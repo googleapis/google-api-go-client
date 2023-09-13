@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package adsense provides access to the AdSense Management API.
 //
 // For product documentation, see: https://developers.google.com/adsense/management/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	adsenseService, err := adsense.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	adsenseService, err := adsense.NewService(ctx, option.WithScopes(adsense.AdsenseReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	adsenseService, err := adsense.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	adsenseService, err := adsense.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package adsense // import "google.golang.org/api/adsense/v2"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "adsense:v2"
 const apiName = "adsense"
@@ -484,7 +499,7 @@ type AdUnit struct {
 	// in the `AD_UNIT_ID` reporting dimension.
 	ReportingDimensionId string `json:"reportingDimensionId,omitempty"`
 
-	// State: State of the ad unit.
+	// State: Required. State of the ad unit.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State unspecified.
@@ -1521,12 +1536,18 @@ type Site struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "REQUIRES_REVIEW" - The site hasn't been checked yet.
-	//   "GETTING_READY" - Running some checks on the site. This usually
-	// takes a few days, but in some cases can take up to 2 weeks.
-	//   "READY" - The site is ready to show ads.
+	//   "REQUIRES_REVIEW" - Either: * The site hasn't been checked yet. *
+	// The site is inactive and needs another review before it can show ads
+	// again. Learn how to [request a review for an inactive
+	// site](https://support.google.com/adsense/answer/9393996).
+	//   "GETTING_READY" - Google is running some checks on the site. This
+	// usually takes a few days, but in some cases it can take two to four
+	// weeks.
+	//   "READY" - The site is ready to show ads. Learn how to [set up ads
+	// on the site](https://support.google.com/adsense/answer/7037624).
 	//   "NEEDS_ATTENTION" - Publisher needs to fix some issues before the
-	// site is ready to show ads.
+	// site is ready to show ads. Learn what to do [if a new site isn't
+	// ready](https://support.google.com/adsense/answer/9061852).
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1729,17 +1750,17 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Account{
 		ServerResponse: googleapi.ServerResponse{
@@ -1878,17 +1899,17 @@ func (c *AccountsGetAdBlockingRecoveryTagCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdBlockingRecoveryTag{
 		ServerResponse: googleapi.ServerResponse{
@@ -2037,17 +2058,17 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2144,10 +2165,10 @@ func (c *AccountsListChildAccountsCall) PageSize(pageSize int64) *AccountsListCh
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAccounts` call. Provide this to
+// received from a previous `ListChildAccounts` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListAccounts` must match the call that provided the page
-// token.
+// provided to `ListChildAccounts` must match the call that provided the
+// page token.
 func (c *AccountsListChildAccountsCall) PageToken(pageToken string) *AccountsListChildAccountsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2228,17 +2249,17 @@ func (c *AccountsListChildAccountsCall) Do(opts ...googleapi.CallOption) (*ListC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChildAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2267,7 +2288,7 @@ func (c *AccountsListChildAccountsCall) Do(opts ...googleapi.CallOption) (*ListC
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAccounts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccounts` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListChildAccounts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListChildAccounts` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2408,17 +2429,17 @@ func (c *AccountsAdclientsGetCall) Do(opts ...googleapi.CallOption) (*AdClient, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdClient{
 		ServerResponse: googleapi.ServerResponse{
@@ -2560,17 +2581,17 @@ func (c *AccountsAdclientsGetAdcodeCall) Do(opts ...googleapi.CallOption) (*AdCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdClientAdCode{
 		ServerResponse: googleapi.ServerResponse{
@@ -2727,17 +2748,17 @@ func (c *AccountsAdclientsListCall) Do(opts ...googleapi.CallOption) (*ListAdCli
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAdClientsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2827,9 +2848,9 @@ type AccountsAdclientsAdunitsCreateCall struct {
 // (https://developers.google.com/adsense/platforms/) product. Note that
 // ad units can only be created for ad clients with an "AFC" product
 // code. For more info see the AdClient resource
-// (https://developers.google.com/adsense/management/reference/rest/v2/accounts.adclients).
-// For now, this method can only be used to create `DISPLAY` ad units.
-// See: https://support.google.com/adsense/answer/9183566
+// (/adsense/management/reference/rest/v2/accounts.adclients). For now,
+// this method can only be used to create `DISPLAY` ad units. See:
+// https://support.google.com/adsense/answer/9183566
 //
 //   - parent: Ad client to create an ad unit under. Format:
 //     accounts/{account}/adclients/{adclient}.
@@ -2907,17 +2928,17 @@ func (c *AccountsAdclientsAdunitsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdUnit{
 		ServerResponse: googleapi.ServerResponse{
@@ -2931,7 +2952,7 @@ func (c *AccountsAdclientsAdunitsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](https://developers.google.com/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
+	//   "description": "Creates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits",
 	//   "httpMethod": "POST",
 	//   "id": "adsense.accounts.adclients.adunits.create",
@@ -3057,17 +3078,17 @@ func (c *AccountsAdclientsAdunitsGetCall) Do(opts ...googleapi.CallOption) (*AdU
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdUnit{
 		ServerResponse: googleapi.ServerResponse{
@@ -3209,17 +3230,17 @@ func (c *AccountsAdclientsAdunitsGetAdcodeCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdUnitAdCode{
 		ServerResponse: googleapi.ServerResponse{
@@ -3375,17 +3396,17 @@ func (c *AccountsAdclientsAdunitsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAdUnitsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3575,17 +3596,17 @@ func (c *AccountsAdclientsAdunitsListLinkedCustomChannelsCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLinkedCustomChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3759,17 +3780,17 @@ func (c *AccountsAdclientsAdunitsPatchCall) Do(opts ...googleapi.CallOption) (*A
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AdUnit{
 		ServerResponse: googleapi.ServerResponse{
@@ -3910,17 +3931,17 @@ func (c *AccountsAdclientsCustomchannelsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomChannel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4049,17 +4070,17 @@ func (c *AccountsAdclientsCustomchannelsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4197,17 +4218,17 @@ func (c *AccountsAdclientsCustomchannelsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomChannel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4364,17 +4385,17 @@ func (c *AccountsAdclientsCustomchannelsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4566,17 +4587,17 @@ func (c *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLinkedAdUnitsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4749,17 +4770,17 @@ func (c *AccountsAdclientsCustomchannelsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomChannel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4905,17 +4926,17 @@ func (c *AccountsAdclientsUrlchannelsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UrlChannel{
 		ServerResponse: googleapi.ServerResponse{
@@ -5072,17 +5093,17 @@ func (c *AccountsAdclientsUrlchannelsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUrlChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5263,17 +5284,17 @@ func (c *AccountsAlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAlertsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5416,17 +5437,17 @@ func (c *AccountsPaymentsListCall) Do(opts ...googleapi.CallOption) (*ListPaymen
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPaymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5599,6 +5620,16 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 //
 // dimension match the values from Site.reporting_dimension_id.
 //
+//	"PAGE_URL" - URL of the page upon which the ad was served. This is
+//
+// a complete URL including scheme and query parameters. Note that the
+// URL that appears in this dimension may be a canonicalized version of
+// the one that was used in the original request, and so may not exactly
+// match the URL that a user might have seen. Note that there are also
+// some caveats to be aware of when using this dimension. For more
+// information, see [Page URL
+// breakdown](https://support.google.com/adsense/answer/11988478).
+//
 //	"URL_CHANNEL_NAME" - Name of a URL channel. The members of this
 //
 // dimension match the values from UrlChannel.uri_pattern.
@@ -5740,7 +5771,9 @@ func (c *AccountsReportsGenerateCall) EndDateYear(endDateYear int64) *AccountsRe
 	return c
 }
 
-// Filters sets the optional parameter "filters": Filters to be run on
+// Filters sets the optional parameter "filters": A list of filters
+// (/adsense/management/reporting/filtering) to apply to the report. All
+// provided filters must match in order for the data to be included in
 // the report.
 func (c *AccountsReportsGenerateCall) Filters(filters ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("filters", append([]string{}, filters...))
@@ -5894,6 +5927,27 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // revenue share is applied.
 //
 //	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//	"FUNNEL_REQUESTS" - Number of requests for non-ad units (for
+//
+// example a related search unit). For more information, see [Funnel
+// requests](https://support.google.com/adsense/answer/11586959).
+//
+//	"FUNNEL_IMPRESSIONS" - Number of requests for non-ad units ads that
+//
+// returned content that was shown to the user. For more information,
+// see [Funnel
+// impressions](https://support.google.com/adsense/answer/11585767).
+//
+//	"FUNNEL_CLICKS" - Number of times a user clicked on a non-ad unit,
+//
+// triggering further ad requests. For more information, see [Funnel
+// clicks](https://support.google.com/adsense/answer/11586382).
+//
+//	"FUNNEL_RPM" - Revenue per thousand funnel impressions. This is
+//
+// calculated by dividing estimated revenue by the number of funnel
+// impressions multiplied by 1000. For more information, see [Funnel
+// RPM](https://support.google.com/adsense/answer/11585979).
 func (c *AccountsReportsGenerateCall) Metrics(metrics ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
 	return c
@@ -6026,17 +6080,17 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReportResult{
 		ServerResponse: googleapi.ServerResponse{
@@ -6115,6 +6169,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "CUSTOM_CHANNEL_ID",
 	//         "OWNED_SITE_DOMAIN_NAME",
 	//         "OWNED_SITE_ID",
+	//         "PAGE_URL",
 	//         "URL_CHANNEL_NAME",
 	//         "URL_CHANNEL_ID",
 	//         "BUYER_NETWORK_NAME",
@@ -6164,6 +6219,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Unique ID of a custom channel. The members of this dimension match the values from CustomChannel.reporting_dimension_id.",
 	//         "Domain name of a verified site (e.g. \"example.com\"). The members of this dimension match the values from Site.domain.",
 	//         "Unique ID of a verified site. The members of this dimension match the values from Site.reporting_dimension_id.",
+	//         "URL of the page upon which the ad was served. This is a complete URL including scheme and query parameters. Note that the URL that appears in this dimension may be a canonicalized version of the one that was used in the original request, and so may not exactly match the URL that a user might have seen. Note that there are also some caveats to be aware of when using this dimension. For more information, see [Page URL breakdown](https://support.google.com/adsense/answer/11988478).",
 	//         "Name of a URL channel. The members of this dimension match the values from UrlChannel.uri_pattern.",
 	//         "Unique ID of a URL channel. The members of this dimension match the values from UrlChannel.reporting_dimension_id.",
 	//         "Name of an ad network that returned the winning ads for an ad request (e.g. \"Google AdWords\"). Note that unlike other \"NAME\" dimensions, the members of this dimensions are not localized.",
@@ -6218,7 +6274,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//       "type": "integer"
 	//     },
 	//     "filters": {
-	//       "description": "Filters to be run on the report.",
+	//       "description": "A list of [filters](/adsense/management/reporting/filtering) to apply to the report. All provided filters must match in order for the data to be included in the report.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6269,7 +6325,11 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "COST_PER_CLICK",
 	//         "ADS_PER_IMPRESSION",
 	//         "TOTAL_EARNINGS",
-	//         "WEBSEARCH_RESULT_PAGES"
+	//         "WEBSEARCH_RESULT_PAGES",
+	//         "FUNNEL_REQUESTS",
+	//         "FUNNEL_IMPRESSIONS",
+	//         "FUNNEL_CLICKS",
+	//         "FUNNEL_RPM"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified metric.",
@@ -6304,7 +6364,11 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
 	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
-	//         "Number of results pages."
+	//         "Number of results pages.",
+	//         "Number of requests for non-ad units (for example a related search unit). For more information, see [Funnel requests](https://support.google.com/adsense/answer/11586959).",
+	//         "Number of requests for non-ad units ads that returned content that was shown to the user. For more information, see [Funnel impressions](https://support.google.com/adsense/answer/11585767).",
+	//         "Number of times a user clicked on a non-ad unit, triggering further ad requests. For more information, see [Funnel clicks](https://support.google.com/adsense/answer/11586382).",
+	//         "Revenue per thousand funnel impressions. This is calculated by dividing estimated revenue by the number of funnel impressions multiplied by 1000. For more information, see [Funnel RPM](https://support.google.com/adsense/answer/11585979)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6493,6 +6557,16 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 //
 // dimension match the values from Site.reporting_dimension_id.
 //
+//	"PAGE_URL" - URL of the page upon which the ad was served. This is
+//
+// a complete URL including scheme and query parameters. Note that the
+// URL that appears in this dimension may be a canonicalized version of
+// the one that was used in the original request, and so may not exactly
+// match the URL that a user might have seen. Note that there are also
+// some caveats to be aware of when using this dimension. For more
+// information, see [Page URL
+// breakdown](https://support.google.com/adsense/answer/11988478).
+//
 //	"URL_CHANNEL_NAME" - Name of a URL channel. The members of this
 //
 // dimension match the values from UrlChannel.uri_pattern.
@@ -6634,7 +6708,9 @@ func (c *AccountsReportsGenerateCsvCall) EndDateYear(endDateYear int64) *Account
 	return c
 }
 
-// Filters sets the optional parameter "filters": Filters to be run on
+// Filters sets the optional parameter "filters": A list of filters
+// (/adsense/management/reporting/filtering) to apply to the report. All
+// provided filters must match in order for the data to be included in
 // the report.
 func (c *AccountsReportsGenerateCsvCall) Filters(filters ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("filters", append([]string{}, filters...))
@@ -6788,6 +6864,27 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // revenue share is applied.
 //
 //	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//	"FUNNEL_REQUESTS" - Number of requests for non-ad units (for
+//
+// example a related search unit). For more information, see [Funnel
+// requests](https://support.google.com/adsense/answer/11586959).
+//
+//	"FUNNEL_IMPRESSIONS" - Number of requests for non-ad units ads that
+//
+// returned content that was shown to the user. For more information,
+// see [Funnel
+// impressions](https://support.google.com/adsense/answer/11585767).
+//
+//	"FUNNEL_CLICKS" - Number of times a user clicked on a non-ad unit,
+//
+// triggering further ad requests. For more information, see [Funnel
+// clicks](https://support.google.com/adsense/answer/11586382).
+//
+//	"FUNNEL_RPM" - Revenue per thousand funnel impressions. This is
+//
+// calculated by dividing estimated revenue by the number of funnel
+// impressions multiplied by 1000. For more information, see [Funnel
+// RPM](https://support.google.com/adsense/answer/11585979).
 func (c *AccountsReportsGenerateCsvCall) Metrics(metrics ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
 	return c
@@ -6920,17 +7017,17 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &HttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -7009,6 +7106,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "CUSTOM_CHANNEL_ID",
 	//         "OWNED_SITE_DOMAIN_NAME",
 	//         "OWNED_SITE_ID",
+	//         "PAGE_URL",
 	//         "URL_CHANNEL_NAME",
 	//         "URL_CHANNEL_ID",
 	//         "BUYER_NETWORK_NAME",
@@ -7058,6 +7156,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Unique ID of a custom channel. The members of this dimension match the values from CustomChannel.reporting_dimension_id.",
 	//         "Domain name of a verified site (e.g. \"example.com\"). The members of this dimension match the values from Site.domain.",
 	//         "Unique ID of a verified site. The members of this dimension match the values from Site.reporting_dimension_id.",
+	//         "URL of the page upon which the ad was served. This is a complete URL including scheme and query parameters. Note that the URL that appears in this dimension may be a canonicalized version of the one that was used in the original request, and so may not exactly match the URL that a user might have seen. Note that there are also some caveats to be aware of when using this dimension. For more information, see [Page URL breakdown](https://support.google.com/adsense/answer/11988478).",
 	//         "Name of a URL channel. The members of this dimension match the values from UrlChannel.uri_pattern.",
 	//         "Unique ID of a URL channel. The members of this dimension match the values from UrlChannel.reporting_dimension_id.",
 	//         "Name of an ad network that returned the winning ads for an ad request (e.g. \"Google AdWords\"). Note that unlike other \"NAME\" dimensions, the members of this dimensions are not localized.",
@@ -7112,7 +7211,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//       "type": "integer"
 	//     },
 	//     "filters": {
-	//       "description": "Filters to be run on the report.",
+	//       "description": "A list of [filters](/adsense/management/reporting/filtering) to apply to the report. All provided filters must match in order for the data to be included in the report.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -7163,7 +7262,11 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "COST_PER_CLICK",
 	//         "ADS_PER_IMPRESSION",
 	//         "TOTAL_EARNINGS",
-	//         "WEBSEARCH_RESULT_PAGES"
+	//         "WEBSEARCH_RESULT_PAGES",
+	//         "FUNNEL_REQUESTS",
+	//         "FUNNEL_IMPRESSIONS",
+	//         "FUNNEL_CLICKS",
+	//         "FUNNEL_RPM"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified metric.",
@@ -7198,7 +7301,11 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Amount the publisher earns each time a user clicks on an ad. CPC is calculated by dividing the estimated revenue by the number of clicks received.",
 	//         "Number of ad views per impression.",
 	//         "Total earnings are the gross estimated earnings from revenue shared traffic before any parent and child account revenue share is applied.",
-	//         "Number of results pages."
+	//         "Number of results pages.",
+	//         "Number of requests for non-ad units (for example a related search unit). For more information, see [Funnel requests](https://support.google.com/adsense/answer/11586959).",
+	//         "Number of requests for non-ad units ads that returned content that was shown to the user. For more information, see [Funnel impressions](https://support.google.com/adsense/answer/11585767).",
+	//         "Number of times a user clicked on a non-ad unit, triggering further ad requests. For more information, see [Funnel clicks](https://support.google.com/adsense/answer/11586382).",
+	//         "Revenue per thousand funnel impressions. This is calculated by dividing estimated revenue by the number of funnel impressions multiplied by 1000. For more information, see [Funnel RPM](https://support.google.com/adsense/answer/11585979)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -7352,17 +7459,17 @@ func (c *AccountsReportsGetSavedCall) Do(opts ...googleapi.CallOption) (*SavedRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SavedReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -7617,17 +7724,17 @@ func (c *AccountsReportsSavedGenerateCall) Do(opts ...googleapi.CallOption) (*Re
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReportResult{
 		ServerResponse: googleapi.ServerResponse{
@@ -7968,17 +8075,17 @@ func (c *AccountsReportsSavedGenerateCsvCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &HttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -8137,10 +8244,10 @@ func (c *AccountsReportsSavedListCall) PageSize(pageSize int64) *AccountsReports
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListPayments` call. Provide this to
+// received from a previous `ListSavedReports` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListPayments` must match the call that provided the page
-// token.
+// provided to `ListSavedReports` must match the call that provided the
+// page token.
 func (c *AccountsReportsSavedListCall) PageToken(pageToken string) *AccountsReportsSavedListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8221,17 +8328,17 @@ func (c *AccountsReportsSavedListCall) Do(opts ...googleapi.CallOption) (*ListSa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSavedReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8260,7 +8367,7 @@ func (c *AccountsReportsSavedListCall) Do(opts ...googleapi.CallOption) (*ListSa
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListPayments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPayments` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListSavedReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSavedReports` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8400,17 +8507,17 @@ func (c *AccountsSitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Site{
 		ServerResponse: googleapi.ServerResponse{
@@ -8566,17 +8673,17 @@ func (c *AccountsSitesListCall) Do(opts ...googleapi.CallOption) (*ListSitesResp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSitesResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package authorizedbuyersmarketplace provides access to the Authorized Buyers Marketplace API.
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/marketplace/reference/rest/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package authorizedbuyersmarketplace // import "google.golang.org/api/authorizedbuyersmarketplace/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "authorizedbuyersmarketplace:v1"
 const apiName = "authorizedbuyersmarketplace"
@@ -1234,7 +1248,7 @@ type FinalizedDeal struct {
 	DealServingStatus string `json:"dealServingStatus,omitempty"`
 
 	// Name: The resource name of the finalized deal. Format:
-	// `buyers/{accountId}/finalizeddeals/{finalizedDealId}`
+	// `buyers/{accountId}/finalizedDeals/{finalizedDealId}`
 	Name string `json:"name,omitempty"`
 
 	// ReadyToServe: Whether the Programmatic Guaranteed deal is ready for
@@ -2102,14 +2116,17 @@ type ProgrammaticGuaranteedTerms struct {
 	// FixedPrice: Fixed price for the deal.
 	FixedPrice *Price `json:"fixedPrice,omitempty"`
 
-	// GuaranteedLooks: Count of guaranteed looks.
+	// GuaranteedLooks: Count of guaranteed looks. For CPD deals, buyer
+	// changes to guaranteed_looks will be ignored.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
 
 	// ImpressionCap: The lifetime impression cap for CPM Sponsorship deals.
 	// Deal will stop serving when cap is reached.
 	ImpressionCap int64 `json:"impressionCap,omitempty,string"`
 
-	// MinimumDailyLooks: Daily minimum looks for CPD deal types.
+	// MinimumDailyLooks: Daily minimum looks for CPD deal types. For CPD
+	// deals, buyer should negotiate on this field instead of
+	// guaranteed_looks.
 	MinimumDailyLooks int64 `json:"minimumDailyLooks,omitempty,string"`
 
 	// PercentShareOfVoice: For sponsorship deals, this is the percentage of
@@ -2422,6 +2439,7 @@ type PublisherProfileMobileApplication struct {
 	//   "SAMSUNG" - Samsung Galaxy Store
 	//   "VIVO" - VIVO App Store
 	//   "XIAOMI" - Xiaomi GetApps
+	//   "LG_TV" - LG TV
 	AppStore string `json:"appStore,omitempty"`
 
 	// ExternalAppId: The external ID for the app from its app store. Can be
@@ -2956,7 +2974,7 @@ func (r *BiddersFinalizedDealsService) List(parent string) *BiddersFinalizedDeal
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * deal.displayName *
 // deal.dealType * deal.createTime * deal.updateTime *
 // deal.flightStartTime * deal.flightEndTime * dealServingStatus
@@ -3072,17 +3090,17 @@ func (c *BiddersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListF
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFinalizedDealsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3105,7 +3123,7 @@ func (c *BiddersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListF
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
+	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3261,17 +3279,17 @@ func (c *BuyersAuctionPackagesGetCall) Do(opts ...googleapi.CallOption) (*Auctio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuctionPackage{
 		ServerResponse: googleapi.ServerResponse{
@@ -3424,17 +3442,17 @@ func (c *BuyersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAuctionPackagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3599,17 +3617,17 @@ func (c *BuyersAuctionPackagesSubscribeCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuctionPackage{
 		ServerResponse: googleapi.ServerResponse{
@@ -3746,17 +3764,17 @@ func (c *BuyersAuctionPackagesSubscribeClientsCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuctionPackage{
 		ServerResponse: googleapi.ServerResponse{
@@ -3891,17 +3909,17 @@ func (c *BuyersAuctionPackagesUnsubscribeCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuctionPackage{
 		ServerResponse: googleapi.ServerResponse{
@@ -4036,17 +4054,17 @@ func (c *BuyersAuctionPackagesUnsubscribeClientsCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuctionPackage{
 		ServerResponse: googleapi.ServerResponse{
@@ -4180,17 +4198,17 @@ func (c *BuyersClientsActivateCall) Do(opts ...googleapi.CallOption) (*Client, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -4322,17 +4340,17 @@ func (c *BuyersClientsCreateCall) Do(opts ...googleapi.CallOption) (*Client, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -4466,17 +4484,17 @@ func (c *BuyersClientsDeactivateCall) Do(opts ...googleapi.CallOption) (*Client,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -4615,17 +4633,17 @@ func (c *BuyersClientsGetCall) Do(opts ...googleapi.CallOption) (*Client, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -4688,7 +4706,7 @@ func (r *BuyersClientsService) List(parent string) *BuyersClientsListCall {
 
 // Filter sets the optional parameter "filter": Query string using the
 // Filtering Syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported fields for filtering are: * partnerClientId Use this field
 // to filter the clients by the partnerClientId. For example, if the
 // partnerClientId of the client is "1234", the value of this field
@@ -4790,17 +4808,17 @@ func (c *BuyersClientsListCall) Do(opts ...googleapi.CallOption) (*ListClientsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListClientsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4823,7 +4841,7 @@ func (c *BuyersClientsListCall) Do(opts ...googleapi.CallOption) (*ListClientsRe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is \"1234\", the value of this field should be `partnerClientId = \"1234\"`, in order to get only the client whose partnerClientId is \"1234\" in the response.",
+	//       "description": "Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is \"1234\", the value of this field should be `partnerClientId = \"1234\"`, in order to get only the client whose partnerClientId is \"1234\" in the response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4983,17 +5001,17 @@ func (c *BuyersClientsPatchCall) Do(opts ...googleapi.CallOption) (*Client, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Client{
 		ServerResponse: googleapi.ServerResponse{
@@ -5137,17 +5155,17 @@ func (c *BuyersClientsUsersActivateCall) Do(opts ...googleapi.CallOption) (*Clie
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUser{
 		ServerResponse: googleapi.ServerResponse{
@@ -5282,17 +5300,17 @@ func (c *BuyersClientsUsersCreateCall) Do(opts ...googleapi.CallOption) (*Client
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUser{
 		ServerResponse: googleapi.ServerResponse{
@@ -5430,17 +5448,17 @@ func (c *BuyersClientsUsersDeactivateCall) Do(opts ...googleapi.CallOption) (*Cl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUser{
 		ServerResponse: googleapi.ServerResponse{
@@ -5570,17 +5588,17 @@ func (c *BuyersClientsUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5718,17 +5736,17 @@ func (c *BuyersClientsUsersGetCall) Do(opts ...googleapi.CallOption) (*ClientUse
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClientUser{
 		ServerResponse: googleapi.ServerResponse{
@@ -5881,17 +5899,17 @@ func (c *BuyersClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListClie
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListClientUsersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6061,17 +6079,17 @@ func (c *BuyersFinalizedDealsAddCreativeCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FinalizedDeal{
 		ServerResponse: googleapi.ServerResponse{
@@ -6210,17 +6228,17 @@ func (c *BuyersFinalizedDealsGetCall) Do(opts ...googleapi.CallOption) (*Finaliz
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FinalizedDeal{
 		ServerResponse: googleapi.ServerResponse{
@@ -6290,7 +6308,7 @@ func (r *BuyersFinalizedDealsService) List(parent string) *BuyersFinalizedDealsL
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * deal.displayName *
 // deal.dealType * deal.createTime * deal.updateTime *
 // deal.flightStartTime * deal.flightEndTime * dealServingStatus
@@ -6406,17 +6424,17 @@ func (c *BuyersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListFi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFinalizedDealsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6439,7 +6457,7 @@ func (c *BuyersFinalizedDealsListCall) Do(opts ...googleapi.CallOption) (*ListFi
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
+	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6590,17 +6608,17 @@ func (c *BuyersFinalizedDealsPauseCall) Do(opts ...googleapi.CallOption) (*Final
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FinalizedDeal{
 		ServerResponse: googleapi.ServerResponse{
@@ -6736,17 +6754,17 @@ func (c *BuyersFinalizedDealsResumeCall) Do(opts ...googleapi.CallOption) (*Fina
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FinalizedDeal{
 		ServerResponse: googleapi.ServerResponse{
@@ -6887,17 +6905,17 @@ func (c *BuyersFinalizedDealsSetReadyToServeCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FinalizedDeal{
 		ServerResponse: googleapi.ServerResponse{
@@ -7038,17 +7056,17 @@ func (c *BuyersProposalsAcceptCall) Do(opts ...googleapi.CallOption) (*Proposal,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -7181,17 +7199,17 @@ func (c *BuyersProposalsAddNoteCall) Do(opts ...googleapi.CallOption) (*Proposal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -7332,17 +7350,17 @@ func (c *BuyersProposalsCancelNegotiationCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -7397,8 +7415,8 @@ type BuyersProposalsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a proposal using its name. The proposal is returned at most
-// recent revision. revision.
+// Get: Gets a proposal using its resource name. The proposal is
+// returned at the latest revision.
 //
 //   - name: Name of the proposal. Format:
 //     `buyers/{accountId}/proposals/{proposalId}`.
@@ -7483,17 +7501,17 @@ func (c *BuyersProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -7507,7 +7525,7 @@ func (c *BuyersProposalsGetCall) Do(opts ...googleapi.CallOption) (*Proposal, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a proposal using its name. The proposal is returned at most recent revision. revision.",
+	//   "description": "Gets a proposal using its resource name. The proposal is returned at the latest revision.",
 	//   "flatPath": "v1/buyers/{buyersId}/proposals/{proposalsId}",
 	//   "httpMethod": "GET",
 	//   "id": "authorizedbuyersmarketplace.buyers.proposals.get",
@@ -7545,10 +7563,10 @@ type BuyersProposalsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists proposals. A filter expression (list filter syntax) may
-// be specified to filter the results. This will not list finalized
-// versions of proposals that are being renegotiated; to retrieve these
-// use the finalizedProposals resource.
+// List: Lists proposals. A filter expression using Cloud API list
+// filtering syntax
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
+// may be specified to filter the results.
 //
 //   - parent: Parent that owns the collection of proposals Format:
 //     `buyers/{accountId}`.
@@ -7560,7 +7578,7 @@ func (r *BuyersProposalsService) List(parent string) *BuyersProposalsListCall {
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // Supported columns for filtering are: * displayName * dealType *
 // updateTime * state
 func (c *BuyersProposalsListCall) Filter(filter string) *BuyersProposalsListCall {
@@ -7658,17 +7676,17 @@ func (c *BuyersProposalsListCall) Do(opts ...googleapi.CallOption) (*ListProposa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListProposalsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7682,7 +7700,7 @@ func (c *BuyersProposalsListCall) Do(opts ...googleapi.CallOption) (*ListProposa
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists proposals. A filter expression (list filter syntax) may be specified to filter the results. This will not list finalized versions of proposals that are being renegotiated; to retrieve these use the finalizedProposals resource.",
+	//   "description": "Lists proposals. A filter expression using [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) may be specified to filter the results.",
 	//   "flatPath": "v1/buyers/{buyersId}/proposals",
 	//   "httpMethod": "GET",
 	//   "id": "authorizedbuyersmarketplace.buyers.proposals.list",
@@ -7691,7 +7709,7 @@ func (c *BuyersProposalsListCall) Do(opts ...googleapi.CallOption) (*ListProposa
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state",
+	//       "description": "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7758,9 +7776,9 @@ type BuyersProposalsPatchCall struct {
 }
 
 // Patch: Updates the proposal at the given revision number. If the
-// revision number in the request is behind the latest from the server,
-// an error message will be returned. See FieldMask for how to use
-// FieldMask. Only fields specified in the
+// revision number in the request is behind the latest one kept in the
+// server, an error message will be returned. See FieldMask for how to
+// use FieldMask. Only fields specified in the
 // UpdateProposalRequest.update_mask will be updated; Fields noted as
 // 'Immutable' or 'Output only' yet specified in the
 // UpdateProposalRequest.update_mask will be ignored and left unchanged.
@@ -7859,17 +7877,17 @@ func (c *BuyersProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -7883,7 +7901,7 @@ func (c *BuyersProposalsPatchCall) Do(opts ...googleapi.CallOption) (*Proposal, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the proposal at the given revision number. If the revision number in the request is behind the latest from the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is not allowed and will result in an error.",
+	//   "description": "Updates the proposal at the given revision number. If the revision number in the request is behind the latest one kept in the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is not allowed and will result in an error.",
 	//   "flatPath": "v1/buyers/{buyersId}/proposals/{proposalsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "authorizedbuyersmarketplace.buyers.proposals.patch",
@@ -8014,17 +8032,17 @@ func (c *BuyersProposalsSendRfpCall) Do(opts ...googleapi.CallOption) (*Proposal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Proposal{
 		ServerResponse: googleapi.ServerResponse{
@@ -8157,17 +8175,17 @@ func (c *BuyersProposalsDealsBatchUpdateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUpdateDealsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8308,17 +8326,17 @@ func (c *BuyersProposalsDealsGetCall) Do(opts ...googleapi.CallOption) (*Deal, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Deal{
 		ServerResponse: googleapi.ServerResponse{
@@ -8473,17 +8491,17 @@ func (c *BuyersProposalsDealsListCall) Do(opts ...googleapi.CallOption) (*ListDe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDealsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8672,17 +8690,17 @@ func (c *BuyersProposalsDealsPatchCall) Do(opts ...googleapi.CallOption) (*Deal,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Deal{
 		ServerResponse: googleapi.ServerResponse{
@@ -8828,17 +8846,17 @@ func (c *BuyersPublisherProfilesGetCall) Do(opts ...googleapi.CallOption) (*Publ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublisherProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -8905,7 +8923,7 @@ func (r *BuyersPublisherProfilesService) List(parent string) *BuyersPublisherPro
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the [Cloud API list filtering]
-// (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters)
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
 // syntax.
 func (c *BuyersPublisherProfilesListCall) Filter(filter string) *BuyersPublisherProfilesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -9003,17 +9021,17 @@ func (c *BuyersPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPublisherProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9036,7 +9054,7 @@ func (c *BuyersPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional query string using the [Cloud API list filtering] (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) syntax.",
+	//       "description": "Optional query string using the [Cloud API list filtering] (https://developers.google.com/authorized-buyers/apis/guides/list-filters) syntax.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

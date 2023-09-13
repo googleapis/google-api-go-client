@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package slides provides access to the Google Slides API.
 //
 // For product documentation, see: https://developers.google.com/slides/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	slidesService, err := slides.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	slidesService, err := slides.NewService(ctx, option.WithScopes(slides.SpreadsheetsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	slidesService, err := slides.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	slidesService, err := slides.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package slides // import "google.golang.org/api/slides/v1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "slides:v1"
 const apiName = "slides"
@@ -574,12 +589,12 @@ type CreateImageRequest struct {
 	// ElementProperties: The element properties for the image. When the
 	// aspect ratio of the provided size does not match the image aspect
 	// ratio, the image is scaled and centered with respect to the size in
-	// order to maintain aspect ratio. The provided transform is applied
+	// order to maintain the aspect ratio. The provided transform is applied
 	// after this operation. The PageElementProperties.size property is
 	// optional. If you don't specify the size, the default size of the
 	// image is used. The PageElementProperties.transform property is
 	// optional. If you don't specify a transform, the image will be placed
-	// at the top left corner of the page.
+	// at the top-left corner of the page.
 	ElementProperties *PageElementProperties `json:"elementProperties,omitempty"`
 
 	// ObjectId: A user-supplied object ID. If you specify an ID, it must be
@@ -593,10 +608,10 @@ type CreateImageRequest struct {
 
 	// Url: The image URL. The image is fetched once at insertion time and a
 	// copy is stored for display inside the presentation. Images must be
-	// less than 50MB in size, cannot exceed 25 megapixels, and must be in
-	// one of PNG, JPEG, or GIF format. The provided URL can be at most 2 kB
-	// in length. The URL itself is saved with the image, and exposed via
-	// the Image.source_url field.
+	// less than 50 MB in size, can't exceed 25 megapixels, and must be in
+	// one of PNG, JPEG, or GIF formats. The provided URL must be publicly
+	// accessible and up to 2 KB in length. The URL is saved with the image,
+	// and exposed through the Image.source_url field.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ElementProperties")
@@ -7267,17 +7282,17 @@ func (c *PresentationsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchU
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUpdatePresentationResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7410,17 +7425,17 @@ func (c *PresentationsCreateCall) Do(opts ...googleapi.CallOption) (*Presentatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Presentation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7551,17 +7566,17 @@ func (c *PresentationsGetCall) Do(opts ...googleapi.CallOption) (*Presentation, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Presentation{
 		ServerResponse: googleapi.ServerResponse{
@@ -7706,17 +7721,17 @@ func (c *PresentationsPagesGetCall) Do(opts ...googleapi.CallOption) (*Page, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Page{
 		ServerResponse: googleapi.ServerResponse{
@@ -7903,17 +7918,17 @@ func (c *PresentationsPagesGetThumbnailCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Thumbnail{
 		ServerResponse: googleapi.ServerResponse{

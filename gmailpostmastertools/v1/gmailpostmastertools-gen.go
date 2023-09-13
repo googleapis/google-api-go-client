@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package gmailpostmastertools provides access to the Gmail Postmaster Tools API.
 //
 // For product documentation, see: https://developers.google.com/gmail/postmaster
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package gmailpostmastertools // import "google.golang.org/api/gmailpostmastertools/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "gmailpostmastertools:v1"
 const apiName = "gmailpostmastertools"
@@ -543,9 +557,30 @@ type TrafficStats struct {
 	SpfSuccessRatio float64 `json:"spfSuccessRatio,omitempty"`
 
 	// UserReportedSpamRatio: The ratio of user-report spam vs. email that
-	// was sent to the inbox. This metric only pertains to emails
-	// authenticated by DKIM (http://www.dkim.org/).
+	// was sent to the inbox. This is potentially inexact -- users may want
+	// to refer to the description of the interval fields
+	// userReportedSpamRatioLowerBound and userReportedSpamRatioUpperBound
+	// for more explicit accuracy guarantees. This metric only pertains to
+	// emails authenticated by DKIM (http://www.dkim.org/).
 	UserReportedSpamRatio float64 `json:"userReportedSpamRatio,omitempty"`
+
+	// UserReportedSpamRatioLowerBound: The lower bound of the confidence
+	// interval for the user reported spam ratio. If this field is set, then
+	// the value of userReportedSpamRatio is set to the midpoint of this
+	// interval and is thus inexact. However, the true ratio is guaranteed
+	// to be in between this lower bound and the corresponding upper bound
+	// 95% of the time. This metric only pertains to emails authenticated by
+	// DKIM (http://www.dkim.org/).
+	UserReportedSpamRatioLowerBound float64 `json:"userReportedSpamRatioLowerBound,omitempty"`
+
+	// UserReportedSpamRatioUpperBound: The upper bound of the confidence
+	// interval for the user reported spam ratio. If this field is set, then
+	// the value of userReportedSpamRatio is set to the midpoint of this
+	// interval and is thus inexact. However, the true ratio is guaranteed
+	// to be in between this upper bound and the corresponding lower bound
+	// 95% of the time. This metric only pertains to emails authenticated by
+	// DKIM (http://www.dkim.org/).
+	UserReportedSpamRatioUpperBound float64 `json:"userReportedSpamRatioUpperBound,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -578,12 +613,14 @@ func (s *TrafficStats) MarshalJSON() ([]byte, error) {
 func (s *TrafficStats) UnmarshalJSON(data []byte) error {
 	type NoMethod TrafficStats
 	var s1 struct {
-		DkimSuccessRatio        gensupport.JSONFloat64 `json:"dkimSuccessRatio"`
-		DmarcSuccessRatio       gensupport.JSONFloat64 `json:"dmarcSuccessRatio"`
-		InboundEncryptionRatio  gensupport.JSONFloat64 `json:"inboundEncryptionRatio"`
-		OutboundEncryptionRatio gensupport.JSONFloat64 `json:"outboundEncryptionRatio"`
-		SpfSuccessRatio         gensupport.JSONFloat64 `json:"spfSuccessRatio"`
-		UserReportedSpamRatio   gensupport.JSONFloat64 `json:"userReportedSpamRatio"`
+		DkimSuccessRatio                gensupport.JSONFloat64 `json:"dkimSuccessRatio"`
+		DmarcSuccessRatio               gensupport.JSONFloat64 `json:"dmarcSuccessRatio"`
+		InboundEncryptionRatio          gensupport.JSONFloat64 `json:"inboundEncryptionRatio"`
+		OutboundEncryptionRatio         gensupport.JSONFloat64 `json:"outboundEncryptionRatio"`
+		SpfSuccessRatio                 gensupport.JSONFloat64 `json:"spfSuccessRatio"`
+		UserReportedSpamRatio           gensupport.JSONFloat64 `json:"userReportedSpamRatio"`
+		UserReportedSpamRatioLowerBound gensupport.JSONFloat64 `json:"userReportedSpamRatioLowerBound"`
+		UserReportedSpamRatioUpperBound gensupport.JSONFloat64 `json:"userReportedSpamRatioUpperBound"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -596,6 +633,8 @@ func (s *TrafficStats) UnmarshalJSON(data []byte) error {
 	s.OutboundEncryptionRatio = float64(s1.OutboundEncryptionRatio)
 	s.SpfSuccessRatio = float64(s1.SpfSuccessRatio)
 	s.UserReportedSpamRatio = float64(s1.UserReportedSpamRatio)
+	s.UserReportedSpamRatioLowerBound = float64(s1.UserReportedSpamRatioLowerBound)
+	s.UserReportedSpamRatioUpperBound = float64(s1.UserReportedSpamRatioUpperBound)
 	return nil
 }
 
@@ -697,17 +736,17 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -856,17 +895,17 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsResponse
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1028,17 +1067,17 @@ func (c *DomainsTrafficStatsGetCall) Do(opts ...googleapi.CallOption) (*TrafficS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TrafficStats{
 		ServerResponse: googleapi.ServerResponse{
@@ -1244,17 +1283,17 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTrafficStatsResponse{
 		ServerResponse: googleapi.ServerResponse{

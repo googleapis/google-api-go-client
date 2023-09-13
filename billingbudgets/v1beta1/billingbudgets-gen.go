@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package billingbudgets provides access to the Cloud Billing Budget API.
 //
 // For product documentation, see: https://cloud.google.com/billing/docs/how-to/budget-api-overview
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	billingbudgetsService, err := billingbudgets.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithScopes(billingbudgets.CloudPlatformScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package billingbudgets // import "google.golang.org/api/billingbudgets/v1beta1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "billingbudgets:v1beta1"
 const apiName = "billingbudgets"
@@ -175,6 +190,14 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// notifications are sent to those with Billing Account Administrator
 	// and Billing Account User IAM roles for the target account.
 	DisableDefaultIamRecipients bool `json:"disableDefaultIamRecipients,omitempty"`
+
+	// EnableProjectLevelRecipients: Optional. When set to true, and when
+	// the budget has a single project configured, notifications will be
+	// sent to project level recipients of that project. This field will be
+	// ignored if the budget has multiple or no project configured.
+	// Currently, project level recipients are the users with `Owner` role
+	// on a cloud project.
+	EnableProjectLevelRecipients bool `json:"enableProjectLevelRecipients,omitempty"`
 
 	// MonitoringNotificationChannels: Optional. Targets to send
 	// notifications to when a threshold is exceeded. This is in addition to
@@ -465,9 +488,17 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// `projects/{project}`, specifying that usage from only this set of
 	// projects should be included in the budget. If omitted, the report
 	// will include all usage for the billing account, regardless of which
-	// project the usage occurred on. Only zero or one project can be
-	// specified currently.
+	// project the usage occurred on.
 	Projects []string `json:"projects,omitempty"`
+
+	// ResourceAncestors: Optional. A set of folder and organization names
+	// of the form `folders/{folderId}` or `organizations/{organizationId}`,
+	// specifying that usage from only this set of folders and organizations
+	// should be included in the budget. If omitted, the budget includes all
+	// usage that the billing account pays for. If the folder or
+	// organization contains projects that are paid for by a different Cloud
+	// Billing account, the budget *doesn't* apply to those projects.
+	ResourceAncestors []string `json:"resourceAncestors,omitempty"`
 
 	// Services: Optional. A set of services of the form
 	// `services/{service_id}`, specifying that usage from only this set of
@@ -857,17 +888,17 @@ func (c *BillingAccountsBudgetsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -994,17 +1025,17 @@ func (c *BillingAccountsBudgetsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1146,17 +1177,17 @@ func (c *BillingAccountsBudgetsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{
@@ -1239,6 +1270,19 @@ func (c *BillingAccountsBudgetsListCall) PageToken(pageToken string) *BillingAcc
 	return c
 }
 
+// Scope sets the optional parameter "scope": Set the scope of the
+// budgets to be returned, in the format of the resource name. The scope
+// of a budget is the cost that it tracks, such as costs for a single
+// project, or the costs for all projects in a folder. Only project
+// scope (in the format of "projects/project-id" or "projects/123") is
+// supported in this field. When this field is set to a project's
+// resource name, the budgets returned are tracking the costs for that
+// project.
+func (c *BillingAccountsBudgetsListCall) Scope(scope string) *BillingAccountsBudgetsListCall {
+	c.urlParams_.Set("scope", scope)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1316,17 +1360,17 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1ListBudgetsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1364,6 +1408,11 @@ func (c *BillingAccountsBudgetsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Optional. Set the scope of the budgets to be returned, in the format of the resource name. The scope of a budget is the cost that it tracks, such as costs for a single project, or the costs for all projects in a folder. Only project scope (in the format of \"projects/project-id\" or \"projects/123\") is supported in this field. When this field is set to a project's resource name, the budgets returned are tracking the costs for that project.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1494,17 +1543,17 @@ func (c *BillingAccountsBudgetsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudBillingBudgetsV1beta1Budget{
 		ServerResponse: googleapi.ServerResponse{

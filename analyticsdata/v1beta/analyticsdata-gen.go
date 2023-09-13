@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package analyticsdata provides access to the Google Analytics Data API.
 //
 // For product documentation, see: https://developers.google.com/analytics/devguides/reporting/data/v1/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	analyticsdataService, err := analyticsdata.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithScopes(analyticsdata.AnalyticsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package analyticsdata // import "google.golang.org/api/analyticsdata/v1beta"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "analyticsdata:v1beta"
 const apiName = "analyticsdata"
@@ -188,6 +203,10 @@ func (s *ActiveMetricRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ActiveMetricRestriction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AudienceListMetadata: This metadata is currently blank.
+type AudienceListMetadata struct {
 }
 
 // BatchRunPivotReportsRequest: The batch request containing multiple
@@ -729,8 +748,8 @@ func (s *ConcatenateExpression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DateRange: A contiguous set of days: startDate, startDate + 1, ...,
-// endDate. Requests are allowed up to 4 date ranges.
+// DateRange: A contiguous set of days: `startDate`, `startDate + 1`,
+// ..., `endDate`. Requests are allowed up to 4 date ranges.
 type DateRange struct {
 	// EndDate: The inclusive end date for the query in the format
 	// `YYYY-MM-DD`. Cannot be before `start_date`. The format `NdaysAgo`,
@@ -787,14 +806,20 @@ type Dimension struct {
 
 	// Name: The name of the dimension. See the API Dimensions
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions)
-	// for the list of dimension names. If `dimensionExpression` is
-	// specified, `name` can be any string that you would like within the
-	// allowed character set. For example if a `dimensionExpression`
-	// concatenates `country` and `city`, you could call that dimension
-	// `countryAndCity`. Dimension names that you choose must match the
-	// regular expression `^[a-zA-Z0-9_]$`. Dimensions are referenced by
-	// `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`, and
-	// `pivots`.
+	// for the list of dimension names supported by core reporting methods
+	// such as `runReport` and `batchRunReports`. See Realtime Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema#dimensions)
+	// for the list of dimension names supported by the `runRealtimeReport`
+	// method. See Funnel Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/exploration-api-schema#dimensions)
+	// for the list of dimension names supported by the `runFunnelReport`
+	// method. If `dimensionExpression` is specified, `name` can be any
+	// string that you would like within the allowed character set. For
+	// example if a `dimensionExpression` concatenates `country` and `city`,
+	// you could call that dimension `countryAndCity`. Dimension names that
+	// you choose must match the regular expression `^[a-zA-Z0-9_]$`.
+	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
+	// `dimensionExpression`, and `pivots`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
@@ -1255,13 +1280,19 @@ type Metric struct {
 
 	// Name: The name of the metric. See the API Metrics
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics)
-	// for the list of metric names. If `expression` is specified, `name`
-	// can be any string that you would like within the allowed character
-	// set. For example if `expression` is `screenPageViews/sessions`, you
-	// could call that metric's name = `viewsPerSession`. Metric names that
-	// you choose must match the regular expression `^[a-zA-Z0-9_]$`.
-	// Metrics are referenced by `name` in `metricFilter`, `orderBys`, and
-	// metric `expression`.
+	// for the list of metric names supported by core reporting methods such
+	// as `runReport` and `batchRunReports`. See Realtime Metrics
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-api-schema#metrics)
+	// for the list of metric names supported by the `runRealtimeReport`
+	// method. See Funnel Metrics
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/exploration-api-schema#metrics)
+	// for the list of metric names supported by the `runFunnelReport`
+	// method. If `expression` is specified, `name` can be any string that
+	// you would like within the allowed character set. For example if
+	// `expression` is `screenPageViews/sessions`, you could call that
+	// metric's name = `viewsPerSession`. Metric names that you choose must
+	// match the regular expression `^[a-zA-Z0-9_]$`. Metrics are referenced
+	// by `name` in `metricFilter`, `orderBys`, and metric `expression`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expression") to
@@ -1538,9 +1569,9 @@ func (s *MetricValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MinuteRange: A contiguous set of minutes: startMinutesAgo,
-// startMinutesAgo + 1, ..., endMinutesAgo. Requests are allowed up to 2
-// minute ranges.
+// MinuteRange: A contiguous set of minutes: `startMinutesAgo`,
+// `startMinutesAgo + 1`, ..., `endMinutesAgo`. Requests are allowed up
+// to 2 minute ranges.
 type MinuteRange struct {
 	// EndMinutesAgo: The inclusive end minute for the query as a number of
 	// minutes before now. Cannot be before `startMinutesAgo`. For example,
@@ -1729,7 +1760,7 @@ type Pivot struct {
 	// return in this pivot. The `limit` parameter is required. A `limit` of
 	// 10,000 is common for single pivot requests. The product of the
 	// `limit` for each `pivot` in a `RunPivotReportRequest` must not exceed
-	// 100,000. For example, a two pivot request with `limit: 1000` in each
+	// 250,000. For example, a two pivot request with `limit: 1000` in each
 	// pivot will fail because the product is `1,000,000`.
 	Limit int64 `json:"limit,omitempty,string"`
 
@@ -1944,22 +1975,22 @@ type PropertyQuota struct {
 	// server errors per hour.
 	ServerErrorsPerProjectPerHour *QuotaStatus `json:"serverErrorsPerProjectPerHour,omitempty"`
 
-	// TokensPerDay: Standard Analytics Properties can use up to 25,000
-	// tokens per day; Analytics 360 Properties can use 250,000 tokens per
+	// TokensPerDay: Standard Analytics Properties can use up to 200,000
+	// tokens per day; Analytics 360 Properties can use 2,000,000 tokens per
 	// day. Most requests consume fewer than 10 tokens.
 	TokensPerDay *QuotaStatus `json:"tokensPerDay,omitempty"`
 
-	// TokensPerHour: Standard Analytics Properties can use up to 5,000
-	// tokens per hour; Analytics 360 Properties can use 50,000 tokens per
+	// TokensPerHour: Standard Analytics Properties can use up to 40,000
+	// tokens per hour; Analytics 360 Properties can use 400,000 tokens per
 	// hour. An API request consumes a single number of tokens, and that
 	// number is deducted from all of the hourly, daily, and per project
 	// hourly quotas.
 	TokensPerHour *QuotaStatus `json:"tokensPerHour,omitempty"`
 
-	// TokensPerProjectPerHour: Analytics Properties can use up to 25% of
+	// TokensPerProjectPerHour: Analytics Properties can use up to 35% of
 	// their tokens per project per hour. This amounts to standard Analytics
-	// Properties can use up to 1,250 tokens per project per hour, and
-	// Analytics 360 Properties can use 12,500 tokens per project per hour.
+	// Properties can use up to 14,000 tokens per project per hour, and
+	// Analytics 360 Properties can use 140,000 tokens per project per hour.
 	// An API request consumes a single number of tokens, and that number is
 	// deducted from all of the hourly, daily, and per project hourly
 	// quotas.
@@ -2036,7 +2067,16 @@ type ResponseMetaData struct {
 
 	// DataLossFromOtherRow: If true, indicates some buckets of dimension
 	// combinations are rolled into "(other)" row. This can happen for high
-	// cardinality reports.
+	// cardinality reports. The metadata parameter dataLossFromOtherRow is
+	// populated based on the aggregated data table used in the report. The
+	// parameter will be accurately populated regardless of the filters and
+	// limits in the report. For example, the (other) row could be dropped
+	// from the report because the request contains a filter on
+	// sessionSource = google. This parameter will still be populated if
+	// data loss from other row was present in the input aggregate data used
+	// to generate this report. To learn more, see About the (other) row and
+	// data sampling
+	// (https://support.google.com/analytics/answer/13208658#reports).
 	DataLossFromOtherRow bool `json:"dataLossFromOtherRow,omitempty"`
 
 	// EmptyReason: If empty reason is specified, the report is empty for
@@ -2161,7 +2201,12 @@ type RunPivotReportRequest struct {
 
 	// KeepEmptyRows: If false or unspecified, each row with all metrics
 	// equal to 0 will not be returned. If true, these rows will be returned
-	// if they are not separately removed by a filter.
+	// if they are not separately removed by a filter. Regardless of this
+	// `keep_empty_rows` setting, only data recorded by the Google Analytics
+	// (GA4) property can be displayed in a report. For example if a
+	// property never logs a `purchase` event, then a query for the
+	// `eventName` dimension and `eventCount` metric will not have a row
+	// eventName: "purchase" and eventCount: 0.
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
 
 	// MetricFilter: The filter clause of metrics. Applied at post
@@ -2302,7 +2347,7 @@ type RunRealtimeReportRequest struct {
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// Limit: The number of rows to return. If unspecified, 10,000 rows are
-	// returned. The API returns a maximum of 100,000 rows per request, no
+	// returned. The API returns a maximum of 250,000 rows per request, no
 	// matter how many you ask for. `limit` must be positive. The API can
 	// also return fewer rows than the requested `limit`, if there aren't as
 	// many dimension values as the `limit`. For instance, there are fewer
@@ -2458,7 +2503,7 @@ type RunReportRequest struct {
 	// cohort request, this `dateRanges` must be unspecified.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
 
-	// DimensionFilter: Dimension filters allow you to ask for only specific
+	// DimensionFilter: Dimension filters let you ask for only specific
 	// dimension values in the report. To learn more, see Fundamentals of
 	// Dimension Filters
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#dimension_filters)
@@ -2470,11 +2515,16 @@ type RunReportRequest struct {
 
 	// KeepEmptyRows: If false or unspecified, each row with all metrics
 	// equal to 0 will not be returned. If true, these rows will be returned
-	// if they are not separately removed by a filter.
+	// if they are not separately removed by a filter. Regardless of this
+	// `keep_empty_rows` setting, only data recorded by the Google Analytics
+	// (GA4) property can be displayed in a report. For example if a
+	// property never logs a `purchase` event, then a query for the
+	// `eventName` dimension and `eventCount` metric will not have a row
+	// eventName: "purchase" and eventCount: 0.
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
 
 	// Limit: The number of rows to return. If unspecified, 10,000 rows are
-	// returned. The API returns a maximum of 100,000 rows per request, no
+	// returned. The API returns a maximum of 250,000 rows per request, no
 	// matter how many you ask for. `limit` must be positive. The API can
 	// also return fewer rows than the requested `limit`, if there aren't as
 	// many dimension values as the `limit`. For instance, there are fewer
@@ -2804,17 +2854,17 @@ func (c *PropertiesBatchRunPivotReportsCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchRunPivotReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2954,17 +3004,17 @@ func (c *PropertiesBatchRunReportsCall) Do(opts ...googleapi.CallOption) (*Batch
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchRunReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3034,10 +3084,7 @@ type PropertiesCheckCompatibilityCall struct {
 //     are tracked. To learn more, see where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     `property` should be the same value as in your `runReport` request.
-//     Example: properties/1234 Set the Property ID to 0 for compatibility
-//     checking on dimensions and metrics common to all properties. In
-//     this special mode, this method will not return custom dimensions
-//     and metrics.
+//     Example: properties/1234.
 func (r *PropertiesService) CheckCompatibility(propertyid string, checkcompatibilityrequest *CheckCompatibilityRequest) *PropertiesCheckCompatibilityCall {
 	c := &PropertiesCheckCompatibilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3112,17 +3159,17 @@ func (c *PropertiesCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*Ch
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckCompatibilityResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3145,7 +3192,7 @@ func (c *PropertiesCheckCompatibilityCall) Do(opts ...googleapi.CallOption) (*Ch
 	//   ],
 	//   "parameters": {
 	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). `property` should be the same value as in your `runReport` request. Example: properties/1234 Set the Property ID to 0 for compatibility checking on dimensions and metrics common to all properties. In this special mode, this method will not return custom dimensions and metrics.",
+	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). `property` should be the same value as in your `runReport` request. Example: properties/1234",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+$",
 	//       "required": true,
@@ -3278,17 +3325,17 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Metadata{
 		ServerResponse: googleapi.ServerResponse{
@@ -3428,17 +3475,17 @@ func (c *PropertiesRunPivotReportCall) Do(opts ...googleapi.CallOption) (*RunPiv
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RunPivotReportResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3582,17 +3629,17 @@ func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*Run
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RunRealtimeReportResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3740,17 +3787,17 @@ func (c *PropertiesRunReportCall) Do(opts ...googleapi.CallOption) (*RunReportRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RunReportResponse{
 		ServerResponse: googleapi.ServerResponse{

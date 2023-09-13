@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package cloudsearch provides access to the Cloud Search API.
 //
 // For product documentation, see: https://developers.google.com/cloud-search/docs/guides/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	cloudsearchService, err := cloudsearch.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	cloudsearchService, err := cloudsearch.NewService(ctx, option.WithScopes(cloudsearch.CloudSearchStatsIndexingScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudsearchService, err := cloudsearch.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudsearchService, err := cloudsearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudsearch // import "google.golang.org/api/cloudsearch/v1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudsearch:v1"
 const apiName = "cloudsearch"
@@ -505,2551 +520,14 @@ type V1Service struct {
 	s *Service
 }
 
-// AbuseReportingConfig: Abuse reporting configuration outlining what is
-// supported in this conference.
-type AbuseReportingConfig struct {
-	// RecordingAllowed: Whether the current call may include video
-	// recordings in its abuse reports.
-	RecordingAllowed bool `json:"recordingAllowed,omitempty"`
-
-	// WrittenUgcAllowed: Whether the current call may include user
-	// generated content (chat, polls, Q&A...) in its abuse reports.
-	WrittenUgcAllowed bool `json:"writtenUgcAllowed,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RecordingAllowed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RecordingAllowed") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AbuseReportingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AbuseReportingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AckInfo: Information about how devices in a meeting have acked for a
-// session/operation.
-type AckInfo struct {
-	// UnackedDeviceCount: Output only. Number of meeting devices that have
-	// not acked yet.
-	UnackedDeviceCount int64 `json:"unackedDeviceCount,omitempty"`
-
-	// UnackedDeviceIds: Output only. IDs of meeting devices (at most ten
-	// are provided) that have not acked yet.
-	UnackedDeviceIds []string `json:"unackedDeviceIds,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "UnackedDeviceCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UnackedDeviceCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AckInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AckInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AclFixRequest: The request set by clients to instruct Backend how the
-// user intend to fix the ACL. Technically it's not a request to ACL
-// Fixer, because Backend uses /DriveService.Share to modify Drive ACLs.
-type AclFixRequest struct {
-	// RecipientEmails: For Spaces messages: This field is ignored. For DMs
-	// messages: The list of email addresses that should be added to the
-	// Drive item's ACL. In general, the list should not be empty when the
-	// boolean "should_fix" field is set; otherwise, the list should be
-	// empty. During transition - when clients do not specify this field but
-	// the "should_fix" is true, we follow the legacy behavior: share to all
-	// users in the DM regardless of emails. This behavior is being phased
-	// out.
-	RecipientEmails []string `json:"recipientEmails,omitempty"`
-
-	// Possible values:
-	//   "UNKNOWN"
-	//   "READER"
-	//   "COMMENTER"
-	//   "WRITER"
-	Role string `json:"role,omitempty"`
-
-	// ShouldFix: Whether to attempt to fix the ACL by adding the room or DM
-	// members to the Drive file's ACL.
-	ShouldFix bool `json:"shouldFix,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RecipientEmails") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RecipientEmails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AclFixRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod AclFixRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AclFixStatus: The message reconstructed based on information in the
-// response of /PermissionFixOptionsService.Query (or the Apiary API
-// that wraps it). Indicates the ability of the requester to change the
-// access to the Drive file for the room roster or the DM members. Used
-// in GetMessagePreviewMetadataResponse only.
-type AclFixStatus struct {
-	// Possible values:
-	//   "UNKNOWN"
-	//   "ALREADY_ACCESSIBLE"
-	//   "CAN_FIX"
-	//   "CANNOT_FIX"
-	//   "ACL_FIXER_ERROR"
-	Fixability string `json:"fixability,omitempty"`
-
-	// FixableEmailAddress: List of recipient email addresses for which
-	// access can be granted. This field contains the same email addresses
-	// from the GetMessagePreviewMetadata request if all recipients can be
-	// successfully added to the ACL as determined by Drive ACL Fixer. For
-	// now, the field is non-empty if and only if the "fixability" value is
-	// "CAN_FIX".
-	FixableEmailAddress []string `json:"fixableEmailAddress,omitempty"`
-
-	// OutOfDomainWarningEmailAddress: List of recipient email addresses for
-	// which an out-of-domain-sharing warning must be shown, stating that
-	// these email addresses are not in the Google Apps organization that
-	// the requested item belong to. Empty if all recipients are in the same
-	// Google Apps organization.
-	OutOfDomainWarningEmailAddress []string `json:"outOfDomainWarningEmailAddress,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Fixability") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Fixability") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AclFixStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod AclFixStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AclInfo: Next tag: 4
-type AclInfo struct {
-	// GroupsCount: Number of groups which have at least read access to the
-	// document.
-	GroupsCount int64 `json:"groupsCount,omitempty"`
-
-	// Scope: The scope to which the content was shared.
-	//
-	// Possible values:
-	//   "LIMITED" - Explicit set of people and groups.
-	//   "DASHER_DOMAIN_WITH_LINK" - Anybody at the same domain with the
-	// link.
-	//   "DASHER_DOMAIN" - Now it works only for google.com. Anybody at the
-	// same domain. Now it works only
-	//   "PUBLIC_WITH_LINK" - for google.com. Anybody with the link.
-	//   "PUBLIC" - Anybody.
-	//   "TEAM_DRIVE" - Special tag to indicate TeamDrive scope.
-	Scope string `json:"scope,omitempty"`
-
-	// UsersCount: Number of users which have at least read access to the
-	// document.
-	UsersCount int64 `json:"usersCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupsCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupsCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AclInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AclInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ActionParameter: List of string parameters that developers can
-// specify when the above action method (in apps script) is invoked. An
-// example use case is for 3 snooze buttons: snooze now, snooze 1 day,
-// snooze next week. Developers can have action method = snooze() and
-// pass the snooze type and snooze time in list of string parameters.
-type ActionParameter struct {
-	Key string `json:"key,omitempty"`
-
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ActionParameter) MarshalJSON() ([]byte, error) {
-	type NoMethod ActionParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AffectedMembership: Earlier we used to populate just the
-// affected_members list and inferred the new membership state (roles
-// didn't exist back then) from the Type. go/dynamite-finra required
-// backend to know the previous membership state to reconstruct
-// membership history. The proper solution involved cleaning up up Type
-// enum, but it was used in many, many places. This was added as a
-// stop-gap solution to unblock FINRA without breaking everything. Later
-// role update and target audience update started relying on this to
-// communicate information to clients about what transition happened. So
-// this is now required to be populated and should be in sync with
-// affected_members for new messages.
-type AffectedMembership struct {
-	AffectedMember *MemberId `json:"affectedMember,omitempty"`
-
-	// Possible values:
-	//   "ROLE_UNKNOWN"
-	//   "ROLE_NONE" - This role is used when a user is forcibly removed
-	// from a room by another user. They will no longer be able to search
-	// for the room, but their history will be retained.
-	//   "ROLE_INVITEE" - This role is used for two purposes. 1. A group is
-	// invited to a room, making it discoverable for its members. 2. A user
-	// was part of a room, but willingly left the room.
-	//   "ROLE_MEMBER" - --- Following roles are for joined members of a
-	// roster. --- Default role for any joined user. Has basic capabilities
-	// within a room.
-	//   "ROLE_OWNER" - Role assigned to room creators and explicitly
-	// promoted members. Has broad powers to manage the room.
-	PriorMembershipRole string `json:"priorMembershipRole,omitempty"`
-
-	// Possible values:
-	//   "MEMBER_UNKNOWN" - Default state, do not use
-	//   "MEMBER_INVITED" - An invitation to the space has been sent
-	//   "MEMBER_JOINED" - User has joined the space
-	//   "MEMBER_NOT_A_MEMBER" - User is not a member
-	//   "MEMBER_FAILED" - This state should never be stored in Spanner. It
-	// is a state for responses to the clients to indicate that membership
-	// mutations have failed and the member is in its previous state.
-	PriorMembershipState string `json:"priorMembershipState,omitempty"`
-
-	// Possible values:
-	//   "ROLE_UNKNOWN"
-	//   "ROLE_NONE" - This role is used when a user is forcibly removed
-	// from a room by another user. They will no longer be able to search
-	// for the room, but their history will be retained.
-	//   "ROLE_INVITEE" - This role is used for two purposes. 1. A group is
-	// invited to a room, making it discoverable for its members. 2. A user
-	// was part of a room, but willingly left the room.
-	//   "ROLE_MEMBER" - --- Following roles are for joined members of a
-	// roster. --- Default role for any joined user. Has basic capabilities
-	// within a room.
-	//   "ROLE_OWNER" - Role assigned to room creators and explicitly
-	// promoted members. Has broad powers to manage the room.
-	TargetMembershipRole string `json:"targetMembershipRole,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AffectedMember") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AffectedMember") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AffectedMembership) MarshalJSON() ([]byte, error) {
-	type NoMethod AffectedMembership
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AllAuthenticatedUsersProto: Represents a principal who has
-// authenticated as any kind of user which the application understands.
-// This is typically used for "wiki-like" security, where anyone is
-// allowed access so long as they can be held accountable for that
-// access. Since the purpose is knowing whom to blame, it is up to the
-// application to decide what kinds of users it knows how to blame. For
-// example, an application might choose to include GAIA users in "all
-// authenticated users", but not include MDB users. Nothing here.
-type AllAuthenticatedUsersProto struct {
-}
-
-// Annotation: NOTE WHEN ADDING NEW PROTO FIELDS: Be sure to add datapol
-// annotations to new fields with potential PII, so they get scrubbed
-// when logging protos for errors. NEXT TAG: 29
-type Annotation struct {
-	BabelPlaceholderMetadata *BabelPlaceholderMetadata `json:"babelPlaceholderMetadata,omitempty"`
-
-	// CardCapabilityMetadata:
-	// LINT.ThenChange(//depot/google3/java/com/google/apps/dynamite/v1/backe
-	// nd/action/common/SystemMessageHelper.java)
-	CardCapabilityMetadata *CardCapabilityMetadata `json:"cardCapabilityMetadata,omitempty"`
-
-	// ChipRenderType: Whether the annotation should be rendered as a chip.
-	// If this is missing or unspecified, fallback to should_not_render on
-	// the metadata.
-	//
-	// Possible values:
-	//   "CHIP_RENDER_TYPE_UNSPECIFIED"
-	//   "RENDER" - Clients must render the annotation as a chip, and if
-	// they cannot render this many Annotations, show a fallback card.
-	//   "RENDER_IF_POSSIBLE" - Client can render the annotation if it has
-	// room to render it.
-	//   "DO_NOT_RENDER" - Client should not render the annotation as a
-	// chip.
-	ChipRenderType string `json:"chipRenderType,omitempty"`
-
-	ConsentedAppUnfurlMetadata *ConsentedAppUnfurlMetadata `json:"consentedAppUnfurlMetadata,omitempty"`
-
-	CustomEmojiMetadata *CustomEmojiMetadata `json:"customEmojiMetadata,omitempty"`
-
-	DataLossPreventionMetadata *DataLossPreventionMetadata `json:"dataLossPreventionMetadata,omitempty"`
-
-	// DriveMetadata: Chip annotations
-	DriveMetadata *DriveMetadata `json:"driveMetadata,omitempty"`
-
-	FormatMetadata *FormatMetadata `json:"formatMetadata,omitempty"`
-
-	GroupRetentionSettingsUpdated *GroupRetentionSettingsUpdatedMetaData `json:"groupRetentionSettingsUpdated,omitempty"`
-
-	// GsuiteIntegrationMetadata: Metadata for 1P integrations like tasks,
-	// calendar. These are supported only through integration server as 1P
-	// integrations use the integration API (which in turn uses backend API
-	// with special permissions) to post messages. Clients should never set
-	// this. LINT.IfChange
-	GsuiteIntegrationMetadata *GsuiteIntegrationMetadata `json:"gsuiteIntegrationMetadata,omitempty"`
-
-	IncomingWebhookChangedMetadata *IncomingWebhookChangedMetadata `json:"incomingWebhookChangedMetadata,omitempty"`
-
-	// IntegrationConfigUpdated:
-	// LINT.ThenChange(//depot/google3/java/com/google/apps/dynamite/v1/backe
-	// nd/action/common/SystemMessageHelper.java)
-	IntegrationConfigUpdated *IntegrationConfigUpdatedMetadata `json:"integrationConfigUpdated,omitempty"`
-
-	// Length: Length of the text_body substring beginning from start_index
-	// the Annotation corresponds to.
-	Length int64 `json:"length,omitempty"`
-
-	// LocalId: A unique client-assigned ID for this annotation. This is
-	// helpful in matching the back-filled annotations to the original
-	// annotations on client side, without having to re-parse the message.
-	LocalId string `json:"localId,omitempty"`
-
-	// MembershipChanged: Metadata for system messages. Clients should never
-	// set this. LINT.IfChange
-	MembershipChanged *MembershipChangedMetadata `json:"membershipChanged,omitempty"`
-
-	ReadReceiptsSettingsMetadata *ReadReceiptsSettingsUpdatedMetadata `json:"readReceiptsSettingsMetadata,omitempty"`
-
-	// RequiredMessageFeaturesMetadata: Metadata that defines all of the
-	// required features that must be rendered in the message. Clients can
-	// use this to see whether they support the entire message, or show a
-	// fallback chip otherwise. See go/message-quoting-client-to-server for
-	// details. LINT.ThenChange(
-	// //depot/google3/java/com/google/apps/dynamite/v1/allshared/parser/Anno
-	// tationSanitizer.java,
-	// //depot/google3/java/com/google/apps/dynamite/v1/backend/action/common
-	// /SystemMessageHelper.java,
-	// //depot/google3/java/com/google/caribou/eli/mediation/chat/AnnotationT
-	// ranslator.java )
-	RequiredMessageFeaturesMetadata *RequiredMessageFeaturesMetadata `json:"requiredMessageFeaturesMetadata,omitempty"`
-
-	RoomUpdated *RoomUpdatedMetadata `json:"roomUpdated,omitempty"`
-
-	// ServerInvalidated: Whether or not the annotation is invalidated by
-	// the server. Example of situations for invalidation include: when the
-	// URL is malformed, or when Drive item ID is rejected by Drive Service.
-	ServerInvalidated bool `json:"serverInvalidated,omitempty"`
-
-	SlashCommandMetadata *SlashCommandMetadata `json:"slashCommandMetadata,omitempty"`
-
-	// StartIndex: Start index (0-indexed) of the Message text the
-	// Annotation corresponds to, inclusive.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// Type: Type of the Annotation.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "URL" - These can have overlaps, i.e. same message can have
-	// multiple of these. For example a Drive link to a PDF can have URL,
-	// DRIVE_FILE and PDF all set Links
-	//   "DRIVE_FILE" - Any drive file
-	//   "DRIVE_DOC"
-	//   "DRIVE_SHEET"
-	//   "DRIVE_SLIDE"
-	//   "DRIVE_FORM"
-	//   "USER_MENTION"
-	//   "SLASH_COMMAND"
-	//   "CONSENTED_APP_UNFURL"
-	//   "VIDEO" - Any video, not just youtube, the url decides how to play
-	//   "FORMAT_DATA" - UI should not be concerned with FORMAT_DATA
-	//   "IMAGE"
-	//   "PDF"
-	//   "VIDEO_CALL" - For Thor integration
-	//   "UPLOAD_METADATA" - Blobstore uploads
-	//   "GSUITE_INTEGRATION" - Generic annotation for gsuite integrations
-	//   "CUSTOM_EMOJI"
-	//   "CARD_CAPABILITY" - Card capability for in-stream widgets.
-	//   "DATA_LOSS_PREVENTION"
-	//   "REQUIRED_MESSAGE_FEATURES_METADATA" - Clients can use this to see
-	// whether they support the entire message, or show a fallback chip
-	// otherwise.
-	//   "MEMBERSHIP_CHANGED" - Annotation types for system messages.
-	// Clients should never set this.
-	//   "ROOM_UPDATED"
-	//   "GROUP_RETENTION_SETTINGS_UPDATED"
-	//   "BABEL_PLACEHOLDER"
-	//   "READ_RECEIPTS_SETTINGS_UPDATED"
-	//   "INCOMING_WEBHOOK_CHANGED"
-	//   "INTEGRATION_CONFIG_UPDATED"
-	//   "INVITATION" - Message-level annotations. First message of an
-	// invite. Should not be set by clients.
-	Type string `json:"type,omitempty"`
-
-	// UniqueId: A unique server-assigned ID for this annotation. This is
-	// helpful in matching annotation objects when fetched from service.
-	UniqueId string `json:"uniqueId,omitempty"`
-
-	UploadMetadata *UploadMetadata `json:"uploadMetadata,omitempty"`
-
-	UrlMetadata *UrlMetadata `json:"urlMetadata,omitempty"`
-
-	// UserMentionMetadata: Metadata that clients can set for annotations.
-	// LINT.IfChange In-text annotations
-	UserMentionMetadata *UserMentionMetadata `json:"userMentionMetadata,omitempty"`
-
-	VideoCallMetadata *VideoCallMetadata `json:"videoCallMetadata,omitempty"`
-
-	YoutubeMetadata *YoutubeMetadata `json:"youtubeMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BabelPlaceholderMetadata") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BabelPlaceholderMetadata")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Annotation) MarshalJSON() ([]byte, error) {
-	type NoMethod Annotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppId: Identifier of an App.
-type AppId struct {
-	// AppType: Enum indicating the type of App this is.
-	//
-	// Possible values:
-	//   "APP_TYPE_UNSPECIFIED"
-	//   "APP" - 3P APP eg. external Bots(Asana Bot), 1P Bots(Drive Bot).
-	//   "GSUITE_APP" - 1P APP eg. Tasks, Meet, Docs, Calendar..
-	//   "INCOMING_WEBHOOK" - Asynchronous messages via an incoming webhook.
-	AppType string `json:"appType,omitempty"`
-
-	// GsuiteAppType: Enum indicating which 1P App this is when app_type is
-	// GSUITE_APP. Determined & set by the 1P API as a convenience for all
-	// users of this identifier(Eg. clients, chime, backend etc.) to map to
-	// 1P properties.
-	//
-	// Possible values:
-	//   "GSUITE_APP_TYPE_UNSPECIFIED"
-	//   "TASKS_APP"
-	//   "CALENDAR_APP"
-	//   "DOCS_APP"
-	//   "SHEETS_APP"
-	//   "SLIDES_APP"
-	//   "MEET_APP"
-	//   "ASSISTIVE_SUGGESTION_APP" - Powered by Bullseye
-	//   "CONTACTS_APP"
-	//   "ACTIVITY_FEED_APP"
-	//   "DRIVE_APP"
-	//   "CHAT_IN_MEET_APP"
-	GsuiteAppType string `json:"gsuiteAppType,omitempty"`
-
-	// Id: Numeric identifier of the App. Set to Project number for 1/3P
-	// Apps. For Webhook, this is WebhookId. Determined & set by the 1P API
-	// from App credentials on the side channel.
-	Id int64 `json:"id,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "AppType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppId) MarshalJSON() ([]byte, error) {
-	type NoMethod AppId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAction: An action that describes the behavior when
-// the form is submitted. For example, an Apps Script can be invoked to
-// handle the form.
-type AppsDynamiteSharedAction struct {
-	// Function: Apps Script function to invoke when the containing element
-	// is clicked/activated.
-	Function string `json:"function,omitempty"`
-
-	// Possible values:
-	//   "INTERACTION_UNSPECIFIED" - Default value if interaction is not
-	// specified.
-	//   "OPEN_DIALOG" - A dialog opens by clicking the button.
-	Interaction string `json:"interaction,omitempty"`
-
-	// Possible values:
-	//   "SPINNER" - Displays a spinner to indicate that content is loading.
-	//   "NONE" - Nothing is displayed.
-	LoadIndicator string `json:"loadIndicator,omitempty"`
-
-	// Parameters: List of action parameters.
-	Parameters []*AppsDynamiteSharedActionActionParameter `json:"parameters,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Function") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Function") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAction) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedActionActionParameter: List of string parameters to
-// supply when the action method is invoked. For example, consider three
-// snooze buttons: snooze now, snooze 1 day, snooze next week. You might
-// use action method = snooze(), passing the snooze type and snooze time
-// in the list of string parameters.
-type AppsDynamiteSharedActionActionParameter struct {
-	// Key: The name of the parameter for the action script.
-	Key string `json:"key,omitempty"`
-
-	// Value: The value of the parameter.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedActionActionParameter) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedActionActionParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedActivityFeedAnnotationData: Next Id: 7
-type AppsDynamiteSharedActivityFeedAnnotationData struct {
-	// ActivityFeedMessageCreateTime: Timestamp of when the Activity Feed
-	// message that contains this annotation was created. This is roughly
-	// when the activity happened, such as when a reaction happened, but
-	// will have at least some small delay, since the Activity Feed message
-	// is created asynchronously after. This timestamp should only be used
-	// for display when the activity create time is not available in the
-	// Chat UI, like the time of a reaction.
-	ActivityFeedMessageCreateTime string `json:"activityFeedMessageCreateTime,omitempty"`
-
-	// ActivityFeedMessageId: Unique id of the Activity Feed message used by
-	// clients to implement click-to-source. This is the same messageId as
-	// the top-level id field for the Activity Feed item.
-	ActivityFeedMessageId *MessageId `json:"activityFeedMessageId,omitempty"`
-
-	ChatItem *AppsDynamiteSharedChatItem `json:"chatItem,omitempty"`
-
-	// SharedUserInfo: Only populated on read path and should not be
-	// persisted in storage.
-	SharedUserInfo *UserInfo `json:"sharedUserInfo,omitempty"`
-
-	// UserInfo: Use shared_user_info instead.
-	UserInfo *AppsDynamiteSharedActivityFeedAnnotationDataUserInfo `json:"userInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ActivityFeedMessageCreateTime") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ActivityFeedMessageCreateTime") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedActivityFeedAnnotationData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedActivityFeedAnnotationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedActivityFeedAnnotationDataUserInfo: UserId of the
-// AF item updater to show and the updater count to show.
-type AppsDynamiteSharedActivityFeedAnnotationDataUserInfo struct {
-	// UpdaterCountDisplayType: Describes how updater_count_to_show should
-	// be used.
-	//
-	// Possible values:
-	//   "UPDATER_COUNT_DISPLAY_TYPE_UNSPECIFIED"
-	//   "EXACT_COUNT" - A precise updater count is known and the value set
-	// in updater_count_to_show should be used.
-	//   "NONZERO_COUNT" - A precise updater count could not be calculated,
-	// but there is at least one. Any value set in updater_count_to_show
-	// should NOT be used.
-	UpdaterCountDisplayType string `json:"updaterCountDisplayType,omitempty"`
-
-	// UpdaterCountToShow: The number of updaters for clients to show,
-	// currently set to the total number of updaters minus the one set in
-	// updater_to_show.
-	UpdaterCountToShow int64 `json:"updaterCountToShow,omitempty"`
-
-	// UpdaterToShow: The updater for clients to show.
-	UpdaterToShow *UserId `json:"updaterToShow,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "UpdaterCountDisplayType") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UpdaterCountDisplayType")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedActivityFeedAnnotationDataUserInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedActivityFeedAnnotationDataUserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAppProfile: Optional field for apps overriding
-// display info
-type AppsDynamiteSharedAppProfile struct {
-	// AvatarEmoji: Displayed user avatar emoji.
-	AvatarEmoji string `json:"avatarEmoji,omitempty"`
-
-	// AvatarUrl: Displayed user avatar url.
-	AvatarUrl string `json:"avatarUrl,omitempty"`
-
-	// Name: Displayed user name.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvatarEmoji") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvatarEmoji") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAppProfile) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAppProfile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantAnnotationData: This is the internal
-// version of the API proto at
-// google3/google/chat/v1/gsuite_message_integration.proto Data used to
-// render Assistant suggestions. See go/bullseye-rendering.
-type AppsDynamiteSharedAssistantAnnotationData struct {
-	// Suggestion: The suggestion to render in the card.
-	Suggestion *AppsDynamiteSharedAssistantSuggestion `json:"suggestion,omitempty"`
-
-	// Unfulfillable: Set when the initial query was unfulfillable. Only an
-	// on-demand unfulfillable query will result in a response (not a
-	// proactive query). 1. On-demand: user explicitly invokes the bot 2.
-	// Proactive: bot makes proactive suggestion (when available) by
-	// listening to all user messages.
-	Unfulfillable *AppsDynamiteSharedAssistantUnfulfillableRequest `json:"unfulfillable,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Suggestion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Suggestion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAssistantAnnotationData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAssistantAnnotationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantDebugContext: Represents info regarding
-// suggestion debug information.
-type AppsDynamiteSharedAssistantDebugContext struct {
-	// Query: The query that triggered the resulting suggestion.
-	Query string `json:"query,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Query") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Query") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAssistantDebugContext) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAssistantDebugContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantFeedbackContext: Data needed to render
-// feedback on the Assistant card
-type AppsDynamiteSharedAssistantFeedbackContext struct {
-	// FeedbackChips: Specifies a list of feedback chips to show
-	FeedbackChips []*AppsDynamiteSharedAssistantFeedbackContextFeedbackChip `json:"feedbackChips,omitempty"`
-
-	// ThumbsFeedback: Whether the thumbs feedback is provided
-	//
-	// Possible values:
-	//   "THUMBS_FEEDBACK_UNSPECIFIED" - Unspecified thumbs state
-	//   "NONE_SELECTED" - Thumbs are not selected
-	//   "UP" - Thumbs up selected
-	//   "DOWN" - Thumbs down selected
-	ThumbsFeedback string `json:"thumbsFeedback,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FeedbackChips") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FeedbackChips") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAssistantFeedbackContext) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAssistantFeedbackContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantFeedbackContextFeedbackChip: Suggestion
-// chips for users to indicate positive or negative feedback
-type AppsDynamiteSharedAssistantFeedbackContextFeedbackChip struct {
-	// FeedbackChipType: What type of chip to display
-	//
-	// Possible values:
-	//   "FEEDBACK_CHIP_TYPE_UNSPECIFIED" - Unspecified type of feedback
-	// chip
-	//   "WRONG_TRIGGER" - Bad/noisy triggering
-	//   "WRONG_FILE" - Incorrect files were presented
-	//   "CORRECT_TRIGGER" - The Assistant card triggered appropriately
-	//   "CORRECT_FILE" - The correct files were presented
-	//   "DISRUPTIVE" - The feature is disruptive
-	//   "OTHER" - Other reason
-	FeedbackChipType string `json:"feedbackChipType,omitempty"`
-
-	// State: Whether the chip has been selected
-	//
-	// Possible values:
-	//   "FEEDBACK_CHIP_STATE_UNSPECIFIED" - Unspecified selection state
-	//   "SELECTED" - Chip is selected
-	//   "UNSELECTED" - Chip is not selected
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FeedbackChipType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FeedbackChipType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAssistantFeedbackContextFeedbackChip) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAssistantFeedbackContextFeedbackChip
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantSessionContext: Session context specific
-// for Assistant suggestions.
-type AppsDynamiteSharedAssistantSessionContext struct {
-	// ContextualSessionId: Unique identifier populated by the contextual
-	// request handler for each vertical (Ex: File Suggestions, Smart
-	// Scheduling, etc.) that can be used to track sessions end-to-end. May
-	// span multiple users (sender-specific).
-	ContextualSessionId string `json:"contextualSessionId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextualSessionId")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextualSessionId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAssistantSessionContext) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAssistantSessionContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantSuggestion: Data for an Assistant
-// suggestion.
-type AppsDynamiteSharedAssistantSuggestion struct {
-	// DebugContext: Info regarding suggestion debug information.
-	DebugContext *AppsDynamiteSharedAssistantDebugContext `json:"debugContext,omitempty"`
-
-	// FeedbackContext: Data for rendering feedback.
-	FeedbackContext *AppsDynamiteSharedAssistantFeedbackContext `json:"feedbackContext,omitempty"`
-
-	// FindDocumentSuggestion: Suggestion type that suggests documents
-	// (docs, slides, sheets).
-	FindDocumentSuggestion *AppsDynamiteSharedFindDocumentSuggestion `json:"findDocumentSuggestion,omitempty"`
-
-	// SerializedSuggestions: String representation of the suggestions
-	// provided.
-	SerializedSuggestions string `json:"serializedSuggestions,omitempty"`
-
-	// SessionContext: Session context specific to the Assistant suggestion.
-	SessionContext *AppsDynamiteSharedAssistantSessionContext `json:"sessionContext,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DebugContext") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DebugContext") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAssistantSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAssistantSuggestion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedAssistantUnfulfillableRequest: Data for a response
-// to an unfulfillable request.
-type AppsDynamiteSharedAssistantUnfulfillableRequest struct {
-}
-
-type AppsDynamiteSharedAvatarInfo struct {
-	Emoji *AppsDynamiteSharedEmoji `json:"emoji,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Emoji") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Emoji") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAvatarInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAvatarInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedBackendUploadMetadata: Metadata used only in
-// Dynamite backend for uploaded attachments.
-type AppsDynamiteSharedBackendUploadMetadata struct {
-	// BlobPath: Blobstore path for the uploaded attachment
-	BlobPath string `json:"blobPath,omitempty"`
-
-	// ContentName: The original file name for the content, not the full
-	// path.
-	ContentName string `json:"contentName,omitempty"`
-
-	// ContentSize: Scotty reported content size by default.
-	// http://google3/uploader/agent/scotty_agent.proto?l=101&rcl=140889785
-	ContentSize int64 `json:"contentSize,omitempty,string"`
-
-	// ContentType: Type is from Scotty's best_guess by default:
-	// http://google3/uploader/agent/scotty_agent.proto?l=51&rcl=140889785
-	ContentType string `json:"contentType,omitempty"`
-
-	// DlpScanOutcome: The results of the Data Loss Prevention (DLP) scan of
-	// the attachment. DEPRECATED: use dlp_scan_summary instead.
-	//
-	// Possible values:
-	//   "SCAN_UNKNOWN_OUTCOME"
-	//   "SCAN_SUCCEEDED_NO_VIOLATION" - This means no violation is detected
-	// on the given message/attachment.
-	//   "SCAN_SUCCEEDED_BLOCK" - Violation is detected. The
-	// message/attachment will be blocked (or deleted if this happens in
-	// failure recovery), the user will be warned, and the violation will be
-	// logged to BIP.
-	//   "SCAN_SUCCEEDED_WARN" - Violation is detected. The user will be
-	// warned, and the violation will be logged to BIP.
-	//   "SCAN_SUCCEEDED_AUDIT_ONLY" - Violation is detected and will be
-	// logged to BIP (no user-facing action performed).
-	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
-	// but an exception occurred.
-	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
-	// but the scanning timed out.
-	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
-	// evaluation were attempted, but all of the rules failed to be
-	// evaluated.
-	//   "SCAN_FAILURE_ILLEGAL_STATE_FOR_ATTACHMENTS" - An
-	// IllegalStateException is thrown when executing DLP on attachments.
-	// This could happen if the space row is missing.
-	//   "SCAN_SKIPPED_EXPERIMENT_DISABLED" - Rule fetch and evaluation is
-	// skipped because DLP is not enabled for the user.
-	//   "SCAN_SKIPPED_CONSUMER" - Rule fetch and evaluation are skipped
-	// because the user sending message is consumer.
-	//   "SCAN_SKIPPED_NON_HUMAN_USER" - Rule fetch and evaluation are
-	// skipped because the user sending message is a non-human user (i.e. a
-	// bot).
-	//   "SCAN_SKIPPED_NO_MESSAGE" - Rule fetch and evaluation are skipped
-	// because there is no message to scan. Deprecated: this should not
-	// happen since there must be message or attachment for DLP scan.
-	//   "SCAN_SKIPPED_USER_ACKNOWLEDGED_WARNING" - Rule fetch and
-	// evaluation are skipped because the user has acknowledged the warning
-	// on the message that triggered the Warn violation and sent the message
-	// anyway.
-	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
-	// skipped because the message originated from Interop or Babel.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
-	// happened, but rule evaluation is skipped because no rules were found.
-	//
-	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
-	// - Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given action params.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
-	// Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given trigger.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned permanent failure while converting the attachment to text.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_EMPTY_RESPONSE" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned an empty response while converting the attachment to text.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_NO_VIOLATION" - Rules were fetched
-	// but some evaluations failed. No violation was found in the rules that
-	// were successfully evaluated.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_BLOCK" - Rules were fetched but some
-	// evaluations failed. A blocking violation was found in the rules that
-	// were successfully evaluated. The message/attachment will be blocked,
-	// the user will be notified, and the violation will be logged to BIP. A
-	// blocking violation takes precedence over all other violation types.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_WARN" - Rules were fetched but some
-	// evaluations failed. A warn violation was found in the rules that were
-	// successfully evaluated. The user will be warned, and the violation
-	// will be logged to BIP.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_AUDIT_ONLY" - Rules were fetched but
-	// some evaluations failed. An audit-only violation was found in the
-	// rules that were successfully evaluated. The violation will be logged
-	// to BIP (no user-facing action performed).
-	DlpScanOutcome string `json:"dlpScanOutcome,omitempty"`
-
-	// DlpScanSummary: Summary of a Data Loss Prevention (DLP) scan of the
-	// attachment. Attachments are evaluated in the backend when they are
-	// uploaded.
-	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
-
-	// GroupId: GroupId to which this attachment is uploaded.
-	GroupId *GroupId `json:"groupId,omitempty"`
-
-	// OriginalDimension: Original dimension of the content. Only set for
-	// image attachments.
-	OriginalDimension *AppsDynamiteSharedDimension `json:"originalDimension,omitempty"`
-
-	// QuoteReplyMessageId: The message id of a quote reply referencing this
-	// attachment. When present, this attachment has been quoted in a reply
-	// message. Normally, the attachment is fetched through the message id
-	// in the blob_path, but in the case of a quote reply, the blob_path
-	// would contain the quoted message id. Thus this message id field is
-	// needed to fetch the quote reply message instead. This field is
-	// conditionally populated at read time for quotes and never persisted
-	// in storage. See go/message-quoting-attachments for more context.
-	QuoteReplyMessageId *MessageId `json:"quoteReplyMessageId,omitempty"`
-
-	// Sha256: The SHA256 hash of the attachment bytes.
-	Sha256 string `json:"sha256,omitempty"`
-
-	// UploadIp: User IP address at upload time. Ex. "123.1.2.3". Used by
-	// Ares abuse scanning.
-	UploadIp string `json:"uploadIp,omitempty"`
-
-	// UploadTimestampUsec: Timestamp of when user finished uploading the
-	// content.
-	UploadTimestampUsec int64 `json:"uploadTimestampUsec,omitempty,string"`
-
-	// VideoId: VideoID of the video attachments. This ID shall meets the
-	// Youtube ID format of 16 hex characters. For example,
-	// '4c14b8825af6059b' is a valid ID.
-	VideoId string `json:"videoId,omitempty"`
-
-	// VideoThumbnailBlobId: Full Blobstore ID for the video thumbnail.
-	VideoThumbnailBlobId string `json:"videoThumbnailBlobId,omitempty"`
-
-	// VirusScanResult: Result for a virus scan.
-	//
-	// Possible values:
-	//   "UNKNOWN_VIRUS_SCAN_RESULT"
-	//   "CLEAN"
-	//   "INFECTED"
-	//   "ERROR"
-	//   "POLICY_VIOLATION" - The document violates Google's policy for
-	// executables and archives.
-	VirusScanResult string `json:"virusScanResult,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BlobPath") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlobPath") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedBackendUploadMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedBackendUploadMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedBorderStyle: Represents the complete border style
-// applied to widgets.
-type AppsDynamiteSharedBorderStyle struct {
-	// CornerRadius: The corner radius for the border.
-	CornerRadius int64 `json:"cornerRadius,omitempty"`
-
-	// StrokeColor: The colors to use when the type is `BORDER_TYPE_STROKE`.
-	StrokeColor *Color `json:"strokeColor,omitempty"`
-
-	// Type: The border type.
-	//
-	// Possible values:
-	//   "BORDER_TYPE_UNSPECIFIED" - No value specified.
-	//   "NO_BORDER" - No border.
-	//   "STROKE" - Outline.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CornerRadius") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CornerRadius") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedBorderStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedBorderStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedButton: A button. Can be a text button or an image
-// button.
-type AppsDynamiteSharedButton struct {
-	// AltText: The alternative text used for accessibility. Has no effect
-	// when an icon is set; use `icon.alt_text` instead.
-	AltText string `json:"altText,omitempty"`
-
-	// Color: If set, the button is filled with a solid background.
-	Color *Color `json:"color,omitempty"`
-
-	// Disabled: If true, the button is displayed in a disabled state and
-	// doesn't respond to user actions.
-	Disabled bool `json:"disabled,omitempty"`
-
-	// Icon: The icon image.
-	Icon *AppsDynamiteSharedIcon `json:"icon,omitempty"`
-
-	// OnClick: The action to perform when the button is clicked.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// Text: The text of the button.
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedButton) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedButtonList: A list of buttons layed out
-// horizontally.
-type AppsDynamiteSharedButtonList struct {
-	Buttons []*AppsDynamiteSharedButton `json:"buttons,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Buttons") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Buttons") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedButtonList) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedButtonList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedCalendarEventAnnotationData struct {
-	CalendarEvent *AppsDynamiteSharedCalendarEventAnnotationDataCalendarEvent `json:"calendarEvent,omitempty"`
-
-	// EventCreation: Notification about the creation of an event.
-	EventCreation *AppsDynamiteSharedCalendarEventAnnotationDataEventCreation `json:"eventCreation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CalendarEvent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CalendarEvent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCalendarEventAnnotationData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCalendarEventAnnotationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedCalendarEventAnnotationDataCalendarEvent struct {
-	// EndTime: The end time of the event.
-	EndTime *AppsDynamiteSharedCalendarEventAnnotationDataCalendarEventTime `json:"endTime,omitempty"`
-
-	// EventId: ID of the event.
-	EventId string `json:"eventId,omitempty"`
-
-	// StartTime: The start time of the event.
-	StartTime *AppsDynamiteSharedCalendarEventAnnotationDataCalendarEventTime `json:"startTime,omitempty"`
-
-	// Title: Title of the event (at the time the message was generated).
+type Action struct {
+	// Title: [Required] Title of the action.
 	Title string `json:"title,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCalendarEventAnnotationDataCalendarEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCalendarEventAnnotationDataCalendarEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedCalendarEventAnnotationDataCalendarEventTime struct {
-	// AllDay: All day event.
-	AllDay *Date `json:"allDay,omitempty"`
-
-	// Timed: Non all day event.
-	Timed string `json:"timed,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllDay") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllDay") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCalendarEventAnnotationDataCalendarEventTime) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCalendarEventAnnotationDataCalendarEventTime
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCalendarEventAnnotationDataEventCreation: Creation
-// of an event (no extra data for now).
-type AppsDynamiteSharedCalendarEventAnnotationDataEventCreation struct {
-}
-
-// AppsDynamiteSharedCallAnnotationData: Data used to render Meet or
-// Google Voice chips in Chat. See
-// go/dynamite-calling-artifacts-in-chat.
-type AppsDynamiteSharedCallAnnotationData struct {
-	// CallEndedTimestamp: Timestamp when the call ended. Used to render the
-	// call ended system message.
-	CallEndedTimestamp string `json:"callEndedTimestamp,omitempty"`
-
-	// CallMetadata: Required. Call metadata required to create the call
-	// artifacts. For now, the metadata contains only the call id to
-	// identify the call. This field allows additional data (e.g. voice call
-	// type) to be added if needed in the future.
-	CallMetadata *AppsDynamiteSharedCallMetadata `json:"callMetadata,omitempty"`
-
-	// CallStatus: Required. Indicates the call status for the space. Used
-	// to determine the chip's state.
-	//
-	// Possible values:
-	//   "CALL_STATUS_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "CALL_STARTED" - Indicates that the call has started.
-	//   "CALL_MISSED" - Indicates that the call is missed.
-	//   "CALL_ENDED" - Indicates that the call has ended.
-	CallStatus string `json:"callStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CallEndedTimestamp")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CallEndedTimestamp") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCallAnnotationData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCallAnnotationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCallMetadata: Metadata required to generate call
-// artifacts. This can either be the metadata for a Meet or, in the
-// future, Google Voice call.
-type AppsDynamiteSharedCallMetadata struct {
-	// MeetMetadata: Metadata specific for the Meet call.
-	MeetMetadata *AppsDynamiteSharedMeetMetadata `json:"meetMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MeetMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MeetMetadata") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCallMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCallMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCard: A card is a UI element that can contain UI
-// widgets such as text and images. For more information, see Cards .
-// For example, the following JSON creates a card that has a header with
-// the name, position, icons, and link for a contact, followed by a
-// section with contact information like email and phone number. ``` {
-// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
-// "imageStyle": "ImageStyle.AVATAR", "imageUrl":
-// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
-// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
-// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
-// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
-// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
-// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
-// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
-// "openLink": { "url": "https://example.com/share" } } }, {
-// "textButton": { "text": "Edit", }, "onClick": { "action": {
-// "function": "goToView", "parameters": [ { "key": "viewType", "value":
-// "EDIT" } ], "loadIndicator": "LoadIndicator.SPINNER" } } } ] } ],
-// "collapsible": true, "uncollapsibleWidgetsCount": 3 } ],
-// "cardActions": [ { "actionLabel": "Send Feedback", "onClick": {
-// "openLink": { "url": "https://example.com/feedback" } } } ], "name":
-// "contact-card-K3wB6arF2H9L" } ```
-type AppsDynamiteSharedCard struct {
-	// CardActions: The actions of this card. They are added to a card's
-	// generated toolbar menu. For example, the following JSON constructs a
-	// card action menu with Settings and Send Feedback options: ```
-	// "card_actions": [ { "actionLabel": "Setting", "onClick": { "action":
-	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
-	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
-	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
-	// "url": "https://example.com/feedback" } } } ] ```
-	CardActions []*AppsDynamiteSharedCardCardAction `json:"cardActions,omitempty"`
-
-	// Header: The header of the card. A header usually contains a title and
-	// an image.
-	Header *AppsDynamiteSharedCardCardHeader `json:"header,omitempty"`
-
-	// Name: Name of the card, which is used as a identifier for the card in
-	// card navigation.
-	Name string `json:"name,omitempty"`
-
-	// Sections: Sections are separated by a line divider.
-	Sections []*AppsDynamiteSharedCardSection `json:"sections,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CardActions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CardActions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCard) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCard
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCardCardAction: A card action is the action
-// associated with the card. For example, an invoice card might include
-// actions such as delete invoice, email invoice, or open the invoice in
-// a browser.
-type AppsDynamiteSharedCardCardAction struct {
-	// ActionLabel: The label that displays as the action menu item.
-	ActionLabel string `json:"actionLabel,omitempty"`
-
-	// OnClick: The onclick action for this action item.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardCardAction) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardCardAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedCardCardHeader struct {
-	// ImageAltText: The alternative text of this image which is used for
-	// accessibility.
-	ImageAltText string `json:"imageAltText,omitempty"`
-
-	// ImageType: The image's type.
-	//
-	// Possible values:
-	//   "SQUARE" - Applies no cropping to the image.
-	//   "CIRCLE" - Applies a circular mask to the image.
-	ImageType string `json:"imageType,omitempty"`
-
-	// ImageUrl: The URL of the image in the card header.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// Subtitle: The subtitle of the card header.
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// Title: The title of the card header. The title must be specified. The
-	// header has a fixed height: if both a title and subtitle are
-	// specified, each takes up one line. If only the title is specified, it
-	// takes up both lines.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageAltText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardCardHeader) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardCardHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCardClickSuggestion: Card click which identifies
-// one suggestion provided by the app/bot.
-type AppsDynamiteSharedCardClickSuggestion struct {
-	// ActionId: Identify the button/action that created the suggestion. A
-	// simple example would be a card button within the stream, or the id
-	// which can identify a specific suggestion.
-	ActionId string `json:"actionId,omitempty"`
-
-	// SuggestionMessageId: The message_id for the message that was posted
-	// by the app/bot.
-	SuggestionMessageId *MessageId `json:"suggestionMessageId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardClickSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardClickSuggestion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCardSection: A section contains a collection of
-// widgets that are rendered vertically in the order that they are
-// specified. Across all platforms, cards have a narrow fixed width, so
-// there is currently no need for layout properties, for example, float.
-type AppsDynamiteSharedCardSection struct {
-	// Collapsible: Indicates whether this section is collapsible. If a
-	// section is collapsible, the description must be given.
-	Collapsible bool `json:"collapsible,omitempty"`
-
-	// Header: The header of the section. Formatted text is supported.
-	Header string `json:"header,omitempty"`
-
-	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
-	// example, when a section contains five widgets and the
-	// `numUncollapsibleWidget` is set to `2`, the first two widgets are
-	// always shown and the last three are collapsed as default. The
-	// `numUncollapsibleWidget` is taken into account only when collapsible
-	// is set to `true`.
-	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
-
-	// Widgets: A section must contain at least 1 widget.
-	Widgets []*AppsDynamiteSharedWidget `json:"widgets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Collapsible") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Collapsible") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardSection) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardSection
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedChatItem: Next Id: 5
-type AppsDynamiteSharedChatItem struct {
-	// ActivityInfo: Information needed to render the specific type of feed
-	// item.
-	ActivityInfo []*AppsDynamiteSharedChatItemActivityInfo `json:"activityInfo,omitempty"`
-
-	// GroupInfo: Only populated on read path and should not be persisted in
-	// storage.
-	GroupInfo *AppsDynamiteSharedChatItemGroupInfo `json:"groupInfo,omitempty"`
-
-	// MessageInfo: Additional information about the original chat message
-	// that isn't captured in the top-level message proto.
-	MessageInfo *AppsDynamiteSharedMessageInfo `json:"messageInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActivityInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActivityInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedChatItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedChatItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedChatItemActivityInfo struct {
-	FeedItemNudge *AppsDynamiteSharedChatItemActivityInfoFeedItemNudge `json:"feedItemNudge,omitempty"`
-
-	FeedItemReactions *AppsDynamiteSharedChatItemActivityInfoFeedItemReactions `json:"feedItemReactions,omitempty"`
-
-	FeedItemThreadReply *AppsDynamiteSharedChatItemActivityInfoFeedItemThreadReply `json:"feedItemThreadReply,omitempty"`
-
-	FeedItemUserMention *AppsDynamiteSharedChatItemActivityInfoFeedItemUserMention `json:"feedItemUserMention,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FeedItemNudge") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FeedItemNudge") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedChatItemActivityInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedChatItemActivityInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedChatItemActivityInfoFeedItemNudge: Existence of
-// this attribute indicates that the AF item is for a message nudge
-// item.
-type AppsDynamiteSharedChatItemActivityInfoFeedItemNudge struct {
-	// NudgeType: Nudge type of the nudge feed item.
-	//
-	// Possible values:
-	//   "UNDEFINED"
-	//   "REPLY" - The message receiver is nudged since the message may
-	// require a reply.
-	//   "FOLLOW_UP" - The message creator is nudged since the message may
-	// require a follow-up.
-	NudgeType string `json:"nudgeType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NudgeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NudgeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedChatItemActivityInfoFeedItemNudge) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedChatItemActivityInfoFeedItemNudge
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedChatItemActivityInfoFeedItemReactions: Existence of
-// this attribute indicates that the AF item is for message reactions,
-// but it is intentionally left empty since the list of reactions can be
-// found in the top-level Message.Reactions.
-type AppsDynamiteSharedChatItemActivityInfoFeedItemReactions struct {
-}
-
-// AppsDynamiteSharedChatItemActivityInfoFeedItemThreadReply: Existence
-// of this attribute indicates that the AF item is for thread reply.
-type AppsDynamiteSharedChatItemActivityInfoFeedItemThreadReply struct {
-	// ReplyType: Reply type of the thread reply feed item. The field is not
-	// persisted in storage. It's populated when constructing Activity Feed
-	// payload.
-	//
-	// Possible values:
-	//   "UNSPECIFIED"
-	//   "ROOT" - The thread reply feed item is for the root message poster.
-	//   "FOLLOWER" - The thread reply feed item is for a thread follower
-	// who's not the root message poster.
-	ReplyType string `json:"replyType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ReplyType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReplyType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedChatItemActivityInfoFeedItemThreadReply) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedChatItemActivityInfoFeedItemThreadReply
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedChatItemActivityInfoFeedItemUserMention: Existence
-// of this attribute indicates that the AF item is for a user mention
-// item.
-type AppsDynamiteSharedChatItemActivityInfoFeedItemUserMention struct {
-	// Type: User mention type
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Mention type not specified.
-	//   "DIRECT" - Mentioned directly by name.
-	//   "ALL" - Mentioned by @all.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedChatItemActivityInfoFeedItemUserMention) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedChatItemActivityInfoFeedItemUserMention
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedChatItemGroupInfo: Information about the space that
-// the item originated from. This will be used to display Activity Feed
-// items from rooms, and only contain the necessary information, such as
-// the space name and group attributes. NEXT TAG: 6
-type AppsDynamiteSharedChatItemGroupInfo struct {
-	// AttributeCheckerGroupType: This is needed to determine what type of
-	// group the source message came from to support click-to-source.
-	//
-	// Possible values:
-	//   "ATTRIBUTE_CHECKER_GROUP_TYPE_UNSPECIFIED" - LINT.IfChange
-	//   "ONE_TO_ONE_HUMAN_DM" - A 1:1 DM that has two human users.
-	// Deprecated. Use IMMUTABLE_MEMBERSHIP_HUMAN_DM instead.
-	//   "ONE_TO_ONE_BOT_DM" - A 1:1 DM between a human user and a bot.
-	//   "IMMUTABLE_MEMBERSHIP_GROUP_DM" - A group DM that has multiple
-	// human users with immutable group membership. Deprecated. Use
-	// IMMUTABLE_MEMBERSHIP_HUMAN_DM instead.
-	//   "FLAT_ROOM" - A flat room that contains a single thread.
-	//   "THREADED_ROOM" - A threaded room. Topics in this room are
-	// threaded, and users can reply to any topic.
-	//   "IMMUTABLE_MEMBERSHIP_HUMAN_DM" - A DM with immutable group
-	// membership. It can be a 1:1 DM or a group DM with multiple human
-	// users.
-	//   "POST_ROOM" - A post room. Topics in this room are organized in a
-	// post/reply style. See the design doc for more details:
-	// go/PostRoomsInDynamite. Deprecated. Post rooms are no longer
-	// supported.
-	//   "ACTIVITY_FEED" - Represents an Activity Feed space. These groups
-	// are modeled like flat rooms and contain items for users to catch up
-	// on important things. Each user should only have one group of this
-	// type. See go/activity-feed.
-	// LINT.ThenChange(//depot/google3/logs/proto/apps_dynamite/dynamite_visu
-	// al_element_entry.proto:LoggingGroupType,//depot/google3/java/com/googl
-	// e/apps/dynamite/v1/web/ui/group/groups.js:LoggingGroupType)
-	AttributeCheckerGroupType string `json:"attributeCheckerGroupType,omitempty"`
-
-	GroupName string `json:"groupName,omitempty"`
-
-	// GroupReadTimeUsec: Timestamp of when the group containing the message
-	// has been read by the user.
-	GroupReadTimeUsec int64 `json:"groupReadTimeUsec,omitempty,string"`
-
-	// InlineThreadingEnabled: Indicates whether the group has inline
-	// replies enabled. If enabled, clients will render the space with
-	// inline replies.
-	InlineThreadingEnabled bool `json:"inlineThreadingEnabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AttributeCheckerGroupType") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AttributeCheckerGroupType") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedChatItemGroupInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedChatItemGroupInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedColumns: Represents a Columns widget that displays
-// a single row of columns.
-type AppsDynamiteSharedColumns struct {
-	// ColumnItems: Each card supports up to 2 columns.
-	ColumnItems []*AppsDynamiteSharedColumnsColumn `json:"columnItems,omitempty"`
-
-	// WrapStyle: Controls how the column resizes based on screen width.
-	//
-	// Possible values:
-	//   "WRAP_STYLE_UNSPECIFIED" - Unspecified.
-	//   "NOWRAP" - Column widgets don't wrap.
-	//   "WRAP" - Column Widgets wrap.
-	WrapStyle string `json:"wrapStyle,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ColumnItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnItems") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedColumns) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedColumns
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedColumnsColumn: Represents a Column that consists of
-// widgets stacked vertically.
-type AppsDynamiteSharedColumnsColumn struct {
-	// HorizontalAlignment: The horizontal alignment of the column.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
-
-	// HorizontalSizeStyle: Specifies how the column content is sized
-	// horizontally.
-	//
-	// Possible values:
-	//   "HORIZONTAL_SIZE_STYLE_UNSPECIFIED" - Unspecified.
-	//   "FILL_AVAILABLE_SPACE" - Fills up the available horizontal width.
-	// Default value if unspecified.
-	//   "FILL_MINIMUM_SPACE" - Fills up the minimum horizontal width.
-	HorizontalSizeStyle string `json:"horizontalSizeStyle,omitempty"`
-
-	// VerticalAlignment: The vertical alignment of the column.
-	//
-	// Possible values:
-	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Unspecified.
-	//   "CENTER" - Aligns the widget in the center of the column. Default
-	// value if unspecified.
-	//   "TOP" - Aligns the widget at the top of the column.
-	//   "BOTTOM" - Aligns the widget at the bottom of the column.
-	VerticalAlignment string `json:"verticalAlignment,omitempty"`
-
-	// Widgets: LINT.ThenChange(//google/apps/card/v1/card.proto) Array of
-	// widgets included in the column.
-	Widgets []*AppsDynamiteSharedColumnsColumnWidgets `json:"widgets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HorizontalAlignment")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HorizontalAlignment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedColumnsColumn) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedColumnsColumn
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedColumnsColumnWidgets: LINT.IfChange The `column`
-// widget can contain these widgets.
-type AppsDynamiteSharedColumnsColumnWidgets struct {
-	// ButtonList: ButtonList widget.
-	ButtonList *AppsDynamiteSharedButtonList `json:"buttonList,omitempty"`
-
-	// DateTimePicker: DateTimePicker widget.
-	DateTimePicker *AppsDynamiteSharedDateTimePicker `json:"dateTimePicker,omitempty"`
-
-	// DecoratedText: DecoratedText widget.
-	DecoratedText *AppsDynamiteSharedDecoratedText `json:"decoratedText,omitempty"`
-
-	// Image: Image widget.
-	Image *AppsDynamiteSharedImage `json:"image,omitempty"`
-
-	// SelectionInput: SelectionInput widget.
-	SelectionInput *AppsDynamiteSharedSelectionInput `json:"selectionInput,omitempty"`
-
-	// TextInput: TextInput widget.
-	TextInput *AppsDynamiteSharedTextInput `json:"textInput,omitempty"`
-
-	// TextParagraph: Text paragraph widget.
-	TextParagraph *AppsDynamiteSharedTextParagraph `json:"textParagraph,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ButtonList") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ButtonList") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedColumnsColumnWidgets) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedColumnsColumnWidgets
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedContentReportType: Denotes a type of content report
-// a user can send.
-type AppsDynamiteSharedContentReportType struct {
-	// SystemViolation: Required. Google-defined system violation, covering
-	// the most common violations.
-	//
-	// Possible values:
-	//   "VIOLATION_UNSPECIFIED" - Default value if unset. Do not use
-	// directly. This value should not appear as a selectable violation
-	// during content reporting.
-	//   "HARASSMENT" - "Harassment, offensive, or rude behavior"
-	//   "DISCRIMINATION" - "Discrimination or harmful stereotypes against
-	// anyone, including protected groups"
-	//   "EXPLICIT_CONTENT" - "Explicit content that's graphic, violent, or
-	// otherwise inappropriate"
-	//   "SPAM" - "Spam"
-	//   "CONFIDENTIAL_INFORMATION" - "Confidential information"
-	//   "SENSITIVE_INFORMATION" - "Sensitive information"
-	//   "FRAUD" - Phishing, impersonation/misrepresentation, or deceiving
-	// other users into sharing information under false pretenses.
-	//   "MALWARE" - Malware, viruses, Trojan horses, corrupted files,
-	// destructive code, etc.
-	//   "ILLEGAL_ACTIVITIES" - Promoting, organizing, or engaging in
-	// illegal activities.
-	//   "OTHER" - "Something else"
-	SystemViolation string `json:"systemViolation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SystemViolation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SystemViolation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedContentReportType) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedContentReportType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCustomEmoji: Proto representation of a custom
-// emoji. May be used in both APIs and in Spanner, but certain fields
-// should be restricted to one or the other. See the per-field
-// documentation for details. NEXT_TAG: 14
-type AppsDynamiteSharedCustomEmoji struct {
-	// BlobId: ID for the underlying image data in Blobstore. This field
-	// should *only* be present in Spanner or within the server, but should
-	// not be exposed in public APIs.
-	BlobId string `json:"blobId,omitempty"`
-
-	// ContentType: Content type of the file used to upload the emoji. Used
-	// for takeout. Written to Spanner when the emoji is created.
-	ContentType string `json:"contentType,omitempty"`
-
-	// CreateTimeMicros: Time when the Emoji was created, in microseconds.
-	// This field may be present in Spanner, within the server, or in public
-	// APIs.
-	CreateTimeMicros int64 `json:"createTimeMicros,omitempty,string"`
-
-	// CreatorUserId: This field should *never* be persisted to Spanner.
-	CreatorUserId *UserId `json:"creatorUserId,omitempty"`
-
-	// DeleteTimeMicros: Time when the emoji was deleted, in microseconds.
-	// This field may be present in Spanner, within the server, or in public
-	// APIs. Only present if the emoji has been deleted.
-	DeleteTimeMicros int64 `json:"deleteTimeMicros,omitempty,string"`
-
-	// EphemeralUrl: Output only. A short-lived URL clients can use for
-	// directly accessing a custom emoji image. This field is intended for
-	// API consumption, and should *never* be persisted to Spanner.
-	EphemeralUrl string `json:"ephemeralUrl,omitempty"`
-
-	// OwnerCustomerId: This field should *never* be persisted to Spanner.
-	OwnerCustomerId *CustomerId `json:"ownerCustomerId,omitempty"`
-
-	// ReadToken: Opaque token that clients use to construct the URL for
-	// accessing the custom emoji’s image data. This field is intended for
-	// API consumption, and should *never* be persisted to Spanner.
-	ReadToken string `json:"readToken,omitempty"`
-
-	// Shortcode: User-provided, human-readable ID for the custom emoji.
-	// Users are expected to observe this field in the UI instead of the
-	// UUID. This shortcode should be unique within an organization, but has
-	// no global uniqueness guarantees, unlike the UUID. This field should
-	// *never* be persisted to Spanner.
-	Shortcode string `json:"shortcode,omitempty"`
-
-	// State: Snapshot of the current state of the emoji, which may differ
-	// from the source-of-truth in the CustomEmojis table. This field should
-	// *never* be persisted to Spanner.
-	//
-	// Possible values:
-	//   "EMOJI_STATE_UNSPECIFIED"
-	//   "EMOJI_ENABLED" - Emoji is visible and available to be used,
-	// subject to access control requirements.
-	//   "EMOJI_SYSTEM_DISABLED" - Emoji can no longer be used (e.g. due to
-	// a shortcode conflict), but is not removed from existing embeddings.
-	//   "EMOJI_HIDDEN" - Emoji is hidden from pickers, so new usages are
-	// not allowed, but is not removed from existing embeddings.
-	//   "EMOJI_DELETED" - Emoji is removed everywhere and is not available
-	// to end-users.
-	State string `json:"state,omitempty"`
-
-	UpdateTimeMicros int64 `json:"updateTimeMicros,omitempty,string"`
-
-	// Uuid: Unique key for a custom emoji resource. Required. This field is
-	// *always* populated.
-	Uuid string `json:"uuid,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BlobId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlobId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCustomEmoji) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCustomEmoji
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDateTimePicker: The widget that lets users to
-// specify a date and time.
-type AppsDynamiteSharedDateTimePicker struct {
-	// Label: The label for the field that displays to the user.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text input that's used in formInput, and
-	// uniquely identifies this input.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: Triggered when the user clicks Save or Clear from the
-	// date/time picker dialog. This is only triggered if the value changed
-	// as a result of the Save/Clear operation.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// TimezoneOffsetDate: The number representing the time zone offset from
-	// UTC, in minutes. If set, the `value_ms_epoch` is displayed in the
-	// specified time zone. If not set, it uses the user's time zone setting
-	// on the client side.
-	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
-
-	// Type: The type of the date/time picker.
-	//
-	// Possible values:
-	//   "DATE_AND_TIME" - The user can select a date and time.
-	//   "DATE_ONLY" - The user can only select a date.
-	//   "TIME_ONLY" - The user can only select a time.
-	Type string `json:"type,omitempty"`
-
-	// ValueMsEpoch: The value to display as the default value before user
-	// input or previous user input. It is represented in milliseconds
-	// (Epoch time). For `DATE_AND_TIME` type, the full epoch value is used.
-	// For `DATE_ONLY` type, only date of the epoch time is used. For
-	// `TIME_ONLY` type, only time of the epoch time is used. For example,
-	// you can set epoch time to `3 * 60 * 60 * 1000` to represent 3am.
-	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Label") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Label") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDateTimePicker) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDateTimePicker
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDecoratedText: A widget that displays text with
-// optional decorations such as a label above or below the text, an icon
-// in front of the text, a selection widget or a button after the text.
-type AppsDynamiteSharedDecoratedText struct {
-	// BottomLabel: The formatted text label that shows below the main text.
-	BottomLabel string `json:"bottomLabel,omitempty"`
-
-	// Button: A button that can be clicked to trigger an action.
-	Button *AppsDynamiteSharedButton `json:"button,omitempty"`
-
-	// EndIcon: An icon displayed after the text.
-	EndIcon *AppsDynamiteSharedIcon `json:"endIcon,omitempty"`
-
-	// Icon: Deprecated in favor of start_icon.
-	Icon *AppsDynamiteSharedIcon `json:"icon,omitempty"`
-
-	// OnClick: Only the top and bottom label and content region are
-	// clickable.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// StartIcon: The icon displayed in front of the text.
-	StartIcon *AppsDynamiteSharedIcon `json:"startIcon,omitempty"`
-
-	// SwitchControl: A switch widget can be clicked to change its state or
-	// trigger an action.
-	SwitchControl *AppsDynamiteSharedDecoratedTextSwitchControl `json:"switchControl,omitempty"`
-
-	// Text: Required. The main widget formatted text. See Text formatting
-	// for details.
-	Text string `json:"text,omitempty"`
-
-	// TopLabel: The formatted text label that shows above the main text.
-	TopLabel string `json:"topLabel,omitempty"`
-
-	// WrapText: The wrap text setting. If `true`, the text is wrapped and
-	// displayed in multiline. Otherwise, the text is truncated.
-	WrapText bool `json:"wrapText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BottomLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDecoratedText) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDecoratedText
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedDecoratedTextSwitchControl struct {
-	// ControlType: The control type, either switch or checkbox.
-	//
-	// Possible values:
-	//   "SWITCH"
-	//   "CHECKBOX" - Deprecated in favor of `CHECK_BOX`.
-	//   "CHECK_BOX"
-	ControlType string `json:"controlType,omitempty"`
-
-	// Name: The name of the switch widget that's used in formInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: The action when the switch state is changed.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// Selected: If the switch is selected.
-	Selected bool `json:"selected,omitempty"`
-
-	// Value: The value is what is passed back in the callback.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ControlType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ControlType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDecoratedTextSwitchControl) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDecoratedTextSwitchControl
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDimension: Dimension for the uploaded attachments.
-type AppsDynamiteSharedDimension struct {
-	Height int64 `json:"height,omitempty"`
-
-	Width int64 `json:"width,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Height") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Height") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDimension) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDimension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDivider: A divider that appears in between widgets.
-type AppsDynamiteSharedDivider struct {
-}
-
-// AppsDynamiteSharedDlpMetricsMetadata: LINT.IfChange
-type AppsDynamiteSharedDlpMetricsMetadata struct {
-	// DlpStatus: [required] Describes the DLP status of message send and
-	// attachment upload events.
-	//
-	// Possible values:
-	//   "DLP_STATUS_UNKNOWN"
-	//   "DLP_DISABLED" - Rule fetch and evaluation are skipped because DLP
-	// experiment is not enabled.
-	//   "DLP_ENABLED_NO_RULE_FETCH" - Rule fetch and evaluation are skipped
-	// because there is no rule to be fetched (e.g. message is sent from a
-	// consumer, or there is no message.)
-	//   "DLP_ENABLED_RULES_FETCHED_NO_RULES" - Rule fetch happened, but
-	// rule evalution is skipped because the fetch returned no rules.
-	//   "DLP_ENABLED_RULES_FETCHED_NO_APPLICABLE_RULES" - Rule fetch
-	// happened, but rule evaluation is skipped because none of the rules
-	// are applicable.
-	//   "DLP_ENABLED_RULES_FETCHED_AND_EVALUATED" - Rule fetch and
-	// evaluation were performed and completed successfully.
-	//   "DLP_ENABLED_SCAN_TIMEOUT" - DLP scan was attempted but timed out.
-	//   "DLP_ENABLED_SCAN_FAILED" - Generic DLP failure. This case covers
-	// any other errors/exceptions in the Chat backend that caused the DLP
-	// scan to fail.
-	DlpStatus string `json:"dlpStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DlpStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DlpStatus") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDlpMetricsMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDlpMetricsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDocument: Data for rendering a document.
-type AppsDynamiteSharedDocument struct {
-	// FileId: Unique file ID.
-	FileId string `json:"fileId,omitempty"`
-
-	// Justification: Justification to explain why this document is being
-	// suggested.
-	Justification *AppsDynamiteSharedJustification `json:"justification,omitempty"`
-
-	// LastModifiedTime: Time the document was last modified.
-	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
-
-	// MimeType: Used to determine which icon to render (e.g. docs, slides,
-	// sheets)
-	MimeType string `json:"mimeType,omitempty"`
-
-	// Title: Title of the document.
-	Title string `json:"title,omitempty"`
-
-	// Url: URL of the document.
+	// Url: [Optional] Url of the action.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FileId") to
+	// ForceSendFields is a list of field names (e.g. "Title") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3057,7 +535,7 @@ type AppsDynamiteSharedDocument struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FileId") to include in API
+	// NullFields is a list of field names (e.g. "Title") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3066,1971 +544,8 @@ type AppsDynamiteSharedDocument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppsDynamiteSharedDocument) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDocument
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedEmoji struct {
-	// CustomEmoji: A custom emoji.
-	CustomEmoji *AppsDynamiteSharedCustomEmoji `json:"customEmoji,omitempty"`
-
-	// Unicode: A basic emoji represented by a unicode string.
-	Unicode string `json:"unicode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomEmoji") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomEmoji") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedEmoji) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedEmoji
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedFindDocumentSuggestion: Data for a FindDocument
-// suggestion type.
-type AppsDynamiteSharedFindDocumentSuggestion struct {
-	// DocumentSuggestions: List of documents to render as suggestions.
-	DocumentSuggestions []*AppsDynamiteSharedDocument `json:"documentSuggestions,omitempty"`
-
-	// ShowActionButtons: Whether to show the action buttons in the card for
-	// the suggestions.
-	ShowActionButtons bool `json:"showActionButtons,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DocumentSuggestions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DocumentSuggestions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedFindDocumentSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedFindDocumentSuggestion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedGrid: Represents a Grid widget that displays items
-// in a configurable grid layout.
-type AppsDynamiteSharedGrid struct {
-	// BorderStyle: The border style to apply to each grid item.
-	BorderStyle *AppsDynamiteSharedBorderStyle `json:"borderStyle,omitempty"`
-
-	// ColumnCount: The number of columns to display in the grid. A default
-	// value is used if this field isn't specified, and that default value
-	// is different depending on where the grid is shown (dialog versus
-	// companion).
-	ColumnCount int64 `json:"columnCount,omitempty"`
-
-	// Items: The items to display in the grid.
-	Items []*AppsDynamiteSharedGridGridItem `json:"items,omitempty"`
-
-	// OnClick: This callback is reused by each individual grid item, but
-	// with the item's identifier and index in the items list added to the
-	// callback's parameters.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// Title: The text that displays in the grid header.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BorderStyle") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BorderStyle") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedGrid) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedGrid
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedGridGridItem: Represents a single item in the grid
-// layout.
-type AppsDynamiteSharedGridGridItem struct {
-	// Id: A user-specified identifier for this grid item. This identifier
-	// is returned in the parent Grid's onClick callback parameters.
-	Id string `json:"id,omitempty"`
-
-	// Image: The image that displays in the grid item.
-	Image *AppsDynamiteSharedImageComponent `json:"image,omitempty"`
-
-	// Layout: The layout to use for the grid item.
-	//
-	// Possible values:
-	//   "GRID_ITEM_LAYOUT_UNSPECIFIED" - No layout specified.
-	//   "TEXT_BELOW" - The title and subtitle are shown below the grid
-	// item's image.
-	//   "TEXT_ABOVE" - The title and subtitle are shown above the grid
-	// item's image.
-	Layout string `json:"layout,omitempty"`
-
-	// Subtitle: The grid item's subtitle.
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// TextAlignment: The horizontal alignment of the grid item's text.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	TextAlignment string `json:"textAlignment,omitempty"`
-
-	// Title: The grid item's title.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedGridGridItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedGridGridItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedGroupDetails: NEXT TAG: 3 A GroupDetails proto will
-// store the information pertaining to single Group.
-type AppsDynamiteSharedGroupDetails struct {
-	// Description: A simple text that describes the purpose of a single
-	// Group, the general theme of the topics to be posted and/or the
-	// denominator of the Group participants.
-	Description string `json:"description,omitempty"`
-
-	// Guidelines: A simple text describing the rules and expectations from
-	// members when participating in conversation.
-	Guidelines string `json:"guidelines,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedGroupDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedGroupDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedGroupVisibility struct {
-	// Possible values:
-	//   "UNKNOWN" - Do not use.
-	//   "PRIVATE" - Explicitly invited users may join the room.
-	//   "PUBLIC" - Anyone in the domain may join the room.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "State") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedGroupVisibility) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedGroupVisibility
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedIcon struct {
-	// AltText: The description of the icon, used for accessibility. The
-	// default value is provided if you don't specify one.
-	AltText string `json:"altText,omitempty"`
-
-	// IconUrl: The icon specified by a URL.
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// ImageType: The crop style applied to the image. In some cases,
-	// applying a `CIRCLE` crop causes the image to be drawn larger than a
-	// standard icon.
-	//
-	// Possible values:
-	//   "SQUARE" - Applies no cropping to the image.
-	//   "CIRCLE" - Applies a circular mask to the image.
-	ImageType string `json:"imageType,omitempty"`
-
-	// KnownIcon: The icon specified by the string name of a list of known
-	// icons
-	KnownIcon string `json:"knownIcon,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedIcon) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedIcon
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedImage: An image that is specified by a URL and can
-// have an onClick action.
-type AppsDynamiteSharedImage struct {
-	// AltText: The alternative text of this image, used for accessibility.
-	AltText string `json:"altText,omitempty"`
-
-	// ImageUrl: An image URL.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedImage) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedImageComponent struct {
-	// AltText: The accessibility label for the image.
-	AltText string `json:"altText,omitempty"`
-
-	// BorderStyle: The border style to apply to the image.
-	BorderStyle *AppsDynamiteSharedBorderStyle `json:"borderStyle,omitempty"`
-
-	// CropStyle: The crop style to apply to the image.
-	CropStyle *AppsDynamiteSharedImageCropStyle `json:"cropStyle,omitempty"`
-
-	// ImageUri: The image URL.
-	ImageUri string `json:"imageUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedImageComponent) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedImageComponent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedImageCropStyle: Represents the crop style applied
-// to an image.
-type AppsDynamiteSharedImageCropStyle struct {
-	// AspectRatio: The aspect ratio to use if the crop type is
-	// `RECTANGLE_CUSTOM`.
-	AspectRatio float64 `json:"aspectRatio,omitempty"`
-
-	// Type: The crop type.
-	//
-	// Possible values:
-	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified.
-	//   "SQUARE" - Applies a square crop.
-	//   "CIRCLE" - Applies a circular crop.
-	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
-	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
-	// ratio.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AspectRatio") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedImageCropStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedImageCropStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *AppsDynamiteSharedImageCropStyle) UnmarshalJSON(data []byte) error {
-	type NoMethod AppsDynamiteSharedImageCropStyle
-	var s1 struct {
-		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AspectRatio = float64(s1.AspectRatio)
-	return nil
-}
-
-// AppsDynamiteSharedJustification: Data for rendering a justification
-// for a document.
-type AppsDynamiteSharedJustification struct {
-	// ActionTime: Time the action took place.
-	ActionTime string `json:"actionTime,omitempty"`
-
-	// ActionType: Type of action performed on the document.
-	//
-	// Possible values:
-	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified action.
-	//   "COMMENTED" - Commented on document.
-	//   "CREATED" - Created document.
-	//   "EDITED" - Edited document.
-	//   "PRESENTED" - Presented document.
-	//   "SHARED" - Shared document.
-	//   "VIEWED" - Viewed document.
-	//   "COMMENT_RESOLVED" - Resolved comment on document.
-	//   "SENT" - Sent document over chat/email.
-	ActionType string `json:"actionType,omitempty"`
-
-	// DocumentOwner: Owner of the document.
-	DocumentOwner *AppsDynamiteSharedJustificationPerson `json:"documentOwner,omitempty"`
-
-	// Topics: Words or phrases from the user's query that describes the
-	// document content. (Ex: Users query is "Can you share the document
-	// about Bullseye?" the extracted topic would be "Bullseye").
-	Topics []string `json:"topics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedJustification) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedJustification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedJustificationPerson: Data for rendering a person
-// associated with a document.
-type AppsDynamiteSharedJustificationPerson struct {
-	// IsRecipient: Whether the person is the recipient of the suggestions.
-	IsRecipient bool `json:"isRecipient,omitempty"`
-
-	// User: Obfuscated user ID.
-	User *UserId `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsRecipient") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsRecipient") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedJustificationPerson) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedJustificationPerson
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedMeetMetadata: Metadata specific for a Meet call
-// that are required to generate call artifacts.
-type AppsDynamiteSharedMeetMetadata struct {
-	// MeetingCode: Required. A globally unique code (e.g. "cxv-zbgj-wzw")
-	// that points to a meeting space. Note: Meeting codes may be
-	// regenerated, which will cause old meeting codes to become invalid.
-	MeetingCode string `json:"meetingCode,omitempty"`
-
-	// MeetingUrl: Required. A URL, in the format
-	// "https://meet.google.com/*" (e.g.
-	// https://meet.google.com/cxv-zbgj-wzw), to identify and access the
-	// meeting space.
-	MeetingUrl string `json:"meetingUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MeetingCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MeetingCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedMeetMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedMeetMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedMessageInfo: Information that references a Dynamite
-// chat message. This is only used for Activity Feed messages.
-type AppsDynamiteSharedMessageInfo struct {
-	// MessageId: Id of the source chat message. This is kept here because
-	// the top-level message ID to refers the AF message ID.
-	MessageId *MessageId `json:"messageId,omitempty"`
-
-	// MessageType: The type of the source chat message.
-	//
-	// Possible values:
-	//   "MESSAGE_TYPE_UNSPECIFIED" - Default value where type is not
-	// specified.
-	//   "INLINE_REPLY" - The source chat message is a threaded reply to
-	// another message.
-	MessageType string `json:"messageType,omitempty"`
-
-	// TopicReadTimeUsec: Timestamp of when the topic containing the message
-	// has been read by the user. This is populated if the message
-	// references an inline reply, in which case the space may be marked as
-	// read but the topic still has unread messages.
-	TopicReadTimeUsec int64 `json:"topicReadTimeUsec,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "MessageId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MessageId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedMessageInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedMessageInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedMessageIntegrationPayload: The payload(restricted
-// to 1P applications) to be stored with a specific message.
-type AppsDynamiteSharedMessageIntegrationPayload struct {
-	// ProjectNumber: Pantheon project number used to identify the calling
-	// app.
-	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
-
-	TasksMessageIntegrationPayload *AppsDynamiteSharedTasksMessageIntegrationPayload `json:"tasksMessageIntegrationPayload,omitempty"`
-
-	// Type: An enum indicating which 1P application's payload this is. This
-	// field is required to add 1P payload.
-	//
-	// Possible values:
-	//   "PAYLOAD_TYPE_UNSPECIFIED"
-	//   "TASKS"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ProjectNumber") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ProjectNumber") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedMessageIntegrationPayload) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedMessageIntegrationPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedOnClick struct {
-	// Action: If specified, an action is triggered by this onClick.
-	Action *AppsDynamiteSharedAction `json:"action,omitempty"`
-
-	// OpenDynamicLinkAction: An add-on triggers this action when the action
-	// needs to open a link. This differs from the open_link above in that
-	// this needs to talk to server to get the link. Thus some preparation
-	// work is required for web client to do before the open link action
-	// response comes back.
-	OpenDynamicLinkAction *AppsDynamiteSharedAction `json:"openDynamicLinkAction,omitempty"`
-
-	// OpenLink: If specified, this onClick triggers an open link action.
-	OpenLink *AppsDynamiteSharedOpenLink `json:"openLink,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOnClick) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOnClick
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedOpenLink struct {
-	// AppUri: Represents the platform specific uri/intent to open on each
-	// client. For example: A companion_url will open in a companion window
-	// on the web. An iOS URL and android intent will open in the
-	// corresponding hosting apps. If these platform specific URLs can't be
-	// handled correctly, i.e. if the companion isn't supported on web and
-	// the hosting apps aren't available on the mobile platforms then the
-	// `uri` will open in a new browser window on all the platforms.
-	AppUri *AppsDynamiteSharedOpenLinkAppUri `json:"appUri,omitempty"`
-
-	// Possible values:
-	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes. Reloads the card after the child window closes. If used in
-	// conjunction with
-	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
-	// openas), the child window acts as a modal dialog and the main card is
-	// blocked until the child window closes.
-	//   "RELOAD"
-	OnClose string `json:"onClose,omitempty"`
-
-	// Possible values:
-	//   "FULL_SIZE" - The link opens as a full size window (if that's the
-	// frame used by the client.
-	//   "OVERLAY" - The link opens as an overlay, such as a pop-up.
-	OpenAs string `json:"openAs,omitempty"`
-
-	// Url: The URL to open.
-	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLink) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOpenLinkAppUri: Represents the platform specific
-// uri/intent to open for each client.
-type AppsDynamiteSharedOpenLinkAppUri struct {
-	// AndroidIntent: An intent object to be opened in the corresponding
-	// android hosting app.
-	AndroidIntent *AppsDynamiteSharedOpenLinkAppUriIntent `json:"androidIntent,omitempty"`
-
-	// CompanionUri: A companion uri string to be opened in the chat
-	// companion window. on the web.
-	CompanionUri string `json:"companionUri,omitempty"`
-
-	// IosUri: A uri string to be opened in the corresponding iOS hosting
-	// app.
-	IosUri string `json:"iosUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AndroidIntent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidIntent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLinkAppUri) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLinkAppUri
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOpenLinkAppUriIntent: Android intent.
-type AppsDynamiteSharedOpenLinkAppUriIntent struct {
-	// ExtraData: A list of extra data for the android intent. For example,
-	// for a calendar event edit intent, the event title information can be
-	// passed as extra data.
-	ExtraData []*AppsDynamiteSharedOpenLinkAppUriIntentExtraData `json:"extraData,omitempty"`
-
-	// IntentAction: An android intent action string for the {@link
-	// android.content.Intent} object. For example: for the view intent
-	// action type, a valid value will be
-	// android.content.Intent.ACTION_VIEW.
-	IntentAction string `json:"intentAction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ExtraData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExtraData") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLinkAppUriIntent) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLinkAppUriIntent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOpenLinkAppUriIntentExtraData: Extra data for an
-// android intent. Valid keys are defined in the hosting app contract.
-type AppsDynamiteSharedOpenLinkAppUriIntentExtraData struct {
-	// Key: A key for the intent extra data.
-	Key string `json:"key,omitempty"`
-
-	// Value: Value for the given extra data key.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLinkAppUriIntentExtraData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLinkAppUriIntentExtraData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOrganizationInfo: Contains info about the entity
-// that something is, or is owned by.
-type AppsDynamiteSharedOrganizationInfo struct {
-	ConsumerInfo *AppsDynamiteSharedOrganizationInfoConsumerInfo `json:"consumerInfo,omitempty"`
-
-	CustomerInfo *AppsDynamiteSharedOrganizationInfoCustomerInfo `json:"customerInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConsumerInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConsumerInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOrganizationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOrganizationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOrganizationInfoConsumerInfo: Intentionally empty.
-// Used to disambiguate consumer and customer use cases in oneof below.
-type AppsDynamiteSharedOrganizationInfoConsumerInfo struct {
-}
-
-type AppsDynamiteSharedOrganizationInfoCustomerInfo struct {
-	CustomerId *CustomerId `json:"customerId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOrganizationInfoCustomerInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOrganizationInfoCustomerInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOriginAppSuggestion: Stores the suggestion provided
-// by apps/bots.
-type AppsDynamiteSharedOriginAppSuggestion struct {
-	AppId *AppId `json:"appId,omitempty"`
-
-	CardClickSuggestion *AppsDynamiteSharedCardClickSuggestion `json:"cardClickSuggestion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOriginAppSuggestion) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOriginAppSuggestion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedPhoneNumber struct {
-	// Type: The phone number type, e.g., work, mobile, etc.
-	Type string `json:"type,omitempty"`
-
-	// Value: The actual phone number.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedPhoneNumber) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedPhoneNumber
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedReaction struct {
-	// Count: The total number of users who have reacted.
-	Count int64 `json:"count,omitempty"`
-
-	// CreateTimestamp: When the first emoji of this type was added.
-	CreateTimestamp int64 `json:"createTimestamp,omitempty,string"`
-
-	// CurrentUserParticipated: Whether the current user reacted using this
-	// emoji. Note: Unlike most properties of messages, this is different
-	// per-user.
-	CurrentUserParticipated bool `json:"currentUserParticipated,omitempty"`
-
-	Emoji *AppsDynamiteSharedEmoji `json:"emoji,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Count") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedReaction) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedReaction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedRetentionSettings: The settings of retention period
-// of a message or topic.
-type AppsDynamiteSharedRetentionSettings struct {
-	// ExpiryTimestamp: The timestamp after which the message/topic should
-	// be removed, in microseconds since the epoch, when state ==
-	// EPHEMERAL_ONE_DAY. The value should not be set in other cases.
-	ExpiryTimestamp int64 `json:"expiryTimestamp,omitempty,string"`
-
-	// State: The retention state.
-	//
-	// Possible values:
-	//   "UNKNOWN_RETENTION_STATE"
-	//   "PERMANENT" - The message/topic should be kept permanently.
-	//   "EPHEMERAL_ONE_DAY" - The message/topic should be kept with a
-	// 24-hour TTL.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ExpiryTimestamp") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExpiryTimestamp") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedRetentionSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedRetentionSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSegmentedMembershipCount: Contains info on
-// membership count for member types: HUMAN_USER, APP_USER &
-// ROSTER_MEMBER different states: INVITED, JOINED
-type AppsDynamiteSharedSegmentedMembershipCount struct {
-	// Possible values:
-	//   "MEMBER_TYPE_UNSPECIFIED" - default value
-	//   "HUMAN_USER" - member is a human user
-	//   "ROSTER_MEMBER" - member is a roster
-	MemberType string `json:"memberType,omitempty"`
-
-	// MembershipCount: count of members with given type and state
-	MembershipCount int64 `json:"membershipCount,omitempty"`
-
-	// Possible values:
-	//   "MEMBER_UNKNOWN" - Default state, do not use
-	//   "MEMBER_INVITED" - An invitation to the space has been sent
-	//   "MEMBER_JOINED" - User has joined the space
-	//   "MEMBER_NOT_A_MEMBER" - User is not a member
-	//   "MEMBER_FAILED" - This state should never be stored in Spanner. It
-	// is a state for responses to the clients to indicate that membership
-	// mutations have failed and the member is in its previous state.
-	MembershipState string `json:"membershipState,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MemberType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MemberType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSegmentedMembershipCount) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSegmentedMembershipCount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedSegmentedMembershipCounts struct {
-	Value []*AppsDynamiteSharedSegmentedMembershipCount `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSegmentedMembershipCounts) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSegmentedMembershipCounts
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSelectionInput: A widget that creates a UI item
-// (for example, a drop-down list) with options for users to select.
-type AppsDynamiteSharedSelectionInput struct {
-	Items []*AppsDynamiteSharedSelectionInputSelectionItem `json:"items,omitempty"`
-
-	// Label: The label displayed ahead of the switch control.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text input which is used in formInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: If specified, the form is submitted when the
-	// selection changes. If not specified, you must specify a separate
-	// button.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// Possible values:
-	//   "CHECK_BOX" - The selection type is a checkbox.
-	//   "RADIO_BUTTON" - The selection type is a radio button.
-	//   "SWITCH" - The selection type is a switch.
-	//   "DROPDOWN" - The selection type is a dropdown.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSelectionInput) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSelectionInput
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSelectionInputSelectionItem: The item in the switch
-// control. A radio button, at most one of the items is selected.
-type AppsDynamiteSharedSelectionInputSelectionItem struct {
-	// Selected: If more than one item is selected for `RADIO_BUTTON` and
-	// `DROPDOWN`, the first selected item is treated as selected and the
-	// ones after are ignored.
-	Selected bool `json:"selected,omitempty"`
-
-	// Text: The text to be displayed.
-	Text string `json:"text,omitempty"`
-
-	// Value: The value associated with this item. The client should use
-	// this as a form input value.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Selected") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Selected") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSelectionInputSelectionItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSelectionInputSelectionItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSpaceInfo: Defines the representation of a single
-// matching space.
-type AppsDynamiteSharedSpaceInfo struct {
-	AvatarInfo *AppsDynamiteSharedAvatarInfo `json:"avatarInfo,omitempty"`
-
-	AvatarUrl string `json:"avatarUrl,omitempty"`
-
-	Description string `json:"description,omitempty"`
-
-	GroupId *GroupId `json:"groupId,omitempty"`
-
-	// InviterEmail: The email address of the user that invited the calling
-	// user to the room, if available. This field will only be populated for
-	// direct invites, it will be empty if the user was indirectly invited
-	// to the group.
-	InviterEmail string `json:"inviterEmail,omitempty"`
-
-	// IsExternal: Whether this is a space that enables guest access
-	IsExternal bool `json:"isExternal,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	NumMembers int64 `json:"numMembers,omitempty"`
-
-	// UserMembershipState: searching user's membership state in this space
-	//
-	// Possible values:
-	//   "MEMBER_UNKNOWN" - Default state, do not use
-	//   "MEMBER_INVITED" - An invitation to the space has been sent
-	//   "MEMBER_JOINED" - User has joined the space
-	//   "MEMBER_NOT_A_MEMBER" - User is not a member
-	//   "MEMBER_FAILED" - This state should never be stored in Spanner. It
-	// is a state for responses to the clients to indicate that membership
-	// mutations have failed and the member is in its previous state.
-	UserMembershipState string `json:"userMembershipState,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvatarInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvatarInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSpaceInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSpaceInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSuggestions: A container wrapping elements
-// necessary for showing suggestion items used in text input
-// autocomplete.
-type AppsDynamiteSharedSuggestions struct {
-	// Items: A list of suggestions items which will be used in are used in
-	// autocomplete.
-	Items []*AppsDynamiteSharedSuggestionsSuggestionItem `json:"items,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSuggestions) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSuggestions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSuggestionsSuggestionItem: A suggestion item. Only
-// supports text for now.
-type AppsDynamiteSharedSuggestionsSuggestionItem struct {
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSuggestionsSuggestionItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSuggestionsSuggestionItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedTasksAnnotationData: This is the internal version
-// of the API proto at
-// google3/google/chat/v1/gsuite_message_integration.proto
-type AppsDynamiteSharedTasksAnnotationData struct {
-	AssigneeChange *AppsDynamiteSharedTasksAnnotationDataAssigneeChange `json:"assigneeChange,omitempty"`
-
-	CompletionChange *AppsDynamiteSharedTasksAnnotationDataCompletionChange `json:"completionChange,omitempty"`
-
-	Creation *AppsDynamiteSharedTasksAnnotationDataCreation `json:"creation,omitempty"`
-
-	DeletionChange *AppsDynamiteSharedTasksAnnotationDataDeletionChange `json:"deletionChange,omitempty"`
-
-	// TaskId: ID of task. Will be used to create deep links to Tasks.
-	TaskId string `json:"taskId,omitempty"`
-
-	// TaskProperties: Task properties after the update has been applied.
-	TaskProperties *AppsDynamiteSharedTasksAnnotationDataTaskProperties `json:"taskProperties,omitempty"`
-
-	UserDefinedMessage *AppsDynamiteSharedTasksAnnotationDataUserDefinedMessage `json:"userDefinedMessage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AssigneeChange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssigneeChange") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTasksAnnotationData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTasksAnnotationData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedTasksAnnotationDataAssigneeChange struct {
-	// OldAssignee: Obfuscated user ID of previous assignee. Not set if the
-	// task was originally not assigned.
-	OldAssignee *UserId `json:"oldAssignee,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OldAssignee") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OldAssignee") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTasksAnnotationDataAssigneeChange) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTasksAnnotationDataAssigneeChange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedTasksAnnotationDataCompletionChange struct {
-}
-
-type AppsDynamiteSharedTasksAnnotationDataCreation struct {
-}
-
-type AppsDynamiteSharedTasksAnnotationDataDeletionChange struct {
-}
-
-// AppsDynamiteSharedTasksAnnotationDataTaskProperties: All relevant
-// task properties for a Chat message.
-type AppsDynamiteSharedTasksAnnotationDataTaskProperties struct {
-	// Assignee: Obfuscated user ID of new assignee. Not set if the task
-	// doesn't have an assignee.
-	Assignee *UserId `json:"assignee,omitempty"`
-
-	// Completed: Whether the task is marked as completed.
-	Completed bool `json:"completed,omitempty"`
-
-	// Deleted: Whether the task is marked as deleted.
-	Deleted bool `json:"deleted,omitempty"`
-
-	// Description: The description of the task. If Task original
-	// description's length is greater than 1024, then Task BE sends the
-	// truncated description to Dynamite Integration Server.
-	Description string `json:"description,omitempty"`
-
-	// StartDate: Set if the task has a date but no time. Source of truth in
-	// Tasks BE: http://shortn/_wyT7eB4Ixv
-	StartDate *Date `json:"startDate,omitempty"`
-
-	// StartTime: Set if the task has both a date and a time. Source of
-	// truth in Tasks BE: http://shortn/_u6cr0F5ttE
-	StartTime string `json:"startTime,omitempty"`
-
-	// Title: The title of the task.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Assignee") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Assignee") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTasksAnnotationDataTaskProperties) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTasksAnnotationDataTaskProperties
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedTasksAnnotationDataUserDefinedMessage: Used for
-// task card attachments on custom user messages that should be kept as
-// is without generating an i18n event message, e.g. the user starts a
-// conversation from an existing task. IMPORTANT: please don't populate
-// this field yet as it could break existing flows until it's
-// implemented. See code at http://shortn/_CM74CdENMx used by
-// http://shortn/_5o85POJY8Q.
-type AppsDynamiteSharedTasksAnnotationDataUserDefinedMessage struct {
-}
-
-// AppsDynamiteSharedTasksMessageIntegrationPayload: A payload
-// containing Tasks metadata for rendering a live card. Currently not
-// used by the Tasks integration.
-type AppsDynamiteSharedTasksMessageIntegrationPayload struct {
-}
-
-// AppsDynamiteSharedTextInput: A text input is a UI item where users
-// can input text. A text input can also have an onChange action and
-// suggestions.
-type AppsDynamiteSharedTextInput struct {
-	// AutoCompleteAction: The refresh function that returns suggestions
-	// based on the user's input text. If the callback is not specified,
-	// autocomplete is done in client side based on the initial suggestion
-	// items.
-	AutoCompleteAction *AppsDynamiteSharedAction `json:"autoCompleteAction,omitempty"`
-
-	// HintText: The hint text.
-	HintText string `json:"hintText,omitempty"`
-
-	// InitialSuggestions: The initial suggestions made before any user
-	// input.
-	InitialSuggestions *AppsDynamiteSharedSuggestions `json:"initialSuggestions,omitempty"`
-
-	// Label: At least one of label and hintText must be specified.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text input which is used in formInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: The onChange action, for example, invoke a function.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// Type: The style of the text, for example, a single line or multiple
-	// lines.
-	//
-	// Possible values:
-	//   "SINGLE_LINE" - The text is put into a single line.
-	//   "MULTIPLE_LINE" - The text is put into multiple lines.
-	Type string `json:"type,omitempty"`
-
-	// Value: The default value when there is no input from the user.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AutoCompleteAction")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutoCompleteAction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTextInput) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTextInput
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedTextParagraph: A paragraph of text that supports
-// formatting. See Text formatting
-// (workspace/add-ons/concepts/widgets#text_formatting") for details.
-type AppsDynamiteSharedTextParagraph struct {
-	// Text: The text that's shown in the widget.
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTextParagraph) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTextParagraph
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedUserBlockRelationship: User-block relationship
-type AppsDynamiteSharedUserBlockRelationship struct {
-	HasBlockedRequester bool `json:"hasBlockedRequester,omitempty"`
-
-	IsBlockedByRequester bool `json:"isBlockedByRequester,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HasBlockedRequester")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HasBlockedRequester") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedUserBlockRelationship) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedUserBlockRelationship
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedVideoReference: Reference to a transcoded video
-// attachment.
-type AppsDynamiteSharedVideoReference struct {
-	// Format: Available transcode format. Value is defined in
-	// video/storage/proto/content_header.proto
-	Format []int64 `json:"format,omitempty"`
-
-	// Status: Transcode status
-	//
-	// Possible values:
-	//   "UNKNOWN_STATUS"
-	//   "SUCCESS"
-	//   "ERROR"
-	//   "NOT_APPLICABLE"
-	//   "THUMBNAIL_SUCCESS"
-	//   "GO_LIVE_SUCCESS"
-	Status string `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Format") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Format") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedVideoReference) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedVideoReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedWidget: A widget is a UI element that presents
-// texts, images, etc.
-type AppsDynamiteSharedWidget struct {
-	// ButtonList: A list of buttons. For example, the following JSON
-	// creates two buttons. The first is a filled text button and the second
-	// is an image button that opens a link: ``` "buttonList": { "buttons":
-	// [ "button": { "text": "Edit", "Color": { "Red": 255 "Green": 255
-	// "Blue": 255 } "disabled": true }, "button": { "icon": { "knownIcon":
-	// "INVITE" "altText": "check calendar" }, "onClick": { "openLink": {
-	// "url": "https://example.com/calendar" } } }, ] } ```
-	ButtonList *AppsDynamiteSharedButtonList `json:"buttonList,omitempty"`
-
-	// Columns: Displays a single row of columns with widgets stacked
-	// vertically in each column. For example, the following JSON creates a
-	// 2 column widget each containing a single item. ``` "columns": {
-	// "wrapStyle": "WRAP", "columnItems": [ { "horizontalSizeStyle":
-	// "FILL_AVAILABLE_SPACE", "horizontalAlignment": "CENTER",
-	// "verticalAlignment" : "CENTER", "widgets": [ { "textParagraph": {
-	// "text": "First column text paragraph", } } ] }, {
-	// "horizontalSizeStyle": "FILL_AVAILABLE_SPACE", "horizontalAlignment":
-	// "CENTER", "verticalAlignment" : "CENTER", "widgets": [ {
-	// "textParagraph": { "text": "Second column text paragraph", } } ] }, ]
-	// } } ```
-	Columns *AppsDynamiteSharedColumns `json:"columns,omitempty"`
-
-	// DateTimePicker: Displays a selection/input widget for date/time. For
-	// example, the following JSON creates a date/time picker for an
-	// appointment time: ``` "date_time_picker": { "name":
-	// "appointment_time", "label": "Book your appointment at:", "type":
-	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
-	// ```
-	DateTimePicker *AppsDynamiteSharedDateTimePicker `json:"dateTimePicker,omitempty"`
-
-	// DecoratedText: Displays a decorated text item in this widget. For
-	// example, the following JSON creates a decorated text widget showing
-	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
-	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
-	// "bottomLabel": "This is a new Email address!", "switchWidget": {
-	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
-	// "controlType": "ControlType.CHECKBOX" } } ```
-	DecoratedText *AppsDynamiteSharedDecoratedText `json:"decoratedText,omitempty"`
-
-	// Divider: Displays a divider. For example, the following JSON creates
-	// a divider: ``` "divider": { } ```
-	Divider *AppsDynamiteSharedDivider `json:"divider,omitempty"`
-
-	// Grid: Displays a grid with a collection of items. For example, the
-	// following JSON creates a 2 column grid with a single item: ```
-	// "grid": { "title": "A fine collection of items", "numColumns": 2,
-	// "borderStyle": { "type": "STROKE", "cornerRadius": 4.0 }, "items": [
-	// "image": { "imageUri": "https://www.example.com/image.png",
-	// "cropStyle": { "type": "SQUARE" }, "borderStyle": { "type": "STROKE"
-	// } }, "title": "An item", "textAlignment": "CENTER" ], "onClick": {
-	// "openLink": { "url":"https://www.example.com" } } } ```
-	Grid *AppsDynamiteSharedGrid `json:"grid,omitempty"`
-
-	// HorizontalAlignment: The horizontal alignment of this widget.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
-
-	// Image: Displays an image in this widget. For example, the following
-	// JSON creates an image with alternative text: ``` "image": {
-	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
-	// for Heba Salam" } ```
-	Image *AppsDynamiteSharedImage `json:"image,omitempty"`
-
-	// SelectionInput: Displays a switch control in this widget. For
-	// example, the following JSON creates a dropdown selection for size:
-	// ``` "switchControl": { "name": "size", "label": "Size" "type":
-	// "SelectionType.DROPDOWN", "items": [ { "text": "S", "value": "small",
-	// "selected": false }, { "text": "M", "value": "medium", "selected":
-	// true }, { "text": "L", "value": "large", "selected": false }, {
-	// "text": "XL", "value": "extra_large", "selected": false } ] } ```
-	SelectionInput *AppsDynamiteSharedSelectionInput `json:"selectionInput,omitempty"`
-
-	// TextInput: Displays a text input in this widget. For example, the
-	// following JSON creates a text input for mail address: ```
-	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
-	// } ``` As another example, the following JSON creates a text input for
-	// programming language with static suggestions: ``` "textInput": {
-	// "name": "preferred_programing_language", "label": "Preferred
-	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
-	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
-	// } ```
-	TextInput *AppsDynamiteSharedTextInput `json:"textInput,omitempty"`
-
-	// TextParagraph: Displays a text paragraph in this widget. For example,
-	// the following JSON creates a bolded text: ``` "textParagraph": {
-	// "text": " *bold text*" } ```
-	TextParagraph *AppsDynamiteSharedTextParagraph `json:"textParagraph,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ButtonList") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ButtonList") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedWidget) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedWidget
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteV1ApiCompatV1Action: Interactive objects inside a
-// message. Documentation: - https://api.slack.com/docs/message-buttons
-type AppsDynamiteV1ApiCompatV1Action struct {
-	// Confirm: Confirmation dialog config.
-	Confirm *AppsDynamiteV1ApiCompatV1ActionConfirm `json:"confirm,omitempty"`
-
-	// Name: Unique identifier for this action.
-	Name string `json:"name,omitempty"`
-
-	// Style: Button style ("default", "primary", or "danger").
-	Style string `json:"style,omitempty"`
-
-	// Text: User-facing label for the action.
-	Text string `json:"text,omitempty"`
-
-	// Type: Action type - currently only "button".
-	Type string `json:"type,omitempty"`
-
-	// Value: Payload for this action. Will be sent to the action handler
-	// along with name.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Confirm") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Confirm") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteV1ApiCompatV1Action) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteV1ApiCompatV1Action
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteV1ApiCompatV1ActionConfirm: Confirmation dialog config.
-type AppsDynamiteV1ApiCompatV1ActionConfirm struct {
-	// DismissText: "Cancel" button label.
-	DismissText string `json:"dismiss_text,omitempty"`
-
-	// OkText: "OK" button label.
-	OkText string `json:"ok_text,omitempty"`
-
-	// Text: Confirmation dialog body text.
-	Text string `json:"text,omitempty"`
-
-	// Title: Confirmation dialog title.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DismissText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DismissText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteV1ApiCompatV1ActionConfirm) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteV1ApiCompatV1ActionConfirm
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteV1ApiCompatV1Attachment: Richly formatted attachments.
-// Documentation: - https://api.slack.com/docs/message-attachments
-type AppsDynamiteV1ApiCompatV1Attachment struct {
-	// Actions: Array of actions (currently only buttons).
-	Actions []*AppsDynamiteV1ApiCompatV1Action `json:"actions,omitempty"`
-
-	// AttachmentType: Undocumented - used in interactive button examples.
-	// The only valid value appears to be "default".
-	AttachmentType string `json:"attachment_type,omitempty"`
-
-	// AuthorIcon: Avatar URL for the user.
-	AuthorIcon string `json:"author_icon,omitempty"`
-
-	// AuthorLink: URL that the user name should link to.
-	AuthorLink string `json:"author_link,omitempty"`
-
-	// AuthorName: User name to display as the author of the message.
-	AuthorName string `json:"author_name,omitempty"`
-
-	// CallbackId: Unique identifier for the collection of buttons within
-	// this attachment. Will be sent back to the action handler URL when a
-	// button is clicked.
-	CallbackId string `json:"callback_id,omitempty"`
-
-	// Color: A color "bar" to display to the left of the attachment.
-	Color string `json:"color,omitempty"`
-
-	// Fallback: Fallback plain-text string for clients that don't support
-	// attachments.
-	Fallback string `json:"fallback,omitempty"`
-
-	// Fields: Columns of text inside the attachment body.
-	Fields []*AppsDynamiteV1ApiCompatV1Field `json:"fields,omitempty"`
-
-	// Footer: A string displayed at the bottom of the attachment.
-	Footer string `json:"footer,omitempty"`
-
-	// FooterIcon: Avatar URL displayed to the left of the footer.
-	FooterIcon string `json:"footer_icon,omitempty"`
-
-	// ImageUrl: URL of an image to display in an image chip.
-	ImageUrl string `json:"image_url,omitempty"`
-
-	// MrkdwnIn: List of fields to apply formatting to.
-	MrkdwnIn []string `json:"mrkdwn_in,omitempty"`
-
-	// Pretext: A string to show above the attachment.
-	Pretext string `json:"pretext,omitempty"`
-
-	// Text: Main text.
-	Text string `json:"text,omitempty"`
-
-	// ThumbUrl: URL of a thumbnail image to display to the right of the
-	// attachment body.
-	ThumbUrl string `json:"thumb_url,omitempty"`
-
-	// Title: Title string of this attachment.
-	Title string `json:"title,omitempty"`
-
-	// TitleLink: URL that the title string should link to.
-	TitleLink string `json:"title_link,omitempty"`
-
-	// Ts: UNIX timestamp of the attachment.
-	Ts int64 `json:"ts,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Actions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Actions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteV1ApiCompatV1Attachment) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteV1ApiCompatV1Attachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteV1ApiCompatV1Field: A column of text in an attachment.
-// Documentation: - https://api.slack.com/docs/message-attachments
-type AppsDynamiteV1ApiCompatV1Field struct {
-	// Short: Whether the field can be shown side-by-side with another
-	// field.
-	Short bool `json:"short,omitempty"`
-
-	// Title: The heading text, shown in bold.
-	Title string `json:"title,omitempty"`
-
-	// Value: The text value of the field.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Short") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Short") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteV1ApiCompatV1Field) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteV1ApiCompatV1Field
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Attachment: Attachments that follow the message text.
-type Attachment struct {
-	// AddOnData: Revised version of Gmail AddOn attachment approved by API
-	// design review.
-	AddOnData *GoogleChatV1ContextualAddOnMarkup `json:"addOnData,omitempty"`
-
-	// AppId: The userId for the bot/app that created this data, to be used
-	// for attribution of attachments when the attachment was not created by
-	// the message sender.
-	AppId *UserId `json:"appId,omitempty"`
-
-	// AttachmentId: To identify an attachment within repeated in a message
-	AttachmentId string `json:"attachmentId,omitempty"`
-
-	// CardAddOnData: Card AddOn attachment with the possibility for
-	// specifying editable widgets.
-	CardAddOnData *AppsDynamiteSharedCard `json:"cardAddOnData,omitempty"`
-
-	// DeprecatedAddOnData: Deprecated version of Gmail AddOn attachment.
-	DeprecatedAddOnData *ContextualAddOnMarkup `json:"deprecatedAddOnData,omitempty"`
-
-	// SlackData: Slack attachment.
-	SlackData *AppsDynamiteV1ApiCompatV1Attachment `json:"slackData,omitempty"`
-
-	// SlackDataImageUrlHeight: The height of image url as fetched by fife.
-	// This field is asynchronously filled.
-	SlackDataImageUrlHeight int64 `json:"slackDataImageUrlHeight,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AddOnData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddOnData") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Attachment) MarshalJSON() ([]byte, error) {
-	type NoMethod Attachment
+func (s *Action) MarshalJSON() ([]byte, error) {
+	type NoMethod Action
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5079,74 +594,26 @@ func (s *AuditLoggingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuthorizedItemId: A combination of an identifier for a Drive resource
-// (e.g. file, folder, or drive) and any secrets needed to access it.
-// The secrets should never be logged, and this proto annotates those
-// secret fields to ensure that they are not. Clients are encouraged to
-// use this proto rather than defining their own, to ensure that secrets
-// are correctly annotated.
-type AuthorizedItemId struct {
-	// Id: Serialized ID of the Drive resource
-	Id string `json:"id,omitempty"`
+type BackgroundColoredText struct {
+	// BackgroundColor: [Optional] Color of the background. The text color
+	// can change depending on the selected background color, and the client
+	// does not have control over this. If missing, the background will be
+	// WHITE.
+	//
+	// Possible values:
+	//   "UNKNOWN_COLOR"
+	//   "WHITE"
+	//   "YELLOW"
+	//   "ORANGE"
+	//   "GREEN"
+	//   "BLUE"
+	//   "GREY"
+	BackgroundColor string `json:"backgroundColor,omitempty"`
 
-	// ResourceKey: Resource key of the Drive item. This field should be
-	// unset if, depending on the context, the item does not have a resource
-	// key, or if none was specified. This must never be logged.
-	ResourceKey string `json:"resourceKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AuthorizedItemId) MarshalJSON() ([]byte, error) {
-	type NoMethod AuthorizedItemId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AutoComplete struct {
-	Items []*AutoCompleteItem `json:"items,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AutoComplete) MarshalJSON() ([]byte, error) {
-	type NoMethod AutoComplete
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AutoCompleteItem struct {
+	// Text: [Required] The text to display.
 	Text string `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Text") to
+	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5154,58 +621,7 @@ type AutoCompleteItem struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AutoCompleteItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AutoCompleteItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BabelMessageProps: Container for Babel (Hangouts Classic) only
-// message properties. The properties here will not be consumed by
-// Dynamite clients. They are relevant only for Hangouts Classic.
-type BabelMessageProps struct {
-	// ClientGeneratedId: Babel clients locally generate this ID to dedupe
-	// against the async fanout.
-	ClientGeneratedId int64 `json:"clientGeneratedId,omitempty,string"`
-
-	// ContentExtension: Stores additional Babel-specific properties (such
-	// as event metadata).
-	ContentExtension *ChatContentExtension `json:"contentExtension,omitempty"`
-
-	// DeliveryMedium: Stores the delivery source of messages (such as phone
-	// number for SMS).
-	DeliveryMedium *DeliveryMedium `json:"deliveryMedium,omitempty"`
-
-	// EventId: Primary identifier used by Hangouts Classic for its events
-	// (messages).
-	EventId string `json:"eventId,omitempty"`
-
-	// MessageContent: Stores message segments (text content) and
-	// attachments (media URLs).
-	MessageContent *ChatConserverMessageContent `json:"messageContent,omitempty"`
-
-	// WasUpdatedByBackfill: Whether or not these message properties were
-	// backfilled by go/dinnertrain.
-	WasUpdatedByBackfill bool `json:"wasUpdatedByBackfill,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClientGeneratedId")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientGeneratedId") to
+	// NullFields is a list of field names (e.g. "BackgroundColor") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -5215,42 +631,8 @@ type BabelMessageProps struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BabelMessageProps) MarshalJSON() ([]byte, error) {
-	type NoMethod BabelMessageProps
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BabelPlaceholderMetadata: Annotation metadata for Babel-only items
-// that signals which type of placeholder message should be displayed in
-// Babel clients.
-type BabelPlaceholderMetadata struct {
-	DeleteMetadata *DeleteMetadata `json:"deleteMetadata,omitempty"`
-
-	EditMetadata *EditMetadata `json:"editMetadata,omitempty"`
-
-	HangoutVideoMetadata *HangoutVideoEventMetadata `json:"hangoutVideoMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeleteMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeleteMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BabelPlaceholderMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod BabelPlaceholderMetadata
+func (s *BackgroundColoredText) MarshalJSON() ([]byte, error) {
+	type NoMethod BackgroundColoredText
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5323,1042 +705,6 @@ func (s *BooleanPropertyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BorderStyle: Represents a complete border style that can be applied
-// to widgets.
-type BorderStyle struct {
-	// CornerRadius: The corner radius for the border.
-	CornerRadius int64 `json:"cornerRadius,omitempty"`
-
-	// StrokeColor: The colors to use when the type is STROKE.
-	StrokeColor string `json:"strokeColor,omitempty"`
-
-	// Type: The border type.
-	//
-	// Possible values:
-	//   "BORDER_TYPE_NOT_SET" - No value specified.
-	//   "NO_BORDER" - No border.
-	//   "STROKE" - Outline.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CornerRadius") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CornerRadius") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BorderStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod BorderStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BotInfo: Bot-specific profile information.
-type BotInfo struct {
-	// Possible values:
-	//   "UNSPECIFIED_STATUS"
-	//   "ALLOWED"
-	//   "ALL_APPS_DISABLED_BY_ADMIN" - For both ALL_APPS_DISABLED_BY_ADMIN
-	// and APP_NOT_ALLOWLISTED_BY_ADMIN, the app should still be visible in
-	// the catalog, but usage of the app will be disabled. Indicates that
-	// all apps have been disabled by the dasher admin.
-	//   "APP_NOT_ALLOWLISTED_BY_ADMIN" - Indicates that the customer is
-	// using allowlisting, but that the bot is not allowlisted.
-	AppAllowlistStatus string `json:"appAllowlistStatus,omitempty"`
-
-	// AppId: Identifier of the application associated with the bot.
-	AppId *AppId `json:"appId,omitempty"`
-
-	// BotAvatarUrl: URL for the avatar picture of the User in dynamite.
-	// This field should be populated if the request is
-	// FetchBotCategories/ListBotCatalogEntries
-	BotAvatarUrl string `json:"botAvatarUrl,omitempty"`
-
-	// BotName: Non-unique, user-defined display name of the Bot. This field
-	// should be populated if the request is
-	// FetchBotCategories/ListBotCatalogEntries.
-	BotName string `json:"botName,omitempty"`
-
-	// Description: Short description for the bot.
-	Description string `json:"description,omitempty"`
-
-	// DeveloperName: Name of bot developer.
-	DeveloperName string `json:"developerName,omitempty"`
-
-	// MarketPlaceBannerUrl: URL for the banner image in GSuite Market
-	// Place. The banner will be 220x140.
-	MarketPlaceBannerUrl string `json:"marketPlaceBannerUrl,omitempty"`
-
-	// Status: Indicates whether bot is enabled/disabled.
-	//
-	// Possible values:
-	//   "UNKNOWN_STATUS"
-	//   "ENABLED"
-	//   "DISABLED_BY_DEVELOPER" - Bot has been disabled by the bot
-	// developer. No one can @mention or interact with the bot.
-	Status string `json:"status,omitempty"`
-
-	// SupportHomeScreen: If the app supports a home screen.
-	SupportHomeScreen bool `json:"supportHomeScreen,omitempty"`
-
-	// SupportUrls: Urls with additional information related to the bot.
-	// This field should always be set even if all the fields within it are
-	// empty, so that it is convenient for clients to work with this field
-	// in javascript.
-	SupportUrls *SupportUrls `json:"supportUrls,omitempty"`
-
-	// SupportedUses: The supported uses are limited according to the user
-	// that made the request. If the user does not have permission to use
-	// the bot, the list will be empty. This could occur for non whitelisted
-	// bots in the catalog.
-	//
-	// Possible values:
-	//   "UNKNOWN"
-	//   "CAN_ADD_TO_DM"
-	//   "CAN_ADD_TO_ROOM"
-	//   "CAN_ADD_TO_HUMAN_DM"
-	SupportedUses []string `json:"supportedUses,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppAllowlistStatus")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppAllowlistStatus") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BotInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod BotInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BotResponse: Information about a bot response, branched from
-// shared/bot_response.proto without frontend User proto as we never
-// store it.
-type BotResponse struct {
-	BotId *UserId `json:"botId,omitempty"`
-
-	// Possible values:
-	//   "UNKNOWN_SETUP_TYPE"
-	//   "CONFIGURATION" - Bot requires configuration.
-	//   "AUTHENTICATION" - Bot requires authentication.
-	RequiredAction string `json:"requiredAction,omitempty"`
-
-	// Possible values:
-	//   "UNKNOWN_RESPONSE_TYPE"
-	//   "ERROR" - Bot fails to respond because of deadline_exceeded or
-	// failing to parse bot message.
-	//   "SETUP_REQUIRED" - Bot requires auth or config
-	//   "DISABLED_BY_ADMIN" - Bot fails to respond because it is disabled
-	// by domain admin
-	//   "DISABLED_BY_DEVELOPER" - Bot fails to respond because it is
-	// disabled by the bot's developer
-	//   "PRIVATE" - Message to bot should be permanently private.
-	ResponseType string `json:"responseType,omitempty"`
-
-	// SetupUrl: URL for setting up bot.
-	SetupUrl string `json:"setupUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BotId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BotId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BotResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod BotResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BroadcastAccess: Broadcast access information of a meeting space.
-type BroadcastAccess struct {
-	// AccessPolicy: The policy that controls the broadcast's viewer access.
-	//
-	// Possible values:
-	//   "BROADCASTING_ACCESS_POLICY_UNSPECIFIED" - Used only when broadcast
-	// is not enabled, or an unknown enum value is used.
-	//   "ORGANIZATION" - Only authenticated Google accounts belonging to
-	// the same organization as the meeting organizer can access the
-	// broadcast.
-	//   "PUBLIC" - Anyone with the broadcast view URL can access the
-	// broadcast.
-	AccessPolicy string `json:"accessPolicy,omitempty"`
-
-	// ViewUrl: A URL that can be used to access the broadcast of the
-	// meeting. This field will be empty if broadcast is not enabled. It
-	// will be populated by the backend. Clients cannot modify the value.
-	ViewUrl string `json:"viewUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessPolicy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessPolicy") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BroadcastAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod BroadcastAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BroadcastSessionInfo: Information about a broadcast session.
-type BroadcastSessionInfo struct {
-	// BroadcastSessionId: A unique server-generated ID for the broadcast
-	// session.
-	BroadcastSessionId string `json:"broadcastSessionId,omitempty"`
-
-	// BroadcastStats: Output only. Current broadcast session's statistics.
-	BroadcastStats *BroadcastStats `json:"broadcastStats,omitempty"`
-
-	// IngestionId: Input only. Deprecated field, should not be used.
-	IngestionId string `json:"ingestionId,omitempty"`
-
-	// SessionStateInfo: Broadcast session's state information.
-	SessionStateInfo *SessionStateInfo `json:"sessionStateInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BroadcastSessionId")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BroadcastSessionId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BroadcastSessionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod BroadcastSessionInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BroadcastStats: Statistics of the broadcast session.
-type BroadcastStats struct {
-	// EstimatedViewerCount: Estimated concurrent viewer count.
-	EstimatedViewerCount int64 `json:"estimatedViewerCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EstimatedViewerCount") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EstimatedViewerCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BroadcastStats) MarshalJSON() ([]byte, error) {
-	type NoMethod BroadcastStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Button struct {
-	ImageButton *ImageButton `json:"imageButton,omitempty"`
-
-	TextButton *TextButton `json:"textButton,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageButton") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageButton") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Button) MarshalJSON() ([]byte, error) {
-	type NoMethod Button
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CallInfo: Contains information regarding an ongoing conference (aka
-// call) for a meeting space.
-type CallInfo struct {
-	// AbuseReportingConfig: Abuse reporting configuration for the ongoing
-	// conference.
-	AbuseReportingConfig *AbuseReportingConfig `json:"abuseReportingConfig,omitempty"`
-
-	// ArtifactOwner: Output only. Display name of the owner of artifacts
-	// generated in this conference. The expected use of this in clients is
-	// to present info like "This recording will be sent to John Doe's
-	// Drive". This field can be empty if preferred display name
-	// determination fails for any reason.
-	ArtifactOwner *UserDisplayInfo `json:"artifactOwner,omitempty"`
-
-	// AttachedDocuments: Output only. Documents attached to an ongoing
-	// conference.
-	AttachedDocuments []*DocumentInfo `json:"attachedDocuments,omitempty"`
-
-	// AvailableReactions: Output only. The set of reactions that clients
-	// are allowed to send and can expect to receive. Note that a device in
-	// the conference should have the MAY_SEND_REACTIONS privilege to be
-	// able to send reactions.
-	AvailableReactions []*ReactionInfo `json:"availableReactions,omitempty"`
-
-	// BroadcastSessionInfo: Information about active broadcast session in
-	// the ongoing conference.
-	BroadcastSessionInfo *BroadcastSessionInfo `json:"broadcastSessionInfo,omitempty"`
-
-	// CalendarEventId: Output only. The calendar event ID of a Google
-	// Calendar event that the meeting space is associated with. If the
-	// meeting space is not associated with an event in Google Calendar,
-	// this field is empty. For recurring events, it refers to the recurring
-	// instance associated with the current call, as determined by the
-	// server.
-	CalendarEventId string `json:"calendarEventId,omitempty"`
-
-	// ChatConfig: Configuration for the chat for this conference.
-	ChatConfig *ChatConfig `json:"chatConfig,omitempty"`
-
-	// CoActivity: The current co-activity session, or unset if there is
-	// none in progress. A co-activity session can be initiated by devices
-	// in JOINED state . Initiator of the co-activity is expected to
-	// populate this field to start the session. Once clients detect that
-	// the co-activity has finished, any JOINED device can clear this field
-	// to end the co-activity session. In the case of switching activities,
-	// the initiator of the new activity merely needs to override this with
-	// the new co-activity data, and all connected clients are expected to
-	// handle the transition gracefully.
-	CoActivity *CoActivity `json:"coActivity,omitempty"`
-
-	// Collaboration: The current collaboration session, or unset if no
-	// collaboration is in progress.
-	Collaboration *Collaboration `json:"collaboration,omitempty"`
-
-	// CseInfo: CSE information for the ongoing conference.
-	CseInfo *CseInfo `json:"cseInfo,omitempty"`
-
-	// MaxJoinedDevices: Output only. The maximum number of devices that may
-	// be in the joined state simultaneously in this conference. This can be
-	// used by clients to guess whether it will be possible to join, but the
-	// only way to know is to try to join. It can also be used to inform
-	// users about the limit that is in effect. This limit is normally set
-	// when the conference is created and not changed during the lifetime of
-	// the conference. But there are some cases where it may change, so
-	// clients should be aware that the information may be stale.
-	MaxJoinedDevices int64 `json:"maxJoinedDevices,omitempty"`
-
-	// MediaBackendInfo: Output only. Information about the media backend
-	// for the currently ongoing conference in the meeting space. The media
-	// backend information will only be filled in for clients that are
-	// supposed to present the information. The information should be
-	// displayed in a debug panel and is only intended for internal
-	// debugging purposes. If the string is empty nothing should be
-	// displayed about the media backend.
-	MediaBackendInfo string `json:"mediaBackendInfo,omitempty"`
-
-	// OrganizationName: Output only. The name or description of the
-	// organization or domain that the organizer belongs to. The expected
-	// use of this in clients is to present messages like "John Doe (outside
-	// of Google.com) is trying to join this call", where "Google.com" is
-	// the organization name. The field will be empty if the organization
-	// name could not be determined, possibly because of a backend error.
-	OrganizationName string `json:"organizationName,omitempty"`
-
-	// PaygateInfo: Paygate information to clients.
-	PaygateInfo *PaygateInfo `json:"paygateInfo,omitempty"`
-
-	// Presenter: The current presenter in the call, or unset if there is no
-	// current presenter. Clients can set this to change the presenter.
-	Presenter *Presenter `json:"presenter,omitempty"`
-
-	// RecordingInfo: Deprecated, use RecordingSessionInfo instead. Info
-	// about recording for this conference. This will always be set in
-	// server responses, with a valid recording status. This is superseded
-	// by streaming_sessions field, which contains the same information
-	// about this recording as well as additional information about other
-	// application type at the same time. This will be deprecated and
-	// removed at some point.
-	RecordingInfo *RecordingInfo `json:"recordingInfo,omitempty"`
-
-	// RecordingSessionInfo: Information about active recording session in
-	// the ongoing conference.
-	RecordingSessionInfo *RecordingSessionInfo `json:"recordingSessionInfo,omitempty"`
-
-	// Settings: Settings of the ongoing conference.
-	Settings *CallSettings `json:"settings,omitempty"`
-
-	// StreamingSessions: Output only. Info about streaming sessions
-	// (recording or broadcast) for this conference. This should contain all
-	// active sessions. Currently, it's guaranteed to have at most one
-	// recording and at most one broadcast (at most two sessions in total).
-	// For each application type (recording or broadcast), latest inactive
-	// session is included if there's no active one.
-	StreamingSessions []*StreamingSessionInfo `json:"streamingSessions,omitempty"`
-
-	// TranscriptionSessionInfo: Information about active transcription
-	// session in the ongoing conference.
-	TranscriptionSessionInfo *TranscriptionSessionInfo `json:"transcriptionSessionInfo,omitempty"`
-
-	// ViewerCount: The number of devices viewing the conference -
-	// MeetingDevices that are in VIEWER role and JOINED state in the
-	// conference.
-	ViewerCount int64 `json:"viewerCount,omitempty"`
-
-	// YouTubeBroadcastSessionInfos: Information about active YouTube
-	// broadcast sessions in the ongoing conference.
-	YouTubeBroadcastSessionInfos []*YouTubeBroadcastSessionInfo `json:"youTubeBroadcastSessionInfos,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AbuseReportingConfig") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AbuseReportingConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CallInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod CallInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CallSettings: Effective settings of the ongoing conference.
-type CallSettings struct {
-	// AccessLock: Indicates whether the access lock is currently on or off.
-	AccessLock bool `json:"accessLock,omitempty"`
-
-	// AttendanceReportEnabled: Indicates whether the attendance report is
-	// currently enabled or disabled.
-	AttendanceReportEnabled bool `json:"attendanceReportEnabled,omitempty"`
-
-	// AudioLock: Indicates whether the audio lock is currently on or off.
-	AudioLock bool `json:"audioLock,omitempty"`
-
-	// ChatLock: Indicates whether the chat lock is currently on or off.
-	ChatLock bool `json:"chatLock,omitempty"`
-
-	// CseEnabled: Whether Client-side Encryption is enabled for this
-	// conference.
-	CseEnabled bool `json:"cseEnabled,omitempty"`
-
-	// ModerationEnabled: Indicates whether the current call is moderated.
-	ModerationEnabled bool `json:"moderationEnabled,omitempty"`
-
-	// PresentLock: Indicates whether the present lock is currently on or
-	// off.
-	PresentLock bool `json:"presentLock,omitempty"`
-
-	// ProjectDinoEnabled: Indicates whether project Dino is currently on or
-	// off. WARNING: This is currently an experimental field. It should not
-	// be used without getting an explicit review and approval from the Meet
-	// team.
-	ProjectDinoEnabled bool `json:"projectDinoEnabled,omitempty"`
-
-	// ReactionsLock: Indicates whether the reactions lock is currently on
-	// or off.
-	ReactionsLock bool `json:"reactionsLock,omitempty"`
-
-	// VideoLock: Indicates whether the video lock is currently on or off.
-	VideoLock bool `json:"videoLock,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessLock") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessLock") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CallSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod CallSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CapTokenHolderProto: Represents a principal which possesses a
-// particular secret string whose cryptographic hash is specified here.
-// CapTokens ("Capability Tokens") are used in ACLProto. It's expected
-// that ACLs with CapTokenHolders will strongly enforce them by
-// Keystore-wrapping crypto keys for the corresponding CapTokens.
-type CapTokenHolderProto struct {
-	// TokenHmacSha1Prefix: The hash of the corresponding capability token.
-	// The value is defined to be identical to the one in acl.proto's
-	// CapTokenMetadata: 10-byte prefix of HMAC-SHA1 of the token. The HMAC
-	// key is the following fixed (non-secret) 512-bit value: 79b1c8f4
-	// 82baf523 b8a9ab4a e960f438 c45be041 11f1f222 e8a3f64d aeb05e3d
-	// c3576acc ec649194 aede422c 4e48e0d1 ff21234a a6ed6b49 a7fa592e
-	// efd7bba3
-	TokenHmacSha1Prefix string `json:"tokenHmacSha1Prefix,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TokenHmacSha1Prefix")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TokenHmacSha1Prefix") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CapTokenHolderProto) MarshalJSON() ([]byte, error) {
-	type NoMethod CapTokenHolderProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Card struct {
-	CardActions []*CardAction `json:"cardActions,omitempty"`
-
-	// Possible values:
-	//   "DISPLAY_STYLE_UNSPECIFIED"
-	//   "PEEK"
-	//   "REPLACE"
-	DisplayStyle string `json:"displayStyle,omitempty"`
-
-	FixedFooter *FixedFooter `json:"fixedFooter,omitempty"`
-
-	Header *CardHeader `json:"header,omitempty"`
-
-	// Name: Name of the card used in CardNavigation.pop_to_card_name.
-	Name string `json:"name,omitempty"`
-
-	// PeekCardHeader: When displaying contextual content, the peek card
-	// header acts as a placeholder so that the user can navigate forward
-	// between the homepage cards and the contextual cards.
-	PeekCardHeader *CardHeader `json:"peekCardHeader,omitempty"`
-
-	Sections []*Section `json:"sections,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CardActions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CardActions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Card) MarshalJSON() ([]byte, error) {
-	type NoMethod Card
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CardAction: When an AddOn Card is shown in detailed view, a card
-// action is the action associated with the card. For an invoice card, a
-// typical action would be: delete invoice, email invoice or open the
-// invoice in browser.
-type CardAction struct {
-	// ActionLabel: The label used to be displayed in the action menu item.
-	ActionLabel string `json:"actionLabel,omitempty"`
-
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CardAction) MarshalJSON() ([]byte, error) {
-	type NoMethod CardAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type CardCapabilityMetadata struct {
-	// RequiredCapabilities: NEXT TAG : 2
-	//
-	// Possible values:
-	//   "UNKNOWN"
-	//   "SUPPORTS_BASE_CARDS" - NEXT TAG : 2
-	RequiredCapabilities []string `json:"requiredCapabilities,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RequiredCapabilities") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequiredCapabilities") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CardCapabilityMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod CardCapabilityMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type CardHeader struct {
-	// ImageAltText: The alternative text of this image which will be used
-	// for accessibility.
-	ImageAltText string `json:"imageAltText,omitempty"`
-
-	// Possible values:
-	//   "CROP_TYPE_NOT_SET" - No value specified.
-	//   "SQUARE" - Applies a square crop.
-	//   "CIRCLE" - Applies a circular crop.
-	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
-	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
-	// ratio.
-	ImageStyle string `json:"imageStyle,omitempty"`
-
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// Title: The title must be specified. The header has a fixed height: if
-	// both a title and subtitle is specified, each will take up 1 line. If
-	// only the title is specified, it will take up both lines. The header
-	// is rendered in collapsed and detailed view.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageAltText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CardHeader) MarshalJSON() ([]byte, error) {
-	type NoMethod CardHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatConfig: Configuration of the in meeting chat.
-type ChatConfig struct {
-	// ChatType: The Type of chat this Conference is currently using.
-	//
-	// Possible values:
-	//   "CHAT_TYPE_UNSPECIFIED" - Chat Type has not been specified.
-	//   "MEET_CHAT" - Meets native chat.
-	//   "GOOGLE_CHAT" - Google Chat.
-	ChatType string `json:"chatType,omitempty"`
-
-	// GoogleChatConfig: The configuration of Google Chat when selected.
-	GoogleChatConfig *GoogleChatConfig `json:"googleChatConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChatType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChatType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatConserverDynamitePlaceholderMetadata: Metadata used as inputs to
-// the localization that is performed on Dynamite-originated messages
-// that are incompatible with Hangouts clients. See
-// go/localization-of-system-messages for more details.
-type ChatConserverDynamitePlaceholderMetadata struct {
-	AttachmentMetadata *ChatConserverDynamitePlaceholderMetadataAttachmentMetadata `json:"attachmentMetadata,omitempty"`
-
-	BotMessageMetadata *ChatConserverDynamitePlaceholderMetadataBotMessageMetadata `json:"botMessageMetadata,omitempty"`
-
-	CalendarEventMetadata *ChatConserverDynamitePlaceholderMetadataCalendarEventMetadata `json:"calendarEventMetadata,omitempty"`
-
-	DeleteMetadata *ChatConserverDynamitePlaceholderMetadataDeleteMetadata `json:"deleteMetadata,omitempty"`
-
-	EditMetadata *ChatConserverDynamitePlaceholderMetadataEditMetadata `json:"editMetadata,omitempty"`
-
-	// SpaceUrl: The space URL embedded in the localized string.
-	SpaceUrl string `json:"spaceUrl,omitempty"`
-
-	TasksMetadata *ChatConserverDynamitePlaceholderMetadataTasksMetadata `json:"tasksMetadata,omitempty"`
-
-	VideoCallMetadata *ChatConserverDynamitePlaceholderMetadataVideoCallMetadata `json:"videoCallMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AttachmentMetadata")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttachmentMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatConserverDynamitePlaceholderMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatConserverDynamitePlaceholderMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatConserverDynamitePlaceholderMetadataAttachmentMetadata: An
-// attachment uploaded in Dynamite and its filename.
-type ChatConserverDynamitePlaceholderMetadataAttachmentMetadata struct {
-	Filename string `json:"filename,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filename") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Filename") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatConserverDynamitePlaceholderMetadataAttachmentMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatConserverDynamitePlaceholderMetadataAttachmentMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatConserverDynamitePlaceholderMetadataBotMessageMetadata: A bot
-// sent a message in Dynamite.
-type ChatConserverDynamitePlaceholderMetadataBotMessageMetadata struct {
-}
-
-// ChatConserverDynamitePlaceholderMetadataCalendarEventMetadata: A
-// Calendar event message in Dynamite.
-type ChatConserverDynamitePlaceholderMetadataCalendarEventMetadata struct {
-}
-
-// ChatConserverDynamitePlaceholderMetadataDeleteMetadata: A message was
-// deleted in Dynamite.
-type ChatConserverDynamitePlaceholderMetadataDeleteMetadata struct {
-}
-
-// ChatConserverDynamitePlaceholderMetadataEditMetadata: An edit was
-// made in Dynamite.
-type ChatConserverDynamitePlaceholderMetadataEditMetadata struct {
-}
-
-// ChatConserverDynamitePlaceholderMetadataTasksMetadata: A Tasks
-// message in Dynamite.
-type ChatConserverDynamitePlaceholderMetadataTasksMetadata struct {
-}
-
-// ChatConserverDynamitePlaceholderMetadataVideoCallMetadata: A Meet
-// initiated in Dynamite and its URL.
-type ChatConserverDynamitePlaceholderMetadataVideoCallMetadata struct {
-	MeetingUrl string `json:"meetingUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MeetingUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MeetingUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatConserverDynamitePlaceholderMetadataVideoCallMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatConserverDynamitePlaceholderMetadataVideoCallMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatConserverMessageContent: The content of a chat message, which
-// includes 0 or more segments along with 0 or more embeds, which
-// represent various attachment types (like photos).
-type ChatConserverMessageContent struct {
-	// Attachment: Items attached to this message, such as photos. This
-	// should *NOT* be set by clients. It will be automatically set from
-	// media uploaded along with this request and using the information
-	// provided in existing_media.
-	Attachment []*SocialCommonAttachmentAttachment `json:"attachment,omitempty"`
-
-	// Segment: The text part of the message content. Segments are
-	// concatenated together to yield the full message. A message can have
-	// zero or more segments.
-	Segment []*Segment `json:"segment,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Attachment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatConserverMessageContent) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatConserverMessageContent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatContentExtension: NEXT ID: 12
-type ChatContentExtension struct {
-	// Annotation: Annotations to decorate this event.
-	Annotation []*EventAnnotation `json:"annotation,omitempty"`
-
-	// DynamitePlaceholderMetadata: This metadata informs how the
-	// placeholder string will be localized dynamically in Hangouts. See
-	// go/localization-of-system-messages. This is only used as part of
-	// REGULAR_CHAT_MESSAGE events.
-	DynamitePlaceholderMetadata *ChatConserverDynamitePlaceholderMetadata `json:"dynamitePlaceholderMetadata,omitempty"`
-
-	// EventOtrStatus: Is this event OnTR or OffTR? Since some events can be
-	// ON_THE_RECORD and have an expiration_timestamp (for example
-	// enterprise retention users) we need to store the otr status.
-	//
-	// Possible values:
-	//   "OFF_THE_RECORD" - The conversation is completely off the record.
-	//   "ON_THE_RECORD" - The conversation is completely on the record.
-	EventOtrStatus string `json:"eventOtrStatus,omitempty"`
-
-	// GroupLinkSharingModificationEvent: Group-link sharing toggle event.
-	GroupLinkSharingModificationEvent *GroupLinkSharingModificationEvent `json:"groupLinkSharingModificationEvent,omitempty"`
-
-	// HangoutEvent: Audio/video Hangout event.
-	HangoutEvent *HangoutEvent `json:"hangoutEvent,omitempty"`
-
-	// InviteAcceptedEvent: Invite accepted events. Note: this is only used
-	// ephemerally to sync to Gmail. No actual cent is stored in Papyrus.
-	InviteAcceptedEvent *InviteAcceptedEvent `json:"inviteAcceptedEvent,omitempty"`
-
-	// MembershipChangeEvent: Join/leave events.
-	MembershipChangeEvent *MembershipChangeEvent `json:"membershipChangeEvent,omitempty"`
-
-	// OtrChatMessageEvent: Metadata for off-the-record message.
-	OtrChatMessageEvent *OtrChatMessageEvent `json:"otrChatMessageEvent,omitempty"`
-
-	OtrModificationEvent *OtrModificationEvent `json:"otrModificationEvent,omitempty"`
-
-	RenameEvent *RenameEvent `json:"renameEvent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Annotation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Annotation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatContentExtension) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatContentExtension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ChatProto: Represents the invitees or other users associated with a
-// Babel Chat (see http://goto/babel). Corresponds to GroupType CHAT in
-// //social/graph/storage/proto/data.proto.
-type ChatProto struct {
-	// ChatId: Chat IDs consist of alphanumeric characters and colons.
-	// Currently required.
-	ChatId string `json:"chatId,omitempty"`
-
-	// MemberType: The type of Chat members to consider, e.g. "all members"
-	// vs. "invitee" These are defined by legacy_relation_id values in
-	// social.graph.storage.EdgeTypeEnum.EdgeType enum options in
-	// social/graph/storage/proto/id.proto. See chat.pb (defined in
-	// production/config/cdd/socialgraph/mixer_config/prod/node_type_config)
-	// for all valid edge types associated with chat. Currently required.
-	MemberType int64 `json:"memberType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChatId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChatId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChatProto) MarshalJSON() ([]byte, error) {
-	type NoMethod ChatProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type CheckAccessResponse struct {
 	// HasAccess: Returns true if principal has access. Returns false
 	// otherwise.
@@ -6387,320 +733,6 @@ type CheckAccessResponse struct {
 
 func (s *CheckAccessResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckAccessResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CircleProto: Represents a Google+ Circle. Currently (12/2011), a
-// Circle is identical to the ContactGroup with matching parameters, but
-// Circle must only be used for true Circles and not other Focus groups,
-// and should be preferred over ContactGroup where applicable. Soon it
-// may become more efficient to check membership in a Circle than in a
-// ContactGroup (see http://go/superglue). Support for this principal
-// type is currently (12/2011) incomplete -- e.g., Keystore does not
-// support it yet (see b/5703421).
-type CircleProto struct {
-	// CircleId: Circle ID is unique only relative to the owner's Gaia ID.
-	// Currently required.
-	CircleId int64 `json:"circleId,omitempty,string"`
-
-	// OwnerGaiaId: The owner of the circle. Currently required.
-	OwnerGaiaId int64 `json:"ownerGaiaId,omitempty,string"`
-
-	// RequiredConsistencyTimestampUsec: If present, then tests for
-	// membership in this circle must use data known to be at least as fresh
-	// as the given (FBS-assigned) timestamp. See
-	// http://go/fbs-consistent-read-after-important-write Before using
-	// this, be sure that any service checking authorization against this
-	// circle supports checking consistency timestamps. For example, as of
-	// 12/2011, Keystore only supports this for the Moonshine configuration,
-	// and in others authorization checks will fail if the timestamp is
-	// present.
-	RequiredConsistencyTimestampUsec int64 `json:"requiredConsistencyTimestampUsec,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "CircleId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CircleId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CircleProto) MarshalJSON() ([]byte, error) {
-	type NoMethod CircleProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CloudPrincipalProto: Principal associated with a Cloud Principal
-// representing third party user.
-type CloudPrincipalProto struct {
-	// Id: Format: "{identity-pool}:{subject}#" Details:
-	// go/cloud-principal-identifiers
-	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CloudPrincipalProto) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudPrincipalProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CoActivity: Metadata about a co-activity session.
-type CoActivity struct {
-	// ActivityTitle: The title of the activity in this co-activity session.
-	// For example, this might be the title of the video being co-watched,
-	// or the name of the round of a game being co-played.
-	ActivityTitle string `json:"activityTitle,omitempty"`
-
-	// CoActivityApp: Identifies the app handling this co-activity.
-	//
-	// Possible values:
-	//   "CO_ACTIVITY_APP_UNSPECIFIED" - Should never be used.
-	//   "CO_ACTIVITY_APP_YOU_TUBE_MAIN" - Main YouTube app, for watching
-	// videos.
-	//   "CO_ACTIVITY_APP_SPOTIFY" - Spotify music.
-	//   "CO_ACTIVITY_APP_UNO" - Uno game.
-	//   "CO_ACTIVITY_APP_HEADSUP" - HeadsUp game.
-	//   "CO_ACTIVITY_APP_KAHOOT" - Kahoot! educational software.
-	//   "CO_ACTIVITY_APP_GQUEUES" - GQueues task manager.
-	CoActivityApp string `json:"coActivityApp,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActivityTitle") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActivityTitle") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CoActivity) MarshalJSON() ([]byte, error) {
-	type NoMethod CoActivity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Collaboration: Information about a collaboration session.
-type Collaboration struct {
-	// AttachmentId: The attachment being collaborated on.
-	AttachmentId string `json:"attachmentId,omitempty"`
-
-	// Initiator: Display info of the user who initiated the collaboration
-	// session.
-	Initiator *UserDisplayInfo `json:"initiator,omitempty"`
-
-	// Uri: The uri of the artifact being collaborated on.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AttachmentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttachmentId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Collaboration) MarshalJSON() ([]byte, error) {
-	type NoMethod Collaboration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Color: Represents a color in the RGBA color space. This
-// representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness. For example,
-// the fields of this representation can be trivially provided to the
-// constructor of `java.awt.Color` in Java; it can also be trivially
-// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
-// and, with just a little work, it can be easily formatted into a CSS
-// `rgba()` string in JavaScript. This reference page doesn't carry
-// information about the absolute color space that should be used to
-// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications should assume the sRGB color space.
-// When color equality needs to be decided, implementations, unless
-// documented otherwise, treat two colors as equal if all their red,
-// green, blue, and alpha values each differ by at most 1e-5. Example
-// (Java): import com.google.type.Color; // ... public static
-// java.awt.Color fromProto(Color protocolor) { float alpha =
-// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
-// return new java.awt.Color( protocolor.getRed(),
-// protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
-// Color toProto(java.awt.Color color) { float red = (float)
-// color.getRed(); float green = (float) color.getGreen(); float blue =
-// (float) color.getBlue(); float denominator = 255.0; Color.Builder
-// resultBuilder = Color .newBuilder() .setRed(red / denominator)
-// .setGreen(green / denominator) .setBlue(blue / denominator); int
-// alpha = color.getAlpha(); if (alpha != 255) { result.setAlpha(
-// FloatValue .newBuilder() .setValue(((float) alpha) / denominator)
-// .build()); } return resultBuilder.build(); } // ... Example (iOS /
-// Obj-C): // ... static UIColor* fromProto(Color* protocolor) { float
-// red = [protocolor red]; float green = [protocolor green]; float blue
-// = [protocolor blue]; FloatValue* alpha_wrapper = [protocolor alpha];
-// float alpha = 1.0; if (alpha_wrapper != nil) { alpha = [alpha_wrapper
-// value]; } return [UIColor colorWithRed:red green:green blue:blue
-// alpha:alpha]; } static Color* toProto(UIColor* color) { CGFloat red,
-// green, blue, alpha; if (![color getRed:&red green:&green blue:&blue
-// alpha:&alpha]) { return nil; } Color* result = [[Color alloc] init];
-// [result setRed:red]; [result setGreen:green]; [result setBlue:blue];
-// if (alpha <= 0.9999) { [result
-// setAlpha:floatWrapperWithValue(alpha)]; } [result autorelease];
-// return result; } // ... Example (JavaScript): // ... var
-// protoToCssColor = function(rgb_color) { var redFrac = rgb_color.red
-// || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac =
-// rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green
-// = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255);
-// if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
-// blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
-// = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
-// blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
-// blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
-// hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
-// missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
-// ...
-type Color struct {
-	// Alpha: The fraction of this color that should be applied to the
-	// pixel. That is, the final pixel color is defined by the equation:
-	// `pixel color = alpha * (this color) + (1.0 - alpha) * (background
-	// color)` This means that a value of 1.0 corresponds to a solid color,
-	// whereas a value of 0.0 corresponds to a completely transparent color.
-	// This uses a wrapper message rather than a simple float scalar so that
-	// it is possible to distinguish between a default value and the value
-	// being unset. If omitted, this color object is rendered as a solid
-	// color (as if the alpha value had been explicitly given a value of
-	// 1.0).
-	Alpha float64 `json:"alpha,omitempty"`
-
-	// Blue: The amount of blue in the color as a value in the interval [0,
-	// 1].
-	Blue float64 `json:"blue,omitempty"`
-
-	// Green: The amount of green in the color as a value in the interval
-	// [0, 1].
-	Green float64 `json:"green,omitempty"`
-
-	// Red: The amount of red in the color as a value in the interval [0,
-	// 1].
-	Red float64 `json:"red,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Alpha") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Alpha") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Color) MarshalJSON() ([]byte, error) {
-	type NoMethod Color
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *Color) UnmarshalJSON(data []byte) error {
-	type NoMethod Color
-	var s1 struct {
-		Alpha gensupport.JSONFloat64 `json:"alpha"`
-		Blue  gensupport.JSONFloat64 `json:"blue"`
-		Green gensupport.JSONFloat64 `json:"green"`
-		Red   gensupport.JSONFloat64 `json:"red"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Alpha = float64(s1.Alpha)
-	s.Blue = float64(s1.Blue)
-	s.Green = float64(s1.Green)
-	s.Red = float64(s1.Red)
-	return nil
-}
-
-// CommunalLabelTag: An individual instance (or "tag") of a label
-// configured as a communal type that's associated with a message.
-type CommunalLabelTag struct {
-	// CreatorUserId: Gaia ID of the user who added the tag, if any. Not
-	// present for any tags automatically created by server-side processing.
-	CreatorUserId int64 `json:"creatorUserId,omitempty,string"`
-
-	// LabelId: A string ID representing the label. Possible ID values are
-	// documented at go/chat-labels-howto:ids. Example: "^*t_p" for
-	// "Pinned".
-	LabelId string `json:"labelId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreatorUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreatorUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CommunalLabelTag) MarshalJSON() ([]byte, error) {
-	type NoMethod CommunalLabelTag
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6741,61 +773,20 @@ func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConsentedAppUnfurlMetadata: Annotation metadata app unfurl consent.
-type ConsentedAppUnfurlMetadata struct {
-	// ClientSpecifiedAppId: Client specified AppId, which will not be
-	// sanitized and is untrusted.
-	ClientSpecifiedAppId *UserId `json:"clientSpecifiedAppId,omitempty"`
+type Content struct {
+	// Actions: [Optional] Actions for this card.
+	Actions []*Action `json:"actions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ClientSpecifiedAppId") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
+	// Description: [Optional] Description of the card.
+	Description *SafeHtmlProto `json:"description,omitempty"`
 
-	// NullFields is a list of field names (e.g. "ClientSpecifiedAppId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
+	// Subtitle: [Optional] Subtitle of the card.
+	Subtitle *BackgroundColoredText `json:"subtitle,omitempty"`
 
-func (s *ConsentedAppUnfurlMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ConsentedAppUnfurlMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
+	// Title: [Optional] Title of the card.
+	Title *BackgroundColoredText `json:"title,omitempty"`
 
-// ContactGroupProto: A group of contacts for a given user, as described
-// in http://cs/p#google3/focus/backend/proto/backend.proto Historically
-// (and in still-existing ACLs), this was used to represent Google+
-// circles as well as contact groups, but this use is now deprecated.
-// New code should use the CIRCLE principal type to represent Google+
-// circles.
-type ContactGroupProto struct {
-	// GroupId: Group ID is unique only relative to the owner's Gaia ID.
-	GroupId int64 `json:"groupId,omitempty,string"`
-
-	OwnerGaiaId int64 `json:"ownerGaiaId,omitempty,string"`
-
-	// RequiredConsistencyTimestampUsec: If present, then tests for
-	// membership in this ContactGroup must use data known to be at least as
-	// fresh as the given (FBS-assigned) timestamp. See
-	// http://go/fbs-consistent-read-after-important-write Before using
-	// this, be sure that any service checking authorization against this
-	// group supports checking consistency timestamps. For example, as of
-	// 12/2011, Keystore only supports this for the Moonshine configuration,
-	// and in others authorization checks will fail if the timestamp is
-	// present.
-	RequiredConsistencyTimestampUsec int64 `json:"requiredConsistencyTimestampUsec,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupId") to
+	// ForceSendFields is a list of field names (e.g. "Actions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6803,7 +794,7 @@ type ContactGroupProto struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GroupId") to include in
+	// NullFields is a list of field names (e.g. "Actions") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -6812,102 +803,84 @@ type ContactGroupProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactGroupProto) MarshalJSON() ([]byte, error) {
-	type NoMethod ContactGroupProto
+func (s *Content) MarshalJSON() ([]byte, error) {
+	type NoMethod Content
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type ContentReport struct {
-	// ReportCreateTimestamp: The time at which the report is generated.
-	// Always populated when it is in a response.
-	ReportCreateTimestamp string `json:"reportCreateTimestamp,omitempty"`
+type Context struct {
+	// App: [Optional] App where the card should be shown. If missing, the
+	// card will be shown in TOPAZ.
+	//
+	// Possible values:
+	//   "UNKNOWN_APP"
+	//   "TOPAZ"
+	//   "MOMA"
+	App []string `json:"app,omitempty"`
 
-	// ReportJustification: Additional user-provided justification on the
-	// report. Optional.
-	ReportJustification *ContentReportJustification `json:"reportJustification,omitempty"`
+	// DayOfWeek: [Optional] Day of week when the card should be shown,
+	// where 0 is Monday.
+	DayOfWeek []int64 `json:"dayOfWeek,omitempty"`
 
-	// ReportType: Type of the report. Always populated when it is in a
-	// response.
-	ReportType *AppsDynamiteSharedContentReportType `json:"reportType,omitempty"`
+	// EndDateSec: [Optional] Date (in seconds since epoch) when the card
+	// should stop being shown. If missing, end_date_sec will be set to Jan
+	// 1st, 2100.
+	EndDateSec int64 `json:"endDateSec,omitempty,string"`
 
-	// ReporterUserId: User ID of the reporter. Always populated when it is
-	// in a response.
-	ReporterUserId *UserId `json:"reporterUserId,omitempty"`
+	// EndDayOffsetSec: [Optional] End time in seconds, within a day, when
+	// the card should stop being shown if it's within [start_date_sec,
+	// end_date_sec]. If missing, this is set to 86400 (24 hours x 3600
+	// sec/hour), i.e., midnight next day.
+	EndDayOffsetSec int64 `json:"endDayOffsetSec,omitempty,string"`
 
-	// RevisionCreateTimestamp: Create timestamp of the revisions of the
-	// message when it's reported. Always populated when it is in a
-	// response.
-	RevisionCreateTimestamp string `json:"revisionCreateTimestamp,omitempty"`
+	// Locale: [Optional] The locales for which the card should be triggered
+	// (e.g., en_US and en_CA). If missing, the card is going to show to
+	// clients regardless of their locale.
+	Locale []string `json:"locale,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ReportCreateTimestamp") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
+	// Location: [Optional] Text-free locations where the card should be
+	// shown. This is expected to match the user's location in focus. If no
+	// location is specified, the card will be shown for any location.
+	Location []string `json:"location,omitempty"`
 
-	// NullFields is a list of field names (e.g. "ReportCreateTimestamp") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
+	// Query: [Required only for Answer and RHS cards - will be ignored for
+	// Homepage] cards. It's the exact case-insensitive queries that will
+	// trigger the Answer or RHS card.
+	Query []string `json:"query,omitempty"`
 
-func (s *ContentReport) MarshalJSON() ([]byte, error) {
-	type NoMethod ContentReport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
+	// StartDateSec: [Optional] Date (in seconds since epoch) when the card
+	// should start being shown. If missing, start_date_sec will be Jan 1st,
+	// 1970 UTC.
+	StartDateSec int64 `json:"startDateSec,omitempty,string"`
 
-type ContentReportJustification struct {
-	// UserJustification: Optional. User-generated free-text justification
-	// for the content report.
-	UserJustification string `json:"userJustification,omitempty"`
+	// StartDayOffsetSec: [Optional] Start time in seconds, within a day,
+	// when the card should be shown if it's within [start_date_sec,
+	// end_date_sec]. If 0, the card will be shown from 12:00am on.
+	StartDayOffsetSec int64 `json:"startDayOffsetSec,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "UserJustification")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
+	// Surface: [Optional] Surface where the card should be shown in. If
+	// missing, the card will be shown in any surface.
+	//
+	// Possible values:
+	//   "UNKNOWN_SURFACE"
+	//   "DESKTOP"
+	//   "ANDROID"
+	//   "IOS"
+	//   "MOBILE" - Any mobile device.
+	//   "ANY"
+	Surface []string `json:"surface,omitempty"`
 
-	// NullFields is a list of field names (e.g. "UserJustification") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
+	// Type: [Required] Type of the card (homepage, Answer or RHS).
+	//
+	// Possible values:
+	//   "UNKNOWN_CARD_TYPE"
+	//   "HOMEPAGE_CARD"
+	//   "ANSWER_CARD"
+	//   "RHS_CARD"
+	Type []string `json:"type,omitempty"`
 
-func (s *ContentReportJustification) MarshalJSON() ([]byte, error) {
-	type NoMethod ContentReportJustification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ContentReportSummary: Summarized info of content reports. Usually
-// less expensive to fetch than to fetch all detailed reports. Set only
-// when the request asks for it.
-type ContentReportSummary struct {
-	// NumberReports: Total number of reports attached to this (revision of)
-	// message.
-	NumberReports int64 `json:"numberReports,omitempty"`
-
-	// NumberReportsAllRevisions: Totoal number of reports attached to all
-	// revisions of this message (i.e. since creation). Set only when the
-	// request asks for it.
-	NumberReportsAllRevisions int64 `json:"numberReportsAllRevisions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NumberReports") to
+	// ForceSendFields is a list of field names (e.g. "App") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6915,17 +888,17 @@ type ContentReportSummary struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NumberReports") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "App") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentReportSummary) MarshalJSON() ([]byte, error) {
-	type NoMethod ContentReportSummary
+func (s *Context) MarshalJSON() ([]byte, error) {
+	type NoMethod Context
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6965,143 +938,6 @@ type ContextAttribute struct {
 
 func (s *ContextAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod ContextAttribute
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ContextualAddOnMarkup: The markup for developers to specify the
-// contents of a contextual AddOn. A contextual AddOn is triggered in
-// context of an email. For that email, there can be N items that are
-// associated with the email (e.g. contacts, sales lead, meeting
-// information). Each item is represented as a "card". A card has two
-// views, collapsed and detailed. If there are more than 1 card, the
-// cards are show as a list of collapsed views. The end user can expand
-// into the detailed view for each of those cards. In the detailed view,
-// developers have the freedom to use a variety of "widgets" to
-// construct it. The model here is to restrict (make consistent for end
-// users) the navigation of the N cards but providing developers the
-// freedom to build the detailed view that can best represent their use
-// case/content. Go http://go/aoig-widgets1 to see the mocks. Post v1,
-// we plan to support new AddOn use cases that will require different
-// and separate 'templates'. For example, a compose triggered AddOn
-// which will support a new set of use cases with different user
-// interaction patterns. As a result, we will likely need a very
-// different template than this one.
-type ContextualAddOnMarkup struct {
-	// Cards: A card must contain a header and at least 1 section.
-	Cards []*Card `json:"cards,omitempty"`
-
-	// Toolbar: Deprecated.
-	Toolbar *Toolbar `json:"toolbar,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Cards") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Cards") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ContextualAddOnMarkup) MarshalJSON() ([]byte, error) {
-	type NoMethod ContextualAddOnMarkup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CseInfo: Information needed for Client-side Encryption.
-type CseInfo struct {
-	// CseDomain: CSE domain name claimed by the meeting owner's company.
-	// This field is expected to be used for display purposes only, i.e.,
-	// "Extra encryption added by $cse_domain". It can differ from the
-	// `cse_domain` as defined elsewhere on the User, in the case of
-	// cross-domain meetings.
-	CseDomain string `json:"cseDomain,omitempty"`
-
-	// WrappedKey: The wrapped CSE key used by this conference.
-	WrappedKey string `json:"wrappedKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CseDomain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CseDomain") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CseInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod CseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type CustomEmojiMetadata struct {
-	CustomEmoji *AppsDynamiteSharedCustomEmoji `json:"customEmoji,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomEmoji") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomEmoji") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CustomEmojiMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod CustomEmojiMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CustomerId: Represents a GSuite customer ID. Obfuscated with
-// CustomerIdObfuscator.
-type CustomerId struct {
-	CustomerId string `json:"customerId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CustomerId) MarshalJSON() ([]byte, error) {
-	type NoMethod CustomerId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7309,44 +1145,6 @@ type CustomerUserStats struct {
 
 func (s *CustomerUserStats) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerUserStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DataLossPreventionMetadata: Annotation metadata for Data Loss
-// Prevention that pertains to DLP violation on message send or edit
-// events. It is used for client -> BE communication and other
-// downstream process in BE (e.g. storage and audit logging), and it
-// should never be returned to the client.
-type DataLossPreventionMetadata struct {
-	// DlpScanSummary: The DLP scan summary that should only be set after
-	// the message is scanned in the Chat backend.
-	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
-
-	// WarnAcknowledged: Flag set by client on message resend to bypass WARN
-	// violation.
-	WarnAcknowledged bool `json:"warnAcknowledged,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DlpScanSummary") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DlpScanSummary") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DataLossPreventionMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod DataLossPreventionMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7639,66 +1437,6 @@ func (s *DatePropertyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type DateTimePicker struct {
-	// Label: The label for the field, which is displayed to the user.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text field which is used in FormInput, and
-	// uniquely identifies this input.
-	Name string `json:"name,omitempty"`
-
-	// OnChange: Triggered when the user clicks on the Save, or Clear button
-	// from the date / time picker dialog. Will only be triggered if the
-	// value changed as a result of the Save / Clear operation.
-	OnChange *FormAction `json:"onChange,omitempty"`
-
-	// TimezoneOffsetDate: The number representing the time-zone offset from
-	// UTC, in minutes. If set, the value_ms_epoch will be displayed in the
-	// specified time zone. If not set, it will use the user's timezone
-	// setting in client side.
-	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
-
-	// Type: The type of the DateTimePicker.
-	//
-	// Possible values:
-	//   "UNSPECIFIED_TYPE"
-	//   "DATE_AND_TIME"
-	//   "DATE_ONLY"
-	//   "TIME_ONLY"
-	Type string `json:"type,omitempty"`
-
-	// ValueMsEpoch: The value to display which can be the default value
-	// before user input or previous user input. It is represented in
-	// milliseconds (Epoch time). - For DATE_AND_TIME type, the full epoch
-	// value is used. - For DATE_ONLY type, only date of the epoch time is
-	// used. - For TIME_ONLY type, only time of the epoch time is used. For
-	// example, you can set epoch time to 3 * 60 * 60 * 1000 to represent
-	// 3am.
-	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Label") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Label") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DateTimePicker) MarshalJSON() ([]byte, error) {
-	type NoMethod DateTimePicker
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // DateValues: List of date values.
 type DateValues struct {
 	Values []*Date `json:"values,omitempty"`
@@ -7757,64 +1495,6 @@ func (s *DebugOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeepLinkData: Deep-linking data is used to construct a deep-link URI
-// for an activity or frame's embed, such that on click, the user is
-// taken to the right place in a mobile app. If the app is not
-// installed, the user is taken to the app store. If not on mobile, an
-// analogous web uri is used.
-type DeepLinkData struct {
-	// AppId: Application ID (or project ID) from Google API Console.
-	AppId int64 `json:"appId,omitempty,string"`
-
-	// Client: The data for a Google API Console client is entered by a
-	// developer during client registration and is stored in
-	// PackagingService.
-	Client []*PackagingServiceClient `json:"client,omitempty"`
-
-	// DeepLinkId: The ID for non-URL content. Embeds may either have no
-	// analogous web presence or prefer a native mobile experience if
-	// supported. In the case of no web presence, instead of setting the
-	// "url" field of an embed, such developers will set this field and
-	// other content fields, e.g. thumbnail, title, description. If set,
-	// this field is used to construct the deep-link URI. Note that the
-	// native experience is preferred over the web link and the web link is
-	// used as a fallback.
-	DeepLinkId string `json:"deepLinkId,omitempty"`
-
-	// Url: Analogous web presence. Used as desktop fallback or when no
-	// native link data is present.
-	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DeepLinkData) MarshalJSON() ([]byte, error) {
-	type NoMethod DeepLinkData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DeleteMetadata: A message delete in Dynamite inserts a Babel-only
-// item containing this field. This is only inserted for messages before
-// the source-of-truth flip. See go/hsc-message-deletions for more
-// details.
-type DeleteMetadata struct {
-}
-
 type DeleteQueueItemsRequest struct {
 	// ConnectorName: The name of connector making this call. Format:
 	// datasources/{source_id}/connectors/{ID}
@@ -7845,46 +1525,6 @@ type DeleteQueueItemsRequest struct {
 
 func (s *DeleteQueueItemsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteQueueItemsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type DeliveryMedium struct {
-	// MediumType: Describes the medium the cent was sent/received. For
-	// example, if I receive an SMS via GV, the medium_type will be GV.
-	//
-	// Possible values:
-	//   "UNKNOWN_MEDIUM"
-	//   "BABEL_MEDIUM"
-	//   "GOOGLE_VOICE_MEDIUM"
-	//   "LOCAL_SMS_MEDIUM"
-	MediumType string `json:"mediumType,omitempty"`
-
-	// SelfPhone: In the case of multiple GV/native numbers, this defines
-	// the exact number to send from. It is used to differentiate mediums
-	// that have the same type, but different addresses (e.g. two android
-	// phones).
-	SelfPhone *VoicePhoneNumber `json:"selfPhone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MediumType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MediumType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DeliveryMedium) MarshalJSON() ([]byte, error) {
-	type NoMethod DeliveryMedium
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7920,183 +1560,6 @@ type DisplayedProperty struct {
 
 func (s *DisplayedProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod DisplayedProperty
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Divider struct {
-}
-
-// DlpScanSummary: A summary of a DLP scan event. This is a summary and
-// should contain the minimum amount of data required to identify and
-// process DLP scans. It is written to Starcast and encoded & returned
-// to the client on attachment upload.
-type DlpScanSummary struct {
-	// ScanId: The scan ID of the corresponding {@link
-	// DlpViolationScanRecord} in the {@link EphemeralDlpScans} Spanner
-	// table. This can be used to fetch additional details about the scan,
-	// e.g. for audit logging.
-	ScanId string `json:"scanId,omitempty"`
-
-	// ScanNotApplicableForContext: Indicates that was no attempt to scan a
-	// message or attachment because it was not applicable in the given
-	// context (e.g. atomic mutuate). If this is true, scan_outcome should
-	// not be set. This flag is used to identify messages that DLP did not
-	// attempt to scan for monitoring scan coverage. Contents that DLP
-	// attempted to scan but skipped can be identified by
-	// DlpScanOutcome.SCAN_SKIPPED_* reasons.
-	ScanNotApplicableForContext bool `json:"scanNotApplicableForContext,omitempty"`
-
-	// ScanOutcome: The outcome of a DLP Scan. If this is set,
-	// scan_not_applicable_for_context should not be true.
-	//
-	// Possible values:
-	//   "SCAN_UNKNOWN_OUTCOME"
-	//   "SCAN_SUCCEEDED_NO_VIOLATION" - This means no violation is detected
-	// on the given message/attachment.
-	//   "SCAN_SUCCEEDED_BLOCK" - Violation is detected. The
-	// message/attachment will be blocked (or deleted if this happens in
-	// failure recovery), the user will be warned, and the violation will be
-	// logged to BIP.
-	//   "SCAN_SUCCEEDED_WARN" - Violation is detected. The user will be
-	// warned, and the violation will be logged to BIP.
-	//   "SCAN_SUCCEEDED_AUDIT_ONLY" - Violation is detected and will be
-	// logged to BIP (no user-facing action performed).
-	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
-	// but an exception occurred.
-	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
-	// but the scanning timed out.
-	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
-	// evaluation were attempted, but all of the rules failed to be
-	// evaluated.
-	//   "SCAN_FAILURE_ILLEGAL_STATE_FOR_ATTACHMENTS" - An
-	// IllegalStateException is thrown when executing DLP on attachments.
-	// This could happen if the space row is missing.
-	//   "SCAN_SKIPPED_EXPERIMENT_DISABLED" - Rule fetch and evaluation is
-	// skipped because DLP is not enabled for the user.
-	//   "SCAN_SKIPPED_CONSUMER" - Rule fetch and evaluation are skipped
-	// because the user sending message is consumer.
-	//   "SCAN_SKIPPED_NON_HUMAN_USER" - Rule fetch and evaluation are
-	// skipped because the user sending message is a non-human user (i.e. a
-	// bot).
-	//   "SCAN_SKIPPED_NO_MESSAGE" - Rule fetch and evaluation are skipped
-	// because there is no message to scan. Deprecated: this should not
-	// happen since there must be message or attachment for DLP scan.
-	//   "SCAN_SKIPPED_USER_ACKNOWLEDGED_WARNING" - Rule fetch and
-	// evaluation are skipped because the user has acknowledged the warning
-	// on the message that triggered the Warn violation and sent the message
-	// anyway.
-	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
-	// skipped because the message originated from Interop or Babel.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
-	// happened, but rule evaluation is skipped because no rules were found.
-	//
-	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
-	// - Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given action params.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
-	// Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given trigger.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned permanent failure while converting the attachment to text.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_EMPTY_RESPONSE" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned an empty response while converting the attachment to text.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_NO_VIOLATION" - Rules were fetched
-	// but some evaluations failed. No violation was found in the rules that
-	// were successfully evaluated.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_BLOCK" - Rules were fetched but some
-	// evaluations failed. A blocking violation was found in the rules that
-	// were successfully evaluated. The message/attachment will be blocked,
-	// the user will be notified, and the violation will be logged to BIP. A
-	// blocking violation takes precedence over all other violation types.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_WARN" - Rules were fetched but some
-	// evaluations failed. A warn violation was found in the rules that were
-	// successfully evaluated. The user will be warned, and the violation
-	// will be logged to BIP.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_AUDIT_ONLY" - Rules were fetched but
-	// some evaluations failed. An audit-only violation was found in the
-	// rules that were successfully evaluated. The violation will be logged
-	// to BIP (no user-facing action performed).
-	ScanOutcome string `json:"scanOutcome,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ScanId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ScanId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DlpScanSummary) MarshalJSON() ([]byte, error) {
-	type NoMethod DlpScanSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type DmId struct {
-	// DmId: Unique server assigned Id, per Direct Message Space.
-	DmId string `json:"dmId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DmId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DmId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DmId) MarshalJSON() ([]byte, error) {
-	type NoMethod DmId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DocumentInfo: Information on a document attached to an active
-// conference.
-type DocumentInfo struct {
-	// WhiteboardInfo: A whiteboard document.
-	WhiteboardInfo *WhiteboardInfo `json:"whiteboardInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "WhiteboardInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "WhiteboardInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DocumentInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod DocumentInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8191,6 +1654,23 @@ func (s *DoubleValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *DoubleValues) UnmarshalJSON(data []byte) error {
+	type NoMethod DoubleValues
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
+}
+
 // DriveFollowUpRestrict: Drive follow-up search restricts (e.g.
 // "followup:suggestions").
 type DriveFollowUpRestrict struct {
@@ -8251,147 +1731,6 @@ type DriveLocationRestrict struct {
 
 func (s *DriveLocationRestrict) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveLocationRestrict
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DriveMetadata: Annotation metadata for Drive artifacts.
-type DriveMetadata struct {
-	AclFixRequest *AclFixRequest `json:"aclFixRequest,omitempty"`
-
-	AclFixStatus *AclFixStatus `json:"aclFixStatus,omitempty"`
-
-	// CanEdit: Can the current user edit this resource
-	CanEdit bool `json:"canEdit,omitempty"`
-
-	// CanShare: Can the current user share this resource
-	CanShare bool `json:"canShare,omitempty"`
-
-	// CanView: Can the current user view this resource
-	CanView bool `json:"canView,omitempty"`
-
-	// DriveAction: DriveAction for organizing this file in Drive. If the
-	// user does not have access to the Drive file, the value will be
-	// DriveAction.DRIVE_ACTION_UNSPECIFIED. This field is only set when
-	// part of a FileResult in a ListFilesResponse.
-	//
-	// Possible values:
-	//   "DRIVE_ACTION_UNSPECIFIED" - No organize action should be shown.
-	//   "ADD_TO_DRIVE" - Show "Add to Drive" button, for adding file that
-	// doesn't exist in Drive to Drive. Note that deleted Drive files that
-	// still exist (i.e. in your Trash) will still be ORGANIZE (this is
-	// consistent with Gmail Drive attachments).
-	//   "ORGANIZE" - Show "Move" button, for organizing a Drive file the
-	// user has permission to move.
-	//   "ADD_SHORTCUT" - Show "Add shortcut" button, for adding a shortcut
-	// to a Drive file the user does not have permission to move.
-	//   "ADD_ANOTHER_SHORTCUT" - Show "Add another shortcut" button, for
-	// Drive files the user has already created a shortcut to.
-	DriveAction string `json:"driveAction,omitempty"`
-
-	// Possible values:
-	//   "DRIVE_STATE_UNSPECIFIED" - Default value
-	//   "IN_MY_DRIVE" - File in My Drive
-	//   "IN_TEAM_DRIVE" - File in Team Drive
-	//   "SHARED_IN_DRIVE" - File in someone else's Drive, but is shared
-	// with the current user
-	//   "NOT_IN_DRIVE" - File not in drive
-	DriveState string `json:"driveState,omitempty"`
-
-	// EmbedUrl: Output only. Trusted Resource URL for drive file embedding.
-	EmbedUrl *TrustedResourceUrlProto `json:"embedUrl,omitempty"`
-
-	// EncryptedDocId: Indicates whether the Drive link contains an
-	// encrypted doc ID. If true, Dynamite should not attempt to query the
-	// doc ID in Drive Service. See go/docid-encryption for details.
-	EncryptedDocId bool `json:"encryptedDocId,omitempty"`
-
-	// EncryptedResourceKey: This is deprecated and unneeded. TODO
-	// (b/182479059): Remove this.
-	EncryptedResourceKey string `json:"encryptedResourceKey,omitempty"`
-
-	// ExternalMimetype: External mimetype of the Drive Resource (Useful for
-	// creating Drive URL) See: http://b/35219462
-	ExternalMimetype string `json:"externalMimetype,omitempty"`
-
-	// Id: Drive resource ID of the artifact.
-	Id string `json:"id,omitempty"`
-
-	// IsDownloadRestricted: Deprecated. Whether the setting to restrict
-	// downloads is enabled for this file. This was previously used to
-	// determine whether to hide the download and print buttons in the UI,
-	// but is no longer used by clients, because Projector now independently
-	// queries Drive to ensure that we have the most up-to-date value.
-	IsDownloadRestricted bool `json:"isDownloadRestricted,omitempty"`
-
-	// IsOwner: If the current user is the Drive file's owner. The field is
-	// currently only set for Annotations for the ListFiles action (as
-	// opposed to fetching Topics/Messages with Drive annotations).
-	IsOwner bool `json:"isOwner,omitempty"`
-
-	// LegacyUploadMetadata: Only present if this DriveMetadata is converted
-	// from an UploadMetadata.
-	LegacyUploadMetadata *LegacyUploadMetadata `json:"legacyUploadMetadata,omitempty"`
-
-	// Mimetype: Mimetype of the Drive Resource
-	Mimetype string `json:"mimetype,omitempty"`
-
-	// OrganizationDisplayName: The display name of the organization owning
-	// the Drive item.
-	OrganizationDisplayName string `json:"organizationDisplayName,omitempty"`
-
-	// ShortcutAuthorizedItemId: Shortcut ID of this drive file in the
-	// shared drive, which is associated with a named room this file was
-	// shared in. Shortcuts will not be created for DMs or unnamed rooms.
-	// This is populated after the DriveMetadata is migrated to shared
-	// drive. go/chat-shared-drive-uploads.
-	ShortcutAuthorizedItemId *AuthorizedItemId `json:"shortcutAuthorizedItemId,omitempty"`
-
-	// ShouldNotRender: If this field is set to true, server should still
-	// contact external backends to get metadata for search but clients
-	// should not render this chip.
-	ShouldNotRender bool `json:"shouldNotRender,omitempty"`
-
-	// ThumbnailHeight: Thumbnail image of the Drive Resource
-	ThumbnailHeight int64 `json:"thumbnailHeight,omitempty"`
-
-	// ThumbnailUrl: Thumbnail image of the Drive Resource
-	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
-
-	// ThumbnailWidth: Thumbnail image of the Drive Resource
-	ThumbnailWidth int64 `json:"thumbnailWidth,omitempty"`
-
-	// Title: Title of the Drive Resource
-	Title string `json:"title,omitempty"`
-
-	// UrlFragment: Url string fragment that generally indicates the
-	// specific location in the linked file. Example: #header=h.123abc456.
-	// If the fragment is not present this will not be present and therefore
-	// default to an empty string. The "#" will not be included.
-	UrlFragment string `json:"urlFragment,omitempty"`
-
-	// WrappedResourceKey: This is considered SPII and should not be logged.
-	WrappedResourceKey *WrappedResourceKey `json:"wrappedResourceKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AclFixRequest") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AclFixRequest") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DriveMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod DriveMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8475,106 +1814,6 @@ func (s *DriveTimeSpanRestrict) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DynamiteSpacesScoringInfo: This is the proto for holding space level
-// scoring information. This data is used for logging in query-api
-// server and for testing purposes.
-type DynamiteSpacesScoringInfo struct {
-	AffinityScore float64 `json:"affinityScore,omitempty"`
-
-	CommonContactCountAffinityScore float64 `json:"commonContactCountAffinityScore,omitempty"`
-
-	ContactsIntersectionCount float64 `json:"contactsIntersectionCount,omitempty"`
-
-	FinalScore float64 `json:"finalScore,omitempty"`
-
-	FreshnessScore float64 `json:"freshnessScore,omitempty"`
-
-	JoinedSpacesAffinityScore float64 `json:"joinedSpacesAffinityScore,omitempty"`
-
-	LastMessagePostedTimestampSecs int64 `json:"lastMessagePostedTimestampSecs,omitempty,string"`
-
-	LastReadTimestampSecs int64 `json:"lastReadTimestampSecs,omitempty,string"`
-
-	MemberMetadataCount float64 `json:"memberMetadataCount,omitempty"`
-
-	MessageScore float64 `json:"messageScore,omitempty"`
-
-	NumAucContacts int64 `json:"numAucContacts,omitempty,string"`
-
-	SmallContactListAffinityScore float64 `json:"smallContactListAffinityScore,omitempty"`
-
-	SmallUnjoinedSpacesAffinityScore float64 `json:"smallUnjoinedSpacesAffinityScore,omitempty"`
-
-	SpaceAgeInDays float64 `json:"spaceAgeInDays,omitempty"`
-
-	SpaceCreationTimestampSecs int64 `json:"spaceCreationTimestampSecs,omitempty,string"`
-
-	TopicalityScore float64 `json:"topicalityScore,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AffinityScore") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AffinityScore") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DynamiteSpacesScoringInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod DynamiteSpacesScoringInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
-	type NoMethod DynamiteSpacesScoringInfo
-	var s1 struct {
-		AffinityScore                    gensupport.JSONFloat64 `json:"affinityScore"`
-		CommonContactCountAffinityScore  gensupport.JSONFloat64 `json:"commonContactCountAffinityScore"`
-		ContactsIntersectionCount        gensupport.JSONFloat64 `json:"contactsIntersectionCount"`
-		FinalScore                       gensupport.JSONFloat64 `json:"finalScore"`
-		FreshnessScore                   gensupport.JSONFloat64 `json:"freshnessScore"`
-		JoinedSpacesAffinityScore        gensupport.JSONFloat64 `json:"joinedSpacesAffinityScore"`
-		MemberMetadataCount              gensupport.JSONFloat64 `json:"memberMetadataCount"`
-		MessageScore                     gensupport.JSONFloat64 `json:"messageScore"`
-		SmallContactListAffinityScore    gensupport.JSONFloat64 `json:"smallContactListAffinityScore"`
-		SmallUnjoinedSpacesAffinityScore gensupport.JSONFloat64 `json:"smallUnjoinedSpacesAffinityScore"`
-		SpaceAgeInDays                   gensupport.JSONFloat64 `json:"spaceAgeInDays"`
-		TopicalityScore                  gensupport.JSONFloat64 `json:"topicalityScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AffinityScore = float64(s1.AffinityScore)
-	s.CommonContactCountAffinityScore = float64(s1.CommonContactCountAffinityScore)
-	s.ContactsIntersectionCount = float64(s1.ContactsIntersectionCount)
-	s.FinalScore = float64(s1.FinalScore)
-	s.FreshnessScore = float64(s1.FreshnessScore)
-	s.JoinedSpacesAffinityScore = float64(s1.JoinedSpacesAffinityScore)
-	s.MemberMetadataCount = float64(s1.MemberMetadataCount)
-	s.MessageScore = float64(s1.MessageScore)
-	s.SmallContactListAffinityScore = float64(s1.SmallContactListAffinityScore)
-	s.SmallUnjoinedSpacesAffinityScore = float64(s1.SmallUnjoinedSpacesAffinityScore)
-	s.SpaceAgeInDays = float64(s1.SpaceAgeInDays)
-	s.TopicalityScore = float64(s1.TopicalityScore)
-	return nil
-}
-
-// EditMetadata: A message edit in Dynamite inserts a Babel-only item
-// containing this field.
-type EditMetadata struct {
-}
-
 // EmailAddress: A person's email address.
 type EmailAddress struct {
 	// CustomType: If the value of type is custom, this property contains
@@ -8618,14 +1857,13 @@ func (s *EmailAddress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EmailOwnerProto: Represents a verified owner of the given email
-// address. Note that a single address may have many owners, and a
-// single user may own many addresses. (All lower-case, in display form
-// -- see com.google.gaia.client.GaiaEmail)
-type EmailOwnerProto struct {
-	Email string `json:"email,omitempty"`
+type EnterpriseTopazFrontendTeamsLink struct {
+	// Type: The identifying link type
+	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Email") to
+	Url *SafeUrlProto `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -8633,7 +1871,7 @@ type EmailOwnerProto struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Email") to include in API
+	// NullFields is a list of field names (e.g. "Type") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -8642,523 +1880,28 @@ type EmailOwnerProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailOwnerProto) MarshalJSON() ([]byte, error) {
-	type NoMethod EmailOwnerProto
+func (s *EnterpriseTopazFrontendTeamsLink) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazFrontendTeamsLink
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EmbedClientItem: Represents an embedded object in an update. This is
-// a wrapper class that can contain a single specific item proto in an
-// extension field. Think of it as a base class like `Message` in Java.
-// Each item proto must declare that it extends this proto: message
-// ExampleObject { option (item_type) = EXAMPLE_OBJECT; extend
-// EmbedClientItem { optional ExampleObject example_object = ; } } See
-// go/es-embeds for details.
-type EmbedClientItem struct {
-	// CanonicalId: The canonical ID of the embed. If absent, the canonical
-	// ID is equal to the ID; if present, then the canonical ID represents
-	// an "equivalence class" of embeds which really refer to the same
-	// object. (For example, the URLs http://www.foo.com/ and
-	// http://foo.com/ refer to the same object) This field may be updated
-	// periodically by background processes.
-	CanonicalId string `json:"canonicalId,omitempty"`
+type EnterpriseTopazFrontendTeamsPersonCorePhoneNumber struct {
+	// PhoneNumber: Phone number in no particular format (as comes from the
+	// Focus profile).
+	PhoneNumber string `json:"phoneNumber,omitempty"`
 
-	// DeepLinkData: Deep-linking data to take the user to the right place
-	// in a mobile app. This is only used for preview and attribution. Links
-	// that are specific to a given embed type should live on that specific
-	// embed's proto by using Link. See
-	// http://goto.google.com/mariana-design.
-	DeepLinkData *DeepLinkData `json:"deepLinkData,omitempty"`
+	// PhoneUrl: Phone number URL
+	PhoneUrl *SafeUrlProto `json:"phoneUrl,omitempty"`
 
-	// Id: The ID of the embed. This corresponds to the schema.org ID, as
-	// represented in the ItemScope.id field.
-	Id string `json:"id,omitempty"`
-
-	// Provenance: The provenance of the embed, populated when the embed
-	// originated from a web fetch. The provenance captures information
-	// about the web page the embed had originated, like the URL that was
-	// retrieved and the retrieved URL's canonical form. This is useful in
-	// the case where the URL shared by the URL redirects (e.g., in the case
-	// of a shortened URL).
-	Provenance *Provenance `json:"provenance,omitempty"`
-
-	// RenderId: The ID used to identify the embed during rendering. This
-	// field will match ID, if set, otherwise it will be the ID of the
-	// parent activity. This field is only populated on the server for
-	// client use and is not persisted to storage.
-	RenderId string `json:"renderId,omitempty"`
-
-	// Signature: Signature of the embed, used for verification.
-	Signature string `json:"signature,omitempty"`
-
-	// TransientData: Transient generic data that will not be saved on the
-	// server.
-	TransientData *TransientData `json:"transientData,omitempty"`
-
-	// Type: The first value in `type` determines which extension field will
-	// be set. When creating an EmbedClientItem, you only need to set the
-	// first (primary) type in this field. When the server receives the
-	// item, it will populate the full type list using the parent
-	// annotations in the ItemType enum.
-	//
 	// Possible values:
-	//   "UNKNOWN" - Largely deprecated, effectively an error condition and
-	// should not be in storage.
-	//   "ACTION_V2" - Embeds V2 types
-	//   "ADD_ACTION_V2"
-	//   "AGGREGATE_RATING_V2"
-	//   "ARTICLE_V2"
-	//   "ASSESS_ACTION_V2"
-	//   "AUDIO_OBJECT_V2"
-	//   "BASIC_INTERACTION_V2"
-	//   "BLOG_POSTING_V2"
-	//   "BLOG_V2"
-	//   "BOOK_V2"
-	//   "BUY_ACTION_V2"
-	//   "CHECK_IN_ACTION_V2" - The action of checking in, as opposed to a
-	// "check-in".
-	//   "CHECKIN_V2"
-	//   "COLLEXION_V2"
-	//   "COMMENT_ACTION_V2" - The act of commenting, which might result in
-	// a comment.
-	//   "COMMENT_V2"
-	//   "COMMUNICATE_ACTION_V2"
-	//   "CONSUME_ACTION_V2"
-	//   "CREATE_ACTION_V2"
-	//   "CREATIVE_WORK_V2"
-	//   "DISCOVER_ACTION_V2"
-	//   "DOCUMENT_OBJECT_V2"
-	//   "DRAWING_OBJECT_V2"
-	//   "DRIVE_OBJECT_V2"
-	//   "EMOTISHARE_V2"
-	//   "ENTRY_POINT_V2"
-	//   "EVENT_TIME_V2"
-	//   "EVENT_V2"
-	//   "FILE_OBJECT_V2"
-	//   "FIND_ACTION_V2"
-	//   "FINANCIAL_QUOTE_V2"
-	//   "FORM_OBJECT_V2"
-	//   "GEO_COORDINATES_V2"
-	//   "GOOGLE_OFFER_V2"
-	//   "HANGOUT_CHAT_MESSAGE"
-	//   "HANGOUT_QUOTE"
-	//   "HANGOUT_V2"
-	//   "HOA_PLUS_EVENT_V2"
-	//   "IMAGE_OBJECT_V2"
-	//   "INTERACT_ACTION_V2"
-	//   "INTERACTION_V2"
-	//   "LISTEN_ACTION_V2"
-	//   "LOCAL_BUSINESS_V2"
-	//   "LOCAL_PLUS_PHOTO_ALBUM_V2"
-	//   "MAGAZINE_V2"
-	//   "MEDIA_OBJECT_V2"
-	//   "MOBILE_APPLICATION_V2"
-	//   "MOVIE_V2"
-	//   "MUSIC_ALBUM_V2"
-	//   "MUSIC_GROUP_V2"
-	//   "MUSIC_PLAYLIST_V2"
-	//   "MUSIC_RECORDING_V2"
-	//   "NEWS_ARTICLE_V2"
-	//   "OFFER_V2"
-	//   "ORGANIZATION_V2"
-	//   "ORGANIZE_ACTION_V2"
-	//   "PERSON_V2"
-	//   "PLACE_REVIEW_V2"
-	//   "PLACE_V2"
-	//   "PLAN_ACTION_V2"
-	//   "PLAY_MUSIC_ALBUM_V2"
-	//   "PLAY_MUSIC_TRACK_V2"
-	//   "PLAY_OBJECT_V2"
-	//   "PLUS_AUDIO_V2"
-	//   "PLUS_EVENT_V2"
-	//   "PLUS_MEDIA_COLLECTION_V2"
-	//   "PLUS_MEDIA_OBJECT_V2"
-	//   "PLUS_PAGE_V2"
-	//   "PLUS_PHOTOS_ADDED_TO_COLLECTION_V2"
-	//   "PLUS_PHOTO_ALBUM_V2"
-	//   "PLUS_PHOTO_COLLECTION_V2"
-	//   "PLUS_PHOTO_V2"
-	//   "PLUS_POST_V2"
-	//   "PLUS_RESHARE_V2"
-	//   "PLUS_SOFTWARE_APPLICATION_V2"
-	//   "POLL_OPTION_V2"
-	//   "POLL_V2"
-	//   "POSTAL_ADDRESS_V2"
-	//   "PRESENTATION_OBJECT_V2"
-	//   "PRODUCT_REVIEW_V2"
-	//   "RATING_V2"
-	//   "REACT_ACTION_V2"
-	//   "RESERVATION_V2"
-	//   "RESERVE_ACTION_V2"
-	//   "REVIEW_V2"
-	//   "REVIEW_ACTION_V2"
-	//   "SOFTWARE_APPLICATION_V2"
-	//   "SPREADSHEET_OBJECT_V2"
-	//   "SQUARE_INVITE_V2"
-	//   "SQUARE_V2"
-	//   "STICKER_V2"
-	//   "STORY_V2" - Boswell story (see goto/boswell)
-	//   "THING_V2"
-	//   "TRADE_ACTION_V2"
-	//   "DEPRECATED_TOUR_OBJECT_V2"
-	//   "TV_EPISODE_V2"
-	//   "TV_SERIES_V2"
-	//   "UPDATE_ACTION_V2"
-	//   "VIEW_ACTION_V2"
-	//   "VIDEO_OBJECT_V2"
-	//   "VIDEO_GALLERY_V2"
-	//   "WANT_ACTION_V2"
-	//   "WEB_PAGE_V2"
-	//   "WRITE_ACTION_V2"
-	//   "YOUTUBE_CHANNEL_V2"
-	//   "GOOGLE_USER_PHOTO_V2" - A photo stored in photo service owned by a
-	// Google account user. This is distinct from PlusPhoto as it isn't tied
-	// to GPlus, but is instead intended to be a more general photo tied to
-	// a google user.
-	//   "GOOGLE_USER_PHOTO_ALBUM" - A photo album in photo service owned by
-	// a Google account user. This is distinct from PlusPhotoAlbum as it
-	// isn't tied to GPlus, but is instead intended to be a general photo
-	// album tied to a google user.
-	//   "GOOGLE_PHOTO_RECIPE" - An embed used to create a single photo in
-	// photo service. This type is never stored but is used to create a
-	// GOOGLE_USER_PHOTO_V2 or PLUS_PHOTO_V2 embed.
-	//   "THING" - Embeds V1 types
-	//   "CREATIVE_WORK"
-	//   "EVENT"
-	//   "INTANGIBLE"
-	//   "ORGANIZATION"
-	//   "PERSON"
-	//   "PLACE"
-	//   "PRODUCT"
-	//   "ARTICLE" - CREATIVE_WORK subtypes
-	//   "BLOG_POSTING"
-	//   "NEWS_ARTICLE"
-	//   "SCHOLARLY_ARTICLE"
-	//   "BLOG"
-	//   "BOOK"
-	//   "COMMENT"
-	//   "ITEM_LIST"
-	//   "MAP"
-	//   "MEDIA_OBJECT"
-	//   "AUDIO_OBJECT"
-	//   "IMAGE_OBJECT"
-	//   "MUSIC_VIDEO_OBJECT"
-	//   "VIDEO_OBJECT"
-	//   "MOVIE"
-	//   "MUSIC_PLAYLIST"
-	//   "MUSIC_ALBUM"
-	//   "MUSIC_RECORDING"
-	//   "PAINTING"
-	//   "PHOTOGRAPH"
-	//   "RECIPE"
-	//   "REVIEW"
-	//   "SCULPTURE"
-	//   "SOFTWARE_APPLICATION"
-	//   "MOBILE_APPLICATION"
-	//   "WEB_APPLICATION"
-	//   "TV_EPISODE"
-	//   "TV_SEASON"
-	//   "TV_SERIES"
-	//   "WEB_PAGE"
-	//   "ABOUT_PAGE"
-	//   "CHECKOUT_PAGE"
-	//   "COLLECTION_PAGE"
-	//   "IMAGE_GALLERY"
-	//   "VIDEO_GALLERY"
-	//   "CONTACT_PAGE"
-	//   "ITEM_PAGE"
-	//   "PROFILE_PAGE"
-	//   "SEARCH_RESULTS_PAGE"
-	//   "WEB_PAGE_ELEMENT"
-	//   "SITE_NAVIGATION_ELEMENT"
-	//   "TABLE"
-	//   "WP_AD_BLOCK"
-	//   "WP_FOOTER"
-	//   "WP_HEADER"
-	//   "WP_SIDEBAR"
-	//   "APP_INVITE"
-	//   "EMOTISHARE"
-	//   "BUSINESS_EVENT" - EVENT subtypes
-	//   "CHILDRENS_EVENT"
-	//   "COMEDY_EVENT"
-	//   "DANCE_EVENT"
-	//   "EDUCATION_EVENT"
-	//   "FESTIVAL"
-	//   "FOOD_EVENT"
-	//   "LITERARY_EVENT"
-	//   "MUSIC_EVENT"
-	//   "SALE_EVENT"
-	//   "SOCIAL_EVENT"
-	//   "SPORTS_EVENT"
-	//   "THEATER_EVENT"
-	//   "VISUAL_ARTS_EVENT"
-	//   "RESERVATION"
-	//   "TRAVEL_EVENT"
-	//   "CORPORATION" - ORGANIZATION subtypes
-	//   "EDUCATIONAL_ORGANIZATION"
-	//   "COLLEGE_OR_UNIVERSITY"
-	//   "ELEMENTARY_SCHOOL"
-	//   "HIGH_SCHOOL"
-	//   "MIDDLE_SCHOOL"
-	//   "PRESCHOOL"
-	//   "SCHOOL"
-	//   "GOVERNMENT_ORGANIZATION"
-	//   "LOCAL_BUSINESS"
-	//   "ANIMAL_SHELTER"
-	//   "AUTOMOTIVE_BUSINESS"
-	//   "AUTO_BODY_SHOP"
-	//   "AUTO_DEALER"
-	//   "AUTO_PARTS_STORE"
-	//   "AUTO_RENTAL"
-	//   "AUTO_REPAIR"
-	//   "AUTO_WASH"
-	//   "GAS_STATION"
-	//   "MOTORCYCLE_DEALER"
-	//   "MOTORCYCLE_REPAIR"
-	//   "CHILD_CARE"
-	//   "DRY_CLEANING_OR_LAUNDRY"
-	//   "EMERGENCY_SERVICE"
-	//   "FIRE_STATION"
-	//   "HOSPITAL"
-	//   "POLICE_STATION"
-	//   "EMPLOYMENT_AGENGY"
-	//   "ENTERTAINMENT_BUSINESS"
-	//   "ADULT_ENTERTAINMENT"
-	//   "AMUSEMENT_PARK"
-	//   "ART_GALLERY"
-	//   "CASINO"
-	//   "COMEDY_CLUB"
-	//   "MOVIE_THEATER"
-	//   "NIGHT_CLUB"
-	//   "FINANCIAL_SERVICE"
-	//   "ACCOUNTING_SERVICE"
-	//   "AUTOMATED_TELLER"
-	//   "BANK_OR_CREDIT_UNION"
-	//   "INSURANCE_AGENCY"
-	//   "FOOD_ESTABLISHMENT"
-	//   "BAKERY"
-	//   "BAR_OR_PUB"
-	//   "BREWERY"
-	//   "CAFE_OR_COFFEE_SHOP"
-	//   "FAST_FOOD_RESTAURANT"
-	//   "ICE_CREAM_SHOP"
-	//   "RESTAURANT"
-	//   "WINERY"
-	//   "GOVERNMENT_OFFICE"
-	//   "POST_OFFICE"
-	//   "HEALTH_AND_BEAUTY_BUSINESS"
-	//   "BEAUTY_SALON"
-	//   "DAY_SPA"
-	//   "HAIR_SALON"
-	//   "HEALTH_CLUB"
-	//   "NAIL_SALON"
-	//   "TATTOO_PARLOR"
-	//   "HOME_AND_CONSTRUCTION_BUSINESS"
-	//   "ELECTRICIAN"
-	//   "GENERAL_CONTRACTOR"
-	//   "HVAC_BUSINESS"
-	//   "HOUSE_PAINTER"
-	//   "LOCKSMITH"
-	//   "MOVING_COMPANY"
-	//   "PLUMBER"
-	//   "ROOFING_CONTRACTOR"
-	//   "INTERNET_CAFE"
-	//   "LIBRARY"
-	//   "LODGING_BUSINESS"
-	//   "BED_AND_BREAKFAST"
-	//   "HOSTEL"
-	//   "HOTEL"
-	//   "MOTEL"
-	//   "MEDICAL_ORGANIZATION"
-	//   "DENTIST"
-	//   "MEDICAL_CLINIC"
-	//   "OPTICIAN"
-	//   "PHARMACY"
-	//   "PHYSICIAN"
-	//   "VETERINARY_CARE"
-	//   "PROFESSIONAL_SERVICE"
-	//   "ATTORNEY"
-	//   "NOTARY"
-	//   "RADIO_STATION"
-	//   "REAL_ESTATE_AGENT"
-	//   "RECYCLING_CENTER"
-	//   "SELF_STORAGE"
-	//   "SHOPPING_CENTER"
-	//   "SPORTS_ACTIVITY_LOCATION"
-	//   "BOWLING_ALLEY"
-	//   "EXERCISE_GYM"
-	//   "GOLF_COURSE"
-	//   "PUBLIC_SWIMMING_POOL"
-	//   "SKI_RESORT"
-	//   "SPORTS_CLUB"
-	//   "STADIUM_OR_ARENA"
-	//   "TENNIS_COMPLEX"
-	//   "STORE"
-	//   "BIKE_STORE"
-	//   "BOOK_STORE"
-	//   "CLOTHING_STORE"
-	//   "COMPUTER_STORE"
-	//   "CONVENIENCE_STORE"
-	//   "DEPARTMENT_STORE"
-	//   "ELECTRONICS_STORE"
-	//   "FLORIST"
-	//   "FURNITURE_STORE"
-	//   "GARDEN_STORE"
-	//   "GROCERY_STORE"
-	//   "HARDWARE_STORE"
-	//   "HOBBY_SHOP"
-	//   "HOME_GOODS_STORE"
-	//   "JEWELRY_STORE"
-	//   "LIQUOR_STORE"
-	//   "MENS_CLOTHING_STORE"
-	//   "MOBILE_PHONE_STORE"
-	//   "MOVIE_RENTAL_STORE"
-	//   "MUSIC_STORE"
-	//   "OFFICE_EQUIPMENT_STORE"
-	//   "OUTLET_STORE"
-	//   "PAWN_SHOP"
-	//   "PET_STORE"
-	//   "SHOE_STORE"
-	//   "SPORTING_GOODS_STORE"
-	//   "TIRE_SHOP"
-	//   "TOY_STORE"
-	//   "WHOLESALE_STORE"
-	//   "TELEVISION_STATION"
-	//   "TOURIST_INFORMATION_CENTER"
-	//   "TRAVEL_AGENCY"
-	//   "PERFORMING_GROUP"
-	//   "MUSIC_GROUP"
-	//   "ADMINISTRATIVE_AREA" - PLACE subtypes
-	//   "CITY"
-	//   "COUNTRY"
-	//   "STATE"
-	//   "CIVIC_STRUCTURE"
-	//   "AIRPORT"
-	//   "AQUARIUM"
-	//   "BEACH"
-	//   "BUS_STATION"
-	//   "BUS_STOP"
-	//   "CAMPGROUND"
-	//   "CEMETERY"
-	//   "CREMATORIUM"
-	//   "EVENT_VENUE"
-	//   "GOVERNMENT_BUILDING"
-	//   "CITY_HALL"
-	//   "COURTHOUSE"
-	//   "DEFENCE_ESTABLISHMENT"
-	//   "EMBASSY"
-	//   "LEGISLATIVE_BUILDING"
-	//   "MUSEUM"
-	//   "MUSIC_VENUE"
-	//   "PARK"
-	//   "PARKING_FACILITY"
-	//   "PERFORMING_ARTS_THEATER"
-	//   "PLACE_OF_WORSHIP"
-	//   "BUDDHIST_TEMPLE"
-	//   "CATHOLIC_CHURCH"
-	//   "CHURCH"
-	//   "HINDU_TEMPLE"
-	//   "MOSQUE"
-	//   "SYNAGOGUE"
-	//   "PLAYGROUND"
-	//   "R_V_PARK"
-	//   "RESIDENCE"
-	//   "APARTMENT_COMPLEX"
-	//   "GATED_RESIDENCE_COMMUNITY"
-	//   "SINGLE_FAMILY_RESIDENCE"
-	//   "TOURIST_ATTRACTION"
-	//   "SUBWAY_STATION"
-	//   "TAXI_STAND"
-	//   "TRAIN_STATION"
-	//   "ZOO"
-	//   "LANDFORM"
-	//   "BODY_OF_WATER"
-	//   "CANAL"
-	//   "LAKE_BODY_OF_WATER"
-	//   "OCEAN_BODY_OF_WATER"
-	//   "POND"
-	//   "RESERVOIR"
-	//   "RIVER_BODY_OF_WATER"
-	//   "SEA_BODY_OF_WATER"
-	//   "WATERFALL"
-	//   "CONTINENT"
-	//   "MOUNTAIN"
-	//   "VOLCANO"
-	//   "LANDMARKS_OR_HISTORICAL_BUILDINGS"
-	//   "USER_INTERACTION" - NOTE(jpanzer): This is a badly designed
-	// hierarchy and we should avoid depending on Event properties inside
-	// UserInteractions as much as possible IMHO.
-	//   "USER_PLUS_ONES"
-	//   "ENUMERATION" - Intangibles, primarily used as sub-objects of other
-	// types
-	//   "BOOK_FORMAT_TYPE"
-	//   "ITEM_AVAILABILITY"
-	//   "OFFER_ITEM_CONDITION"
-	//   "JOB_POSTING"
-	//   "LANGUAGE"
-	//   "OFFER"
-	//   "QUANTITY"
-	//   "DISTANCE"
-	//   "DURATION"
-	//   "ENERGY"
-	//   "MASS"
-	//   "RATING"
-	//   "AGGREGATE_RATING"
-	//   "STRUCTURED_VALUE"
-	//   "CONTACT_POINT"
-	//   "POSTAL_ADDRESS"
-	//   "GEO_COORDINATES"
-	//   "GEO_SHAPE"
-	//   "NUTRITION_INFORMATION"
-	//   "PRESENTATION_OBJECT" - CREATIVE_WORK extensions
-	//   "DOCUMENT_OBJECT"
-	//   "SPREADSHEET_OBJECT"
-	//   "FORM_OBJECT"
-	//   "DRAWING_OBJECT"
-	//   "PLACE_REVIEW"
-	//   "FILE_OBJECT"
-	//   "PLAY_MUSIC_TRACK"
-	//   "PLAY_MUSIC_ALBUM"
-	//   "MAGAZINE"
-	//   "CAROUSEL_FRAME" - Single frame for http://goto/carousel.
-	//   "PLUS_EVENT" - EVENT extensions
-	//   "HANGOUT" - No declared proto. Used only as a base type for now.
-	//   "HANGOUT_BROADCAST"
-	//   "HANGOUT_CONSUMER"
-	//   "CHECKIN"
-	//   "EXAMPLE_OBJECT"
-	//   "SQUARE" - NOTE(melchang): These correspond to
-	// http://schema.org/WebPage/Community and
-	// http://schema.org/WebPage/CommunityInvite. See b/7653610 for why
-	// these are "SQUARE" and not "COMMUNITY".
-	//   "SQUARE_INVITE"
-	//   "PLUS_PHOTO"
-	//   "PLUS_PHOTO_ALBUM"
-	//   "LOCAL_PLUS_PHOTO_ALBUM"
-	//   "PRODUCT_REVIEW"
-	//   "FINANCIAL_QUOTE"
-	//   "DEPRECATED_TOUR_OBJECT"
-	//   "PLUS_PAGE"
-	//   "GOOGLE_CHART" - Data visualizations. See
-	// http://code.google.com/apis/chart/index.html
-	//   "PLUS_PHOTOS_ADDED_TO_COLLECTION"
-	//   "RECOMMENDED_PEOPLE" - A collection of people that have been
-	// recommended to a user.
-	//   "PLUS_POST" - A Google+ post.
-	//   "DATE" - An http://schema.org/Date unstructured ISO-8859 timestamp
-	// string.
-	//   "DRIVE_OBJECT_COLLECTION" - Embed representing a collection of
-	// multiple Drive objects.
-	//   "NEWS_MEDIA_ORGANIZATION" -
-	// https://schema.org/NewsMediaOrganization
-	//   "DYNAMITE_ATTACHMENT_METADATA" - Deprecated in favor of
-	// DYNAMITE_MESSAGE_METADATA
-	//   "DYNAMITE_MESSAGE_METADATA" - Used for Dynamite message metadata in
-	// Hangouts
-	Type []string `json:"type,omitempty"`
+	//   "UNKNOWN"
+	//   "MOBILE"
+	//   "OFFICE"
+	//   "OTHER"
+	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CanonicalId") to
+	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -9166,7 +1909,7 @@ type EmbedClientItem struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CanonicalId") to include
+	// NullFields is a list of field names (e.g. "PhoneNumber") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -9175,8 +1918,2179 @@ type EmbedClientItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmbedClientItem) MarshalJSON() ([]byte, error) {
-	type NoMethod EmbedClientItem
+func (s *EnterpriseTopazFrontendTeamsPersonCorePhoneNumber) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazFrontendTeamsPersonCorePhoneNumber
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAgendaEntry: An AgendaEntry, e.g., a Calendar
+// Event.
+type EnterpriseTopazSidekickAgendaEntry struct {
+	// AgendaItemUrl: URL of the agenda item.
+	AgendaItemUrl string `json:"agendaItemUrl,omitempty"`
+
+	// Chronology: The chronology from the present.
+	//
+	// Possible values:
+	//   "STALE" - Stale.
+	//   "ALL_DAY" - All day.
+	//   "PAST" - Past.
+	//   "RECENTLY_PAST" - Recently past.
+	//   "PRESENT" - Present.
+	//   "NEAR_FUTURE" - Near future.
+	//   "FUTURE" - Future.
+	Chronology string `json:"chronology,omitempty"`
+
+	// Creator: Person who created the event.
+	Creator *EnterpriseTopazSidekickPerson `json:"creator,omitempty"`
+
+	// CurrentUserAttendingStatus: Attendance status for the current user
+	// making the request. This is a convenience data member in order to
+	// avoid figuring out the same by iterating the invitee list above on
+	// the caller side.
+	//
+	// Possible values:
+	//   "AWAITING" - Awaiting for the user to set the status.
+	//   "YES" - Attending.
+	//   "NO" - Not attending.
+	//   "MAYBE" - Tentatively attending.
+	CurrentUserAttendingStatus string `json:"currentUserAttendingStatus,omitempty"`
+
+	// Description: Description of the agenda item (i.e., typically, summary
+	// in calendar event).
+	Description string `json:"description,omitempty"`
+
+	// Document: Items related to the current AgendaEntry. E.g., related
+	// drive/mail/groups documents.
+	Document []*EnterpriseTopazSidekickCommonDocument `json:"document,omitempty"`
+
+	// EndDate: End date "Friday, August 26" in the user's timezone.
+	EndDate string `json:"endDate,omitempty"`
+
+	// EndTime: End time (HH:mm) in the user's timezone.
+	EndTime string `json:"endTime,omitempty"`
+
+	// EndTimeMs: End time in milliseconds
+	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
+
+	// EventId: Event id provided by Calendar API.
+	EventId string `json:"eventId,omitempty"`
+
+	// GuestsCanInviteOthers: Whether the guests can invite other guests.
+	GuestsCanInviteOthers bool `json:"guestsCanInviteOthers,omitempty"`
+
+	// GuestsCanModify: Whether the guests can modify the event.
+	GuestsCanModify bool `json:"guestsCanModify,omitempty"`
+
+	// GuestsCanSeeGuests: Whether the guests of the event can be seen. If
+	// false, the user is going to be reported as the only attendee to the
+	// meeting, even though there may be more attendees.
+	GuestsCanSeeGuests bool `json:"guestsCanSeeGuests,omitempty"`
+
+	// HangoutId: Hangout meeting identifier.
+	HangoutId string `json:"hangoutId,omitempty"`
+
+	// HangoutUrl: Absolute URL for the Hangout meeting.
+	HangoutUrl string `json:"hangoutUrl,omitempty"`
+
+	// Invitee: People attending the meeting.
+	Invitee []*EnterpriseTopazSidekickPerson `json:"invitee,omitempty"`
+
+	// IsAllDay: Whether the entry lasts all day.
+	IsAllDay bool `json:"isAllDay,omitempty"`
+
+	// LastModificationTimeMs: Last time the event was modified.
+	LastModificationTimeMs int64 `json:"lastModificationTimeMs,omitempty,string"`
+
+	// Location: Agenda item location.
+	Location string `json:"location,omitempty"`
+
+	// NotifyToUser: Whether this should be notified to the user.
+	NotifyToUser bool `json:"notifyToUser,omitempty"`
+
+	// OtherAttendeesExcluded: Whether guest list is not returned because
+	// number of attendees is too large.
+	OtherAttendeesExcluded bool `json:"otherAttendeesExcluded,omitempty"`
+
+	// RequesterIsOwner: Whether the requester is the owner of the agenda
+	// entry.
+	RequesterIsOwner bool `json:"requesterIsOwner,omitempty"`
+
+	// ShowFullEventDetailsToUse: Whether the details of this entry should
+	// be displayed to the user.
+	ShowFullEventDetailsToUse bool `json:"showFullEventDetailsToUse,omitempty"`
+
+	// StartDate: Start date "Friday, August 26" in the user's timezone.
+	StartDate string `json:"startDate,omitempty"`
+
+	// StartTime: Start time (HH:mm) in the user's timezone.
+	StartTime string `json:"startTime,omitempty"`
+
+	// StartTimeMs: Start time in milliseconds.
+	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
+
+	// TimeZone: User's calendar timezone;
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// Title: Title of the agenda item.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgendaItemUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgendaItemUrl") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAgendaEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAgendaEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickAgendaGroupCardProto struct {
+	AgendaItem []*EnterpriseTopazSidekickAgendaItem `json:"agendaItem,omitempty"`
+
+	Context *EnterpriseTopazSidekickAgendaGroupCardProtoContext `json:"context,omitempty"`
+
+	CurrentAgendaItem *EnterpriseTopazSidekickAgendaItem `json:"currentAgendaItem,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgendaItem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgendaItem") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAgendaGroupCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAgendaGroupCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAgendaGroupCardProtoContext: The context that
+// resulted in the generation of the card.
+type EnterpriseTopazSidekickAgendaGroupCardProtoContext struct {
+	// Context: User friendly free text that describes the context of the
+	// card (e.g. "Next meeting with Bob"). This is largely only applicable
+	// when the card is generated from a query.
+	Context string `json:"context,omitempty"`
+
+	// Date: Localized free text that describes the dates represented by the
+	// card. Currently, the card will only represent a single day.
+	Date string `json:"date,omitempty"`
+
+	// EventsRestrict: Represents restrictions applied to the events
+	// requested in the user's query.
+	//
+	// Possible values:
+	//   "NONE" - No specific event was requested.
+	//   "NEXT_MEETING" - The next meeting was requested.
+	EventsRestrict string `json:"eventsRestrict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Context") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Context") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAgendaGroupCardProtoContext) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAgendaGroupCardProtoContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickAgendaItem struct {
+	ConflictedGroup *EnterpriseTopazSidekickConflictingEventsCardProto `json:"conflictedGroup,omitempty"`
+
+	GapBefore *EnterpriseTopazSidekickGap `json:"gapBefore,omitempty"`
+
+	Meeting *EnterpriseTopazSidekickAgendaEntry `json:"meeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConflictedGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictedGroup") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAgendaItem) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAgendaItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAnswerAnswerList: A list of answers
+// represented as free text.
+type EnterpriseTopazSidekickAnswerAnswerList struct {
+	// LabeledAnswer: Answers that have a corresponding label.
+	LabeledAnswer []*EnterpriseTopazSidekickAnswerAnswerListLabeledAnswer `json:"labeledAnswer,omitempty"`
+
+	// Type: Answer type.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "PERSON_ADDRESS"
+	//   "PERSON_BIRTHDAY"
+	//   "PERSON_DEPARTMENT"
+	//   "PERSON_DESK_LOCATION"
+	//   "PERSON_EMAIL"
+	//   "PERSON_JOB_TITLE"
+	//   "PERSON_PHONE"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LabeledAnswer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LabeledAnswer") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAnswerAnswerList) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAnswerAnswerList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAnswerAnswerListLabeledAnswer: An answer with
+// a corresponding label.
+type EnterpriseTopazSidekickAnswerAnswerListLabeledAnswer struct {
+	// Answer: The free text answer.
+	Answer string `json:"answer,omitempty"`
+
+	// Label: A localized label for the answer (e.g. "Cell phone" vs "Desk
+	// phone").
+	Label string `json:"label,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Answer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAnswerAnswerListLabeledAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAnswerAnswerListLabeledAnswer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAnswerSuggestedQueryAnswerCard: Contains a
+// list of suggested queries. Allows the user to determine what natural
+// language queries they can ask Cloud Search (e.g. "what can I search
+// for?").
+type EnterpriseTopazSidekickAnswerSuggestedQueryAnswerCard struct {
+	// SuggestedQueryCategory: A list of queries to suggest.
+	SuggestedQueryCategory []*EnterpriseTopazSidekickAnswerSuggestedQueryCategory `json:"suggestedQueryCategory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SuggestedQueryCategory") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SuggestedQueryCategory")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAnswerSuggestedQueryAnswerCard) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAnswerSuggestedQueryAnswerCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAnswerSuggestedQueryCategory: Contains a list
+// of suggested queries for a single category.
+type EnterpriseTopazSidekickAnswerSuggestedQueryCategory struct {
+	// Category: The query list category.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown.
+	//   "CALENDAR" - Calendar based queries (e.g. "my agenda for
+	// tomorrow").
+	//   "DOCUMENT" - Document based queries (e.g. "files shared with me").
+	//   "PEOPLE" - People based queries (e.g. "what is x's email
+	// address?").
+	Category string `json:"category,omitempty"`
+
+	// IsEnabled: Whether this category is enabled.
+	IsEnabled bool `json:"isEnabled,omitempty"`
+
+	// Query: List of suggested queries to show the user.
+	Query []string `json:"query,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAnswerSuggestedQueryCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAnswerSuggestedQueryCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickAssistCardProto: Wrapper proto for the Assist
+// cards.
+type EnterpriseTopazSidekickAssistCardProto struct {
+	// AgendaGroupCardProto: Agenda group card.
+	AgendaGroupCardProto *EnterpriseTopazSidekickAgendaGroupCardProto `json:"agendaGroupCardProto,omitempty"`
+
+	// CardMetadata: Card metadata such as chronology and render mode of the
+	// card.
+	CardMetadata *EnterpriseTopazSidekickCardMetadata `json:"cardMetadata,omitempty"`
+
+	// CardType: Card type.
+	//
+	// Possible values:
+	//   "UNKNOWN_TYPE" - The default type, an unknown card type.
+	//   "AGENDA" - The user's agenda for the day.
+	//   "CHANGELISTS" - Changelists.
+	//   "CONFLICTING_MEETINGS" - Any group of meetings for the day that are
+	// overlapping.
+	//   "CREATE_NOTES_FOR_MEETING" - Create notes for a meeting specified
+	// in the request.
+	//   "CREATE_NOTES_FOR_MEETING_REQUEST" - Create notes for meeting
+	// query.
+	//   "CUSTOMER_NEWS" - News about your SFDC customers.
+	//   "FIND_MEETING_TIME" - Find a time for two people to meet.
+	//   "NEXT_MEETING" - The user's next non-declined meeting.
+	//   "PERSONALIZED_DOCS" - Important documents for you since you have
+	// viewed them in the last month and there's some action going on.
+	//   "TRENDING_DOCS" - Documents that are trending in your company. A
+	// TRENDING_DOCS card can be of two types: TRENDING_IN_COLLABORATORS
+	// (i.e., Stay in the Loop) and TRENDING_IN_DOMAIN (i.e., Popular
+	// Content). Use DOMAIN_TRENDING_DOCS/TEAM_TRENDING_DOCS instead.
+	//   "UPCOMING_TRIP" - An upcoming trip with all trip information along
+	// with calendar events in the destination timezone.
+	//   "SUMMARY" - The Morning/Evening Summary Card for the next working
+	// day.
+	//   "MEETINGS" - A meeting. When requesting meetings, the service will
+	// return a MEETING card for each meeting the user has in his agenda.
+	//   "HOMEPAGE" - All cards related to the homepage (agenda,
+	// conflicting-meetings, summary, etc...). This type should no longer be
+	// used. Use HOMEPAGE_V3 instead.
+	//   "SHARE_MEETING_DOCS" - A card to with specifics to share meeting
+	// documents with all attendees.
+	//   "DISCOVER_PEOPLE" - Represents a set of users that the requesting
+	// user has low affinity with.
+	//   "HOMEPAGE_V3" - All cards related to the homepage-v3 (agenda-group,
+	// WIP, etc...)
+	//   "AGENDA_GROUP" - A group of agenda-events (meeting, conflicts)
+	//   "WORK_IN_PROGRESS" - The documents that you were recently working
+	// on.
+	//   "GET_AND_KEEP_AHEAD" - (v3) The "get and keep ahead" card for today
+	// and tomorrow
+	//   "GENERIC_ANSWER_CARD" - Generic answer card.
+	//   "THIRD_PARTY_ANSWER_CARD" - Third party answer card.
+	//   "DOMAIN_TRENDING_DOCS" - Documents that are trending in your
+	// company/domain (i.e., Popular Content).
+	//   "TEAM_TRENDING_DOCS" - Documents that are trending in your team
+	// (i.e., Stay in the Loop).
+	//   "DOCUMENT_LIST_ANSWER_CARD" - Documents that match the user's query
+	// (e.g. sheets shared with me).
+	//   "SUGGESTED_QUERY_ANSWER_CARD" - A help card that provides examples
+	// of queries the user can ask.
+	//   "PERSON_ANSWER_CARD" - Answer card for a single person (e.g. what
+	// is x's phone number).
+	//   "RELATED_PEOPLE_ANSWER_CARD" - Answer card for a list of people
+	// related to the person that is the subject of the query (e.g. who
+	// reports to x).
+	//   "PERSON_KNOWLEDGE_CARD" - Knowledge card for a single person and
+	// their related people.
+	//   "PEOPLE_SEARCH_PROMOTION_CARD" - People Search promotion card.
+	CardType string `json:"cardType,omitempty"`
+
+	// ConflictingMeetingsCard: Conflicting events card.
+	ConflictingMeetingsCard *EnterpriseTopazSidekickConflictingEventsCardProto `json:"conflictingMeetingsCard,omitempty"`
+
+	// DocumentListCard: Answer card for documents that are applicable to
+	// the current query.
+	DocumentListCard *EnterpriseTopazSidekickDocumentPerCategoryList `json:"documentListCard,omitempty"`
+
+	// DocumentsWithMentions: Documents with mentions.
+	DocumentsWithMentions *EnterpriseTopazSidekickDocumentPerCategoryList `json:"documentsWithMentions,omitempty"`
+
+	// FindMeetingTimeCard: Find meeting time card.
+	FindMeetingTimeCard *EnterpriseTopazSidekickFindMeetingTimeCardProto `json:"findMeetingTimeCard,omitempty"`
+
+	// GenericAnswerCard: Generic answer card.
+	GenericAnswerCard *EnterpriseTopazSidekickGenericAnswerCard `json:"genericAnswerCard,omitempty"`
+
+	// GetAndKeepAheadCard: Get and keep ahead card.
+	GetAndKeepAheadCard *EnterpriseTopazSidekickGetAndKeepAheadCardProto `json:"getAndKeepAheadCard,omitempty"`
+
+	// Meeting: Meeting card.
+	Meeting *EnterpriseTopazSidekickAgendaEntry `json:"meeting,omitempty"`
+
+	// MeetingNotesCard: Meeting notes card.
+	MeetingNotesCard *EnterpriseTopazSidekickMeetingNotesCardProto `json:"meetingNotesCard,omitempty"`
+
+	// MeetingNotesCardRequest: Request for meeting notes card.
+	MeetingNotesCardRequest *EnterpriseTopazSidekickMeetingNotesCardRequest `json:"meetingNotesCardRequest,omitempty"`
+
+	// PeopleDisambiguationCard: The people disambiguation card.
+	PeopleDisambiguationCard *EnterpriseTopazSidekickPeopleDisambiguationCard `json:"peopleDisambiguationCard,omitempty"`
+
+	// PeoplePromotionCard: People Search promotion card.
+	PeoplePromotionCard *PeoplePromotionCard `json:"peoplePromotionCard,omitempty"`
+
+	// PersonAnswerCard: Answer card that represents a single person.
+	PersonAnswerCard *EnterpriseTopazSidekickPeopleAnswerPersonAnswerCard `json:"personAnswerCard,omitempty"`
+
+	// PersonProfileCard: Full profile card.
+	PersonProfileCard *EnterpriseTopazSidekickPersonProfileCard `json:"personProfileCard,omitempty"`
+
+	// PersonalizedDocsCard: Card with recommended documents for the user.
+	PersonalizedDocsCard *EnterpriseTopazSidekickPersonalizedDocsCardProto `json:"personalizedDocsCard,omitempty"`
+
+	// RelatedPeopleAnswerCard: Answer card that represents a list of people
+	// related to a person.
+	RelatedPeopleAnswerCard *EnterpriseTopazSidekickPeopleAnswerRelatedPeopleAnswerCard `json:"relatedPeopleAnswerCard,omitempty"`
+
+	// ShareMeetingDocsCard: Sahre meeting docs card.
+	ShareMeetingDocsCard *EnterpriseTopazSidekickShareMeetingDocsCardProto `json:"shareMeetingDocsCard,omitempty"`
+
+	// SharedDocuments: Shared documents.
+	SharedDocuments *EnterpriseTopazSidekickDocumentPerCategoryList `json:"sharedDocuments,omitempty"`
+
+	// SuggestedQueryAnswerCard: Answer card for what natural language
+	// queries the user can ask.
+	SuggestedQueryAnswerCard *EnterpriseTopazSidekickAnswerSuggestedQueryAnswerCard `json:"suggestedQueryAnswerCard,omitempty"`
+
+	// ThirdPartyAnswerCard: Third party answer cards.
+	ThirdPartyAnswerCard *ThirdPartyGenericCard `json:"thirdPartyAnswerCard,omitempty"`
+
+	// WorkInProgressCardProto: Work In Progress card.
+	WorkInProgressCardProto *EnterpriseTopazSidekickRecentDocumentsCardProto `json:"workInProgressCardProto,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AgendaGroupCardProto") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgendaGroupCardProto") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickAssistCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickAssistCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickCardMetadata: Card metadata.
+type EnterpriseTopazSidekickCardMetadata struct {
+	// CardCategory: Declares a preference for how this card should be
+	// packed in MSCR. All cards in a response must correspond to a single
+	// category. As a result, cards may be dropped from the response if this
+	// field is set. Any card that does not match the category of the card
+	// with the highest priority in the response will be dropped.
+	//
+	// Possible values:
+	//   "DEFAULT" - Let MSCR decide how this card should be packed. Most
+	// cards should choose this type. This type should largely be considered
+	// equivalent to ANSWER. However, this is not guaranteed to be the case
+	// as the request to MSCR may override the static configuration.
+	//   "ANSWER" - This card should be rendered as an answer card.
+	//   "KNOWLEDGE" - This card should be rendered as a knowledge card (a
+	// non-organic result).
+	//   "HOMEPAGE" - This card should be rendered in the Homepage.
+	CardCategory string `json:"cardCategory,omitempty"`
+
+	// CardId: An ID to identify the card and match actions to it. Be
+	// thoughtful of new card IDs since actions will be associated to that
+	// ID. E.g., if two card IDs collide, the system will think that the
+	// actions have been applied to the same card. Similarly, if EAS can
+	// return multiple cards of the same type (e.g., Meetings), ensure that
+	// the card_id identifies a given instance of the card so that, e.g.,
+	// dismissals only affect the dismissed card as opposed to affecting all
+	// meeting cards.
+	CardId string `json:"cardId,omitempty"`
+
+	// Chronology: Chronology.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown chronology (default).
+	//   "PAST" - Past.
+	//   "RECENTLY_PAST" - Recently past.
+	//   "PRESENT" - Present.
+	//   "NEAR_FUTURE" - Near future.
+	//   "FUTURE" - Future.
+	Chronology string `json:"chronology,omitempty"`
+
+	// DebugInfo: Debug info (only reported if request's debug_level > 0).
+	DebugInfo string `json:"debugInfo,omitempty"`
+
+	// NlpMetadata: Information about the NLP done to get the card.
+	NlpMetadata *EnterpriseTopazSidekickNlpMetadata `json:"nlpMetadata,omitempty"`
+
+	// RankingParams: Ranking params.
+	RankingParams *EnterpriseTopazSidekickRankingParams `json:"rankingParams,omitempty"`
+
+	// RenderMode: Render mode.
+	//
+	// Possible values:
+	//   "UNKNOWN_RENDER" - Unknown mode (default).
+	//   "COLLAPSED" - Collapsed.
+	//   "EXPANDED" - Expanded.
+	RenderMode string `json:"renderMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardCategory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardCategory") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCardMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCardMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickCommonDebugInfo: Container of debugging
+// information in all object levels. Extend as needed.
+type EnterpriseTopazSidekickCommonDebugInfo struct {
+	// Message: Debug message.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCommonDebugInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCommonDebugInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickCommonDocument: Representation of a document.
+// NEXT_TAG: 15
+type EnterpriseTopazSidekickCommonDocument struct {
+	// AccessType: Access type, i.e., whether the user has access to the
+	// document or not.
+	//
+	// Possible values:
+	//   "UNKNOWN_ACCESS" - Unknown access type.
+	//   "ALLOWED" - Access allowed.
+	//   "NOT_ALLOWED" - Access not allowed.
+	AccessType string `json:"accessType,omitempty"`
+
+	// DebugInfo: Information for debugging.
+	DebugInfo *EnterpriseTopazSidekickCommonDebugInfo `json:"debugInfo,omitempty"`
+
+	// DocumentId: Document id.
+	DocumentId string `json:"documentId,omitempty"`
+
+	// DriveDocumentMetadata: Drive document metadata.
+	DriveDocumentMetadata *EnterpriseTopazSidekickCommonDocumentDriveDocumentMetadata `json:"driveDocumentMetadata,omitempty"`
+
+	// GenericUrl: Generic Drive-based url in the format of
+	// drive.google.com/open to be used for deeplink
+	GenericUrl string `json:"genericUrl,omitempty"`
+
+	// Justification: Justification on why the document is selected.
+	Justification *EnterpriseTopazSidekickCommonDocumentJustification `json:"justification,omitempty"`
+
+	// MimeType: MIME type
+	MimeType string `json:"mimeType,omitempty"`
+
+	// Provenance: Document provenance.
+	//
+	// Possible values:
+	//   "UNKNOWN_PROVENANCE" - Unknown provenance.
+	//   "CALENDAR_DESCRIPTION" - Calendar event description.
+	//   "CALENDAR_ATTACHMENT" - Calendar event attachment.
+	//   "MINED" - Mined (extracted by some offline/online analysis).
+	//   "CALENDAR_ASSIST_ATTACHMENT" - Attachment created by enterprise
+	// assist.
+	Provenance string `json:"provenance,omitempty"`
+
+	// Reason: Justification of why this document is being returned.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown justification.
+	//   "TRENDING_IN_COLLABORATORS" - Popular documents within
+	// collaborators.
+	//   "TRENDING_IN_DOMAIN" - Popular documents within the domain.
+	//   "FREQUENTLY_VIEWED" - Documents being reviewed frequently by the
+	// current user .
+	//   "FREQUENTLY_EDITED" - Documents being edited frequently by the
+	// current user .
+	//   "NEW_UPDATES" - Documents updated since user's last visit.
+	//   "NEW_COMMENTS" - Documents that receive comments since user's last
+	// visit.
+	//   "EVENT_DESCRIPTION" - Documents in the calendar event description.
+	//   "EVENT_ATTACHMENT" - Documents in the calendar event attachments
+	// section.
+	//   "EVENT_METADATA_ATTACHMENT" - Documents attached in calendar event
+	// metadata instead of the attachment section. Event metadata is not
+	// visible to the final user. Enterprise assist uses this metadata to
+	// store auto-generated documents such as meeting notes.
+	//   "MINED_DOCUMENT" - Documents mined, and so, probably related to the
+	// request context. For example, this category includes documents
+	// related to a meeting.
+	//   "NEW_MENTIONS" - Documents that contains mentions of the user.
+	//   "NEW_SHARES" - Documents that are shared with the user.
+	Reason string `json:"reason,omitempty"`
+
+	// Snippet: A sampling of the text from the document.
+	Snippet string `json:"snippet,omitempty"`
+
+	// ThumbnailUrl: Thumbnail URL.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+
+	// Type: Type of the document.
+	//
+	// Possible values:
+	//   "UNKNOWN" - If the type is unknown or not represented in this enum.
+	//   "DOCUMENT" - Drive document types Writely, Word, etc.
+	//   "PRESENTATION" - Presently, PowerPoint, etc.
+	//   "SPREADSHEET" - Trix, Excel, etc.
+	//   "PDF" - File types for Gdrive objects are below. PDF.
+	//   "IMAGE" - Image.
+	//   "BINARY_BLOB" - Fall-back for unknown Gdrive types.
+	//   "FUSION_TABLE" - Fusion table.
+	//   "FOLDER" - Folder.
+	//   "DRAWING" - Drawing.
+	//   "VIDEO" - Video.
+	//   "FORM" - Form.
+	//   "LINK_URL" - Link formats uncategorized URL links
+	//   "LINK_GO" - meaningful links that should be renderred specifically
+	//   "LINK_GOO_GL" - Link to goo.gl.
+	//   "LINK_BIT_LY" - Link to bit_ly.
+	//   "LINK_GMAIL" - Link to Gmail.
+	//   "LINK_MAILTO" - Mailto link.
+	//   "VIDEO_YOUTUBE" - Videos Youtube videos.
+	//   "VIDEO_LIVE" - Live streams (e.g., liveplayer.googleplex.com)
+	//   "GROUPS" - Other types. Google Groups.
+	//   "NEWS" - Google News.
+	//   "SITES" - Google Sites.
+	//   "HANGOUT" - Google Hangout.
+	//   "AUDIO" - Audio files.
+	//   "MS_WORD" - Microsoft-specific file types.
+	//   "MS_POWERPOINT"
+	//   "MS_EXCEL"
+	//   "MS_OUTLOOK"
+	Type string `json:"type,omitempty"`
+
+	// Url: Absolute URL of the document.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCommonDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCommonDocument
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickCommonDocumentDriveDocumentMetadata: Meta data
+// for drive documents.
+type EnterpriseTopazSidekickCommonDocumentDriveDocumentMetadata struct {
+	// DocumentId: The drive document cosmo id. Client could use the id to
+	// build a URL to open a document. Please use Document.document_id.
+	DocumentId string `json:"documentId,omitempty"`
+
+	// IsPrivate: Additional field to identify whether a document is private
+	// since scope set to LIMITED can mean both that the doc is private or
+	// that it's shared with others. is_private indicates whether the doc is
+	// not shared with anyone except for the owner.
+	IsPrivate bool `json:"isPrivate,omitempty"`
+
+	// LastCommentTimeMs: Timestamp of the most recent comment added to the
+	// document in milliseconds since epoch.
+	LastCommentTimeMs uint64 `json:"lastCommentTimeMs,omitempty,string"`
+
+	// LastEditTimeMs: Timestamp of the most recent edit from the current
+	// user in milliseconds since epoch.
+	LastEditTimeMs uint64 `json:"lastEditTimeMs,omitempty,string"`
+
+	// LastModificationTimeMillis: Last modification time of the document
+	// (independent of the user that modified it).
+	LastModificationTimeMillis int64 `json:"lastModificationTimeMillis,omitempty,string"`
+
+	// LastUpdatedTimeMs: Timestamp of the last updated time of the document
+	// in milliseconds since epoch.
+	LastUpdatedTimeMs uint64 `json:"lastUpdatedTimeMs,omitempty,string"`
+
+	// LastViewTimeMs: Timestamp of the most recent view from the current
+	// user in milliseconds since epoch.
+	LastViewTimeMs uint64 `json:"lastViewTimeMs,omitempty,string"`
+
+	// Owner: The owner of the document.
+	Owner *EnterpriseTopazSidekickCommonPerson `json:"owner,omitempty"`
+
+	// Scope: ACL scope of the document which identifies the sharing status
+	// of the doc (e.g., limited, shared with link, team drive, ...).
+	//
+	// Possible values:
+	//   "UNKNOWN_DOCUMENT_SCOPE"
+	//   "LIMITED"
+	//   "DASHER_DOMAIN_WITH_LINK"
+	//   "DASHER_DOMAIN"
+	//   "PUBLIC_WITH_LINK"
+	//   "PUBLIC"
+	//   "TEAM_DRIVE"
+	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCommonDocumentDriveDocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCommonDocumentDriveDocumentMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickCommonDocumentJustification: Justification of
+// why we are reporting the document.
+type EnterpriseTopazSidekickCommonDocumentJustification struct {
+	// Justification: A locale aware message that explains why this document
+	// was selected.
+	Justification string `json:"justification,omitempty"`
+
+	// Reason: Reason on why the document is selected. Populate for trending
+	// documents.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown justification.
+	//   "TRENDING_IN_COLLABORATORS" - Popular documents within
+	// collaborators.
+	//   "TRENDING_IN_DOMAIN" - Popular documents within the domain.
+	//   "FREQUENTLY_VIEWED" - Documents being reviewed frequently by the
+	// current user .
+	//   "FREQUENTLY_EDITED" - Documents being edited frequently by the
+	// current user .
+	//   "NEW_UPDATES" - Documents updated since user's last visit.
+	//   "NEW_COMMENTS" - Documents that receive comments since user's last
+	// visit.
+	//   "EVENT_DESCRIPTION" - Documents in the calendar event description.
+	//   "EVENT_ATTACHMENT" - Documents in the calendar event attachments
+	// section.
+	//   "EVENT_METADATA_ATTACHMENT" - Documents attached in calendar event
+	// metadata instead of the attachment section. Event metadata is not
+	// visible to the final user. Enterprise assist uses this metadata to
+	// store auto-generated documents such as meeting notes.
+	//   "MINED_DOCUMENT" - Documents mined, and so, probably related to the
+	// request context. For example, this category includes documents
+	// related to a meeting.
+	//   "NEW_MENTIONS" - Documents that contains mentions of the user.
+	//   "NEW_SHARES" - Documents that are shared with the user.
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Justification") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Justification") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCommonDocumentJustification) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCommonDocumentJustification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickCommonPerson: Common representation of a
+// person.
+type EnterpriseTopazSidekickCommonPerson struct {
+	// Birthday: The birthday.
+	Birthday *EnterpriseTopazSidekickCommonPersonBirthday `json:"birthday,omitempty"`
+
+	// CellPhone: Cell phone number.
+	CellPhone string `json:"cellPhone,omitempty"`
+
+	// Department: The department the person works in (e.g. Engineering).
+	Department string `json:"department,omitempty"`
+
+	// DeskLocation: Desk location (e.g. US-MTV-PR55-5-5B1I).
+	DeskLocation string `json:"deskLocation,omitempty"`
+
+	// DeskPhone: Work desk phone number.
+	DeskPhone string `json:"deskPhone,omitempty"`
+
+	// DisplayName: The full name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: Email.
+	Email string `json:"email,omitempty"`
+
+	// FamilyName: The last name.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// FullAddress: The fully formatted address (e.g. 1255 Pear Avenue,
+	// Mountain View 94043, United States).
+	FullAddress string `json:"fullAddress,omitempty"`
+
+	// GaiaId: This field is deprecated. The obfuscated_id should be used
+	// instead.
+	GaiaId int64 `json:"gaiaId,omitempty,string"`
+
+	// GivenName: The first name.
+	GivenName string `json:"givenName,omitempty"`
+
+	// JobTitle: The person's job title (e.g. Software Engineer).
+	JobTitle string `json:"jobTitle,omitempty"`
+
+	// Manager: The manager.
+	Manager *EnterpriseTopazSidekickCommonPerson `json:"manager,omitempty"`
+
+	// ObfuscatedId: The obfuscated GAIA ID.
+	ObfuscatedId string `json:"obfuscatedId,omitempty"`
+
+	// PhotoUrl: The URL for the Focus profile picture.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// StreetAddress: The street address (e.g. 1255 Pear Avenue).
+	StreetAddress string `json:"streetAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Birthday") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Birthday") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCommonPerson) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCommonPerson
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickCommonPersonBirthday struct {
+	// Value: Unstructured birthday.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickCommonPersonBirthday) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickCommonPersonBirthday
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickConflictingEventsCardProto: Conflicting
+// meetings card proto.
+type EnterpriseTopazSidekickConflictingEventsCardProto struct {
+	// ConflictingEvent: All the events that conflict with main_event.
+	ConflictingEvent []*EnterpriseTopazSidekickAgendaEntry `json:"conflictingEvent,omitempty"`
+
+	// MainEvent: The event identified as being the most important.
+	MainEvent *EnterpriseTopazSidekickAgendaEntry `json:"mainEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConflictingEvent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingEvent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickConflictingEventsCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickConflictingEventsCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickDocumentGroup: Represents a mapping between a
+// document type and its corresponding documents. Use for Work in
+// Progress card in v1 homepage.
+type EnterpriseTopazSidekickDocumentGroup struct {
+	// GroupType: Document group type
+	//
+	// Possible values:
+	//   "UNKNOWN_TYPE" - Unknown type.
+	//   "ALL" - A mix of all the document types.
+	GroupType string `json:"groupType,omitempty"`
+
+	// PersonalizedDocument: The list of corresponding documents.
+	PersonalizedDocument []*EnterpriseTopazSidekickCommonDocument `json:"personalizedDocument,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GroupType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GroupType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickDocumentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickDocumentGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickDocumentPerCategoryList struct {
+	Documents []*EnterpriseTopazSidekickDocumentPerCategoryListDocumentPerCategoryListEntry `json:"documents,omitempty"`
+
+	// HelpMessage: Localized message explaining how the documents were
+	// derived (e.g. from the last 30 days activity). This field is
+	// optional.
+	HelpMessage string `json:"helpMessage,omitempty"`
+
+	// Possible values:
+	//   "UNKNOWN_LIST_TYPE"
+	//   "MENTIONS" - All documents in the list correspond to one of the
+	// mention categories.
+	//   "SHARES" - All documents in the list correspond to one of the share
+	// categories.
+	//   "NEEDS_ATTENTION" - A mixture of document categories that
+	// correspond to documents that need the users attention (e.g. documents
+	// that have been explicitly shared with the user but have not been
+	// viewed and documents where the user was mentioned but has not
+	// replied).
+	//   "VIEWS" - All documents in the list correspond to one of the view
+	// categories.
+	//   "EDITS" - All documents in the list correspond to one of the edit
+	// categories.
+	ListType string `json:"listType,omitempty"`
+
+	// ListTypeDescription: Description of the types of documents present in
+	// the list.
+	ListTypeDescription string `json:"listTypeDescription,omitempty"`
+
+	// ResponseMessage: Response message in case no documents are present in
+	// the card.
+	ResponseMessage string `json:"responseMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Documents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickDocumentPerCategoryList) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickDocumentPerCategoryList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickDocumentPerCategoryListDocumentPerCategoryListEntry struct {
+	// Possible values:
+	//   "UNKNOWN_DOCUMENT"
+	//   "ACTIONABLE"
+	//   "VIEWED"
+	//   "REPLIED"
+	//   "MENTION_VIEWED" - Mention categories. The mention has been viewed
+	// by the user, but the user has not replied.
+	//   "MENTION_REPLIED" - The user has replied to the mention.
+	//   "MENTION_NOT_VIEWED" - The mention has not been viewed by the user.
+	//   "SHARED_AND_VIEWED" - Share categories. Consists of documents that
+	// have been explicitly shared with the user. Document has been viewed.
+	//   "SHARED_NOT_VIEWED" - Document has not been viewed.
+	//   "EDITED" - Document has been edited.
+	Category string `json:"category,omitempty"`
+
+	Document *EnterpriseTopazSidekickCommonDocument `json:"document,omitempty"`
+
+	// Rationale: Reason this document was selected.
+	Rationale string `json:"rationale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickDocumentPerCategoryListDocumentPerCategoryListEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickDocumentPerCategoryListDocumentPerCategoryListEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickFindMeetingTimeCardProto: Response to find
+// meeting time among a set of people.
+type EnterpriseTopazSidekickFindMeetingTimeCardProto struct {
+	// CommonAvailableTimeSlots: Slots when all attendees have availability.
+	CommonAvailableTimeSlots []*EnterpriseTopazSidekickTimeSlot `json:"commonAvailableTimeSlots,omitempty"`
+
+	// Invitees: Invitees to the event.
+	Invitees []*EnterpriseTopazSidekickPerson `json:"invitees,omitempty"`
+
+	// Requester: Requester.
+	Requester *EnterpriseTopazSidekickPerson `json:"requester,omitempty"`
+
+	// ScheduledMeeting: Details about the scheduled meeting, if one exists.
+	ScheduledMeeting *EnterpriseTopazSidekickScheduledMeeting `json:"scheduledMeeting,omitempty"`
+
+	// SkippedInvitees: Invitees that have been skipped in the computation,
+	// most likely because they are groups.
+	SkippedInvitees []*EnterpriseTopazSidekickPerson `json:"skippedInvitees,omitempty"`
+
+	// TimeBoundaries: Min and max timestamp used to find a common available
+	// timeslot.
+	TimeBoundaries *EnterpriseTopazSidekickTimeSlot `json:"timeBoundaries,omitempty"`
+
+	// TimezoneId: Timezone ID.
+	TimezoneId string `json:"timezoneId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonAvailableTimeSlots") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonAvailableTimeSlots")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickFindMeetingTimeCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickFindMeetingTimeCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickGap struct {
+	// DisplayRemainingTime: Localized time string in the format: 1 hour 15
+	// minutes
+	DisplayRemainingTime string `json:"displayRemainingTime,omitempty"`
+
+	// EndTime: Localized time string in the format:(Locale CZ) 8:30 odp.
+	EndTime string `json:"endTime,omitempty"`
+
+	EndTimeMs uint64 `json:"endTimeMs,omitempty,string"`
+
+	RemainingTime string `json:"remainingTime,omitempty"`
+
+	// StartTime: Localized time string in the format:(Locale CZ) 8:30 odp.
+	StartTime string `json:"startTime,omitempty"`
+
+	StartTimeMs uint64 `json:"startTimeMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisplayRemainingTime") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayRemainingTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickGap) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickGap
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickGenericAnswerCard struct {
+	// Answer: The answer.
+	Answer string `json:"answer,omitempty"`
+
+	// Title: Title or header of the card.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Answer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickGenericAnswerCard) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickGenericAnswerCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickGetAndKeepAheadCardProto: Get and keep ahead
+// card
+type EnterpriseTopazSidekickGetAndKeepAheadCardProto struct {
+	DeclinedEvents *EnterpriseTopazSidekickGetAndKeepAheadCardProtoDeclinedEvents `json:"declinedEvents,omitempty"`
+
+	MentionedDocuments *EnterpriseTopazSidekickDocumentPerCategoryList `json:"mentionedDocuments,omitempty"`
+
+	SharedDocuments *EnterpriseTopazSidekickDocumentPerCategoryList `json:"sharedDocuments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeclinedEvents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeclinedEvents") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickGetAndKeepAheadCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickGetAndKeepAheadCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickGetAndKeepAheadCardProtoDeclinedEvents: A list
+// of events where all guests declined.
+type EnterpriseTopazSidekickGetAndKeepAheadCardProtoDeclinedEvents struct {
+	Events []*EnterpriseTopazSidekickAgendaEntry `json:"events,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Events") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Events") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickGetAndKeepAheadCardProtoDeclinedEvents) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickGetAndKeepAheadCardProtoDeclinedEvents
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickMeetingNotesCardError: Errors in the creation
+// of meeting notes.
+type EnterpriseTopazSidekickMeetingNotesCardError struct {
+	// Description: The description of the reason why create-meeting-notes
+	// failed.
+	Description string `json:"description,omitempty"`
+
+	// Event: The event to request meeting notes creation
+	Event *EnterpriseTopazSidekickAgendaEntry `json:"event,omitempty"`
+
+	// Reason: The reason why create-meeting-notes failed.
+	//
+	// Possible values:
+	//   "NONE" - No reason (default value).
+	//   "NOT_OWNER" - The user is not an owner.
+	//   "UNKNOWN" - Unknown reason.
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickMeetingNotesCardError) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickMeetingNotesCardError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickMeetingNotesCardProto: Information about the
+// meeting notes created.
+type EnterpriseTopazSidekickMeetingNotesCardProto struct {
+	// Event: The event to request meeting notes creation.
+	Event *EnterpriseTopazSidekickAgendaEntry `json:"event,omitempty"`
+
+	// FileId: Google Drive ID (a.k.a. resource ID) of the file.
+	FileId string `json:"fileId,omitempty"`
+
+	// Title: Title we want to show for meeting notes in the answer card
+	Title string `json:"title,omitempty"`
+
+	// Url: New URL.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Event") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickMeetingNotesCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickMeetingNotesCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickMeetingNotesCardRequest: Meeting notes card
+// request.
+type EnterpriseTopazSidekickMeetingNotesCardRequest struct {
+	// CanCreateFor: Who are the meeting notes created for.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown (default).
+	//   "MYSELF" - For the requester.
+	//   "ALL_ATTENDEES" - For all the meeting attendees.
+	CanCreateFor []string `json:"canCreateFor,omitempty"`
+
+	// Error: The error and reason if known error occured.
+	Error *EnterpriseTopazSidekickMeetingNotesCardError `json:"error,omitempty"`
+
+	// Event: The event to request meeting notes creation
+	Event *EnterpriseTopazSidekickAgendaEntry `json:"event,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanCreateFor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanCreateFor") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickMeetingNotesCardRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickMeetingNotesCardRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickNlpMetadata: Metadata about the NLP
+// interpretation of the query.
+type EnterpriseTopazSidekickNlpMetadata struct {
+	// Confidence: Confidence of the interpretation that generated this
+	// card.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickNlpMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickNlpMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *EnterpriseTopazSidekickNlpMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod EnterpriseTopazSidekickNlpMetadata
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
+// EnterpriseTopazSidekickPeopleAnswerDisambiguationInfo: Metadata for
+// disambiguation.
+type EnterpriseTopazSidekickPeopleAnswerDisambiguationInfo struct {
+	// Disambiguation: A list of people that also matched the query. This
+	// list is not complete.
+	Disambiguation []*EnterpriseTopazSidekickPeopleAnswerDisambiguationInfoDisambiguationPerson `json:"disambiguation,omitempty"`
+
+	// Name: The name that was extracted from the query. This may be in the
+	// form of the given name, last name, full name, LDAP, or email address.
+	// This name can be considered suitable for displaying to the user and
+	// can largely be considered to be normalized (e.g. "Bob's" -> "Bob").
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disambiguation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disambiguation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPeopleAnswerDisambiguationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPeopleAnswerDisambiguationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickPeopleAnswerDisambiguationInfoDisambiguationPer
+// son: A person that also matches the query, but was not selected due
+// to a lower affinity with the requesting user.
+type EnterpriseTopazSidekickPeopleAnswerDisambiguationInfoDisambiguationPerson struct {
+	// Person: The profile of this person.
+	Person *EnterpriseTopazSidekickCommonPerson `json:"person,omitempty"`
+
+	// Query: The query that can be used to produce an answer card with the
+	// same attribute, but for this person.
+	Query string `json:"query,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Person") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Person") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPeopleAnswerDisambiguationInfoDisambiguationPerson) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPeopleAnswerDisambiguationInfoDisambiguationPerson
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickPeopleAnswerPeopleAnswerCardHeader:
+// Recommended header to display for the card.
+type EnterpriseTopazSidekickPeopleAnswerPeopleAnswerCardHeader struct {
+	// Title: The suggested title to display. This defaults to the user's
+	// query.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Title") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Title") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPeopleAnswerPeopleAnswerCardHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPeopleAnswerPeopleAnswerCardHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickPeopleAnswerPersonAnswerCard: An answer card
+// for a single person.
+type EnterpriseTopazSidekickPeopleAnswerPersonAnswerCard struct {
+	// Answer: List of answers.
+	Answer []*SafeHtmlProto `json:"answer,omitempty"`
+
+	// AnswerText: List of answers.
+	AnswerText *EnterpriseTopazSidekickAnswerAnswerList `json:"answerText,omitempty"`
+
+	// DisambiguationInfo: Disambiguation information.
+	DisambiguationInfo *EnterpriseTopazSidekickPeopleAnswerDisambiguationInfo `json:"disambiguationInfo,omitempty"`
+
+	// Header: The header to display for the card.
+	Header *EnterpriseTopazSidekickPeopleAnswerPeopleAnswerCardHeader `json:"header,omitempty"`
+
+	// ResponseStatus: The response status.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown.
+	//   "SUCCESS" - Success.
+	//   "MISSING_PERSON" - No such person was found in the user's domain.
+	//   "MISSING_DATA" - A person was found to match the query, but an
+	// answer could not be obtained.
+	ResponseStatus string `json:"responseStatus,omitempty"`
+
+	// StatusMessage: Localized user friendly message to display to the user
+	// in the case of missing data or an error.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Subject: The profile of the person that was the subject of the query.
+	Subject *EnterpriseTopazSidekickCommonPerson `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Answer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPeopleAnswerPersonAnswerCard) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPeopleAnswerPersonAnswerCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickPeopleAnswerRelatedPeopleAnswerCard: An answer
+// card for a list of people that are related to the subject of the
+// query.
+type EnterpriseTopazSidekickPeopleAnswerRelatedPeopleAnswerCard struct {
+	// DisambiguationInfo: Disambiguation information.
+	DisambiguationInfo *EnterpriseTopazSidekickPeopleAnswerDisambiguationInfo `json:"disambiguationInfo,omitempty"`
+
+	// Header: The header to display for the card.
+	Header *EnterpriseTopazSidekickPeopleAnswerPeopleAnswerCardHeader `json:"header,omitempty"`
+
+	// RelatedPeople: A list of people that are related to the query
+	// subject.
+	RelatedPeople []*EnterpriseTopazSidekickCommonPerson `json:"relatedPeople,omitempty"`
+
+	// RelationType: Defines the type of relation the list of people have
+	// with the subject of the card.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown.
+	//   "DIRECT_REPORTS" - Direct reports.
+	//   "MANAGER" - The manager.
+	//   "PEERS" - The teammates/peers of the subject.
+	RelationType string `json:"relationType,omitempty"`
+
+	// ResponseStatus: The response status.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown.
+	//   "SUCCESS" - Success.
+	//   "MISSING_PERSON" - No such person was found in the user's domain.
+	//   "MISSING_DATA" - A person was found to match the query, but an
+	// answer could not be obtained.
+	ResponseStatus string `json:"responseStatus,omitempty"`
+
+	// StatusMessage: Localized user friendly message to display to the user
+	// in the case of missing data or an error.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Subject: The profile of the person that was the subject of the query.
+	Subject *EnterpriseTopazSidekickCommonPerson `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisambiguationInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisambiguationInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPeopleAnswerRelatedPeopleAnswerCard) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPeopleAnswerRelatedPeopleAnswerCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickPeopleDisambiguationCard struct {
+	// Person: Candidate persons for the query.
+	Person []*EnterpriseTopazSidekickCommonPerson `json:"person,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Person") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Person") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPeopleDisambiguationCard) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPeopleDisambiguationCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickPerson: Person.
+type EnterpriseTopazSidekickPerson struct {
+	// AffinityLevel: The level of affinity this person has with the
+	// requesting user.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "LOW"
+	//   "MEDIUM"
+	//   "HIGH"
+	AffinityLevel string `json:"affinityLevel,omitempty"`
+
+	// AttendingStatus: Attendance status of the person when included in a
+	// meeting event.
+	//
+	// Possible values:
+	//   "AWAITING" - Awaiting for the user to set the status.
+	//   "YES" - Attending.
+	//   "NO" - Not attending.
+	//   "MAYBE" - Tentatively attending.
+	AttendingStatus string `json:"attendingStatus,omitempty"`
+
+	// Email: Email.
+	Email string `json:"email,omitempty"`
+
+	// GaiaId: Gaia id.
+	GaiaId int64 `json:"gaiaId,omitempty,string"`
+
+	// IsGroup: Whether the invitee is a group.
+	IsGroup bool `json:"isGroup,omitempty"`
+
+	// Name: Name.
+	Name string `json:"name,omitempty"`
+
+	// ObfuscatedGaiaId: Obfuscated Gaia id.
+	ObfuscatedGaiaId string `json:"obfuscatedGaiaId,omitempty"`
+
+	// PhotoUrl: Absolute URL to the profile photo of the person.
+	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AffinityLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AffinityLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPerson) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPerson
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickPersonProfileCard struct {
+	RelatedPeople []*EnterpriseTopazSidekickPersonProfileCardRelatedPeople `json:"relatedPeople,omitempty"`
+
+	// Subject: The subject of the card.
+	Subject *EnterpriseTopazSidekickCommonPerson `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RelatedPeople") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RelatedPeople") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPersonProfileCard) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPersonProfileCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnterpriseTopazSidekickPersonProfileCardRelatedPeople struct {
+	// RelatedPerson: Related people.
+	RelatedPerson []*EnterpriseTopazSidekickCommonPerson `json:"relatedPerson,omitempty"`
+
+	// Relation: Relation type.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "MANAGER"
+	//   "DIRECT_REPORT"
+	Relation string `json:"relation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RelatedPerson") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RelatedPerson") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPersonProfileCardRelatedPeople) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPersonProfileCardRelatedPeople
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickPersonalizedDocsCardProto: Personalized docs
+// card proto.
+type EnterpriseTopazSidekickPersonalizedDocsCardProto struct {
+	// DocumentGroup: Document group.
+	DocumentGroup []*EnterpriseTopazSidekickDocumentGroup `json:"documentGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentGroup") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickPersonalizedDocsCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickPersonalizedDocsCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickRankingParams: Ranking params.
+type EnterpriseTopazSidekickRankingParams struct {
+	// EndTimeMs: The end-time that this object will expect to occur. If the
+	// type is marked as FIXED, then this end-time will persist after
+	// bidding. If the type is marked as FLEXIBLE, this field is NOT
+	// expected to be filled and will be filled in after it has won a bid.
+	// Expected to be set when type is set to FIXED.
+	EndTimeMs uint64 `json:"endTimeMs,omitempty,string"`
+
+	// Priority: The priority to determine between objects that have the
+	// same start_time_ms The lower-value of priority == ranked higher.
+	// Max-priority = 0. Expected to be set for all types.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown (default).
+	//   "CRITICAL" - Critical.
+	//   "IMPORTANT" - Important.
+	//   "HIGH" - High.
+	//   "NORMAL" - Normal.
+	//   "BEST_EFFORT" - Best effort.
+	Priority string `json:"priority,omitempty"`
+
+	// Score: The score of the card to be used to break priority-ties
+	Score float64 `json:"score,omitempty"`
+
+	// SpanMs: The span that this card will take in the stream Expected to
+	// be set when type is set to FLEXIBLE.
+	SpanMs uint64 `json:"spanMs,omitempty,string"`
+
+	// StartTimeMs: The start-time that this object will bid-for If the type
+	// is marked as FIXED, then this start-time will persist after bidding.
+	// If the type is marked as FLEXIBLE, then it will occur at the given
+	// time or sometime after the requested time. Expected to be set for all
+	// types.
+	StartTimeMs uint64 `json:"startTimeMs,omitempty,string"`
+
+	// Type: The packing type of this object.
+	//
+	// Possible values:
+	//   "FIXED" - Fixed, i.e., the card is time sensitive.
+	//   "FLEXIBLE" - Flexible, i.e., the card is not time sensitive.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTimeMs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTimeMs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickRankingParams) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickRankingParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *EnterpriseTopazSidekickRankingParams) UnmarshalJSON(data []byte) error {
+	type NoMethod EnterpriseTopazSidekickRankingParams
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+type EnterpriseTopazSidekickRecentDocumentsCardProto struct {
+	Document []*EnterpriseTopazSidekickCommonDocument `json:"document,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Document") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickRecentDocumentsCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickRecentDocumentsCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickScheduledMeeting: Details about scheduled
+// meetings.
+type EnterpriseTopazSidekickScheduledMeeting struct {
+	// MeetingLocation: The meeting location.
+	MeetingLocation string `json:"meetingLocation,omitempty"`
+
+	// MeetingTime: The meeting time slot.
+	MeetingTime *EnterpriseTopazSidekickTimeSlot `json:"meetingTime,omitempty"`
+
+	// MeetingTitle: The meeting title.
+	MeetingTitle string `json:"meetingTitle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MeetingLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MeetingLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickScheduledMeeting) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickScheduledMeeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickShareMeetingDocsCardProto: Share meeting docs
+// card proto.
+type EnterpriseTopazSidekickShareMeetingDocsCardProto struct {
+	// Document: Documents to share for the given meeting.
+	Document []*EnterpriseTopazSidekickCommonDocument `json:"document,omitempty"`
+
+	// Event: Event.
+	Event *EnterpriseTopazSidekickAgendaEntry `json:"event,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Document") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickShareMeetingDocsCardProto) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickShareMeetingDocsCardProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseTopazSidekickTimeSlot: Slot of time.
+type EnterpriseTopazSidekickTimeSlot struct {
+	// EndTimeDay: Day end time at the user's timezone.
+	EndTimeDay string `json:"endTimeDay,omitempty"`
+
+	// EndTimeHourAndMinute: Hour and minute of the end time at the user's
+	// timezone.
+	EndTimeHourAndMinute string `json:"endTimeHourAndMinute,omitempty"`
+
+	// EndTimeInMillis: End time in milliseconds.
+	EndTimeInMillis int64 `json:"endTimeInMillis,omitempty,string"`
+
+	// StartTimeDay: Day start time at user's timezone.
+	StartTimeDay string `json:"startTimeDay,omitempty"`
+
+	// StartTimeHourAndMinute: Hour and minute of the start time at the
+	// user's timezone.
+	StartTimeHourAndMinute string `json:"startTimeHourAndMinute,omitempty"`
+
+	// StartTimeInMillis: Start time in milliseconds.
+	StartTimeInMillis int64 `json:"startTimeInMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTimeDay") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTimeDay") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseTopazSidekickTimeSlot) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseTopazSidekickTimeSlot
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9423,72 +4337,6 @@ func (s *ErrorMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type EventAnnotation struct {
-	Type int64 `json:"type,omitempty"`
-
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *EventAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod EventAnnotation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// EventProto: Represents the invitees or other users associated with a
-// Google+ Event (see http://goto/events-backend-design).
-type EventProto struct {
-	// EventId: Event IDs consist of alphanumeric characters and colons.
-	// Currently required.
-	EventId string `json:"eventId,omitempty"`
-
-	// MemberType: The type of Event members to consider, e.g. "all members"
-	// vs. "owners" vs. "admins". These are defined by legacy_relation_id
-	// values in social.graph.storage.EdgeTypeEnum.EdgeType enum options in
-	// social/graph/storage/proto/id.proto. See event.pb (defined in
-	// production/config/cdd/socialgraph/mixer_config/prod/node_type_config)
-	// for all valid edge types associated with event. Currently required.
-	MemberType int64 `json:"memberType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EventId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *EventProto) MarshalJSON() ([]byte, error) {
-	type NoMethod EventProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // FacetBucket: A bucket in a facet is the basic unit of operation. A
 // bucket can comprise either a single value OR a contiguous range of
 // values, depending on the type of the field bucketed. FacetBucket is
@@ -9501,6 +4349,10 @@ type FacetBucket struct {
 	// build dependencies on facet count existence; instead use facet ount
 	// percentages which are always returned.
 	Count int64 `json:"count,omitempty"`
+
+	// Filter: Filter to be passed in the search request if the
+	// corresponding bucket is selected.
+	Filter *Filter `json:"filter,omitempty"`
 
 	// Percentage: Percent of results that match the bucket value. The
 	// returned value is between (0-100], and is rounded down to an integer
@@ -9539,6 +4391,12 @@ func (s *FacetBucket) MarshalJSON() ([]byte, error) {
 // will be one FacetResult for every
 // source_name/object_type/operator_name combination.
 type FacetOptions struct {
+	// IntegerFacetingOptions: If set, describes integer faceting options
+	// for the given integer property. The corresponding integer property in
+	// the schema should be marked isFacetable. The number of buckets
+	// returned would be minimum of this and num_facet_buckets.
+	IntegerFacetingOptions *IntegerFacetingOptions `json:"integerFacetingOptions,omitempty"`
+
 	// NumFacetBuckets: Maximum number of facet buckets that should be
 	// returned for this facet. Defaults to 10. Maximum value is 100.
 	NumFacetBuckets int64 `json:"numFacetBuckets,omitempty"`
@@ -9556,18 +4414,19 @@ type FacetOptions struct {
 	// If empty, all data sources will be used.
 	SourceName string `json:"sourceName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NumFacetBuckets") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "IntegerFacetingOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NumFacetBuckets") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "IntegerFacetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -9722,201 +4581,6 @@ func (s *FilterOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FixedFooter: A persistent (sticky) footer that is added to the bottom
-// of the card.
-type FixedFooter struct {
-	Buttons []*Button `json:"buttons,omitempty"`
-
-	PrimaryButton *TextButton `json:"primaryButton,omitempty"`
-
-	SecondaryButton *TextButton `json:"secondaryButton,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Buttons") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Buttons") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FixedFooter) MarshalJSON() ([]byte, error) {
-	type NoMethod FixedFooter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type FormAction struct {
-	// ActionMethodName: Apps script function that should be invoked in the
-	// developer's apps script when the containing element is
-	// clicked/activated.
-	ActionMethodName string `json:"actionMethodName,omitempty"`
-
-	// Possible values:
-	//   "SPINNER"
-	//   "NONE"
-	LoadIndicator string `json:"loadIndicator,omitempty"`
-
-	Parameters []*ActionParameter `json:"parameters,omitempty"`
-
-	// PersistValues: Indicates whether form values persist after the
-	// action. When false, the Apps Script is responsible for persisting
-	// values, by setting any form field values using the formInputs in the
-	// event. Disabling this behavior can be used if the add-on needs the
-	// ability to clear form fields, for example, as with persistent values,
-	// there is no means for clearing existing values. When disabling
-	// persistent values, it is strongly recommended that the add-on use
-	// LoadIndicator.SPINNER for all events, as this locks the UI to ensure
-	// no changes are made by the user while the action is being processed.
-	// When using LoadIndicator.NONE for any of the actions, persistent
-	// values are recommended, as it ensures that any changes made by the
-	// user after form / on change actions are sent to the server are not
-	// overwritten by the response. Persistent values disabled by default.
-	// While we recommend persistent values be used in the typical use case,
-	// we do not enable by default, as doing so would change the current
-	// behavior of existing add-ons in prod.
-	PersistValues bool `json:"persistValues,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionMethodName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionMethodName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FormAction) MarshalJSON() ([]byte, error) {
-	type NoMethod FormAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// FormatMetadata: Annotation metadata for markup formatting
-type FormatMetadata struct {
-	// FontColor: Font color is set if and only if format_type is
-	// FONT_COLOR. The components are stored as (alpha << 24) | (red << 16)
-	// | (green << 8) | blue. Clients should always set the alpha component
-	// to 0xFF. NEXT TAG: 3
-	FontColor int64 `json:"fontColor,omitempty"`
-
-	// FormatType:
-	// LINT.ThenChange(//depot/google3/apps/dynamite/v1/web/datakeys/annotate
-	// d_span.proto)
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value for the enum.
-	//   "BOLD"
-	//   "ITALIC"
-	//   "STRIKE"
-	//   "SOURCE_CODE"
-	//   "MONOSPACE" - Inline monospace.
-	//   "HIDDEN"
-	//   "MONOSPACE_BLOCK" - Multi-line monospace block.
-	//   "UNDERLINE"
-	//   "FONT_COLOR"
-	//   "BULLETED_LIST" - Encloses BULLETED_LIST_ITEM annotations.
-	//   "BULLETED_LIST_ITEM" - Must cover the whole line including the
-	// newline
-	//   "CLIENT_HIDDEN" - character at the end. Not used anymore.
-	FormatType string `json:"formatType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FontColor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FontColor") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FormatMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod FormatMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Formatting: Formatting information for a segment.
-type Formatting struct {
-	Bold bool `json:"bold,omitempty"`
-
-	// Highlight: This indicates that the segment should be rendered as
-	// highlighted or visually emphasized.
-	Highlight bool `json:"highlight,omitempty"`
-
-	Italics bool `json:"italics,omitempty"`
-
-	Strikethrough bool `json:"strikethrough,omitempty"`
-
-	// Style: If set, this indicates that the segment should be rendered
-	// with the specified style. The absence of an explicit style represents
-	// "no style", i.e. the segment can be rendered with the default style
-	// chosen by the application.
-	//
-	// Possible values:
-	//   "UNKNOWN_STYLE" - This represents a style that is unknown (e.g. a
-	// new style was introduced but not supported by older mobile app
-	// versions) and should generally not be used as a value in a proto. If
-	// the segment does not need to be rendered with a special style, the
-	// 'style' field should simply be left unset. A reasonable fallback for
-	// an unknown style is to render the segment in the default style.
-	//   "HEADING_1" - The most important heading to the least important
-	// heading.
-	//   "HEADING_2"
-	//   "HEADING_3"
-	//   "HEADING_4"
-	Style string `json:"style,omitempty"`
-
-	Underline bool `json:"underline,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Bold") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bold") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Formatting) MarshalJSON() ([]byte, error) {
-	type NoMethod Formatting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // FreshnessOptions: Indicates which freshness property to use when
 // adjusting search ranking for an item. Fresher, more recent dates
 // indicate higher quality. Use the freshness option property that best
@@ -9995,129 +4659,6 @@ type GSuitePrincipal struct {
 
 func (s *GSuitePrincipal) MarshalJSON() ([]byte, error) {
 	type NoMethod GSuitePrincipal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GaiaGroupProto struct {
-	GroupId int64 `json:"groupId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GaiaGroupProto) MarshalJSON() ([]byte, error) {
-	type NoMethod GaiaGroupProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GaiaUserProto: A Gaia account, which may represent a user, device,
-// service account, etc. For prod (@prod.google.com) accounts, use
-// MdbUserProto instead.
-type GaiaUserProto struct {
-	UserId int64 `json:"userId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "UserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UserId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GaiaUserProto) MarshalJSON() ([]byte, error) {
-	type NoMethod GaiaUserProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GatewayAccess: Details on the third-party interoperability settings
-// for the meeting space.
-type GatewayAccess struct {
-	// Enabled: Whether third-party gateway accesses are enabled for this
-	// meeting space. If enabled, the actual access code can be retrieved by
-	// calling the GetGatewayAccess RPC method.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GatewayAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod GatewayAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GatewaySipAccess: Details how to join the conference via a SIP
-// gateway.
-type GatewaySipAccess struct {
-	// SipAccessCode: Permanent numeric code for manual entry on specially
-	// configured devices, currently the same as the PSTN "Universal pin".
-	SipAccessCode string `json:"sipAccessCode,omitempty"`
-
-	// Uri: The SIP URI the conference can be reached through. The string is
-	// on one of the formats: "sip:@" "sips:@" where currently is the
-	// 13-digit universal pin (with the future option to support using a
-	// Meet meeting code as well), and is a valid address to be resolved
-	// using a DNS SRV lookup, or a dotted quad.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SipAccessCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SipAccessCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GatewaySipAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod GatewaySipAccess
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10428,1252 +4969,6 @@ func (s *GetSearchApplicationUserStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChatConfig: Configuration of the Google Chat in Meet.
-type GoogleChatConfig struct {
-	// ChatGroupId: ID of the Chat group.
-	ChatGroupId string `json:"chatGroupId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChatGroupId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChatGroupId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1ContextualAddOnMarkup: The markup for developers to
-// specify the contents of a contextual AddOn.
-type GoogleChatV1ContextualAddOnMarkup struct {
-	// Cards: A list of cards. A card must contain a header and at least 1
-	// section.
-	Cards []*GoogleChatV1ContextualAddOnMarkupCard `json:"cards,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Cards") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Cards") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1ContextualAddOnMarkup) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1ContextualAddOnMarkup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1ContextualAddOnMarkupCard: A card is a UI element that
-// can contain UI widgets such as texts, images.
-type GoogleChatV1ContextualAddOnMarkupCard struct {
-	// CardActions: The actions of this card.
-	CardActions []*GoogleChatV1ContextualAddOnMarkupCardCardAction `json:"cardActions,omitempty"`
-
-	// Header: The header of the card. A header usually contains a title and
-	// an image.
-	Header *GoogleChatV1ContextualAddOnMarkupCardCardHeader `json:"header,omitempty"`
-
-	// Name: Name of the card.
-	Name string `json:"name,omitempty"`
-
-	// Sections: Sections are separated by a line divider.
-	Sections []*GoogleChatV1ContextualAddOnMarkupCardSection `json:"sections,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CardActions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CardActions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1ContextualAddOnMarkupCard) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1ContextualAddOnMarkupCard
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1ContextualAddOnMarkupCardCardAction: A card action is the
-// action associated with the card. For an invoice card, a typical
-// action would be: delete invoice, email invoice or open the invoice in
-// browser.
-type GoogleChatV1ContextualAddOnMarkupCardCardAction struct {
-	// ActionLabel: The label used to be displayed in the action menu item.
-	ActionLabel string `json:"actionLabel,omitempty"`
-
-	// OnClick: The onclick action for this action item.
-	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1ContextualAddOnMarkupCardCardAction) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1ContextualAddOnMarkupCardCardAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GoogleChatV1ContextualAddOnMarkupCardCardHeader struct {
-	// ImageStyle: The image's type (e.g. square border or circular border).
-	//
-	// Possible values:
-	//   "IMAGE_STYLE_UNSPECIFIED"
-	//   "IMAGE" - Square border.
-	//   "AVATAR" - Circular border.
-	ImageStyle string `json:"imageStyle,omitempty"`
-
-	// ImageUrl: The URL of the image in the card header.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// Subtitle: The subtitle of the card header.
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// Title: The title must be specified. The header has a fixed height: if
-	// both a title and subtitle is specified, each will take up 1 line. If
-	// only the title is specified, it will take up both lines.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageStyle") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageStyle") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1ContextualAddOnMarkupCardCardHeader) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1ContextualAddOnMarkupCardCardHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1ContextualAddOnMarkupCardSection: A section contains a
-// collection of widgets that are rendered (vertically) in the order
-// that they are specified. Across all platforms, cards have a narrow
-// fixed width, so there is currently no need for layout properties
-// (e.g. float).
-type GoogleChatV1ContextualAddOnMarkupCardSection struct {
-	// Header: The header of the section, text formatted supported.
-	Header string `json:"header,omitempty"`
-
-	// Widgets: A section must contain at least 1 widget.
-	Widgets []*GoogleChatV1WidgetMarkup `json:"widgets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Header") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Header") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1ContextualAddOnMarkupCardSection) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1ContextualAddOnMarkupCardSection
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkup: A widget is a UI element that presents
-// texts, images, etc.
-type GoogleChatV1WidgetMarkup struct {
-	// Buttons: A list of buttons. Buttons is also oneof data and only one
-	// of these fields should be set.
-	Buttons []*GoogleChatV1WidgetMarkupButton `json:"buttons,omitempty"`
-
-	// Image: Display an image in this widget.
-	Image *GoogleChatV1WidgetMarkupImage `json:"image,omitempty"`
-
-	// KeyValue: Display a key value item in this widget.
-	KeyValue *GoogleChatV1WidgetMarkupKeyValue `json:"keyValue,omitempty"`
-
-	// TextParagraph: Display a text paragraph in this widget.
-	TextParagraph *GoogleChatV1WidgetMarkupTextParagraph `json:"textParagraph,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Buttons") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Buttons") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkup) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupButton: A button. Can be a text button or an
-// image button.
-type GoogleChatV1WidgetMarkupButton struct {
-	// ImageButton: A button with image and onclick action.
-	ImageButton *GoogleChatV1WidgetMarkupImageButton `json:"imageButton,omitempty"`
-
-	// TextButton: A button with text and onclick action.
-	TextButton *GoogleChatV1WidgetMarkupTextButton `json:"textButton,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageButton") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageButton") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupButton) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupFormAction: A form action describes the
-// behavior when the form is submitted. For example, an Apps Script can
-// be invoked to handle the form.
-type GoogleChatV1WidgetMarkupFormAction struct {
-	// ActionMethodName: The method name is used to identify which part of
-	// the form triggered the form submission. This information is echoed
-	// back to the Chat app as part of the card click event. The same method
-	// name can be used for several elements that trigger a common behavior
-	// if desired.
-	ActionMethodName string `json:"actionMethodName,omitempty"`
-
-	// Parameters: List of action parameters.
-	Parameters []*GoogleChatV1WidgetMarkupFormActionActionParameter `json:"parameters,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionMethodName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionMethodName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupFormAction) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupFormAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupFormActionActionParameter: List of string
-// parameters to supply when the action method is invoked. For example,
-// consider three snooze buttons: snooze now, snooze 1 day, snooze next
-// week. You might use action method = snooze(), passing the snooze type
-// and snooze time in the list of string parameters.
-type GoogleChatV1WidgetMarkupFormActionActionParameter struct {
-	// Key: The name of the parameter for the action script.
-	Key string `json:"key,omitempty"`
-
-	// Value: The value of the parameter.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupFormActionActionParameter) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupFormActionActionParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupImage: An image that is specified by a URL
-// and can have an onclick action.
-type GoogleChatV1WidgetMarkupImage struct {
-	// AspectRatio: The aspect ratio of this image (width/height). This
-	// field allows clients to reserve the right height for the image while
-	// waiting for it to load. It's not meant to override the native aspect
-	// ratio of the image. If unset, the server fills it by prefetching the
-	// image.
-	AspectRatio float64 `json:"aspectRatio,omitempty"`
-
-	// ImageUrl: The URL of the image.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// OnClick: The onclick action.
-	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AspectRatio") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupImage) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleChatV1WidgetMarkupImage) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleChatV1WidgetMarkupImage
-	var s1 struct {
-		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AspectRatio = float64(s1.AspectRatio)
-	return nil
-}
-
-// GoogleChatV1WidgetMarkupImageButton: An image button with an onclick
-// action.
-type GoogleChatV1WidgetMarkupImageButton struct {
-	// Icon: The icon specified by an enum that indices to an icon provided
-	// by Chat API.
-	//
-	// Possible values:
-	//   "ICON_UNSPECIFIED"
-	//   "AIRPLANE"
-	//   "BOOKMARK"
-	//   "BUS"
-	//   "CAR"
-	//   "CLOCK"
-	//   "CONFIRMATION_NUMBER_ICON"
-	//   "DOLLAR"
-	//   "DESCRIPTION"
-	//   "EMAIL"
-	//   "EVENT_PERFORMER"
-	//   "EVENT_SEAT"
-	//   "FLIGHT_ARRIVAL"
-	//   "FLIGHT_DEPARTURE"
-	//   "HOTEL"
-	//   "HOTEL_ROOM_TYPE"
-	//   "INVITE"
-	//   "MAP_PIN"
-	//   "MEMBERSHIP"
-	//   "MULTIPLE_PEOPLE"
-	//   "OFFER"
-	//   "PERSON"
-	//   "PHONE"
-	//   "RESTAURANT_ICON"
-	//   "SHOPPING_CART"
-	//   "STAR"
-	//   "STORE"
-	//   "TICKET"
-	//   "TRAIN"
-	//   "VIDEO_CAMERA"
-	//   "VIDEO_PLAY"
-	Icon string `json:"icon,omitempty"`
-
-	// IconUrl: The icon specified by a URL.
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// Name: The name of this image_button which will be used for
-	// accessibility. Default value will be provided if developers don't
-	// specify.
-	Name string `json:"name,omitempty"`
-
-	// OnClick: The onclick action.
-	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Icon") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Icon") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupImageButton) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupImageButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupKeyValue: A UI element contains a key (label)
-// and a value (content). And this element may also contain some actions
-// such as onclick button.
-type GoogleChatV1WidgetMarkupKeyValue struct {
-	// BottomLabel: The text of the bottom label. Formatted text supported.
-	BottomLabel string `json:"bottomLabel,omitempty"`
-
-	// Button: A button that can be clicked to trigger an action.
-	Button *GoogleChatV1WidgetMarkupButton `json:"button,omitempty"`
-
-	// Content: The text of the content. Formatted text supported and always
-	// required.
-	Content string `json:"content,omitempty"`
-
-	// ContentMultiline: If the content should be multiline.
-	ContentMultiline bool `json:"contentMultiline,omitempty"`
-
-	// Icon: An enum value that will be replaced by the Chat API with the
-	// corresponding icon image.
-	//
-	// Possible values:
-	//   "ICON_UNSPECIFIED"
-	//   "AIRPLANE"
-	//   "BOOKMARK"
-	//   "BUS"
-	//   "CAR"
-	//   "CLOCK"
-	//   "CONFIRMATION_NUMBER_ICON"
-	//   "DOLLAR"
-	//   "DESCRIPTION"
-	//   "EMAIL"
-	//   "EVENT_PERFORMER"
-	//   "EVENT_SEAT"
-	//   "FLIGHT_ARRIVAL"
-	//   "FLIGHT_DEPARTURE"
-	//   "HOTEL"
-	//   "HOTEL_ROOM_TYPE"
-	//   "INVITE"
-	//   "MAP_PIN"
-	//   "MEMBERSHIP"
-	//   "MULTIPLE_PEOPLE"
-	//   "OFFER"
-	//   "PERSON"
-	//   "PHONE"
-	//   "RESTAURANT_ICON"
-	//   "SHOPPING_CART"
-	//   "STAR"
-	//   "STORE"
-	//   "TICKET"
-	//   "TRAIN"
-	//   "VIDEO_CAMERA"
-	//   "VIDEO_PLAY"
-	Icon string `json:"icon,omitempty"`
-
-	// IconUrl: The icon specified by a URL.
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// OnClick: The onclick action. Only the top label, bottom label and
-	// content region are clickable.
-	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
-
-	// TopLabel: The text of the top label. Formatted text supported.
-	TopLabel string `json:"topLabel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BottomLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupKeyValue) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupKeyValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupOnClick: An onclick action (e.g. open a
-// link).
-type GoogleChatV1WidgetMarkupOnClick struct {
-	// Action: A form action will be triggered by this onclick if specified.
-	Action *GoogleChatV1WidgetMarkupFormAction `json:"action,omitempty"`
-
-	// OpenLink: This onclick triggers an open link action if specified.
-	OpenLink *GoogleChatV1WidgetMarkupOpenLink `json:"openLink,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupOnClick) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupOnClick
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupOpenLink: A link that opens a new window.
-type GoogleChatV1WidgetMarkupOpenLink struct {
-	// Url: The URL to open.
-	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupOpenLink) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupOpenLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupTextButton: A button with text and onclick
-// action.
-type GoogleChatV1WidgetMarkupTextButton struct {
-	// OnClick: The onclick action of the button.
-	OnClick *GoogleChatV1WidgetMarkupOnClick `json:"onClick,omitempty"`
-
-	// Text: The text of the button.
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OnClick") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OnClick") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupTextButton) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupTextButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleChatV1WidgetMarkupTextParagraph: A paragraph of text. Formatted
-// text supported.
-type GoogleChatV1WidgetMarkupTextParagraph struct {
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleChatV1WidgetMarkupTextParagraph) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChatV1WidgetMarkupTextParagraph
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleDocsMetadata: The corpus specific metadata for office-type
-// documents, from Google Docs and other sources. This message is passed
-// to the scorer and beyond. Next tag: 9
-type GoogleDocsMetadata struct {
-	// AclInfo: Contains number of users and groups which can access the
-	// document.
-	AclInfo *AclInfo `json:"aclInfo,omitempty"`
-
-	// DocumentType: The conceptual type (presentation, document, etc.) of
-	// this document.
-	//
-	// Possible values:
-	//   "UNKNOWN" - If the type is unknown or not represented in this enum.
-	//   "DOCUMENT" - Writely, Word, etc.
-	//   "PRESENTATION" - Presently, PowerPoint, etc.
-	//   "SPREADSHEET" - Trix, Excel, etc.
-	//   "PDF" - File types for Gdrive objects are below.
-	//   "IMAGE"
-	//   "BINARY_BLOB" - Fall-back for unknown Gdrive types.
-	//   "FUSION_TABLE"
-	//   "FOLDER"
-	//   "DRAWING"
-	//   "VIDEO"
-	//   "FORM"
-	//   "DRAFT_SITE" - For Atari page and site drafts
-	//   "DRAFT_SITE_PAGE"
-	//   "JAM" - Jamboard Jams (go/jam)
-	//   "SHORTCUT" - Drive Shortcuts (go/shortcuts)
-	//   "SCRIPT"
-	DocumentType string `json:"documentType,omitempty"`
-
-	// FileExtension: The file extension of the document. NOTE: As of
-	// October 2018 this field is not backfilled for old documents.
-	FileExtension string `json:"fileExtension,omitempty"`
-
-	// LastContentModifiedTimestamp: The last time this document was
-	// modified, in seconds since epoch. Only counts content modifications.
-	LastContentModifiedTimestamp int64 `json:"lastContentModifiedTimestamp,omitempty,string"`
-
-	// NumSubscribers: Contains number of subscribers for the document.
-	NumSubscribers int64 `json:"numSubscribers,omitempty"`
-
-	// NumViewers: Size of untruncated viewers list.
-	NumViewers int64 `json:"numViewers,omitempty"`
-
-	// ResultInfo: Additional per-result information, akin to Gmail's
-	// SingleThreadResponse. Note: GWS no longer seems to use this field,
-	// but there's still one reference to it for Scribe, so we can't remove
-	// it.
-	ResultInfo *GoogleDocsResultInfo `json:"resultInfo,omitempty"`
-
-	// TypeInfo: Contains additional information about the document
-	// depending on its type.
-	TypeInfo *TypeInfo `json:"typeInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AclInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AclInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDocsMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDocsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleDocsResultInfo: A message containing information about a
-// specific result. This information is passed to the scorer and beyond;
-// in particular, GWS relies on it to format the result in the UI. Split
-// from GoogleDocsMetadata in case we later want to reuse the message.
-type GoogleDocsResultInfo struct {
-	// AttachmentSha1: The SHA1 hash of the object in Drive, if any.
-	AttachmentSha1 string `json:"attachmentSha1,omitempty"`
-
-	// CosmoId: The storage identifier for the object in Cosmo. This field
-	// is intended to used by Stratus/Moonshine integration only. It should
-	// not be exposed externally (please refer to encrypted_id for that
-	// purpose).
-	CosmoId *Id `json:"cosmoId,omitempty"`
-
-	// CosmoNameSpace: For Cosmo objects, the Cosmo namespace the object was
-	// in. This allows downstream clients to identify whether a document was
-	// created in Writely or Kix, Presently or Punch, or whether it was
-	// uploaded from GDrive. See storage_cosmo.Id.NAME_SPACE for a list of
-	// all Cosmo name spaces.
-	CosmoNameSpace int64 `json:"cosmoNameSpace,omitempty"`
-
-	// EncryptedId: The encrypted (user-visible) id of this object. Knowing
-	// the id is sufficient to create a canonical URL for this document.
-	EncryptedId string `json:"encryptedId,omitempty"`
-
-	// MimeType: The mimetype of the document.
-	MimeType string `json:"mimeType,omitempty"`
-
-	// ShareScope: The visibility indicator in the UI will be based upon
-	// this.
-	ShareScope *ShareScope `json:"shareScope,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AttachmentSha1") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttachmentSha1") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDocsResultInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDocsResultInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Grid struct {
-	// BorderStyle: The border style to apply to each grid item.
-	BorderStyle *BorderStyle `json:"borderStyle,omitempty"`
-
-	// Items: The items to display in the grid.
-	Items []*GridItem `json:"items,omitempty"`
-
-	// NumColumns: The number of columns to display in the grid. Note that a
-	// default value will be used if this field is not specified, and that
-	// default value will be different depending on where the grid is shown
-	// (dialog vs companion).
-	NumColumns int64 `json:"numColumns,omitempty"`
-
-	// OnClick: This callback will be reused by each individual GridItem,
-	// but with the item's identifier and index in the items list added to
-	// the callback's parameters.
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	// Title: The text to display in the grid header.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BorderStyle") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BorderStyle") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Grid) MarshalJSON() ([]byte, error) {
-	type NoMethod Grid
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GridItem struct {
-	// Identifier: A user-specified identifier for this grid item. This
-	// identifier will be returned in the parent Grid's on_click callback's
-	// parameters.
-	Identifier string `json:"identifier,omitempty"`
-
-	Image *ImageComponent `json:"image,omitempty"`
-
-	// Possible values:
-	//   "NOT_SET"
-	//   "TEXT_BELOW" - The title and subtitle are shown below the grid
-	// item's image.
-	//   "TEXT_ABOVE" - The title and subtitle are shown above the grid
-	// item's image.
-	Layout string `json:"layout,omitempty"`
-
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED"
-	//   "START"
-	//   "CENTER"
-	//   "END"
-	TextAlignment string `json:"textAlignment,omitempty"`
-
-	// Title: Text properties.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Identifier") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Identifier") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GridItem) MarshalJSON() ([]byte, error) {
-	type NoMethod GridItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GroupDetailsUpdatedMetadata struct {
-	NewGroupDetails *AppsDynamiteSharedGroupDetails `json:"newGroupDetails,omitempty"`
-
-	PrevGroupDetails *AppsDynamiteSharedGroupDetails `json:"prevGroupDetails,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewGroupDetails") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewGroupDetails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GroupDetailsUpdatedMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GroupDetailsUpdatedMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GroupId: Id representing a group that could be a space, a chat, or a
-// direct message space. Which ID is set here will determine which group
-type GroupId struct {
-	// DmId: Unique, immutable ID of the Direct Message Space
-	DmId *DmId `json:"dmId,omitempty"`
-
-	// SpaceId: Unique, immutable ID of the Space
-	SpaceId *SpaceId `json:"spaceId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DmId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DmId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GroupId) MarshalJSON() ([]byte, error) {
-	type NoMethod GroupId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GroupLinkSharingModificationEvent struct {
-	// Possible values:
-	//   "UNKNOWN_LINK_SHARING_STATUS"
-	//   "LINK_SHARING_ON" - Link sharing is turned on.
-	//   "LINK_SHARING_OFF" - Link sharing is turned off.
-	//   "NOT_AVAILABLE" - Link sharing is not available for the
-	// conversation.
-	NewStatus string `json:"newStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewStatus") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GroupLinkSharingModificationEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod GroupLinkSharingModificationEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GroupRetentionSettingsUpdatedMetaData struct {
-	// Initiator: The user who triggered the retention settings update
-	Initiator *UserId `json:"initiator,omitempty"`
-
-	// RetentionSettings: The updated space retention settings
-	RetentionSettings *AppsDynamiteSharedRetentionSettings `json:"retentionSettings,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Initiator") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Initiator") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GroupRetentionSettingsUpdatedMetaData) MarshalJSON() ([]byte, error) {
-	type NoMethod GroupRetentionSettingsUpdatedMetaData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GsuiteIntegrationMetadata: Annotation metadata for an
-// GsuiteIntegration artifact.
-type GsuiteIntegrationMetadata struct {
-	ActivityFeedData *AppsDynamiteSharedActivityFeedAnnotationData `json:"activityFeedData,omitempty"`
-
-	AssistantData *AppsDynamiteSharedAssistantAnnotationData `json:"assistantData,omitempty"`
-
-	CalendarEventData *AppsDynamiteSharedCalendarEventAnnotationData `json:"calendarEventData,omitempty"`
-
-	// CallData: Data used to render call artifacts.
-	CallData *AppsDynamiteSharedCallAnnotationData `json:"callData,omitempty"`
-
-	// Possible values:
-	//   "UNKNOWN_CLIENT_TYPE"
-	//   "MEET"
-	//   "TASKS"
-	//   "CALENDAR_EVENT"
-	//   "ASSISTANT"
-	//   "ACTIVITY_FEED_SERVICE"
-	ClientType string `json:"clientType,omitempty"`
-
-	// IndexableTexts: A list of all strings that are to be indexed for this
-	// 1P chip. Each string in this list would be the contents of a single
-	// string field in the 1P chip. Eg. For Tasks[title = “hello world”,
-	// description = “good bye”]. If we want to index only the title,
-	// this would be set to [“hello world”]. If both title and
-	// description, then this would be [“hello world”, “good bye”].
-	// Please make sure that the contents of this field is a subset of
-	// strings that are rendered as part of the 1P Chip.
-	IndexableTexts []string `json:"indexableTexts,omitempty"`
-
-	TasksData *AppsDynamiteSharedTasksAnnotationData `json:"tasksData,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActivityFeedData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActivityFeedData") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GsuiteIntegrationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GsuiteIntegrationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type HangoutEvent struct {
-	HangoutDurationSecs int64 `json:"hangoutDurationSecs,omitempty,string"`
-
-	// Possible values:
-	//   "AUDIO_VIDEO"
-	//   "AUDIO_ONLY"
-	//   "PUSH_TO_TALK" - A user has started a PTT broadcast. When receiving
-	// a notification with this HangoutMediaType, other users in the
-	// conversation will take different actions depending on their active
-	// clients: a) If there is a recent "reasonable" active client, the user
-	// will join hangout and play audio. b) If there is no "reasonable"
-	// active client an invite will be displayed on all clients.
-	MediaType string `json:"mediaType,omitempty"`
-
-	ParticipantId []*StoredParticipantId `json:"participantId,omitempty"`
-
-	// Possible values:
-	//   "START_HANGOUT"
-	//   "JOIN_HANGOUT"
-	//   "LEAVE_HANGOUT"
-	//   "END_HANGOUT"
-	//   "HANGOUT_COMING_SOON"
-	//   "ONGOING_HANGOUT"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HangoutDurationSecs")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HangoutDurationSecs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HangoutEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod HangoutEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HangoutVideoEventMetadata: A message representing the Hangout video
-// start/end events in Babel
-type HangoutVideoEventMetadata struct {
-	// Possible values:
-	//   "UNKNOWN_HANGOUT_VIDEO_EVENT_TYPE"
-	//   "VIDEO_START"
-	//   "VIDEO_END"
-	HangoutVideoType string `json:"hangoutVideoType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HangoutVideoType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HangoutVideoType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HangoutVideoEventMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod HangoutVideoEventMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HashtagData: Hashtag metadata, for HASHTAG segments. For a hashtag,
-// the "text" field should contain the display text, and the search_text
-// field should represent the topic being referenced, without the hash
-// symbol; for example, we might have: text = "#Google"
-// hashtag_data.search_text = "Google" Another example: text =
-// "#pikachu" hashtag_data.search_text = "Pokemon" Both strings should
-// be considered part of the searchable text. In go/sbe, both are
-// indexed and searchable.
-type HashtagData struct {
-	SearchText string `json:"searchText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SearchText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SearchText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HashtagData) MarshalJSON() ([]byte, error) {
-	type NoMethod HashtagData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HostProto: Represents a single host. Optionally, the MDB owner of the
-// host can be specified.
-type HostProto struct {
-	// HostName: Lower-case, fully qualified hostname.
-	HostName string `json:"hostName,omitempty"`
-
-	// HostOwner: If present, then any checks that compare this Principal to
-	// LOAS peer info must confirm the peer's machine owner is equal to
-	// 'host_owner'. If absent, then any peer machine owner is acceptable.
-	HostOwner string `json:"hostOwner,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HostName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HostName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HostProto) MarshalJSON() ([]byte, error) {
-	type NoMethod HostProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // HtmlOperatorOptions: Used to provide a search operator for html
 // properties. This is optional. Search operators let users restrict the
 // query to specific fields relevant to the type of item being searched.
@@ -11776,478 +5071,6 @@ func (s *HtmlValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type IconImage struct {
-	// AltText: The alternative text of this icon_url which will be used for
-	// accessibility.
-	AltText string `json:"altText,omitempty"`
-
-	// Possible values:
-	//   "NONE"
-	//   "AIRPLANE"
-	//   "BOOKMARK"
-	//   "BUS"
-	//   "CAR"
-	//   "CLOCK"
-	//   "CONFIRMATION_NUMBER_ICON"
-	//   "DOLLAR"
-	//   "DESCRIPTION"
-	//   "EDIT"
-	//   "EDIT_NOTE"
-	//   "EMAIL"
-	//   "EVENT_PERFORMER"
-	//   "EVENT_SEAT"
-	//   "FLIGHT_ARRIVAL"
-	//   "FLIGHT_DEPARTURE"
-	//   "HOTEL"
-	//   "HOTEL_ROOM_TYPE"
-	//   "INVITE"
-	//   "MAP_PIN"
-	//   "MEMBERSHIP"
-	//   "MULTIPLE_PEOPLE"
-	//   "OFFER"
-	//   "OPEN_IN_NEW"
-	//   "PERSON"
-	//   "PHONE"
-	//   "RESTAURANT_ICON"
-	//   "SHOPPING_CART"
-	//   "STAR"
-	//   "STORE"
-	//   "TICKET"
-	//   "TRAIN"
-	//   "VIDEO_CAMERA"
-	//   "VIDEO_PLAY" - Add new items in alphabetical order. Next Available
-	// ID: 34
-	Icon string `json:"icon,omitempty"`
-
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// ImageStyle: The image cropping style. Note that icons with a CIRCLE
-	// style are rendered larger than the default icon size.
-	//
-	// Possible values:
-	//   "CROP_TYPE_NOT_SET" - No value specified.
-	//   "SQUARE" - Applies a square crop.
-	//   "CIRCLE" - Applies a circular crop.
-	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
-	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
-	// ratio.
-	ImageStyle string `json:"imageStyle,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IconImage) MarshalJSON() ([]byte, error) {
-	type NoMethod IconImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Id: Identifies a particular object, including both Users and
-// DirEntries. This Id is unique across the entire server instance, such
-// as the production or qa instance.
-type Id struct {
-	// CreatorUserId: The User account in which the DirEntry was originally
-	// created. If name_space==GAIA, then it's the gaia_id of the user this
-	// id is referring to.
-	CreatorUserId uint64 `json:"creatorUserId,omitempty,string"`
-
-	// LocalId: The local identifier for the DirEntry (local to the
-	// creator's account). local_id + app_name is guaranteed to be unique
-	// within the creator account, but not across all User accounts. The
-	// string is case sensitive. Ignore if name_space==GAIA. NB For
-	// name_space==COSMO, all local_id's should be defined in
-	// google3/java/com/google/storage/cosmo/server/api/SpecialObjectIds.java
-	//  as they have a special predefined meaning. See
-	// cosmo.client.CosmoIdFactory.createObjectId(long,String) for IMPORTANT
-	// recommendations when generating IDs.
-	LocalId string `json:"localId,omitempty"`
-
-	// NameSpace: The name space in which this id is unique (typically the
-	// application that created it). Values should be drawn from the above
-	// enum, but for experimentation, use values greater than 1000.
-	NameSpace int64 `json:"nameSpace,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreatorUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreatorUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Id) MarshalJSON() ([]byte, error) {
-	type NoMethod Id
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Image struct {
-	// AltText: The alternative text of this image which will be used for
-	// accessibility.
-	AltText string `json:"altText,omitempty"`
-
-	// AspectRatio: The aspect ratio of this image (width/height).
-	AspectRatio float64 `json:"aspectRatio,omitempty"`
-
-	// ImageUrl: Image url specified by developers. Server side, we will
-	// wrap with FIFE so client apps can configure size/cropping/etc.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Image) MarshalJSON() ([]byte, error) {
-	type NoMethod Image
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *Image) UnmarshalJSON(data []byte) error {
-	type NoMethod Image
-	var s1 struct {
-		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AspectRatio = float64(s1.AspectRatio)
-	return nil
-}
-
-type ImageButton struct {
-	// Possible values:
-	//   "NONE"
-	//   "AIRPLANE"
-	//   "BOOKMARK"
-	//   "BUS"
-	//   "CAR"
-	//   "CLOCK"
-	//   "CONFIRMATION_NUMBER_ICON"
-	//   "DOLLAR"
-	//   "DESCRIPTION"
-	//   "EDIT"
-	//   "EDIT_NOTE"
-	//   "EMAIL"
-	//   "EVENT_PERFORMER"
-	//   "EVENT_SEAT"
-	//   "FLIGHT_ARRIVAL"
-	//   "FLIGHT_DEPARTURE"
-	//   "HOTEL"
-	//   "HOTEL_ROOM_TYPE"
-	//   "INVITE"
-	//   "MAP_PIN"
-	//   "MEMBERSHIP"
-	//   "MULTIPLE_PEOPLE"
-	//   "OFFER"
-	//   "OPEN_IN_NEW"
-	//   "PERSON"
-	//   "PHONE"
-	//   "RESTAURANT_ICON"
-	//   "SHOPPING_CART"
-	//   "STAR"
-	//   "STORE"
-	//   "TICKET"
-	//   "TRAIN"
-	//   "VIDEO_CAMERA"
-	//   "VIDEO_PLAY" - Add new items in alphabetical order. Next Available
-	// ID: 34
-	Icon string `json:"icon,omitempty"`
-
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Icon") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Icon") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImageButton) MarshalJSON() ([]byte, error) {
-	type NoMethod ImageButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImageComponent: NOTE: Through future refactoring work, this image
-// component will eventually be used in the Image widget, and will
-// likely replace the Icon proto as well.
-type ImageComponent struct {
-	AltText string `json:"altText,omitempty"`
-
-	BorderStyle *BorderStyle `json:"borderStyle,omitempty"`
-
-	CropStyle *ImageCropStyle `json:"cropStyle,omitempty"`
-
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImageComponent) MarshalJSON() ([]byte, error) {
-	type NoMethod ImageComponent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImageCropStyle: Represents a crop style that can be applied to an
-// image.
-type ImageCropStyle struct {
-	// AspectRatio: The aspect ratio to use if the crop type is
-	// RECTANGLE_CUSTOM.
-	AspectRatio float64 `json:"aspectRatio,omitempty"`
-
-	// Type: The crop type.
-	//
-	// Possible values:
-	//   "CROP_TYPE_NOT_SET" - No value specified.
-	//   "SQUARE" - Applies a square crop.
-	//   "CIRCLE" - Applies a circular crop.
-	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
-	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
-	// ratio.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AspectRatio") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImageCropStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod ImageCropStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *ImageCropStyle) UnmarshalJSON(data []byte) error {
-	type NoMethod ImageCropStyle
-	var s1 struct {
-		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AspectRatio = float64(s1.AspectRatio)
-	return nil
-}
-
-// ImageKeyValue: This is deprecated and please use KeyValue.
-type ImageKeyValue struct {
-	// Possible values:
-	//   "NONE"
-	//   "AIRPLANE"
-	//   "BOOKMARK"
-	//   "BUS"
-	//   "CAR"
-	//   "CLOCK"
-	//   "CONFIRMATION_NUMBER_ICON"
-	//   "DOLLAR"
-	//   "DESCRIPTION"
-	//   "EDIT"
-	//   "EDIT_NOTE"
-	//   "EMAIL"
-	//   "EVENT_PERFORMER"
-	//   "EVENT_SEAT"
-	//   "FLIGHT_ARRIVAL"
-	//   "FLIGHT_DEPARTURE"
-	//   "HOTEL"
-	//   "HOTEL_ROOM_TYPE"
-	//   "INVITE"
-	//   "MAP_PIN"
-	//   "MEMBERSHIP"
-	//   "MULTIPLE_PEOPLE"
-	//   "OFFER"
-	//   "OPEN_IN_NEW"
-	//   "PERSON"
-	//   "PHONE"
-	//   "RESTAURANT_ICON"
-	//   "SHOPPING_CART"
-	//   "STAR"
-	//   "STORE"
-	//   "TICKET"
-	//   "TRAIN"
-	//   "VIDEO_CAMERA"
-	//   "VIDEO_PLAY" - Add new items in alphabetical order. Next Available
-	// ID: 34
-	Icon string `json:"icon,omitempty"`
-
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Icon") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Icon") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImageKeyValue) MarshalJSON() ([]byte, error) {
-	type NoMethod ImageKeyValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// IncomingWebhookChangedMetadata: Annotation metadata to display system
-// messages for incoming webhook events. Next Tag: 7
-type IncomingWebhookChangedMetadata struct {
-	// IncomingWebhookName: The webhook name at the time of the change. Used
-	// in Spanner storage, BE API responses and FE API responses.
-	IncomingWebhookName string `json:"incomingWebhookName,omitempty"`
-
-	// InitiatorId: The user id of the user whose action triggered this
-	// system message. Used in Spanner storage, BE API responses and FE API
-	// responses.
-	InitiatorId *UserId `json:"initiatorId,omitempty"`
-
-	// InitiatorProfile: Complete profile when ListTopicsRequest
-	// FetchOptions.USER is set. Otherwise, only the id will be filled in.
-	// Used in FE API responses.
-	InitiatorProfile *User `json:"initiatorProfile,omitempty"`
-
-	// ObfuscatedIncomingWebhookId: The webhook id of the incoming webhook
-	// in question. This field should not be used to load webhook
-	// information dynamically and is only present for debugging purposes.
-	// Used in Spanner storage, BE API responses and FE API responses.
-	ObfuscatedIncomingWebhookId string `json:"obfuscatedIncomingWebhookId,omitempty"`
-
-	// OldIncomingWebhookName: Only populated for UPDATED_NAME and
-	// UPDATED_NAME_AND_AVATAR events, where the webhook name was changed.
-	// Used in Spanner storage, BE API responses and FE API responses.
-	OldIncomingWebhookName string `json:"oldIncomingWebhookName,omitempty"`
-
-	// Type: Used in Spanner storage, BE API responses and FE API responses.
-	//
-	// Possible values:
-	//   "UNSPECIFIED"
-	//   "ADDED"
-	//   "UPDATED" - TODO (b/154857280): remove UPDATED field.
-	//   "REMOVED"
-	//   "UPDATED_NAME"
-	//   "UPDATED_AVATAR"
-	//   "UPDATED_NAME_AND_AVATAR"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IncomingWebhookName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IncomingWebhookName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IncomingWebhookChangedMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod IncomingWebhookChangedMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type IndexItemOptions struct {
 	// AllowUnknownGsuitePrincipals: Specifies if the index request should
 	// allow Google Workspace principals that do not exist or are deleted.
@@ -12330,6 +5153,38 @@ func (s *IndexItemRequest) MarshalJSON() ([]byte, error) {
 type InitializeCustomerRequest struct {
 }
 
+// IntegerFacetingOptions: Used to specify integer faceting options.
+type IntegerFacetingOptions struct {
+	// IntegerBuckets: Buckets for given integer values should be in
+	// strictly ascending order. For example, if values supplied are
+	// (1,5,10,100), the following facet buckets will be formed {<1, [1,5),
+	// [5-10), [10-100), >=100}.
+	IntegerBuckets googleapi.Int64s `json:"integerBuckets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntegerBuckets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntegerBuckets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntegerFacetingOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod IntegerFacetingOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IntegerOperatorOptions: Used to provide a search operator for integer
 // properties. This is optional. Search operators let users restrict the
 // query to specific fields relevant to the type of item being searched.
@@ -12392,6 +5247,11 @@ func (s *IntegerOperatorOptions) MarshalJSON() ([]byte, error) {
 
 // IntegerPropertyOptions: The options for integer properties.
 type IntegerPropertyOptions struct {
+	// IntegerFacetingOptions: If set, describes integer faceting options
+	// for the given integer property. The corresponding integer property
+	// should be marked isFacetable.
+	IntegerFacetingOptions *IntegerFacetingOptions `json:"integerFacetingOptions,omitempty"`
+
 	// MaximumValue: The maximum value of the property. The minimum and
 	// maximum values for the property are used to rank results according to
 	// the ordered ranking. Indexing requests with values greater than the
@@ -12422,20 +5282,22 @@ type IntegerPropertyOptions struct {
 	// values indicate higher ranking.
 	OrderedRanking string `json:"orderedRanking,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MaximumValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "IntegerFacetingOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MaximumValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IntegerFacetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -12468,76 +5330,6 @@ type IntegerValues struct {
 
 func (s *IntegerValues) MarshalJSON() ([]byte, error) {
 	type NoMethod IntegerValues
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type IntegrationConfigMutation struct {
-	// AddApp: Add an app using its identifier.
-	AddApp *AppId `json:"addApp,omitempty"`
-
-	// AddPinnedItem: Add a pinned tab using its identifier.
-	AddPinnedItem *PinnedItemId `json:"addPinnedItem,omitempty"`
-
-	// RemoveApp: Remove an active app using its identifier.
-	RemoveApp *AppId `json:"removeApp,omitempty"`
-
-	// RemovePinnedItem: Remove an active pinned tab using its identifier.
-	RemovePinnedItem *PinnedItemId `json:"removePinnedItem,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AddApp") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddApp") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IntegrationConfigMutation) MarshalJSON() ([]byte, error) {
-	type NoMethod IntegrationConfigMutation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// IntegrationConfigUpdatedMetadata: Annotation metadata to display
-// system message for integration config updated event. This metadata is
-// stored in spanner, and can be dispatched to clients without any field
-// modification or transformation.
-type IntegrationConfigUpdatedMetadata struct {
-	// InitiatorId: The user whose action triggered this system message.
-	InitiatorId *UserId `json:"initiatorId,omitempty"`
-
-	// Mutations: A list of updates applied on the integration config.
-	Mutations []*IntegrationConfigMutation `json:"mutations,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "InitiatorId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InitiatorId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IntegrationConfigUpdatedMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod IntegrationConfigUpdatedMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12578,65 +5370,6 @@ type Interaction struct {
 
 func (s *Interaction) MarshalJSON() ([]byte, error) {
 	type NoMethod Interaction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type InviteAcceptedEvent struct {
-	ParticipantId []*StoredParticipantId `json:"participantId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ParticipantId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ParticipantId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InviteAcceptedEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod InviteAcceptedEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// InviteeInfo: Invitee information from a Dynamite invitation. See
-// go/dynamite-invitee-mgmt.
-type InviteeInfo struct {
-	// Email: Email as typed by the user when invited to Room or DM. This
-	// value will be canonicalized and hashed before retained in storage.
-	Email string `json:"email,omitempty"`
-
-	// UserId: Unique, immutable ID of the User.
-	UserId *UserId `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InviteeInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod InviteeInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13072,328 +5805,6 @@ func (s *ItemStructuredData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type KeyValue struct {
-	// BottomLabel: Formatted text supported.
-	BottomLabel string `json:"bottomLabel,omitempty"`
-
-	Button *Button `json:"button,omitempty"`
-
-	// Content: Formatted text supported and always required.
-	Content string `json:"content,omitempty"`
-
-	ContentMultiline bool `json:"contentMultiline,omitempty"`
-
-	EndIcon *IconImage `json:"endIcon,omitempty"`
-
-	// Possible values:
-	//   "NONE"
-	//   "AIRPLANE"
-	//   "BOOKMARK"
-	//   "BUS"
-	//   "CAR"
-	//   "CLOCK"
-	//   "CONFIRMATION_NUMBER_ICON"
-	//   "DOLLAR"
-	//   "DESCRIPTION"
-	//   "EDIT"
-	//   "EDIT_NOTE"
-	//   "EMAIL"
-	//   "EVENT_PERFORMER"
-	//   "EVENT_SEAT"
-	//   "FLIGHT_ARRIVAL"
-	//   "FLIGHT_DEPARTURE"
-	//   "HOTEL"
-	//   "HOTEL_ROOM_TYPE"
-	//   "INVITE"
-	//   "MAP_PIN"
-	//   "MEMBERSHIP"
-	//   "MULTIPLE_PEOPLE"
-	//   "OFFER"
-	//   "OPEN_IN_NEW"
-	//   "PERSON"
-	//   "PHONE"
-	//   "RESTAURANT_ICON"
-	//   "SHOPPING_CART"
-	//   "STAR"
-	//   "STORE"
-	//   "TICKET"
-	//   "TRAIN"
-	//   "VIDEO_CAMERA"
-	//   "VIDEO_PLAY" - Add new items in alphabetical order. Next Available
-	// ID: 34
-	Icon string `json:"icon,omitempty"`
-
-	// IconAltText: The alternative text of this icon_url which will be used
-	// for accessibility.
-	IconAltText string `json:"iconAltText,omitempty"`
-
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// Possible values:
-	//   "CROP_TYPE_NOT_SET" - No value specified.
-	//   "SQUARE" - Applies a square crop.
-	//   "CIRCLE" - Applies a circular crop.
-	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
-	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
-	// ratio.
-	ImageStyle string `json:"imageStyle,omitempty"`
-
-	// OnClick: Only the top/bottom label + content region is clickable.
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	// StartIcon: The optional icon to display before the text content.
-	StartIcon *IconImage `json:"startIcon,omitempty"`
-
-	SwitchWidget *SwitchWidget `json:"switchWidget,omitempty"`
-
-	// TopLabel: Formatted text supported.
-	TopLabel string `json:"topLabel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BottomLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *KeyValue) MarshalJSON() ([]byte, error) {
-	type NoMethod KeyValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// LanguageConfig: The language configuration for the session.
-type LanguageConfig struct {
-	// SpokenLanguages: The spoken language(s) in BCP47 language code.
-	SpokenLanguages []string `json:"spokenLanguages,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SpokenLanguages") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SpokenLanguages") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LanguageConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod LanguageConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type LdapGroupProto struct {
-	GroupName string `json:"groupName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LdapGroupProto) MarshalJSON() ([]byte, error) {
-	type NoMethod LdapGroupProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type LdapUserProto struct {
-	UserName string `json:"userName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "UserName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UserName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LdapUserProto) MarshalJSON() ([]byte, error) {
-	type NoMethod LdapUserProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// LegacyUploadMetadata: The original UploadMetadata that this
-// DriveMetadata was converted from.
-type LegacyUploadMetadata struct {
-	// LegacyUniqueId: A unique ID generated from legacy UploadMetadata.
-	// This is used for interopping URLs after uploading blob to shared
-	// drive. Links in Classic might break without this.
-	// go/drive-file-attachment-interop-from-dynamite.
-	LegacyUniqueId string `json:"legacyUniqueId,omitempty"`
-
-	// UploadMetadata: The blob in this UploadMetadata has been uploaded to
-	// shared drive. This UploadMetadata is no longer attached to a message.
-	// go/shared-drive-data-migration.
-	UploadMetadata *UploadMetadata `json:"uploadMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LegacyUniqueId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LegacyUniqueId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LegacyUploadMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod LegacyUploadMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// LinkData: Link metadata, for LINK segments. Anchor text should be
-// stored in the "text" field of the Segment, which can also serve as a
-// fallback.
-type LinkData struct {
-	// Attachment: An Attachment represents the structured entity to which
-	// we are linking. It contains an Embed
-	// (apps/tacotown/proto/embeds/embed_client.proto) with fields specific
-	// to the appropriate type of linked entity. For example, if we are
-	// linking to a photo album, the Embed may include the album ID and gaia
-	// ID of the creator. Clients that understand the Embed type within the
-	// Attachment may construct and/or decorate their link appropriately
-	// e.g. to make use of type-specific functionality or first-party
-	// integrations. The link_target and (if appropriate) display_url fields
-	// must still be set even when an Attachment is present, so that clients
-	// who do not know how to interpret the Attachment can fall back to
-	// those fields, and render the Segment as an ordinary web link. N.B.
-	// Even when an Attachment is present, the intention of a "LINK" Segment
-	// is for the Segment to be presented inline with the rest of the text
-	// of a post or comment, with a clickable link or other UI suitable for
-	// inlining (though the client may modify the UI based on Attachment
-	// data, e.g. to add appropriate hovers, icons, etc.). When an entity is
-	// intended to be rendered separately from the main body of the
-	// post/comment, a separate Attachment proto can be added outside the
-	// set of Segments. N.B. Within the Attachment, fields of
-	// EmbedClientItem have their own visibility annotations, which should
-	// be enforced separately from Segment visibility annotations. See:
-	// apps/tacotown/proto/embeds/embed_annotations.proto
-	Attachment *SocialCommonAttachmentAttachment `json:"attachment,omitempty"`
-
-	// AttachmentRenderHint: The hint to use when rendering the associated
-	// attachment. Ignored if there is no associated attachment.
-	//
-	// Possible values:
-	//   "ATTACHMENT_RENDER_HINT_UNKNOWN" - No rendering hint; should not be
-	// used (equivalent to having no hint)
-	//   "ATTACHMENT_RENDER_HINT_AFTER" - Render any associated attachment
-	// at the end of the block, after all sibling Segments. Leave the link
-	// in place in the text and render it normally as well.
-	//   "ATTACHMENT_RENDER_HINT_INTERLEAVED" - Render any associated
-	// attachment inline in the text in place of the link text, forcing a
-	// line break before and after the attachment so the text and the
-	// attachment are "interleaved". If this is not possible, render as if
-	// AFTER.
-	AttachmentRenderHint string `json:"attachmentRenderHint,omitempty"`
-
-	// DisplayUrl: If we wish to show the user a different (e.g. shortened)
-	// version of the URL for display purposes, then that version should be
-	// set here. If this field isn't set, link_target will be used for both
-	// purposes.
-	DisplayUrl string `json:"displayUrl,omitempty"`
-
-	// LinkTarget: link_target is the URL to navigate to when clicked. This
-	// could be the original URL, or a URL signed by the GWS URL signing
-	// service.
-	LinkTarget string `json:"linkTarget,omitempty"`
-
-	// LinkType: LinkType is an optional field that provides additional
-	// information regarding link target. For example, link type can be
-	// identified as the SELF_LINK when the request was executed from the
-	// same link as the link target.
-	//
-	// Possible values:
-	//   "UNKNOWN_LINK_TYPE" - No link type specified.
-	//   "SELF_LINK" - This indicates that the link target points to the
-	// same object related to this segment. Example: A YouTube link with
-	// text="0.07" and link_target:
-	// "https://www.youtube.com/watch?v=leHVmSqd4_w&t=0m07s" points to the
-	// same YouTube video where this segment appears. See
-	// http://go/ignore-badwords-filtering-for-selflink for adding link_type
-	// design document.
-	LinkType string `json:"linkType,omitempty"`
-
-	// Title: Title is an optional field that provides a short string that
-	// describes the link or its destination. User interfaces often use
-	// title as a tooltip or for accessibility purposes. However, they are
-	// of course free to present this data in any form. This field is plain
-	// text.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Attachment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LinkData) MarshalJSON() ([]byte, error) {
-	type NoMethod LinkData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type ListDataSourceResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
 	// if there are no more results in the list.
@@ -13634,6 +6045,119 @@ func (s *ListUnmappedIdentitiesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MapInfo: Geo information used for rendering a map that shows the
+// user's work location.
+type MapInfo struct {
+	// Lat: Latitude in degrees
+	Lat float64 `json:"lat,omitempty"`
+
+	// LocationUrl: URL to a view of a map centered on the user's work
+	// location in Campus Maps (for google.com) or Google Maps (external).
+	LocationUrl *SafeUrlProto `json:"locationUrl,omitempty"`
+
+	// Long: Longitude in degrees
+	Long float64 `json:"long,omitempty"`
+
+	// MapTile: MapTiles for the area around a user's work location
+	MapTile []*MapTile `json:"mapTile,omitempty"`
+
+	// Zoom: The zoom level of the map. A constant zoom value of 18 is used
+	// for now to match the zoom of the map shown on a Moma Teams Profile
+	// page
+	Zoom int64 `json:"zoom,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Lat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Lat") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MapInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MapInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *MapInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod MapInfo
+	var s1 struct {
+		Lat  gensupport.JSONFloat64 `json:"lat"`
+		Long gensupport.JSONFloat64 `json:"long"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Lat = float64(s1.Lat)
+	s.Long = float64(s1.Long)
+	return nil
+}
+
+// MapTile: Information used to render a map tile image in the proper
+// location on a map.
+type MapTile struct {
+	// ImageUrl: URL to an image file containing an office layout of the
+	// user's location for their organization, if one is available. For
+	// google.com, this image is from Corp Campus Maps.
+	ImageUrl *SafeUrlProto `json:"imageUrl,omitempty"`
+
+	// TileX: Map tile x coordinate
+	TileX float64 `json:"tileX,omitempty"`
+
+	// TileY: Map tile y coordinate
+	TileY float64 `json:"tileY,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MapTile) MarshalJSON() ([]byte, error) {
+	type NoMethod MapTile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *MapTile) UnmarshalJSON(data []byte) error {
+	type NoMethod MapTile
+	var s1 struct {
+		TileX gensupport.JSONFloat64 `json:"tileX"`
+		TileY gensupport.JSONFloat64 `json:"tileY"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TileX = float64(s1.TileX)
+	s.TileY = float64(s1.TileY)
+	return nil
+}
+
 // MatchRange: Matched range of a snippet [start, end).
 type MatchRange struct {
 	// End: End of the match in the snippet.
@@ -13661,72 +6185,6 @@ type MatchRange struct {
 
 func (s *MatchRange) MarshalJSON() ([]byte, error) {
 	type NoMethod MatchRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MdbGroupProto: An entity from the MDB namespace that is to be
-// interpreted as a group. If using this for authorization, you should
-// do an exact match of the peer role against group_name or any of the
-// names in the Chubby expansion of the MDB group named group_name.
-type MdbGroupProto struct {
-	GroupName string `json:"groupName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MdbGroupProto) MarshalJSON() ([]byte, error) {
-	type NoMethod MdbGroupProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MdbUserProto: An entity from the MDB namespace that is to be
-// interpreted as a user. If using this for authorization, you should
-// only do an exact match on the peer role against user_name.
-type MdbUserProto struct {
-	// GaiaId: Do not set this field. Contact credentials-eng@ if you
-	// believe you absolutely need to use it. This is the @prod.google.com
-	// Gaia ID that corresponds to the MDB user, see go/authn-merge for
-	// details. This field may always be safely ignored when performing an
-	// authorization check.
-	GaiaId int64 `json:"gaiaId,omitempty,string"`
-
-	UserName string `json:"userName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GaiaId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GaiaId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MdbUserProto) MarshalJSON() ([]byte, error) {
-	type NoMethod MdbUserProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13759,852 +6217,6 @@ type Media struct {
 
 func (s *Media) MarshalJSON() ([]byte, error) {
 	type NoMethod Media
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MeetingSpace:  A meeting space is a persistent object that is the
-// context for one or more calls. The meeting space is what makes users
-// find each other when they want to meet and to find shared resources.
-// With two exceptions, all the fields in the meeting space resource are
-// visible publicly to any client, even anonymous users. The exceptions
-// are that * The call_info field is only visible to clients that have a
-// device (as indicated by the meeting token) in the JOINED or HIDDEN
-// state. * The meeting_alias field will only be set for users who are
-// in the same domain as the meeting space. The meeting space resource
-// (outside call_info) should only contain information necessary to join
-// a call in the meeting space, and not any other metadata about the
-// meeting space, such as what organization it belongs to or things
-// related to ongoing calls.
-type MeetingSpace struct {
-	// AcceptedNumberClass: Which number classes are accepted by this
-	// meeting at the moment? When there is no ongoing conference, this
-	// field may change independent of the version number of the
-	// MeetingSpace. When a conference starts, this field will be locked to
-	// the value at that time, and then will be unlocked again at the end of
-	// the conference.
-	//
-	// Possible values:
-	//   "NUMBER_CLASS_UNSPECIFIED" - No number class has been specified.
-	//   "LOW_COST" - The number has a low cost to receive calls on.
-	//   "HIGH_COST" - The number has a high cost to receive calls on.
-	//   "LEGACY" - Class for legacy numbers.
-	AcceptedNumberClass []string `json:"acceptedNumberClass,omitempty"`
-
-	// BroadcastAccess: Broadcast access information for this meeting space.
-	BroadcastAccess *BroadcastAccess `json:"broadcastAccess,omitempty"`
-
-	// CallInfo: Information relevant to an ongoing conference. This field
-	// will be set in responses if the client requesting the meeting space
-	// has a device in one of the JOINED, HIDDEN, or MISSING_PREREQUISITES
-	// states. The field will also be set without a created device if the
-	// client requesting the meeting space is eligible to directly create a
-	// device in the JOINED state without knocking, eg a same-domain joiner.
-	// Can also only be updated by clients with a device in the JOINED
-	// state.
-	CallInfo *CallInfo `json:"callInfo,omitempty"`
-
-	// GatewayAccess: The interop gateway access information for the meeting
-	// space. A gateway access can be used when joining conferences from
-	// non-Google equipment through an interop gateway.
-	GatewayAccess *GatewayAccess `json:"gatewayAccess,omitempty"`
-
-	// GatewaySipAccess: The SIP based access methods that can be used to
-	// join the conference.
-	GatewaySipAccess []*GatewaySipAccess `json:"gatewaySipAccess,omitempty"`
-
-	// MeetingAlias: An optional alias for the meeting space. The alias can
-	// in some cases be resolved to the meeting space, similar to the
-	// meeting code. The limitation is that the user needs to be in the same
-	// meeting domain as the meeting space.
-	MeetingAlias string `json:"meetingAlias,omitempty"`
-
-	// MeetingCode: A meeting code is a globally unique code which points to
-	// a meeting space. Note: Meeting codes may be regenerated, which will
-	// cause old meeting codes to become invalid.
-	MeetingCode string `json:"meetingCode,omitempty"`
-
-	// MeetingSpaceId: A unique server-generated ID for the meeting space.
-	// This is the resource name of the meeting space resource and has the
-	// form `spaces/`, where is a sequence of characters in the base64url
-	// set (https://tools.ietf.org/html/rfc4648#section-5), without any `=`
-	// characters.
-	MeetingSpaceId string `json:"meetingSpaceId,omitempty"`
-
-	// MeetingUrl: A URL to identify and access the meeting space. Output
-	// only.
-	MeetingUrl string `json:"meetingUrl,omitempty"`
-
-	// MoreJoinUrl: Output only. A URL that clients (e.g. Calendar) can use
-	// to show the web page with all join methods available for this meeting
-	// space. This link is also used in iOS universal links and Android
-	// intents, used for opening the "More ways to join" view in the Meet
-	// mobile apps. Example: https://tel.meet/mee-ting-cod?pin=1234567891011
-	// Here, "pin" is the universal phone PIN. We include it explicitly to
-	// better support the offline case on the mobile. This is set when the
-	// meeting space has either a universal PIN or an interop PIN and
-	// clients who can show a "more ways to join" button should show it
-	// whenever this field is set.
-	MoreJoinUrl string `json:"moreJoinUrl,omitempty"`
-
-	// PhoneAccess: All regional phone access methods for this meeting
-	// space. Can be empty.
-	PhoneAccess []*PhoneAccess `json:"phoneAccess,omitempty"`
-
-	// Settings: Settings of the meeting space.
-	Settings *Settings `json:"settings,omitempty"`
-
-	// UniversalPhoneAccess: A universal phone access method for this
-	// meeting space. Can be unset.
-	UniversalPhoneAccess *UniversalPhoneAccess `json:"universalPhoneAccess,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AcceptedNumberClass")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AcceptedNumberClass") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MeetingSpace) MarshalJSON() ([]byte, error) {
-	type NoMethod MeetingSpace
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Member struct {
-	Roster *Roster `json:"roster,omitempty"`
-
-	User *User `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Roster") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Roster") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Member) MarshalJSON() ([]byte, error) {
-	type NoMethod Member
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MemberId: Eventually this can be updated to a oneOf User, Space (for
-// nested spaces), Bots or Service, as and when these use cases come up.
-type MemberId struct {
-	// RosterId: Unique, immutable ID of the Roster.
-	RosterId *RosterId `json:"rosterId,omitempty"`
-
-	// UserId: Unique, immutable ID of the User.
-	UserId *UserId `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RosterId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RosterId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MemberId) MarshalJSON() ([]byte, error) {
-	type NoMethod MemberId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type MembershipChangeEvent struct {
-	// LeaveReason: This should only be set when MembershipChange type is
-	// LEAVE.
-	//
-	// Possible values:
-	//   "LEAVE_REASON_UNKNOWN"
-	//   "FORCE_HISTORY_POLICY_CHANGE"
-	//   "USER_INITIATED"
-	LeaveReason string `json:"leaveReason,omitempty"`
-
-	ParticipantId []*StoredParticipantId `json:"participantId,omitempty"`
-
-	// Possible values:
-	//   "JOIN"
-	//   "LEAVE"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LeaveReason") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LeaveReason") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MembershipChangeEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod MembershipChangeEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MembershipChangedMetadata: Annotation metadata to display system
-// messages for membership changes.
-type MembershipChangedMetadata struct {
-	AffectedMemberProfiles []*Member `json:"affectedMemberProfiles,omitempty"`
-
-	// AffectedMembers: List of users and rosters whose membership status
-	// changed.
-	AffectedMembers []*MemberId `json:"affectedMembers,omitempty"`
-
-	AffectedMemberships []*AffectedMembership `json:"affectedMemberships,omitempty"`
-
-	// Initiator: The user whose action triggered this system message.
-	Initiator *UserId `json:"initiator,omitempty"`
-
-	// InitiatorProfile: Complete member profiles, when ListTopicsRequest
-	// FetchOptions.USER is set. Otherwise, only the id will be filled in.
-	InitiatorProfile *User `json:"initiatorProfile,omitempty"`
-
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "INVITED" - Non-member -> Can join. Multiple groups and users.
-	//   "JOINED" - Can join -> Member. One user.
-	//   "ADDED" - Non-member -> Member. Multiple users.
-	//   "REMOVED" - Can join -> Non-member. One group or user.
-	//   "LEFT" - Member -> Can join. One user.
-	//   "BOT_ADDED" - Bot added to the room.
-	//   "BOT_REMOVED" - Bot removed from the room.
-	//   "KICKED_DUE_TO_OTR_CONFLICT" - This signifies the user is kicked
-	// because the user's OTR policy is conflicted with the room history
-	// settings. Joined -> Non-member. One user.
-	//   "ROLE_UPDATED" - MembershipRole changed. Multiple users.
-	//   "ROLE_TARGET_AUDIENCE_UPDATED" - The room is now joinable by an
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AffectedMemberProfiles") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AffectedMemberProfiles")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MembershipChangedMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod MembershipChangedMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Menu: This is deprecated and please use SelectionControl by setting
-// type to DROPDOWN.
-type Menu struct {
-	Items []*MenuItem `json:"items,omitempty"`
-
-	// Label: Label used to be displayed ahead of the menu. It is optional.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text field which is will be used in FormInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChange: If specified, form is submitted when selection changed. If
-	// not specified, developer will need to specify a separate button.
-	OnChange *FormAction `json:"onChange,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Menu) MarshalJSON() ([]byte, error) {
-	type NoMethod Menu
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type MenuItem struct {
-	Selected bool `json:"selected,omitempty"`
-
-	// Text: The text to be displayed.
-	Text string `json:"text,omitempty"`
-
-	// Value: The value associated with this item which will be sent back to
-	// app scripts. Client should use as a form input value.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Selected") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Selected") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MenuItem) MarshalJSON() ([]byte, error) {
-	type NoMethod MenuItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Message: Message posted to a Space.
-type Message struct {
-	// Annotations: Annotations parsed and extracted from the text body.
-	Annotations []*Annotation `json:"annotations,omitempty"`
-
-	// AppProfile: Custom display profile info for apps. Leave the field
-	// empty for real users.
-	AppProfile *AppsDynamiteSharedAppProfile `json:"appProfile,omitempty"`
-
-	// Attachments: Attachments parsed from incoming webhooks
-	Attachments []*Attachment `json:"attachments,omitempty"`
-
-	// Attributes: Lightweight message attributes which values are
-	// calculated and set in the servers.
-	Attributes *MessageAttributes `json:"attributes,omitempty"`
-
-	// BotResponses: Responses from bots indicating if extra auth/config is
-	// needed.
-	BotResponses []*BotResponse `json:"botResponses,omitempty"`
-
-	// CommunalLabels: Communal labels associated with a message. These
-	// exist on the message itself regardless of which user fetches them.
-	// Order of entries is arbitrary and will not list duplicates of the
-	// same label_id. See go/chat-labels-design for details.
-	CommunalLabels []*CommunalLabelTag `json:"communalLabels,omitempty"`
-
-	ContentReportSummary *ContentReportSummary `json:"contentReportSummary,omitempty"`
-
-	// CreateTime: Time when the Message was posted in microseconds.
-	CreateTime int64 `json:"createTime,omitempty,string"`
-
-	// CreatorId: ID of the User who posted the Message. This includes
-	// information to identify if this was posted by an App on behalf of a
-	// user.
-	CreatorId *UserId `json:"creatorId,omitempty"`
-
-	// DeletableBy: Indicates who can delete the message. This field is set
-	// on the read path (e.g. ListTopics) but doesn’t have any effect on
-	// the write path (e.g. CreateMessageRequest).
-	//
-	// Possible values:
-	//   "PERMISSION_UNSPECIFIED" - Default case, should never be used. If
-	// this data is encountered in the DB any request should throw an
-	// exception.
-	//   "PERMISSION_NO_ONE" - No one can mutate the entity.
-	//   "PERMISSION_CREATOR" - Only the creator of an entity can mutate it.
-	//   "PERMISSION_MEMBER" - Every human member of a space or the creator
-	// can mutate the entity.
-	DeletableBy string `json:"deletableBy,omitempty"`
-
-	// DeleteTime: Time when the Message was deleted in microseconds. This
-	// field is set to nonzero value only for Messages deleted globally.
-	DeleteTime int64 `json:"deleteTime,omitempty,string"`
-
-	// DeleteTimeForRequester: Time when the Message was per-user deleted by
-	// the message requester in microseconds. This field is set to nonzero
-	// value only for Message per-user deleted by the requester.
-	DeleteTimeForRequester int64 `json:"deleteTimeForRequester,omitempty,string"`
-
-	// DeletedByVault: Was this message deleted by Vault (Only used for
-	// Vault support) This is false if message is live or message was
-	// deleted by user.
-	DeletedByVault bool `json:"deletedByVault,omitempty"`
-
-	// DlpScanOutcome: Data Loss Prevention scan information for this
-	// message. Messages are evaluated in the backend on create
-	// message/topic and edit message actions. DEPRECATED: use
-	// dlp_scan_summary instead.
-	//
-	// Possible values:
-	//   "SCAN_UNKNOWN_OUTCOME"
-	//   "SCAN_SUCCEEDED_NO_VIOLATION" - This means no violation is detected
-	// on the given message/attachment.
-	//   "SCAN_SUCCEEDED_BLOCK" - Violation is detected. The
-	// message/attachment will be blocked (or deleted if this happens in
-	// failure recovery), the user will be warned, and the violation will be
-	// logged to BIP.
-	//   "SCAN_SUCCEEDED_WARN" - Violation is detected. The user will be
-	// warned, and the violation will be logged to BIP.
-	//   "SCAN_SUCCEEDED_AUDIT_ONLY" - Violation is detected and will be
-	// logged to BIP (no user-facing action performed).
-	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
-	// but an exception occurred.
-	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
-	// but the scanning timed out.
-	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
-	// evaluation were attempted, but all of the rules failed to be
-	// evaluated.
-	//   "SCAN_FAILURE_ILLEGAL_STATE_FOR_ATTACHMENTS" - An
-	// IllegalStateException is thrown when executing DLP on attachments.
-	// This could happen if the space row is missing.
-	//   "SCAN_SKIPPED_EXPERIMENT_DISABLED" - Rule fetch and evaluation is
-	// skipped because DLP is not enabled for the user.
-	//   "SCAN_SKIPPED_CONSUMER" - Rule fetch and evaluation are skipped
-	// because the user sending message is consumer.
-	//   "SCAN_SKIPPED_NON_HUMAN_USER" - Rule fetch and evaluation are
-	// skipped because the user sending message is a non-human user (i.e. a
-	// bot).
-	//   "SCAN_SKIPPED_NO_MESSAGE" - Rule fetch and evaluation are skipped
-	// because there is no message to scan. Deprecated: this should not
-	// happen since there must be message or attachment for DLP scan.
-	//   "SCAN_SKIPPED_USER_ACKNOWLEDGED_WARNING" - Rule fetch and
-	// evaluation are skipped because the user has acknowledged the warning
-	// on the message that triggered the Warn violation and sent the message
-	// anyway.
-	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
-	// skipped because the message originated from Interop or Babel.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
-	// happened, but rule evaluation is skipped because no rules were found.
-	//
-	// "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_ACTION_PARAMS"
-	// - Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given action params.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_APPLICABLE_RULES_FOR_TRIGGER" -
-	// Rule fetch happened, but rule evaluation is skipped because none of
-	// the rules are applicable to the given trigger.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_PERMANENT_ERROR" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned permanent failure while converting the attachment to text.
-	//   "SCAN_RULE_EVALUATION_SKIPPED_CHANGELING_EMPTY_RESPONSE" - Rule
-	// fetch happened, but rule evaluation is skipped because Changeling
-	// returned an empty response while converting the attachment to text.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_NO_VIOLATION" - Rules were fetched
-	// but some evaluations failed. No violation was found in the rules that
-	// were successfully evaluated.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_BLOCK" - Rules were fetched but some
-	// evaluations failed. A blocking violation was found in the rules that
-	// were successfully evaluated. The message/attachment will be blocked,
-	// the user will be notified, and the violation will be logged to BIP. A
-	// blocking violation takes precedence over all other violation types.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_WARN" - Rules were fetched but some
-	// evaluations failed. A warn violation was found in the rules that were
-	// successfully evaluated. The user will be warned, and the violation
-	// will be logged to BIP.
-	//   "SCAN_SUCCEEDED_WITH_FAILURES_AUDIT_ONLY" - Rules were fetched but
-	// some evaluations failed. An audit-only violation was found in the
-	// rules that were successfully evaluated. The violation will be logged
-	// to BIP (no user-facing action performed).
-	DlpScanOutcome string `json:"dlpScanOutcome,omitempty"`
-
-	// DlpScanSummary: Data Loss Prevention scan information for this
-	// message. Messages are evaluated in the backend on create
-	// message/topic and edit message actions.
-	DlpScanSummary *DlpScanSummary `json:"dlpScanSummary,omitempty"`
-
-	// EditableBy: Indicates who can edit the message. This field is set on
-	// the read path (e.g. ListTopics) but doesn’t have any effect on the
-	// write path (e.g. CreateMessageRequest).
-	//
-	// Possible values:
-	//   "PERMISSION_UNSPECIFIED" - Default case, should never be used. If
-	// this data is encountered in the DB any request should throw an
-	// exception.
-	//   "PERMISSION_NO_ONE" - No one can mutate the entity.
-	//   "PERMISSION_CREATOR" - Only the creator of an entity can mutate it.
-	//   "PERMISSION_MEMBER" - Every human member of a space or the creator
-	// can mutate the entity.
-	EditableBy string `json:"editableBy,omitempty"`
-
-	// FallbackText: A plain-text description of the attachment, used when
-	// clients cannot display formatted attachment (e.g. mobile push
-	// notifications).
-	FallbackText string `json:"fallbackText,omitempty"`
-
-	// Id: ID of the resource.
-	Id *MessageId `json:"id,omitempty"`
-
-	// IsContentPurged: Whether the message is content purged. Content
-	// purged messages contain only data required for tombstone (see
-	// go/chat-infinite-tombstone). This field is only used by Vault to
-	// display tombstone and should only be set to true if the message is a
-	// tombstone.
-	IsContentPurged bool `json:"isContentPurged,omitempty"`
-
-	// IsInlineReply: Output only. Indicates if the message is an inline
-	// reply. Set to true only if the message's ParentPath is non-NULL.
-	// Currently, only inline replies have non-NULL ParentPath. See
-	// go/chat-be-inline-reply-indicator.
-	IsInlineReply bool `json:"isInlineReply,omitempty"`
-
-	// LastEditTime: If the message was edited by a user, timestamp of the
-	// last edit, in microseconds.
-	LastEditTime int64 `json:"lastEditTime,omitempty,string"`
-
-	// LastUpdateTime: Time when the Message text was last updated in
-	// microseconds.
-	LastUpdateTime int64 `json:"lastUpdateTime,omitempty,string"`
-
-	// LocalId: A unique id specified on the client side.
-	LocalId string `json:"localId,omitempty"`
-
-	// MessageIntegrationPayload: An optional payload (restricted to 1P
-	// applications) that will be stored with this message. This can only be
-	// set by the 1P API and should be used to deliver additional data such
-	// a 1P sync version, 1P entity ID to the client for more advanced
-	// functionality [Eg. inform Group Tasks tab of new version while
-	// linking, fetch & render a live Task/Meet call tile].
-	MessageIntegrationPayload *AppsDynamiteSharedMessageIntegrationPayload `json:"messageIntegrationPayload,omitempty"`
-
-	// MessageOrigin: Where the message was posted from
-	//
-	// Possible values:
-	//   "ORIGIN_NOT_SET"
-	//   "ORIGIN_DYNAMITE"
-	//   "ORIGIN_BABEL_INTEROP_LIVE" - The message is from Babel (Hangouts
-	// Classic) interop.
-	//   "ORIGIN_BABEL_INTEROP_RETRY" - The message is from Babel interop
-	// retries from Manifold queue.
-	//   "ORIGIN_BABEL" - The message came directly from Babel as
-	// source-of-truth
-	//   "ORIGIN_BABEL_DUAL_WRITE" - The message came directly from Babel
-	// during dual-write
-	//   "ORIGIN_BABEL_DUAL_WRITE_RETRY" - The message came directly from
-	// Babel Manifold queue during dual write
-	//   "ORIGIN_BACKFILL_FROM_PAPYRUS" - The message was backfilled by
-	// go/dinnertrain as part of go/storage-consolidation. The backfill
-	// origin corresponds to the BackfillState in which the message was
-	// created.
-	//   "ORIGIN_BACKFILL_FROM_GMAIL_ARCHIVE"
-	MessageOrigin string `json:"messageOrigin,omitempty"`
-
-	// MessageState: State of the message, indicating whether the message is
-	// visible to all members in the group or is only visible to the sender
-	// only, or the private_message_viewer if it is set.
-	//
-	// Possible values:
-	//   "PUBLIC" - Default - visible to the room / DM.
-	//   "PRIVATE" - Private state - only visible to the message creator,
-	// and the private_message_viewer if set.
-	MessageState string `json:"messageState,omitempty"`
-
-	// OriginAppSuggestions: Indicates if this message contains any
-	// suggestions that were provided by any Apps.
-	OriginAppSuggestions []*AppsDynamiteSharedOriginAppSuggestion `json:"originAppSuggestions,omitempty"`
-
-	// PersonalLabels: Personal labels associated with a message for the
-	// viewing user. Order of entries is arbitrary and will not list
-	// duplicates of the same label_id. See go/chat-labels-design for
-	// details. NOTE: This will be unpopulated in the case of SpaceChangelog
-	// events.
-	PersonalLabels []*PersonalLabelTag `json:"personalLabels,omitempty"`
-
-	// PrivateMessageInfos: A list of per-user private information. This is
-	// deprecated, because we no longer plan to support partially private
-	// messages or private messages for multiple users. The message_state
-	// and private_message_viewer fields should be sufficient for this
-	// infrastructure.
-	PrivateMessageInfos []*PrivateMessageInfo `json:"privateMessageInfos,omitempty"`
-
-	// PrivateMessageViewer: Should only be set if the Message State is
-	// PRIVATE. If set, the message content is only visible to this user
-	// (and any apps associated with the message), as well as the message
-	// creator. If unset, a private message is visible to the message
-	// creator only.
-	PrivateMessageViewer *UserId `json:"privateMessageViewer,omitempty"`
-
-	// Props: Contains additional (currently Hangouts Classic only)
-	// properties applicable to this message.
-	Props *MessageProps `json:"props,omitempty"`
-
-	// QuotedByState: Output only. Whether this message has been quoted by
-	// another message or not. Used by clients to handle message edit flows
-	// for messages that have been quoted.
-	//
-	// Possible values:
-	//   "QUOTED_BY_STATE_UNSPECIFIED" - Unspecified state for
-	// QuotedByState.
-	//   "QUOTED_BY_STATE_HAS_BEEN_QUOTED" - State to indicate that this
-	// message is quoted by another message (excluding soft-deleted message
-	// and purged ones).
-	//   "QUOTED_BY_STATE_HAS_NOT_BEEN_QUOTED" - State to indicate that this
-	// message are not quoted by another message.
-	QuotedByState string `json:"quotedByState,omitempty"`
-
-	// QuotedMessageMetadata: Output only. Metadata for a message that is
-	// quoted by this message.
-	QuotedMessageMetadata *QuotedMessageMetadata `json:"quotedMessageMetadata,omitempty"`
-
-	// Reactions: A list of user reactions to this message. Ordered by the
-	// timestamp of the first reaction, ascending (oldest to newest).
-	Reactions []*AppsDynamiteSharedReaction `json:"reactions,omitempty"`
-
-	// Reports: Output only. Details of content reports. Set only when the
-	// request asks for it.
-	Reports []*ContentReport `json:"reports,omitempty"`
-
-	// RetentionSettings: The retention settings of the message.
-	RetentionSettings *AppsDynamiteSharedRetentionSettings `json:"retentionSettings,omitempty"`
-
-	// SecondaryMessageKey: A client-specified string that can be used to
-	// uniquely identify a message in a space, in lieu of `id.message_id`.
-	SecondaryMessageKey string `json:"secondaryMessageKey,omitempty"`
-
-	// TextBody: Plaintext body of the Message.
-	TextBody string `json:"textBody,omitempty"`
-
-	// TombstoneMetadata: Information for the stoning of a Message.
-	TombstoneMetadata *TombstoneMetadata `json:"tombstoneMetadata,omitempty"`
-
-	// UpdaterId: ID of the User who last updated (created/edited/deleted)
-	// the Message. This includes information to identify if this was
-	// updated by an App on behalf of a user.
-	UpdaterId *UserId `json:"updaterId,omitempty"`
-
-	// UploadMetadata: UploadMetadata b/36864213 is an ongoing effort to
-	// move UploadMetadata out of annotations field and save it to
-	// upload_metadata field only. After the migration, UploadMetadata will
-	// only be saved in this field.
-	UploadMetadata []*UploadMetadata `json:"uploadMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Annotations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Message) MarshalJSON() ([]byte, error) {
-	type NoMethod Message
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MessageAttributes: Stores tombstone message attributes:
-// go/tombstone-message-attributes-overview
-type MessageAttributes struct {
-	// IsTombstone: If true: message is a tombstone in the client. Default
-	// false.
-	IsTombstone bool `json:"isTombstone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsTombstone") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsTombstone") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MessageAttributes) MarshalJSON() ([]byte, error) {
-	type NoMethod MessageAttributes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MessageId: Primary key for Message resource.
-type MessageId struct {
-	// MessageId: Opaque, server-assigned ID of the Message. While this ID
-	// is guaranteed to be unique within the Space, it's not guaranteed to
-	// be globally unique.
-	MessageId string `json:"messageId,omitempty"`
-
-	// ParentId: ID of the Message's immediate parent.
-	ParentId *MessageParentId `json:"parentId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MessageId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MessageId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MessageId) MarshalJSON() ([]byte, error) {
-	type NoMethod MessageId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type MessageInfo struct {
-	// Message: The content of a matching message.
-	Message *Message `json:"message,omitempty"`
-
-	// SearcherMembershipState: Searcher's membership state in the space
-	// where the message is posted.
-	//
-	// Possible values:
-	//   "MEMBER_UNKNOWN" - Default state, do not use
-	//   "MEMBER_INVITED" - An invitation to the space has been sent
-	//   "MEMBER_JOINED" - User has joined the space
-	//   "MEMBER_NOT_A_MEMBER" - User is not a member
-	//   "MEMBER_FAILED" - This state should never be stored in Spanner. It
-	// is a state for responses to the clients to indicate that membership
-	// mutations have failed and the member is in its previous state.
-	SearcherMembershipState string `json:"searcherMembershipState,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Message") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MessageInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod MessageInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MessageParentId: Primary key identifying Message resource's immediate
-// parent. For top-level Messages, either topic_id or chat_id is
-// populated. For replies, message_id is populated with the topic
-// Message's ID.
-type MessageParentId struct {
-	// TopicId: ID of the Topic this Message is posted to. NEXT TAG : 5
-	TopicId *TopicId `json:"topicId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TopicId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TopicId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MessageParentId) MarshalJSON() ([]byte, error) {
-	type NoMethod MessageParentId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MessageProps: Container for storing properties applicable to
-// messages. For now (until storage consolidation is complete), it will
-// only be used for babel props. In the future it could be used to house
-// Dynamite properties for experimenting/rapid prototyping.
-type MessageProps struct {
-	BabelProps *BabelMessageProps `json:"babelProps,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BabelProps") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BabelProps") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MessageProps) MarshalJSON() ([]byte, error) {
-	type NoMethod MessageProps
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14775,36 +6387,6 @@ type NamedProperty struct {
 
 func (s *NamedProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod NamedProperty
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OAuthConsumerProto: Represents an OAuth consumer, a/k/a AuthSub
-// target. These principals are identified by domain name (e.g.,
-// example.com). Historically, Dasher domain GAIA group IDs have been
-// used instead, but that doesn't work: http://go/tricky-gaia-ids
-type OAuthConsumerProto struct {
-	Domain string `json:"domain,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Domain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OAuthConsumerProto) MarshalJSON() ([]byte, error) {
-	type NoMethod OAuthConsumerProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14995,89 +6577,6 @@ func (s *ObjectValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type OnClick struct {
-	Action *FormAction `json:"action,omitempty"`
-
-	// Link: This can be used as a short form for OpenLink with the default
-	// OpenAs and OnClose. It may be undeprecated if this proves to be handy
-	// for developers.
-	Link string `json:"link,omitempty"`
-
-	OpenLink *OpenLink `json:"openLink,omitempty"`
-
-	// OpenLinkAction: An add-on triggers this action when the form action
-	// needs to open a link. This differs from the open_link above in that
-	// this needs to talk to server to get the link. Thus some preparation
-	// work is required for web client to do before the open link action
-	// response comes back.
-	OpenLinkAction *FormAction `json:"openLinkAction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OnClick) MarshalJSON() ([]byte, error) {
-	type NoMethod OnClick
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type OpenLink struct {
-	// LoadIndicator: Next available ID: 5
-	//
-	// Possible values:
-	//   "NONE"
-	//   "SPINNER"
-	LoadIndicator string `json:"loadIndicator,omitempty"`
-
-	// Possible values:
-	//   "NOTHING"
-	//   "RELOAD_ADD_ON"
-	OnClose string `json:"onClose,omitempty"`
-
-	// Possible values:
-	//   "FULL_SIZE"
-	//   "OVERLAY"
-	OpenAs string `json:"openAs,omitempty"`
-
-	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LoadIndicator") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LoadIndicator") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OpenLink) MarshalJSON() ([]byte, error) {
-	type NoMethod OpenLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -15103,8 +6602,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -15140,65 +6639,10 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type OtrChatMessageEvent struct {
-	ExpirationTimestampUsec int64 `json:"expirationTimestampUsec,omitempty,string"`
+type PeoplePromotionCard struct {
+	People []*PersonCore `json:"people,omitempty"`
 
-	KansasRowId string `json:"kansasRowId,omitempty"`
-
-	KansasVersionInfo string `json:"kansasVersionInfo,omitempty"`
-
-	// Possible values:
-	//   "OFF_THE_RECORD" - The conversation is completely off the record.
-	//   "ON_THE_RECORD" - The conversation is completely on the record.
-	MessageOtrStatus string `json:"messageOtrStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ExpirationTimestampUsec") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExpirationTimestampUsec")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OtrChatMessageEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod OtrChatMessageEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type OtrModificationEvent struct {
-	// Possible values:
-	//   "OFF_THE_RECORD" - The conversation is completely off the record.
-	//   "ON_THE_RECORD" - The conversation is completely on the record.
-	NewOtrStatus string `json:"newOtrStatus,omitempty"`
-
-	// Possible values:
-	//   "ENABLED" - The conversation can be toggled
-	//   "DISABLED" - The conversation cannot be toggled
-	NewOtrToggle string `json:"newOtrToggle,omitempty"`
-
-	// Possible values:
-	//   "OFF_THE_RECORD" - The conversation is completely off the record.
-	//   "ON_THE_RECORD" - The conversation is completely on the record.
-	OldOtrStatus string `json:"oldOtrStatus,omitempty"`
-
-	// Possible values:
-	//   "ENABLED" - The conversation can be toggled
-	//   "DISABLED" - The conversation cannot be toggled
-	OldOtrToggle string `json:"oldOtrToggle,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewOtrStatus") to
+	// ForceSendFields is a list of field names (e.g. "People") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -15206,104 +6650,17 @@ type OtrModificationEvent struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewOtrStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "People") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *OtrModificationEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod OtrModificationEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PackagingServiceClient: Developers register a client in Google API
-// Console to get the deep-linking feature on Google+ posts or frames
-// about their apps. The client data is stored in this proto.
-type PackagingServiceClient struct {
-	// AndroidPackageName: Android app's package name to generate the
-	// deep-link URI.
-	AndroidPackageName string `json:"androidPackageName,omitempty"`
-
-	// IosAppStoreId: iOS app's App Store ID to generate the App Store URL
-	// when app is not installed on device.
-	IosAppStoreId string `json:"iosAppStoreId,omitempty"`
-
-	// IosBundleId: iOS app's bundle ID to generate the deep-link URI.
-	IosBundleId string `json:"iosBundleId,omitempty"`
-
-	// Type: Type of Google API Console client.
-	//
-	// Possible values:
-	//   "ANDROID" - Client for Android app.
-	//   "IOS" - Client for iOS app.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AndroidPackageName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidPackageName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PackagingServiceClient) MarshalJSON() ([]byte, error) {
-	type NoMethod PackagingServiceClient
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PaygateInfo: Information provided to clients so that they can show
-// upgrade promos and warnings on call ending early (for non-paying
-// users).
-type PaygateInfo struct {
-	// CallEndingSoonWarningTime: Time when client should show message that
-	// the call is ending soon.
-	CallEndingSoonWarningTime string `json:"callEndingSoonWarningTime,omitempty"`
-
-	// CallEndingTime: Time when the call will end if the user does not
-	// upgrade (after in-call upgrade support check has been implemented).
-	CallEndingTime string `json:"callEndingTime,omitempty"`
-
-	// ShowUpgradePromos: This boolean is used by clients to decide whether
-	// the user should be shown promos to upgrade.
-	ShowUpgradePromos bool `json:"showUpgradePromos,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CallEndingSoonWarningTime") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "CallEndingSoonWarningTime") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PaygateInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod PaygateInfo
+func (s *PeoplePromotionCard) MarshalJSON() ([]byte, error) {
+	type NoMethod PeoplePromotionCard
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15386,15 +6743,154 @@ func (s *Person) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PersonalLabelTag: An individual instance (or "tag") of a label
-// configured as a personal type that's associated with a message.
-type PersonalLabelTag struct {
-	// LabelId: A string ID representing the label. Possible ID values are
-	// documented at go/chat-labels-howto:ids. Examples: "^t" for "Starred",
-	// "^nu" for "Nudged".
-	LabelId string `json:"labelId,omitempty"`
+// PersonCore: Information for rendering a person. NEXT ID: 37
+type PersonCore struct {
+	// AddressMeAs: Instructions for how to address this person (e.g. custom
+	// pronouns). For google.com this is a set of pronouns from a defined
+	// list of options.
+	AddressMeAs string `json:"addressMeAs,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LabelId") to
+	// AdminTo: People the profile owner is an admin to. Note that not all
+	// fields of these PersonCores will be set, in particular, relationships
+	// will be empty.
+	AdminTo []*PersonCore `json:"adminTo,omitempty"`
+
+	// Admins: The profile owner's admins in no particular order. Note that
+	// not all fields of these PersonCores will be set, in particular,
+	// relationships will be empty.
+	Admins []*PersonCore `json:"admins,omitempty"`
+
+	// Possible values:
+	//   "UNKNOWN"
+	//   "OUT_OF_OFFICE"
+	//   "OUTSIDE_WORKING_HOURS"
+	//   "AVAILABLE"
+	AvailabilityStatus string `json:"availabilityStatus,omitempty"`
+
+	// Birthday: Person birthday.
+	Birthday *Date `json:"birthday,omitempty"`
+
+	// CalendarUrl: The URL to open the profile owner's primary calendar.
+	CalendarUrl *SafeUrlProto `json:"calendarUrl,omitempty"`
+
+	// ChatUrl: The URL to start a chat conversation with the profile owner.
+	// For google.com this is a Hangouts URL.
+	ChatUrl *SafeUrlProto `json:"chatUrl,omitempty"`
+
+	// CostCenter: Person's cost center as a string, e.g. "926: Googler
+	// Apps".
+	CostCenter string `json:"costCenter,omitempty"`
+
+	// Department: The person's Organization department, e.g. "People
+	// Operations". For google.com this is usually called "area".
+	Department string `json:"department,omitempty"`
+
+	// DirectReports: A subset of the profile owner's direct reports. The
+	// number of entities here may be less than total_direct_reports_count,
+	// because typically ProfileResponse does not include all the person's
+	// reports, if there are too many to retrieve efficiently. Note that not
+	// all fields of these PersonCores will be set, in particular,
+	// relationships will be empty.
+	DirectReports []*PersonCore `json:"directReports,omitempty"`
+
+	// DottedLineManagers: The profile owner's direct dotted line managers
+	// in no particular order. Note that not all fields of these PersonCores
+	// will be set, in particular, relationships will be empty.
+	DottedLineManagers []*PersonCore `json:"dottedLineManagers,omitempty"`
+
+	// DottedLineReports: A subset of the profile owner's dotted-line
+	// reports. The number of entities here may be less than
+	// total_dlr_count. Note that not all fields of these PersonCores will
+	// be set, in particular, relationships will be empty.
+	DottedLineReports []*PersonCore `json:"dottedLineReports,omitempty"`
+
+	// Emails: E-mail addresses of the person. The primary or preferred
+	// email should be first.
+	Emails []string `json:"emails,omitempty"`
+
+	// EmployeeId: Person's employee number (external ID of type
+	// "organization") For google.com this is the badge number (e.g. 2 for
+	// Larry Page).
+	EmployeeId string `json:"employeeId,omitempty"`
+
+	// Fingerprint: A fingerprint used by PAPI to reliably determine if a
+	// resource has changed Externally it is used as part of the etag.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// FtePermille: Full-time equivalent (in ‰) (e.g. 800 for a person
+	// who's working 80%).
+	FtePermille int64 `json:"ftePermille,omitempty,string"`
+
+	GeoLocation *MapInfo `json:"geoLocation,omitempty"`
+
+	GmailUrl string `json:"gmailUrl,omitempty"`
+
+	// JobTitle: Profile owner's job title (e.g. "Software Engineer"). For
+	// google.com this is the Workday preferred job title.
+	JobTitle string `json:"jobTitle,omitempty"`
+
+	// KeywordTypes: List of keys to use from the map 'keywords'.
+	KeywordTypes []string `json:"keywordTypes,omitempty"`
+
+	// Keywords: Custom keywords the domain admin has added.
+	Keywords map[string]string `json:"keywords,omitempty"`
+
+	// Links: Custom links the profile owner has added.
+	Links []*EnterpriseTopazFrontendTeamsLink `json:"links,omitempty"`
+
+	// Location: Detailed desk location within the company. For google.com
+	// this is the desk location code (e.g. "DE-MUC-ARP-6T2-6T2C0C") if the
+	// person has a desk.
+	Location string `json:"location,omitempty"`
+
+	// Managers: The profile owner's management chain from top to bottom,
+	// where managers[0] is the CEO, manager[N-2] is the person's manager's
+	// manager and managers[N-1] is the person's direct manager. Note that
+	// not all fields of these PersonCores will be set, in particular,
+	// relationships will be empty.
+	Managers []*PersonCore `json:"managers,omitempty"`
+
+	// Mission: Custom mission statement the profile owner has added.
+	Mission string `json:"mission,omitempty"`
+
+	// Name: Human-readable Unicode display name.
+	Name string `json:"name,omitempty"`
+
+	// OfficeLocation: Office/building identifier within the company. For
+	// google.com this is the office code (e.g. "DE-MUC-ARP").
+	OfficeLocation string `json:"officeLocation,omitempty"`
+
+	// PersonId: The person's obfuscated Gaia ID.
+	PersonId string `json:"personId,omitempty"`
+
+	PhoneNumbers []*EnterpriseTopazFrontendTeamsPersonCorePhoneNumber `json:"phoneNumbers,omitempty"`
+
+	// PhotoUrl: Person photo.
+	PhotoUrl *SafeUrlProto `json:"photoUrl,omitempty"`
+
+	// PostalAddress: Postal address of office/building.
+	PostalAddress string `json:"postalAddress,omitempty"`
+
+	// TotalDirectReportsCount: Total count of the profile owner's direct
+	// reports.
+	TotalDirectReportsCount int64 `json:"totalDirectReportsCount,omitempty"`
+
+	// TotalDlrCount: Total count of the profile owner's dotted-line
+	// reports.
+	TotalDlrCount int64 `json:"totalDlrCount,omitempty"`
+
+	// TotalFteCount: The sum of all profile owner's reports and their own
+	// full-time-equivalents in ‰ (e.g. 1800 if one report is working 80%
+	// and profile owner 100%).
+	TotalFteCount int64 `json:"totalFteCount,omitempty,string"`
+
+	// Username: External ID of type "login_id" for the profile. For
+	// google.com this is the username/LDAP.
+	Username string `json:"username,omitempty"`
+
+	WaldoComeBackTime string `json:"waldoComeBackTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressMeAs") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -15402,70 +6898,17 @@ type PersonalLabelTag struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LabelId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AddressMeAs") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *PersonalLabelTag) MarshalJSON() ([]byte, error) {
-	type NoMethod PersonalLabelTag
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PhoneAccess: Phone access contains information required to dial into
-// a conference using a regional phone number and a PIN that is specific
-// to that phone number.
-type PhoneAccess struct {
-	// FormattedPhoneNumber: The phone number to dial for this meeting space
-	// in INTERNATIONAL format. Full phone number with a leading '+'
-	// character and whitespace separations.
-	FormattedPhoneNumber string `json:"formattedPhoneNumber,omitempty"`
-
-	// LanguageCode: The BCP 47/LDML language code for the language
-	// associated with this phone access. To be parsed by the i18n
-	// LanguageCode utility. Examples: "es-419" for Latin American Spanish,
-	// "fr-CA" for Canadian French.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// PhoneNumber: The phone number to dial for this meeting space in E.164
-	// format. Full phone number with a leading '+' character.
-	PhoneNumber string `json:"phoneNumber,omitempty"`
-
-	// Pin: The PIN that users must enter after dialing the given number.
-	// The PIN consists of only decimal digits and the length may vary.
-	Pin string `json:"pin,omitempty"`
-
-	// RegionCode: The CLDR/ISO 3166 region code for the country associated
-	// with this phone access. To be parsed by the i18n RegionCode utility.
-	// Example: "SE" for Sweden.
-	RegionCode string `json:"regionCode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "FormattedPhoneNumber") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedPhoneNumber") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PhoneAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod PhoneAccess
+func (s *PersonCore) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonCore
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15528,33 +6971,6 @@ type Photo struct {
 
 func (s *Photo) MarshalJSON() ([]byte, error) {
 	type NoMethod Photo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type PinnedItemId struct {
-	// DriveId: Identifier for a Drive file (e.g. Docs, Sheets, Slides).
-	DriveId string `json:"driveId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DriveId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DriveId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PinnedItemId) MarshalJSON() ([]byte, error) {
-	type NoMethod PinnedItemId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15648,74 +7064,6 @@ func (s *PollItemsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PostiniUserProto: See
-// http://s/?fileprint=//depot/google3/security/authentication/postini/auth_token.proto
-type PostiniUserProto struct {
-	PostiniUserId int64 `json:"postiniUserId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "PostiniUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PostiniUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PostiniUserProto) MarshalJSON() ([]byte, error) {
-	type NoMethod PostiniUserProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Presenter: Presenter contains information about which device is
-// currently presenting as well as which device requested the presenter
-// to be set.
-type Presenter struct {
-	// ByDeviceId: The device resource name of the device which requested
-	// the current presenter to be set. This field can not be modified by
-	// clients.
-	ByDeviceId string `json:"byDeviceId,omitempty"`
-
-	// CopresenterDeviceIds: The device resource names of other devices
-	// which can control the current presentation.
-	CopresenterDeviceIds []string `json:"copresenterDeviceIds,omitempty"`
-
-	// PresenterDeviceId: The device resource name of the currently
-	// presenting device.
-	PresenterDeviceId string `json:"presenterDeviceId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ByDeviceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ByDeviceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Presenter) MarshalJSON() ([]byte, error) {
-	type NoMethod Presenter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Principal: Reference to a user, group, or domain.
 type Principal struct {
 	// GroupResourceName: This principal is a group identified using an
@@ -15752,198 +7100,6 @@ type Principal struct {
 
 func (s *Principal) MarshalJSON() ([]byte, error) {
 	type NoMethod Principal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PrincipalProto: A Principal represents something to which permissions
-// are assigned, often but not always a user or group of some kind. It
-// is most appropriate for use in ACLs and authorization checks. Callers
-// should prefer to use the wrapper classes in
-// google3/security/credentials/public/principal.h
-// google3/java/com/google/security/credentials/Principal.java
-// google3/security/credentials/go/principal.go unless direct proto
-// access is essential. If you update this protocol buffer, please
-// update the wrapper classes as well.
-type PrincipalProto struct {
-	// AllAuthenticatedUsers: scope = ALL_AUTHENTICATED_USERS
-	AllAuthenticatedUsers *AllAuthenticatedUsersProto `json:"allAuthenticatedUsers,omitempty"`
-
-	// CapTokenHolder: scope = CAP_TOKEN_HOLDER
-	CapTokenHolder *CapTokenHolderProto `json:"capTokenHolder,omitempty"`
-
-	// Chat: scope = CHAT
-	Chat *ChatProto `json:"chat,omitempty"`
-
-	// Circle: scope = CIRCLE
-	Circle *CircleProto `json:"circle,omitempty"`
-
-	// CloudPrincipal: scope = CLOUD_PRINCIPAL
-	CloudPrincipal *CloudPrincipalProto `json:"cloudPrincipal,omitempty"`
-
-	// ContactGroup: scope = CONTACT_GROUP
-	ContactGroup *ContactGroupProto `json:"contactGroup,omitempty"`
-
-	// EmailOwner: scope = EMAIL_OWNER
-	EmailOwner *EmailOwnerProto `json:"emailOwner,omitempty"`
-
-	// Event: scope = EVENT
-	Event *EventProto `json:"event,omitempty"`
-
-	// GaiaGroup: scope = GAIA_GROUP
-	GaiaGroup *GaiaGroupProto `json:"gaiaGroup,omitempty"`
-
-	// GaiaUser: scope = GAIA_USER
-	GaiaUser *GaiaUserProto `json:"gaiaUser,omitempty"`
-
-	// Host: scope = HOST
-	Host *HostProto `json:"host,omitempty"`
-
-	// LdapGroup: scope = LDAP_GROUP
-	LdapGroup *LdapGroupProto `json:"ldapGroup,omitempty"`
-
-	// LdapUser: scope = LDAP_USER
-	LdapUser *LdapUserProto `json:"ldapUser,omitempty"`
-
-	// MdbGroup: scope = MDB_GROUP
-	MdbGroup *MdbGroupProto `json:"mdbGroup,omitempty"`
-
-	// MdbUser: scope = MDB_USER
-	MdbUser *MdbUserProto `json:"mdbUser,omitempty"`
-
-	// OauthConsumer: scope = OAUTH_CONSUMER;
-	OauthConsumer *OAuthConsumerProto `json:"oauthConsumer,omitempty"`
-
-	// PostiniUser: scope = POSTINI_USER
-	PostiniUser *PostiniUserProto `json:"postiniUser,omitempty"`
-
-	// RbacRole: scope = RBAC_ROLE
-	RbacRole *RbacRoleProto `json:"rbacRole,omitempty"`
-
-	// RbacSubject: scope = RBAC_SUBJECT
-	RbacSubject *RbacSubjectProto `json:"rbacSubject,omitempty"`
-
-	// ResourceRole: scope = RESOURCE_ROLE
-	ResourceRole *ResourceRoleProto `json:"resourceRole,omitempty"`
-
-	// Scope: This is only optional because required enums cannot be
-	// extended. Currently required.
-	//
-	// Possible values:
-	//   "INVALID"
-	//   "GAIA_USER"
-	//   "GAIA_GROUP"
-	//   "LDAP_USER"
-	//   "LDAP_GROUP"
-	//   "MDB_USER"
-	//   "MDB_GROUP"
-	//   "POSTINI_USER"
-	//   "CONTACT_GROUP"
-	//   "SIMPLE_SECRET_HOLDER"
-	//   "SIGNING_KEY_POSSESSOR"
-	//   "ALL_AUTHENTICATED_USERS"
-	//   "OAUTH_CONSUMER"
-	//   "HOST"
-	//   "SOCIAL_GRAPH_NODE"
-	//   "EMAIL_OWNER"
-	//   "CAP_TOKEN_HOLDER"
-	//   "CIRCLE"
-	//   "SQUARE"
-	//   "EVENT"
-	//   "RESOURCE_ROLE"
-	//   "CHAT"
-	//   "YOUTUBE_USER"
-	//   "UNUSED_ZWIEBACK_SESSION"
-	//   "ZWIEBACK_SESSION"
-	//   "RBAC_ROLE"
-	//   "RBAC_SUBJECT"
-	//   "CLOUD_PRINCIPAL" - next tag: 29
-	Scope string `json:"scope,omitempty"`
-
-	// SigningKeyPossessor: scope = SIGNING_KEY_POSSESSOR
-	SigningKeyPossessor *SigningKeyPossessorProto `json:"signingKeyPossessor,omitempty"`
-
-	// SimpleSecretHolder: scope = SIMPLE_SECRET_HOLDER
-	SimpleSecretHolder *SimpleSecretHolderProto `json:"simpleSecretHolder,omitempty"`
-
-	// SocialGraphNode: scope = SOCIAL_GRAPH_NODE
-	SocialGraphNode *SocialGraphNodeProto `json:"socialGraphNode,omitempty"`
-
-	// Square: scope = SQUARE
-	Square *SquareProto `json:"square,omitempty"`
-
-	// YoutubeUser: scope = YOUTUBE_USER
-	YoutubeUser *YoutubeUserProto `json:"youtubeUser,omitempty"`
-
-	// ZwiebackSession: scope = ZWIEBACK_SESSION
-	ZwiebackSession *ZwiebackSessionProto `json:"zwiebackSession,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllAuthenticatedUsers") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllAuthenticatedUsers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrincipalProto) MarshalJSON() ([]byte, error) {
-	type NoMethod PrincipalProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PrivateMessageInfo: Private message information specific to a given
-// user.
-type PrivateMessageInfo struct {
-	// Annotations: Annotations private to {@code userId}.
-	Annotations []*Annotation `json:"annotations,omitempty"`
-
-	// Attachments: Attachments private to {@code userId}.
-	Attachments []*Attachment `json:"attachments,omitempty"`
-
-	ContextualAddOnMarkup []*GoogleChatV1ContextualAddOnMarkup `json:"contextualAddOnMarkup,omitempty"`
-
-	GsuiteIntegrationMetadata []*GsuiteIntegrationMetadata `json:"gsuiteIntegrationMetadata,omitempty"`
-
-	// Text: Text private to {@code user_id}. Initial restriction: Only one
-	// of public text or private text is rendered on the client. So if
-	// public text is set, private text is ignored.
-	Text string `json:"text,omitempty"`
-
-	// UserId: Required. The elements in this struct are visible to this
-	// user.
-	UserId *UserId `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Annotations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateMessageInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateMessageInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16016,7 +7172,7 @@ type PropertyDefinition struct {
 	// IsFacetable: Indicates that the property can be used for generating
 	// facets. Cannot be true for properties whose type is object.
 	// IsReturnable must be true to set this option. Only supported for
-	// boolean, enum, and text properties.
+	// boolean, enum, integer, and text properties.
 	IsFacetable bool `json:"isFacetable,omitempty"`
 
 	// IsRepeatable: Indicates that multiple values are allowed for the
@@ -16134,63 +7290,6 @@ func (s *PropertyDisplayOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Provenance: This field records where the ItemScope was retrieved, if
-// it was created via a web fetch.
-type Provenance struct {
-	// AnnotationBlob: Annotation blob from Annotation Service.
-	AnnotationBlob string `json:"annotationBlob,omitempty"`
-
-	// CanonicalUrl: Canonical url of the retrieved_url, if one was resolved
-	// during retrieval, for example, if a rel="canonical" link tag was
-	// provided in the retrieved web page.
-	CanonicalUrl string `json:"canonicalUrl,omitempty"`
-
-	// InputUrl: The url originally passed in the PRS request, which should
-	// be used to re-discover the content. Note that this URL may be a
-	// forwarding service or link shortener (bit.ly), so it should not be
-	// assumed to be canonical, but should be used for navigation back to
-	// the original source of the itemscope.
-	InputUrl string `json:"inputUrl,omitempty"`
-
-	// Itemtype: Contains exact types as parsed, whether or not we
-	// recognized that type at parse time. If an itemscope is created by
-	// merging SchemaOrg markup and open graph markup then the first
-	// itemtype would be schemaorg type, the second would be open graph and
-	// so on. example: http://schema.org/VideoObject, og:video.movie Plain
-	// text; usually a URL
-	Itemtype []string `json:"itemtype,omitempty"`
-
-	// RetrievedTimestampMsec: The server retrieved timestamp (in msec).
-	RetrievedTimestampMsec uint64 `json:"retrievedTimestampMsec,omitempty,string"`
-
-	// RetrievedUrl: The final URL that was the actual source of the
-	// itemscope, after any redirects.
-	RetrievedUrl string `json:"retrievedUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationBlob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationBlob") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Provenance) MarshalJSON() ([]byte, error) {
-	type NoMethod Provenance
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // PushItem: Represents an item to be pushed to the indexing queue.
 type PushItem struct {
 	// ContentHash: Content hash of the item according to the repository. If
@@ -16300,6 +7399,34 @@ type PushItemRequest struct {
 
 func (s *PushItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PushItemRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryActivity: Details about a user's query activity.
+type QueryActivity struct {
+	// Query: User input query to be logged/removed.
+	Query string `json:"query,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Query") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryActivity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16633,85 +7760,16 @@ func (s *QuerySource) MarshalJSON() ([]byte, error) {
 type QuerySuggestion struct {
 }
 
-// QuotedMessageMetadata: Quote metadata: go/message-quoting-be-dd-v2.
-// This proto is only used on the read path. For the request proto,
-// refer to `QuotedMessagePayload`. Fields are either derived from
-// storage directly from the Item this metadata belongs to, or is
-// hydrated at read time from another Item read. Note:
-// QuotedMessageMetadata proto is similar to Message proto with less
-// field. Reasons to differtiate QuotedMessageMetadata from Message are:
-// 1. Not all fields for original message is applicable for quoted
-// message. (E.g. reactions, is_inline_reply, etc.), thus separting out
-// for confusion. 2. We don't support nested message quoting. For more
-// detailed discussion, please see http://shortn/_VsSXQb2C7P. For future
-// reference: if your new feature/field will be supported in message
-// quoting feature (go/chat-quoting-prd), you will need to add that
-// field within QuotedMessageMetadata
-type QuotedMessageMetadata struct {
-	// Annotations: Output only. Snapshot of the annotations of the quoted
-	// message.
-	Annotations []*Annotation `json:"annotations,omitempty"`
+// RemoveActivityRequest: Remove Logged Activity Request.
+type RemoveActivityRequest struct {
+	// RequestOptions: Request options, such as the search application and
+	// clientId.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 
-	// AppProfile: Output only. Custom display profile info for apps. Will
-	// be empty for real users.
-	AppProfile *AppsDynamiteSharedAppProfile `json:"appProfile,omitempty"`
+	// UserActivity: User Activity containing the data to be deleted.
+	UserActivity *UserActivity `json:"userActivity,omitempty"`
 
-	// BotAttachmentState: Output only. The bot attachment state of the
-	// quoted message. Used by clients to display a bot attachment indicator
-	// in the UI.
-	//
-	// Possible values:
-	//   "BOT_ATTACHMENT_STATE_UNSPECIFIED"
-	//   "BOT_ATTACHMENT_STATE_HAS_BOT_ATTACHMENT"
-	//   "BOT_ATTACHMENT_STATE_NO_BOT_ATTACHMENT"
-	BotAttachmentState string `json:"botAttachmentState,omitempty"`
-
-	// CreatorId: Output only. ID of the User who posted the quoted message.
-	// This includes information to identify if the quoted message was
-	// posted by an App on behalf of a user.
-	CreatorId *UserId `json:"creatorId,omitempty"`
-
-	// LastUpdateTimeWhenQuotedMicros: The `last_update_time` of the
-	// original message when the client initiated the quote creation. This
-	// is derived from the request payload passed from clients. Used to
-	// fetch the quoted message contents at a specific time on the read
-	// path. This field is populated from storage directly.
-	LastUpdateTimeWhenQuotedMicros int64 `json:"lastUpdateTimeWhenQuotedMicros,omitempty,string"`
-
-	// MessageId: MessageId of the original message that is being quoted.
-	// This is derived from the request payload passed from clients. This
-	// field is populated from storage directly.
-	MessageId *MessageId `json:"messageId,omitempty"`
-
-	// MessageState: Output only. The state of the quoted message. Used by
-	// clients to display tombstones for quotes that reference a deleted
-	// message.
-	//
-	// Possible values:
-	//   "MESSAGE_STATE_UNSPECIFIED"
-	//   "MESSAGE_STATE_ACTIVE" - The original message is present in storage
-	// and not deleted; the message contents can be hydrated.
-	//   "MESSAGE_STATE_DELETED" - The original message has been deleted;
-	// the message contents cannot be hydrated.
-	//   "MESSAGE_STATE_OTR_EDITED" - The OTR original message was edited
-	// and therefore no longer retrievable from storage; the message
-	// contents cannot be hydrated. See go/message-quoting-otr-edits for
-	// more context.
-	MessageState string `json:"messageState,omitempty"`
-
-	// RetentionSettings: Output only. The retention (OTR) settings of the
-	// quoted message.
-	RetentionSettings *AppsDynamiteSharedRetentionSettings `json:"retentionSettings,omitempty"`
-
-	// TextBody: Output only. Snapshot of the text body of the quoted
-	// message.
-	TextBody string `json:"textBody,omitempty"`
-
-	// UploadMetadata: Output only. Upload metadata of the quoted message.
-	// NEXT TAG: 11
-	UploadMetadata []*UploadMetadata `json:"uploadMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -16719,132 +7777,7 @@ type QuotedMessageMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Annotations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *QuotedMessageMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod QuotedMessageMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RbacRoleProto: Principal associated with a given RBAC role. This
-// principal is used by Sphinx Provisioning Service for RBAC
-// (go/cedi-auth) provisionable (go/sphinx-rbacz-design).
-type RbacRoleProto struct {
-	Name string `json:"name,omitempty"`
-
-	ObjectId string `json:"objectId,omitempty"`
-
-	// RbacNamespace: DEPRECATED as of 01.11.2019
-	RbacNamespace string `json:"rbacNamespace,omitempty"`
-
-	// RbacRoleName: Format:
-	// "RbacNamespaceName.RbacRoleName(/field=value)*", e.g.,
-	// "hr.v1.Reader",
-	// "hr.v1.Reader/language=EN_US/country=USA/room=NYC-9th-11A201".
-	RbacRoleName string `json:"rbacRoleName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RbacRoleProto) MarshalJSON() ([]byte, error) {
-	type NoMethod RbacRoleProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RbacSubjectProto: Principal associated with a given RBAC subject.
-// This principal is used by Sphinx Provisioning Service for RBAC
-// (go/cedi-auth) provisionable (go/sphinx-rbacz-design).
-type RbacSubjectProto struct {
-	// Username: Format "username" without "@domain", e.g., "bogdand".
-	Username string `json:"username,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Username") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Username") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RbacSubjectProto) MarshalJSON() ([]byte, error) {
-	type NoMethod RbacSubjectProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ReactionInfo: Contains information about an emoji reaction.
-type ReactionInfo struct {
-	// Emoji: Unicode string representing a single emoji.
-	Emoji string `json:"emoji,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Emoji") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Emoji") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReactionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ReactionInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type ReadReceiptsSettingsUpdatedMetadata struct {
-	// ReadReceiptsEnabled: The new read receipts state.
-	ReadReceiptsEnabled bool `json:"readReceiptsEnabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ReadReceiptsEnabled")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReadReceiptsEnabled") to
+	// NullFields is a list of field names (e.g. "RequestOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -16854,209 +7787,18 @@ type ReadReceiptsSettingsUpdatedMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadReceiptsSettingsUpdatedMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod ReadReceiptsSettingsUpdatedMetadata
+func (s *RemoveActivityRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveActivityRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RecordingEvent: A recording event is something that happens to the
-// recording in a conference.
-type RecordingEvent struct {
-	// DeviceId: The initiator of the latest event of the recording. It will
-	// be set for all user events (`type` is 100-199) and unset for all
-	// server events (`type` is 200-299).
-	DeviceId string `json:"deviceId,omitempty"`
-
-	// Type: The type of event.
-	//
-	// Possible values:
-	//   "RECORDING_EVENT_UNSPECIFIED" - This is never used.
-	//   "USER_ACTION" - Deprecated, use detailed user actions instead.
-	//   "STARTED_BY_USER" - Recording was started or is being started by a
-	// user.
-	//   "STOPPED_BY_USER" - Recording was stopped by a user.
-	//   "CANCELLED_BY_USER" - Recording was cancelled by a user.
-	//   "CANCELLED_INITIALIZATION_FAILED" - Recording was cancelled by the
-	// server because of a failure during recording initialization.
-	//   "CANCELLED_INITIATOR_LEFT" - Recording was cancelled by the server
-	// because the recording initiator left the conference during
-	// initialization. When the initiator leaves after the recording is
-	// started, no event is triggered.
-	//   "ACTIVE_ABOUT_TO_STOP_TOO_LONG" - Recording is about to be stopped
-	// by the server because the recording is about to reach the maximum
-	// duration.
-	//   "STOPPED_TOO_LONG" - Recording was stopped because the recording
-	// reached the maximum duration.
-	//   "STOPPED_ALL_DEVICES_LEFT" - Recording was stopped because there
-	// were no devices left in the conference.
-	//   "STOPPED_INTERNAL_FAILURES" - Recording was stopped because of an
-	// internal error.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeviceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeviceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RecordingEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod RecordingEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RecordingInfo: This message is deprecated, please use
-// RecordingSessionInfo instead. Information about recording in the
-// current conference.
-type RecordingInfo struct {
-	// LatestRecordingEvent: The latest recording event. This can be used by
-	// clients to help explain what is going on, why recording stopped, etc.
-	// This will always be set if there is or was an active recording, which
-	// means there can be latest event when recording is INACTIVE.
-	LatestRecordingEvent *RecordingEvent `json:"latestRecordingEvent,omitempty"`
-
-	// OwnerDisplayName: The display name of the owner of the recording
-	// output. Email notifications about uploaded recordings will also be
-	// sent to this owner.
-	OwnerDisplayName string `json:"ownerDisplayName,omitempty"`
-
-	// ProducerDeviceId: The device resource name of the producer device for
-	// the currently active recording. Note that, after the producer
-	// drops/leaves the conference, this field will be cleaned up by the
-	// server after a delay.
-	ProducerDeviceId string `json:"producerDeviceId,omitempty"`
-
-	// RecordingApplicationType: The application type of the current active
-	// recording. `RECORDING_APPLICATION_TYPE_UNSPECIFIED` if
-	// `recording_status` is inactive.
-	//
-	// Possible values:
-	//   "RECORDING_APPLICATION_TYPE_UNSPECIFIED" - This is never used.
-	//   "RECORDING" - A meeting recording saved to a video file in Google
-	// Drive.
-	//   "GLIVE_STREAM" - A *Google Live* managed stream.
-	//   "BROADCAST" - A meeting broadcast.
-	RecordingApplicationType string `json:"recordingApplicationType,omitempty"`
-
-	// RecordingId: An identifier for the current recording, if any. This is
-	// returned whenever recording_status is either `RECORDING_STARTING` or
-	// `RECORDING_STARTED`.
-	RecordingId string `json:"recordingId,omitempty"`
-
-	// RecordingStatus: The current status of the recording. This can be
-	// used by clients to show a recording dot or similar to indicated to
-	// the user that a recording is taking place.
-	//
-	// Possible values:
-	//   "RECORDING_UNSPECIFIED" - This value is never used.
-	//   "RECORDING_INACTIVE" - The conference is not being recorded. This
-	// can mean either that no recording has been started, or that a
-	// previous recording has stopped.
-	//   "RECORDING_STARTING" - Recording is about to begin. The status will
-	// be updated to RECORDING_STARTED when the recording actually starts,
-	// which happens when all the backend plumbing is set up.
-	//   "RECORDING_STARTED" - The recording is started. Any media sent to
-	// the conference may be included in the resulting recording.
-	RecordingStatus string `json:"recordingStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "LatestRecordingEvent") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LatestRecordingEvent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RecordingInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod RecordingInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RecordingSessionInfo: Information about a recording session.
-type RecordingSessionInfo struct {
-	// OwnerEmail: Input only. Deprecated field, should not be used.
-	OwnerEmail string `json:"ownerEmail,omitempty"`
-
-	// RecordingSessionId: A unique server-generated ID for the recording
-	// session.
-	RecordingSessionId string `json:"recordingSessionId,omitempty"`
-
-	// SessionStateInfo: Recording session's state information.
-	SessionStateInfo *SessionStateInfo `json:"sessionStateInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OwnerEmail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OwnerEmail") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RecordingSessionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod RecordingSessionInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type RenameEvent struct {
-	NewName string `json:"newName,omitempty"`
-
-	OriginalName string `json:"originalName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RenameEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod RenameEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+// RemoveActivityResponse: Remove Logged Activity Response. will return
+// an empty response for now. Will be revisited in later phases.
+type RemoveActivityResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // RepositoryError: Errors when the connector is communicating to the
@@ -17124,8 +7866,8 @@ type RequestOptions struct {
 	// the page. In the event that the user's language preference is known,
 	// set this field to the known user language. When specified, the
 	// documents in search results are biased towards the specified
-	// language. From Suggest API perspective, for 3p suggest this is used
-	// as a hint while making predictions to add language boosting.
+	// language. The Suggest API uses this field as a hint to make better
+	// third-party autocomplete predictions.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SearchApplicationId: The ID generated when you create a search
@@ -17165,39 +7907,6 @@ func (s *RequestOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RequiredMessageFeaturesMetadata: A list of capabilities that are used
-// in this message.
-type RequiredMessageFeaturesMetadata struct {
-	// Possible values:
-	//   "REQUIRED_FEATURE_UNSPECIFIED"
-	//   "REQUIRED_FEATURE_MESSAGE_QUOTING"
-	//   "REQUIRED_FEATURE_TOMBSTONES_IN_DMS_AND_UFRS"
-	RequiredFeatures []string `json:"requiredFeatures,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RequiredFeatures") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequiredFeatures") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RequiredMessageFeaturesMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod RequiredMessageFeaturesMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type ResetSearchApplicationRequest struct {
 	// DebugOptions: Common debug options.
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
@@ -17225,54 +7934,12 @@ func (s *ResetSearchApplicationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResourceRoleProto: A type of sharing target that points to some
-// resource's ACL. Used to refer to the set of Principals that have the
-// given privilege ('role_id') for the given resource ('application_id',
-// 'object_id', 'object_part'). The meaning of 'role_id' is interpreted
-// only by implementations of AclRpcService and is usually dependent on
-// 'application_id' All fields except object_part are required. If
-// present, object_part must be non-empty.
-type ResourceRoleProto struct {
-	ApplicationId string `json:"applicationId,omitempty"`
-
-	ObjectId string `json:"objectId,omitempty"`
-
-	ObjectPart string `json:"objectPart,omitempty"`
-
-	RoleId int64 `json:"roleId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApplicationId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResourceRoleProto) MarshalJSON() ([]byte, error) {
-	type NoMethod ResourceRoleProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ResponseDebugInfo: Debugging information about the response.
 type ResponseDebugInfo struct {
-	// EnabledExperiments: Experiments enabled in QAPI.
-	EnabledExperiments []int64 `json:"enabledExperiments,omitempty"`
-
 	// FormattedDebugInfo: General debug info formatted for display.
 	FormattedDebugInfo string `json:"formattedDebugInfo,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EnabledExperiments")
+	// ForceSendFields is a list of field names (e.g. "FormattedDebugInfo")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -17280,7 +7947,7 @@ type ResponseDebugInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnabledExperiments") to
+	// NullFields is a list of field names (e.g. "FormattedDebugInfo") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -17526,150 +8193,31 @@ func (s *RetrievalImportance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type RoomRenameMetadata struct {
-	NewName string `json:"newName,omitempty"`
-
-	// PrevName: NEXT_TAG: 3
-	PrevName string `json:"prevName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RoomRenameMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod RoomRenameMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type RoomUpdatedMetadata struct {
-	GroupDetailsMetadata *GroupDetailsUpdatedMetadata `json:"groupDetailsMetadata,omitempty"`
-
-	GroupLinkSharingEnabled bool `json:"groupLinkSharingEnabled,omitempty"`
-
-	// Initiator: The user who initiated this room update. Complete member
-	// profiles, when ListTopicsRequest FetchOptions.USER is set. Otherwise,
-	// only the id will be filled in.
-	Initiator *User `json:"initiator,omitempty"`
-
-	// InitiatorType: The type of the user who initiated this room update.
-	//
-	// Possible values:
-	//   "INITIATOR_TYPE_UNSPECIFIED"
-	//   "INITIATOR_TYPE_END_USER"
-	//   "INITIATOR_TYPE_ADMIN"
-	InitiatorType string `json:"initiatorType,omitempty"`
-
-	// Name: What was updated in the room.
-	Name string `json:"name,omitempty"`
-
-	RenameMetadata *RoomRenameMetadata `json:"renameMetadata,omitempty"`
-
-	// Visibility: DEPRECATED: See GroupVisibility proto definition.
-	Visibility *AppsDynamiteSharedGroupVisibility `json:"visibility,omitempty"`
+// SafeHtmlProto: IMPORTANT: It is unsafe to accept this message from an
+// untrusted source, since it's trivial for an attacker to forge
+// serialized messages that don't fulfill the type's safety contract --
+// for example, it could contain attacker controlled script. A system
+// which receives a SafeHtmlProto implicitly trusts the producer of the
+// SafeHtmlProto. So, it's generally safe to return this message in RPC
+// responses, but generally unsafe to accept it in RPC requests.
+type SafeHtmlProto struct {
+	// PrivateDoNotAccessOrElseSafeHtmlWrappedValue: IMPORTANT: Never set or
+	// read this field, even from tests, it is private. See documentation at
+	// the top of .proto file for programming language packages with which
+	// to create or read this message.
+	PrivateDoNotAccessOrElseSafeHtmlWrappedValue string `json:"privateDoNotAccessOrElseSafeHtmlWrappedValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "GroupDetailsMetadata") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "PrivateDoNotAccessOrElseSafeHtmlWrappedValue") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GroupDetailsMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RoomUpdatedMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod RoomUpdatedMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Roster: Roster profile information.
-type Roster struct {
-	AvatarUrl string `json:"avatarUrl,omitempty"`
-
-	Id *RosterId `json:"id,omitempty"`
-
-	MembershipCount int64 `json:"membershipCount,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	// RosterGaiaKey: Roster gaia key, usually an email address. Set in
-	// looking up rosters response.
-	RosterGaiaKey string `json:"rosterGaiaKey,omitempty"`
-
-	// RosterState: Roster deletion state - considered active unless set to
-	// deleted
-	//
-	// Possible values:
-	//   "ROSTER_STATE_UNKNOWN"
-	//   "ROSTER_ACTIVE" - Roster is active
-	//   "ROSTER_DELETED" - Roster deleted
-	RosterState string `json:"rosterState,omitempty"`
-
-	// SegmentedMembershipCounts: Roster membership count. May contain
-	// counts based on member type and membership state.
-	SegmentedMembershipCounts *AppsDynamiteSharedSegmentedMembershipCounts `json:"segmentedMembershipCounts,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvatarUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvatarUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Roster) MarshalJSON() ([]byte, error) {
-	type NoMethod Roster
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RosterId: Primary key for Roster resource.
-type RosterId struct {
-	// Id: Opaque, server-assigned ID of the Roster.
-	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
+	// NullFields is a list of field names (e.g.
+	// "PrivateDoNotAccessOrElseSafeHtmlWrappedValue") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -17678,8 +8226,8 @@ type RosterId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RosterId) MarshalJSON() ([]byte, error) {
-	type NoMethod RosterId
+func (s *SafeHtmlProto) MarshalJSON() ([]byte, error) {
+	type NoMethod SafeHtmlProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18262,683 +8810,14 @@ func (s *SearchResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Section: Sections are separated by a line divider. They contain a
-// collection of widgets that are rendered (vertically) in the order
-// that they are specified. Across all platforms, AddOns have a narrow
-// fixed width, so there is currently no need for layout properties
-// (e.g. float).
-type Section struct {
-	// Collapsable: Indicating whether this section is collapsable. If a
-	// section is collapsable, the description must be given.
-	Collapsable bool `json:"collapsable,omitempty"`
-
-	// Description: The header of the section, text formatted supported.
-	Description string `json:"description,omitempty"`
-
-	// NumUncollapsableWidgets: The number of uncollapsable widgets. For
-	// example, when a section contains 5 widgets and the
-	// num_uncollapsable_widget are set to be 2, The first 2 widgets will
-	// always shown and the last 3 is collapsed as default. Only when
-	// collapsable is set to be true, the num_uncollapsable_widget will be
-	// taken into account.
-	NumUncollapsableWidgets int64 `json:"numUncollapsableWidgets,omitempty"`
-
-	// Widgets: A section must contain at least 1 widget.
-	Widgets []*WidgetMarkup `json:"widgets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Collapsable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Collapsable") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Section) MarshalJSON() ([]byte, error) {
-	type NoMethod Section
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Segment struct {
-	// Formatting: Formatting to be applied when rendering the Segment. For
-	// all segment types, this is the standard way of representing that the
-	// Segment should be rendered in bold, italics, etc.
-	Formatting *Formatting `json:"formatting,omitempty"`
-
-	// HashtagData: For HASHTAG type:
-	HashtagData *HashtagData `json:"hashtagData,omitempty"`
-
-	// LinkData: Type-specific metadata. At most one of these should be
-	// populated, and the one that is populated should correspond to the
-	// type of the Segment. For LINK type:
-	LinkData *LinkData `json:"linkData,omitempty"`
-
-	// Text: Text content of the Segment. As a general rule, this field
-	// should contain the actual text that should be rendered in the UI.
-	// Thus, for a hashtag, it should be "#Foo", and for a link, it should
-	// be the display text. Clients that do not understand a particular
-	// segment type may use this text, along with the Formatting info below,
-	// as a fallback for display. The field is not required -- if all
-	// relevant information is carried in other metadata fields and there is
-	// no need for a fallback, or it is not practical for a fallback to be
-	// provided for any other reason, the field may be left blank. A
-	// standard example would be a user reference being transmitted between
-	// server layers, where a gaia-ID representation may be sufficient and
-	// there is no need for a textual fallback. In such a case, it would be
-	// valid and useful - though not required - for servers to compute and
-	// populate a fallback on the serving path.
-	Text string `json:"text,omitempty"`
-
-	// Type: Type of Segment.
-	//
-	// Possible values:
-	//   "TEXT" - A TEXT segment represents plain-text subject to particular
-	// formatting constraints (as represented in the "formatting" field of
-	// the Segment).
-	//   "LINE_BREAK" - A LINE_BREAK segment is simply a placeholder to
-	// represent a line break between other segments. The "text" variable
-	// may be set to a newline as a fallback, but clients that understand
-	// this segment type should simply insert a line break without needing
-	// to reference any fields.
-	//   "LINK" - A LINK segment represents a link to a web entity. The
-	// "text" field should be used for anchor text. Additional link data
-	// should be put in the link_data protobuf.
-	//   "USER_MENTION" - A USER_MENTION segment represents a reference to a
-	// (possibly non-Gaia, possibly off-network) user. The "text" field may
-	// be populated as a fallback, but information identifying the user
-	// should be contained in the user_mention_data protobuf. (The set of
-	// fields that are populated in user_mention_data may differ depending
-	// on the context in which the segment is viewed, but the interpretation
-	// of the fields is uniform. See comments over UserMentionData).
-	//   "ALL_USER_MENTION" - An ALL_USER_MENTION segment represents a
-	// reference to all users in the context, that is, the conversation,
-	// discussion, or other context containing the segment. For example, an
-	// ALL_USER_MENTION segment ("@all") can be useful to ping all
-	// participants in a conversation if the notification setting of the
-	// conversation is not set to ping on normal messages. An
-	// ALL_USER_MENTION should be treated as a USER_MENTION for all users
-	// who receives the segment.
-	//   "HASHTAG" - A HASHTAG segment represents a structured reference to
-	// a topic. The "text" field should represent display text (e.g.
-	// "#Google"), and additional metadata should be put in the Segment's
-	// hashtag_data field.
-	Type string `json:"type,omitempty"`
-
-	// UserMentionData: For USER_MENTION type:
-	UserMentionData *UserMentionData `json:"userMentionData,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Formatting") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Formatting") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Segment) MarshalJSON() ([]byte, error) {
-	type NoMethod Segment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type SelectionControl struct {
-	// Items: For radio button, at most one of the items will be selected.
-	Items []*SelectionItem `json:"items,omitempty"`
-
-	// Label: Label used to be displayed ahead of the selection control. It
-	// is optional.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text field which is will be used in FormInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChange: If specified, form is submitted when selection changed. If
-	// not specified, developer will need to specify a separate button.
-	OnChange *FormAction `json:"onChange,omitempty"`
-
-	// Possible values:
-	//   "CHECK_BOX"
-	//   "RADIO_BUTTON"
-	//   "SWITCH"
-	//   "DROPDOWN"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SelectionControl) MarshalJSON() ([]byte, error) {
-	type NoMethod SelectionControl
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type SelectionItem struct {
-	// Selected: If more than one items are selected for RADIO_BUTTON and
-	// DROPDOWN, the first selected item is treated as sElected and the
-	// after ones are all ignored.
-	Selected bool `json:"selected,omitempty"`
-
-	// Text: The text to be displayed.
-	Text string `json:"text,omitempty"`
-
-	// Value: The value associated with this item which will be sent back to
-	// app scripts. Client should use as a form input value.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Selected") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Selected") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SelectionItem) MarshalJSON() ([]byte, error) {
-	type NoMethod SelectionItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SessionEvent: A session event is something that happens to the
-// streaming session in a conference.
-type SessionEvent struct {
-	// DeviceId: The initiator of the latest event of the streaming session.
-	// It will be set for all user events (`type` is 100-199) and unset for
-	// all server events(`type` is 200-299).
-	DeviceId string `json:"deviceId,omitempty"`
-
-	// Type: The type of event.
-	//
-	// Possible values:
-	//   "EVENT_UNSPECIFIED" - This is never used.
-	//   "STARTED_BY_USER" - Streaming session was started or is being
-	// started by a user.
-	//   "STOPPED_BY_USER" - Streaming session was stopped by a user.
-	//   "CANCELLED_BY_USER" - Streaming session was cancelled by a user.
-	//   "CANCELLED_INITIALIZATION_FAILED" - Streaming session was cancelled
-	// by the server because of a failure during session initialization.
-	//   "CANCELLED_INITIATOR_LEFT" - Streaming session was cancelled by the
-	// server because the session initiator left the conference during
-	// initialization. When the initiator leaves after the session is
-	// started, no event is triggered.
-	//   "ACTIVE_ABOUT_TO_STOP_TOO_LONG" - Streaming session is about to be
-	// stopped by the server because the session is about to reach the
-	// maximum duration.
-	//   "STOPPED_TOO_LONG" - Streaming session was stopped because the
-	// session reached the maximum duration.
-	//   "STOPPED_ALL_DEVICES_LEFT" - Streaming session was stopped because
-	// there were no devices left in the conference.
-	//   "STOPPED_INTERNAL_FAILURES" - Streaming session was stopped because
-	// of an internal error.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeviceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeviceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SessionEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod SessionEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SessionStateInfo: Information about the state of a (recording,
-// broadcast, transcription...) session in a conference.
-type SessionStateInfo struct {
-	// AckInfo: Output only. The ack info of the session.
-	AckInfo *AckInfo `json:"ackInfo,omitempty"`
-
-	// LanguageConfig: Immutable. The language configuration used by this
-	// session. When empty, captions will be disabled. It's a required field
-	// for transcription sessions.
-	LanguageConfig *LanguageConfig `json:"languageConfig,omitempty"`
-
-	// LastActorDeviceId: Output only. The device id of the actor is set if
-	// the current state is a result of a user action, is empty otherwise.
-	LastActorDeviceId string `json:"lastActorDeviceId,omitempty"`
-
-	// MaxEndTime: Output only. The max end time of the session, at this
-	// time the session will be force stopped/terminated. Clients are
-	// expected to use this timestamp to warn users about the force stop.
-	MaxEndTime string `json:"maxEndTime,omitempty"`
-
-	// SessionState: State of the session.
-	//
-	// Possible values:
-	//   "SESSION_STATE_UNSPECIFIED" - Unspecified session state.
-	//   "STARTING" - The session is starting.
-	//   "ACTIVE" - The session is active/ongoing.
-	//   "STOPPED" - The session has stopped.
-	SessionState string `json:"sessionState,omitempty"`
-
-	// SessionStopReason: Output only. The reason the session was
-	// transitioned to STOPPED state.
-	//
-	// Possible values:
-	//   "SESSION_STOP_REASON_UNSPECIFIED" - Session stop reason
-	// unspecified.
-	//   "USER_ACTION" - Stopped by user action.
-	//   "STOPPED_INITIALIZATION_FAILED" - Stopped by the server because of
-	// an initialization failure.
-	//   "STOPPED_TOO_LONG" - Stopped because the session reached the
-	// maximum duration.
-	//   "STOPPED_ALL_DEVICES_LEFT" - Stopped because there were no devices
-	// left in the conference.
-	//   "STOPPED_INTERNAL_FAILURES" - Stopped because of an internal error.
-	//   "STOPPED_YOU_TUBE_LIVE_EVENT_ENDED" - Stopped because the broadcast
-	// event ended on YouTube.
-	SessionStopReason string `json:"sessionStopReason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AckInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AckInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SessionStateInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod SessionStateInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Settings: Settings of a meeting space that can be viewed and edited
-// by users with permissions. These settings are always populated for
-// output.
-type Settings struct {
-	// AccessLock: The access lock of the meeting space that lets owner
-	// control who can join the meeting. True if the access lock feature is
-	// enabled for the meeting space.
-	AccessLock bool `json:"accessLock,omitempty"`
-
-	// AttendanceReportEnabled: Whether attendance report is enabled for the
-	// meeting space.
-	AttendanceReportEnabled bool `json:"attendanceReportEnabled,omitempty"`
-
-	// ChatLock: The chat lock of the meeting space that lets owner control
-	// whether the participants can send chat messages. True if the chat
-	// lock feature is enabled for the meeting space.
-	ChatLock bool `json:"chatLock,omitempty"`
-
-	// CohostArtifactSharingEnabled: Whether meeting artifacts will be
-	// shared with cohosts.
-	CohostArtifactSharingEnabled bool `json:"cohostArtifactSharingEnabled,omitempty"`
-
-	// CseEnabled: Whether Client-side Encryption is enabled for the meeting
-	// space.
-	CseEnabled bool `json:"cseEnabled,omitempty"`
-
-	// DefaultAsViewer: Whether the default role is viewer or not.
-	DefaultAsViewer bool `json:"defaultAsViewer,omitempty"`
-
-	// ModerationEnabled: Indicates whether the meeting space is moderated.
-	ModerationEnabled bool `json:"moderationEnabled,omitempty"`
-
-	// PresentLock: The present lock of the meeting space that lets owner
-	// control whether the participants can present their screen. True if
-	// the present lock feature is enabled for the meeting space.
-	PresentLock bool `json:"presentLock,omitempty"`
-
-	// ReactionsLock: The reactions lock of the meeting space that lets
-	// owner control whether the participants can send reactions. True if
-	// the reactions lock feature is enabled for the meeting space.
-	ReactionsLock bool `json:"reactionsLock,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessLock") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessLock") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Settings) MarshalJSON() ([]byte, error) {
-	type NoMethod Settings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type ShareScope struct {
-	// Domain: If scope is DOMAIN, this field contains the dasher domain,
-	// for example "google.com".
-	Domain string `json:"domain,omitempty"`
-
-	// Scope: The scope to which the content was shared.
-	//
-	// Possible values:
-	//   "UNKNOWN"
-	//   "PRIVATE" - Only the author can view the post.
-	//   "LIMITED" - Viewable only by a set of people.
-	//   "EXTENDED" - Viewable by extended circles.
-	//   "DASHER_DOMAIN"
-	//   "PUBLIC"
-	Scope string `json:"scope,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Domain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ShareScope) MarshalJSON() ([]byte, error) {
-	type NoMethod ShareScope
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SigningKeyPossessorProto: Represents a principal who possesses a
-// signing key corresponding to the verification key or keyset described
-// here.
-type SigningKeyPossessorProto struct {
-	// KeymasterKeyType: This value must be from the KeyMetadata.Type enum
-	// in keymaster.proto.
-	KeymasterKeyType int64 `json:"keymasterKeyType,omitempty"`
-
-	// SerializedVerificationKey: The actual verification key bytes
-	// corresponding to the above type.
-	SerializedVerificationKey string `json:"serializedVerificationKey,omitempty"`
-
-	// SerializedVerificationKeyset: The binary serialized Keymaster
-	// SerializedReader of a public keyset. The keyset must contain exactly
-	// one key. N.B.: If this field is populated,
-	// serialized_verification_key should be set to the empty string and
-	// keymaster_key_type should be set to zero.
-	SerializedVerificationKeyset string `json:"serializedVerificationKeyset,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KeymasterKeyType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KeymasterKeyType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SigningKeyPossessorProto) MarshalJSON() ([]byte, error) {
-	type NoMethod SigningKeyPossessorProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SimpleSecretHolderProto: Represents a principal which possesses a
-// particular, presumably secret, string. Useful for things like "auth
-// keys," used for anonymous sharing. Since representing this principal
-// with the actual secret included reveals the secret, it's best if the
-// requisite condition is enforced in some other way, for example via
-// Keystore wrapping attributes (Keystore will unwrap only if the
-// specified secret, aka "attribute", is presented). All that's stored
-// here is an identifying label.
-type SimpleSecretHolderProto struct {
-	// Label: A descriptive label to help identify a relevant ACL entry or
-	// otherwise disambiguate this instance.
-	Label *SimpleSecretLabelProto `json:"label,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Label") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Label") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SimpleSecretHolderProto) MarshalJSON() ([]byte, error) {
-	type NoMethod SimpleSecretHolderProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SimpleSecretLabelProto: SimpleSecretProto (in authenticator.proto)
-// and SimpleSecretHolderProto (below) share the notion of a "label",
-// which identifies a particular secret without (hopefully) revealing
-// the secret. Note that a SimpleSecretLabel only disambiguates between
-// secrets used to get access to some particular object. Two different
-// secrets that apply to two different objects could have the same
-// label. For example, in the common sharing model, each object has no
-// more than one "auth key". Therefore, the label for an auth key simply
-// has type = AUTH_KEY with no additional information. In theory, we
-// could add some sort of resource ID to SimpleSecretLabel to make it
-// more explicit. However, in practice, this is never really needed. A
-// SimpleSecret for one object is never used to authorize a request on
-// some other object, so there is no ambiguity. Also, since
-// SimpleSecrets must obviously be unguessable, there is no risk that a
-// SimpleSecret intended for one object will accidentally grant access
-// to another.
-type SimpleSecretLabelProto struct {
-	// CapabilityId: ***DEPRECATED (3-Oct-2011) *** This field should be
-	// deleted when code stops using CAP_TOKEN labels. Used when type =
-	// CAP_TOKEN. When a CAP_TOKEN label appears in a SimpleSecretHolder
-	// Principal, |capability_id| must be filled in to identify one of the
-	// capabilities on the ACL. When a CAP_TOKEN label appears in a
-	// SimpleSecret Authenticator, it is NOT necessary to fill in
-	// |capability_id| -- ACL Service will find the ID by searching all
-	// capabilities on the ACL for one associated with the token given by
-	// the SimpleSecret's secret data. If |capability_id| is specified,
-	// though, then the Authenticator will only be accepted if it actually
-	// matches that particular token ID.
-	CapabilityId int64 `json:"capabilityId,omitempty"`
-
-	// GenericLabel: Used when type = GENERIC_SECRET
-	GenericLabel string `json:"genericLabel,omitempty"`
-
-	// InviteId: Used when type == INVITE.
-	InviteId int64 `json:"inviteId,omitempty,string"`
-
-	// Type: This is optional because required enums cannot be extended.
-	//
-	// Possible values:
-	//   "INVALID" - Used as a default value.
-	//   "AUTH_KEY" - The singleton auth key for a common-sharing ACL. No
-	// other fields of SimpleSecretLabelProto need to be filled in, since
-	// there is only one of these per ACL. The corresponding secret is the
-	// auth key encoded in 64-bit big-endian.
-	//   "INVITE" - A common-sharing invite token. |invite_id| (below) must
-	// be set to identify the invite. The corresponding secret is the
-	// SecretMaterial, as defined by InviteToken.SecretMaterial in
-	// acl.proto, encoded in 64-bit big-endian. If there is no
-	// SecretMaterial, the secret should be omitted; in this case the invite
-	// ID itself is the secret, which is less secure.
-	//   "GENERIC_SECRET" - A generic secret value. Do not use this if any
-	// more specific type is appropriate.
-	//   "CAP_TOKEN" - ***DEPRECATED (3-Oct-2011)*** Use the new
-	// CapTokenProto and CapTokenHolderProto instead. A capability token.
-	// The corresponding secret is an arbitrary-length random byte string
-	// (recommended: 128 bits). |capability_id| may be filled in (see
-	// below). See CapTokenMetadata in acl.proto.
-	//   "REKE" - Identifies a principal that can perform a successful REKE
-	// handshake. The holder is not authenticated by presenting a
-	// SimpleSecretProto, but rather by knowing either the REKE resumption
-	// ticket secret or the private key corresponding to a public key
-	// specified outside the PrincipalProto. For more information, see:
-	// http://goto.google.com/loas2cert
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CapabilityId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CapabilityId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SimpleSecretLabelProto) MarshalJSON() ([]byte, error) {
-	type NoMethod SimpleSecretLabelProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SlashCommandMetadata: Annotation metadata for slash commands (/).
-type SlashCommandMetadata struct {
-	// ArgumentsHint: Hint string for the arguments expected by the slash
-	// command.
-	ArgumentsHint string `json:"argumentsHint,omitempty"`
-
-	// CommandId: Unique id for the slash command.
-	CommandId int64 `json:"commandId,omitempty,string"`
-
-	// CommandName: Name of the slash command.
-	CommandName string `json:"commandName,omitempty"`
-
-	// Id: ID of the bot which owns the slash command.
-	Id *UserId `json:"id,omitempty"`
-
-	// TriggersDialog: Whether or not this slash command should trigger a
-	// dialog.
-	TriggersDialog bool `json:"triggersDialog,omitempty"`
-
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "ADD" - If a bot is added by a Slash Command, it means the bot was
-	// invoked by the user but hasn't yet been added to the group. Attaching
-	// an ADD annotation both add and invoke the bot.
-	//   "INVOKE"
-	//   "FAILED_TO_ADD" - Server-generated slash command metadata, for
-	// clients to strikethrough.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ArgumentsHint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArgumentsHint") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod SlashCommandMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Snippet: Snippet of the search result, which summarizes the content
 // of the resulting page.
 type Snippet struct {
 	// MatchRanges: The matched ranges in the snippet.
 	MatchRanges []*MatchRange `json:"matchRanges,omitempty"`
 
-	// Snippet: The snippet of the document. The snippet of the document.
-	// May contain escaped HTML character that should be unescaped prior to
-	// rendering.
+	// Snippet: The snippet of the document. May contain escaped HTML
+	// character that should be unescaped prior to rendering.
 	Snippet string `json:"snippet,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MatchRanges") to
@@ -18960,82 +8839,6 @@ type Snippet struct {
 
 func (s *Snippet) MarshalJSON() ([]byte, error) {
 	type NoMethod Snippet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SocialCommonAttachmentAttachment: An Attachment represents a linked
-// entity associated with a piece of social content. This may be a
-// 1st-party or 3rd-party entity. In the Papyrus context, an Attachment
-// is part of a Cent, and sits alongside the main content of the cent,
-// which is represented as a sequence of Segments. Right now an
-// Attachment is just a wrapper around an Embed, but we provide the
-// extra layer of abstraction since, as Embeds move to separate storage
-// in Briefcase, we may want to add additional fields that are not part
-// of the Embed proper, but that (for example) relate to the usage of
-// the linked content within the particular post/cent.
-type SocialCommonAttachmentAttachment struct {
-	// EmbedItem: An embed represents an external entity. See go/es-embeds.
-	EmbedItem *EmbedClientItem `json:"embedItem,omitempty"`
-
-	// Id: An id to uniquely identify an attachment when several attachments
-	// are in a collection.
-	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EmbedItem") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EmbedItem") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SocialCommonAttachmentAttachment) MarshalJSON() ([]byte, error) {
-	type NoMethod SocialCommonAttachmentAttachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SocialGraphNodeProto: Represents a user pseudonym. Pseudonyms are
-// linked accounts on Google and third-party services (e.g. YouTube or
-// Twitter) and are described by a Social Graph Node.
-type SocialGraphNodeProto struct {
-	// SgnDomain: The fields from
-	// ccc/socialgraph/socialgraphnode.proto:SgnNode that uniquely identify
-	// a social graph node. The 'ident' field is not included here because
-	// its value can be changed.
-	SgnDomain string `json:"sgnDomain,omitempty"`
-
-	SgnPk string `json:"sgnPk,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SgnDomain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SgnDomain") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SocialGraphNodeProto) MarshalJSON() ([]byte, error) {
-	type NoMethod SocialGraphNodeProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19273,37 +9076,29 @@ func (s *SourceScoringConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpaceId: Primary key for Space resource.
-type SpaceId struct {
-	// SpaceId: Unique, immutable ID of the Space
-	SpaceId string `json:"spaceId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SpaceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SpaceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SpaceId) MarshalJSON() ([]byte, error) {
-	type NoMethod SpaceId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type SpellResult struct {
 	// SuggestedQuery: The suggested spelling of the query.
 	SuggestedQuery string `json:"suggestedQuery,omitempty"`
+
+	// SuggestedQueryHtml: The sanitized HTML representing the spell
+	// corrected query that can be used in the UI. This usually has
+	// language-specific tags to mark up parts of the query that are spell
+	// checked.
+	SuggestedQueryHtml *SafeHtmlProto `json:"suggestedQueryHtml,omitempty"`
+
+	// SuggestionType: Suggestion triggered for the current query.
+	//
+	// Possible values:
+	//   "SUGGESTION_TYPE_UNSPECIFIED" - Default spell check type
+	//   "NON_EMPTY_RESULTS_SPELL_SUGGESTION" - Spell suggestion without any
+	// results changed. The results are still shown for the original query
+	// (which has non zero / results) with a suggestion for spelling that
+	// would have results.
+	//   "ZERO_RESULTS_FULL_PAGE_REPLACEMENT" - Spell suggestion triggered
+	// when original query has no results. When the original query has no
+	// results, and spell suggestion has results we trigger results for the
+	// spell corrected query.
+	SuggestionType string `json:"suggestionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SuggestedQuery") to
 	// unconditionally include in API requests. By default, fields with
@@ -19325,49 +9120,6 @@ type SpellResult struct {
 
 func (s *SpellResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SpellResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SquareProto: Represents the set of members (of a given type) in a
-// Google+ Square (see http://go/squares). A Square with default
-// member_type is currently (1/2012) identical to the GaiaGroup with the
-// same ID, but that is expected to change soon (see
-// http://go/superglue). Support for this principal type is currently
-// (1/2012) incomplete -- e.g., Keystore does not support it yet (see
-// b/5703421).
-type SquareProto struct {
-	// MemberType: The type of Square members to consider, e.g. "all
-	// members" vs. "owners" vs. "admins". These are defined by
-	// legacy_relation_id values in
-	// social.graph.storage.EdgeTypeEnum.EdgeType enum options in
-	// social/graph/storage/proto/id.proto. See square.pb (defined in
-	// production/config/cdd/socialgraph/mixer_config/prod/node_type_config)
-	// for all valid edge types associated with square. Currently required.
-	MemberType int64 `json:"memberType,omitempty"`
-
-	// SquareId: Currently required.
-	SquareId int64 `json:"squareId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "MemberType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MemberType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SquareProto) MarshalJSON() ([]byte, error) {
-	type NoMethod SquareProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19444,153 +9196,6 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type StoredParticipantId struct {
-	GaiaId int64 `json:"gaiaId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "GaiaId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GaiaId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StoredParticipantId) MarshalJSON() ([]byte, error) {
-	type NoMethod StoredParticipantId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// StreamViewerStats: Information about viewers of the stream.
-type StreamViewerStats struct {
-	// EstimatedViewerCount: The estimate of the current viewer count.
-	EstimatedViewerCount int64 `json:"estimatedViewerCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EstimatedViewerCount") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EstimatedViewerCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StreamViewerStats) MarshalJSON() ([]byte, error) {
-	type NoMethod StreamViewerStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// StreamingSessionInfo: Information about a streaming session in
-// conference.
-type StreamingSessionInfo struct {
-	// ApplicationType: The application type of the current streaming
-	// session.
-	//
-	// Possible values:
-	//   "RECORDING_APPLICATION_TYPE_UNSPECIFIED" - This is never used.
-	//   "RECORDING" - A meeting recording saved to a video file in Google
-	// Drive.
-	//   "GLIVE_STREAM" - A *Google Live* managed stream.
-	//   "BROADCAST" - A meeting broadcast.
-	ApplicationType string `json:"applicationType,omitempty"`
-
-	// LatestSessionEvent: The latest streaming session event. This can be
-	// used by clients to help explain what is going on, why recording
-	// stopped, etc. This will always be set to a valid event and consistent
-	// with the status. It can be set when current session is inactive to
-	// indicate latest event that makes current session to become inactive.
-	LatestSessionEvent *SessionEvent `json:"latestSessionEvent,omitempty"`
-
-	// OwnerDisplayName: The display name of the owner of the recording
-	// output. It's only set when there will be uploaded recordings.
-	// Currently, it's only set when application type is RECORDING or
-	// GLIVE_STREAM.
-	OwnerDisplayName string `json:"ownerDisplayName,omitempty"`
-
-	// SessionId: This is the REST name and unique identifier of this
-	// streaming session and has the form `spaces//recordings/` This is
-	// returned whenever status is either `STARTING` or `STARTED`.
-	SessionId string `json:"sessionId,omitempty"`
-
-	// Status: The current status of this streaming session. This can be
-	// used by clients to show session status indicator and/or notification.
-	//
-	// Possible values:
-	//   "STATUS_UNSPECIFIED" - This value is never used.
-	//   "INACTIVE" - The streaming session is inactive. This means either
-	// it's not started yet or it's already stopped.
-	//   "STARTING" - The streaming session is about to begin. The status
-	// will be updated to LIVE when the streaming session actually starts,
-	// which happens when all the backend plumbing is set up.
-	//   "LIVE" - The streaming session is live. Any media sent to the
-	// conference may be included in the resulting recording/broadcast.
-	Status string `json:"status,omitempty"`
-
-	// TrainingEnabled: When true, this recording may be used for training
-	// new transcription models.
-	TrainingEnabled bool `json:"trainingEnabled,omitempty"`
-
-	// ViewerAccessPolicy: The policy that controls who can view the
-	// broadcast. This setting applies for broadcast session.
-	//
-	// Possible values:
-	//   "BROADCASTING_ACCESS_POLICY_UNSPECIFIED" - Used only when broadcast
-	// is not enabled, or an unknown enum value is used.
-	//   "ORGANIZATION" - Only authenticated Google accounts belonging to
-	// the same organization as the meeting organizer can access the
-	// broadcast.
-	//   "PUBLIC" - Anyone with the broadcast view URL can access the
-	// broadcast.
-	ViewerAccessPolicy string `json:"viewerAccessPolicy,omitempty"`
-
-	// ViewerStats: Contains information about viewers of the livestream. It
-	// is only set when application type is BROADCAST.
-	ViewerStats *StreamViewerStats `json:"viewerStats,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApplicationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StreamingSessionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod StreamingSessionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19772,232 +9377,6 @@ func (s *SuggestResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SupportUrls: Urls with additional bot related information.
-type SupportUrls struct {
-	// AdminConfigUrl: Link to the admin configuration webpage for the bot.
-	// Configured by Pantheon, may be empty.
-	AdminConfigUrl string `json:"adminConfigUrl,omitempty"`
-
-	// DeletionPolicyUrl: Link to the deletion policy webpage for the bot.
-	// Configured by Pantheon, may be empty.
-	DeletionPolicyUrl string `json:"deletionPolicyUrl,omitempty"`
-
-	// PrivacyPolicyUrl: Link to the privacy policy webpage for the bot. May
-	// be empty.
-	PrivacyPolicyUrl string `json:"privacyPolicyUrl,omitempty"`
-
-	// SetupUrl: Link to the setup webpage for the bot. Configured by
-	// Pantheon, may be empty.
-	SetupUrl string `json:"setupUrl,omitempty"`
-
-	// SupportUrl: Link to the support webpage for the developer of the bot.
-	// May be empty.
-	SupportUrl string `json:"supportUrl,omitempty"`
-
-	// TosUrl: Link to the terms of service webpage for the bot. May be
-	// empty.
-	TosUrl string `json:"tosUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AdminConfigUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdminConfigUrl") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SupportUrls) MarshalJSON() ([]byte, error) {
-	type NoMethod SupportUrls
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type SwitchWidget struct {
-	// Possible values:
-	//   "UNSPECIFIED"
-	//   "SWITCH"
-	//   "CHECKBOX"
-	ControlType string `json:"controlType,omitempty"`
-
-	// Name: The name of the switch widget which is will be used in
-	// FormInput.
-	Name string `json:"name,omitempty"`
-
-	OnChange *FormAction `json:"onChange,omitempty"`
-
-	Selected bool `json:"selected,omitempty"`
-
-	// Value: The value is what is passed back in apps script callback.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ControlType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ControlType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SwitchWidget) MarshalJSON() ([]byte, error) {
-	type NoMethod SwitchWidget
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type TextButton struct {
-	// AltText: The alternative text used for accessibility Next field
-	// number: 7.
-	AltText string `json:"altText,omitempty"`
-
-	// BackgroundColor: Optional color of the button's background in RAISE
-	// mode. The default is the secondary color from addon's manifest.
-	BackgroundColor string `json:"backgroundColor,omitempty"`
-
-	Disabled bool `json:"disabled,omitempty"`
-
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	// Possible values:
-	//   "UNSPECIFIED"
-	//   "TEXT" - Simple text button with ripple touch feedback.
-	//   "FILLED" - Button with solid background.
-	Style string `json:"style,omitempty"`
-
-	// Text: Text color can be set via HTML markup.
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TextButton) MarshalJSON() ([]byte, error) {
-	type NoMethod TextButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type TextField struct {
-	// AutoComplete: The initial set of auto complete items without any user
-	// input.
-	AutoComplete *AutoComplete `json:"autoComplete,omitempty"`
-
-	// AutoCompleteCallback: The refresh function which returns AutoComplete
-	// based on the user's input text. If the callback is not specified,
-	// auto complete will be purely done in client side based on the
-	// auto_complete items.
-	AutoCompleteCallback *FormAction `json:"autoCompleteCallback,omitempty"`
-
-	// AutoCompleteMultipleSelections: When set to true, a user can input
-	// multiple auto-complet items.
-	AutoCompleteMultipleSelections bool `json:"autoCompleteMultipleSelections,omitempty"`
-
-	HintText string `json:"hintText,omitempty"`
-
-	// Label: One of label or hint_text is required to be specified by the
-	// developers.
-	Label string `json:"label,omitempty"`
-
-	MaxLines int64 `json:"maxLines,omitempty"`
-
-	// Name: The name of the text field which is will be used in FormInput.
-	Name string `json:"name,omitempty"`
-
-	OnChange *FormAction `json:"onChange,omitempty"`
-
-	// Possible values:
-	//   "SINGLE_LINE"
-	//   "MULTIPLE_LINE"
-	Type string `json:"type,omitempty"`
-
-	// Value: The default value when no input from user.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AutoComplete") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutoComplete") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TextField) MarshalJSON() ([]byte, error) {
-	type NoMethod TextField
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TextKeyValue: This is deprecated and please use KeyValue.
-type TextKeyValue struct {
-	Key string `json:"key,omitempty"`
-
-	OnClick *OnClick `json:"onClick,omitempty"`
-
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TextKeyValue) MarshalJSON() ([]byte, error) {
-	type NoMethod TextKeyValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // TextOperatorOptions: Used to provide a search operator for text
 // properties. This is optional. Search operators let users restrict the
 // query to specific fields relevant to the type of item being searched.
@@ -20044,32 +9423,6 @@ type TextOperatorOptions struct {
 
 func (s *TextOperatorOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TextOperatorOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type TextParagraph struct {
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TextParagraph) MarshalJSON() ([]byte, error) {
-	type NoMethod TextParagraph
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -20133,6 +9486,48 @@ type TextValues struct {
 
 func (s *TextValues) MarshalJSON() ([]byte, error) {
 	type NoMethod TextValues
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ThirdPartyGenericCard struct {
+	// CardId: Unique identifier for the card.
+	CardId string `json:"cardId,omitempty"`
+
+	// Category: Category that the card belongs to.
+	Category string `json:"category,omitempty"`
+
+	// Content: [Required] Card content.
+	Content *Content `json:"content,omitempty"`
+
+	// Context: [Required] Context where the card should be triggered.
+	Context *Context `json:"context,omitempty"`
+
+	// IsDismissible: Whether the card can be dismissed.
+	IsDismissible bool `json:"isDismissible,omitempty"`
+
+	// Priority: Priority of the card, where 0 is the highest priority.
+	Priority int64 `json:"priority,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyGenericCard) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyGenericCard
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -20255,258 +9650,6 @@ func (s *TimestampValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TombstoneMetadata: Tombstoning is the act of leaving a contextual
-// trace when deleting a message. See more: go/tombstone-prd,
-// go/hub-dynamite-tombstones-server-design-v2.
-type TombstoneMetadata struct {
-	// TombstoneType: Indicates the type of Tombstone.
-	//
-	// Possible values:
-	//   "TOMBSTONE_UNSPECIFIED" - This should not be used.
-	//   "CREATOR" - User deleted their own message.
-	//   "ROOM_OWNER" - The space owner deleted a message in their space.
-	//   "ADMIN" - The customer admin deleted a message in a space or DM
-	// owned by the customer. (go/chat-customer-owned-data)
-	//   "APP_MESSAGE_EXPIRY" - App scheduled deletion of their own message.
-	// See go/bme-dd.
-	//   "CREATOR_VIA_APP" - User deleted their own message via an app. See
-	// go/chat-api-delete-message.
-	//   "ROOM_OWNER_VIA_APP" - The space owner deleted a message in their
-	// space via an app. See go/chat-api-delete-message.
-	TombstoneType string `json:"tombstoneType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TombstoneType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TombstoneType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TombstoneMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod TombstoneMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Toolbar: The Toolbar markup has been deprecated. The information is
-// now specified in the manifest.
-type Toolbar struct {
-	// Color: Background color of the toolbar in RBG hex representation.
-	Color string `json:"color,omitempty"`
-
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Color") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Color") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Toolbar) MarshalJSON() ([]byte, error) {
-	type NoMethod Toolbar
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type TopicId struct {
-	// GroupId: The Space or DM that the topic belongs to.
-	GroupId *GroupId `json:"groupId,omitempty"`
-
-	// TopicId: Opaque, server-assigned ID of the Topic. While this ID is
-	// guaranteed to be unique within the Space, it's not guaranteed to be
-	// globally unique. Internal usage: this field can be empty in the
-	// following cases: 1. To create the first message in a topic. 2. To
-	// list last N messages of a Space (regardless of topic).
-	TopicId string `json:"topicId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GroupId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GroupId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TopicId) MarshalJSON() ([]byte, error) {
-	type NoMethod TopicId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TranscriptionSessionInfo: Information about a transcription session.
-type TranscriptionSessionInfo struct {
-	// SessionStateInfo: Transcription session's state information.
-	SessionStateInfo *SessionStateInfo `json:"sessionStateInfo,omitempty"`
-
-	// TranscriptionSessionId: A unique server-generated ID for the
-	// transcription session.
-	TranscriptionSessionId string `json:"transcriptionSessionId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SessionStateInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SessionStateInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TranscriptionSessionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod TranscriptionSessionInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TransientData: Transient generic data that will not be saved on the
-// server.
-type TransientData struct {
-}
-
-// TrustedResourceUrlProto: Message containing a string that is safe to
-// use in all URL contexts in DOM APIs and HTML documents; even where
-// the referred-to resource is interpreted as code, e.g., as the src of
-// a script element.
-type TrustedResourceUrlProto struct {
-	// PrivateDoNotAccessOrElseTrustedResourceUrlWrappedValue: IMPORTANT:
-	// Never set or read this field, even from tests, it is private. See
-	// documentation at the top of .proto file for programming language
-	// packages with which to create or read this message.
-	PrivateDoNotAccessOrElseTrustedResourceUrlWrappedValue string `json:"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PrivateDoNotAccessOrElseTrustedResourceUrlWrappedValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "PrivateDoNotAccessOrElseTrustedResourceUrlWrappedValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TrustedResourceUrlProto) MarshalJSON() ([]byte, error) {
-	type NoMethod TrustedResourceUrlProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TypeInfo: Next tag: 2
-type TypeInfo struct {
-	// VideoInfo: Contains additional video information only if
-	// document_type is VIDEO.
-	VideoInfo *VideoInfo `json:"videoInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "VideoInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "VideoInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TypeInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod TypeInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UniversalPhoneAccess: Universal phone access contains information
-// required to dial into a conference using one of a static list of
-// phone numbers and a universal PIN. The phone number list is
-// distributed separately.
-type UniversalPhoneAccess struct {
-	// Pin: The PIN that users must enter after dialing a universal number.
-	// The pin consists of only decimal digits and the length may vary,
-	// though it generally is longer than a PhoneAccess.pin.
-	Pin string `json:"pin,omitempty"`
-
-	// PstnInfoUrl: This field has the same contents as the
-	// MeetingSpace.more_join_url field, and is included for compatibility
-	// reasons. Clients should use the other field instead. This field is
-	// deprecated and will be removed.
-	PstnInfoUrl string `json:"pstnInfoUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Pin") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Pin") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UniversalPhoneAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod UniversalPhoneAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type UnmappedIdentity struct {
 	// ExternalIdentity: The resource name for an external user.
 	ExternalIdentity *Principal `json:"externalIdentity,omitempty"`
@@ -20592,6 +9735,16 @@ type UpdateDataSourceRequest struct {
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 
 	Source *DataSource `json:"source,omitempty"`
+
+	// UpdateMask: Only applies to `settings.datasources.patch`
+	// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
+	// Update mask to control which fields to update. Example field paths:
+	// `name`, `displayName`. * If `update_mask` is non-empty, then only the
+	// fields specified in the `update_mask` are updated. * If you specify a
+	// field in the `update_mask`, but don't specify its value in the
+	// source, that field is cleared. * If the `update_mask` is not present
+	// or empty or has the value `*`, then all fields are updated.
+	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DebugOptions") to
 	// unconditionally include in API requests. By default, fields with
@@ -20686,85 +9839,13 @@ func (s *UploadItemRef) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UploadMetadata: Annotation metadata for user Upload artifacts.
-type UploadMetadata struct {
-	// AttachmentToken: Opaque token. Clients shall simply pass it back to
-	// the Backend. This field will NOT be saved into storage.
-	AttachmentToken string `json:"attachmentToken,omitempty"`
+// UserActivity: User's single or bulk query activity. This can be a
+// logging query or deletion query.
+type UserActivity struct {
+	// QueryActivity: Contains data which needs to be logged/removed.
+	QueryActivity *QueryActivity `json:"queryActivity,omitempty"`
 
-	// BackendUploadMetadata: Information about the uploaded attachment that
-	// is only used in Backend. This field will NOT be sent out of Google.
-	BackendUploadMetadata *AppsDynamiteSharedBackendUploadMetadata `json:"backendUploadMetadata,omitempty"`
-
-	// ClonedAuthorizedItemId: The "new" secure identifier for Drive files.
-	// Should be used instead of the deprecated string drive_id field above.
-	// This should only be set if the upload file has been added to Drive.
-	// Note that older Drive files that do not have a ResourceKey should
-	// still use this field, with the resource_key field unset.
-	ClonedAuthorizedItemId *AuthorizedItemId `json:"clonedAuthorizedItemId,omitempty"`
-
-	// ClonedDriveAction: DriveAction for organizing the cloned version of
-	// this upload in Drive, if the file has been added to Drive. This field
-	// is not set if the file has not been added to Drive. Additionally,
-	// this field is only set when part of a FileResult in a
-	// ListFilesResponse.
-	//
-	// Possible values:
-	//   "DRIVE_ACTION_UNSPECIFIED" - No organize action should be shown.
-	//   "ADD_TO_DRIVE" - Show "Add to Drive" button, for adding file that
-	// doesn't exist in Drive to Drive. Note that deleted Drive files that
-	// still exist (i.e. in your Trash) will still be ORGANIZE (this is
-	// consistent with Gmail Drive attachments).
-	//   "ORGANIZE" - Show "Move" button, for organizing a Drive file the
-	// user has permission to move.
-	//   "ADD_SHORTCUT" - Show "Add shortcut" button, for adding a shortcut
-	// to a Drive file the user does not have permission to move.
-	//   "ADD_ANOTHER_SHORTCUT" - Show "Add another shortcut" button, for
-	// Drive files the user has already created a shortcut to.
-	ClonedDriveAction string `json:"clonedDriveAction,omitempty"`
-
-	// ClonedDriveId: Reference to a Drive ID, if this upload file has been
-	// previously cloned to Drive. Note: this is deprecated in favor of the
-	// AuthorizedItemId below.
-	ClonedDriveId string `json:"clonedDriveId,omitempty"`
-
-	// ContentName: The original file name for the content, not the full
-	// path.
-	ContentName string `json:"contentName,omitempty"`
-
-	// ContentType: Type is from Scotty's best_guess by default:
-	// http://google3/uploader/agent/scotty_agent.proto?l=51&rcl=140889785
-	ContentType string `json:"contentType,omitempty"`
-
-	// DlpMetricsMetadata: The metrics metadata of the Data Loss Prevention
-	// attachment scan.
-	DlpMetricsMetadata *AppsDynamiteSharedDlpMetricsMetadata `json:"dlpMetricsMetadata,omitempty"`
-
-	// LocalId: A copy of the LocalId in Annotation. This field is supposed
-	// to be filled by server only.
-	LocalId string `json:"localId,omitempty"`
-
-	// OriginalDimension: Original dimension of the content. Only set for
-	// image attachments.
-	OriginalDimension *AppsDynamiteSharedDimension `json:"originalDimension,omitempty"`
-
-	// VideoReference: Reference to a transcoded video attachment. Only set
-	// for video attachments.
-	VideoReference *AppsDynamiteSharedVideoReference `json:"videoReference,omitempty"`
-
-	// VirusScanResult: Result for a virus scan. It's duplicated in the
-	// above field apps.dynamite.shared.BackendUploadMetadata
-	//
-	// Possible values:
-	//   "UNKNOWN_VIRUS_SCAN_RESULT"
-	//   "CLEAN"
-	//   "INFECTED"
-	//   "ERROR"
-	//   "POLICY_VIOLATION" - The document violates Google's policy for
-	// executables and archives.
-	VirusScanResult string `json:"virusScanResult,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AttachmentToken") to
+	// ForceSendFields is a list of field names (e.g. "QueryActivity") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -20772,292 +9853,7 @@ type UploadMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AttachmentToken") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UrlMetadata: Annotation metadata for a Weblink. In case of pasted
-// link it can qualify to be other types in addition to being a URL -
-// like DRIVE_DOC/DRIVE_SHEET and so on. The URL metadata will also be
-// present and it's up to the client to decide which metadata to render
-// it with. These fields are filled in using page render service.
-type UrlMetadata struct {
-	// Domain: Domain for this url. If it's an IP address the address is
-	// returned.
-	Domain string `json:"domain,omitempty"`
-
-	// GwsUrl: The signed GWS URL.
-	GwsUrl *SafeUrlProto `json:"gwsUrl,omitempty"`
-
-	// GwsUrlExpirationTimestamp: The expiration timestamp for GWS URL, only
-	// set when gws_url is set.
-	GwsUrlExpirationTimestamp int64 `json:"gwsUrlExpirationTimestamp,omitempty,string"`
-
-	// ImageHeight: Dimensions of the image: height. This field is string to
-	// match with page render service response. Deprecated. Use
-	// int_image_height instead.
-	ImageHeight string `json:"imageHeight,omitempty"`
-
-	// ImageUrl: Representative image of the website.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// ImageWidth: Dimensions of the image: width. This field is string to
-	// match with page render service response. Deprecated. Use
-	// int_image_height instead.
-	ImageWidth string `json:"imageWidth,omitempty"`
-
-	// IntImageHeight: Dimensions of the image: height.
-	IntImageHeight int64 `json:"intImageHeight,omitempty"`
-
-	// IntImageWidth: Dimensions of the image: width.
-	IntImageWidth int64 `json:"intImageWidth,omitempty"`
-
-	// MimeType: Mime type of the content (Currently mapped from Page Render
-	// Service ItemType) Note that this is not necessarily the mime type of
-	// the http resource. For example a text/html from youtube or vimeo may
-	// actually be classified as a video type. Then we shall mark it as
-	// video/* since we don't know exactly what type of video it is.
-	MimeType string `json:"mimeType,omitempty"`
-
-	// RedirectUrl: The stable redirect URL pointing to frontend server.
-	RedirectUrl *SafeUrlProto `json:"redirectUrl,omitempty"`
-
-	// ShouldNotRender: If the UrlMetadata is missing data for rendering a
-	// chip. Deprecated. Use Annotation.ChipRenderType instead.
-	ShouldNotRender bool `json:"shouldNotRender,omitempty"`
-
-	// Snippet: Snippet/small description of the weblink.
-	Snippet string `json:"snippet,omitempty"`
-
-	// Title: Title of the Weblink.
-	Title string `json:"title,omitempty"`
-
-	// Url: The original URL.
-	Url *SafeUrlProto `json:"url,omitempty"`
-
-	// UrlSource: NEXT TAG : 17
-	//
-	// Possible values:
-	//   "URL_SOURCE_UNKNOWN"
-	//   "USER_SUPPLIED_URL"
-	//   "SERVER_SUPPLIED_POLICY_VIOLATION"
-	UrlSource string `json:"urlSource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Domain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Domain") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UrlMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod UrlMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// User: User profile information. This user is not necessarily member
-// of a space.
-type User struct {
-	// AvatarUrl: URL for the avatar picture of the User in dynamite
-	AvatarUrl string `json:"avatarUrl,omitempty"`
-
-	// BlockRelationship: Information about whether the user is blocked by
-	// requester and/or has blocked requester.
-	BlockRelationship *AppsDynamiteSharedUserBlockRelationship `json:"blockRelationship,omitempty"`
-
-	// BotInfo: Bot-specific profile information. Leave it empty for human
-	// users.
-	BotInfo *BotInfo `json:"botInfo,omitempty"`
-
-	// Deleted: Deleted flag, if true, means User has been
-	// soft-deleted/purged Deprecated. Use user_account_state field instead.
-	Deleted bool `json:"deleted,omitempty"`
-
-	// Email: Email ID of the user
-	Email string `json:"email,omitempty"`
-
-	// FirstName: First or given name of the user
-	FirstName string `json:"firstName,omitempty"`
-
-	// Gender: Gender of the user
-	Gender string `json:"gender,omitempty"`
-
-	// Id: UserId
-	Id *UserId `json:"id,omitempty"`
-
-	// IsAnonymous: Set to true if none of the depending services (Gaia,
-	// PeopleApi) returns any info for this user.
-	IsAnonymous bool `json:"isAnonymous,omitempty"`
-
-	// LastName: Last or family name of the user
-	LastName string `json:"lastName,omitempty"`
-
-	// Name: Non-unique, user-defined display name of the User
-	Name string `json:"name,omitempty"`
-
-	// OrganizationInfo: Information about whether the user is a consumer
-	// user, or the GSuite customer that they belong to.
-	OrganizationInfo *AppsDynamiteSharedOrganizationInfo `json:"organizationInfo,omitempty"`
-
-	// PhoneNumber: Phone number(s) of the user
-	PhoneNumber []*AppsDynamiteSharedPhoneNumber `json:"phoneNumber,omitempty"`
-
-	// UserAccountState: State of user's Gaia Account
-	//
-	// Possible values:
-	//   "UNKNOWN_USER_ACCOUNT_STATE"
-	//   "ENABLED" - User has Dynamite enabled.
-	//   "DISABLED" - User doesn't have Dynamite enabled. This includes
-	// service disabled by admin, or user's account is suspended
-	//   "DELETED" - User account is deleted
-	//   "TEMPORARY_UNAVAILABLE" - Failed to retrieve user's info. Will use
-	// user's email address as name and first_name.
-	UserAccountState string `json:"userAccountState,omitempty"`
-
-	// UserProfileVisibility: Visibility of user's Profile
-	//
-	// Possible values:
-	//   "UNKNOWN_USER_PROFILE_VISIBILITY"
-	//   "FULL_PROFILE" - Caller has full visibility.
-	//   "PRIMARY_MAIL" - Caller can only see target user's primary email
-	// from Gaia
-	//   "INVITEE_EMAIL" - Caller can only see the email used to invite the
-	// target user
-	//   "DELETED_USER" - Caller can only see the target user as a deleted
-	// user. Email is empty. Names are redacted as "Deleted User".
-	//   "UNKNOWN_USER" - Caller has no visibility to the target user at
-	// all. Email is empty. Names are redacted as "Unknown User".
-	//   "FAILURE" - Stubby failed. Clients should always retry ASAP
-	UserProfileVisibility string `json:"userProfileVisibility,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvatarUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvatarUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *User) MarshalJSON() ([]byte, error) {
-	type NoMethod User
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserDisplayInfo: Resource for displaying user info
-type UserDisplayInfo struct {
-	// AvatarUrl: The avatar to show for this user
-	AvatarUrl string `json:"avatarUrl,omitempty"`
-
-	// DisplayName: The name to show for this user
-	DisplayName string `json:"displayName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvatarUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvatarUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserDisplayInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod UserDisplayInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserId: Primary key for User resource.
-type UserId struct {
-	// ActingUserId: Optional. Opaque, server-assigned ID of the user
-	// profile associated with App/user acting on behalf of the human user.
-	// This is currently only set when a 3P application is acting on the
-	// user's behalf.
-	ActingUserId string `json:"actingUserId,omitempty"`
-
-	// Id: Opaque, server-assigned ID of the User.
-	Id string `json:"id,omitempty"`
-
-	// OriginAppId: Optional. Identifier of the App involved (directly or on
-	// behalf of a human creator) in creating this message. This is not set
-	// if the user posted a message directly, but is used in the case of,
-	// for example, a message being generated by a 1P integration based on a
-	// user action (creating an event, creating a task etc). This should
-	// only be used on the BE. For clients, please use the field in the FE
-	// message proto instead
-	// (google3/apps/dynamite/v1/frontend/api/message.proto?q=origin_app_id).
-	OriginAppId *AppId `json:"originAppId,omitempty"`
-
-	// Type: Clients do not need to send UserType to Backend, but Backend
-	// will always send this field to clients per the following rule: 1. For
-	// HUMAN Ids, the field is empty but by default .getType() will return
-	// HUMAN. 2. For BOT Ids, the field is ALWAYS set to BOT.
-	//
-	// Possible values:
-	//   "HUMAN" - Notes on HUMAN type: 1) Leaving UserId.UserType field
-	// empty will return HUMAN as default value. This is expected because
-	// all the existing UserIds are without explicitly setting UserType,
-	// most of which are HUMAN Ids. For Bot Ids we will always set BOT in
-	// UserType field. 2) DO NOT explicitly set HUMAN as type. This is a
-	// proto2 issue, that a UserId with explicitly set default value HUMAN
-	// as type is NOT equal to an id without setting the field. aka. UserId
-	// id1 = UserId.newBuilder()
-	// .setId("dummy").setType(UserType.HUMAN).build(); UserId id2 =
-	// UserId.newBuilder().setId("dummy").build();
-	// AssertThat(id1).isNotEqual(id2);
-	// AssertThat(id2.getType()).isEqualTo(UserType.HUMAN);
-	//   "BOT"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActingUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActingUserId") to include
+	// NullFields is a list of field names (e.g. "QueryActivity") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -21066,201 +9862,8 @@ type UserId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserId) MarshalJSON() ([]byte, error) {
-	type NoMethod UserId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserInfo: Contains info regarding the updater of an Activity Feed
-// item. Next Id: 8
-type UserInfo struct {
-	// DriveNotificationAvatarUrl: Avatar url of the user who triggered the
-	// Drive Notification email. This field will be populated if we can
-	// extract such information from the Drive Notification email. This
-	// should only be used to fetch user avatars when updater_to_show_email
-	// is not populated. This field is not set for non-Drive Notification
-	// items. This is not the actual sender of the email, as the sender is
-	// always comments-noreply@docs.google.com.
-	DriveNotificationAvatarUrl string `json:"driveNotificationAvatarUrl,omitempty"`
-
-	// UpdaterCountDisplayType: Describes how updater_count_to_show should
-	// be used.
-	//
-	// Possible values:
-	//   "UPDATER_COUNT_DISPLAY_TYPE_UNSPECIFIED"
-	//   "NO_DISPLAY_COUNT" - No additional updaters where involved. Shows
-	// up in clients as "$USERNAME replied".
-	//   "EXACT_COUNT" - A precise updater count is known and the value set
-	// in updater_count_to_show should be used. If set,
-	// updater_count_to_show is set to the total number of updaters minus
-	// the one set in updater_to_show. Shows up in clients as "$USERNAME and
-	// $NUM others replied".
-	//   "NONZERO_COUNT" - A precise updater count could not be calculated,
-	// but there is at least one. Any value set in updater_count_to_show
-	// should NOT be used. Shows up in clients as "$USERNAME and others
-	// replied".
-	UpdaterCountDisplayType string `json:"updaterCountDisplayType,omitempty"`
-
-	// UpdaterCountToShow: The number of updaters for clients to show
-	// depending on UpdaterCountDisplayType.
-	UpdaterCountToShow int64 `json:"updaterCountToShow,omitempty"`
-
-	// UpdaterToShowEmail: The email of the updater for clients to show used
-	// for Gmail items. For Drive Notifications, this is the email of the
-	// user who triggered the Drive Notification email. This field will be
-	// populated if we can extract such information from the Drive
-	// Notification email. This is not the actual sender of the email, as
-	// the sender is always comments-noreply@docs.google.com.
-	UpdaterToShowEmail string `json:"updaterToShowEmail,omitempty"`
-
-	// UpdaterToShowGaiaId: The gaia id of the updater for clients to show
-	// used for Gmail items. If the updater is an external user, the email
-	// field below should be populated.
-	UpdaterToShowGaiaId int64 `json:"updaterToShowGaiaId,omitempty,string"`
-
-	// UpdaterToShowName: The display name of the updater for clients to
-	// show used for Gmail items. For non-Drive Notification items, this
-	// field will always be populated. If the display name cannot be found
-	// for the user, the fallback string will be the email address. For
-	// Drive Notification items, this is the email of the user who triggered
-	// the Drive notification email. This field will be populated if we can
-	// extract such information from the Drive Notification email. This is
-	// not the actual sender of the email, as the sender is always
-	// comments-noreply@docs.google.com.
-	UpdaterToShowName string `json:"updaterToShowName,omitempty"`
-
-	// UpdaterToShowUserId: The updater for clients to show used for
-	// Dynamite Chat items.
-	UpdaterToShowUserId *UserId `json:"updaterToShowUserId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DriveNotificationAvatarUrl") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DriveNotificationAvatarUrl") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod UserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserMentionData: Person metadata, for USER_MENTION segments. Should
-// always contain at least one of user_gaia_id, user_id, email or user.
-// The exact set of populated fields may differ depending on the context
-// and the level in the serving stack; for example, emails will be
-// elided on the viewing path. But as a general rule, a proto having any
-// one of the four is valid, subject to the standard constraints of the
-// applied annotations -- that is, communication between servers and
-// clients will ignore jspb.ignore fields, and communication between
-// servers and other servers (or between servers and storage) will
-// ignore client_only fields. For more on the annotations, see the
-// comments in social/common/segment_annotations.proto
-type UserMentionData struct {
-	Email string `json:"email,omitempty"`
-
-	// User: If the principal is backed by a gaia id, DO NOT use this field.
-	// Use user_gaia_id/user_id fields instead.
-	User *PrincipalProto `json:"user,omitempty"`
-
-	// UserGaiaId: An unobfuscated gaia ID:
-	UserGaiaId int64 `json:"userGaiaId,omitempty,string"`
-
-	// UserId: An obfuscated gaia ID:
-	UserId string `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserMentionData) MarshalJSON() ([]byte, error) {
-	type NoMethod UserMentionData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserMentionMetadata: Annotation metadata for user mentions (+/@/-).
-type UserMentionMetadata struct {
-	// DisplayName: Display name of the mentioned user. This field should
-	// remain empty when clients resolve a UserMention annotation. It will
-	// be filled in when a UserMention is generated by the Integration
-	// Server.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Gender: Gender of the mentioned user. One of "female", "male" or
-	// "other". Used for choosing accurate translations for strings that
-	// contain the UserMention, when these need to be constructed (e.g. task
-	// assignment update message). This field should remain empty when
-	// clients resolve a UserMention. It will be filled in when a
-	// UserMention is generated by the Integration Server.
-	Gender string `json:"gender,omitempty"`
-
-	// Id: To be deprecated. Use invitee_info field instead. ID of the User
-	// mentioned. This field should remain empty when type == MENTION_ALL.
-	Id *UserId `json:"id,omitempty"`
-
-	// InviteeInfo: Invitee UserId and email used when mentioned. This field
-	// should remain empty when type == MENTION_ALL. Invitee_info.email is
-	// only used when a user is @-mentioned with an email address, and it
-	// will be empty when clients get messages from Backend.
-	InviteeInfo *InviteeInfo `json:"inviteeInfo,omitempty"`
-
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
-	//   "INVITE"
-	//   "UNINVITE"
-	//   "MENTION"
-	//   "MENTION_ALL"
-	//   "FAILED_TO_ADD" - Server-generated user mention, for clients to
-	// strikethrough.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserMentionMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod UserMentionMetadata
+func (s *UserActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod UserActivity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -21383,502 +9986,6 @@ func (s *ValueFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type VideoCallMetadata struct {
-	// MeetingSpace: Thor meeting space.
-	MeetingSpace *MeetingSpace `json:"meetingSpace,omitempty"`
-
-	// ShouldNotRender: If this field is set to true, server should still
-	// contact external backends to get metadata for search but clients
-	// should not render this chip.
-	ShouldNotRender bool `json:"shouldNotRender,omitempty"`
-
-	// WasCreatedInCurrentGroup: Whether this meeting space was created via
-	// Dynamite in this Dynamite group.
-	WasCreatedInCurrentGroup bool `json:"wasCreatedInCurrentGroup,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MeetingSpace") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MeetingSpace") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VideoCallMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoCallMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// VideoInfo: Next tag: 2
-type VideoInfo struct {
-	// Duration: Duration of the video in milliseconds. This field can be
-	// absent for recently uploaded video or inaccurate sometimes.
-	Duration int64 `json:"duration,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Duration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Duration") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VideoInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// VoicePhoneNumber: Represents both long and short phone number that
-// can be called or texted. Short telephone numbers are used to reach
-// local services. Short numbers and their purpose differ from country
-// to country. These numbers in US are in the form of N11 which is a
-// three-digit abbreviated dialing telephone number.
-type VoicePhoneNumber struct {
-	// E164: E.164 formatted full phone number with leading +. This field
-	// also represents encoded form of short telephone numbers in E.164
-	// format. e.g. "911" is encoded as "+1911".
-	E164 string `json:"e164,omitempty"`
-
-	// I18nData: Additional data that could be added using the
-	// libphonenumber API.
-	I18nData *VoicePhoneNumberI18nData `json:"i18nData,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "E164") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "E164") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VoicePhoneNumber) MarshalJSON() ([]byte, error) {
-	type NoMethod VoicePhoneNumber
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type VoicePhoneNumberI18nData struct {
-	// CountryCode: The country calling code for this number, as defined by
-	// the ITU. For example, this would be 1 for NANPA countries, and 33 for
-	// France (for more info see
-	// i18n.phonenumbers.PhoneNumber.country_code).
-	CountryCode int64 `json:"countryCode,omitempty"`
-
-	// InternationalNumber: Display number formatted using the INTERNATIONAL
-	// format.
-	InternationalNumber string `json:"internationalNumber,omitempty"`
-
-	// IsValid: When present, indicates the number is valid according to the
-	// libphonenumber's isValidNumber API (see
-	// https://code.google.com/p/libphonenumber/).
-	IsValid bool `json:"isValid,omitempty"`
-
-	// NationalNumber: Display number formatted using the NATIONAL format.
-	NationalNumber string `json:"nationalNumber,omitempty"`
-
-	// RegionCode: A region (country, territory, continent, etc), as defined
-	// by Unicode's "CLDR", itself based on ISO 3166 (UN country codes). For
-	// details, see
-	// https://www.corp.google.com/~engdocs/java/com/google/i18n/identifiers/RegionCode.html
-	RegionCode string `json:"regionCode,omitempty"`
-
-	// ValidationResult: When set to a non-default value, indicates the
-	// validation reason that is set when phone number is invalid (is_valid
-	// is false).
-	//
-	// Possible values:
-	//   "UNKNOWN"
-	//   "IS_POSSIBLE"
-	//   "INVALID_COUNTRY_CODE"
-	//   "TOO_SHORT"
-	//   "TOO_LONG"
-	//   "IS_POSSIBLE_LOCAL_ONLY"
-	//   "INVALID_LENGTH"
-	ValidationResult string `json:"validationResult,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CountryCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CountryCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VoicePhoneNumberI18nData) MarshalJSON() ([]byte, error) {
-	type NoMethod VoicePhoneNumberI18nData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WhiteboardInfo: Information on a whiteboard attached to an active
-// conference. A whiteboard is a Jam document.
-type WhiteboardInfo struct {
-	// Id: The Cosmo Id of the whiteboard document (Jam).
-	Id string `json:"id,omitempty"`
-
-	// Title: Title of the whiteboard document.
-	Title string `json:"title,omitempty"`
-
-	// Uri: The uri for whiteboard document.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WhiteboardInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod WhiteboardInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type WidgetMarkup struct {
-	// Buttons: buttons is also oneof data and only one of these fields
-	// should be set.
-	Buttons []*Button `json:"buttons,omitempty"`
-
-	DateTimePicker *DateTimePicker `json:"dateTimePicker,omitempty"`
-
-	Divider *Divider `json:"divider,omitempty"`
-
-	Grid *Grid `json:"grid,omitempty"`
-
-	// HorizontalAlignment: The horizontal alignment of this widget.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED"
-	//   "START"
-	//   "CENTER"
-	//   "END"
-	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
-
-	Image *Image `json:"image,omitempty"`
-
-	ImageKeyValue *ImageKeyValue `json:"imageKeyValue,omitempty"`
-
-	KeyValue *KeyValue `json:"keyValue,omitempty"`
-
-	// Menu: Input Widgets
-	Menu *Menu `json:"menu,omitempty"`
-
-	SelectionControl *SelectionControl `json:"selectionControl,omitempty"`
-
-	TextField *TextField `json:"textField,omitempty"`
-
-	TextKeyValue *TextKeyValue `json:"textKeyValue,omitempty"`
-
-	// TextParagraph: Read-only Widgets
-	TextParagraph *TextParagraph `json:"textParagraph,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Buttons") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Buttons") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WidgetMarkup) MarshalJSON() ([]byte, error) {
-	type NoMethod WidgetMarkup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WrappedResourceKey: A wrapper around a raw resource key. The secret
-// should never be logged, and this proto annotates those secret fields
-// to ensure that they are not. Clients are encouraged to use this proto
-// rather than defining their own, to ensure that secrets are correctly
-// annotated.
-type WrappedResourceKey struct {
-	// ResourceKey: Resource key of the Drive item. This field should be
-	// unset if, depending on the context, the item does not have a resource
-	// key, or if none was specified. This must never be logged.
-	ResourceKey string `json:"resourceKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResourceKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceKey") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WrappedResourceKey) MarshalJSON() ([]byte, error) {
-	type NoMethod WrappedResourceKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// YouTubeBroadcastSessionInfo: Information about a YouTube broadcast
-// session.
-type YouTubeBroadcastSessionInfo struct {
-	// BroadcastStats: Current broadcast session's statistics.
-	BroadcastStats *YouTubeBroadcastStats `json:"broadcastStats,omitempty"`
-
-	// SessionStateInfo: YouTube broadcast session's state information.
-	SessionStateInfo *SessionStateInfo `json:"sessionStateInfo,omitempty"`
-
-	// YouTubeBroadcastSessionId: A unique server-generated ID for the
-	// broadcast session.
-	YouTubeBroadcastSessionId string `json:"youTubeBroadcastSessionId,omitempty"`
-
-	// YouTubeLiveBroadcastEvent: The YouTube Live broadcast event that is
-	// being streamed to.
-	YouTubeLiveBroadcastEvent *YouTubeLiveBroadcastEvent `json:"youTubeLiveBroadcastEvent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BroadcastStats") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BroadcastStats") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *YouTubeBroadcastSessionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod YouTubeBroadcastSessionInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// YouTubeBroadcastStats: Statistics of the YouTube broadcast session.
-type YouTubeBroadcastStats struct {
-	// EstimatedViewerCount: Estimated concurrent viewer count.
-	EstimatedViewerCount int64 `json:"estimatedViewerCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EstimatedViewerCount") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EstimatedViewerCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *YouTubeBroadcastStats) MarshalJSON() ([]byte, error) {
-	type NoMethod YouTubeBroadcastStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// YouTubeLiveBroadcastEvent: Information about the broadcast to
-// YouTube.
-type YouTubeLiveBroadcastEvent struct {
-	// BroadcastId: Input only. The broadcast id, used to control the
-	// lifecycle of the event on YouTube
-	BroadcastId string `json:"broadcastId,omitempty"`
-
-	// ChannelId: YouTube channel associated with the broadcast.
-	ChannelId string `json:"channelId,omitempty"`
-
-	// ViewUrl: Output only. A URL that can be used to watch the meeting
-	// broadcast. Will be populated by the backend.
-	ViewUrl string `json:"viewUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BroadcastId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BroadcastId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *YouTubeLiveBroadcastEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod YouTubeLiveBroadcastEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// YoutubeMetadata: Annotation metadata for YouTube artifact.
-type YoutubeMetadata struct {
-	// Id: YouTube resource ID of the artifact.
-	Id string `json:"id,omitempty"`
-
-	// ShouldNotRender: If this field is set to true, server should still
-	// contact external backends to get metadata for search but clients
-	// should not render this chip.
-	ShouldNotRender bool `json:"shouldNotRender,omitempty"`
-
-	// StartTime: YouTube query parameter for timestamp. YouTube specific
-	// flag that allows users to embed time token when sharing a link. This
-	// property contains parsed time token in seconds.
-	StartTime int64 `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *YoutubeMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod YoutubeMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type YoutubeUserProto struct {
-	YoutubeUserId int64 `json:"youtubeUserId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "YoutubeUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "YoutubeUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *YoutubeUserProto) MarshalJSON() ([]byte, error) {
-	type NoMethod YoutubeUserProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ZwiebackSessionProto: See go/zwieback. New uses of Zwieback sessions
-// must be approved via go/zwieback-request.
-type ZwiebackSessionProto struct {
-	ZwiebackSessionId uint64 `json:"zwiebackSessionId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "ZwiebackSessionId")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ZwiebackSessionId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ZwiebackSessionProto) MarshalJSON() ([]byte, error) {
-	type NoMethod ZwiebackSessionProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "cloudsearch.debug.datasources.items.checkAccess":
 
 type DebugDatasourcesItemsCheckAccessCall struct {
@@ -21977,17 +10084,17 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckAccessResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22127,17 +10234,17 @@ func (c *DebugDatasourcesItemsSearchByViewUrlCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchItemsByViewUrlResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22322,17 +10429,17 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUnmappedIdentitiesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22545,17 +10652,17 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListItemNamesForUnmappedIdentityResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22793,17 +10900,17 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUnmappedIdentitiesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22994,17 +11101,17 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -23157,17 +11264,17 @@ func (c *IndexingDatasourcesGetSchemaCall) Do(opts ...googleapi.CallOption) (*Sc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Schema{
 		ServerResponse: googleapi.ServerResponse{
@@ -23307,17 +11414,17 @@ func (c *IndexingDatasourcesUpdateSchemaCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -23497,17 +11604,17 @@ func (c *IndexingDatasourcesItemsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -23672,17 +11779,17 @@ func (c *IndexingDatasourcesItemsDeleteQueueItemsCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -23841,17 +11948,17 @@ func (c *IndexingDatasourcesItemsGetCall) Do(opts ...googleapi.CallOption) (*Ite
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Item{
 		ServerResponse: googleapi.ServerResponse{
@@ -23998,17 +12105,17 @@ func (c *IndexingDatasourcesItemsIndexCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -24195,17 +12302,17 @@ func (c *IndexingDatasourcesItemsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListItemsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -24394,17 +12501,17 @@ func (c *IndexingDatasourcesItemsPollCall) Do(opts ...googleapi.CallOption) (*Po
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PollItemsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -24541,17 +12648,17 @@ func (c *IndexingDatasourcesItemsPushCall) Do(opts ...googleapi.CallOption) (*It
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Item{
 		ServerResponse: googleapi.ServerResponse{
@@ -24689,17 +12796,17 @@ func (c *IndexingDatasourcesItemsUnreserveCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -24838,17 +12945,17 @@ func (c *IndexingDatasourcesItemsUploadCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UploadItemRef{
 		ServerResponse: googleapi.ServerResponse{
@@ -25047,17 +13154,17 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -25073,7 +13180,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Media{
@@ -25228,17 +13335,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -25297,14 +13404,7 @@ type OperationsLroListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OperationsLroService) List(name string) *OperationsLroListCall {
@@ -25409,17 +13509,17 @@ func (c *OperationsLroListCall) Do(opts ...googleapi.CallOption) (*ListOperation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25433,7 +13533,7 @@ func (c *OperationsLroListCall) Do(opts ...googleapi.CallOption) (*ListOperation
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations/{operationsId}/lro",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.operations.lro.list",
@@ -25500,6 +13600,138 @@ func (c *OperationsLroListCall) Pages(ctx context.Context, f func(*ListOperation
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudsearch.query.removeActivity":
+
+type QueryRemoveActivityCall struct {
+	s                     *Service
+	removeactivityrequest *RemoveActivityRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// RemoveActivity: Provides functionality to remove logged activity for
+// a user. Currently to be used only for Chat 1p clients **Note:** This
+// API requires a standard end user account to execute. A service
+// account can't perform Remove Activity requests directly; to use a
+// service account to perform queries, set up Google Workspace
+// domain-wide delegation of authority
+// (https://developers.google.com/cloud-search/docs/guides/delegation/).
+func (r *QueryService) RemoveActivity(removeactivityrequest *RemoveActivityRequest) *QueryRemoveActivityCall {
+	c := &QueryRemoveActivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.removeactivityrequest = removeactivityrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *QueryRemoveActivityCall) Fields(s ...googleapi.Field) *QueryRemoveActivityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *QueryRemoveActivityCall) Context(ctx context.Context) *QueryRemoveActivityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *QueryRemoveActivityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *QueryRemoveActivityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removeactivityrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/query:removeActivity")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.query.removeActivity" call.
+// Exactly one of *RemoveActivityResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RemoveActivityResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *QueryRemoveActivityCall) Do(opts ...googleapi.CallOption) (*RemoveActivityResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemoveActivityResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provides functionality to remove logged activity for a user. Currently to be used only for Chat 1p clients **Note:** This API requires a standard end user account to execute. A service account can't perform Remove Activity requests directly; to use a service account to perform queries, set up [Google Workspace domain-wide delegation of authority](https://developers.google.com/cloud-search/docs/guides/delegation/).",
+	//   "flatPath": "v1/query:removeActivity",
+	//   "httpMethod": "POST",
+	//   "id": "cloudsearch.query.removeActivity",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/query:removeActivity",
+	//   "request": {
+	//     "$ref": "RemoveActivityRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RemoveActivityResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.query"
+	//   ]
+	// }
+
 }
 
 // method id "cloudsearch.query.search":
@@ -25591,17 +13823,17 @@ func (c *QuerySearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25722,17 +13954,17 @@ func (c *QuerySuggestCall) Do(opts ...googleapi.CallOption) (*SuggestResponse, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SuggestResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25812,8 +14044,8 @@ func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(request
 // the page. In the event that the user's language preference is known,
 // set this field to the known user language. When specified, the
 // documents in search results are biased towards the specified
-// language. From Suggest API perspective, for 3p suggest this is used
-// as a hint while making predictions to add language boosting.
+// language. The Suggest API uses this field as a hint to make better
+// third-party autocomplete predictions.
 func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.languageCode", requestOptionsLanguageCode)
 	return c
@@ -25914,17 +14146,17 @@ func (c *QuerySourcesListCall) Do(opts ...googleapi.CallOption) (*ListQuerySourc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListQuerySourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25955,7 +14187,7 @@ func (c *QuerySourcesListCall) Do(opts ...googleapi.CallOption) (*ListQuerySourc
 	//       "type": "boolean"
 	//     },
 	//     "requestOptions.languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. For translations. Set this field using the language set in browser or for the page. In the event that the user's language preference is known, set this field to the known user language. When specified, the documents in search results are biased towards the specified language. From Suggest API perspective, for 3p suggest this is used as a hint while making predictions to add language boosting.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. For translations. Set this field using the language set in browser or for the page. In the event that the user's language preference is known, set this field to the known user language. When specified, the documents in search results are biased towards the specified language. The Suggest API uses this field as a hint to make better third-party autocomplete predictions.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26092,17 +14324,17 @@ func (c *SettingsGetCustomerCall) Do(opts ...googleapi.CallOption) (*CustomerSet
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomerSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -26228,17 +14460,17 @@ func (c *SettingsUpdateCustomerCall) Do(opts ...googleapi.CallOption) (*Operatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -26363,17 +14595,17 @@ func (c *SettingsDatasourcesCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -26499,17 +14731,17 @@ func (c *SettingsDatasourcesDeleteCall) Do(opts ...googleapi.CallOption) (*Opera
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -26662,17 +14894,17 @@ func (c *SettingsDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
 		ServerResponse: googleapi.ServerResponse{
@@ -26832,17 +15064,17 @@ func (c *SettingsDatasourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDataSourceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -26945,6 +15177,20 @@ func (c *SettingsDatasourcesPatchCall) DebugOptionsEnableDebugging(debugOptionsE
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Only applies to
+// `settings.datasources.patch`
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
+// Update mask to control which fields to update. Example field paths:
+// `name`, `displayName`. * If `update_mask` is non-empty, then only the
+// fields specified in the `update_mask` are updated. * If you specify a
+// field in the `update_mask`, but don't specify its value in the
+// source, that field is cleared. * If the `update_mask` is not present
+// or empty or has the value `*`, then all fields are updated.
+func (c *SettingsDatasourcesPatchCall) UpdateMask(updateMask string) *SettingsDatasourcesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -27012,17 +15258,17 @@ func (c *SettingsDatasourcesPatchCall) Do(opts ...googleapi.CallOption) (*Operat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27054,6 +15300,12 @@ func (c *SettingsDatasourcesPatchCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Only applies to [`settings.datasources.patch`](https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch). Update mask to control which fields to update. Example field paths: `name`, `displayName`. * If `update_mask` is non-empty, then only the fields specified in the `update_mask` are updated. * If you specify a field in the `update_mask`, but don't specify its value in the source, that field is cleared. * If the `update_mask` is not present or empty or has the value `*`, then all fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -27164,17 +15416,17 @@ func (c *SettingsDatasourcesUpdateCall) Do(opts ...googleapi.CallOption) (*Opera
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27302,17 +15554,17 @@ func (c *SettingsSearchapplicationsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27439,17 +15691,17 @@ func (c *SettingsSearchapplicationsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27602,17 +15854,17 @@ func (c *SettingsSearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*S
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchApplication{
 		ServerResponse: googleapi.ServerResponse{
@@ -27772,17 +16024,17 @@ func (c *SettingsSearchapplicationsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSearchApplicationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -27876,6 +16128,22 @@ func (r *SettingsSearchapplicationsService) Patch(name string, searchapplication
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Only applies to
+// `settings.searchapplications.patch`
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
+// Update mask to control which fields to update. Example field paths:
+// `search_application.name`, `search_application.displayName`. * If
+// `update_mask` is non-empty, then only the fields specified in the
+// `update_mask` are updated. * If you specify a field in the
+// `update_mask`, but don't specify its value in the
+// `search_application`, then that field is cleared. * If the
+// `update_mask` is not present or empty or has the value `*`, then all
+// fields are updated.
+func (c *SettingsSearchapplicationsPatchCall) UpdateMask(updateMask string) *SettingsSearchapplicationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -27943,17 +16211,17 @@ func (c *SettingsSearchapplicationsPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27980,6 +16248,12 @@ func (c *SettingsSearchapplicationsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "location": "path",
 	//       "pattern": "^searchapplications/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Only applies to [`settings.searchapplications.patch`](https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch). Update mask to control which fields to update. Example field paths: `search_application.name`, `search_application.displayName`. * If `update_mask` is non-empty, then only the fields specified in the `update_mask` are updated. * If you specify a field in the `update_mask`, but don't specify its value in the `search_application`, then that field is cleared. * If the `update_mask` is not present or empty or has the value `*`, then all fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -28090,17 +16364,17 @@ func (c *SettingsSearchapplicationsResetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28166,6 +16440,22 @@ func (r *SettingsSearchapplicationsService) Update(name string, searchapplicatio
 	c := &SettingsSearchapplicationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.searchapplication = searchapplication
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Only applies to
+// `settings.searchapplications.patch`
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
+// Update mask to control which fields to update. Example field paths:
+// `search_application.name`, `search_application.displayName`. * If
+// `update_mask` is non-empty, then only the fields specified in the
+// `update_mask` are updated. * If you specify a field in the
+// `update_mask`, but don't specify its value in the
+// `search_application`, then that field is cleared. * If the
+// `update_mask` is not present or empty or has the value `*`, then all
+// fields are updated.
+func (c *SettingsSearchapplicationsUpdateCall) UpdateMask(updateMask string) *SettingsSearchapplicationsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
@@ -28236,17 +16526,17 @@ func (c *SettingsSearchapplicationsUpdateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28273,6 +16563,12 @@ func (c *SettingsSearchapplicationsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "location": "path",
 	//       "pattern": "^searchapplications/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Only applies to [`settings.searchapplications.patch`](https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch). Update mask to control which fields to update. Example field paths: `search_application.name`, `search_application.displayName`. * If `update_mask` is non-empty, then only the fields specified in the `update_mask` are updated. * If you specify a field in the `update_mask`, but don't specify its value in the `search_application`, then that field is cleared. * If the `update_mask` is not present or empty or has the value `*`, then all fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -28425,17 +16721,17 @@ func (c *StatsGetIndexCall) Do(opts ...googleapi.CallOption) (*GetCustomerIndexS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetCustomerIndexStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -28636,17 +16932,17 @@ func (c *StatsGetQueryCall) Do(opts ...googleapi.CallOption) (*GetCustomerQueryS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetCustomerQueryStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -28849,17 +17145,17 @@ func (c *StatsGetSearchapplicationCall) Do(opts ...googleapi.CallOption) (*GetCu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetCustomerSearchApplicationStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29061,17 +17357,17 @@ func (c *StatsGetSessionCall) Do(opts ...googleapi.CallOption) (*GetCustomerSess
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetCustomerSessionStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29272,17 +17568,17 @@ func (c *StatsGetUserCall) Do(opts ...googleapi.CallOption) (*GetCustomerUserSta
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetCustomerUserStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29491,17 +17787,17 @@ func (c *StatsIndexDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*GetDat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetDataSourceIndexStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29720,17 +18016,17 @@ func (c *StatsQuerySearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetSearchApplicationQueryStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29951,17 +18247,17 @@ func (c *StatsSessionSearchapplicationsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetSearchApplicationSessionStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -30180,17 +18476,17 @@ func (c *StatsUserSearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetSearchApplicationUserStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -30351,17 +18647,17 @@ func (c *V1InitializeCustomerCall) Do(opts ...googleapi.CallOption) (*Operation,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{

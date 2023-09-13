@@ -6,7 +6,7 @@ package googleapi
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -318,7 +318,7 @@ func TestCheckResponse(t *testing.T) {
 	for _, test := range checkResponseTests {
 		res := test.in
 		if test.bodyText != "" {
-			res.Body = ioutil.NopCloser(strings.NewReader(test.bodyText))
+			res.Body = io.NopCloser(strings.NewReader(test.bodyText))
 		}
 		g := CheckResponse(res)
 		if !reflect.DeepEqual(g, test.want) {

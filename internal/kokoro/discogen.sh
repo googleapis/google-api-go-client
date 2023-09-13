@@ -15,6 +15,7 @@ set -x
 # cd to project dir on Kokoro instance
 cd github/google-api-go-client
 export DISCOVERY_DIR=$(pwd)
+git config --global --add safe.directory $PWD
 
 cd internal/kokoro/discogen
 go run google.golang.org/api/internal/kokoro/discogen

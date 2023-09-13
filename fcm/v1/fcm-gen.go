@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package fcm provides access to the Firebase Cloud Messaging API.
 //
 // For product documentation, see: https://firebase.google.com/docs/cloud-messaging
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	fcmService, err := fcm.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	fcmService, err := fcm.NewService(ctx, option.WithScopes(fcm.FirebaseMessagingScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	fcmService, err := fcm.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	fcmService, err := fcm.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package fcm // import "google.golang.org/api/fcm/v1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "fcm:v1"
 const apiName = "fcm"
@@ -420,6 +435,18 @@ type AndroidNotification struct {
 	// attention or input.
 	NotificationPriority string `json:"notificationPriority,omitempty"`
 
+	// Proxy: Setting to control when a notification may be proxied.
+	//
+	// Possible values:
+	//   "PROXY_UNSPECIFIED" - If unspecified, default to
+	// `Proxy.IF_PRIORITY_LOWERED`.
+	//   "ALLOW" - Try to proxy this notification.
+	//   "DENY" - Do not proxy this notification.
+	//   "IF_PRIORITY_LOWERED" - Only try to proxy this notification if its
+	// `AndroidMessagePriority` was lowered from `HIGH` to `NORMAL` on the
+	// device.
+	Proxy string `json:"proxy,omitempty"`
+
 	// Sound: The sound to play when the device receives the notification.
 	// Supports "default" or the filename of a sound resource bundled in the
 	// app. Sound files must reside in /res/raw/.
@@ -518,15 +545,15 @@ type ApnsConfig struct {
 	// Service. Refer to APNs request headers
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)
 	// for supported headers such as `apns-expiration` and `apns-priority`.
+	// The backend sets a default value for `apns-expiration` of 30 days and
+	// a default value for `apns-priority` of 10 if not explicitly set.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Payload: APNs payload as a JSON object, including both `aps`
 	// dictionary and custom payload. See Payload Key Reference
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification).
 	// If present, it overrides google.firebase.fcm.v1.Notification.title
-	// and google.firebase.fcm.v1.Notification.body. The backend sets a
-	// default value for `apns-expiration` of 30 days and a default value
-	// for `apns-priority` of 10 if not explicitly set.
+	// and google.firebase.fcm.v1.Notification.body.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FcmOptions") to
@@ -587,23 +614,23 @@ func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
 }
 
 // Color: Represents a color in the RGBA color space. This
-// representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness. For example,
-// the fields of this representation can be trivially provided to the
-// constructor of `java.awt.Color` in Java; it can also be trivially
-// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
-// and, with just a little work, it can be easily formatted into a CSS
-// `rgba()` string in JavaScript. This reference page doesn't carry
-// information about the absolute color space that should be used to
-// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications should assume the sRGB color space.
-// When color equality needs to be decided, implementations, unless
-// documented otherwise, treat two colors as equal if all their red,
-// green, blue, and alpha values each differ by at most 1e-5. Example
-// (Java): import com.google.type.Color; // ... public static
-// java.awt.Color fromProto(Color protocolor) { float alpha =
-// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
-// return new java.awt.Color( protocolor.getRed(),
+// representation is designed for simplicity of conversion to and from
+// color representations in various languages over compactness. For
+// example, the fields of this representation can be trivially provided
+// to the constructor of `java.awt.Color` in Java; it can also be
+// trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
+// method in iOS; and, with just a little work, it can be easily
+// formatted into a CSS `rgba()` string in JavaScript. This reference
+// page doesn't have information about the absolute color space that
+// should be used to interpret the RGB value—for example, sRGB, Adobe
+// RGB, DCI-P3, and BT.2020. By default, applications should assume the
+// sRGB color space. When color equality needs to be decided,
+// implementations, unless documented otherwise, treat two colors as
+// equal if all their red, green, blue, and alpha values each differ by
+// at most `1e-5`. Example (Java): import com.google.type.Color; // ...
+// public static java.awt.Color fromProto(Color protocolor) { float
+// alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() :
+// 1.0; return new java.awt.Color( protocolor.getRed(),
 // protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
 // Color toProto(java.awt.Color color) { float red = (float)
 // color.getRed(); float green = (float) color.getGreen(); float blue =
@@ -1094,17 +1121,17 @@ func (c *ProjectsMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Message{
 		ServerResponse: googleapi.ServerResponse{

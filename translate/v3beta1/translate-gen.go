@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/translate/docs/quickstarts
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,28 +30,31 @@
 //	ctx := context.Background()
 //	translateService, err := translate.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	translateService, err := translate.NewService(ctx, option.WithScopes(translate.CloudTranslationScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	translateService, err := translate.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	translateService, err := translate.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package translate // import "google.golang.org/api/translate/v3beta1"
 
 import (
@@ -77,6 +91,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "translate:v3beta1"
 const apiName = "translate"
@@ -267,15 +282,16 @@ type BatchDocumentOutputConfig struct {
 	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The naming format of translation output files follows (for target
 	// language code [trg]): `translation_output`:
-	// gs://translation_output/a_b_c_[trg]_translation.[extension]
+	// `gs://translation_output/a_b_c_[trg]_translation.[extension]`
 	// `glossary_translation_output`:
-	// gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]`.
 	// The output document will maintain the same file format as the input
 	// document. The naming format of error output files follows (for target
 	// language code [trg]): `error_output`:
-	// gs://translation_test/a_b_c_[trg]_errors.txt `glossary_error_output`:
-	// gs://translation_test/a_b_c_[trg]_glossary_translation.txt The error
-	// output is a txt file containing error details.
+	// `gs://translation_test/a_b_c_[trg]_errors.txt`
+	// `glossary_error_output`:
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.txt` The
+	// error output is a txt file containing error details.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
@@ -304,6 +320,22 @@ func (s *BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
 
 // BatchTranslateDocumentRequest: The BatchTranslateDocument request.
 type BatchTranslateDocumentRequest struct {
+	// CustomizedAttribution: Optional. This flag is to support user
+	// customized attribution. If not provided, the default is `Machine
+	// Translated by Google`. Customized attribution should follow rules in
+	// https://cloud.google.com/translate/attribution#attribution_and_logos
+	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
+
+	// EnableRotationCorrection: Optional. If true, enable auto rotation
+	// correction in DVS.
+	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
+
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
+	// server to remove the shadow text on background image for native pdf
+	// translation. Shadow removal feature can only be enabled when
+	// is_translate_native_pdf_only: false && pdf_native_only: false
+	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
+
 	// FormatConversions: Optional.
 	FormatConversions map[string]string `json:"formatConversions,omitempty"`
 
@@ -344,15 +376,16 @@ type BatchTranslateDocumentRequest struct {
 	// here.
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FormatConversions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomizedAttribution") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FormatConversions") to
+	// NullFields is a list of field names (e.g. "CustomizedAttribution") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -624,21 +657,21 @@ type DocumentOutputConfig struct {
 	// corresponds to the translated file's extension according to its mime
 	// type. For a DocumentInputConfig.gcs_uri provided document, the output
 	// file will have a name according to its URI. For example: an input
-	// file with URI: "gs://a/b/c.[extension]" stored in a gcs_destination
+	// file with URI: `gs://a/b/c.[extension]` stored in a gcs_destination
 	// bucket with name "my_bucket" will have an output URI:
-	// "gs://my_bucket/a_b_c_[trg]_translations.[ext]", where - [trg]
+	// `gs://my_bucket/a_b_c_[trg]_translations.[ext]`, where - [trg]
 	// corresponds to the translated file's language code, - [ext]
 	// corresponds to the translated file's extension according to its mime
 	// type. If the document was directly provided through the request, then
 	// the output document will have the format:
-	// "gs://my_bucket/translated_document_[trg]_translations.[ext], where -
-	// [trg] corresponds to the translated file's language code, - [ext]
+	// `gs://my_bucket/translated_document_[trg]_translations.[ext]`, where
+	// - [trg] corresponds to the translated file's language code, - [ext]
 	// corresponds to the translated file's extension according to its mime
 	// type. If a glossary was provided, then the output URI for the
 	// glossary translation will be equal to the default output URI but have
 	// `glossary_translations` instead of `translations`. For the previous
 	// example, its glossary URI would be:
-	// "gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]". Thus the
+	// `gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]`. Thus the
 	// max number of output files will be 2 (Translated document, Glossary
 	// translated document). Callers should expect no partial outputs. If
 	// there is any error during document translation, no output will be
@@ -1115,7 +1148,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -1190,8 +1223,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1257,7 +1290,7 @@ type OutputConfig struct {
 	// file updating.
 	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The format of translations_file (for target language code 'trg') is:
-	// gs://translation_test/a_b_c_'trg'_translations.[extension] If the
+	// `gs://translation_test/a_b_c_'trg'_translations.[extension]` If the
 	// input file extension is tsv, the output has the following columns:
 	// Column 1: ID of the request provided in the input, if it's not
 	// provided in the input, then the input row number is used (0-based).
@@ -1269,9 +1302,9 @@ type OutputConfig struct {
 	// applied. If input file extension is a txt or html, the translation is
 	// directly written to the output file. If glossary is requested, a
 	// separate glossary_translations_file has format of
-	// gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]
+	// `gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]`
 	// The format of errors file (for target language code 'trg') is:
-	// gs://translation_test/a_b_c_'trg'_errors.[extension] If the input
+	// `gs://translation_test/a_b_c_'trg'_errors.[extension]` If the input
 	// file extension is tsv, errors_file contains the following: Column 1:
 	// ID of the request provided in the input, if it's not provided in the
 	// input, then the input row number is used (0-based). Column 2: source
@@ -1280,7 +1313,7 @@ type OutputConfig struct {
 	// Error when applying the glossary. If the input file extension is txt
 	// or html, glossary_error_file will be generated that contains error
 	// details. glossary_error_file has format of
-	// gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]
+	// `gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]`
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
@@ -1445,10 +1478,26 @@ type TranslateDocumentRequest struct {
 	// the same as the input file's mime type.
 	DocumentOutputConfig *DocumentOutputConfig `json:"documentOutputConfig,omitempty"`
 
+	// EnableRotationCorrection: Optional. If true, enable auto rotation
+	// correction in DVS.
+	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
+
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
+	// server to remove the shadow text on background image for native pdf
+	// translation. Shadow removal feature can only be enabled when
+	// is_translate_native_pdf_only: false && pdf_native_only: false
+	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
+
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
 	// be within the same region (have the same location-id) as the model,
 	// otherwise an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
+
+	// IsTranslateNativePdfOnly: Optional. is_translate_native_pdf_only
+	// field for external customers. If true, the page limit of online
+	// native pdf translation is 300 and only native pdf pages will be
+	// translated.
+	IsTranslateNativePdfOnly bool `json:"isTranslateNativePdfOnly,omitempty"`
 
 	// Labels: Optional. The labels with user-defined metadata for the
 	// request. Label keys and values can be no longer than 63 characters
@@ -1883,17 +1932,17 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DetectLanguageResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2064,17 +2113,17 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SupportedLanguages{
 		ServerResponse: googleapi.ServerResponse{
@@ -2222,17 +2271,17 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TranslateTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2376,17 +2425,17 @@ func (c *ProjectsLocationsBatchTranslateDocumentCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2529,17 +2578,17 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2678,17 +2727,17 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DetectLanguageResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2828,17 +2877,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -3006,17 +3055,17 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SupportedLanguages{
 		ServerResponse: googleapi.ServerResponse{
@@ -3189,17 +3238,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3373,17 +3422,17 @@ func (c *ProjectsLocationsTranslateDocumentCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TranslateDocumentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3524,17 +3573,17 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TranslateTextResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3668,17 +3717,17 @@ func (c *ProjectsLocationsGlossariesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3805,17 +3854,17 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3953,17 +4002,17 @@ func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Glossary{
 		ServerResponse: googleapi.ServerResponse{
@@ -4141,17 +4190,17 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGlossariesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4327,17 +4376,17 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4466,17 +4515,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4615,17 +4664,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4680,14 +4729,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -4792,17 +4834,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4816,7 +4858,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "translate.projects.locations.operations.list",
@@ -4978,17 +5020,17 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{

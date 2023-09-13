@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package essentialcontacts provides access to the Essential Contacts API.
 //
 // For product documentation, see: https://cloud.google.com/essentialcontacts/docs/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	essentialcontactsService, err := essentialcontacts.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	essentialcontactsService, err := essentialcontacts.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	essentialcontactsService, err := essentialcontacts.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package essentialcontacts // import "google.golang.org/api/essentialcontacts/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "essentialcontacts:v1"
 const apiName = "essentialcontacts"
@@ -251,22 +265,22 @@ func (s *GoogleCloudEssentialcontactsV1ComputeContactsResponse) MarshalJSON() ([
 // GoogleCloudEssentialcontactsV1Contact: A contact that will receive
 // notifications from Google Cloud.
 type GoogleCloudEssentialcontactsV1Contact struct {
-	// Email: Required. The email address to send notifications to. This
-	// does not need to be a Google account.
+	// Email: Required. The email address to send notifications to. The
+	// email address does not need to be a Google Account.
 	Email string `json:"email,omitempty"`
 
-	// LanguageTag: The preferred language for notifications, as a ISO 639-1
-	// language code. See Supported languages
+	// LanguageTag: Required. The preferred language for notifications, as a
+	// ISO 639-1 language code. See Supported languages
 	// (https://cloud.google.com/resource-manager/docs/managing-notification-contacts#supported-languages)
 	// for a list of supported languages.
 	LanguageTag string `json:"languageTag,omitempty"`
 
-	// Name: The identifier for the contact. Format:
+	// Name: Output only. The identifier for the contact. Format:
 	// {resource_type}/{resource_id}/contacts/{contact_id}
 	Name string `json:"name,omitempty"`
 
-	// NotificationCategorySubscriptions: The categories of notifications
-	// that the contact will receive communications for.
+	// NotificationCategorySubscriptions: Required. The categories of
+	// notifications that the contact will receive communications for.
 	//
 	// Possible values:
 	//   "NOTIFICATION_CATEGORY_UNSPECIFIED" - Notification category is
@@ -614,17 +628,17 @@ func (c *FoldersContactsComputeCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1ComputeContactsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -816,17 +830,17 @@ func (c *FoldersContactsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -954,17 +968,17 @@ func (c *FoldersContactsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1104,17 +1118,17 @@ func (c *FoldersContactsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudE
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -1274,17 +1288,17 @@ func (c *FoldersContactsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1ListContactsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1371,7 +1385,7 @@ type FoldersContactsPatchCall struct {
 // Patch: Updates a contact. Note: A contact's email address cannot be
 // changed.
 //
-//   - name: The identifier for the contact. Format:
+//   - name: Output only. The identifier for the contact. Format:
 //     {resource_type}/{resource_id}/contacts/{contact_id}.
 func (r *FoldersContactsService) Patch(nameid string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *FoldersContactsPatchCall {
 	c := &FoldersContactsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1456,17 +1470,17 @@ func (c *FoldersContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -1489,7 +1503,7 @@ func (c *FoldersContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
+	//       "description": "Output only. The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/contacts/[^/]+$",
 	//       "required": true,
@@ -1609,17 +1623,17 @@ func (c *FoldersContactsSendTestMessageCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1832,17 +1846,17 @@ func (c *OrganizationsContactsComputeCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1ComputeContactsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2034,17 +2048,17 @@ func (c *OrganizationsContactsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -2172,17 +2186,17 @@ func (c *OrganizationsContactsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2322,17 +2336,17 @@ func (c *OrganizationsContactsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -2492,17 +2506,17 @@ func (c *OrganizationsContactsListCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1ListContactsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2589,7 +2603,7 @@ type OrganizationsContactsPatchCall struct {
 // Patch: Updates a contact. Note: A contact's email address cannot be
 // changed.
 //
-//   - name: The identifier for the contact. Format:
+//   - name: Output only. The identifier for the contact. Format:
 //     {resource_type}/{resource_id}/contacts/{contact_id}.
 func (r *OrganizationsContactsService) Patch(nameid string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *OrganizationsContactsPatchCall {
 	c := &OrganizationsContactsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2674,17 +2688,17 @@ func (c *OrganizationsContactsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -2707,7 +2721,7 @@ func (c *OrganizationsContactsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
+	//       "description": "Output only. The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/contacts/[^/]+$",
 	//       "required": true,
@@ -2827,17 +2841,17 @@ func (c *OrganizationsContactsSendTestMessageCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3050,17 +3064,17 @@ func (c *ProjectsContactsComputeCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1ComputeContactsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3252,17 +3266,17 @@ func (c *ProjectsContactsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -3390,17 +3404,17 @@ func (c *ProjectsContactsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3540,17 +3554,17 @@ func (c *ProjectsContactsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -3710,17 +3724,17 @@ func (c *ProjectsContactsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1ListContactsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3807,7 +3821,7 @@ type ProjectsContactsPatchCall struct {
 // Patch: Updates a contact. Note: A contact's email address cannot be
 // changed.
 //
-//   - name: The identifier for the contact. Format:
+//   - name: Output only. The identifier for the contact. Format:
 //     {resource_type}/{resource_id}/contacts/{contact_id}.
 func (r *ProjectsContactsService) Patch(nameid string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *ProjectsContactsPatchCall {
 	c := &ProjectsContactsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3892,17 +3906,17 @@ func (c *ProjectsContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudEssentialcontactsV1Contact{
 		ServerResponse: googleapi.ServerResponse{
@@ -3925,7 +3939,7 @@ func (c *ProjectsContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
+	//       "description": "Output only. The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/contacts/[^/]+$",
 	//       "required": true,
@@ -4045,17 +4059,17 @@ func (c *ProjectsContactsSendTestMessageCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{

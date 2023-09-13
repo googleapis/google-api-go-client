@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package apigee provides access to the Apigee API.
 //
 // For product documentation, see: https://cloud.google.com/apigee-api-management/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	apigeeService, err := apigee.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	apigeeService, err := apigee.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	apigeeService, err := apigee.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package apigee // import "google.golang.org/api/apigee/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "apigee:v1"
 const apiName = "apigee"
@@ -169,6 +183,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Analytics = NewOrganizationsAnalyticsService(s)
 	rs.Apiproducts = NewOrganizationsApiproductsService(s)
 	rs.Apis = NewOrganizationsApisService(s)
+	rs.Appgroups = NewOrganizationsAppgroupsService(s)
 	rs.Apps = NewOrganizationsAppsService(s)
 	rs.Datacollectors = NewOrganizationsDatacollectorsService(s)
 	rs.Deployments = NewOrganizationsDeploymentsService(s)
@@ -198,6 +213,8 @@ type OrganizationsService struct {
 	Apiproducts *OrganizationsApiproductsService
 
 	Apis *OrganizationsApisService
+
+	Appgroups *OrganizationsAppgroupsService
 
 	Apps *OrganizationsAppsService
 
@@ -356,6 +373,51 @@ func NewOrganizationsApisRevisionsDeploymentsService(s *Service) *OrganizationsA
 }
 
 type OrganizationsApisRevisionsDeploymentsService struct {
+	s *Service
+}
+
+func NewOrganizationsAppgroupsService(s *Service) *OrganizationsAppgroupsService {
+	rs := &OrganizationsAppgroupsService{s: s}
+	rs.Apps = NewOrganizationsAppgroupsAppsService(s)
+	return rs
+}
+
+type OrganizationsAppgroupsService struct {
+	s *Service
+
+	Apps *OrganizationsAppgroupsAppsService
+}
+
+func NewOrganizationsAppgroupsAppsService(s *Service) *OrganizationsAppgroupsAppsService {
+	rs := &OrganizationsAppgroupsAppsService{s: s}
+	rs.Keys = NewOrganizationsAppgroupsAppsKeysService(s)
+	return rs
+}
+
+type OrganizationsAppgroupsAppsService struct {
+	s *Service
+
+	Keys *OrganizationsAppgroupsAppsKeysService
+}
+
+func NewOrganizationsAppgroupsAppsKeysService(s *Service) *OrganizationsAppgroupsAppsKeysService {
+	rs := &OrganizationsAppgroupsAppsKeysService{s: s}
+	rs.Apiproducts = NewOrganizationsAppgroupsAppsKeysApiproductsService(s)
+	return rs
+}
+
+type OrganizationsAppgroupsAppsKeysService struct {
+	s *Service
+
+	Apiproducts *OrganizationsAppgroupsAppsKeysApiproductsService
+}
+
+func NewOrganizationsAppgroupsAppsKeysApiproductsService(s *Service) *OrganizationsAppgroupsAppsKeysApiproductsService {
+	rs := &OrganizationsAppgroupsAppsKeysApiproductsService{s: s}
+	return rs
+}
+
+type OrganizationsAppgroupsAppsKeysApiproductsService struct {
 	s *Service
 }
 
@@ -535,6 +597,7 @@ func NewOrganizationsEnvironmentsService(s *Service) *OrganizationsEnvironmentsS
 	rs.Queries = NewOrganizationsEnvironmentsQueriesService(s)
 	rs.References = NewOrganizationsEnvironmentsReferencesService(s)
 	rs.Resourcefiles = NewOrganizationsEnvironmentsResourcefilesService(s)
+	rs.SecurityIncidents = NewOrganizationsEnvironmentsSecurityIncidentsService(s)
 	rs.SecurityReports = NewOrganizationsEnvironmentsSecurityReportsService(s)
 	rs.SecurityStats = NewOrganizationsEnvironmentsSecurityStatsService(s)
 	rs.Sharedflows = NewOrganizationsEnvironmentsSharedflowsService(s)
@@ -570,6 +633,8 @@ type OrganizationsEnvironmentsService struct {
 	References *OrganizationsEnvironmentsReferencesService
 
 	Resourcefiles *OrganizationsEnvironmentsResourcefilesService
+
+	SecurityIncidents *OrganizationsEnvironmentsSecurityIncidentsService
 
 	SecurityReports *OrganizationsEnvironmentsSecurityReportsService
 
@@ -797,6 +862,15 @@ func NewOrganizationsEnvironmentsResourcefilesService(s *Service) *Organizations
 }
 
 type OrganizationsEnvironmentsResourcefilesService struct {
+	s *Service
+}
+
+func NewOrganizationsEnvironmentsSecurityIncidentsService(s *Service) *OrganizationsEnvironmentsSecurityIncidentsService {
+	rs := &OrganizationsEnvironmentsSecurityIncidentsService{s: s}
+	return rs
+}
+
+type OrganizationsEnvironmentsSecurityIncidentsService struct {
 	s *Service
 }
 
@@ -1226,6 +1300,39 @@ func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1APIProductAssociation: APIProductAssociation has
+// the API product and its administrative state association.
+type GoogleCloudApigeeV1APIProductAssociation struct {
+	// Apiproduct: API product to be associated with the credential.
+	Apiproduct string `json:"apiproduct,omitempty"`
+
+	// Status: The API product credential associated status. Valid values
+	// are `approved` or `revoked`.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Apiproduct") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apiproduct") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1APIProductAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1APIProductAssociation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1Access struct {
 	Get *GoogleCloudApigeeV1AccessGet `json:"Get,omitempty"`
 
@@ -1594,6 +1701,9 @@ func (s *GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApigeeV1ApiCategoryData: the Api category resource.
 type GoogleCloudApigeeV1ApiCategoryData struct {
+	// GcpResource: GCP name of api category resource.
+	GcpResource string `json:"gcpResource,omitempty"`
+
 	// Id: ID of the category (a UUID).
 	Id string `json:"id,omitempty"`
 
@@ -1607,7 +1717,7 @@ type GoogleCloudApigeeV1ApiCategoryData struct {
 	// epoch.
 	UpdateTime int64 `json:"updateTime,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "GcpResource") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1615,10 +1725,10 @@ type GoogleCloudApigeeV1ApiCategoryData struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "GcpResource") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1701,6 +1811,14 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// imply quota will be applied on all graphQL requests matching the
 	// operation type.
 	GraphqlOperationGroup *GoogleCloudApigeeV1GraphQLOperationGroup `json:"graphqlOperationGroup,omitempty"`
+
+	// GrpcOperationGroup: Optional. Configuration used to group Apigee
+	// proxies with gRPC services and method names. This grouping allows us
+	// to set quota for a particular proxy with the gRPC service name and
+	// method. If a method name is not set, this implies quota and
+	// authorization are applied to all gRPC methods implemented by that
+	// proxy for that particular gRPC service.
+	GrpcOperationGroup *GoogleCloudApigeeV1GrpcOperationGroup `json:"grpcOperationGroup,omitempty"`
 
 	// LastModifiedAt: Response only. Modified time of this environment as
 	// milliseconds since epoch.
@@ -1937,6 +2055,10 @@ type GoogleCloudApigeeV1ApiProxyRevision struct {
 	// revision as a key-value map.
 	EntityMetaDataAsProperties map[string]string `json:"entityMetaDataAsProperties,omitempty"`
 
+	// HasExtensiblePolicy: Output only. This field will be marked as true
+	// if revision contains any policies marked as extensible.
+	HasExtensiblePolicy bool `json:"hasExtensiblePolicy,omitempty"`
+
 	// IntegrationEndpoints: List of IntegrationEndpoints in the
 	// '/integration-endpoints' directory of the API proxy. This is a
 	// 'manifest' setting designed to provide visibility into the contents
@@ -2030,47 +2152,6 @@ func (s *GoogleCloudApigeeV1ApiProxyRevision) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudApigeeV1ApiResponseWrapper struct {
-	// ErrorCode: ID that can be used to find errors in the log files.
-	ErrorCode string `json:"errorCode,omitempty"`
-
-	// Message: Description of the operation.
-	Message string `json:"message,omitempty"`
-
-	// RequestId: ID that can be used to find request details in the log
-	// files.
-	RequestId string `json:"requestId,omitempty"`
-
-	// Status: Status of the operation.
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ApiResponseWrapper) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ApiResponseWrapper
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudApigeeV1ApiSecurityConfig: Configurations of the API
 // Security add-on.
 type GoogleCloudApigeeV1ApiSecurityConfig struct {
@@ -2106,9 +2187,65 @@ func (s *GoogleCloudApigeeV1ApiSecurityConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ApiSecurityRuntimeConfig: Response for
+// GetApiSecurityRuntimeConfig[EnvironmentService.GetApiSecurityRuntimeCo
+// nfig].
+type GoogleCloudApigeeV1ApiSecurityRuntimeConfig struct {
+	// Location: A list of up to 5 Cloud Storage Blobs that contain
+	// SecurityActions.
+	Location []string `json:"location,omitempty"`
+
+	// Name: Name of the environment API Security Runtime configuration
+	// resource. Format:
+	// `organizations/{org}/environments/{env}/apiSecurityRuntimeConfig`
+	Name string `json:"name,omitempty"`
+
+	// RevisionId: Revision ID of the API Security Runtime configuration.
+	// The higher the value, the more recently the configuration was
+	// deployed.
+	RevisionId int64 `json:"revisionId,omitempty,string"`
+
+	// Uid: Unique ID for the API Security Runtime configuration. The ID
+	// will only change if the environment is deleted and recreated.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Time that the API Security Runtime configuration was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiSecurityRuntimeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiSecurityRuntimeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1App struct {
 	// ApiProducts: List of API products associated with the app.
 	ApiProducts []*GoogleCloudApigeeV1ApiProductRef `json:"apiProducts,omitempty"`
+
+	// AppGroup: Name of the AppGroup
+	AppGroup string `json:"appGroup,omitempty"`
 
 	// AppId: ID of the app.
 	AppId string `json:"appId,omitempty"`
@@ -2129,6 +2266,9 @@ type GoogleCloudApigeeV1App struct {
 	// Credentials: Output only. Set of credentials for the app. Credentials
 	// are API key/secret pairs associated with API products.
 	Credentials []*GoogleCloudApigeeV1Credential `json:"credentials,omitempty"`
+
+	// DeveloperEmail: Email of the developer.
+	DeveloperEmail string `json:"developerEmail,omitempty"`
 
 	// DeveloperId: ID of the developer.
 	DeveloperId string `json:"developerId,omitempty"`
@@ -2176,6 +2316,223 @@ type GoogleCloudApigeeV1App struct {
 
 func (s *GoogleCloudApigeeV1App) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1App
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroup: AppGroup contains the request/response
+// fields representing the logical grouping of apps. Note that
+// appgroup_id, create_time and update_time cannot be changed by the
+// user, and gets updated by the system. The name and the organization
+// once provided cannot be edited subsequently.
+type GoogleCloudApigeeV1AppGroup struct {
+	// AppGroupId: Output only. Internal identifier that cannot be edited
+	AppGroupId string `json:"appGroupId,omitempty"`
+
+	// Attributes: A list of attributes
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// ChannelId: channel identifier identifies the owner maintaing this
+	// grouping.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ChannelUri: A reference to the associated storefront/marketplace.
+	ChannelUri string `json:"channelUri,omitempty"`
+
+	// CreatedAt: Output only. Created time as milliseconds since epoch.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+
+	// DisplayName: app group name displayed in the UI
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LastModifiedAt: Output only. Modified time as milliseconds since
+	// epoch.
+	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+
+	// Name: Immutable. Name of the AppGroup. Characters you can use in the
+	// name are restricted to: A-Z0-9._\-$ %.
+	Name string `json:"name,omitempty"`
+
+	// Organization: Immutable. the org the app group is created
+	Organization string `json:"organization,omitempty"`
+
+	// Status: Valid values are `active` or `inactive`. Note that the status
+	// of the AppGroup should be updated via UpdateAppGroupRequest by
+	// setting the action as `active` or `inactive`.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppGroupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppGroupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AppGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupApp: Response for
+// [GetAppGroupApp].[AppGroupApps.GetAppGroupApp],
+// [CreateAppGroupAppRequest].[AppGroupApp.CreateAppGroupAppRequest] and
+// [DeleteAppGroupApp].[AppGroupApp.DeleteAppGroupApp]
+type GoogleCloudApigeeV1AppGroupApp struct {
+	// ApiProducts: List of API products associated with the AppGroup app.
+	ApiProducts []string `json:"apiProducts,omitempty"`
+
+	// AppGroup: Immutable. Name of the parent AppGroup whose resource name
+	// format is of syntax (organizations/*/appgroups/*).
+	AppGroup string `json:"appGroup,omitempty"`
+
+	// AppId: Immutable. ID of the AppGroup app.
+	AppId string `json:"appId,omitempty"`
+
+	// Attributes: List of attributes for the AppGroup app.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// CallbackUrl: Callback URL used by OAuth 2.0 authorization servers to
+	// communicate authorization codes back to AppGroup apps.
+	CallbackUrl string `json:"callbackUrl,omitempty"`
+
+	// CreatedAt: Output only. Time the AppGroup app was created in
+	// milliseconds since epoch.
+	CreatedAt int64 `json:"createdAt,omitempty,string"`
+
+	// Credentials: Output only. Set of credentials for the AppGroup app
+	// consisting of the consumer key/secret pairs associated with the API
+	// products.
+	Credentials []*GoogleCloudApigeeV1Credential `json:"credentials,omitempty"`
+
+	// KeyExpiresIn: Immutable. Expiration time, in seconds, for the
+	// consumer key that is generated for the AppGroup app. If not set or
+	// left to the default value of `-1`, the API key never expires. The
+	// expiration time can't be updated after it is set.
+	KeyExpiresIn int64 `json:"keyExpiresIn,omitempty,string"`
+
+	// LastModifiedAt: Output only. Time the AppGroup app was modified in
+	// milliseconds since epoch.
+	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
+
+	// Name: Immutable. Name of the AppGroup app whose resource name format
+	// is of syntax (organizations/*/appgroups/*/apps/*).
+	Name string `json:"name,omitempty"`
+
+	// Scopes: Scopes to apply to the AppGroup app. The specified scopes
+	// must already exist for the API product that you associate with the
+	// AppGroup app.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Status: Status of the App. Valid values include `approved` or
+	// `revoked`.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiProducts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AppGroupApp) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupApp
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AppGroupAppKey: AppGroupAppKey contains all the
+// information associated with the credentials.
+type GoogleCloudApigeeV1AppGroupAppKey struct {
+	// ApiProducts: Output only. List of API products and its status for
+	// which the credential can be used. **Note**: Use
+	// UpdateAppGroupAppKeyApiProductRequest API to make the association
+	// after the consumer key and secret are created.
+	ApiProducts []*GoogleCloudApigeeV1APIProductAssociation `json:"apiProducts,omitempty"`
+
+	// Attributes: List of attributes associated with the credential.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// ConsumerKey: Immutable. Consumer key.
+	ConsumerKey string `json:"consumerKey,omitempty"`
+
+	// ConsumerSecret: Secret key.
+	ConsumerSecret string `json:"consumerSecret,omitempty"`
+
+	// ExpiresAt: Output only. Time the AppGroup app expires in milliseconds
+	// since epoch.
+	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
+
+	// ExpiresInSeconds: Immutable. Expiration time, in seconds, for the
+	// consumer key. If not set or left to the default value of `-1`, the
+	// API key never expires. The expiration time can't be updated after it
+	// is set.
+	ExpiresInSeconds int64 `json:"expiresInSeconds,omitempty,string"`
+
+	// IssuedAt: Output only. Time the AppGroup app was created in
+	// milliseconds since epoch.
+	IssuedAt int64 `json:"issuedAt,omitempty,string"`
+
+	// Scopes: Scopes to apply to the app. The specified scope names must
+	// already be defined for the API product that you associate with the
+	// app.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Status: Status of the credential. Valid values include `approved` or
+	// `revoked`.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiProducts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AppGroupAppKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AppGroupAppKey
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3536,6 +3893,52 @@ func (s *GoogleCloudApigeeV1DeleteCustomReportResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1DeleteResponse: Response for certain delete
+// operations.
+type GoogleCloudApigeeV1DeleteResponse struct {
+	// ErrorCode: ID that can be used to find errors in the log files.
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// GcpResource: GCP name of deleted resource.
+	GcpResource string `json:"gcpResource,omitempty"`
+
+	// Message: Description of the operation.
+	Message string `json:"message,omitempty"`
+
+	// RequestId: ID that can be used to find request details in the log
+	// files.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Status: Status of the operation.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1DeleteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DeleteResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1Deployment struct {
 	// ApiProxy: API proxy.
 	ApiProxy string `json:"apiProxy,omitempty"`
@@ -3560,6 +3963,21 @@ type GoogleCloudApigeeV1Deployment struct {
 	// deprecated**. Runtime versions 1.3 and above report instance level
 	// status rather than pod status.
 	Pods []*GoogleCloudApigeeV1PodStatus `json:"pods,omitempty"`
+
+	// ProxyDeploymentType: Output only. The type of the deployment
+	// (standard or extensible) Deployed proxy revision will be marked as
+	// extensible in following 2 cases. 1. The deployed proxy revision uses
+	// extensible policies. 2. If a environment supports flowhooks and flow
+	// hook is configured.
+	//
+	// Possible values:
+	//   "PROXY_DEPLOYMENT_TYPE_UNSPECIFIED" - Default value till public
+	// preview. After public preview this value should not be returned.
+	//   "STANDARD" - Deployment will be of type Standard if only Standard
+	// proxies are used
+	//   "EXTENSIBLE" - Proxy will be of type Extensible if deployments uses
+	// one or more Extensible proxies
+	ProxyDeploymentType string `json:"proxyDeploymentType,omitempty"`
 
 	// Revision: API proxy revision.
 	Revision string `json:"revision,omitempty"`
@@ -3799,7 +4217,7 @@ func (s *GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1DeploymentConfig: NEXT ID: 9
+// GoogleCloudApigeeV1DeploymentConfig: NEXT ID: 11
 type GoogleCloudApigeeV1DeploymentConfig struct {
 	// Attributes: Additional key-value metadata for the deployment.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -3807,6 +4225,14 @@ type GoogleCloudApigeeV1DeploymentConfig struct {
 	// BasePath: Base path where the application will be hosted. Defaults to
 	// "/".
 	BasePath string `json:"basePath,omitempty"`
+
+	// DeploymentGroups: The list of deployment groups in which this proxy
+	// should be deployed. Not currently populated for shared flows.
+	DeploymentGroups []string `json:"deploymentGroups,omitempty"`
+
+	// Endpoints: A mapping from basepaths to proxy endpoint names in this
+	// proxy. Not populated for shared flows.
+	Endpoints map[string]string `json:"endpoints,omitempty"`
 
 	// Location: Location of the API proxy bundle as a URI.
 	Location string `json:"location,omitempty"`
@@ -3847,6 +4273,55 @@ type GoogleCloudApigeeV1DeploymentConfig struct {
 
 func (s *GoogleCloudApigeeV1DeploymentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1DeploymentGroupConfig: DeploymentGroupConfig
+// represents a deployment group that should be present in a particular
+// environment.
+type GoogleCloudApigeeV1DeploymentGroupConfig struct {
+	// DeploymentGroupType: Type of the deployment group, which will be
+	// either Standard or Extensible.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_GROUP_TYPE_UNSPECIFIED" - Unspecified type
+	//   "STANDARD" - Standard type
+	//   "EXTENSIBLE" - Extensible Type
+	DeploymentGroupType string `json:"deploymentGroupType,omitempty"`
+
+	// Name: Name of the deployment group in the following format:
+	// `organizations/{org}/environments/{env}/deploymentGroups/{group}`.
+	Name string `json:"name,omitempty"`
+
+	// RevisionId: Revision number which can be used by the runtime to
+	// detect if the deployment group has changed between two versions.
+	RevisionId int64 `json:"revisionId,omitempty,string"`
+
+	// Uid: Unique ID. The ID will only change if the deployment group is
+	// deleted and recreated.
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeploymentGroupType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeploymentGroupType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1DeploymentGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DeploymentGroupConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4240,13 +4715,19 @@ func (s *GoogleCloudApigeeV1DeveloperSubscription) MarshalJSON() ([]byte, error)
 // GoogleCloudApigeeV1DimensionMetric: Encapsulates a metric grouped by
 // dimension.
 type GoogleCloudApigeeV1DimensionMetric struct {
+	// IndividualNames: Individual dimension names. E.g. ["dim1_name",
+	// "dim2_name"].
+	IndividualNames []string `json:"individualNames,omitempty"`
+
 	// Metrics: List of metrics.
 	Metrics []*GoogleCloudApigeeV1Metric `json:"metrics,omitempty"`
 
-	// Name: Name of the dimension.
+	// Name: Comma joined dimension names. E.g. "dim1_name,dim2_name".
+	// Deprecated. If name already has comma before join, we may get wrong
+	// splits. Please use individual_names.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// ForceSendFields is a list of field names (e.g. "IndividualNames") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4254,12 +4735,13 @@ type GoogleCloudApigeeV1DimensionMetric struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metrics") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IndividualNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4345,6 +4827,42 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 
 func (s *GoogleCloudApigeeV1EndpointAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EndpointAttachment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1EndpointChainingRule: EndpointChainingRule
+// specifies the proxies contained in a particular deployment group, so
+// that other deployment groups can find them in chaining calls.
+type GoogleCloudApigeeV1EndpointChainingRule struct {
+	// DeploymentGroup: The deployment group to target for cross-shard
+	// chaining calls to these proxies.
+	DeploymentGroup string `json:"deploymentGroup,omitempty"`
+
+	// ProxyIds: List of proxy ids which may be found in the given
+	// deployment group.
+	ProxyIds []string `json:"proxyIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeploymentGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeploymentGroup") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1EndpointChainingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EndpointChainingRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4443,6 +4961,8 @@ type GoogleCloudApigeeV1Environment struct {
 	// or "https", and port must be supplied.
 	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
+	HasAttachedFlowHooks bool `json:"hasAttachedFlowHooks,omitempty"`
+
 	// LastModifiedAt: Output only. Last modification time of this
 	// environment as milliseconds since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
@@ -4468,6 +4988,22 @@ type GoogleCloudApigeeV1Environment struct {
 	//   "DELETING" - The resource is being deleted.
 	//   "UPDATING" - The resource is being updated.
 	State string `json:"state,omitempty"`
+
+	// Type: Optional. EnvironmentType selected for the environment.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Environment type not specified.
+	//   "BASE" - Base environment has limited capacity and capabilities and
+	// are usually used when you are getting started with Apigee or while
+	// experimenting. Refer to Apigee's public documentation for more
+	// details.
+	//   "INTERMEDIATE" - This is the default type and it supports API
+	// management features and higher capacity than Base environment. Refer
+	// to Apigee's public documentation for more details.
+	//   "COMPREHENSIVE" - Comprehensive environment supports advanced
+	// capabilites and even higher capacity than Intermediate environment.
+	// Refer to Apigee's public documentation for more details.
+	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4513,8 +5049,17 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 	// environment.
 	DebugMask *GoogleCloudApigeeV1DebugMask `json:"debugMask,omitempty"`
 
+	// DeploymentGroups: List of deployment groups in the environment.
+	DeploymentGroups []*GoogleCloudApigeeV1DeploymentGroupConfig `json:"deploymentGroups,omitempty"`
+
 	// Deployments: List of deployments in the environment.
 	Deployments []*GoogleCloudApigeeV1DeploymentConfig `json:"deployments,omitempty"`
+
+	// EnvScopedRevisionId: Revision ID for environment-scoped resources
+	// (e.g. target servers, keystores) in this config. This ID will
+	// increment any time a resource not scoped to a deployment group
+	// changes.
+	EnvScopedRevisionId int64 `json:"envScopedRevisionId,omitempty,string"`
 
 	// FeatureFlags: Feature flags inherited from the organization and
 	// environment.
@@ -4705,8 +5250,18 @@ func (s *GoogleCloudApigeeV1EnvironmentGroupAttachment) MarshalJSON() ([]byte, e
 // a revisioned snapshot of an EnvironmentGroup and its associated
 // routing rules.
 type GoogleCloudApigeeV1EnvironmentGroupConfig struct {
+	// EndpointChainingRules: A list of proxies in each deployment group for
+	// proxy chaining calls.
+	EndpointChainingRules []*GoogleCloudApigeeV1EndpointChainingRule `json:"endpointChainingRules,omitempty"`
+
 	// Hostnames: Host names for the environment group.
 	Hostnames []string `json:"hostnames,omitempty"`
+
+	// Location: When this message appears in the top-level IngressConfig,
+	// this field will be populated in lieu of the inlined routing_rules and
+	// hostnames fields. Some URL for downloading the full
+	// EnvironmentGroupConfig for this group.
+	Location string `json:"location,omitempty"`
 
 	// Name: Name of the environment group in the following format:
 	// `organizations/{org}/envgroups/{envgroup}`.
@@ -4726,20 +5281,26 @@ type GoogleCloudApigeeV1EnvironmentGroupConfig struct {
 	// change if the environment group is deleted and recreated.
 	Uid string `json:"uid,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Hostnames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndpointChainingRules") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Hostnames") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndpointChainingRules") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5252,6 +5813,89 @@ func (s *GoogleCloudApigeeV1GraphQLOperationGroup) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1GrpcOperationConfig: Binds the resources in a
+// proxy or remote service with the gRPC operation and its associated
+// quota enforcement.
+type GoogleCloudApigeeV1GrpcOperationConfig struct {
+	// ApiSource: Required. Name of the API proxy with which the gRPC
+	// operation and quota are associated.
+	ApiSource string `json:"apiSource,omitempty"`
+
+	// Attributes: Custom attributes associated with the operation.
+	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
+
+	// Methods: List of unqualified gRPC method names for the proxy to which
+	// quota will be applied. If this field is empty, the Quota will apply
+	// to all operations on the gRPC service defined on the proxy. Example:
+	// Given a proxy that is configured to serve com.petstore.PetService,
+	// the methods com.petstore.PetService.ListPets and
+	// com.petstore.PetService.GetPet would be specified here as simply
+	// ["ListPets", "GetPet"].
+	Methods []string `json:"methods,omitempty"`
+
+	// Quota: Quota parameters to be enforced for the methods and API source
+	// combination. If none are specified, quota enforcement will not be
+	// done.
+	Quota *GoogleCloudApigeeV1Quota `json:"quota,omitempty"`
+
+	// Service: Required. gRPC Service name associated to be associated with
+	// the API proxy, on which quota rules can be applied upon.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1GrpcOperationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1GrpcOperationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1GrpcOperationGroup: List of gRPC operation
+// configuration details associated with Apigee API proxies.
+type GoogleCloudApigeeV1GrpcOperationGroup struct {
+	// OperationConfigs: Required. List of operation configurations for
+	// either Apigee API proxies that are associated with this API product.
+	OperationConfigs []*GoogleCloudApigeeV1GrpcOperationConfig `json:"operationConfigs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OperationConfigs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OperationConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1GrpcOperationGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1GrpcOperationGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1IngressConfig struct {
 	// EnvironmentGroups: List of environment groups in the organization.
 	EnvironmentGroups []*GoogleCloudApigeeV1EnvironmentGroupConfig `json:"environmentGroups,omitempty"`
@@ -5677,9 +6321,10 @@ func (s *GoogleCloudApigeeV1KeyValueEntry) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApigeeV1KeyValueMap: Collection of key/value string pairs.
 type GoogleCloudApigeeV1KeyValueMap struct {
-	// Encrypted: Optional. Flag that specifies whether entry values will be
-	// encrypted. You must set this value to `true`. Apigee X and hybrid do
-	// not support unencrytped key value maps.
+	// Encrypted: Required. Flag that specifies whether entry values will be
+	// encrypted. This field is retained for backward compatibility and the
+	// value of encrypted will always be `true`. Apigee X and hybrid do not
+	// support unencrypted key value maps.
 	Encrypted bool `json:"encrypted,omitempty"`
 
 	// Name: Required. ID of the key value map.
@@ -5888,8 +6533,96 @@ func (s *GoogleCloudApigeeV1ListApiProxiesResponse) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListAppGroupAppsResponse: Response for
+// ListAppGroupApps
+type GoogleCloudApigeeV1ListAppGroupAppsResponse struct {
+	// AppGroupApps: List of AppGroup apps and their credentials.
+	AppGroupApps []*GoogleCloudApigeeV1AppGroupApp `json:"appGroupApps,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppGroupApps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppGroupApps") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListAppGroupAppsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListAppGroupAppsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListAppGroupsResponse: ListAppGroupsResponse
+// contains the 0 or more AppGroups, along with the optional page token
+// and the total count of apps.
+type GoogleCloudApigeeV1ListAppGroupsResponse struct {
+	// AppGroups: List of AppGroups.
+	AppGroups []*GoogleCloudApigeeV1AppGroup `json:"appGroups,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Total count of AppGroups.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListAppGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListAppGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1ListAppsResponse struct {
 	App []*GoogleCloudApigeeV1App `json:"app,omitempty"`
+
+	// NextPageToken: Token that can be sent as `next_page_token` to
+	// retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Total count of Apps.
+	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -6633,8 +7366,8 @@ func (s *GoogleCloudApigeeV1ListOfDevelopersResponse) MarshalJSON() ([]byte, err
 }
 
 type GoogleCloudApigeeV1ListOrganizationsResponse struct {
-	// Organizations: List of Apigee organizations and associated GCP
-	// projects.
+	// Organizations: List of Apigee organizations and associated Google
+	// Cloud projects.
 	Organizations []*GoogleCloudApigeeV1OrganizationProjectMapping `json:"organizations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6697,6 +7430,44 @@ type GoogleCloudApigeeV1ListRatePlansResponse struct {
 
 func (s *GoogleCloudApigeeV1ListRatePlansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListRatePlansResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ListSecurityIncidentsResponse: Response for
+// ListSecurityIncidents.
+type GoogleCloudApigeeV1ListSecurityIncidentsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityIncidents: List of security incidents in the organization
+	SecurityIncidents []*GoogleCloudApigeeV1SecurityIncident `json:"securityIncidents,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityIncidentsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7470,11 +8241,27 @@ type GoogleCloudApigeeV1Organization struct {
 	// AddonsConfig: Addon configurations of the Apigee organization.
 	AddonsConfig *GoogleCloudApigeeV1AddonsConfig `json:"addonsConfig,omitempty"`
 
-	// AnalyticsRegion: Required. DEPRECATED: This field will be deprecated
-	// once Apigee supports DRZ. Primary GCP region for analytics data
-	// storage. For valid values, see Create an Apigee organization
+	// AnalyticsRegion: Required. DEPRECATED: This field will eventually be
+	// deprecated and replaced with a differently-named field. Primary
+	// Google Cloud region for analytics data storage. For valid values, see
+	// Create an Apigee organization
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
+
+	// ApiConsumerDataEncryptionKeyName: Cloud KMS key name used for
+	// encrypting API consumer data. Required for US/EU regions when
+	// BillingType (#BillingType) is `SUBSCRIPTION`. When BillingType
+	// (#BillingType) is `EVALUATION` or the region is not US/EU, a
+	// Google-Managed encryption key will be used. Format:
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	ApiConsumerDataEncryptionKeyName string `json:"apiConsumerDataEncryptionKeyName,omitempty"`
+
+	// ApiConsumerDataLocation: This field is needed only for customers with
+	// control plane in US or EU. Apigee stores some control plane data only
+	// in single region. This field determines which single region Apigee
+	// should use. For example: "us-west1" when control plane is in US or
+	// "europe-west2" when control plane is in EU.
+	ApiConsumerDataLocation string `json:"apiConsumerDataLocation,omitempty"`
 
 	// ApigeeProjectId: Output only. Apigee Project ID associated with the
 	// organization. Use this project to allowlist Apigee in the Service
@@ -7516,6 +8303,13 @@ type GoogleCloudApigeeV1Organization struct {
 	// (#RuntimeType) is `CLOUD`.
 	CaCertificate string `json:"caCertificate,omitempty"`
 
+	// ControlPlaneEncryptionKeyName: Cloud KMS key name used for encrypting
+	// control plane data that is stored in a multi region. Required when
+	// BillingType (#BillingType) is `SUBSCRIPTION`. When BillingType
+	// (#BillingType) is `EVALUATION`, a Google-Managed encryption key will
+	// be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	ControlPlaneEncryptionKeyName string `json:"controlPlaneEncryptionKeyName,omitempty"`
+
 	// CreatedAt: Output only. Time that the Apigee organization was created
 	// in milliseconds since epoch.
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
@@ -7525,6 +8319,20 @@ type GoogleCloudApigeeV1Organization struct {
 
 	// Description: Description of the Apigee organization.
 	Description string `json:"description,omitempty"`
+
+	// DisableVpcPeering: Optional. Flag that specifies whether the VPC
+	// Peering through Private Google Access should be disabled between the
+	// consumer network and Apigee. Valid only when RuntimeType is set to
+	// CLOUD. Required if an authorizedNetwork on the consumer project is
+	// not provided, in which case the flag should be set to true. The value
+	// must be set before the creation of any Apigee runtime instance and
+	// can be updated only when there are no runtime instances. **Note:**
+	// Apigee will be deprecating the vpc peering model that requires you to
+	// provide 'authorizedNetwork', by making the non-peering model as the
+	// default way of provisioning Apigee organization in future. So, this
+	// will be a temporary flag to enable the transition. Not supported for
+	// Apigee hybrid.
+	DisableVpcPeering bool `json:"disableVpcPeering,omitempty"`
 
 	// DisplayName: Display name for the Apigee organization. Unused, but
 	// reserved for future use.
@@ -7646,7 +8454,8 @@ type GoogleCloudApigeeV1OrganizationProjectMapping struct {
 	// Organization: Name of the Apigee organization.
 	Organization string `json:"organization,omitempty"`
 
-	// ProjectId: GCP project associated with the Apigee organization
+	// ProjectId: Google Cloud project associated with the Apigee
+	// organization
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ProjectIds: DEPRECATED: Use `project_id`. An Apigee Organization is
@@ -7781,6 +8590,117 @@ func (s *GoogleCloudApigeeV1Point) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ProfileConfig: ProfileConfig defines a set of
+// categories and policies which will be used to compute security score.
+type GoogleCloudApigeeV1ProfileConfig struct {
+	// Categories: List of categories of profile config.
+	Categories []*GoogleCloudApigeeV1ProfileConfigCategory `json:"categories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ProfileConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ProfileConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfigAbuse: Checks for abuse, which
+// includes any requests sent to the API for purposes other than what it
+// is intended for, such as high volumes of requests, data scraping, and
+// abuse related to authorization.
+type GoogleCloudApigeeV1ProfileConfigAbuse struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigAuthorization: By default, following
+// policies will be included: - JWS - JWT - OAuth - BasicAuth - APIKey
+type GoogleCloudApigeeV1ProfileConfigAuthorization struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigCORS: Checks to see if you have CORS
+// policy in place.
+type GoogleCloudApigeeV1ProfileConfigCORS struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigCategory: Advanced API Security
+// provides security profile that scores the following categories.
+type GoogleCloudApigeeV1ProfileConfigCategory struct {
+	// Abuse: Checks for abuse, which includes any requests sent to the API
+	// for purposes other than what it is intended for, such as high volumes
+	// of requests, data scraping, and abuse related to authorization.
+	Abuse *GoogleCloudApigeeV1ProfileConfigAbuse `json:"abuse,omitempty"`
+
+	// Authorization: Checks to see if you have an authorization policy in
+	// place.
+	Authorization *GoogleCloudApigeeV1ProfileConfigAuthorization `json:"authorization,omitempty"`
+
+	// Cors: Checks to see if you have CORS policy in place.
+	Cors *GoogleCloudApigeeV1ProfileConfigCORS `json:"cors,omitempty"`
+
+	// Mediation: Checks to see if you have a mediation policy in place.
+	Mediation *GoogleCloudApigeeV1ProfileConfigMediation `json:"mediation,omitempty"`
+
+	// Mtls: Checks to see if you have configured mTLS for the target
+	// server.
+	Mtls *GoogleCloudApigeeV1ProfileConfigMTLS `json:"mtls,omitempty"`
+
+	// Threat: Checks to see if you have a threat protection policy in
+	// place.
+	Threat *GoogleCloudApigeeV1ProfileConfigThreat `json:"threat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Abuse") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Abuse") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ProfileConfigCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ProfileConfigCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ProfileConfigMTLS: Checks to see if you have
+// configured mTLS for the target server.
+type GoogleCloudApigeeV1ProfileConfigMTLS struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigMediation: By default, following
+// policies will be included: - OASValidation - SOAPMessageValidation
+type GoogleCloudApigeeV1ProfileConfigMediation struct {
+}
+
+// GoogleCloudApigeeV1ProfileConfigThreat: By default, following
+// policies will be included: - XMLThreatProtection -
+// JSONThreatProtection
+type GoogleCloudApigeeV1ProfileConfigThreat struct {
+}
+
 // GoogleCloudApigeeV1Properties: Message for compatibility with legacy
 // Edge specification for Java Properties object in JSON.
 type GoogleCloudApigeeV1Properties struct {
@@ -7851,11 +8771,30 @@ type GoogleCloudApigeeV1ProvisionOrganizationRequest struct {
 	// Defaults to `us-west1`.
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
-	// AuthorizedNetwork: Name of the customer project's VPC network. If
-	// provided, the network needs to be peered through Service Networking.
-	// If none is provided, the organization will have access only to the
-	// public internet.
+	// AuthorizedNetwork: Compute Engine network used for Service Networking
+	// to be peered with Apigee runtime instances. See Getting started with
+	// the Service Networking API
+	// (https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started).
+	// Apigee also supports shared VPC (that is, the host network project is
+	// not the same as the one that is peering with Apigee). See Shared VPC
+	// overview (https://cloud.google.com/vpc/docs/shared-vpc). To use a
+	// shared VPC network, use the following format:
+	// `projects/{host-project-id}/{region}/networks/{network-name}`. For
+	// example: `projects/my-sharedvpc-host/global/networks/mynetwork`
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
+
+	// DisableVpcPeering: Optional. Flag that specifies whether the VPC
+	// Peering through Private Google Access should be disabled between the
+	// consumer network and Apigee. Required if an authorizedNetwork on the
+	// consumer project is not provided, in which case the flag should be
+	// set to true. The value must be set before the creation of any Apigee
+	// runtime instance and can be updated only when there are no runtime
+	// instances. **Note:** Apigee will be deprecating the vpc peering model
+	// that requires you to provide 'authorizedNetwork', by making the
+	// non-peering model as the default way of provisioning Apigee
+	// organization in future. So, this will be a temporary flag to enable
+	// the transition. Not supported for Apigee hybrid.
+	DisableVpcPeering bool `json:"disableVpcPeering,omitempty"`
 
 	// RuntimeLocation: Cloud Platform location for the runtime instance.
 	// Defaults to zone `us-west1-a`. If a region is provided, `EVAL`
@@ -9010,6 +9949,12 @@ type GoogleCloudApigeeV1RoutingRule struct {
 	// consisting of a single `*` character will match any string.
 	Basepath string `json:"basepath,omitempty"`
 
+	// DeploymentGroup: Name of a deployment group in an environment bound
+	// to the environment group in the following format:
+	// `organizations/{org}/environment/{env}/deploymentGroups/{group}` Only
+	// one of environment or deployment_group will be set.
+	DeploymentGroup string `json:"deploymentGroup,omitempty"`
+
 	// EnvGroupRevision: The env group config revision_id when this rule was
 	// added or last updated. This value is set when the rule is created and
 	// will only update if the the environment_id changes. It is used to
@@ -9019,8 +9964,13 @@ type GoogleCloudApigeeV1RoutingRule struct {
 	EnvGroupRevision int64 `json:"envGroupRevision,omitempty,string"`
 
 	// Environment: Name of an environment bound to the environment group in
-	// the following format: `organizations/{org}/environments/{env}`.
+	// the following format: `organizations/{org}/environments/{env}`. Only
+	// one of environment or deployment_group will be set.
 	Environment string `json:"environment,omitempty"`
+
+	// OtherTargets: Conflicting targets, which will be resource names
+	// specifying either deployment groups or environments.
+	OtherTargets []string `json:"otherTargets,omitempty"`
 
 	// Receiver: The resource name of the proxy revision that is receiving
 	// this basepath in the following format:
@@ -9576,9 +10526,78 @@ func (s *GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1SecurityIncident: Represents an SecurityIncident
+// resource.
+type GoogleCloudApigeeV1SecurityIncident struct {
+	// DetectionTypes: Output only. Detection types which are part of the
+	// incident. Examples: Flooder, OAuth Abuser, Static Content Scraper,
+	// Anomaly Detection.
+	DetectionTypes []string `json:"detectionTypes,omitempty"`
+
+	// DisplayName: Optional. Display name of the security incident.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FirstDetectedTime: Output only. The time when events associated with
+	// the incident were first detected.
+	FirstDetectedTime string `json:"firstDetectedTime,omitempty"`
+
+	// LastDetectedTime: Output only. The time when events associated with
+	// the incident were last detected.
+	LastDetectedTime string `json:"lastDetectedTime,omitempty"`
+
+	// Name: Immutable. Name of the security incident resource. Format:
+	// organizations/{org}/environments/{environment}/securityIncidents/{inci
+	// dent} Example:
+	// organizations/apigee-org/environments/dev/securityIncidents/1234-5678-
+	// 9101-1111
+	Name string `json:"name,omitempty"`
+
+	// RiskLevel: Output only. Risk level of the incident.
+	//
+	// Possible values:
+	//   "RISK_LEVEL_UNSPECIFIED" - Risk Level Unspecified.
+	//   "LOW" - Risk level of the incident is low.
+	//   "MODERATE" - Risk level of the incident is moderate.
+	//   "SEVERE" - Risk level of the incident is severe.
+	RiskLevel string `json:"riskLevel,omitempty"`
+
+	// TrafficCount: Total traffic detected as part of the incident.
+	TrafficCount int64 `json:"trafficCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectionTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectionTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityIncident) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityIncident
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1SecurityProfile: Represents a SecurityProfile
 // resource.
 type GoogleCloudApigeeV1SecurityProfile struct {
+	// Description: Description of the security profile.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Display name of the security profile.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -9596,6 +10615,10 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// Name: Immutable. Name of the security profile resource. Format:
 	// organizations/{org}/securityProfiles/{profile}
 	Name string `json:"name,omitempty"`
+
+	// ProfileConfig: Required. Customized profile configuration that
+	// computes the security score.
+	ProfileConfig *GoogleCloudApigeeV1ProfileConfig `json:"profileConfig,omitempty"`
 
 	// RevisionCreateTime: Output only. The time when revision was created.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
@@ -9618,7 +10641,7 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -9626,7 +10649,7 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// NullFields is a list of field names (e.g. "Description") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -9799,7 +10822,7 @@ type GoogleCloudApigeeV1SecurityReport struct {
 	Self string `json:"self,omitempty"`
 
 	// State: Query state could be "enqueued", "running", "completed",
-	// "failed".
+	// "expired" and "failed".
 	State string `json:"state,omitempty"`
 
 	// Updated: Output only. Last updated timestamp for the query.
@@ -10528,7 +11551,7 @@ func (s *GoogleCloudApigeeV1SyncAuthorization) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudApigeeV1TargetServer: TargetServer configuration.
-// TargetServers are used to decouple a proxy's TargetEndpoint
+// TargetServers are used to decouple a proxy TargetEndpoint
 // HTTPTargetConnections from concrete URLs for backend services.
 type GoogleCloudApigeeV1TargetServer struct {
 	// Description: Optional. A human-readable description of this
@@ -10559,7 +11582,13 @@ type GoogleCloudApigeeV1TargetServer struct {
 	//   "PROTOCOL_UNSPECIFIED" - UNSPECIFIED defaults to HTTP for backwards
 	// compatibility.
 	//   "HTTP" - The TargetServer uses HTTP.
-	//   "GRPC" - The TargetServer uses GRPC.
+	//   "HTTP2" - The TargetSever uses HTTP2.
+	//   "GRPC_TARGET" - The TargetServer uses GRPC.
+	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy.
+	// Prefer to use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate
+	// once EXTERNAL _CALLOUT generally available.
+	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the
+	// ExternalCallout Policy
 	Protocol string `json:"protocol,omitempty"`
 
 	// SSLInfo: Optional. Specifies TLS configuration info for this
@@ -10617,7 +11646,13 @@ type GoogleCloudApigeeV1TargetServerConfig struct {
 	//   "PROTOCOL_UNSPECIFIED" - UNSPECIFIED defaults to HTTP for backwards
 	// compatibility.
 	//   "HTTP" - The TargetServer uses HTTP.
-	//   "GRPC" - The TargetServer uses GRPC.
+	//   "HTTP2" - The TargetSever uses HTTP2.
+	//   "GRPC_TARGET" - The TargetServer uses GRPC.
+	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy.
+	// Prefer to use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate
+	// once EXTERNAL _CALLOUT generally available.
+	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the
+	// ExternalCallout Policy
 	Protocol string `json:"protocol,omitempty"`
 
 	// TlsInfo: TLS settings for the target server.
@@ -10992,6 +12027,46 @@ func (s *GoogleCloudApigeeV1TraceSamplingConfig) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
+// GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest: Request for
+// UpdateAppGroupAppKey
+type GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest struct {
+	// Action: Approve or revoke the consumer key by setting this value to
+	// `approve` or `revoke` respectively. The `Content-Type` header, if
+	// set, must be set to `application/octet-stream`, with empty body.
+	Action string `json:"action,omitempty"`
+
+	// ApiProducts: The list of API products that will be associated with
+	// the credential. This list will be appended to the existing list of
+	// associated API Products for this App Key. Duplicates will be ignored.
+	ApiProducts []string `json:"apiProducts,omitempty"`
+
+	// AppGroupAppKey: The new AppGroupKey to be amended. Note that the
+	// status can be updated only via action.
+	AppGroupAppKey *GoogleCloudApigeeV1AppGroupAppKey `json:"appGroupAppKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1UpdateError: Details on why a resource update
 // failed in the runtime.
 type GoogleCloudApigeeV1UpdateError struct {
@@ -11250,7 +12325,9 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -11267,9 +12344,7 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -11313,7 +12388,7 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -11322,17 +12397,17 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -11575,8 +12650,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -11979,17 +13054,17 @@ func (c *HybridIssuersListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListHybridIssuersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12050,9 +13125,9 @@ func (r *OrganizationsService) Create(googlecloudapigeev1organization *GoogleClo
 }
 
 // Parent sets the optional parameter "parent": Required. Name of the
-// GCP project in which to associate the Apigee organization. Pass the
-// information as a query parameter using the following structure in
-// your request: `projects/`
+// Google Cloud project in which to associate the Apigee organization.
+// Pass the information as a query parameter using the following
+// structure in your request: `projects/`
 func (c *OrganizationsCreateCall) Parent(parent string) *OrganizationsCreateCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -12122,17 +13197,17 @@ func (c *OrganizationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -12153,7 +13228,7 @@ func (c *OrganizationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the GCP project in which to associate the Apigee organization. Pass the information as a query parameter using the following structure in your request: `projects/`",
+	//       "description": "Required. Name of the Google Cloud project in which to associate the Apigee organization. Pass the information as a query parameter using the following structure in your request: `projects/`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12280,17 +13355,17 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -12442,17 +13517,17 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Organization{
 		ServerResponse: googleapi.ServerResponse{
@@ -12614,17 +13689,17 @@ func (c *OrganizationsGetDeployedIngressConfigCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1IngressConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -12779,17 +13854,17 @@ func (c *OrganizationsGetProjectMappingCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1OrganizationProjectMapping{
 		ServerResponse: googleapi.ServerResponse{
@@ -12926,17 +14001,17 @@ func (c *OrganizationsGetRuntimeConfigCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1RuntimeConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -13077,17 +14152,17 @@ func (c *OrganizationsGetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SyncAuthorization{
 		ServerResponse: googleapi.ServerResponse{
@@ -13142,8 +14217,9 @@ type OrganizationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Apigee organizations and associated GCP projects that
-// you have permission to access. See Understanding organizations
+// List: Lists the Apigee organizations and associated Google Cloud
+// projects that you have permission to access. See Understanding
+// organizations
 // (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
 //
 //   - parent: Use the following structure in your request:
@@ -13231,17 +14307,17 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListOrganizationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13255,7 +14331,7 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Apigee organizations and associated GCP projects that you have permission to access. See [Understanding organizations](https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).",
+	//   "description": "Lists the Apigee organizations and associated Google Cloud projects that you have permission to access. See [Understanding organizations](https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).",
 	//   "flatPath": "v1/organizations",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.list",
@@ -13372,17 +14448,17 @@ func (c *OrganizationsSetAddonsCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -13526,17 +14602,17 @@ func (c *OrganizationsSetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SyncAuthorization{
 		ServerResponse: googleapi.ServerResponse{
@@ -13670,17 +14746,17 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Organization{
 		ServerResponse: googleapi.ServerResponse{
@@ -13813,17 +14889,17 @@ func (c *OrganizationsAnalyticsDatastoresCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Datastore{
 		ServerResponse: googleapi.ServerResponse{
@@ -13949,17 +15025,17 @@ func (c *OrganizationsAnalyticsDatastoresDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -14096,17 +15172,17 @@ func (c *OrganizationsAnalyticsDatastoresGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Datastore{
 		ServerResponse: googleapi.ServerResponse{
@@ -14252,17 +15328,17 @@ func (c *OrganizationsAnalyticsDatastoresListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDatastoresResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14401,17 +15477,17 @@ func (c *OrganizationsAnalyticsDatastoresTestCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TestDatastoreResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14544,17 +15620,17 @@ func (c *OrganizationsAnalyticsDatastoresUpdateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Datastore{
 		ServerResponse: googleapi.ServerResponse{
@@ -14697,17 +15773,17 @@ func (c *OrganizationsApiproductsAttributesCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -14859,17 +15935,17 @@ func (c *OrganizationsApiproductsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProduct{
 		ServerResponse: googleapi.ServerResponse{
@@ -15003,17 +16079,17 @@ func (c *OrganizationsApiproductsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProduct{
 		ServerResponse: googleapi.ServerResponse{
@@ -15154,17 +16230,17 @@ func (c *OrganizationsApiproductsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProduct{
 		ServerResponse: googleapi.ServerResponse{
@@ -15347,17 +16423,17 @@ func (c *OrganizationsApiproductsListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListApiProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -15519,17 +16595,17 @@ func (c *OrganizationsApiproductsUpdateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProduct{
 		ServerResponse: googleapi.ServerResponse{
@@ -15657,17 +16733,17 @@ func (c *OrganizationsApiproductsAttributesDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -15806,17 +16882,17 @@ func (c *OrganizationsApiproductsAttributesGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -15953,17 +17029,17 @@ func (c *OrganizationsApiproductsAttributesListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -16100,17 +17176,17 @@ func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -16253,17 +17329,17 @@ func (c *OrganizationsApiproductsRateplansCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1RatePlan{
 		ServerResponse: googleapi.ServerResponse{
@@ -16390,17 +17466,17 @@ func (c *OrganizationsApiproductsRateplansDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1RatePlan{
 		ServerResponse: googleapi.ServerResponse{
@@ -16538,17 +17614,17 @@ func (c *OrganizationsApiproductsRateplansGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1RatePlan{
 		ServerResponse: googleapi.ServerResponse{
@@ -16745,17 +17821,17 @@ func (c *OrganizationsApiproductsRateplansListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListRatePlansResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16922,17 +17998,17 @@ func (c *OrganizationsApiproductsRateplansUpdateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1RatePlan{
 		ServerResponse: googleapi.ServerResponse{
@@ -17106,17 +18182,17 @@ func (c *OrganizationsApisCreateCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProxyRevision{
 		ServerResponse: googleapi.ServerResponse{
@@ -17259,17 +18335,17 @@ func (c *OrganizationsApisDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProxy{
 		ServerResponse: googleapi.ServerResponse{
@@ -17406,17 +18482,17 @@ func (c *OrganizationsApisGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProxy{
 		ServerResponse: googleapi.ServerResponse{
@@ -17572,17 +18648,17 @@ func (c *OrganizationsApisListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListApiProxiesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -17729,17 +18805,17 @@ func (c *OrganizationsApisPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProxy{
 		ServerResponse: googleapi.ServerResponse{
@@ -17888,17 +18964,17 @@ func (c *OrganizationsApisDeploymentsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18029,17 +19105,17 @@ func (c *OrganizationsApisKeyvaluemapsCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueMap{
 		ServerResponse: googleapi.ServerResponse{
@@ -18166,17 +19242,17 @@ func (c *OrganizationsApisKeyvaluemapsDeleteCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueMap{
 		ServerResponse: googleapi.ServerResponse{
@@ -18314,17 +19390,17 @@ func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -18461,17 +19537,17 @@ func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -18617,17 +19693,17 @@ func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -18789,17 +19865,17 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListKeyValueEntriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18957,17 +20033,17 @@ func (c *OrganizationsApisRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProxyRevision{
 		ServerResponse: googleapi.ServerResponse{
@@ -19118,17 +20194,17 @@ func (c *OrganizationsApisRevisionsGetCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -19277,17 +20353,17 @@ func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiProxyRevision{
 		ServerResponse: googleapi.ServerResponse{
@@ -19435,17 +20511,17 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19478,6 +20554,2511 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Do(opts ...googleapi.Cal
 	//   "path": "v1/{+parent}/deployments",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1ListDeploymentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.create":
+
+type OrganizationsAppgroupsCreateCall struct {
+	s                           *Service
+	parent                      string
+	googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Creates an AppGroup. Once created, user can register apps
+// under the AppGroup to obtain secret key and password. At creation
+// time, the AppGroup's state is set as `active`.
+//
+//   - parent: Name of the Apigee organization in which the AppGroup is
+//     created. Use the following structure in your request:
+//     `organizations/{org}`.
+func (r *OrganizationsAppgroupsService) Create(parent string, googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup) *OrganizationsAppgroupsCreateCall {
+	c := &OrganizationsAppgroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroup = googlecloudapigeev1appgroup
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appgroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.create" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an AppGroup. Once created, user can register apps under the AppGroup to obtain secret key and password. At creation time, the AppGroup's state is set as `active`.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the Apigee organization in which the AppGroup is created. Use the following structure in your request: `organizations/{org}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/appgroups",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.delete":
+
+type OrganizationsAppgroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an AppGroup. All app and API keys associations with
+// the AppGroup are also removed. **Warning**: This API will permanently
+// delete the AppGroup and related artifacts. **Note**: The delete
+// operation is asynchronous. The AppGroup app is deleted immediately,
+// but its associated resources, such as apps and API keys, may take
+// anywhere from a few seconds to a few minutes to be deleted.
+//
+//   - name: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsService) Delete(name string) *OrganizationsAppgroupsDeleteCall {
+	c := &OrganizationsAppgroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an AppGroup. All app and API keys associations with the AppGroup are also removed. **Warning**: This API will permanently delete the AppGroup and related artifacts. **Note**: The delete operation is asynchronous. The AppGroup app is deleted immediately, but its associated resources, such as apps and API keys, may take anywhere from a few seconds to a few minutes to be deleted.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.get":
+
+type OrganizationsAppgroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the AppGroup details for the provided AppGroup name in
+// the request URI.
+//
+//   - name: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsService) Get(name string) *OrganizationsAppgroupsGetCall {
+	c := &OrganizationsAppgroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsGetCall) Context(ctx context.Context) *OrganizationsAppgroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.get" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the AppGroup details for the provided AppGroup name in the request URI.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.list":
+
+type OrganizationsAppgroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all AppGroups in an organization. A maximum of 1000
+// AppGroups are returned in the response if PageSize is not specified,
+// or if the PageSize is greater than 1000.
+//
+//   - parent: Name of the Apigee organization. Use the following
+//     structure in your request: `organizations/{org}`.
+func (r *OrganizationsAppgroupsService) List(parent string) *OrganizationsAppgroupsListCall {
+	c := &OrganizationsAppgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to
+// be used to get the list of AppGroups, where filtering can be done on
+// status, channelId or channelUri of the app group. Examples:
+// filter=status=active", filter=channelId=, filter=channelUri=
+func (c *OrganizationsAppgroupsListCall) Filter(filter string) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Count of AppGroups a
+// single page can have in the response. If unspecified, at most 1000
+// AppGroups will be returned. The maximum value is 1000; values above
+// 1000 will be coerced to 1000.
+func (c *OrganizationsAppgroupsListCall) PageSize(pageSize int64) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The starting index
+// record for listing the AppGroups.
+func (c *OrganizationsAppgroupsListCall) PageToken(pageToken string) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsListCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsListCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsListCall) Context(ctx context.Context) *OrganizationsAppgroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appgroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListAppGroupsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListAppGroupsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListAppGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListAppGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all AppGroups in an organization. A maximum of 1000 AppGroups are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression to be used to get the list of AppGroups, where filtering can be done on status, channelId or channelUri of the app group. Examples: filter=status=active\", filter=channelId=, filter=channelUri=",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Count of AppGroups a single page can have in the response. If unspecified, at most 1000 AppGroups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The starting index record for listing the AppGroups.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the Apigee organization. Use the following structure in your request: `organizations/{org}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/appgroups",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListAppGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppgroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.appgroups.update":
+
+type OrganizationsAppgroupsUpdateCall struct {
+	s                           *Service
+	name                        string
+	googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Update: Updates an appGroup. This API replaces the existing appGroup
+// details with those specified in the request. Include or exclude any
+// existing details that you want to retain or delete, respectively.
+// Note that the state of the AppGroup should be updated using `action`,
+// and not via AppGroup. **Note**: OAuth access tokens and Key
+// Management Service (KMS) entities (apps, developers, and API
+// products) are cached for 180 seconds (current default). Any custom
+// attributes associated with these entities are cached for at least 180
+// seconds after the entity is accessed at runtime. Therefore, an
+// `ExpiresIn` element on the OAuthV2 policy won't be able to expire an
+// access token in less than 180 seconds.
+//
+//   - name: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsService) Update(name string, googlecloudapigeev1appgroup *GoogleCloudApigeeV1AppGroup) *OrganizationsAppgroupsUpdateCall {
+	c := &OrganizationsAppgroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1appgroup = googlecloudapigeev1appgroup
+	return c
+}
+
+// Action sets the optional parameter "action": Activate or de-activate
+// the appGroup by setting the action as `active` or `inactive`. The
+// `Content-Type` header must be set to `application/octet-stream`, with
+// empty body.
+func (c *OrganizationsAppgroupsUpdateCall) Action(action string) *OrganizationsAppgroupsUpdateCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsUpdateCall) Context(ctx context.Context) *OrganizationsAppgroupsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.update" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroup or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1AppGroup.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an appGroup. This API replaces the existing appGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.appgroups.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Activate or de-activate the appGroup by setting the action as `active` or `inactive`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.create":
+
+type OrganizationsAppgroupsAppsCreateCall struct {
+	s                              *Service
+	parent                         string
+	googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Creates an app and associates it with an AppGroup. This API
+// associates the AppGroup app with the specified API product and
+// auto-generates an API key for the app to use in calls to API proxies
+// inside that API product. The `name` is the unique ID of the app that
+// you can use in API calls.
+//
+//   - parent: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsAppsService) Create(parent string, googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp) *OrganizationsAppgroupsAppsCreateCall {
+	c := &OrganizationsAppgroupsAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroupapp = googlecloudapigeev1appgroupapp
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroupapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.create" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an app and associates it with an AppGroup. This API associates the AppGroup app with the specified API product and auto-generates an API key for the app to use in calls to API proxies inside that API product. The `name` is the unique ID of the app that you can use in API calls.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apps",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.delete":
+
+type OrganizationsAppgroupsAppsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an AppGroup app. **Note**: The delete operation is
+// asynchronous. The AppGroup app is deleted immediately, but its
+// associated resources, such as app keys or access tokens, may take
+// anywhere from a few seconds to a few minutes to be deleted.
+//
+//   - name: Name of the AppGroup app. Use the following structure in your
+//     request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}`.
+func (r *OrganizationsAppgroupsAppsService) Delete(name string) *OrganizationsAppgroupsAppsDeleteCall {
+	c := &OrganizationsAppgroupsAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an AppGroup app. **Note**: The delete operation is asynchronous. The AppGroup app is deleted immediately, but its associated resources, such as app keys or access tokens, may take anywhere from a few seconds to a few minutes to be deleted.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.apps.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.get":
+
+type OrganizationsAppgroupsAppsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the details for an AppGroup app.
+//
+//   - name: Name of the AppGroup app. Use the following structure in your
+//     request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}`.
+func (r *OrganizationsAppgroupsAppsService) Get(name string) *OrganizationsAppgroupsAppsGetCall {
+	c := &OrganizationsAppgroupsAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsAppsGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsAppsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsGetCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.get" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the details for an AppGroup app.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.apps.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.list":
+
+type OrganizationsAppgroupsAppsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all apps created by an AppGroup in an Apigee
+// organization. Optionally, you can request an expanded view of the
+// AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of
+// 1000 AppGroup apps are returned in the response if PageSize is not
+// specified, or if the PageSize is greater than 1000.
+//
+//   - parent: Name of the AppGroup. Use the following structure in your
+//     request: `organizations/{org}/appgroups/{app_group_name}`.
+func (r *OrganizationsAppgroupsAppsService) List(parent string) *OrganizationsAppgroupsAppsListCall {
+	c := &OrganizationsAppgroupsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number
+// entries to return. If unspecified, at most 1000 entries will be
+// returned.
+func (c *OrganizationsAppgroupsAppsListCall) PageSize(pageSize int64) *OrganizationsAppgroupsAppsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token. If
+// provides, must be a valid AppGroup app returned from a previous call
+// that can be used to retrieve the next page.
+func (c *OrganizationsAppgroupsAppsListCall) PageToken(pageToken string) *OrganizationsAppgroupsAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsListCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsAppsListCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsAppsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsListCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListAppGroupAppsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListAppGroupAppsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListAppGroupAppsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListAppGroupAppsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all apps created by an AppGroup in an Apigee organization. Optionally, you can request an expanded view of the AppGroup apps. Lists all AppGroupApps in an AppGroup. A maximum of 1000 AppGroup apps are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.apps.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number entries to return. If unspecified, at most 1000 entries will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token. If provides, must be a valid AppGroup app returned from a previous call that can be used to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apps",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListAppGroupAppsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppgroupsAppsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppGroupAppsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.appgroups.apps.update":
+
+type OrganizationsAppgroupsAppsUpdateCall struct {
+	s                              *Service
+	name                           string
+	googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Update: Updates the details for an AppGroup app. In addition, you can
+// add an API product to an AppGroup app and automatically generate an
+// API key for the app to use when calling APIs in the API product. If
+// you want to use an existing API key for the API product, add the API
+// product to the API key using the UpdateAppGroupAppKey API. Using this
+// API, you cannot update the app name, as it is the primary key used to
+// identify the app and cannot be changed. This API replaces the
+// existing attributes with those specified in the request. Include or
+// exclude any existing attributes that you want to retain or delete,
+// respectively.
+//
+//   - name: Name of the AppGroup app. Use the following structure in your
+//     request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}`.
+func (r *OrganizationsAppgroupsAppsService) Update(name string, googlecloudapigeev1appgroupapp *GoogleCloudApigeeV1AppGroupApp) *OrganizationsAppgroupsAppsUpdateCall {
+	c := &OrganizationsAppgroupsAppsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1appgroupapp = googlecloudapigeev1appgroupapp
+	return c
+}
+
+// Action sets the optional parameter "action": Approve or revoke the
+// consumer key by setting this value to `approve` or `revoke`. The
+// `Content-Type` header must be set to `application/octet-stream`, with
+// empty body.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Action(action string) *OrganizationsAppgroupsAppsUpdateCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroupapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.update" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupApp or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupApp.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the details for an AppGroup app. In addition, you can add an API product to an AppGroup app and automatically generate an API key for the app to use when calling APIs in the API product. If you want to use an existing API key for the API product, add the API product to the API key using the UpdateAppGroupAppKey API. Using this API, you cannot update the app name, as it is the primary key used to identify the app and cannot be changed. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.appgroups.apps.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Approve or revoke the consumer key by setting this value to `approve` or `revoke`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.create":
+
+type OrganizationsAppgroupsAppsKeysCreateCall struct {
+	s                                 *Service
+	parent                            string
+	googlecloudapigeev1appgroupappkey *GoogleCloudApigeeV1AppGroupAppKey
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: Creates a custom consumer key and secret for a AppGroup app.
+// This is particularly useful if you want to migrate existing consumer
+// keys and secrets to Apigee from another system. Consumer keys and
+// secrets can contain letters, numbers, underscores, and hyphens. No
+// other special characters are allowed. To avoid service disruptions, a
+// consumer key and secret should not exceed 2 KBs each. **Note**: When
+// creating the consumer key and secret, an association to API products
+// will not be made. Therefore, you should not specify the associated
+// API products in your request. Instead, use the
+// ProductizeAppGroupAppKey API to make the association after the
+// consumer key and secret are created. If a consumer key and secret
+// already exist, you can keep them or delete them using the
+// DeleteAppGroupAppKey API.
+//
+//   - parent: Parent of the AppGroup app key. Use the following structure
+//     in your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys`.
+func (r *OrganizationsAppgroupsAppsKeysService) Create(parent string, googlecloudapigeev1appgroupappkey *GoogleCloudApigeeV1AppGroupAppKey) *OrganizationsAppgroupsAppsKeysCreateCall {
+	c := &OrganizationsAppgroupsAppsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1appgroupappkey = googlecloudapigeev1appgroupappkey
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1appgroupappkey)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keys")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.create" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a custom consumer key and secret for a AppGroup app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the ProductizeAppGroupAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteAppGroupAppKey API.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.keys.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/keys",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.delete":
+
+type OrganizationsAppgroupsAppsKeysDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an app's consumer key and removes all API products
+// associated with the app. After the consumer key is deleted, it cannot
+// be used to access any APIs.
+//
+//   - name: Name of the AppGroup app key. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }`.
+func (r *OrganizationsAppgroupsAppsKeysService) Delete(name string) *OrganizationsAppgroupsAppsKeysDeleteCall {
+	c := &OrganizationsAppgroupsAppsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an app's consumer key and removes all API products associated with the app. After the consumer key is deleted, it cannot be used to access any APIs.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.apps.keys.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.get":
+
+type OrganizationsAppgroupsAppsKeysGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details for a consumer key for a AppGroup app, including
+// the key and secret value, associated API products, and other
+// information.
+//
+//   - name: Name of the AppGroup app key. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }`.
+func (r *OrganizationsAppgroupsAppsKeysService) Get(name string) *OrganizationsAppgroupsAppsKeysGetCall {
+	c := &OrganizationsAppgroupsAppsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) IfNoneMatch(entityTag string) *OrganizationsAppgroupsAppsKeysGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.get" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details for a consumer key for a AppGroup app, including the key and secret value, associated API products, and other information.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.appgroups.apps.keys.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.updateAppGroupAppKey":
+
+type OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudapigeev1updateappgroupappkeyrequest *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdateAppGroupAppKey: Adds an API product to an AppGroupAppKey,
+// enabling the app that holds the key to access the API resources
+// bundled in the API product. In addition, you can add attributes to
+// the AppGroupAppKey. This API replaces the existing attributes with
+// those specified in the request. Include or exclude any existing
+// attributes that you want to retain or delete, respectively. You can
+// use the same key to access all API products associated with the app.
+//
+//   - name: Name of the AppGroup app key. Use the following structure in
+//     your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }`.
+func (r *OrganizationsAppgroupsAppsKeysService) UpdateAppGroupAppKey(name string, googlecloudapigeev1updateappgroupappkeyrequest *GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest) *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall {
+	c := &OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1updateappgroupappkeyrequest = googlecloudapigeev1updateappgroupappkeyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1updateappgroupappkeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.updateAppGroupAppKey" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysUpdateAppGroupAppKeyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds an API product to an AppGroupAppKey, enabling the app that holds the key to access the API resources bundled in the API product. In addition, you can add attributes to the AppGroupAppKey. This API replaces the existing attributes with those specified in the request. Include or exclude any existing attributes that you want to retain or delete, respectively. You can use the same key to access all API products associated with the app.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.keys.updateAppGroupAppKey",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1UpdateAppGroupAppKeyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.apiproducts.delete":
+
+type OrganizationsAppgroupsAppsKeysApiproductsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes an API product from an app's consumer key. After the
+// API product is removed, the app cannot access the API resources
+// defined in that API product. **Note**: The consumer key is not
+// removed, only its association with the API product.
+//
+//   - name: Parent of the AppGroup app key. Use the following structure
+//     in your request:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }/apiproducts/{apiproduct}`.
+func (r *OrganizationsAppgroupsAppsKeysApiproductsService) Delete(name string) *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall {
+	c := &OrganizationsAppgroupsAppsKeysApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.apiproducts.delete" call.
+// Exactly one of *GoogleCloudApigeeV1AppGroupAppKey or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AppGroupAppKey.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AppGroupAppKey, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AppGroupAppKey{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes an API product from an app's consumer key. After the API product is removed, the app cannot access the API resources defined in that API product. **Note**: The consumer key is not removed, only its association with the API product.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.appgroups.apps.keys.apiproducts.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Parent of the AppGroup app key. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+/apiproducts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AppGroupAppKey"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct":
+
+type OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateAppGroupAppKeyApiProduct: Approves or revokes the consumer key
+// for an API product. After a consumer key is approved, the app can use
+// it to access APIs. A consumer key that is revoked or pending cannot
+// be used to access an API. Any access tokens associated with a revoked
+// consumer key will remain active. However, Apigee checks the status of
+// the consumer key and if set to `revoked` will not allow access to the
+// API.
+//
+//   - name: Name of the API product in the developer app key in the
+//     following format:
+//     `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key
+//     }/apiproducts/{apiproduct}`.
+func (r *OrganizationsAppgroupsAppsKeysApiproductsService) UpdateAppGroupAppKeyApiProduct(name string) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c := &OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Action sets the optional parameter "action": Approve or revoke the
+// consumer key by setting this value to `approve` or `revoke`
+// respectively. The `Content-Type` header, if set, must be set to
+// `application/octet-stream`, with empty body.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Action(action string) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c.urlParams_.Set("action", action)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Fields(s ...googleapi.Field) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Context(ctx context.Context) *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsAppgroupsAppsKeysApiproductsUpdateAppGroupAppKeyApiProductCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.",
+	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.appgroups.apps.keys.apiproducts.updateAppGroupAppKeyApiProduct",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "action": {
+	//       "description": "Approve or revoke the consumer key by setting this value to `approve` or `revoke` respectively. The `Content-Type` header, if set, must be set to `application/octet-stream`, with empty body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Name of the API product in the developer app key in the following format: `organizations/{org}/appgroups/{app_group_name}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/appgroups/[^/]+/apps/[^/]+/keys/[^/]+/apiproducts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -19582,17 +23163,17 @@ func (c *OrganizationsAppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1App{
 		ServerResponse: googleapi.ServerResponse{
@@ -19662,9 +23243,8 @@ func (c *OrganizationsAppsListCall) ApiProduct(apiProduct string) *Organizations
 	return c
 }
 
-// Apptype sets the optional parameter "apptype": Filter by the type of
-// the app. Valid values are `company` or `developer`. Defaults to
-// `developer`.
+// Apptype sets the optional parameter "apptype": 'apptype' is no longer
+// available. Use a 'filter' instead.
 func (c *OrganizationsAppsListCall) Apptype(apptype string) *OrganizationsAppsListCall {
 	c.urlParams_.Set("apptype", apptype)
 	return c
@@ -19675,6 +23255,17 @@ func (c *OrganizationsAppsListCall) Apptype(apptype string) *OrganizationsAppsLi
 // Defaults to `false`.
 func (c *OrganizationsAppsListCall) Expand(expand bool) *OrganizationsAppsListCall {
 	c.urlParams_.Set("expand", fmt.Sprint(expand))
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to
+// be used to get the list of apps, where filtering can be done on
+// developerEmail, apiProduct, consumerKey, status, appId, appName,
+// appType and appGroup. Examples: "developerEmail=foo@bar.com",
+// "appType=AppGroup", or "appType=Developer" "filter" is supported from
+// ver 1.10.0 and above.
+func (c *OrganizationsAppsListCall) Filter(filter string) *OrganizationsAppsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -19697,6 +23288,24 @@ func (c *OrganizationsAppsListCall) IncludeCred(includeCred bool) *Organizations
 // `approved`.
 func (c *OrganizationsAppsListCall) KeyStatus(keyStatus string) *OrganizationsAppsListCall {
 	c.urlParams_.Set("keyStatus", keyStatus)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Count of apps a
+// single page can have in the response. If unspecified, at most 100
+// apps will be returned. The maximum value is 100; values above 100
+// will be coerced to 100. "page_size" is supported from ver 1.10.0 and
+// above.
+func (c *OrganizationsAppsListCall) PageSize(pageSize int64) *OrganizationsAppsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The starting index
+// record for listing the developers. "page_token" is supported from ver
+// 1.10.0 and above.
+func (c *OrganizationsAppsListCall) PageToken(pageToken string) *OrganizationsAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -19798,17 +23407,17 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListAppsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19836,7 +23445,7 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "string"
 	//     },
 	//     "apptype": {
-	//       "description": "Optional. Filter by the type of the app. Valid values are `company` or `developer`. Defaults to `developer`.",
+	//       "description": "Optional. 'apptype' is no longer available. Use a 'filter' instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19844,6 +23453,11 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "description": "Optional. Flag that specifies whether to return an expanded list of apps for the organization. Defaults to `false`.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "filter": {
+	//       "description": "Optional. The filter expression to be used to get the list of apps, where filtering can be done on developerEmail, apiProduct, consumerKey, status, appId, appName, appType and appGroup. Examples: \"developerEmail=foo@bar.com\", \"appType=AppGroup\", or \"appType=Developer\" \"filter\" is supported from ver 1.10.0 and above.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "ids": {
 	//       "description": "Optional. Comma-separated list of app IDs on which to filter.",
@@ -19857,6 +23471,17 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//     },
 	//     "keyStatus": {
 	//       "description": "Optional. Key status of the app. Valid values include `approved` or `revoked`. Defaults to `approved`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Count of apps a single page can have in the response. If unspecified, at most 100 apps will be returned. The maximum value is 100; values above 100 will be coerced to 100. \"page_size\" is supported from ver 1.10.0 and above.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The starting index record for listing the developers. \"page_token\" is supported from ver 1.10.0 and above.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19893,6 +23518,27 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsAppsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListAppsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.datacollectors.create":
@@ -19993,17 +23639,17 @@ func (c *OrganizationsDatacollectorsCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DataCollector{
 		ServerResponse: googleapi.ServerResponse{
@@ -20134,17 +23780,17 @@ func (c *OrganizationsDatacollectorsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -20281,17 +23927,17 @@ func (c *OrganizationsDatacollectorsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DataCollector{
 		ServerResponse: googleapi.ServerResponse{
@@ -20445,17 +24091,17 @@ func (c *OrganizationsDatacollectorsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDataCollectorsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -20624,17 +24270,17 @@ func (c *OrganizationsDatacollectorsPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DataCollector{
 		ServerResponse: googleapi.ServerResponse{
@@ -20791,17 +24437,17 @@ func (c *OrganizationsDeploymentsListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -20947,17 +24593,17 @@ func (c *OrganizationsDevelopersAttributesCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -21094,17 +24740,17 @@ func (c *OrganizationsDevelopersCreateCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Developer{
 		ServerResponse: googleapi.ServerResponse{
@@ -21238,17 +24884,17 @@ func (c *OrganizationsDevelopersDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Developer{
 		ServerResponse: googleapi.ServerResponse{
@@ -21394,17 +25040,17 @@ func (c *OrganizationsDevelopersGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Developer{
 		ServerResponse: googleapi.ServerResponse{
@@ -21548,17 +25194,17 @@ func (c *OrganizationsDevelopersGetBalanceCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperBalance{
 		ServerResponse: googleapi.ServerResponse{
@@ -21699,17 +25345,17 @@ func (c *OrganizationsDevelopersGetMonetizationConfigCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperMonetizationConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -21904,17 +25550,17 @@ func (c *OrganizationsDevelopersListCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListOfDevelopersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22084,17 +25730,17 @@ func (c *OrganizationsDevelopersSetDeveloperStatusCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -22238,17 +25884,17 @@ func (c *OrganizationsDevelopersUpdateCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Developer{
 		ServerResponse: googleapi.ServerResponse{
@@ -22385,17 +26031,17 @@ func (c *OrganizationsDevelopersUpdateMonetizationConfigCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperMonetizationConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -22530,17 +26176,17 @@ func (c *OrganizationsDevelopersAppsAttributesCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -22679,17 +26325,17 @@ func (c *OrganizationsDevelopersAppsCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -22819,17 +26465,17 @@ func (c *OrganizationsDevelopersAppsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -22992,17 +26638,17 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -23166,17 +26812,17 @@ func (c *OrganizationsDevelopersAppsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -23366,17 +27012,17 @@ func (c *OrganizationsDevelopersAppsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeveloperAppsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -23538,17 +27184,17 @@ func (c *OrganizationsDevelopersAppsUpdateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -23676,17 +27322,17 @@ func (c *OrganizationsDevelopersAppsAttributesDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -23825,17 +27471,17 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -23973,17 +27619,17 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -24122,17 +27768,17 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -24198,7 +27844,10 @@ type OrganizationsDevelopersAppsKeysCreateCall struct {
 // API products in your request. Instead, use the UpdateDeveloperAppKey
 // API to make the association after the consumer key and secret are
 // created. If a consumer key and secret already exist, you can keep
-// them or delete them using the DeleteDeveloperAppKey API.
+// them or delete them using the DeleteDeveloperAppKey API. **Note**:
+// All keys start out with status=approved, even if status=revoked is
+// passed when the key is created. To revoke a key, use the
+// UpdateDeveloperAppKey API.
 //
 //   - parent: Parent of the developer app key. Use the following
 //     structure in your request:
@@ -24278,17 +27927,17 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -24302,7 +27951,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
+	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.create",
@@ -24423,17 +28072,17 @@ func (c *OrganizationsDevelopersAppsKeysDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -24575,17 +28224,17 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -24724,17 +28373,17 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -24885,17 +28534,17 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -25032,17 +28681,17 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -25181,17 +28830,17 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProdu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -25259,7 +28908,10 @@ type OrganizationsDevelopersAppsKeysCreateCreateCall struct {
 // API products in your request. Instead, use the UpdateDeveloperAppKey
 // API to make the association after the consumer key and secret are
 // created. If a consumer key and secret already exist, you can keep
-// them or delete them using the DeleteDeveloperAppKey API.
+// them or delete them using the DeleteDeveloperAppKey API. **Note**:
+// All keys start out with status=approved, even if status=revoked is
+// passed when the key is created. To revoke a key, use the
+// UpdateDeveloperAppKey API.
 //
 //   - parent: Parent of the developer app key. Use the following
 //     structure in your request:
@@ -25339,17 +28991,17 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperAppKey{
 		ServerResponse: googleapi.ServerResponse{
@@ -25363,7 +29015,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
+	//   "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API. **Note**: All keys start out with status=approved, even if status=revoked is passed when the key is created. To revoke a key, use the UpdateDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/create",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.create.create",
@@ -25477,17 +29129,17 @@ func (c *OrganizationsDevelopersAttributesDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -25626,17 +29278,17 @@ func (c *OrganizationsDevelopersAttributesGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -25774,17 +29426,17 @@ func (c *OrganizationsDevelopersAttributesListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attributes{
 		ServerResponse: googleapi.ServerResponse{
@@ -25922,17 +29574,17 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) Do(opts 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Attribute{
 		ServerResponse: googleapi.ServerResponse{
@@ -26069,17 +29721,17 @@ func (c *OrganizationsDevelopersBalanceAdjustCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperBalance{
 		ServerResponse: googleapi.ServerResponse{
@@ -26214,17 +29866,17 @@ func (c *OrganizationsDevelopersBalanceCreditCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperBalance{
 		ServerResponse: googleapi.ServerResponse{
@@ -26360,17 +30012,17 @@ func (c *OrganizationsDevelopersSubscriptionsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperSubscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -26507,17 +30159,17 @@ func (c *OrganizationsDevelopersSubscriptionsExpireCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperSubscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -26661,17 +30313,17 @@ func (c *OrganizationsDevelopersSubscriptionsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeveloperSubscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -26830,17 +30482,17 @@ func (c *OrganizationsDevelopersSubscriptionsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -26915,9 +30567,10 @@ func (r *OrganizationsEndpointAttachmentsService) Create(parent string, googlecl
 }
 
 // EndpointAttachmentId sets the optional parameter
-// "endpointAttachmentId": ID to use for the endpoint attachment. The ID
-// can contain lowercase letters and numbers, must start with a letter,
-// and must be 1-20 characters in length.
+// "endpointAttachmentId": ID to use for the endpoint attachment. ID
+// must start with a lowercase letter followed by up to 31 lowercase
+// letters, numbers, or hyphens, and cannot end with a hyphen. The
+// minimum length is 2.
 func (c *OrganizationsEndpointAttachmentsCreateCall) EndpointAttachmentId(endpointAttachmentId string) *OrganizationsEndpointAttachmentsCreateCall {
 	c.urlParams_.Set("endpointAttachmentId", endpointAttachmentId)
 	return c
@@ -26990,17 +30643,17 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27023,7 +30676,7 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "endpointAttachmentId": {
-	//       "description": "ID to use for the endpoint attachment. The ID can contain lowercase letters and numbers, must start with a letter, and must be 1-20 characters in length.",
+	//       "description": "ID to use for the endpoint attachment. ID must start with a lowercase letter followed by up to 31 lowercase letters, numbers, or hyphens, and cannot end with a hyphen. The minimum length is 2.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27132,17 +30785,17 @@ func (c *OrganizationsEndpointAttachmentsDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27281,17 +30934,17 @@ func (c *OrganizationsEndpointAttachmentsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1EndpointAttachment{
 		ServerResponse: googleapi.ServerResponse{
@@ -27447,17 +31100,17 @@ func (c *OrganizationsEndpointAttachmentsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListEndpointAttachmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -27626,17 +31279,17 @@ func (c *OrganizationsEnvgroupsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27767,17 +31420,17 @@ func (c *OrganizationsEnvgroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -27915,17 +31568,17 @@ func (c *OrganizationsEnvgroupsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1EnvironmentGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -27958,6 +31611,196 @@ func (c *OrganizationsEnvgroupsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1EnvironmentGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.envgroups.getDeployedIngressConfig":
+
+type OrganizationsEnvgroupsGetDeployedIngressConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDeployedIngressConfig: Gets the deployed ingress configuration for
+// an environment group.
+//
+//   - name: Name of the deployed configuration for the environment group
+//     in the following format:
+//     'organizations/{org}/envgroups/{envgroup}/deployedIngressConfig'.
+func (r *OrganizationsEnvgroupsService) GetDeployedIngressConfig(name string) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c := &OrganizationsEnvgroupsGetDeployedIngressConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": When set to FULL, additional
+// details about the specific deployments receiving traffic will be
+// included in the IngressConfig response's RoutingRules.
+//
+// Possible values:
+//
+//	"INGRESS_CONFIG_VIEW_UNSPECIFIED" - The default/unset value. The
+//
+// API will default to the BASIC view.
+//
+//	"BASIC" - Include all ingress config data necessary for the runtime
+//
+// to configure ingress, but no more. Routing rules will include only
+// basepath and destination environment. This the default value.
+//
+//	"FULL" - Include all ingress config data, including internal debug
+//
+// info for each routing rule such as the proxy claiming a particular
+// basepath and when the routing rule first appeared in the env group.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) View(view string) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Fields(s ...googleapi.Field) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) IfNoneMatch(entityTag string) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Context(ctx context.Context) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.envgroups.getDeployedIngressConfig" call.
+// Exactly one of *GoogleCloudApigeeV1EnvironmentGroupConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1EnvironmentGroupConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1EnvironmentGroupConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1EnvironmentGroupConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the deployed ingress configuration for an environment group.",
+	//   "flatPath": "v1/organizations/{organizationsId}/envgroups/{envgroupsId}/deployedIngressConfig",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.envgroups.getDeployedIngressConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the deployed configuration for the environment group in the following format: 'organizations/{org}/envgroups/{envgroup}/deployedIngressConfig'.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/envgroups/[^/]+/deployedIngressConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "When set to FULL, additional details about the specific deployments receiving traffic will be included in the IngressConfig response's RoutingRules.",
+	//       "enum": [
+	//         "INGRESS_CONFIG_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default/unset value. The API will default to the BASIC view.",
+	//         "Include all ingress config data necessary for the runtime to configure ingress, but no more. Routing rules will include only basepath and destination environment. This the default value.",
+	//         "Include all ingress config data, including internal debug info for each routing rule such as the proxy claiming a particular basepath and when the routing rule first appeared in the env group."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1EnvironmentGroupConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -28079,17 +31922,17 @@ func (c *OrganizationsEnvgroupsListCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListEnvironmentGroupsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -28258,17 +32101,17 @@ func (c *OrganizationsEnvgroupsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28408,17 +32251,17 @@ func (c *OrganizationsEnvgroupsAttachmentsCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28545,17 +32388,17 @@ func (c *OrganizationsEnvgroupsAttachmentsDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28695,17 +32538,17 @@ func (c *OrganizationsEnvgroupsAttachmentsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1EnvironmentGroupAttachment{
 		ServerResponse: googleapi.ServerResponse{
@@ -28861,17 +32704,17 @@ func (c *OrganizationsEnvgroupsAttachmentsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListEnvironmentGroupAttachmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -28968,8 +32811,6 @@ func (r *OrganizationsEnvironmentsService) Create(parent string, googlecloudapig
 }
 
 // Name sets the optional parameter "name": Name of the environment.
-// Alternatively, the name may be specified in the request body in the
-// name field.
 func (c *OrganizationsEnvironmentsCreateCall) Name(name string) *OrganizationsEnvironmentsCreateCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -29042,17 +32883,17 @@ func (c *OrganizationsEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -29075,7 +32916,7 @@ func (c *OrganizationsEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. Name of the environment. Alternatively, the name may be specified in the request body in the name field.",
+	//       "description": "Optional. Name of the environment.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29187,17 +33028,17 @@ func (c *OrganizationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -29334,17 +33175,17 @@ func (c *OrganizationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -29377,6 +33218,158 @@ func (c *OrganizationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.getApiSecurityRuntimeConfig":
+
+type OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetApiSecurityRuntimeConfig: Gets the API Security runtime
+// configuration for an environment. This named ApiSecurityRuntimeConfig
+// to prevent conflicts with ApiSecurityConfig from addon config.
+//
+//   - name: Name of the environment API Security Runtime configuration
+//     resource. Use the following structure in your request:
+//     `organizations/{org}/environments/{env}/apiSecurityRuntimeConfig`.
+func (r *OrganizationsEnvironmentsService) GetApiSecurityRuntimeConfig(name string) *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall {
+	c := &OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) Context(ctx context.Context) *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.getApiSecurityRuntimeConfig" call.
+// Exactly one of *GoogleCloudApigeeV1ApiSecurityRuntimeConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ApiSecurityRuntimeConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiSecurityRuntimeConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiSecurityRuntimeConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the API Security runtime configuration for an environment. This named ApiSecurityRuntimeConfig to prevent conflicts with ApiSecurityConfig from addon config.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/apiSecurityRuntimeConfig",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.getApiSecurityRuntimeConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the environment API Security Runtime configuration resource. Use the following structure in your request: `organizations/{org}/environments/{env}/apiSecurityRuntimeConfig`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/apiSecurityRuntimeConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ApiSecurityRuntimeConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -29482,17 +33475,17 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DebugMask{
 		ServerResponse: googleapi.ServerResponse{
@@ -29632,17 +33625,17 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1EnvironmentConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -29803,17 +33796,17 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -29957,17 +33950,17 @@ func (c *OrganizationsEnvironmentsGetTraceConfigCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TraceConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -30106,17 +34099,17 @@ func (c *OrganizationsEnvironmentsModifyEnvironmentCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -30262,17 +34255,17 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -30400,17 +34393,17 @@ func (c *OrganizationsEnvironmentsSubscribeCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Subscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -30546,17 +34539,17 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -30690,17 +34683,17 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -30839,17 +34832,17 @@ func (c *OrganizationsEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -30999,17 +34992,17 @@ func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DebugMask{
 		ServerResponse: googleapi.ServerResponse{
@@ -31159,17 +35152,17 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Environment{
 		ServerResponse: googleapi.ServerResponse{
@@ -31312,17 +35305,17 @@ func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TraceConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -31489,17 +35482,17 @@ func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Schema{
 		ServerResponse: googleapi.ServerResponse{
@@ -31642,17 +35635,17 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Export{
 		ServerResponse: googleapi.ServerResponse{
@@ -31795,17 +35788,17 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Export{
 		ServerResponse: googleapi.ServerResponse{
@@ -31944,17 +35937,17 @@ func (c *OrganizationsEnvironmentsAnalyticsExportsListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListExportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -32094,17 +36087,17 @@ func (c *OrganizationsEnvironmentsApisDeploymentsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -32199,7 +36192,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Override(override boo
 // deployment will be capturing traffic from another environment under a
 // shared environment group or if traffic will be rerouted to a
 // different environment due to a base path removal. The
-// GenerateDeployChangeReport API (GenerateDeployChangeReport) may be
+// generateDeployChangeReport API (generateDeployChangeReport) may be
 // used to examine routing changes before issuing the deployment
 // request, and its response will indicate if a sequenced rollout is
 // recommended for the deployment.
@@ -32280,17 +36273,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -32325,7 +36318,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Do(opts ...googleapi.
 	//       "type": "boolean"
 	//     },
 	//     "sequencedRollout": {
-	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [GenerateDeployChangeReport API](GenerateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
+	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [generateDeployChangeReport API](generateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -32444,17 +36437,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -32601,17 +36594,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -32756,17 +36749,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) Do(opts 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DebugSession{
 		ServerResponse: googleapi.ServerResponse{
@@ -32901,17 +36894,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -33050,17 +37043,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DebugSession{
 		ServerResponse: googleapi.ServerResponse{
@@ -33217,17 +37210,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDebugSessionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -33400,17 +37393,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DebugSessionTransaction{
 		ServerResponse: googleapi.ServerResponse{
@@ -33557,17 +37550,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateDeployChangeRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeploymentChangeReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -33712,17 +37705,17 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsGenerateUndeployChange
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeploymentChangeReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -33851,17 +37844,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsCreateCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -33987,17 +37980,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsDeleteCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -34131,17 +38124,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateDownloadUrlCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1GenerateDownloadUrlResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34288,17 +38281,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGenerateUploadUrlCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1GenerateUploadUrlResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34439,17 +38432,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsGetCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ArchiveDeployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -34613,17 +38606,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsListCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListArchiveDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34799,17 +38792,17 @@ func (c *OrganizationsEnvironmentsArchiveDeploymentsPatchCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ArchiveDeployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -34942,17 +38935,17 @@ func (c *OrganizationsEnvironmentsCachesDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -35102,17 +39095,17 @@ func (c *OrganizationsEnvironmentsDeploymentsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -35248,17 +39241,17 @@ func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1FlowHook{
 		ServerResponse: googleapi.ServerResponse{
@@ -35385,17 +39378,17 @@ func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1FlowHook{
 		ServerResponse: googleapi.ServerResponse{
@@ -35535,17 +39528,17 @@ func (c *OrganizationsEnvironmentsFlowhooksGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1FlowHook{
 		ServerResponse: googleapi.ServerResponse{
@@ -35687,17 +39680,17 @@ func (c *OrganizationsEnvironmentsKeystoresCreateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Keystore{
 		ServerResponse: googleapi.ServerResponse{
@@ -35829,17 +39822,17 @@ func (c *OrganizationsEnvironmentsKeystoresDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Keystore{
 		ServerResponse: googleapi.ServerResponse{
@@ -35977,17 +39970,17 @@ func (c *OrganizationsEnvironmentsKeystoresGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Keystore{
 		ServerResponse: googleapi.ServerResponse{
@@ -36176,17 +40169,17 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Alias{
 		ServerResponse: googleapi.ServerResponse{
@@ -36353,17 +40346,17 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -36487,17 +40480,17 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Alias{
 		ServerResponse: googleapi.ServerResponse{
@@ -36635,17 +40628,17 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Alias{
 		ServerResponse: googleapi.ServerResponse{
@@ -36784,17 +40777,17 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -36944,17 +40937,17 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Alias{
 		ServerResponse: googleapi.ServerResponse{
@@ -37098,17 +41091,17 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueMap{
 		ServerResponse: googleapi.ServerResponse{
@@ -37235,17 +41228,17 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueMap{
 		ServerResponse: googleapi.ServerResponse{
@@ -37383,17 +41376,17 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -37530,17 +41523,17 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -37686,17 +41679,17 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -37858,17 +41851,17 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListKeyValueEntriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -38158,17 +42151,17 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1OptimizedStats{
 		ServerResponse: googleapi.ServerResponse{
@@ -38376,17 +42369,17 @@ func (c *OrganizationsEnvironmentsQueriesCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1AsyncQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -38528,17 +42521,17 @@ func (c *OrganizationsEnvironmentsQueriesGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1AsyncQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -38680,17 +42673,17 @@ func (c *OrganizationsEnvironmentsQueriesGetResultCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -38834,17 +42827,17 @@ func (c *OrganizationsEnvironmentsQueriesGetResulturlCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -39028,17 +43021,17 @@ func (c *OrganizationsEnvironmentsQueriesListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListAsyncQueriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -39199,17 +43192,17 @@ func (c *OrganizationsEnvironmentsReferencesCreateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Reference{
 		ServerResponse: googleapi.ServerResponse{
@@ -39336,17 +43329,17 @@ func (c *OrganizationsEnvironmentsReferencesDeleteCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Reference{
 		ServerResponse: googleapi.ServerResponse{
@@ -39483,17 +43476,17 @@ func (c *OrganizationsEnvironmentsReferencesGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Reference{
 		ServerResponse: googleapi.ServerResponse{
@@ -39625,17 +43618,17 @@ func (c *OrganizationsEnvironmentsReferencesUpdateCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Reference{
 		ServerResponse: googleapi.ServerResponse{
@@ -39787,17 +43780,17 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ResourceFile{
 		ServerResponse: googleapi.ServerResponse{
@@ -39944,17 +43937,17 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ResourceFile{
 		ServerResponse: googleapi.ServerResponse{
@@ -40116,17 +44109,17 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -40288,17 +44281,17 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListEnvironmentResourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -40450,17 +44443,17 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListEnvironmentResourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -40609,17 +44602,17 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ResourceFile{
 		ServerResponse: googleapi.ServerResponse{
@@ -40675,6 +44668,371 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Do(opts ...googleapi.
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.environments.securityIncidents.get":
+
+type OrganizationsEnvironmentsSecurityIncidentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: GetSecurityIncident gets the specified security incident.
+// Returns NOT_FOUND if security incident is not present for the
+// specified organization and environment.
+//
+//   - name: Security incident in the following format:
+//     `organizations/{org}/environments/{environment}/securityIncidents/{i
+//     ncident}'. Example:
+//     organizations/testOrg/environments/testEnv/securityIncidents/1234-45
+//     67-890-111.
+func (r *OrganizationsEnvironmentsSecurityIncidentsService) Get(name string) *OrganizationsEnvironmentsSecurityIncidentsGetCall {
+	c := &OrganizationsEnvironmentsSecurityIncidentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityIncidentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityIncidentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityIncidentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityIncidents.get" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityIncident or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityIncident.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityIncidentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityIncident, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityIncident{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetSecurityIncident gets the specified security incident. Returns NOT_FOUND if security incident is not present for the specified organization and environment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityIncidents/{securityIncidentsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityIncidents.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Security incident in the following format: `organizations/{org}/environments/{environment}/securityIncidents/{incident}'. Example: organizations/testOrg/environments/testEnv/securityIncidents/1234-4567-890-111",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityIncidents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityIncident"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityIncidents.list":
+
+type OrganizationsEnvironmentsSecurityIncidentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: ListSecurityIncidents lists all the security incident
+// associated with the environment.
+//
+//   - parent: For a specific organization, list of all the security
+//     incidents. Format: `organizations/{org}/environments/{environment}`.
+func (r *OrganizationsEnvironmentsSecurityIncidentsService) List(parent string) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c := &OrganizationsEnvironmentsSecurityIncidentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to
+// be used to get the list of security incidents, where filtering can be
+// done on API Proxies. Example: filter = "api_proxy = /",
+// "first_detected_time >", "last_detected_time <"
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Filter(filter string) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of incidents to return. The service may return fewer than this value.
+// If unspecified, at most 50 incidents will be returned.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) PageSize(pageSize int64) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSecurityIncident` call. Provide this to
+// retrieve the subsequent page.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) PageToken(pageToken string) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityIncidentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityIncidents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityIncidents.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListSecurityIncidentsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListSecurityIncidentsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityIncidentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityIncidentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ListSecurityIncidents lists all the security incident associated with the environment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityIncidents",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityIncidents.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression to be used to get the list of security incidents, where filtering can be done on API Proxies. Example: filter = \"api_proxy = /\", \"first_detected_time \u003e\", \"last_detected_time \u003c\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of incidents to return. The service may return fewer than this value. If unspecified, at most 50 incidents will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListSecurityIncident` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. For a specific organization, list of all the security incidents. Format: `organizations/{org}/environments/{environment}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityIncidents",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListSecurityIncidentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityIncidentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.environments.securityReports.create":
@@ -40770,17 +45128,17 @@ func (c *OrganizationsEnvironmentsSecurityReportsCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -40923,17 +45281,17 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -41077,17 +45435,17 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetResultCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -41229,17 +45587,17 @@ func (c *OrganizationsEnvironmentsSecurityReportsGetResultViewCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityReportResultView{
 		ServerResponse: googleapi.ServerResponse{
@@ -41429,17 +45787,17 @@ func (c *OrganizationsEnvironmentsSecurityReportsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListSecurityReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -41627,17 +45985,17 @@ func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1QueryTabularStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -41795,17 +46153,17 @@ func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1QueryTimeSeriesStatsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -41969,17 +46327,17 @@ func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -42135,17 +46493,17 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeployCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -42295,17 +46653,17 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) Do(opt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Deployment{
 		ServerResponse: googleapi.ServerResponse{
@@ -42437,17 +46795,17 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsUndeployCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -42708,17 +47066,17 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Stats{
 		ServerResponse: googleapi.ServerResponse{
@@ -42931,17 +47289,17 @@ func (c *OrganizationsEnvironmentsTargetserversCreateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TargetServer{
 		ServerResponse: googleapi.ServerResponse{
@@ -43074,17 +47432,17 @@ func (c *OrganizationsEnvironmentsTargetserversDeleteCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TargetServer{
 		ServerResponse: googleapi.ServerResponse{
@@ -43222,17 +47580,17 @@ func (c *OrganizationsEnvironmentsTargetserversGetCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TargetServer{
 		ServerResponse: googleapi.ServerResponse{
@@ -43365,17 +47723,17 @@ func (c *OrganizationsEnvironmentsTargetserversUpdateCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TargetServer{
 		ServerResponse: googleapi.ServerResponse{
@@ -43513,17 +47871,17 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesCreateCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TraceConfigOverride{
 		ServerResponse: googleapi.ServerResponse{
@@ -43650,17 +48008,17 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesDeleteCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -43799,17 +48157,17 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesGetCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TraceConfigOverride{
 		ServerResponse: googleapi.ServerResponse{
@@ -43968,17 +48326,17 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesListCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListTraceConfigOverridesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -44152,17 +48510,17 @@ func (c *OrganizationsEnvironmentsTraceConfigOverridesPatchCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1TraceConfigOverride{
 		ServerResponse: googleapi.ServerResponse{
@@ -44305,17 +48663,17 @@ func (c *OrganizationsHostQueriesCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1AsyncQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -44457,17 +48815,17 @@ func (c *OrganizationsHostQueriesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1AsyncQuery{
 		ServerResponse: googleapi.ServerResponse{
@@ -44608,17 +48966,17 @@ func (c *OrganizationsHostQueriesGetResultCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -44756,17 +49114,17 @@ func (c *OrganizationsHostQueriesGetResultViewCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1AsyncQueryResultView{
 		ServerResponse: googleapi.ServerResponse{
@@ -44957,17 +49315,17 @@ func (c *OrganizationsHostQueriesListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListAsyncQueriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -45137,17 +49495,17 @@ func (c *OrganizationsHostSecurityReportsCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -45290,17 +49648,17 @@ func (c *OrganizationsHostSecurityReportsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -45441,17 +49799,17 @@ func (c *OrganizationsHostSecurityReportsGetResultCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -45592,17 +49950,17 @@ func (c *OrganizationsHostSecurityReportsGetResultViewCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityReportResultView{
 		ServerResponse: googleapi.ServerResponse{
@@ -45799,17 +50157,17 @@ func (c *OrganizationsHostSecurityReportsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListSecurityReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -46123,17 +50481,17 @@ func (c *OrganizationsHostStatsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Stats{
 		ServerResponse: googleapi.ServerResponse{
@@ -46335,17 +50693,17 @@ func (c *OrganizationsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -46473,17 +50831,17 @@ func (c *OrganizationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -46621,17 +50979,17 @@ func (c *OrganizationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Instance{
 		ServerResponse: googleapi.ServerResponse{
@@ -46786,17 +51144,17 @@ func (c *OrganizationsInstancesListCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListInstancesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -46967,17 +51325,17 @@ func (c *OrganizationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -47121,17 +51479,17 @@ func (c *OrganizationsInstancesReportStatusCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ReportInstanceStatusResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -47265,17 +51623,17 @@ func (c *OrganizationsInstancesAttachmentsCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -47403,17 +51761,17 @@ func (c *OrganizationsInstancesAttachmentsDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -47552,17 +51910,17 @@ func (c *OrganizationsInstancesAttachmentsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1InstanceAttachment{
 		ServerResponse: googleapi.ServerResponse{
@@ -47717,17 +52075,17 @@ func (c *OrganizationsInstancesAttachmentsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListInstanceAttachmentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -47889,17 +52247,17 @@ func (c *OrganizationsInstancesCanaryevaluationsCreateCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -48041,17 +52399,17 @@ func (c *OrganizationsInstancesCanaryevaluationsGetCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1CanaryEvaluation{
 		ServerResponse: googleapi.ServerResponse{
@@ -48185,17 +52543,17 @@ func (c *OrganizationsInstancesNatAddressesActivateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -48333,17 +52691,17 @@ func (c *OrganizationsInstancesNatAddressesCreateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -48473,17 +52831,17 @@ func (c *OrganizationsInstancesNatAddressesDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -48623,17 +52981,17 @@ func (c *OrganizationsInstancesNatAddressesGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1NatAddress{
 		ServerResponse: googleapi.ServerResponse{
@@ -48788,17 +53146,17 @@ func (c *OrganizationsInstancesNatAddressesListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListNatAddressesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -48961,17 +53319,17 @@ func (c *OrganizationsKeyvaluemapsCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueMap{
 		ServerResponse: googleapi.ServerResponse{
@@ -49097,17 +53455,17 @@ func (c *OrganizationsKeyvaluemapsDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueMap{
 		ServerResponse: googleapi.ServerResponse{
@@ -49245,17 +53603,17 @@ func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -49392,17 +53750,17 @@ func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -49548,17 +53906,17 @@ func (c *OrganizationsKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1KeyValueEntry{
 		ServerResponse: googleapi.ServerResponse{
@@ -49720,17 +54078,17 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListKeyValueEntriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -49900,17 +54258,17 @@ func (c *OrganizationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -49964,14 +54322,7 @@ type OrganizationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
@@ -50077,17 +54428,17 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -50101,7 +54452,7 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.operations.list",
@@ -50373,17 +54724,17 @@ func (c *OrganizationsOptimizedHostStatsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1OptimizedStats{
 		ServerResponse: googleapi.ServerResponse{
@@ -50591,17 +54942,17 @@ func (c *OrganizationsReportsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1CustomReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -50729,17 +55080,17 @@ func (c *OrganizationsReportsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1DeleteCustomReportResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -50876,17 +55227,17 @@ func (c *OrganizationsReportsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1CustomReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -51032,17 +55383,17 @@ func (c *OrganizationsReportsListCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListCustomReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -51177,17 +55528,17 @@ func (c *OrganizationsReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1CustomReport{
 		ServerResponse: googleapi.ServerResponse{
@@ -51223,6 +55574,298 @@ func (c *OrganizationsReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1CustomReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.securityProfiles.create":
+
+type OrganizationsSecurityProfilesCreateCall struct {
+	s                                  *Service
+	parent                             string
+	googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Create: CreateSecurityProfile create a new custom security profile.
+//
+// - parent: Name of organization. Format: organizations/{org}.
+func (r *OrganizationsSecurityProfilesService) Create(parent string, googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile) *OrganizationsSecurityProfilesCreateCall {
+	c := &OrganizationsSecurityProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityprofile = googlecloudapigeev1securityprofile
+	return c
+}
+
+// SecurityProfileId sets the optional parameter "securityProfileId":
+// Required. The ID to use for the SecurityProfile, which will become
+// the final component of the action's resource name. This value should
+// be 4-63 characters, and valid characters are /(^a-z
+// ([a-z0-9-]{​0,61}[a-z0-9])?$/.
+func (c *OrganizationsSecurityProfilesCreateCall) SecurityProfileId(securityProfileId string) *OrganizationsSecurityProfilesCreateCall {
+	c.urlParams_.Set("securityProfileId", securityProfileId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesCreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesCreateCall) Context(ctx context.Context) *OrganizationsSecurityProfilesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.create" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityProfile or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityProfile.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "CreateSecurityProfile create a new custom security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.securityProfiles.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of organization. Format: organizations/{org}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "securityProfileId": {
+	//       "description": "Required. The ID to use for the SecurityProfile, which will become the final component of the action's resource name. This value should be 4-63 characters, and valid characters are /(^[a-z]([a-z0-9-]{​0,61}[a-z0-9])?$/.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityProfiles",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.securityProfiles.delete":
+
+type OrganizationsSecurityProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: DeleteSecurityProfile delete a profile with all its
+// revisions.
+//
+//   - name: Name of profile. Format:
+//     organizations/{org}/securityProfiles/{profile}.
+func (r *OrganizationsSecurityProfilesService) Delete(name string) *OrganizationsSecurityProfilesDeleteCall {
+	c := &OrganizationsSecurityProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesDeleteCall) Context(ctx context.Context) *OrganizationsSecurityProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "DeleteSecurityProfile delete a profile with all its revisions.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.securityProfiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of profile. Format: organizations/{org}/securityProfiles/{profile}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -51333,17 +55976,17 @@ func (c *OrganizationsSecurityProfilesGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityProfile{
 		ServerResponse: googleapi.ServerResponse{
@@ -51501,17 +56144,17 @@ func (c *OrganizationsSecurityProfilesListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListSecurityProfilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -51700,17 +56343,17 @@ func (c *OrganizationsSecurityProfilesListRevisionsCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -51781,6 +56424,163 @@ func (c *OrganizationsSecurityProfilesListRevisionsCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apigee.organizations.securityProfiles.patch":
+
+type OrganizationsSecurityProfilesPatchCall struct {
+	s                                  *Service
+	name                               string
+	googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Patch: UpdateSecurityProfile update the metadata of security profile.
+//
+//   - name: Immutable. Name of the security profile resource. Format:
+//     organizations/{org}/securityProfiles/{profile}.
+func (r *OrganizationsSecurityProfilesService) Patch(name string, googlecloudapigeev1securityprofile *GoogleCloudApigeeV1SecurityProfile) *OrganizationsSecurityProfilesPatchCall {
+	c := &OrganizationsSecurityProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityprofile = googlecloudapigeev1securityprofile
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update.
+func (c *OrganizationsSecurityProfilesPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityProfilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityProfilesPatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityProfilesPatchCall) Context(ctx context.Context) *OrganizationsSecurityProfilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityProfilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfiles.patch" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityProfile or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityProfile.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "UpdateSecurityProfile update the metadata of security profile.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityProfiles/{securityProfilesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.securityProfiles.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Name of the security profile resource. Format: organizations/{org}/securityProfiles/{profile}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apigee.organizations.securityProfiles.environments.computeEnvironmentScores":
@@ -51877,17 +56677,17 @@ func (c *OrganizationsSecurityProfilesEnvironmentsComputeEnvironmentScoresCall) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ComputeEnvironmentScoresResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -52046,17 +56846,17 @@ func (c *OrganizationsSecurityProfilesEnvironmentsCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation{
 		ServerResponse: googleapi.ServerResponse{
@@ -52184,17 +56984,17 @@ func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -52345,17 +57145,17 @@ func (c *OrganizationsSharedflowsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SharedFlowRevision{
 		ServerResponse: googleapi.ServerResponse{
@@ -52492,17 +57292,17 @@ func (c *OrganizationsSharedflowsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SharedFlow{
 		ServerResponse: googleapi.ServerResponse{
@@ -52639,17 +57439,17 @@ func (c *OrganizationsSharedflowsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SharedFlow{
 		ServerResponse: googleapi.ServerResponse{
@@ -52803,17 +57603,17 @@ func (c *OrganizationsSharedflowsListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListSharedFlowsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -52963,17 +57763,17 @@ func (c *OrganizationsSharedflowsDeploymentsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -53100,17 +57900,17 @@ func (c *OrganizationsSharedflowsRevisionsDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SharedFlowRevision{
 		ServerResponse: googleapi.ServerResponse{
@@ -53263,17 +58063,17 @@ func (c *OrganizationsSharedflowsRevisionsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -53425,17 +58225,17 @@ func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) Do(opts 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1SharedFlowRevision{
 		ServerResponse: googleapi.ServerResponse{
@@ -53583,17 +58383,17 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListDeploymentsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -53723,17 +58523,17 @@ func (c *OrganizationsSitesApicategoriesCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiCategory{
 		ServerResponse: googleapi.ServerResponse{
@@ -53847,33 +58647,33 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) doRequest(alt string) (*http
 }
 
 // Do executes the "apigee.organizations.sites.apicategories.delete" call.
-// Exactly one of *GoogleCloudApigeeV1ApiResponseWrapper or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudApigeeV1ApiResponseWrapper.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiResponseWrapper, error) {
+// Exactly one of *GoogleCloudApigeeV1DeleteResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1DeleteResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1DeleteResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudApigeeV1ApiResponseWrapper{
+	ret := &GoogleCloudApigeeV1DeleteResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -53903,7 +58703,7 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ApiResponseWrapper"
+	//     "$ref": "GoogleCloudApigeeV1DeleteResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -54009,17 +58809,17 @@ func (c *OrganizationsSitesApicategoriesGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiCategory{
 		ServerResponse: googleapi.ServerResponse{
@@ -54158,17 +58958,17 @@ func (c *OrganizationsSitesApicategoriesListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ListApiCategoriesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -54299,17 +59099,17 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1ApiCategory{
 		ServerResponse: googleapi.ServerResponse{
@@ -54444,17 +59244,17 @@ func (c *ProjectsProvisionOrganizationCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{

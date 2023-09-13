@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package connectors provides access to the Connectors API.
 //
 // For product documentation, see: https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	connectorsService, err := connectors.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	connectorsService, err := connectors.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	connectorsService, err := connectors.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package connectors // import "google.golang.org/api/connectors/v2"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "connectors:v2"
 const apiName = "connectors"
@@ -771,10 +785,23 @@ func (s *ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
 // that the JSON representation of ExecuteSqlQueryRequest has the
 // following format: `{"query":"select *"}`.
 type Query struct {
+	// MaxRows: Sets the limit for the maximum number of rows returned after
+	// the query execution.
+	MaxRows int64 `json:"maxRows,omitempty,string"`
+
 	// Query: Required. Sql query to execute.
 	Query string `json:"query,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Query") to
+	// QueryParameters: In the struct, the value corresponds to the value of
+	// query parameter and date type corresponds to the date type of the
+	// query parameter.
+	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
+
+	// Timeout: Sets the number of seconds the driver will wait for a query
+	// to execute.
+	Timeout int64 `json:"timeout,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxRows") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -782,8 +809,8 @@ type Query struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Query") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "MaxRows") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -793,6 +820,81 @@ type Query struct {
 
 func (s *Query) MarshalJSON() ([]byte, error) {
 	type NoMethod Query
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryParameter: Query parameter definition
+type QueryParameter struct {
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Datatype unspecified.
+	//   "INT" - Deprecated Int type, use INTEGER type instead.
+	//   "SMALLINT" - Small int type.
+	//   "DOUBLE" - Double type.
+	//   "DATE" - Date type.
+	//   "DATETIME" - Deprecated Datetime type.
+	//   "TIME" - Time type.
+	//   "STRING" - Deprecated string type, use VARCHAR type instead.
+	//   "LONG" - Deprecated Long type, use BIGINT type instead.
+	//   "BOOLEAN" - Boolean type.
+	//   "DECIMAL" - Decimal type.
+	//   "UUID" - Deprecated UUID type, use VARCHAR instead.
+	//   "BLOB" - Blob type.
+	//   "BIT" - Bit type.
+	//   "TINYINT" - Tiny int type.
+	//   "INTEGER" - Integer type.
+	//   "BIGINT" - Big int type.
+	//   "FLOAT" - Float type.
+	//   "REAL" - Real type.
+	//   "NUMERIC" - Numeric type.
+	//   "CHAR" - Char type.
+	//   "VARCHAR" - Varchar type.
+	//   "LONGVARCHAR" - Long varchar type.
+	//   "TIMESTAMP" - Timestamp type.
+	//   "NCHAR" - Nchar type.
+	//   "NVARCHAR" - Nvarchar type.
+	//   "LONGNVARCHAR" - Long Nvarchar type.
+	//   "NULL" - Null type.
+	//   "OTHER" - Other type.
+	//   "JAVA_OBJECT" - Java object type.
+	//   "DISTINCT" - Distinct type keyword.
+	//   "STRUCT" - Struct type.
+	//   "ARRAY" - Array type.
+	//   "CLOB" - Clob type.
+	//   "REF" - Ref type.
+	//   "DATALINK" - Datalink type.
+	//   "ROWID" - Row ID type.
+	//   "BINARY" - Binary type.
+	//   "VARBINARY" - Varbinary type.
+	//   "LONGVARBINARY" - Long Varbinary type.
+	//   "NCLOB" - Nclob type.
+	//   "SQLXML" - SQLXML type.
+	//   "REF_CURSOR" - Ref_cursor type.
+	//   "TIME_WITH_TIMEZONE" - Time with timezone type.
+	//   "TIMESTAMP_WITH_TIMEZONE" - Timestamp with timezone type.
+	DataType string `json:"dataType,omitempty"`
+
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryParameter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1034,17 +1136,17 @@ func (c *ProjectsLocationsConnectionsExecuteSqlQueryCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ExecuteSqlQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1180,17 +1282,17 @@ func (c *ProjectsLocationsConnectionsActionsExecuteCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ExecuteActionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1346,17 +1448,17 @@ func (c *ProjectsLocationsConnectionsActionsListCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListActionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1542,17 +1644,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEntityTypesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1718,17 +1820,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesCreateCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Entity{
 		ServerResponse: googleapi.ServerResponse{
@@ -1856,17 +1958,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2005,17 +2107,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithCondit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2159,17 +2261,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Entity{
 		ServerResponse: googleapi.ServerResponse{
@@ -2347,17 +2449,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEntitiesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2536,17 +2638,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesPatchCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Entity{
 		ServerResponse: googleapi.ServerResponse{
@@ -2696,17 +2798,17 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UpdateEntitiesWithConditionsResponse{
 		ServerResponse: googleapi.ServerResponse{

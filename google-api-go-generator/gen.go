@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"go/format"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -65,6 +64,13 @@ var (
 	errOldRevision = errors.New("revision pulled older than local cached revision")
 	errNoDoc       = errors.New("could not read discovery doc")
 )
+
+// skipAPIGeneration is a set of APIs to not generate when generating all clients.
+var skipAPIGeneration = map[string]bool{
+	"integrations:v1alpha": true,
+	"sql:v1beta4":          true,
+	"datalineage:v1":       true,
+}
 
 // API represents an API to generate, as well as its state while it's
 // generating.
@@ -120,11 +126,6 @@ type compileError struct {
 
 func (e *compileError) Error() string {
 	return fmt.Sprintf("API %s failed to compile:\n%v", e.api.ID, e.output)
-}
-
-// skipAPIGeneration is a set of APIs to not generate when generating all clients.
-var skipAPIGeneration = map[string]bool{
-	"sql:v1beta4": true,
 }
 
 func main() {
@@ -214,7 +215,7 @@ func getAPIs() []*API {
 			log.Fatalf("-cache=true not compatible with -publiconly=false")
 		}
 		var err error
-		bytes, err = ioutil.ReadFile(apiListFile)
+		bytes, err = os.ReadFile(apiListFile)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -275,7 +276,7 @@ func getAPIsFromFile() []*API {
 }
 
 func apiFromFile(file string) (*API, error) {
-	jsonBytes, err := ioutil.ReadFile(file)
+	jsonBytes, err := os.ReadFile(file)
 	if err != nil {
 		return nil, fmt.Errorf("Error reading %s: %v", file, err)
 	}
@@ -298,7 +299,7 @@ func checkAndUpdateSpecFile(file string, contents []byte) error {
 	if _, err := os.Stat(file); os.IsNotExist(err) {
 		return writeFile(file, contents)
 	}
-	existing, err := ioutil.ReadFile(file)
+	existing, err := os.ReadFile(file)
 	if err != nil {
 		return err
 	}
@@ -329,7 +330,7 @@ func isNewerRevision(old []byte, new []byte) error {
 
 func writeFile(file string, contents []byte) error {
 	// Don't write it if the contents are identical.
-	existing, err := ioutil.ReadFile(file)
+	existing, err := os.ReadFile(file)
 	if err == nil && (bytes.Equal(existing, contents) || basicallyEqual(existing, contents)) {
 		return nil
 	}
@@ -337,7 +338,7 @@ func writeFile(file string, contents []byte) error {
 	if err = os.MkdirAll(outdir, 0755); err != nil {
 		return fmt.Errorf("failed to Mkdir %s: %v", outdir, err)
 	}
-	return ioutil.WriteFile(file, contents, 0644)
+	return os.WriteFile(file, contents, 0644)
 }
 
 var ignoreLines = regexp.MustCompile(`(?m)^\s+"(?:etag|revision)": ".+\n`)
@@ -368,7 +369,7 @@ func slurpURL(urlStr string) []byte {
 		log.Printf("WARNING: URL %s served status code %d", urlStr, res.StatusCode)
 		return nil
 	}
-	bs, err := ioutil.ReadAll(res.Body)
+	bs, err := io.ReadAll(res.Body)
 	if err != nil {
 		log.Fatalf("Error reading body of URL %s: %v", urlStr, err)
 	}
@@ -523,7 +524,7 @@ func (a *API) jsonBytes() []byte {
 		var slurp []byte
 		var err error
 		if *useCache {
-			slurp, err = ioutil.ReadFile(a.JSONFile())
+			slurp, err = os.ReadFile(a.JSONFile())
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -587,6 +588,71 @@ func (a *API) WriteGeneratedCode() error {
 	return nil
 }
 
+func (a *API) printPkgDocs() {
+	pkg := a.Package()
+	pn := a.pn
+
+	pn("// Package %s provides access to the %s.", pkg, a.doc.Title)
+	if r := replacementPackage.Get(pkg, a.Version); r != "" {
+		pn("//")
+		pn("// This package is DEPRECATED. Use package %s instead.", r)
+	}
+	docsLink = a.doc.DocumentationLink
+	if docsLink != "" {
+		pn("//")
+		pn("// For product documentation, see: %s", docsLink)
+	}
+	pn("//")
+	pn("// # Library status")
+	pn("//")
+	pn("// These client libraries are officially supported by Google. However, this")
+	pn("// library is considered complete and is in maintenance mode. This means")
+	pn("// that we will address critical bugs and security issues but will not add")
+	pn("// any new features.")
+	pn("// ")
+	pn("// When possible, we recommend using our newer")
+	pn("// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)")
+	pn("// that are still actively being worked and iterated on.")
+	pn("//")
+	pn("// # Creating a client")
+	pn("//")
+	pn("// Usage example:")
+	pn("//")
+	pn("//   import %q", a.Target())
+	pn("//   ...")
+	pn("//   ctx := context.Background()")
+	pn("//   %sService, err := %s.NewService(ctx)", pkg, pkg)
+	pn("//")
+	pn("// In this example, Google Application Default Credentials are used for")
+	pn("// authentication. For information on how to create and obtain Application")
+	pn("// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.")
+	pn("//")
+	pn("// # Other authentication options")
+	pn("//")
+	if len(a.doc.Auth.OAuth2Scopes) > 1 {
+		pn(`// By default, all available scopes (see "Constants") are used to authenticate.`)
+		pn(`// To restrict scopes, use [google.golang.org/api/option.WithScopes]:`)
+		pn("//")
+		// NOTE: the first scope tends to be the broadest. Use the last one to demonstrate restriction.
+		pn("//   %sService, err := %s.NewService(ctx, option.WithScopes(%s.%s))", pkg, pkg, pkg, scopeIdentifier(a.doc.Auth.OAuth2Scopes[len(a.doc.Auth.OAuth2Scopes)-1]))
+		pn("//")
+	}
+	pn("// To use an API key for authentication (note: some APIs do not support API")
+	pn("// keys), use [google.golang.org/api/option.WithAPIKey]:")
+	pn("//")
+	pn(`//   %sService, err := %s.NewService(ctx, option.WithAPIKey("AIza..."))`, pkg, pkg)
+	pn("//")
+	pn("// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth")
+	pn("// flow, use [google.golang.org/api/option.WithTokenSource]:")
+	pn("//")
+	pn("//   config := &oauth2.Config{...}")
+	pn("//   // ...")
+	pn("//   token, err := config.Exchange(ctx, ...)")
+	pn("//   %sService, err := %s.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))", pkg, pkg)
+	pn("//")
+	pn("// See [google.golang.org/api/option.ClientOption] for details on options.")
+}
+
 var docsLink string
 
 func (a *API) GenerateCode() ([]byte, error) {
@@ -638,51 +704,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 // Code generated file. DO NOT EDIT.
 `, *copyrightYear)
 
-	pn("// Package %s provides access to the %s.", pkg, a.doc.Title)
-	if r := replacementPackage.Get(pkg, a.Version); r != "" {
-		pn("//")
-		pn("// This package is DEPRECATED. Use package %s instead.", r)
-	}
-	docsLink = a.doc.DocumentationLink
-	if docsLink != "" {
-		pn("//")
-		pn("// For product documentation, see: %s", docsLink)
-	}
-	pn("//")
-	pn("// Creating a client")
-	pn("//")
-	pn("// Usage example:")
-	pn("//")
-	pn("//   import %q", a.Target())
-	pn("//   ...")
-	pn("//   ctx := context.Background()")
-	pn("//   %sService, err := %s.NewService(ctx)", pkg, pkg)
-	pn("//")
-	pn("// In this example, Google Application Default Credentials are used for authentication.")
-	pn("//")
-	pn("// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.")
-	pn("//")
-	pn("// Other authentication options")
-	pn("//")
-	if len(a.doc.Auth.OAuth2Scopes) > 1 {
-		pn(`// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:`)
-		pn("//")
-		// NOTE: the first scope tends to be the broadest. Use the last one to demonstrate restriction.
-		pn("//   %sService, err := %s.NewService(ctx, option.WithScopes(%s.%s))", pkg, pkg, pkg, scopeIdentifier(a.doc.Auth.OAuth2Scopes[len(a.doc.Auth.OAuth2Scopes)-1]))
-		pn("//")
-	}
-	pn("// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:")
-	pn("//")
-	pn(`//   %sService, err := %s.NewService(ctx, option.WithAPIKey("AIza..."))`, pkg, pkg)
-	pn("//")
-	pn("// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:")
-	pn("//")
-	pn("//   config := &oauth2.Config{...}")
-	pn("//   // ...")
-	pn("//   token, err := config.Exchange(ctx, ...)")
-	pn("//   %sService, err := %s.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))", pkg, pkg)
-	pn("//")
-	pn("// See https://godoc.org/google.golang.org/api/option/ for details on options.")
+	a.printPkgDocs()
 	pn("package %s // import %q", pkg, a.Target())
 	p("\n")
 	pn("import (")
@@ -732,6 +754,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
 	pn("var _ = internaloption.WithDefaultEndpoint")
+	pn("var _ = internal.Version")
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)
@@ -1476,7 +1499,8 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
 func (s *Schema) writeSchemaUnmarshal() {
 	var floatProps []*Property
 	for _, p := range s.properties() {
-		if p.p.Schema.Type == "number" {
+		if p.p.Schema.Type == "number" ||
+			(p.p.Schema.Type == "array" && p.p.Schema.ItemSchema.Type == "number") {
 			floatProps = append(floatProps, p)
 		}
 	}
@@ -1494,6 +1518,9 @@ func (s *Schema) writeSchemaUnmarshal() {
 		if p.forcePointerType() {
 			typ = "*" + typ
 		}
+		if p.p.Schema.Type == "array" {
+			typ = "[]" + typ
+		}
 		pn("%s %s `json:\"%s\"`", p.assignedGoName, typ, p.p.Name)
 	}
 	pn("    *NoMethod") // embed the schema
@@ -1508,6 +1535,11 @@ func (s *Schema) writeSchemaUnmarshal() {
 		n := p.assignedGoName
 		if p.forcePointerType() {
 			pn("if s1.%s != nil { s.%s = (*float64)(s1.%s) }", n, n, n)
+		} else if p.p.Schema.Type == "array" {
+			pn("s.%s = make([]float64, len(s1.%s))", n, n)
+			pn("  for i := range s1.%s {", n)
+			pn("  s.%s[i] = float64(s1.%s[i])", n, n)
+			pn("}")
 		} else {
 			pn("s.%s = float64(s1.%s)", n, n)
 		}
@@ -2166,7 +2198,7 @@ func (meth *Method) generateCode() {
 			pn("if err := googleapi.CheckResponse(res); err != nil {")
 		}
 		pn("res.Body.Close()")
-		pn("return nil, err")
+		pn("return nil, gensupport.WrapError(err)")
 		pn("}")
 		pn("return res, nil")
 		pn("}")
@@ -2198,15 +2230,15 @@ func (meth *Method) generateCode() {
 		if retTypeComma != "" && !mapRetType {
 			pn("if res != nil && res.StatusCode == http.StatusNotModified {")
 			pn(" if res.Body != nil { res.Body.Close() }")
-			pn(" return nil, &googleapi.Error{")
+			pn(" return nil, gensupport.WrapError(&googleapi.Error{")
 			pn("  Code: res.StatusCode,")
 			pn("  Header: res.Header,")
-			pn(" }")
+			pn(" })")
 			pn("}")
 		}
 		pn("if err != nil { return %serr }", nilRet)
 		pn("defer googleapi.CloseBody(res)")
-		pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+		pn("if err := googleapi.CheckResponse(res); err != nil { return %sgensupport.WrapError(err) }", nilRet)
 		if meth.supportsMediaUpload() {
 			pn(`rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))`)
 			pn("if rx != nil {")
@@ -2223,7 +2255,7 @@ func (meth *Method) generateCode() {
 			pn(" res, err = rx.Upload(ctx)")
 			pn(" if err != nil { return %serr }", nilRet)
 			pn(" defer res.Body.Close()")
-			pn(" if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+			pn(" if err := googleapi.CheckResponse(res); err != nil { return %sgensupport.WrapError(err) }", nilRet)
 			pn("}")
 		}
 		if retTypeComma == "" {

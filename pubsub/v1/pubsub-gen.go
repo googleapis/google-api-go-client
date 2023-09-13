@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -10,6 +10,17 @@
 //
 // For product documentation, see: https://cloud.google.com/pubsub/docs
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -19,28 +30,31 @@
 //	ctx := context.Background()
 //	pubsubService, err := pubsub.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	pubsubService, err := pubsub.NewService(ctx, option.WithScopes(pubsub.PubsubScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	pubsubService, err := pubsub.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	pubsubService, err := pubsub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package pubsub // import "google.golang.org/api/pubsub/v1"
 
 import (
@@ -77,6 +91,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "pubsub:v1"
 const apiName = "pubsub"
@@ -258,13 +273,49 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AvroConfig: Configuration for writing message data in Avro format.
+// Message payloads and metadata will be written to files as an Avro
+// binary.
+type AvroConfig struct {
+	// WriteMetadata: Optional. When true, write the subscription name,
+	// message_id, publish_time, attributes, and ordering_key as additional
+	// fields in the output. The subscription name, message_id, and
+	// publish_time fields are put in their own fields while all other
+	// message properties other than data (for example, an ordering_key, if
+	// present) are added as entries in the attributes map.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WriteMetadata") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvroConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AvroConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryConfig: Configuration for a BigQuery subscription.
 type BigQueryConfig struct {
-	// DropUnknownFields: When true and use_topic_schema is true, any fields
-	// that are a part of the topic schema that are not part of the BigQuery
-	// table schema are dropped when writing to BigQuery. Otherwise, the
-	// schemas must be kept in sync and any messages with extra fields are
-	// not written and remain in the subscription's backlog.
+	// DropUnknownFields: Optional. When true and use_topic_schema is true,
+	// any fields that are a part of the topic schema that are not part of
+	// the BigQuery table schema are dropped when writing to BigQuery.
+	// Otherwise, the schemas must be kept in sync and any messages with
+	// extra fields are not written and remain in the subscription's
+	// backlog.
 	DropUnknownFields bool `json:"dropUnknownFields,omitempty"`
 
 	// State: Output only. An output-only field that indicates whether or
@@ -274,27 +325,33 @@ type BigQueryConfig struct {
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "ACTIVE" - The subscription can actively send messages to BigQuery
 	//   "PERMISSION_DENIED" - Cannot write to the BigQuery table because of
-	// permission denied errors.
+	// permission denied errors. This can happen if - Pub/Sub SA has not
+	// been granted the [appropriate BigQuery IAM
+	// permissions](https://cloud.google.com/pubsub/docs/create-subscription#
+	// assign_bigquery_service_account) - bigquery.googleapis.com API is not
+	// enabled for the project
+	// ([instructions](https://cloud.google.com/service-usage/docs/enable-dis
+	// able))
 	//   "NOT_FOUND" - Cannot write to the BigQuery table because it does
 	// not exist.
 	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a
 	// schema mismatch.
 	State string `json:"state,omitempty"`
 
-	// Table: The name of the table to which to write data, of the form
-	// {projectId}.{datasetId}.{tableId}
+	// Table: Optional. The name of the table to which to write data, of the
+	// form {projectId}.{datasetId}.{tableId}
 	Table string `json:"table,omitempty"`
 
-	// UseTopicSchema: When true, use the topic's schema as the columns to
-	// write to in BigQuery, if it exists.
+	// UseTopicSchema: Optional. When true, use the topic's schema as the
+	// columns to write to in BigQuery, if it exists.
 	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
 
-	// WriteMetadata: When true, write the subscription name, message_id,
-	// publish_time, attributes, and ordering_key to additional columns in
-	// the table. The subscription name, message_id, and publish_time fields
-	// are put in their own columns while all other message properties
-	// (other than data) are written to a JSON object in the attributes
-	// column.
+	// WriteMetadata: Optional. When true, write the subscription name,
+	// message_id, publish_time, attributes, and ordering_key to additional
+	// columns in the table. The subscription name, message_id, and
+	// publish_time fields are put in their own columns while all other
+	// message properties (other than data) are written to a JSON object in
+	// the attributes column.
 	WriteMetadata bool `json:"writeMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DropUnknownFields")
@@ -350,7 +407,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -367,9 +426,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -399,9 +456,112 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudStorageConfig: Configuration for a Cloud Storage subscription.
+type CloudStorageConfig struct {
+	// AvroConfig: Optional. If set, message data will be written to Cloud
+	// Storage in Avro format.
+	AvroConfig *AvroConfig `json:"avroConfig,omitempty"`
+
+	// Bucket: Required. User-provided name for the Cloud Storage bucket.
+	// The bucket must be created by the user. The bucket name must be
+	// without any prefix like "gs://". See the [bucket naming requirements]
+	// (https://cloud.google.com/storage/docs/buckets#naming).
+	Bucket string `json:"bucket,omitempty"`
+
+	// FilenamePrefix: Optional. User-provided prefix for Cloud Storage
+	// filename. See the object naming requirements
+	// (https://cloud.google.com/storage/docs/objects#naming).
+	FilenamePrefix string `json:"filenamePrefix,omitempty"`
+
+	// FilenameSuffix: Optional. User-provided suffix for Cloud Storage
+	// filename. See the object naming requirements
+	// (https://cloud.google.com/storage/docs/objects#naming). Must not end
+	// in "/".
+	FilenameSuffix string `json:"filenameSuffix,omitempty"`
+
+	// MaxBytes: Optional. The maximum bytes that can be written to a Cloud
+	// Storage file before a new file is created. Min 1 KB, max 10 GiB. The
+	// max_bytes limit may be exceeded in cases where messages are larger
+	// than the limit.
+	MaxBytes int64 `json:"maxBytes,omitempty,string"`
+
+	// MaxDuration: Optional. The maximum duration that can elapse before a
+	// new Cloud Storage file is created. Min 1 minute, max 10 minutes,
+	// default 5 minutes. May not exceed the subscription's acknowledgement
+	// deadline.
+	MaxDuration string `json:"maxDuration,omitempty"`
+
+	// State: Output only. An output-only field that indicates whether or
+	// not the subscription can receive messages.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The subscription can actively send messages to Cloud
+	// Storage.
+	//   "PERMISSION_DENIED" - Cannot write to the Cloud Storage bucket
+	// because of permission denied errors.
+	//   "NOT_FOUND" - Cannot write to the Cloud Storage bucket because it
+	// does not exist.
+	State string `json:"state,omitempty"`
+
+	// TextConfig: Optional. If set, message data will be written to Cloud
+	// Storage in text format.
+	TextConfig *TextConfig `json:"textConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvroConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvroConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudStorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudStorageConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitSchemaRequest: Request for CommitSchema method.
+type CommitSchemaRequest struct {
+	// Schema: Required. The schema revision to commit.
+	Schema *Schema `json:"schema,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommitSchemaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CommitSchemaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateSnapshotRequest: Request for the `CreateSnapshot` method.
 type CreateSnapshotRequest struct {
-	// Labels: See Creating and managing labels
+	// Labels: Optional. See Creating and managing labels
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -443,9 +603,9 @@ func (s *CreateSnapshotRequest) MarshalJSON() ([]byte, error) {
 // any of the fields fails at subscription creation/updation, the
 // create/update subscription request will fail.
 type DeadLetterPolicy struct {
-	// DeadLetterTopic: The name of the topic to which dead letter messages
-	// should be published. Format is
-	// `projects/{project}/topics/{topic}`.The Cloud Pub/Sub service account
+	// DeadLetterTopic: Optional. The name of the topic to which dead letter
+	// messages should be published. Format is
+	// `projects/{project}/topics/{topic}`.The Pub/Sub service account
 	// associated with the enclosing subscription's parent project (i.e.,
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must
 	// have permission to Publish() to this topic. The operation will fail
@@ -454,14 +614,14 @@ type DeadLetterPolicy struct {
 	// topic with no subscriptions are lost.
 	DeadLetterTopic string `json:"deadLetterTopic,omitempty"`
 
-	// MaxDeliveryAttempts: The maximum number of delivery attempts for any
-	// message. The value must be between 5 and 100. The number of delivery
-	// attempts is defined as 1 + (the sum of number of NACKs and number of
-	// times the acknowledgement deadline has been exceeded for the
-	// message). A NACK is any call to ModifyAckDeadline with a 0 deadline.
-	// Note that client libraries may automatically extend ack_deadlines.
-	// This field will be honored on a best effort basis. If this parameter
-	// is 0, a default value of 5 is used.
+	// MaxDeliveryAttempts: Optional. The maximum number of delivery
+	// attempts for any message. The value must be between 5 and 100. The
+	// number of delivery attempts is defined as 1 + (the sum of number of
+	// NACKs and number of times the acknowledgement deadline has been
+	// exceeded for the message). A NACK is any call to ModifyAckDeadline
+	// with a 0 deadline. Note that client libraries may automatically
+	// extend ack_deadlines. This field will be honored on a best effort
+	// basis. If this parameter is 0, a default value of 5 is used.
 	MaxDeliveryAttempts int64 `json:"maxDeliveryAttempts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeadLetterTopic") to
@@ -510,12 +670,12 @@ type Empty struct {
 // ExpirationPolicy: A policy that specifies the conditions for resource
 // expiration (i.e., automatic resource deletion).
 type ExpirationPolicy struct {
-	// Ttl: Specifies the "time-to-live" duration for an associated
-	// resource. The resource expires if it is not active for a period of
-	// `ttl`. The definition of "activity" depends on the type of the
-	// associated resource. The minimum and maximum allowed values for `ttl`
-	// depend on the type of the associated resource, as well. If `ttl` is
-	// not set, the associated resource never expires.
+	// Ttl: Optional. Specifies the "time-to-live" duration for an
+	// associated resource. The resource expires if it is not active for a
+	// period of `ttl`. The definition of "activity" depends on the type of
+	// the associated resource. The minimum and maximum allowed values for
+	// `ttl` depend on the type of the associated resource, as well. If
+	// `ttl` is not set, the associated resource never expires.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ttl") to
@@ -601,6 +761,43 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSchemaRevisionsResponse: Response for the `ListSchemaRevisions`
+// method.
+type ListSchemaRevisionsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Schemas: The revisions of the schema.
+	Schemas []*Schema `json:"schemas,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSchemaRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSchemaRevisionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSchemasResponse: Response for the `ListSchemas` method.
 type ListSchemasResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more schemas
@@ -640,12 +837,12 @@ func (s *ListSchemasResponse) MarshalJSON() ([]byte, error) {
 
 // ListSnapshotsResponse: Response for the `ListSnapshots` method.
 type ListSnapshotsResponse struct {
-	// NextPageToken: If not empty, indicates that there may be more
-	// snapshot that match the request; this value should be passed in a new
-	// `ListSnapshotsRequest`.
+	// NextPageToken: Optional. If not empty, indicates that there may be
+	// more snapshot that match the request; this value should be passed in
+	// a new `ListSnapshotsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Snapshots: The resulting snapshots.
+	// Snapshots: Optional. The resulting snapshots.
 	Snapshots []*Snapshot `json:"snapshots,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -678,12 +875,12 @@ func (s *ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
 // ListSubscriptionsResponse: Response for the `ListSubscriptions`
 // method.
 type ListSubscriptionsResponse struct {
-	// NextPageToken: If not empty, indicates that there may be more
-	// subscriptions that match the request; this value should be passed in
-	// a new `ListSubscriptionsRequest` to get more subscriptions.
+	// NextPageToken: Optional. If not empty, indicates that there may be
+	// more subscriptions that match the request; this value should be
+	// passed in a new `ListSubscriptionsRequest` to get more subscriptions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Subscriptions: The subscriptions that match the request.
+	// Subscriptions: Optional. The subscriptions that match the request.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -716,12 +913,13 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // ListTopicSnapshotsResponse: Response for the `ListTopicSnapshots`
 // method.
 type ListTopicSnapshotsResponse struct {
-	// NextPageToken: If not empty, indicates that there may be more
-	// snapshots that match the request; this value should be passed in a
-	// new `ListTopicSnapshotsRequest` to get more snapshots.
+	// NextPageToken: Optional. If not empty, indicates that there may be
+	// more snapshots that match the request; this value should be passed in
+	// a new `ListTopicSnapshotsRequest` to get more snapshots.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Snapshots: The names of the snapshots that match the request.
+	// Snapshots: Optional. The names of the snapshots that match the
+	// request.
 	Snapshots []string `json:"snapshots,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -754,13 +952,14 @@ func (s *ListTopicSnapshotsResponse) MarshalJSON() ([]byte, error) {
 // ListTopicSubscriptionsResponse: Response for the
 // `ListTopicSubscriptions` method.
 type ListTopicSubscriptionsResponse struct {
-	// NextPageToken: If not empty, indicates that there may be more
-	// subscriptions that match the request; this value should be passed in
-	// a new `ListTopicSubscriptionsRequest` to get more subscriptions.
+	// NextPageToken: Optional. If not empty, indicates that there may be
+	// more subscriptions that match the request; this value should be
+	// passed in a new `ListTopicSubscriptionsRequest` to get more
+	// subscriptions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Subscriptions: The names of subscriptions attached to the topic
-	// specified in the request.
+	// Subscriptions: Optional. The names of subscriptions attached to the
+	// topic specified in the request.
 	Subscriptions []string `json:"subscriptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -792,12 +991,12 @@ func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 
 // ListTopicsResponse: Response for the `ListTopics` method.
 type ListTopicsResponse struct {
-	// NextPageToken: If not empty, indicates that there may be more topics
-	// that match the request; this value should be passed in a new
-	// `ListTopicsRequest`.
+	// NextPageToken: Optional. If not empty, indicates that there may be
+	// more topics that match the request; this value should be passed in a
+	// new `ListTopicsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Topics: The resulting topics.
+	// Topics: Optional. The resulting topics.
 	Topics []*Topic `json:"topics,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -830,12 +1029,12 @@ func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 // MessageStoragePolicy: A policy constraining the storage of messages
 // published to the topic.
 type MessageStoragePolicy struct {
-	// AllowedPersistenceRegions: A list of IDs of GCP regions where
-	// messages that are published to the topic may be persisted in storage.
-	// Messages published by publishers running in non-allowed GCP regions
-	// (or running outside of GCP altogether) will be routed for storage in
-	// one of the allowed regions. An empty list means that no regions are
-	// allowed, and is not a valid configuration.
+	// AllowedPersistenceRegions: Optional. A list of IDs of GCP regions
+	// where messages that are published to the topic may be persisted in
+	// storage. Messages published by publishers running in non-allowed GCP
+	// regions (or running outside of GCP altogether) will be routed for
+	// storage in one of the allowed regions. An empty list means that no
+	// regions are allowed, and is not a valid configuration.
 	AllowedPersistenceRegions []string `json:"allowedPersistenceRegions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -935,17 +1134,42 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NoWrapper: Sets the `data` field as the HTTP body for delivery.
+type NoWrapper struct {
+	// WriteMetadata: Optional. When true, writes the Pub/Sub message
+	// metadata to `x-goog-pubsub-:` headers of the HTTP request. Writes the
+	// Pub/Sub message attributes to `:` headers of the HTTP request.
+	WriteMetadata bool `json:"writeMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WriteMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WriteMetadata") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NoWrapper) MarshalJSON() ([]byte, error) {
+	type NoMethod NoWrapper
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OidcToken: Contains information needed for generating an OpenID
 // Connect token
 // (https://developers.google.com/identity/protocols/OpenIDConnect).
-// Service account email
-// (https://cloud.google.com/iam/docs/service-accounts) used for
-// generating the OIDC token. For more information on setting up
-// authentication, see Push subscriptions
-// (https://cloud.google.com/pubsub/docs/push).
 type OidcToken struct {
-	// Audience: Audience to be used when generating OIDC token. The
-	// audience claim identifies the recipients that the JWT is intended
+	// Audience: Optional. Audience to be used when generating OIDC token.
+	// The audience claim identifies the recipients that the JWT is intended
 	// for. The audience value is a single case-sensitive string. Having
 	// multiple values (array) for the audience field is not supported. More
 	// info about the OIDC JWT token audience here:
@@ -953,6 +1177,11 @@ type OidcToken struct {
 	// specified, the Push endpoint URL will be used.
 	Audience string `json:"audience,omitempty"`
 
+	// ServiceAccountEmail: Optional. Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) used for
+	// generating the OIDC token. For more information on setting up
+	// authentication, see Push subscriptions
+	// (https://cloud.google.com/pubsub/docs/push).
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -992,7 +1221,7 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1001,17 +1230,17 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -1114,9 +1343,9 @@ func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 
 // PublishResponse: Response for the `Publish` method.
 type PublishResponse struct {
-	// MessageIds: The server-assigned ID of each published message, in the
-	// same order as the messages in the request. IDs are guaranteed to be
-	// unique within the topic.
+	// MessageIds: Optional. The server-assigned ID of each published
+	// message, in the same order as the messages in the request. IDs are
+	// guaranteed to be unique within the topic.
 	MessageIds []string `json:"messageIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1156,24 +1385,24 @@ func (s *PublishResponse) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/pubsub/quotas) for more information about
 // message limits.
 type PubsubMessage struct {
-	// Attributes: Attributes for this message. If this field is empty, the
-	// message must contain non-empty data. This can be used to filter
-	// messages on the subscription.
+	// Attributes: Optional. Attributes for this message. If this field is
+	// empty, the message must contain non-empty data. This can be used to
+	// filter messages on the subscription.
 	Attributes map[string]string `json:"attributes,omitempty"`
 
-	// Data: The message data field. If this field is empty, the message
-	// must contain at least one attribute.
+	// Data: Optional. The message data field. If this field is empty, the
+	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: ID of this message, assigned by the server when the
-	// message is published. Guaranteed to be unique within the topic. This
-	// value may be read by a subscriber that receives a `PubsubMessage` via
-	// a `Pull` call or a push delivery. It must not be populated by the
-	// publisher in a `Publish` call.
+	// MessageId: Optional. ID of this message, assigned by the server when
+	// the message is published. Guaranteed to be unique within the topic.
+	// This value may be read by a subscriber that receives a
+	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
+	// populated by the publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
-	// OrderingKey: If non-empty, identifies related messages for which
-	// publish order should be respected. If a `Subscription` has
+	// OrderingKey: Optional. If non-empty, identifies related messages for
+	// which publish order should be respected. If a `Subscription` has
 	// `enable_message_ordering` set to `true`, messages published with the
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
@@ -1182,9 +1411,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: The time at which the message was published, populated
-	// by the server when it receives the `Publish` call. It must not be
-	// populated by the publisher in a `Publish` call.
+	// PublishTime: Optional. The time at which the message was published,
+	// populated by the server when it receives the `Publish` call. It must
+	// not be populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -1208,6 +1437,12 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PubsubWrapper: The payload to the push endpoint is in the form of the
+// JSON representation of a PubsubMessage
+// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+type PubsubWrapper struct {
 }
 
 // PullRequest: Request for the `Pull` method.
@@ -1251,11 +1486,12 @@ func (s *PullRequest) MarshalJSON() ([]byte, error) {
 
 // PullResponse: Response for the `Pull` method.
 type PullResponse struct {
-	// ReceivedMessages: Received Pub/Sub messages. The list will be empty
-	// if there are no more messages available in the backlog. For JSON, the
-	// response can be entirely empty. The Pub/Sub system may return fewer
-	// than the `maxMessages` requested even if there are more messages
-	// available in the backlog.
+	// ReceivedMessages: Optional. Received Pub/Sub messages. The list will
+	// be empty if there are no more messages available in the backlog, or
+	// if no messages could be returned before the request timeout. For
+	// JSON, the response can be entirely empty. The Pub/Sub system may
+	// return fewer than the `maxMessages` requested even if there are more
+	// messages available in the backlog.
 	ReceivedMessages []*ReceivedMessage `json:"receivedMessages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1288,15 +1524,15 @@ func (s *PullResponse) MarshalJSON() ([]byte, error) {
 
 // PushConfig: Configuration for a push delivery endpoint.
 type PushConfig struct {
-	// Attributes: Endpoint configuration attributes that can be used to
-	// control different aspects of the message delivery. The only currently
-	// supported attribute is `x-goog-version`, which you can use to change
-	// the format of the pushed message. This attribute indicates the
-	// version of the data expected by the endpoint. This controls the shape
-	// of the pushed message (i.e., its fields and metadata). If not present
-	// during the `CreateSubscription` call, it will default to the version
-	// of the Pub/Sub API used to make such call. If not present in a
-	// `ModifyPushConfig` call, its value will not be changed.
+	// Attributes: Optional. Endpoint configuration attributes that can be
+	// used to control different aspects of the message delivery. The only
+	// currently supported attribute is `x-goog-version`, which you can use
+	// to change the format of the pushed message. This attribute indicates
+	// the version of the data expected by the endpoint. This controls the
+	// shape of the pushed message (i.e., its fields and metadata). If not
+	// present during the `CreateSubscription` call, it will default to the
+	// version of the Pub/Sub API used to make such call. If not present in
+	// a `ModifyPushConfig` call, its value will not be changed.
 	// `GetSubscription` calls will always return a valid version, even if
 	// the subscription was created without this attribute. The only
 	// supported values for the `x-goog-version` attribute are: * `v1beta1`:
@@ -1305,13 +1541,22 @@ type PushConfig struct {
 	// example: `attributes { "x-goog-version": "v1" }`
 	Attributes map[string]string `json:"attributes,omitempty"`
 
-	// OidcToken: If specified, Pub/Sub will generate and attach an OIDC JWT
-	// token as an `Authorization` header in the HTTP request for every
-	// pushed message.
+	// NoWrapper: Optional. When set, the payload to the push endpoint is
+	// not wrapped.
+	NoWrapper *NoWrapper `json:"noWrapper,omitempty"`
+
+	// OidcToken: Optional. If specified, Pub/Sub will generate and attach
+	// an OIDC JWT token as an `Authorization` header in the HTTP request
+	// for every pushed message.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
-	// PushEndpoint: A URL locating the endpoint to which messages should be
-	// pushed. For example, a Webhook endpoint might use
+	// PubsubWrapper: Optional. When set, the payload to the push endpoint
+	// is in the form of the JSON representation of a PubsubMessage
+	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+	PubsubWrapper *PubsubWrapper `json:"pubsubWrapper,omitempty"`
+
+	// PushEndpoint: Optional. A URL locating the endpoint to which messages
+	// should be pushed. For example, a Webhook endpoint might use
 	// `https://example.com/push`.
 	PushEndpoint string `json:"pushEndpoint,omitempty"`
 
@@ -1340,15 +1585,16 @@ func (s *PushConfig) MarshalJSON() ([]byte, error) {
 
 // ReceivedMessage: A message and its corresponding acknowledgment ID.
 type ReceivedMessage struct {
-	// AckId: This ID can be used to acknowledge the received message.
+	// AckId: Optional. This ID can be used to acknowledge the received
+	// message.
 	AckId string `json:"ackId,omitempty"`
 
-	// DeliveryAttempt: The approximate number of times that Cloud Pub/Sub
-	// has attempted to deliver the associated message to a subscriber. More
-	// precisely, this is 1 + (number of NACKs) + (number of ack_deadline
-	// exceeds) for this message. A NACK is any call to ModifyAckDeadline
-	// with a 0 deadline. An ack_deadline exceeds event is whenever a
-	// message is not acknowledged within ack_deadline. Note that
+	// DeliveryAttempt: Optional. The approximate number of times that
+	// Pub/Sub has attempted to deliver the associated message to a
+	// subscriber. More precisely, this is 1 + (number of NACKs) + (number
+	// of ack_deadline exceeds) for this message. A NACK is any call to
+	// ModifyAckDeadline with a 0 deadline. An ack_deadline exceeds event is
+	// whenever a message is not acknowledged within ack_deadline. Note that
 	// ack_deadline is initially Subscription.ackDeadlineSeconds, but may
 	// get extended automatically by the client library. Upon the first
 	// delivery of a given message, `delivery_attempt` will have a value of
@@ -1356,7 +1602,7 @@ type ReceivedMessage struct {
 	// DeadLetterPolicy is not set on the subscription, this will be 0.
 	DeliveryAttempt int64 `json:"deliveryAttempt,omitempty"`
 
-	// Message: The message.
+	// Message: Optional. The message.
 	Message *PubsubMessage `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AckId") to
@@ -1382,9 +1628,9 @@ func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RetryPolicy: A policy that specifies how Cloud Pub/Sub retries
-// message delivery. Retry delay will be exponential based on provided
-// minimum and maximum backoffs.
+// RetryPolicy: A policy that specifies how Pub/Sub retries message
+// delivery. Retry delay will be exponential based on provided minimum
+// and maximum backoffs.
 // https://en.wikipedia.org/wiki/Exponential_backoff. RetryPolicy will
 // be triggered on NACKs or acknowledgement deadline exceeded events for
 // a given message. Retry Policy is implemented on a best effort basis.
@@ -1392,14 +1638,14 @@ func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 // configuration. That is, delay can be more or less than configured
 // backoff.
 type RetryPolicy struct {
-	// MaximumBackoff: The maximum delay between consecutive deliveries of a
-	// given message. Value should be between 0 and 600 seconds. Defaults to
-	// 600 seconds.
+	// MaximumBackoff: Optional. The maximum delay between consecutive
+	// deliveries of a given message. Value should be between 0 and 600
+	// seconds. Defaults to 600 seconds.
 	MaximumBackoff string `json:"maximumBackoff,omitempty"`
 
-	// MinimumBackoff: The minimum delay between consecutive deliveries of a
-	// given message. Value should be between 0 and 600 seconds. Defaults to
-	// 10 seconds.
+	// MinimumBackoff: Optional. The minimum delay between consecutive
+	// deliveries of a given message. Value should be between 0 and 600
+	// seconds. Defaults to 10 seconds.
 	MinimumBackoff string `json:"minimumBackoff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaximumBackoff") to
@@ -1422,6 +1668,35 @@ type RetryPolicy struct {
 
 func (s *RetryPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackSchemaRequest: Request for the `RollbackSchema` method.
+type RollbackSchemaRequest struct {
+	// RevisionId: Required. The revision ID to roll back to. It must be a
+	// revision of the same schema. Example: c7cfa2a8
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RevisionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RevisionId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RollbackSchemaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackSchemaRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1482,7 +1757,8 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 // SchemaSettings: Settings for validating messages published against a
 // schema.
 type SchemaSettings struct {
-	// Encoding: The encoding of messages validated against `schema`.
+	// Encoding: Optional. The encoding of messages validated against
+	// `schema`.
 	//
 	// Possible values:
 	//   "ENCODING_UNSPECIFIED" - Unspecified
@@ -1491,14 +1767,14 @@ type SchemaSettings struct {
 	// schema types, binary encoding may not be available.
 	Encoding string `json:"encoding,omitempty"`
 
-	// FirstRevisionId: The minimum (inclusive) revision allowed for
-	// validating messages. If empty or not present, allow any revision to
-	// be validated against last_revision or any revision created before.
+	// FirstRevisionId: Optional. The minimum (inclusive) revision allowed
+	// for validating messages. If empty or not present, allow any revision
+	// to be validated against last_revision or any revision created before.
 	FirstRevisionId string `json:"firstRevisionId,omitempty"`
 
-	// LastRevisionId: The maximum (inclusive) revision allowed for
-	// validating messages. If empty or not present, allow any revision to
-	// be validated against first_revision or any revision created after.
+	// LastRevisionId: Optional. The maximum (inclusive) revision allowed
+	// for validating messages. If empty or not present, allow any revision
+	// to be validated against first_revision or any revision created after.
 	LastRevisionId string `json:"lastRevisionId,omitempty"`
 
 	// Schema: Required. The name of the schema that messages published
@@ -1532,22 +1808,22 @@ func (s *SchemaSettings) MarshalJSON() ([]byte, error) {
 
 // SeekRequest: Request for the `Seek` method.
 type SeekRequest struct {
-	// Snapshot: The snapshot to seek to. The snapshot's topic must be the
-	// same as that of the provided subscription. Format is
+	// Snapshot: Optional. The snapshot to seek to. The snapshot's topic
+	// must be the same as that of the provided subscription. Format is
 	// `projects/{project}/snapshots/{snap}`.
 	Snapshot string `json:"snapshot,omitempty"`
 
-	// Time: The time to seek to. Messages retained in the subscription that
-	// were published before this time are marked as acknowledged, and
-	// messages retained in the subscription that were published after this
-	// time are marked as unacknowledged. Note that this operation affects
-	// only those messages retained in the subscription (configured by the
-	// combination of `message_retention_duration` and
-	// `retain_acked_messages`). For example, if `time` corresponds to a
-	// point before the message retention window (or to a point before the
-	// system's notion of the subscription creation time), only retained
-	// messages will be marked as unacknowledged, and already-expunged
-	// messages will not be restored.
+	// Time: Optional. The time to seek to. Messages retained in the
+	// subscription that were published before this time are marked as
+	// acknowledged, and messages retained in the subscription that were
+	// published after this time are marked as unacknowledged. Note that
+	// this operation affects only those messages retained in the
+	// subscription (configured by the combination of
+	// `message_retention_duration` and `retain_acked_messages`). For
+	// example, if `time` corresponds to a point before the message
+	// retention window (or to a point before the system's notion of the
+	// subscription creation time), only retained messages will be marked as
+	// unacknowledged, and already-expunged messages will not be restored.
 	Time string `json:"time,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Snapshot") to
@@ -1618,28 +1894,28 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // you can set the acknowledgment state of messages in an existing
 // subscription to the state captured by a snapshot.
 type Snapshot struct {
-	// ExpireTime: The snapshot is guaranteed to exist up until this time. A
-	// newly-created snapshot expires no later than 7 days from the time of
-	// its creation. Its exact lifetime is determined at creation by the
-	// existing backlog in the source subscription. Specifically, the
-	// lifetime of the snapshot is `7 days - (age of oldest unacked message
-	// in the subscription)`. For example, consider a subscription whose
-	// oldest unacked message is 3 days old. If a snapshot is created from
-	// this subscription, the snapshot -- which will always capture this
-	// 3-day-old backlog as long as the snapshot exists -- will expire in 4
-	// days. The service will refuse to create a snapshot that would expire
-	// in less than 1 hour after creation.
+	// ExpireTime: Optional. The snapshot is guaranteed to exist up until
+	// this time. A newly-created snapshot expires no later than 7 days from
+	// the time of its creation. Its exact lifetime is determined at
+	// creation by the existing backlog in the source subscription.
+	// Specifically, the lifetime of the snapshot is `7 days - (age of
+	// oldest unacked message in the subscription)`. For example, consider a
+	// subscription whose oldest unacked message is 3 days old. If a
+	// snapshot is created from this subscription, the snapshot -- which
+	// will always capture this 3-day-old backlog as long as the snapshot
+	// exists -- will expire in 4 days. The service will refuse to create a
+	// snapshot that would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Labels: See [Creating and managing labels]
+	// Labels: Optional. See [Creating and managing labels]
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The name of the snapshot.
+	// Name: Optional. The name of the snapshot.
 	Name string `json:"name,omitempty"`
 
-	// Topic: The name of the topic from which this snapshot is retaining
-	// messages.
+	// Topic: Optional. The name of the topic from which this snapshot is
+	// retaining messages.
 	Topic string `json:"topic,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1669,88 +1945,95 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subscription: A subscription resource. If none of `push_config` or
-// `bigquery_config` is set, then the subscriber will pull and ack
-// messages using API methods. At most one of these fields may be set.
+// Subscription: A subscription resource. If none of `push_config`,
+// `bigquery_config`, or `cloud_storage_config` is set, then the
+// subscriber will pull and ack messages using API methods. At most one
+// of these fields may be set.
 type Subscription struct {
-	// AckDeadlineSeconds: The approximate amount of time (on a best-effort
-	// basis) Pub/Sub waits for the subscriber to acknowledge receipt before
-	// resending the message. In the interval after the message is delivered
-	// and before it is acknowledged, it is considered to be _outstanding_.
-	// During that time period, the message will not be redelivered (on a
-	// best-effort basis). For pull subscriptions, this value is used as the
-	// initial value for the ack deadline. To override this value for a
-	// given message, call `ModifyAckDeadline` with the corresponding
-	// `ack_id` if using non-streaming pull or send the `ack_id` in a
-	// `StreamingModifyAckDeadlineRequest` if using streaming pull. The
-	// minimum custom deadline you can specify is 10 seconds. The maximum
-	// custom deadline you can specify is 600 seconds (10 minutes). If this
-	// parameter is 0, a default value of 10 seconds is used. For push
-	// delivery, this value is also used to set the request timeout for the
-	// call to the push endpoint. If the subscriber never acknowledges the
-	// message, the Pub/Sub system will eventually redeliver the message.
+	// AckDeadlineSeconds: Optional. The approximate amount of time (on a
+	// best-effort basis) Pub/Sub waits for the subscriber to acknowledge
+	// receipt before resending the message. In the interval after the
+	// message is delivered and before it is acknowledged, it is considered
+	// to be _outstanding_. During that time period, the message will not be
+	// redelivered (on a best-effort basis). For pull subscriptions, this
+	// value is used as the initial value for the ack deadline. To override
+	// this value for a given message, call `ModifyAckDeadline` with the
+	// corresponding `ack_id` if using non-streaming pull or send the
+	// `ack_id` in a `StreamingModifyAckDeadlineRequest` if using streaming
+	// pull. The minimum custom deadline you can specify is 10 seconds. The
+	// maximum custom deadline you can specify is 600 seconds (10 minutes).
+	// If this parameter is 0, a default value of 10 seconds is used. For
+	// push delivery, this value is also used to set the request timeout for
+	// the call to the push endpoint. If the subscriber never acknowledges
+	// the message, the Pub/Sub system will eventually redeliver the
+	// message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
-	// BigqueryConfig: If delivery to BigQuery is used with this
+	// BigqueryConfig: Optional. If delivery to BigQuery is used with this
 	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
 
-	// DeadLetterPolicy: A policy that specifies the conditions for dead
-	// lettering messages in this subscription. If dead_letter_policy is not
-	// set, dead lettering is disabled. The Cloud Pub/Sub service account
-	// associated with this subscriptions's parent project (i.e.,
+	// CloudStorageConfig: Optional. If delivery to Google Cloud Storage is
+	// used with this subscription, this field is used to configure it.
+	CloudStorageConfig *CloudStorageConfig `json:"cloudStorageConfig,omitempty"`
+
+	// DeadLetterPolicy: Optional. A policy that specifies the conditions
+	// for dead lettering messages in this subscription. If
+	// dead_letter_policy is not set, dead lettering is disabled. The
+	// Pub/Sub service account associated with this subscriptions's parent
+	// project (i.e.,
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must
 	// have permission to Acknowledge() messages on this subscription.
 	DeadLetterPolicy *DeadLetterPolicy `json:"deadLetterPolicy,omitempty"`
 
-	// Detached: Indicates whether the subscription is detached from its
-	// topic. Detached subscriptions don't receive messages from their topic
-	// and don't retain any backlog. `Pull` and `StreamingPull` requests
-	// will return FAILED_PRECONDITION. If the subscription is a push
-	// subscription, pushes to the endpoint will not be made.
+	// Detached: Optional. Indicates whether the subscription is detached
+	// from its topic. Detached subscriptions don't receive messages from
+	// their topic and don't retain any backlog. `Pull` and `StreamingPull`
+	// requests will return FAILED_PRECONDITION. If the subscription is a
+	// push subscription, pushes to the endpoint will not be made.
 	Detached bool `json:"detached,omitempty"`
 
-	// EnableExactlyOnceDelivery: If true, Pub/Sub provides the following
-	// guarantees for the delivery of a message with a given value of
-	// `message_id` on this subscription: * The message sent to a subscriber
-	// is guaranteed not to be resent before the message's acknowledgement
-	// deadline expires. * An acknowledged message will not be resent to a
-	// subscriber. Note that subscribers may still receive multiple copies
-	// of a message when `enable_exactly_once_delivery` is true if the
-	// message was published multiple times by a publisher client. These
-	// copies are considered distinct by Pub/Sub and have distinct
-	// `message_id` values.
+	// EnableExactlyOnceDelivery: Optional. If true, Pub/Sub provides the
+	// following guarantees for the delivery of a message with a given value
+	// of `message_id` on this subscription: * The message sent to a
+	// subscriber is guaranteed not to be resent before the message's
+	// acknowledgement deadline expires. * An acknowledged message will not
+	// be resent to a subscriber. Note that subscribers may still receive
+	// multiple copies of a message when `enable_exactly_once_delivery` is
+	// true if the message was published multiple times by a publisher
+	// client. These copies are considered distinct by Pub/Sub and have
+	// distinct `message_id` values.
 	EnableExactlyOnceDelivery bool `json:"enableExactlyOnceDelivery,omitempty"`
 
-	// EnableMessageOrdering: If true, messages published with the same
-	// `ordering_key` in `PubsubMessage` will be delivered to the
+	// EnableMessageOrdering: Optional. If true, messages published with the
+	// same `ordering_key` in `PubsubMessage` will be delivered to the
 	// subscribers in the order in which they are received by the Pub/Sub
 	// system. Otherwise, they may be delivered in any order.
 	EnableMessageOrdering bool `json:"enableMessageOrdering,omitempty"`
 
-	// ExpirationPolicy: A policy that specifies the conditions for this
-	// subscription's expiration. A subscription is considered active as
-	// long as any connected subscriber is successfully consuming messages
-	// from the subscription or is issuing operations on the subscription.
-	// If `expiration_policy` is not set, a *default policy* with `ttl` of
-	// 31 days will be used. The minimum allowed value for
+	// ExpirationPolicy: Optional. A policy that specifies the conditions
+	// for this subscription's expiration. A subscription is considered
+	// active as long as any connected subscriber is successfully consuming
+	// messages from the subscription or is issuing operations on the
+	// subscription. If `expiration_policy` is not set, a *default policy*
+	// with `ttl` of 31 days will be used. The minimum allowed value for
 	// `expiration_policy.ttl` is 1 day. If `expiration_policy` is set, but
 	// `expiration_policy.ttl` is not set, the subscription never expires.
 	ExpirationPolicy *ExpirationPolicy `json:"expirationPolicy,omitempty"`
 
-	// Filter: An expression written in the Pub/Sub filter language
-	// (https://cloud.google.com/pubsub/docs/filtering). If non-empty, then
-	// only `PubsubMessage`s whose `attributes` field matches the filter are
-	// delivered on this subscription. If empty, then no messages are
-	// filtered out.
+	// Filter: Optional. An expression written in the Pub/Sub filter
+	// language (https://cloud.google.com/pubsub/docs/filtering). If
+	// non-empty, then only `PubsubMessage`s whose `attributes` field
+	// matches the filter are delivered on this subscription. If empty, then
+	// no messages are filtered out.
 	Filter string `json:"filter,omitempty"`
 
-	// Labels: See Creating and managing labels
+	// Labels: Optional. See Creating and managing labels
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MessageRetentionDuration: How long to retain unacknowledged messages
-	// in the subscription's backlog, from the moment a message is
+	// MessageRetentionDuration: Optional. How long to retain unacknowledged
+	// messages in the subscription's backlog, from the moment a message is
 	// published. If `retain_acked_messages` is true, then this also
 	// configures the retention of acknowledged messages, and thus
 	// configures how far back in time a `Seek` can be done. Defaults to 7
@@ -1765,25 +2048,25 @@ type Subscription struct {
 	// and 255 characters in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 
-	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it.
+	// PushConfig: Optional. If push delivery is used with this
+	// subscription, this field is used to configure it.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
-	// RetainAckedMessages: Indicates whether to retain acknowledged
-	// messages. If true, then messages are not expunged from the
-	// subscription's backlog, even if they are acknowledged, until they
+	// RetainAckedMessages: Optional. Indicates whether to retain
+	// acknowledged messages. If true, then messages are not expunged from
+	// the subscription's backlog, even if they are acknowledged, until they
 	// fall out of the `message_retention_duration` window. This must be
 	// true if you would like to [`Seek` to a timestamp]
 	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time)
 	// in the past to replay previously-acknowledged messages.
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 
-	// RetryPolicy: A policy that specifies how Pub/Sub retries message
-	// delivery for this subscription. If not set, the default retry policy
-	// is applied. This generally implies that messages will be retried as
-	// soon as possible for healthy subscribers. RetryPolicy will be
-	// triggered on NACKs or acknowledgement deadline exceeded events for a
-	// given message.
+	// RetryPolicy: Optional. A policy that specifies how Pub/Sub retries
+	// message delivery for this subscription. If not set, the default retry
+	// policy is applied. This generally implies that messages will be
+	// retried as soon as possible for healthy subscribers. RetryPolicy will
+	// be triggered on NACKs or acknowledgement deadline exceeded events for
+	// a given message.
 	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
 
 	// State: Output only. An output-only field indicating whether or not
@@ -1907,20 +2190,26 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TextConfig: Configuration for writing message data in text format.
+// Message payloads will be written to files as raw text, separated by a
+// newline.
+type TextConfig struct {
+}
+
 // Topic: A topic resource.
 type Topic struct {
-	// KmsKeyName: The resource name of the Cloud KMS CryptoKey to be used
-	// to protect access to messages published on this topic. The expected
-	// format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	// KmsKeyName: Optional. The resource name of the Cloud KMS CryptoKey to
+	// be used to protect access to messages published on this topic. The
+	// expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// Labels: See [Creating and managing labels]
+	// Labels: Optional. See [Creating and managing labels]
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MessageRetentionDuration: Indicates the minimum duration to retain a
-	// message after it is published to the topic. If this field is set,
-	// messages published to the topic in the last
+	// MessageRetentionDuration: Optional. Indicates the minimum duration to
+	// retain a message after it is published to the topic. If this field is
+	// set, messages published to the topic in the last
 	// `message_retention_duration` are always available to subscribers. For
 	// instance, it allows any attached subscription to seek to a timestamp
 	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time)
@@ -1929,9 +2218,9 @@ type Topic struct {
 	// subscriptions. Cannot be more than 31 days or less than 10 minutes.
 	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
 
-	// MessageStoragePolicy: Policy constraining the set of Google Cloud
-	// Platform regions where messages published to the topic may be stored.
-	// If not present, then no constraints are in effect.
+	// MessageStoragePolicy: Optional. Policy constraining the set of Google
+	// Cloud Platform regions where messages published to the topic may be
+	// stored. If not present, then no constraints are in effect.
 	MessageStoragePolicy *MessageStoragePolicy `json:"messageStoragePolicy,omitempty"`
 
 	// Name: Required. The name of the topic. It must have the format
@@ -1942,13 +2231,13 @@ type Topic struct {
 	// in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 
-	// SatisfiesPzs: Reserved for future use. This field is set only in
-	// responses from the server; it is ignored if it is set in any
+	// SatisfiesPzs: Optional. Reserved for future use. This field is set
+	// only in responses from the server; it is ignored if it is set in any
 	// requests.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
-	// SchemaSettings: Settings for validating messages published against a
-	// schema.
+	// SchemaSettings: Optional. Settings for validating messages published
+	// against a schema.
 	SchemaSettings *SchemaSettings `json:"schemaSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2166,6 +2455,150 @@ type ValidateSchemaResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// method id "pubsub.projects.schemas.commit":
+
+type ProjectsSchemasCommitCall struct {
+	s                   *Service
+	name                string
+	commitschemarequest *CommitSchemaRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Commit: Commits a new schema revision to an existing schema.
+//
+//   - name: The name of the schema we are revising. Format is
+//     `projects/{project}/schemas/{schema}`.
+func (r *ProjectsSchemasService) Commit(name string, commitschemarequest *CommitSchemaRequest) *ProjectsSchemasCommitCall {
+	c := &ProjectsSchemasCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.commitschemarequest = commitschemarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSchemasCommitCall) Fields(s ...googleapi.Field) *ProjectsSchemasCommitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSchemasCommitCall) Context(ctx context.Context) *ProjectsSchemasCommitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSchemasCommitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSchemasCommitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitschemarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:commit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsub.projects.schemas.commit" call.
+// Exactly one of *Schema or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Schema.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSchemasCommitCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Schema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Commits a new schema revision to an existing schema.",
+	//   "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:commit",
+	//   "httpMethod": "POST",
+	//   "id": "pubsub.projects.schemas.commit",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the schema we are revising. Format is `projects/{project}/schemas/{schema}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:commit",
+	//   "request": {
+	//     "$ref": "CommitSchemaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
+}
+
 // method id "pubsub.projects.schemas.create":
 
 type ProjectsSchemasCreateCall struct {
@@ -2265,17 +2698,17 @@ func (c *ProjectsSchemasCreateCall) Do(opts ...googleapi.CallOption) (*Schema, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Schema{
 		ServerResponse: googleapi.ServerResponse{
@@ -2407,17 +2840,17 @@ func (c *ProjectsSchemasDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2450,6 +2883,155 @@ func (c *ProjectsSchemasDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
+}
+
+// method id "pubsub.projects.schemas.deleteRevision":
+
+type ProjectsSchemasDeleteRevisionCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DeleteRevision: Deletes a specific schema revision.
+//
+//   - name: The name of the schema revision to be deleted, with a
+//     revision ID explicitly included. Example:
+//     `projects/123/schemas/my-schema@c7cfa2a8`.
+func (r *ProjectsSchemasService) DeleteRevision(name string) *ProjectsSchemasDeleteRevisionCall {
+	c := &ProjectsSchemasDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RevisionId sets the optional parameter "revisionId": This field is
+// deprecated and should not be used for specifying the revision ID. The
+// revision ID should be specified via the `name` parameter.
+func (c *ProjectsSchemasDeleteRevisionCall) RevisionId(revisionId string) *ProjectsSchemasDeleteRevisionCall {
+	c.urlParams_.Set("revisionId", revisionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSchemasDeleteRevisionCall) Fields(s ...googleapi.Field) *ProjectsSchemasDeleteRevisionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSchemasDeleteRevisionCall) Context(ctx context.Context) *ProjectsSchemasDeleteRevisionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSchemasDeleteRevisionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSchemasDeleteRevisionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deleteRevision")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsub.projects.schemas.deleteRevision" call.
+// Exactly one of *Schema or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Schema.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSchemasDeleteRevisionCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Schema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a specific schema revision.",
+	//   "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:deleteRevision",
+	//   "httpMethod": "DELETE",
+	//   "id": "pubsub.projects.schemas.deleteRevision",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the schema revision to be deleted, with a revision ID explicitly included. Example: `projects/123/schemas/my-schema@c7cfa2a8`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revisionId": {
+	//       "deprecated": true,
+	//       "description": "Optional. This field is deprecated and should not be used for specifying the revision ID. The revision ID should be specified via the `name` parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:deleteRevision",
+	//   "response": {
+	//     "$ref": "Schema"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -2575,17 +3157,17 @@ func (c *ProjectsSchemasGetCall) Do(opts ...googleapi.CallOption) (*Schema, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Schema{
 		ServerResponse: googleapi.ServerResponse{
@@ -2760,17 +3342,17 @@ func (c *ProjectsSchemasGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2950,17 +3532,17 @@ func (c *ProjectsSchemasListCall) Do(opts ...googleapi.CallOption) (*ListSchemas
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSchemasResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3047,6 +3629,379 @@ func (c *ProjectsSchemasListCall) Pages(ctx context.Context, f func(*ListSchemas
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "pubsub.projects.schemas.listRevisions":
+
+type ProjectsSchemasListRevisionsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListRevisions: Lists all schema revisions for the named schema.
+//
+// - name: The name of the schema to list revisions for.
+func (r *ProjectsSchemasService) ListRevisions(name string) *ProjectsSchemasListRevisionsCall {
+	c := &ProjectsSchemasListRevisionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of revisions to return per page.
+func (c *ProjectsSchemasListRevisionsCall) PageSize(pageSize int64) *ProjectsSchemasListRevisionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token,
+// received from a previous ListSchemaRevisions call. Provide this to
+// retrieve the subsequent page.
+func (c *ProjectsSchemasListRevisionsCall) PageToken(pageToken string) *ProjectsSchemasListRevisionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The set of Schema fields to
+// return in the response. If not set, returns Schemas with `name` and
+// `type`, but not `definition`. Set to `FULL` to retrieve all fields.
+//
+// Possible values:
+//
+//	"SCHEMA_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to the BASIC view.
+//
+//	"BASIC" - Include the name and type of the schema, but not the
+//
+// definition.
+//
+//	"FULL" - Include all Schema object fields.
+func (c *ProjectsSchemasListRevisionsCall) View(view string) *ProjectsSchemasListRevisionsCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSchemasListRevisionsCall) Fields(s ...googleapi.Field) *ProjectsSchemasListRevisionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSchemasListRevisionsCall) IfNoneMatch(entityTag string) *ProjectsSchemasListRevisionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSchemasListRevisionsCall) Context(ctx context.Context) *ProjectsSchemasListRevisionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSchemasListRevisionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSchemasListRevisionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listRevisions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsub.projects.schemas.listRevisions" call.
+// Exactly one of *ListSchemaRevisionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSchemaRevisionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSchemasListRevisionsCall) Do(opts ...googleapi.CallOption) (*ListSchemaRevisionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSchemaRevisionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all schema revisions for the named schema.",
+	//   "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:listRevisions",
+	//   "httpMethod": "GET",
+	//   "id": "pubsub.projects.schemas.listRevisions",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the schema to list revisions for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of revisions to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token, received from a previous ListSchemaRevisions call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "The set of Schema fields to return in the response. If not set, returns Schemas with `name` and `type`, but not `definition`. Set to `FULL` to retrieve all fields.",
+	//       "enum": [
+	//         "SCHEMA_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include the name and type of the schema, but not the definition.",
+	//         "Include all Schema object fields."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:listRevisions",
+	//   "response": {
+	//     "$ref": "ListSchemaRevisionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSchemasListRevisionsCall) Pages(ctx context.Context, f func(*ListSchemaRevisionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "pubsub.projects.schemas.rollback":
+
+type ProjectsSchemasRollbackCall struct {
+	s                     *Service
+	name                  string
+	rollbackschemarequest *RollbackSchemaRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Rollback: Creates a new schema revision that is a copy of the
+// provided revision_id.
+//
+// - name: The schema being rolled back with revision id.
+func (r *ProjectsSchemasService) Rollback(name string, rollbackschemarequest *RollbackSchemaRequest) *ProjectsSchemasRollbackCall {
+	c := &ProjectsSchemasRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rollbackschemarequest = rollbackschemarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSchemasRollbackCall) Fields(s ...googleapi.Field) *ProjectsSchemasRollbackCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSchemasRollbackCall) Context(ctx context.Context) *ProjectsSchemasRollbackCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSchemasRollbackCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSchemasRollbackCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackschemarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rollback")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsub.projects.schemas.rollback" call.
+// Exactly one of *Schema or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Schema.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSchemasRollbackCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Schema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new schema revision that is a copy of the provided revision_id.",
+	//   "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:rollback",
+	//   "httpMethod": "POST",
+	//   "id": "pubsub.projects.schemas.rollback",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The schema being rolled back with revision id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:rollback",
+	//   "request": {
+	//     "$ref": "RollbackSchemaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
 }
 
 // method id "pubsub.projects.schemas.setIamPolicy":
@@ -3142,17 +4097,17 @@ func (c *ProjectsSchemasSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3293,17 +4248,17 @@ func (c *ProjectsSchemasTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3437,17 +4392,17 @@ func (c *ProjectsSchemasValidateCall) Do(opts ...googleapi.CallOption) (*Validat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ValidateSchemaResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3581,17 +4536,17 @@ func (c *ProjectsSchemasValidateMessageCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ValidateMessageResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3746,17 +4701,17 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Snapshot{
 		ServerResponse: googleapi.ServerResponse{
@@ -3892,17 +4847,17 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4044,17 +4999,17 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Snapshot{
 		ServerResponse: googleapi.ServerResponse{
@@ -4214,17 +5169,17 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4388,17 +5343,17 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSnapshotsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4421,13 +5376,13 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of snapshots to return.",
+	//       "description": "Optional. Maximum number of snapshots to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListSnapshotsResponse`; indicates that this is a continuation of a prior `ListSnapshots` call, and that the system should return the next page of data.",
+	//       "description": "Optional. The value returned by the last `ListSnapshotsResponse`; indicates that this is a continuation of a prior `ListSnapshots` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4489,7 +5444,7 @@ type ProjectsSnapshotsPatchCall struct {
 // you can set the acknowledgment state of messages in an existing
 // subscription to the state captured by a snapshot.
 //
-// - name: The name of the snapshot.
+// - name: Optional. The name of the snapshot.
 func (r *ProjectsSnapshotsService) Patch(name string, updatesnapshotrequest *UpdateSnapshotRequest) *ProjectsSnapshotsPatchCall {
 	c := &ProjectsSnapshotsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4564,17 +5519,17 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Snapshot{
 		ServerResponse: googleapi.ServerResponse{
@@ -4597,7 +5552,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the snapshot.",
+	//       "description": "Optional. The name of the snapshot.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -4712,17 +5667,17 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4863,17 +5818,17 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5012,17 +5967,17 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5171,17 +6126,17 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Subscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -5313,17 +6268,17 @@ func (c *ProjectsSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5451,17 +6406,17 @@ func (c *ProjectsSubscriptionsDetachCall) Do(opts ...googleapi.CallOption) (*Det
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DetachSubscriptionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5599,17 +6554,17 @@ func (c *ProjectsSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Subscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -5769,17 +6724,17 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -5939,17 +6894,17 @@ func (c *ProjectsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSubscriptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5972,13 +6927,13 @@ func (c *ProjectsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of subscriptions to return.",
+	//       "description": "Optional. Maximum number of subscriptions to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListSubscriptionsResponse`; indicates that this is a continuation of a prior `ListSubscriptions` call, and that the system should return the next page of data.",
+	//       "description": "Optional. The value returned by the last `ListSubscriptionsResponse`; indicates that this is a continuation of a prior `ListSubscriptions` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6117,17 +7072,17 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6266,17 +7221,17 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6416,17 +7371,17 @@ func (c *ProjectsSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Subs
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Subscription{
 		ServerResponse: googleapi.ServerResponse{
@@ -6560,17 +7515,17 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PullResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6709,17 +7664,17 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SeekResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6857,17 +7812,17 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7008,17 +7963,17 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7158,17 +8113,17 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Topic{
 		ServerResponse: googleapi.ServerResponse{
@@ -7300,17 +8255,17 @@ func (c *ProjectsTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7448,17 +8403,17 @@ func (c *ProjectsTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Topic{
 		ServerResponse: googleapi.ServerResponse{
@@ -7618,17 +8573,17 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7788,17 +8743,17 @@ func (c *ProjectsTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTopicsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7821,13 +8776,13 @@ func (c *ProjectsTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsRe
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of topics to return.",
+	//       "description": "Optional. Maximum number of topics to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTopicsResponse`; indicates that this is a continuation of a prior `ListTopics` call, and that the system should return the next page of data.",
+	//       "description": "Optional. The value returned by the last `ListTopicsResponse`; indicates that this is a continuation of a prior `ListTopics` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7966,17 +8921,17 @@ func (c *ProjectsTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Topic{
 		ServerResponse: googleapi.ServerResponse{
@@ -8111,17 +9066,17 @@ func (c *ProjectsTopicsPublishCall) Do(opts ...googleapi.CallOption) (*PublishRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PublishResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8259,17 +9214,17 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -8410,17 +9365,17 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8581,17 +9536,17 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTopicSnapshotsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8614,13 +9569,13 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of snapshot names to return.",
+	//       "description": "Optional. Maximum number of snapshot names to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTopicSnapshotsResponse`; indicates that this is a continuation of a prior `ListTopicSnapshots` call, and that the system should return the next page of data.",
+	//       "description": "Optional. The value returned by the last `ListTopicSnapshotsResponse`; indicates that this is a continuation of a prior `ListTopicSnapshots` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8777,17 +9732,17 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTopicSubscriptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8810,13 +9765,13 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of subscription names to return.",
+	//       "description": "Optional. Maximum number of subscription names to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTopicSubscriptionsResponse`; indicates that this is a continuation of a prior `ListTopicSubscriptions` call, and that the system should return the next page of data.",
+	//       "description": "Optional. The value returned by the last `ListTopicSubscriptionsResponse`; indicates that this is a continuation of a prior `ListTopicSubscriptions` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

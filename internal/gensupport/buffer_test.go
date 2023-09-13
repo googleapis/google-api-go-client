@@ -7,7 +7,6 @@ package gensupport
 import (
 	"bytes"
 	"io"
-	"io/ioutil"
 	"reflect"
 	"testing"
 	"testing/iotest"
@@ -19,7 +18,7 @@ import (
 func getChunkAsString(t *testing.T, mb *MediaBuffer) (string, error) {
 	chunk, _, size, err := mb.Chunk()
 
-	buf, e := ioutil.ReadAll(chunk)
+	buf, e := io.ReadAll(chunk)
 	if e != nil {
 		t.Fatalf("Failed reading chunk: %v", e)
 	}
@@ -250,7 +249,7 @@ func TestAdapter(t *testing.T) {
 		if typer, ok := to.(googleapi.ContentTyper); ok && typer.ContentType() != "ctype" {
 			t.Errorf("content type: got: %s; want: ctype", typer.ContentType())
 		}
-		buf, err := ioutil.ReadAll(to)
+		buf, err := io.ReadAll(to)
 		if err != nil {
 			t.Errorf("error reading data: %v", err)
 			return

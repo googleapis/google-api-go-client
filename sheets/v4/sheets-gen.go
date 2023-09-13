@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package sheets provides access to the Google Sheets API.
 //
 // For product documentation, see: https://developers.google.com/sheets/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	sheetsService, err := sheets.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	sheetsService, err := sheets.NewService(ctx, option.WithScopes(sheets.SpreadsheetsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	sheetsService, err := sheets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	sheetsService, err := sheets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package sheets // import "google.golang.org/api/sheets/v4"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "sheets:v4"
 const apiName = "sheets"
@@ -983,7 +998,7 @@ func (s *AutoResizeDimensionsRequest) MarshalJSON() ([]byte, error) {
 
 // BandedRange: A banded (alternating colors) range in a sheet.
 type BandedRange struct {
-	// BandedRangeId: The id of the banded range.
+	// BandedRangeId: The ID of the banded range.
 	BandedRangeId int64 `json:"bandedRangeId,omitempty"`
 
 	// ColumnProperties: Properties for column bands. These properties are
@@ -1532,7 +1547,7 @@ type BasicSeriesDataPointStyleOverride struct {
 	// default is used. If color is also set, this field takes precedence.
 	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
 
-	// Index: Zero based index of the series data point.
+	// Index: The zero-based index of the series data point.
 	Index int64 `json:"index,omitempty"`
 
 	// PointStyle: Point style of the series data point. Valid only if the
@@ -1746,16 +1761,21 @@ type BatchGetValuesByDataFilterRequest struct {
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
-	// reply according to the cell's formatting. Formatting is based on the
-	// spreadsheet's locale, not the requesting user's locale. For example,
-	// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-	// `A2` would return "$1.23".
+	// response according to the cell's formatting. Formatting is based on
+	// the spreadsheet's locale, not the requesting user's locale. For
+	// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency, then `A2` would return "$1.23".
 	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 	// in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 	// formatted as currency, then `A2` would return the number `1.23`.
 	//   "FORMULA" - Values will not be calculated. The reply will include
 	// the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-	// formatted as currency, then A2 would return "=A1".
+	// formatted as currency, then A2 would return "=A1". Sheets treats
+	// date and time values as decimal values. This lets you perform
+	// arithmetic on them in formulas. For more information on interpreting
+	// date and time values, see [About date & time
+	// values](https://developers.google.com/sheets/api/guides/formats#about_
+	// date_time_values).
 	ValueRenderOption string `json:"valueRenderOption,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataFilters") to
@@ -1987,16 +2007,21 @@ type BatchUpdateValuesByDataFilterRequest struct {
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
-	// reply according to the cell's formatting. Formatting is based on the
-	// spreadsheet's locale, not the requesting user's locale. For example,
-	// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-	// `A2` would return "$1.23".
+	// response according to the cell's formatting. Formatting is based on
+	// the spreadsheet's locale, not the requesting user's locale. For
+	// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency, then `A2` would return "$1.23".
 	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 	// in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 	// formatted as currency, then `A2` would return the number `1.23`.
 	//   "FORMULA" - Values will not be calculated. The reply will include
 	// the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-	// formatted as currency, then A2 would return "=A1".
+	// formatted as currency, then A2 would return "=A1". Sheets treats
+	// date and time values as decimal values. This lets you perform
+	// arithmetic on them in formulas. For more information on interpreting
+	// date and time values, see [About date & time
+	// values](https://developers.google.com/sheets/api/guides/formats#about_
+	// date_time_values).
 	ResponseValueRenderOption string `json:"responseValueRenderOption,omitempty"`
 
 	// ValueInputOption: How the input data should be interpreted.
@@ -2126,16 +2151,21 @@ type BatchUpdateValuesRequest struct {
 	//
 	// Possible values:
 	//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
-	// reply according to the cell's formatting. Formatting is based on the
-	// spreadsheet's locale, not the requesting user's locale. For example,
-	// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-	// `A2` would return "$1.23".
+	// response according to the cell's formatting. Formatting is based on
+	// the spreadsheet's locale, not the requesting user's locale. For
+	// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+	// currency, then `A2` would return "$1.23".
 	//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 	// in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 	// formatted as currency, then `A2` would return the number `1.23`.
 	//   "FORMULA" - Values will not be calculated. The reply will include
 	// the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-	// formatted as currency, then A2 would return "=A1".
+	// formatted as currency, then A2 would return "=A1". Sheets treats
+	// date and time values as decimal values. This lets you perform
+	// arithmetic on them in formulas. For more information on interpreting
+	// date and time values, see [About date & time
+	// values](https://developers.google.com/sheets/api/guides/formats#about_
+	// date_time_values).
 	ResponseValueRenderOption string `json:"responseValueRenderOption,omitempty"`
 
 	// ValueInputOption: How the input data should be interpreted.
@@ -2229,9 +2259,9 @@ func (s *BatchUpdateValuesResponse) MarshalJSON() ([]byte, error) {
 // BigQueryDataSourceSpec: The specification of a BigQuery data source
 // that's connected to a sheet.
 type BigQueryDataSourceSpec struct {
-	// ProjectId: The ID of a BigQuery enabled GCP project with a billing
-	// account attached. For any queries executed against the data source,
-	// the project is charged.
+	// ProjectId: The ID of a BigQuery enabled Google Cloud project with a
+	// billing account attached. For any queries executed against the data
+	// source, the project is charged.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// QuerySpec: A BigQueryQuerySpec.
@@ -2292,7 +2322,7 @@ func (s *BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
 }
 
 // BigQueryTableSpec: Specifies a BigQuery table definition. Only native
-// tables (https://cloud.google.com/bigquery/docs/tables-intro) is
+// tables (https://cloud.google.com/bigquery/docs/tables-intro) are
 // allowed.
 type BigQueryTableSpec struct {
 	// DatasetId: The BigQuery dataset id.
@@ -2447,6 +2477,8 @@ type BooleanCondition struct {
 	//   "DATE_NOT_EQ" - The cell's value must be exactly not the
 	// condition's value. Supported by filters on data source objects.
 	// Requires at least one ConditionValue.
+	//   "FILTER_EXPRESSION" - The cell's value must follow the pattern
+	// specified. Requires a single ConditionValue.
 	Type string `json:"type,omitempty"`
 
 	// Values: The values of the condition. The number of supported values
@@ -2486,8 +2518,8 @@ type BooleanRule struct {
 	Condition *BooleanCondition `json:"condition,omitempty"`
 
 	// Format: The format to apply. Conditional formatting can only apply a
-	// subset of formatting: bold, italic, strikethrough, foreground color &
-	// background color.
+	// subset of formatting: bold, italic, strikethrough, foreground color
+	// and, background color.
 	Format *CellFormat `json:"format,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -2911,7 +2943,7 @@ type CellData struct {
 	// writing, the new format will be merged with the existing format.
 	UserEnteredFormat *CellFormat `json:"userEnteredFormat,omitempty"`
 
-	// UserEnteredValue: The value the user entered in the cell. e.g,
+	// UserEnteredValue: The value the user entered in the cell. e.g.,
 	// `1234`, `'Hello'`, or `=NOW()` Note: Dates, Times and DateTimes are
 	// represented as doubles in serial number format.
 	UserEnteredValue *ExtendedValue `json:"userEnteredValue,omitempty"`
@@ -3599,23 +3631,23 @@ func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Color: Represents a color in the RGBA color space. This
-// representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness. For example,
-// the fields of this representation can be trivially provided to the
-// constructor of `java.awt.Color` in Java; it can also be trivially
-// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
-// and, with just a little work, it can be easily formatted into a CSS
-// `rgba()` string in JavaScript. This reference page doesn't carry
-// information about the absolute color space that should be used to
-// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications should assume the sRGB color space.
-// When color equality needs to be decided, implementations, unless
-// documented otherwise, treat two colors as equal if all their red,
-// green, blue, and alpha values each differ by at most 1e-5. Example
-// (Java): import com.google.type.Color; // ... public static
-// java.awt.Color fromProto(Color protocolor) { float alpha =
-// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
-// return new java.awt.Color( protocolor.getRed(),
+// representation is designed for simplicity of conversion to and from
+// color representations in various languages over compactness. For
+// example, the fields of this representation can be trivially provided
+// to the constructor of `java.awt.Color` in Java; it can also be
+// trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
+// method in iOS; and, with just a little work, it can be easily
+// formatted into a CSS `rgba()` string in JavaScript. This reference
+// page doesn't have information about the absolute color space that
+// should be used to interpret the RGB value—for example, sRGB, Adobe
+// RGB, DCI-P3, and BT.2020. By default, applications should assume the
+// sRGB color space. When color equality needs to be decided,
+// implementations, unless documented otherwise, treat two colors as
+// equal if all their red, green, blue, and alpha values each differ by
+// at most `1e-5`. Example (Java): import com.google.type.Color; // ...
+// public static java.awt.Color fromProto(Color protocolor) { float
+// alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() :
+// 1.0; return new java.awt.Color( protocolor.getRed(),
 // protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
 // Color toProto(java.awt.Color color) { float red = (float)
 // color.getRed(); float green = (float) color.getGreen(); float blue =
@@ -4607,7 +4639,7 @@ func (s *DataSourceRefreshDailySchedule) MarshalJSON() ([]byte, error) {
 // refresh on specific days in the month in a given time interval.
 type DataSourceRefreshMonthlySchedule struct {
 	// DaysOfMonth: Days of the month to refresh. Only 1-28 are supported,
-	// mapping to the 1st to the 28th day. At lesat one day must be
+	// mapping to the 1st to the 28th day. At least one day must be
 	// specified.
 	DaysOfMonth []int64 `json:"daysOfMonth,omitempty"`
 
@@ -4643,8 +4675,8 @@ func (s *DataSourceRefreshMonthlySchedule) MarshalJSON() ([]byte, error) {
 // Data sources in the spreadsheet are refreshed within a time interval.
 // You can specify the start time by clicking the Scheduled Refresh
 // button in the Sheets editor, but the interval is fixed at 4 hours.
-// For example, if you specify a start time of 8am , the refresh will
-// take place between 8am and 12pm every day.
+// For example, if you specify a start time of 8 AM , the refresh will
+// take place between 8 AM and 12 PM every day.
 type DataSourceRefreshSchedule struct {
 	// DailySchedule: Daily refresh schedule.
 	DailySchedule *DataSourceRefreshDailySchedule `json:"dailySchedule,omitempty"`
@@ -6351,7 +6383,7 @@ func (s *FilterCriteria) MarshalJSON() ([]byte, error) {
 
 // FilterSpec: The filter criteria associated with a specific column.
 type FilterSpec struct {
-	// ColumnIndex: The column index.
+	// ColumnIndex: The zero-based column index.
 	ColumnIndex int64 `json:"columnIndex,omitempty"`
 
 	// DataSourceColumnReference: Reference to a data source column.
@@ -7966,7 +7998,7 @@ func (s *PivotFilterCriteria) MarshalJSON() ([]byte, error) {
 // PivotFilterSpec: The pivot table filter criteria associated with a
 // specific source column offset.
 type PivotFilterSpec struct {
-	// ColumnOffsetIndex: The column offset of the source range.
+	// ColumnOffsetIndex: The zero-based column offset of the source range.
 	ColumnOffsetIndex int64 `json:"columnOffsetIndex,omitempty"`
 
 	// DataSourceColumnReference: The reference to the data source column.
@@ -8485,7 +8517,7 @@ type ProtectedRange struct {
 	// editing. Warning-based protection means that every user can edit data
 	// in the protected range, except editing will prompt a warning asking
 	// the user to confirm the edit. When writing: if this field is true,
-	// then editors is ignored. Additionally, if this field is changed from
+	// then editors are ignored. Additionally, if this field is changed from
 	// true to false and the `editors` field is not set (nor included in the
 	// field mask), then the editors will be set to all the editors in the
 	// document.
@@ -8825,7 +8857,7 @@ type Request struct {
 	// RandomizeRange: Randomizes the order of the rows in a range.
 	RandomizeRange *RandomizeRangeRequest `json:"randomizeRange,omitempty"`
 
-	// RefreshDataSource: Refreshs one or multiple data sources and
+	// RefreshDataSource: Refreshes one or multiple data sources and
 	// associated dbobjects.
 	RefreshDataSource *RefreshDataSourceRequest `json:"refreshDataSource,omitempty"`
 
@@ -9377,9 +9409,9 @@ type SheetProperties struct {
 	// updating sheet properties, if this field is excluded then the sheet
 	// is added or moved to the end of the sheet list. When updating sheet
 	// indices or inserting sheets, movement is considered in "before the
-	// move" indexes. For example, if there were 3 sheets (S1, S2, S3) in
-	// order to move S1 ahead of S2 the index would have to be set to 2. A
-	// sheet index update request is ignored if the requested index is
+	// move" indexes. For example, if there were three sheets (S1, S2, S3)
+	// in order to move S1 ahead of S2 the index would have to be set to 2.
+	// A sheet index update request is ignored if the requested index is
 	// identical to the sheets current index or if the requested new index
 	// is equal to the current sheet index + 1.
 	Index int64 `json:"index,omitempty"`
@@ -9494,8 +9526,8 @@ type SlicerSpec struct {
 	// background_color is also set, this field takes precedence.
 	BackgroundColorStyle *ColorStyle `json:"backgroundColorStyle,omitempty"`
 
-	// ColumnIndex: The column index in the data table on which the filter
-	// is applied to.
+	// ColumnIndex: The zero-based column index in the data table on which
+	// the filter is applied to.
 	ColumnIndex int64 `json:"columnIndex,omitempty"`
 
 	// DataRange: The data range of the slicer.
@@ -9909,7 +9941,8 @@ type TextFormatRun struct {
 	// format.
 	Format *TextFormat `json:"format,omitempty"`
 
-	// StartIndex: The character index where this run starts.
+	// StartIndex: The zero-based character index where this run starts, in
+	// UTF-16 code units.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -11421,10 +11454,10 @@ type WaterfallChartCustomSubtotal struct {
 	// Label: A label for the subtotal column.
 	Label string `json:"label,omitempty"`
 
-	// SubtotalIndex: The 0-based index of a data point within the series.
-	// If data_is_subtotal is true, the data point at this index is the
-	// subtotal. Otherwise, the subtotal appears after the data point with
-	// this index. A series can have multiple subtotals at arbitrary
+	// SubtotalIndex: The zero-based index of a data point within the
+	// series. If data_is_subtotal is true, the data point at this index is
+	// the subtotal. Otherwise, the subtotal appears after the data point
+	// with this index. A series can have multiple subtotals at arbitrary
 	// indices, but subtotals do not affect the indices of the data points.
 	// For example, if a series has three data points, their indices will
 	// always be 0, 1, and 2, regardless of how many subtotals exist on the
@@ -11698,17 +11731,17 @@ func (c *SpreadsheetsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUpdateSpreadsheetResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11835,17 +11868,17 @@ func (c *SpreadsheetsCreateCall) Do(opts ...googleapi.CallOption) (*Spreadsheet,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Spreadsheet{
 		ServerResponse: googleapi.ServerResponse{
@@ -11895,19 +11928,19 @@ type SpreadsheetsGetCall struct {
 // Get: Returns the spreadsheet at the given ID. The caller must specify
 // the spreadsheet ID. By default, data within grids is not returned.
 // You can include grid data in one of 2 ways: * Specify a field mask
-// listing your desired fields using the `fields` URL parameter in HTTP
-// * Set the includeGridData URL parameter to true. If a field mask is
-// set, the `includeGridData` parameter is ignored For large
-// spreadsheets, as a best practice, retrieve only the specific
-// spreadsheet fields that you want. To retrieve only subsets of
-// spreadsheet data, use the ranges URL parameter. Ranges are specified
-// using A1 notation (/sheets/api/guides/concepts#cell). You can define
-// a single cell (for example, `A1`) or multiple cells (for example,
-// `A1:D5`). You can also get cells from other sheets within the same
-// spreadsheet (for example, `Sheet2!A1:C4`) or retrieve multiple ranges
-// at once (for example, `?ranges=A1:D5&ranges=Sheet2!A1:C4`). Limiting
-// the range returns only the portions of the spreadsheet that intersect
-// the requested ranges.
+// (https://developers.google.com/sheets/api/guides/field-masks) listing
+// your desired fields using the `fields` URL parameter in HTTP * Set
+// the includeGridData URL parameter to true. If a field mask is set,
+// the `includeGridData` parameter is ignored For large spreadsheets, as
+// a best practice, retrieve only the specific spreadsheet fields that
+// you want. To retrieve only subsets of spreadsheet data, use the
+// ranges URL parameter. Ranges are specified using A1 notation
+// (/sheets/api/guides/concepts#cell). You can define a single cell (for
+// example, `A1`) or multiple cells (for example, `A1:D5`). You can also
+// get cells from other sheets within the same spreadsheet (for example,
+// `Sheet2!A1:C4`) or retrieve multiple ranges at once (for example,
+// `?ranges=A1:D5&ranges=Sheet2!A1:C4`). Limiting the range returns only
+// the portions of the spreadsheet that intersect the requested ranges.
 //
 // - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) Get(spreadsheetId string) *SpreadsheetsGetCall {
@@ -12006,17 +12039,17 @@ func (c *SpreadsheetsGetCall) Do(opts ...googleapi.CallOption) (*Spreadsheet, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Spreadsheet{
 		ServerResponse: googleapi.ServerResponse{
@@ -12030,7 +12063,7 @@ func (c *SpreadsheetsGetCall) Do(opts ...googleapi.CallOption) (*Spreadsheet, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. By default, data within grids is not returned. You can include grid data in one of 2 ways: * Specify a field mask listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData URL parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want. To retrieve only subsets of spreadsheet data, use the ranges URL parameter. Ranges are specified using [A1 notation](/sheets/api/guides/concepts#cell). You can define a single cell (for example, `A1`) or multiple cells (for example, `A1:D5`). You can also get cells from other sheets within the same spreadsheet (for example, `Sheet2!A1:C4`) or retrieve multiple ranges at once (for example, `?ranges=A1:D5\u0026ranges=Sheet2!A1:C4`). Limiting the range returns only the portions of the spreadsheet that intersect the requested ranges.",
+	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. By default, data within grids is not returned. You can include grid data in one of 2 ways: * Specify a [field mask](https://developers.google.com/sheets/api/guides/field-masks) listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData URL parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want. To retrieve only subsets of spreadsheet data, use the ranges URL parameter. Ranges are specified using [A1 notation](/sheets/api/guides/concepts#cell). You can define a single cell (for example, `A1`) or multiple cells (for example, `A1:D5`). You can also get cells from other sheets within the same spreadsheet (for example, `Sheet2!A1:C4`) or retrieve multiple ranges at once (for example, `?ranges=A1:D5\u0026ranges=Sheet2!A1:C4`). Limiting the range returns only the portions of the spreadsheet that intersect the requested ranges.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}",
 	//   "httpMethod": "GET",
 	//   "id": "sheets.spreadsheets.get",
@@ -12090,11 +12123,12 @@ type SpreadsheetsGetByDataFilterCall struct {
 // filters returns the portions of the spreadsheet that intersect ranges
 // matched by any of the filters. By default, data within grids is not
 // returned. You can include grid data one of 2 ways: * Specify a field
-// mask listing your desired fields using the `fields` URL parameter in
-// HTTP * Set the includeGridData parameter to true. If a field mask is
-// set, the `includeGridData` parameter is ignored For large
-// spreadsheets, as a best practice, retrieve only the specific
-// spreadsheet fields that you want.
+// mask (https://developers.google.com/sheets/api/guides/field-masks)
+// listing your desired fields using the `fields` URL parameter in HTTP
+// * Set the includeGridData parameter to true. If a field mask is set,
+// the `includeGridData` parameter is ignored For large spreadsheets, as
+// a best practice, retrieve only the specific spreadsheet fields that
+// you want.
 //
 // - spreadsheetId: The spreadsheet to request.
 func (r *SpreadsheetsService) GetByDataFilter(spreadsheetId string, getspreadsheetbydatafilterrequest *GetSpreadsheetByDataFilterRequest) *SpreadsheetsGetByDataFilterCall {
@@ -12171,17 +12205,17 @@ func (c *SpreadsheetsGetByDataFilterCall) Do(opts ...googleapi.CallOption) (*Spr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Spreadsheet{
 		ServerResponse: googleapi.ServerResponse{
@@ -12195,7 +12229,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Do(opts ...googleapi.CallOption) (*Spr
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. This method differs from GetSpreadsheet in that it allows selecting which subsets of spreadsheet data to return by specifying a dataFilters parameter. Multiple DataFilters can be specified. Specifying one or more data filters returns the portions of the spreadsheet that intersect ranges matched by any of the filters. By default, data within grids is not returned. You can include grid data one of 2 ways: * Specify a field mask listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want.",
+	//   "description": "Returns the spreadsheet at the given ID. The caller must specify the spreadsheet ID. This method differs from GetSpreadsheet in that it allows selecting which subsets of spreadsheet data to return by specifying a dataFilters parameter. Multiple DataFilters can be specified. Specifying one or more data filters returns the portions of the spreadsheet that intersect ranges matched by any of the filters. By default, data within grids is not returned. You can include grid data one of 2 ways: * Specify a [field mask](https://developers.google.com/sheets/api/guides/field-masks) listing your desired fields using the `fields` URL parameter in HTTP * Set the includeGridData parameter to true. If a field mask is set, the `includeGridData` parameter is ignored For large spreadsheets, as a best practice, retrieve only the specific spreadsheet fields that you want.",
 	//   "flatPath": "v4/spreadsheets/{spreadsheetId}:getByDataFilter",
 	//   "httpMethod": "POST",
 	//   "id": "sheets.spreadsheets.getByDataFilter",
@@ -12327,17 +12361,17 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeveloperMetadata{
 		ServerResponse: googleapi.ServerResponse{
@@ -12481,17 +12515,17 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchDeveloperMetadataResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12630,17 +12664,17 @@ func (c *SpreadsheetsSheetsCopyToCall) Do(opts ...googleapi.CallOption) (*SheetP
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SheetProperties{
 		ServerResponse: googleapi.ServerResponse{
@@ -12790,10 +12824,10 @@ func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDate
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -12803,7 +12837,12 @@ func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDate
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesAppendCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesAppendCall {
 	c.urlParams_.Set("responseValueRenderOption", responseValueRenderOption)
 	return c
@@ -12900,17 +12939,17 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AppendValuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12978,9 +13017,9 @@ func (c *SpreadsheetsValuesAppendCall) Do(opts ...googleapi.CallOption) (*Append
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13114,17 +13153,17 @@ func (c *SpreadsheetsValuesBatchClearCall) Do(opts ...googleapi.CallOption) (*Ba
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchClearValuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13262,17 +13301,17 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchClearValuesByDataFilterResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13398,10 +13437,10 @@ func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsV
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -13411,7 +13450,12 @@ func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsV
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesBatchGetCall) ValueRenderOption(valueRenderOption string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.Set("valueRenderOption", valueRenderOption)
 	return c
@@ -13492,17 +13536,17 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetValuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13572,9 +13616,9 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13687,17 +13731,17 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchGetValuesByDataFilterResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13832,17 +13876,17 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*B
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUpdateValuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13978,17 +14022,17 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BatchUpdateValuesByDataFilterResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14129,17 +14173,17 @@ func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearVa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ClearValuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14246,10 +14290,10 @@ func (c *SpreadsheetsValuesGetCall) DateTimeRenderOption(dateTimeRenderOption st
 
 // MajorDimension sets the optional parameter "majorDimension": The
 // major dimension that results should use. For example, if the
-// spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting
-// `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas
-// requesting `range=A1:B2,majorDimension=COLUMNS` returns
-// `[[1,3],[2,4]]`.
+// spreadsheet data in Sheet1 is: `A1=1,B1=2,A2=3,B2=4`, then requesting
+// `range=Sheet1!A1:B2?majorDimension=ROWS` returns `[[1,2],[3,4]]`,
+// whereas requesting `range=Sheet1!A1:B2?majorDimension=COLUMNS`
+// returns `[[1,3],[2,4]]`.
 //
 // Possible values:
 //
@@ -14269,10 +14313,10 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -14282,7 +14326,12 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesGetCall) ValueRenderOption(valueRenderOption string) *SpreadsheetsValuesGetCall {
 	c.urlParams_.Set("valueRenderOption", valueRenderOption)
 	return c
@@ -14364,17 +14413,17 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ValueRange{
 		ServerResponse: googleapi.ServerResponse{
@@ -14411,7 +14460,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "majorDimension": {
-	//       "description": "The major dimension that results should use. For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=A1:B2,majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
+	//       "description": "The major dimension that results should use. For example, if the spreadsheet data in Sheet1 is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=Sheet1!A1:B2?majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=Sheet1!A1:B2?majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
 	//       "enum": [
 	//         "DIMENSION_UNSPECIFIED",
 	//         "ROWS",
@@ -14445,9 +14494,9 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14542,10 +14591,10 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDate
 //
 //	"FORMATTED_VALUE" - Values will be calculated & formatted in the
 //
-// reply according to the cell's formatting. Formatting is based on the
-// spreadsheet's locale, not the requesting user's locale. For example,
-// if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
-// `A2` would return "$1.23".
+// response according to the cell's formatting. Formatting is based on
+// the spreadsheet's locale, not the requesting user's locale. For
+// example, if `A1` is `1.23` and `A2` is `=A1` and formatted as
+// currency, then `A2` would return "$1.23".
 //
 //	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 //
@@ -14555,7 +14604,12 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDate
 //	"FORMULA" - Values will not be calculated. The reply will include
 //
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
-// formatted as currency, then A2 would return "=A1".
+// formatted as currency, then A2 would return "=A1". Sheets treats
+// date and time values as decimal values. This lets you perform
+// arithmetic on them in formulas. For more information on interpreting
+// date and time values, see [About date & time
+// values](https://developers.google.com/sheets/api/guides/formats#about_
+// date_time_values).
 func (c *SpreadsheetsValuesUpdateCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesUpdateCall {
 	c.urlParams_.Set("responseValueRenderOption", responseValueRenderOption)
 	return c
@@ -14652,17 +14706,17 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UpdateValuesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -14717,9 +14771,9 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//         "FORMULA"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Values will be calculated \u0026 formatted in the reply according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
+	//         "Values will be calculated \u0026 formatted in the response according to the cell's formatting. Formatting is based on the spreadsheet's locale, not the requesting user's locale. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return `\"$1.23\"`.",
 	//         "Values will be calculated, but not formatted in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then `A2` would return the number `1.23`.",
-	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`."
+	//         "Values will not be calculated. The reply will include the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then A2 would return `\"=A1\"`. Sheets treats date and time values as decimal values. This lets you perform arithmetic on them in formulas. For more information on interpreting date and time values, see [About date \u0026 time values](https://developers.google.com/sheets/api/guides/formats#about_date_time_values)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

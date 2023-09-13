@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package workflowexecutions provides access to the Workflow Executions API.
 //
 // For product documentation, see: https://cloud.google.com/workflows
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	workflowexecutionsService, err := workflowexecutions.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package workflowexecutions // import "google.golang.org/api/workflowexecutions/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "workflowexecutions:v1"
 const apiName = "workflowexecutions"
@@ -175,11 +189,66 @@ type ProjectsLocationsWorkflowsService struct {
 
 func NewProjectsLocationsWorkflowsExecutionsService(s *Service) *ProjectsLocationsWorkflowsExecutionsService {
 	rs := &ProjectsLocationsWorkflowsExecutionsService{s: s}
+	rs.Callbacks = NewProjectsLocationsWorkflowsExecutionsCallbacksService(s)
 	return rs
 }
 
 type ProjectsLocationsWorkflowsExecutionsService struct {
 	s *Service
+
+	Callbacks *ProjectsLocationsWorkflowsExecutionsCallbacksService
+}
+
+func NewProjectsLocationsWorkflowsExecutionsCallbacksService(s *Service) *ProjectsLocationsWorkflowsExecutionsCallbacksService {
+	rs := &ProjectsLocationsWorkflowsExecutionsCallbacksService{s: s}
+	return rs
+}
+
+type ProjectsLocationsWorkflowsExecutionsCallbacksService struct {
+	s *Service
+}
+
+// Callback: An instance of a Callback created by an execution.
+type Callback struct {
+	// AvailablePayloads: Output only. The payloads received by the callback
+	// that have not been processed by a waiting execution step.
+	AvailablePayloads []string `json:"availablePayloads,omitempty"`
+
+	// Method: Output only. The method accepted by the callback. E.g. GET,
+	// POST, PUT.
+	Method string `json:"method,omitempty"`
+
+	// Name: Output only. The resource name of the callback. Format:
+	// projects/{project}/locations/{location}/workflows/{workflow}/execution
+	// s/{execution}/callback/{callback}
+	Name string `json:"name,omitempty"`
+
+	// Waiters: Output only. Number of execution steps waiting on this
+	// callback.
+	Waiters int64 `json:"waiters,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailablePayloads")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailablePayloads") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Callback) MarshalJSON() ([]byte, error) {
+	type NoMethod Callback
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CancelExecutionRequest: Request for the CancelExecution method.
@@ -235,12 +304,16 @@ type Execution struct {
 	// CallLogLevel: The call logging level associated to this execution.
 	//
 	// Possible values:
-	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging specified.
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging level specified.
 	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
 	// returns, and all exceptions raised.
 	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
 	// steps within workflows.
+	//   "LOG_NONE" - Explicitly log nothing.
 	CallLogLevel string `json:"callLogLevel,omitempty"`
+
+	// Duration: Output only. Measures the duration of the execution.
+	Duration string `json:"duration,omitempty"`
 
 	// EndTime: Output only. Marks the end of execution, successful or not.
 	EndTime string `json:"endTime,omitempty"`
@@ -249,6 +322,15 @@ type Execution struct {
 	// prematurely. The value is only present if the execution's state is
 	// `FAILED` or `CANCELLED`.
 	Error *Error `json:"error,omitempty"`
+
+	// Labels: Labels associated with this execution. Labels can contain at
+	// most 64 entries. Keys and values can be no longer than 63 characters
+	// and can only contain lowercase letters, numeric characters,
+	// underscores, and dashes. Label keys must start with a letter.
+	// International characters are allowed. By default, labels are
+	// inherited from the workflow but are overridden by any labels
+	// associated with the execution.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The resource name of the execution. Format:
 	// projects/{project}/locations/{location}/workflows/{workflow}/execution
@@ -271,19 +353,19 @@ type Execution struct {
 	//   "SUCCEEDED" - The execution finished successfully.
 	//   "FAILED" - The execution failed with an error.
 	//   "CANCELLED" - The execution was stopped intentionally.
+	//   "UNAVAILABLE" - Execution data is unavailable. See the
+	// `state_error` field.
+	//   "QUEUED" - Request has been placed in the backlog for processing at
+	// a later time.
 	State string `json:"state,omitempty"`
 
+	// StateError: Output only. Error regarding the state of the Execution
+	// resource. For example, this field will have error details if the
+	// execution data is unavailable due to revoked KMS key permissions.
+	StateError *StateError `json:"stateError,omitempty"`
+
 	// Status: Output only. Status tracks the current steps and progress
-	// data of this execution. > **Preview:** This field is covered by the >
-	// Pre-GA Offerings Terms (https://cloud.google.com/terms/service-terms)
-	// of > the Google Cloud Terms of Service. Pre-GA features might have
-	// limited > support, and changes to pre-GA features might not be
-	// compatible with > other pre-GA versions. For more information, see
-	// the > launch stage descriptions
-	// (https://cloud.google.com/products#product-launch-stages). > This
-	// field is usable only if your project has access. See the > access
-	// request page
-	// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
+	// data of this execution.
 	Status *Status `json:"status,omitempty"`
 
 	// WorkflowRevisionId: Output only. Revision of the workflow this
@@ -313,6 +395,77 @@ type Execution struct {
 
 func (s *Execution) MarshalJSON() ([]byte, error) {
 	type NoMethod Execution
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExportDataResponse: Response for the ExportData method.
+type ExportDataResponse struct {
+	// Data: The JSON string with customer data and metadata of an execution
+	// of the given name
+	Data string `json:"data,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportDataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportDataResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListCallbacksResponse: RPC response object for the ListCallbacks
+// method.
+type ListCallbacksResponse struct {
+	// Callbacks: The callbacks which match the request.
+	Callbacks []*Callback `json:"callbacks,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Callbacks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Callbacks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCallbacksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCallbacksResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -403,24 +556,24 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/pubsub/quotas) for more information about
 // message limits.
 type PubsubMessage struct {
-	// Attributes: Attributes for this message. If this field is empty, the
-	// message must contain non-empty data. This can be used to filter
-	// messages on the subscription.
+	// Attributes: Optional. Attributes for this message. If this field is
+	// empty, the message must contain non-empty data. This can be used to
+	// filter messages on the subscription.
 	Attributes map[string]string `json:"attributes,omitempty"`
 
-	// Data: The message data field. If this field is empty, the message
-	// must contain at least one attribute.
+	// Data: Optional. The message data field. If this field is empty, the
+	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: ID of this message, assigned by the server when the
-	// message is published. Guaranteed to be unique within the topic. This
-	// value may be read by a subscriber that receives a `PubsubMessage` via
-	// a `Pull` call or a push delivery. It must not be populated by the
-	// publisher in a `Publish` call.
+	// MessageId: Optional. ID of this message, assigned by the server when
+	// the message is published. Guaranteed to be unique within the topic.
+	// This value may be read by a subscriber that receives a
+	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
+	// populated by the publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
-	// OrderingKey: If non-empty, identifies related messages for which
-	// publish order should be respected. If a `Subscription` has
+	// OrderingKey: Optional. If non-empty, identifies related messages for
+	// which publish order should be respected. If a `Subscription` has
 	// `enable_message_ordering` set to `true`, messages published with the
 	// same non-empty `ordering_key` value will be delivered to subscribers
 	// in the order in which they are received by the Pub/Sub system. All
@@ -429,9 +582,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: The time at which the message was published, populated
-	// by the server when it receives the `Publish` call. It must not be
-	// populated by the publisher in a `Publish` call.
+	// PublishTime: Optional. The time at which the message was published,
+	// populated by the server when it receives the `Publish` call. It must
+	// not be populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -521,17 +674,43 @@ func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Status: > **Preview:** This field is covered by the > Pre-GA
-// Offerings Terms (https://cloud.google.com/terms/service-terms) of >
-// the Google Cloud Terms of Service. Pre-GA features might have limited
-// > support, and changes to pre-GA features might not be compatible
-// with > other pre-GA versions. For more information, see the > launch
-// stage descriptions
-// (https://cloud.google.com/products#product-launch-stages). > This
-// field is usable only if your project has access. See the > access
-// request page
-// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
-// Represents the current status of this execution.
+// StateError: Describes an error related to the current state of the
+// Execution resource.
+type StateError struct {
+	// Details: Provides specifics about the error.
+	Details string `json:"details,omitempty"`
+
+	// Type: The type of this state error.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - No type specified.
+	//   "KMS_ERROR" - Caused by an issue with KMS.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StateError) MarshalJSON() ([]byte, error) {
+	type NoMethod StateError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: Represents the current status of this execution.
 type Status struct {
 	// CurrentSteps: A list of currently executing or last executed step
 	// names for the workflow execution currently running. If the workflow
@@ -603,6 +782,12 @@ type TriggerPubsubExecutionRequest struct {
 	// value for __GCP_CloudEventsMode, set by the Eventarc service when
 	// configuring triggers.
 	GCPCloudEventsMode string `json:"GCPCloudEventsMode,omitempty"`
+
+	// DeliveryAttempt: The number of attempts that have been made to
+	// deliver this message. This is set by Pub/Sub for subscriptions that
+	// have the "dead letter" feature enabled, and hence provided here for
+	// compatibility, but is ignored by Workflows.
+	DeliveryAttempt int64 `json:"deliveryAttempt,omitempty"`
 
 	// Message: Required. The message of the Pub/Sub push notification.
 	Message *PubsubMessage `json:"message,omitempty"`
@@ -726,17 +911,17 @@ func (c *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -870,17 +1055,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -1016,17 +1201,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -1070,6 +1255,155 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 
 }
 
+// method id "workflowexecutions.projects.locations.workflows.executions.exportData":
+
+type ProjectsLocationsWorkflowsExecutionsExportDataCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExportData: Returns all metadata stored about an execution, excluding
+// most data that is already accessible via other API methods.
+//
+//   - name: Name of the execution to be data exported. Format:
+//     projects/{project}/locations/{location}/workflows/{workflow}/executi
+//     ons/{execution}.
+func (r *ProjectsLocationsWorkflowsExecutionsService) ExportData(name string) *ProjectsLocationsWorkflowsExecutionsExportDataCall {
+	c := &ProjectsLocationsWorkflowsExecutionsExportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsExecutionsExportDataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkflowsExecutionsExportDataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsExecutionsExportDataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:exportData")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.executions.exportData" call.
+// Exactly one of *ExportDataResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExportDataResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Do(opts ...googleapi.CallOption) (*ExportDataResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExportDataResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns all metadata stored about an execution, excluding most data that is already accessible via other API methods.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions/{executionsId}:exportData",
+	//   "httpMethod": "GET",
+	//   "id": "workflowexecutions.projects.locations.workflows.executions.exportData",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the execution to be data exported. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:exportData",
+	//   "response": {
+	//     "$ref": "ExportDataResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "workflowexecutions.projects.locations.workflows.executions.get":
 
 type ProjectsLocationsWorkflowsExecutionsGetCall struct {
@@ -1099,10 +1433,10 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *Projects
 // Possible values:
 //
 //	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
-//	"BASIC" - Includes only basic metadata about the execution.
+//	"BASIC" - Includes only basic metadata about the execution. The
 //
-// Following fields are returned: name, start_time, end_time, state and
-// workflow_revision_id.
+// following fields are returned: name, start_time, end_time, duration,
+// state, and workflow_revision_id.
 //
 //	"FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) View(view string) *ProjectsLocationsWorkflowsExecutionsGetCall {
@@ -1185,17 +1519,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -1233,7 +1567,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 	//       ],
 	//       "enumDescriptions": [
 	//         "The default / unset value.",
-	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, state and workflow_revision_id.",
+	//         "Includes only basic metadata about the execution. The following fields are returned: name, start_time, end_time, duration, state, and workflow_revision_id.",
 	//         "Includes all data."
 	//       ],
 	//       "location": "query",
@@ -1276,6 +1610,25 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [Executions.ListExecutions] results. The following fields are
+// supported for filtering: executionID, state, startTime, endTime,
+// duration, workflowRevisionID, stepName, and label.
+func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The ordering applied
+// to the [Executions.ListExecutions] results. By default the ordering
+// is based on descending start time. The following fields are supported
+// for order by: executionID, startTime, endTime, duration, state, and
+// workflowRevisionID.
+func (c *ProjectsLocationsWorkflowsExecutionsListCall) OrderBy(orderBy string) *ProjectsLocationsWorkflowsExecutionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // executions to return per call. Max supported value depends on the
 // selected Execution view: it's 1000 for BASIC and 100 for FULL. The
@@ -1291,7 +1644,8 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageSize(pageSize int64) 
 // received from a previous `ListExecutions` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
 // provided to `ListExecutions` must match the call that provided the
-// page token.
+// page token. Note that pagination is applied to dynamic data. The list
+// of executions returned can change between page requests.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageToken(pageToken string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1304,10 +1658,10 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageToken(pageToken strin
 // Possible values:
 //
 //	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
-//	"BASIC" - Includes only basic metadata about the execution.
+//	"BASIC" - Includes only basic metadata about the execution. The
 //
-// Following fields are returned: name, start_time, end_time, state and
-// workflow_revision_id.
+// following fields are returned: name, start_time, end_time, duration,
+// state, and workflow_revision_id.
 //
 //	"FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) View(view string) *ProjectsLocationsWorkflowsExecutionsListCall {
@@ -1390,17 +1744,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListExecutionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1422,6 +1776,16 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [Executions.ListExecutions] results. The following fields are supported for filtering: executionID, state, startTime, endTime, duration, workflowRevisionID, stepName, and label.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The ordering applied to the [Executions.ListExecutions] results. By default the ordering is based on descending start time. The following fields are supported for order by: executionID, startTime, endTime, duration, state, and workflowRevisionID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum number of executions to return per call. Max supported value depends on the selected Execution view: it's 1000 for BASIC and 100 for FULL. The default value used if the field is not specified is 100, regardless of the selected view. Values greater than the max value will be coerced down to it.",
 	//       "format": "int32",
@@ -1429,7 +1793,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListExecutions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExecutions` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListExecutions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExecutions` must match the call that provided the page token. Note that pagination is applied to dynamic data. The list of executions returned can change between page requests.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1449,7 +1813,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//       ],
 	//       "enumDescriptions": [
 	//         "The default / unset value.",
-	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, state and workflow_revision_id.",
+	//         "Includes only basic metadata about the execution. The following fields are returned: name, start_time, end_time, duration, state, and workflow_revision_id.",
 	//         "Includes all data."
 	//       ],
 	//       "location": "query",
@@ -1471,6 +1835,207 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) Pages(ctx context.Context, f func(*ListExecutionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "workflowexecutions.projects.locations.workflows.executions.callbacks.list":
+
+type ProjectsLocationsWorkflowsExecutionsCallbacksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of active callbacks which belong to the
+// execution with the given name. The returned callbacks are ordered by
+// callback ID. first).
+//
+//   - parent: Name of the execution for which the callbacks should be
+//     listed. Format:
+//     projects/{project}/locations/{location}/workflows/{workflow}/executi
+//     ons/{execution}.
+func (r *ProjectsLocationsWorkflowsExecutionsCallbacksService) List(parent string) *ProjectsLocationsWorkflowsExecutionsCallbacksListCall {
+	c := &ProjectsLocationsWorkflowsExecutionsCallbacksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// callbacks to return per call. The default value is 100 and is also
+// the maximum value.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) PageSize(pageSize int64) *ProjectsLocationsWorkflowsExecutionsCallbacksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListCallbacks` call. Provide this to
+// retrieve the subsequent page. Note that pagination is applied to
+// dynamic data. The list of callbacks returned can change between page
+// requests if callbacks are created or deleted.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) PageToken(pageToken string) *ProjectsLocationsWorkflowsExecutionsCallbacksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsExecutionsCallbacksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkflowsExecutionsCallbacksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsExecutionsCallbacksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/callbacks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.executions.callbacks.list" call.
+// Exactly one of *ListCallbacksResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCallbacksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Do(opts ...googleapi.CallOption) (*ListCallbacksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCallbacksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of active callbacks which belong to the execution with the given name. The returned callbacks are ordered by callback ID. first).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions/{executionsId}/callbacks",
+	//   "httpMethod": "GET",
+	//   "id": "workflowexecutions.projects.locations.workflows.executions.callbacks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of callbacks to return per call. The default value is 100 and is also the maximum value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListCallbacks` call. Provide this to retrieve the subsequent page. Note that pagination is applied to dynamic data. The list of callbacks returned can change between page requests if callbacks are created or deleted.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the execution for which the callbacks should be listed. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/callbacks",
+	//   "response": {
+	//     "$ref": "ListCallbacksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Pages(ctx context.Context, f func(*ListCallbacksResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

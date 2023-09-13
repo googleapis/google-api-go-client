@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package identitytoolkit provides access to the Identity Toolkit API.
 //
 // For product documentation, see: https://cloud.google.com/identity-platform
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx, option.WithScopes(identitytoolkit.FirebaseScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package identitytoolkit // import "google.golang.org/api/identitytoolkit/v2"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "identitytoolkit:v2"
 const apiName = "identitytoolkit"
@@ -129,6 +144,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.DefaultSupportedIdps = NewDefaultSupportedIdpsService(s)
 	s.Projects = NewProjectsService(s)
+	s.V2 = NewV2Service(s)
 	return s, nil
 }
 
@@ -142,6 +158,8 @@ type Service struct {
 	DefaultSupportedIdps *DefaultSupportedIdpsService
 
 	Projects *ProjectsService
+
+	V2 *V2Service
 }
 
 func (s *Service) userAgent() string {
@@ -295,6 +313,15 @@ func NewProjectsTenantsOauthIdpConfigsService(s *Service) *ProjectsTenantsOauthI
 }
 
 type ProjectsTenantsOauthIdpConfigsService struct {
+	s *Service
+}
+
+func NewV2Service(s *Service) *V2Service {
+	rs := &V2Service{s: s}
+	return rs
+}
+
+type V2Service struct {
 	s *Service
 }
 
@@ -618,6 +645,10 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	// project should be configured.
 	Client *GoogleCloudIdentitytoolkitAdminV2ClientConfig `json:"client,omitempty"`
 
+	// EmailPrivacyConfig: Configuration for settings related to email
+	// privacy and public visibility.
+	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
+
 	// Mfa: Configuration for this project's multi-factor authentication,
 	// including whether it is active and what factors can be used for the
 	// second factor
@@ -637,8 +668,15 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	// users.
 	Notification *GoogleCloudIdentitytoolkitAdminV2NotificationConfig `json:"notification,omitempty"`
 
+	// PasswordPolicyConfig: The project level password policy
+	// configuration.
+	PasswordPolicyConfig *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig `json:"passwordPolicyConfig,omitempty"`
+
 	// Quota: Configuration related to quotas.
 	Quota *GoogleCloudIdentitytoolkitAdminV2QuotaConfig `json:"quota,omitempty"`
+
+	// RecaptchaConfig: The project-level reCAPTCHA config.
+	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
 
 	// SignIn: Configuration related to local sign in methods.
 	SignIn *GoogleCloudIdentitytoolkitAdminV2SignInConfig `json:"signIn,omitempty"`
@@ -679,6 +717,55 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Config
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions: Custom
+// strength options to enforce on user passwords.
+type GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions struct {
+	// ContainsLowercaseCharacter: The password must contain a lower case
+	// character.
+	ContainsLowercaseCharacter bool `json:"containsLowercaseCharacter,omitempty"`
+
+	// ContainsNonAlphanumericCharacter: The password must contain a non
+	// alpha numeric character.
+	ContainsNonAlphanumericCharacter bool `json:"containsNonAlphanumericCharacter,omitempty"`
+
+	// ContainsNumericCharacter: The password must contain a number.
+	ContainsNumericCharacter bool `json:"containsNumericCharacter,omitempty"`
+
+	// ContainsUppercaseCharacter: The password must contain an upper case
+	// character.
+	ContainsUppercaseCharacter bool `json:"containsUppercaseCharacter,omitempty"`
+
+	// MaxPasswordLength: Maximum password length. No default max length
+	MaxPasswordLength int64 `json:"maxPasswordLength,omitempty"`
+
+	// MinPasswordLength: Minimum password length. Range from 6 to 30
+	MinPasswordLength int64 `json:"minPasswordLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -848,6 +935,46 @@ type GoogleCloudIdentitytoolkitAdminV2Email struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Email) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Email
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig: Configuration
+// for settings related to email privacy and public visibility. Settings
+// in this config protect against email enumeration, but may make some
+// trade-offs in user-friendliness.
+type GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig struct {
+	// EnableImprovedEmailPrivacy: Migrates the project to a state of
+	// improved email privacy. For example certain error codes are more
+	// generic to avoid giving away information on whether the account
+	// exists. In addition, this disables certain features that as a
+	// side-effect allow user enumeration. Enabling this toggle disables the
+	// fetchSignInMethodsForEmail functionality and changing the user's
+	// email to an unverified email. It is recommended to remove dependence
+	// on this functionality and enable this toggle to improve user privacy.
+	EnableImprovedEmailPrivacy bool `json:"enableImprovedEmailPrivacy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableImprovedEmailPrivacy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableImprovedEmailPrivacy") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1409,6 +1536,11 @@ type GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig struct {
 	//   "PHONE_SMS" - SMS is enabled as a second factor for this project.
 	EnabledProviders []string `json:"enabledProviders,omitempty"`
 
+	// ProviderConfigs: A list of usable second factors for this project
+	// along with their configurations. This field does not support phone
+	// based MFA, for that use the 'enabled_providers' field.
+	ProviderConfigs []*GoogleCloudIdentitytoolkitAdminV2ProviderConfig `json:"providerConfigs,omitempty"`
+
 	// State: Whether MultiFactor Authentication has been enabled for this
 	// project.
 	//
@@ -1619,6 +1751,136 @@ func (s *GoogleCloudIdentitytoolkitAdminV2OAuthResponseType) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2PasskeyConfig: Configuration for
+// signing in users using passkeys.
+type GoogleCloudIdentitytoolkitAdminV2PasskeyConfig struct {
+	// ExpectedOrigins: Required. The website or app origins associated with
+	// the customer's sites or apps. Only challenges signed from these
+	// origins will be allowed to sign in with passkeys.
+	ExpectedOrigins []string `json:"expectedOrigins,omitempty"`
+
+	// Name: Required. The name of the PasskeyConfig resource.
+	Name string `json:"name,omitempty"`
+
+	// RpId: Required. The relying party ID for the purpose of passkeys
+	// verifications. This cannot be changed once created.
+	RpId string `json:"rpId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpectedOrigins") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpectedOrigins") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasskeyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig: The
+// configuration for the password policy on the project.
+type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig struct {
+	// ForceUpgradeOnSignin: Users must have a password compliant with the
+	// password policy to sign-in.
+	ForceUpgradeOnSignin bool `json:"forceUpgradeOnSignin,omitempty"`
+
+	// LastUpdateTime: Output only. The last time the password policy on the
+	// project was updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// PasswordPolicyEnforcementState: Which enforcement mode to use for the
+	// password policy.
+	//
+	// Possible values:
+	//   "PASSWORD_POLICY_ENFORCEMENT_STATE_UNSPECIFIED" - Illegal State,
+	// should not be used.
+	//   "OFF" - Password Policy will not be used on the project.
+	//   "ENFORCE" - Passwords non-compliant with the password policy will
+	// be rejected with an error thrown.
+	PasswordPolicyEnforcementState string `json:"passwordPolicyEnforcementState,omitempty"`
+
+	// PasswordPolicyVersions: Must be of length 1. Contains the strength
+	// attributes for the password policy.
+	PasswordPolicyVersions []*GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion `json:"passwordPolicyVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ForceUpgradeOnSignin") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ForceUpgradeOnSignin") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion: The strength
+// attributes for the password policy on the project.
+type GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion struct {
+	// CustomStrengthOptions: The custom strength options enforced by the
+	// password policy.
+	CustomStrengthOptions *GoogleCloudIdentitytoolkitAdminV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
+
+	// SchemaVersion: Output only. schema version number for the password
+	// policy
+	SchemaVersion int64 `json:"schemaVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomStrengthOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomStrengthOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2PasswordPolicyVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2Permissions: Configuration related
 // to restricting a user's ability to affect their account.
 type GoogleCloudIdentitytoolkitAdminV2Permissions struct {
@@ -1687,6 +1949,49 @@ func (s *GoogleCloudIdentitytoolkitAdminV2PhoneNumber) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2ProviderConfig: ProviderConfig
+// describes the supported MFA providers along with their
+// configurations.
+type GoogleCloudIdentitytoolkitAdminV2ProviderConfig struct {
+	// State: Describes the state of the MultiFactor Authentication type.
+	//
+	// Possible values:
+	//   "MFA_STATE_UNSPECIFIED" - Illegal State, should not be used.
+	//   "DISABLED" - Multi-factor authentication cannot be used for this
+	// project.
+	//   "ENABLED" - Multi-factor authentication can be used for this
+	// project.
+	//   "MANDATORY" - Multi-factor authentication is required for this
+	// project. Users from this project must authenticate with the second
+	// factor.
+	State string `json:"state,omitempty"`
+
+	// TotpProviderConfig: TOTP MFA provider config for this project.
+	TotpProviderConfig *GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig `json:"totpProviderConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2ProviderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2ProviderConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2QuotaConfig: Configuration related
 // to quotas.
 type GoogleCloudIdentitytoolkitAdminV2QuotaConfig struct {
@@ -1716,6 +2021,161 @@ func (s *GoogleCloudIdentitytoolkitAdminV2QuotaConfig) MarshalJSON() ([]byte, er
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2QuotaConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig: The reCAPTCHA
+// Enterprise integration config.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
+	// EmailPasswordEnforcementState: The reCAPTCHA config for
+	// email/password provider, containing the enforcement status. The
+	// email/password provider contains all related user flows protected by
+	// reCAPTCHA.
+	//
+	// Possible values:
+	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement
+	// state has not been set.
+	//   "OFF" - Unenforced.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to
+	// enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to
+	// enforce.
+	EmailPasswordEnforcementState string `json:"emailPasswordEnforcementState,omitempty"`
+
+	// ManagedRules: The managed rules for authentication action based on
+	// reCAPTCHA scores. The rules are shared across providers for a given
+	// tenant project.
+	ManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule `json:"managedRules,omitempty"`
+
+	// RecaptchaKeys: Output only. The reCAPTCHA keys.
+	RecaptchaKeys []*GoogleCloudIdentitytoolkitAdminV2RecaptchaKey `json:"recaptchaKeys,omitempty"`
+
+	// UseAccountDefender: Whether to use the account defender for reCAPTCHA
+	// assessment. Defaults to `false`.
+	UseAccountDefender bool `json:"useAccountDefender,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EmailPasswordEnforcementState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EmailPasswordEnforcementState") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaKey: The reCAPTCHA key
+// config. reCAPTCHA Enterprise offers different keys for different
+// client platforms.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaKey struct {
+	// Key: The reCAPTCHA Enterprise key resource name, e.g.
+	// "projects/{project}/keys/{key}"
+	Key string `json:"key,omitempty"`
+
+	// Type: The client's platform type.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "WEB" - Client type is web.
+	//   "IOS" - Client type is iOS.
+	//   "ANDROID" - Client type is Android.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule: The config for
+// a reCAPTCHA managed rule. Models a single interval [start_score,
+// end_score]. The start_score is implicit. It is either the closest
+// smaller end_score (if one is available) or 0. Intervals in aggregate
+// span [0, 1] without overlapping.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule struct {
+	// Action: The action taken if the reCAPTCHA score of a request is
+	// within the interval [start_score, end_score].
+	//
+	// Possible values:
+	//   "RECAPTCHA_ACTION_UNSPECIFIED" - The reCAPTCHA action is not
+	// specified.
+	//   "BLOCK" - The reCAPTCHA-protected request will be blocked.
+	Action string `json:"action,omitempty"`
+
+	// EndScore: The end score (inclusive) of the score range for an action.
+	// Must be a value between 0.0 and 1.0, at 11 discrete values; e.g. 0,
+	// 0.1, 0.2, 0.3, ... 0.9, 1.0. A score of 0.0 indicates the riskiest
+	// request (likely a bot), whereas 1.0 indicates the safest request
+	// (likely a human). See
+	// https://cloud.google.com/recaptcha-enterprise/docs/interpret-assessment.
+	EndScore float64 `json:"endScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule
+	var s1 struct {
+		EndScore gensupport.JSONFloat64 `json:"endScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.EndScore = float64(s1.EndScore)
+	return nil
 }
 
 // GoogleCloudIdentitytoolkitAdminV2RequestLogging: Configuration for
@@ -2134,6 +2594,10 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// DisplayName: Display name of the tenant.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EmailPrivacyConfig: Configuration for settings related to email
+	// privacy and public visibility.
+	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
+
 	// EnableAnonymousUser: Whether to enable anonymous user authentication.
 	EnableAnonymousUser bool `json:"enableAnonymousUser,omitempty"`
 
@@ -2161,6 +2625,12 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// Name: Output only. Resource name of a tenant. For example:
 	// "projects/{project-id}/tenants/{tenant-id}"
 	Name string `json:"name,omitempty"`
+
+	// PasswordPolicyConfig: The tenant-level password policy config
+	PasswordPolicyConfig *GoogleCloudIdentitytoolkitAdminV2PasswordPolicyConfig `json:"passwordPolicyConfig,omitempty"`
+
+	// RecaptchaConfig: The tenant-level reCAPTCHA config.
+	RecaptchaConfig *GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig `json:"recaptchaConfig,omitempty"`
 
 	// SmsRegionConfig: Configures which regions are enabled for SMS
 	// verification code sending.
@@ -2196,6 +2666,37 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Tenant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Tenant
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig:
+// TotpMFAProviderConfig represents the TOTP based MFA provider.
+type GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig struct {
+	// AdjacentIntervals: The allowed number of adjacent intervals that will
+	// be used for verification to avoid clock skew.
+	AdjacentIntervals int64 `json:"adjacentIntervals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdjacentIntervals")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdjacentIntervals") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2TotpMfaProviderConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2263,6 +2764,55 @@ func (s *GoogleCloudIdentitytoolkitV2AutoRetrievalInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitV2CustomStrengthOptions: Custom strength
+// options to enforce on user passwords.
+type GoogleCloudIdentitytoolkitV2CustomStrengthOptions struct {
+	// ContainsLowercaseCharacter: The password must contain a lower case
+	// character.
+	ContainsLowercaseCharacter bool `json:"containsLowercaseCharacter,omitempty"`
+
+	// ContainsNonAlphanumericCharacter: The password must contain a non
+	// alpha numeric character.
+	ContainsNonAlphanumericCharacter bool `json:"containsNonAlphanumericCharacter,omitempty"`
+
+	// ContainsNumericCharacter: The password must contain a number.
+	ContainsNumericCharacter bool `json:"containsNumericCharacter,omitempty"`
+
+	// ContainsUppercaseCharacter: The password must contain an upper case
+	// character.
+	ContainsUppercaseCharacter bool `json:"containsUppercaseCharacter,omitempty"`
+
+	// MaxPasswordLength: Maximum password length. No default max length
+	MaxPasswordLength int64 `json:"maxPasswordLength,omitempty"`
+
+	// MinPasswordLength: Minimum password length. Range from 6 to 30
+	MinPasswordLength int64 `json:"minPasswordLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ContainsLowercaseCharacter") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2CustomStrengthOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2CustomStrengthOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest: Finishes
 // enrolling a second factor for the user.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest struct {
@@ -2281,6 +2831,9 @@ type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentRequest struct {
 	// enrolling MFA belongs to. If not set, the user belongs to the default
 	// Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
+
+	// TotpVerificationInfo: Verification information for TOTP.
+	TotpVerificationInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo `json:"totpVerificationInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -2316,6 +2869,9 @@ type GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse struct {
 
 	// RefreshToken: Refresh token updated to reflect MFA enrollment.
 	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// TotpAuthInfo: Auxiliary auth info specific to TOTP auth.
+	TotpAuthInfo *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo `json:"totpAuthInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2427,6 +2983,10 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaPhoneResponseInfo) MarshalJSON()
 // GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest: Finalizes
 // sign-in by verifying MFA challenge.
 type GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest struct {
+	// MfaEnrollmentId: The MFA enrollment ID from the user's list of
+	// current MFA enrollments.
+	MfaEnrollmentId string `json:"mfaEnrollmentId,omitempty"`
+
 	// MfaPendingCredential: Required. Pending credential from first factor
 	// sign-in.
 	MfaPendingCredential string `json:"mfaPendingCredential,omitempty"`
@@ -2440,16 +3000,19 @@ type GoogleCloudIdentitytoolkitV2FinalizeMfaSignInRequest struct {
 	// Platform project.
 	TenantId string `json:"tenantId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "MfaPendingCredential") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// TotpVerificationInfo: Proof of completion of the TOTP based MFA
+	// challenge.
+	TotpVerificationInfo *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo `json:"totpVerificationInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MfaEnrollmentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MfaPendingCredential") to
+	// NullFields is a list of field names (e.g. "MfaEnrollmentId") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2505,6 +3068,289 @@ func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo: Mfa
+// request info specific to TOTP auth for FinalizeMfa.
+type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo struct {
+	// SessionInfo: An opaque string that represents the enrollment session.
+	SessionInfo string `json:"sessionInfo,omitempty"`
+
+	// VerificationCode: User-entered verification code.
+	VerificationCode string `json:"verificationCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SessionInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SessionInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo:
+// Mfa response info specific to TOTP auth for FinalizeMfa.
+type GoogleCloudIdentitytoolkitV2FinalizeMfaTotpEnrollmentResponseInfo struct {
+}
+
+// GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo: TOTP
+// verification info for FinalizeMfaSignInRequest.
+type GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo struct {
+	// VerificationCode: User-entered verification code.
+	VerificationCode string `json:"verificationCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VerificationCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VerificationCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2MfaTotpSignInRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2PasswordPolicy: Configuration for
+// password policy.
+type GoogleCloudIdentitytoolkitV2PasswordPolicy struct {
+	// AllowedNonAlphanumericCharacters: Output only. Allowed characters
+	// which satisfy the non_alphanumeric requirement.
+	AllowedNonAlphanumericCharacters []string `json:"allowedNonAlphanumericCharacters,omitempty"`
+
+	// CustomStrengthOptions: The custom strength options enforced by the
+	// password policy.
+	CustomStrengthOptions *GoogleCloudIdentitytoolkitV2CustomStrengthOptions `json:"customStrengthOptions,omitempty"`
+
+	// EnforcementState: Output only. Which enforcement mode to use for the
+	// password policy.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been
+	// set.
+	//   "OFF" - Password Policy will not be used on the project.
+	//   "ENFORCE" - Passwords non-compliant with the password policy will
+	// be rejected with an error thrown.
+	EnforcementState string `json:"enforcementState,omitempty"`
+
+	// ForceUpgradeOnSignin: Users must have a password compliant with the
+	// password policy to sign-in.
+	ForceUpgradeOnSignin bool `json:"forceUpgradeOnSignin,omitempty"`
+
+	// SchemaVersion: Output only. schema version number for the password
+	// policy
+	SchemaVersion int64 `json:"schemaVersion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedNonAlphanumericCharacters") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowedNonAlphanumericCharacters") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2PasswordPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2PasswordPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RecaptchaConfig: Configuration for
+// reCAPTCHA
+type GoogleCloudIdentitytoolkitV2RecaptchaConfig struct {
+	// RecaptchaEnforcementState: The reCAPTCHA enforcement state for the
+	// providers that GCIP supports reCAPTCHA protection.
+	RecaptchaEnforcementState []*GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState `json:"recaptchaEnforcementState,omitempty"`
+
+	// RecaptchaKey: The reCAPTCHA Enterprise key resource name, e.g.
+	// "projects/{project}/keys/{key}". This will only be returned when the
+	// reCAPTCHA enforcement state is AUDIT or ENFORCE on at least one of
+	// the reCAPTCHA providers.
+	RecaptchaKey string `json:"recaptchaKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecaptchaEnforcementState") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RecaptchaEnforcementState") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RecaptchaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RecaptchaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState: Enforcement
+// states for reCAPTCHA protection.
+type GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState struct {
+	// EnforcementState: The reCAPTCHA enforcement state for the provider.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has not been
+	// set.
+	//   "OFF" - Unenforced.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to
+	// enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to
+	// enforce.
+	EnforcementState string `json:"enforcementState,omitempty"`
+
+	// Provider: The provider that has reCAPTCHA protection.
+	//
+	// Possible values:
+	//   "RECAPTCHA_PROVIDER_UNSPECIFIED" - reCAPTCHA provider not specified
+	//   "EMAIL_PASSWORD_PROVIDER" - Email password provider
+	Provider string `json:"provider,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnforcementState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnforcementState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RevokeTokenRequest: Request message for
+// RevokeToken.
+type GoogleCloudIdentitytoolkitV2RevokeTokenRequest struct {
+	// IdToken: Required. A valid Identity Platform ID token to link the
+	// account. If there was a successful token revocation request on the
+	// account and no tokens are generated after the revocation, the
+	// duplicate requests will be ignored and returned immediately.
+	IdToken string `json:"idToken,omitempty"`
+
+	// ProviderId: Required. The idp provider for the token. Currently only
+	// supports Apple Idp. The format should be "apple.com".
+	ProviderId string `json:"providerId,omitempty"`
+
+	// RedirectUri: The redirect URI provided in the initial authorization
+	// request made by the client to the IDP. The URI must use the HTTPS
+	// protocol, include a domain name, and can't contain an IP address or
+	// localhost. Required if token_type is CODE.
+	RedirectUri string `json:"redirectUri,omitempty"`
+
+	// TenantId: The ID of the Identity Platform tenant the user is signing
+	// in to. If not set, the user will sign in to the default Identity
+	// Platform project.
+	TenantId string `json:"tenantId,omitempty"`
+
+	// Token: Required. The token to be revoked. If an authorization_code is
+	// passed in, the API will first exchange the code for access token and
+	// then revoke the token exchanged.
+	Token string `json:"token,omitempty"`
+
+	// TokenType: Required. The type of the token to be revoked.
+	//
+	// Possible values:
+	//   "TOKEN_TYPE_UNSPECIFIED" - Default value, do not use.
+	//   "REFRESH_TOKEN" - Token type is refresh_token.
+	//   "ACCESS_TOKEN" - Token type is access_token.
+	//   "CODE" - Token type is authorization_code.
+	TokenType string `json:"tokenType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdToken") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2RevokeTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2RevokeTokenRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2RevokeTokenResponse: Response message for
+// RevokeToken. Empty for now.
+type GoogleCloudIdentitytoolkitV2RevokeTokenResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest: Sends MFA
 // enrollment verification SMS for a user.
 type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest struct {
@@ -2519,6 +3365,9 @@ type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentRequest struct {
 	// enrolling MFA belongs to. If not set, the user belongs to the default
 	// Identity Platform project.
 	TenantId string `json:"tenantId,omitempty"`
+
+	// TotpEnrollmentInfo: Sign-in info specific to TOTP auth.
+	TotpEnrollmentInfo *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo `json:"totpEnrollmentInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IdToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -2549,6 +3398,9 @@ type GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse struct {
 	// PhoneSessionInfo: Verification info to authorize sending an SMS for
 	// phone verification.
 	PhoneSessionInfo *GoogleCloudIdentitytoolkitV2StartMfaPhoneResponseInfo `json:"phoneSessionInfo,omitempty"`
+
+	// TotpSessionInfo: Enrollment response info specific to TOTP auth.
+	TotpSessionInfo *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo `json:"totpSessionInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2595,6 +3447,13 @@ type GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo struct {
 	// PhoneNumber: Required for enrollment. Phone number to be enrolled as
 	// MFA.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// PlayIntegrityToken: Android only. Used to assert application identity
+	// in place of a recaptcha token (or safety net token). A Play Integrity
+	// Token can be generated via the [PlayIntegrity API]
+	// (https://developer.android.com/google/play/integrity) with applying
+	// SHA256 to the `phone_number` field as the nonce.
+	PlayIntegrityToken string `json:"playIntegrityToken,omitempty"`
 
 	// RecaptchaToken: Web only. Recaptcha solution.
 	RecaptchaToken string `json:"recaptchaToken,omitempty"`
@@ -2736,6 +3595,66 @@ type GoogleCloudIdentitytoolkitV2StartMfaSignInResponse struct {
 
 func (s *GoogleCloudIdentitytoolkitV2StartMfaSignInResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaSignInResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo: Mfa
+// request info specific to TOTP auth for StartMfa.
+type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentRequestInfo struct {
+}
+
+// GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo: Mfa
+// response info specific to TOTP auth for StartMfa.
+type GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo struct {
+	// FinalizeEnrollmentTime: The time by which the enrollment must finish.
+	FinalizeEnrollmentTime string `json:"finalizeEnrollmentTime,omitempty"`
+
+	// HashingAlgorithm: The hashing algorithm used to generate the
+	// verification code.
+	HashingAlgorithm string `json:"hashingAlgorithm,omitempty"`
+
+	// PeriodSec: Duration in seconds at which the verification code will
+	// change.
+	PeriodSec int64 `json:"periodSec,omitempty"`
+
+	// SessionInfo: An encoded string that represents the enrollment
+	// session.
+	SessionInfo string `json:"sessionInfo,omitempty"`
+
+	// SharedSecretKey: A base 32 encoded string that represents the shared
+	// TOTP secret. The base 32 encoding is the one specified by
+	// RFC4648#section-6
+	// (https://datatracker.ietf.org/doc/html/rfc4648#section-6). (This is
+	// the same as the base 32 encoding from RFC3548#section-5
+	// (https://datatracker.ietf.org/doc/html/rfc3548#section-5).)
+	SharedSecretKey string `json:"sharedSecretKey,omitempty"`
+
+	// VerificationCodeLength: The length of the verification code that
+	// needs to be generated.
+	VerificationCodeLength int64 `json:"verificationCodeLength,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FinalizeEnrollmentTime") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinalizeEnrollmentTime")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV2StartMfaTotpEnrollmentResponseInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2941,7 +3860,9 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -2958,9 +3879,7 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -3076,7 +3995,7 @@ func (s *GoogleIamV1GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -3085,17 +4004,17 @@ func (s *GoogleIamV1GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -3347,6 +4266,139 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "identitytoolkit.accounts.revokeToken":
+
+type AccountsRevokeTokenCall struct {
+	s                                              *Service
+	googlecloudidentitytoolkitv2revoketokenrequest *GoogleCloudIdentitytoolkitV2RevokeTokenRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// RevokeToken: Revokes a user's token from an Identity Provider (IdP).
+// This is done by manually providing an IdP credential, and the token
+// types for revocation. An API key
+// (https://cloud.google.com/docs/authentication/api-keys) is required
+// in the request in order to identify the Google Cloud project.
+func (r *AccountsService) RevokeToken(googlecloudidentitytoolkitv2revoketokenrequest *GoogleCloudIdentitytoolkitV2RevokeTokenRequest) *AccountsRevokeTokenCall {
+	c := &AccountsRevokeTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudidentitytoolkitv2revoketokenrequest = googlecloudidentitytoolkitv2revoketokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsRevokeTokenCall) Fields(s ...googleapi.Field) *AccountsRevokeTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsRevokeTokenCall) Context(ctx context.Context) *AccountsRevokeTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsRevokeTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsRevokeTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitv2revoketokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/accounts:revokeToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.accounts.revokeToken" call.
+// Exactly one of *GoogleCloudIdentitytoolkitV2RevokeTokenResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2RevokeTokenResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsRevokeTokenCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2RevokeTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2RevokeTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revokes a user's token from an Identity Provider (IdP). This is done by manually providing an IdP credential, and the token types for revocation. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
+	//   "flatPath": "v2/accounts:revokeToken",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.accounts.revokeToken",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/accounts:revokeToken",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2RevokeTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2RevokeTokenResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "identitytoolkit.accounts.mfaEnrollment.finalize":
 
 type AccountsMfaEnrollmentFinalizeCall struct {
@@ -3431,17 +4483,17 @@ func (c *AccountsMfaEnrollmentFinalizeCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV2FinalizeMfaEnrollmentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3560,17 +4612,17 @@ func (c *AccountsMfaEnrollmentStartCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV2StartMfaEnrollmentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3690,17 +4742,17 @@ func (c *AccountsMfaEnrollmentWithdrawCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV2WithdrawMfaResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3817,17 +4869,17 @@ func (c *AccountsMfaSignInFinalizeCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV2FinalizeMfaSignInResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3944,17 +4996,17 @@ func (c *AccountsMfaSignInStartCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV2StartMfaSignInResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4093,17 +5145,17 @@ func (c *DefaultSupportedIdpsListCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4265,17 +5317,17 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudId
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2Config{
 		ServerResponse: googleapi.ServerResponse{
@@ -4311,6 +5363,157 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudId
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.getPasskeyConfig":
+
+type ProjectsGetPasskeyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPasskeyConfig: Retrieve a passkey configuration for an Identity
+// Toolkit project.
+//
+//   - name: The resource name of the config, for example:
+//     'projects/my-awesome-project/passkeyConfig'.
+func (r *ProjectsService) GetPasskeyConfig(name string) *ProjectsGetPasskeyConfigCall {
+	c := &ProjectsGetPasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetPasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsGetPasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetPasskeyConfigCall) IfNoneMatch(entityTag string) *ProjectsGetPasskeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetPasskeyConfigCall) Context(ctx context.Context) *ProjectsGetPasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetPasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetPasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.getPasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsGetPasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/passkeyConfig",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.projects.getPasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the config, for example: 'projects/my-awesome-project/passkeyConfig'.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -4415,17 +5618,17 @@ func (c *ProjectsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2Config{
 		ServerResponse: googleapi.ServerResponse{
@@ -4467,6 +5670,167 @@ func (c *ProjectsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2Config"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.updatePasskeyConfig":
+
+type ProjectsUpdatePasskeyConfigCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdatePasskeyConfig: Update a passkey configuration for an Identity
+// Toolkit project.
+//
+// - name: The name of the PasskeyConfig resource.
+func (r *ProjectsService) UpdatePasskeyConfig(name string, googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig) *ProjectsUpdatePasskeyConfigCall {
+	c := &ProjectsUpdatePasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudidentitytoolkitadminv2passkeyconfig = googlecloudidentitytoolkitadminv2passkeyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// applies to the resource. Empty update mask will result in updating
+// nothing. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsUpdatePasskeyConfigCall) UpdateMask(updateMask string) *ProjectsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdatePasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdatePasskeyConfigCall) Context(ctx context.Context) *ProjectsUpdatePasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdatePasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdatePasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2passkeyconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.updatePasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsUpdatePasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/passkeyConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "identitytoolkit.projects.updatePasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the PasskeyConfig resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -4577,17 +5941,17 @@ func (c *ProjectsDefaultSupportedIdpConfigsCreateCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -4720,17 +6084,17 @@ func (c *ProjectsDefaultSupportedIdpConfigsDeleteCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4872,17 +6236,17 @@ func (c *ProjectsDefaultSupportedIdpConfigsGetCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5038,17 +6402,17 @@ func (c *ProjectsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5224,17 +6588,17 @@ func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5382,17 +6746,17 @@ func (c *ProjectsIdentityPlatformInitializeAuthCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5535,17 +6899,17 @@ func (c *ProjectsInboundSamlConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5678,17 +7042,17 @@ func (c *ProjectsInboundSamlConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5829,17 +7193,17 @@ func (c *ProjectsInboundSamlConfigsGetCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -5995,17 +7359,17 @@ func (c *ProjectsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6181,17 +7545,17 @@ func (c *ProjectsInboundSamlConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6343,17 +7707,17 @@ func (c *ProjectsOauthIdpConfigsCreateCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6486,17 +7850,17 @@ func (c *ProjectsOauthIdpConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6639,17 +8003,17 @@ func (c *ProjectsOauthIdpConfigsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6805,17 +8169,17 @@ func (c *ProjectsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6993,17 +8357,17 @@ func (c *ProjectsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -7145,17 +8509,17 @@ func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2Tenant{
 		ServerResponse: googleapi.ServerResponse{
@@ -7282,17 +8646,17 @@ func (c *ProjectsTenantsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7430,17 +8794,17 @@ func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudI
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2Tenant{
 		ServerResponse: googleapi.ServerResponse{
@@ -7576,17 +8940,17 @@ func (c *ProjectsTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -7622,6 +8986,157 @@ func (c *ProjectsTenantsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.tenants.getPasskeyConfig":
+
+type ProjectsTenantsGetPasskeyConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPasskeyConfig: Retrieve a passkey configuration for an Identity
+// Toolkit project.
+//
+//   - name: The resource name of the config, for example:
+//     'projects/my-awesome-project/passkeyConfig'.
+func (r *ProjectsTenantsService) GetPasskeyConfig(name string) *ProjectsTenantsGetPasskeyConfigCall {
+	c := &ProjectsTenantsGetPasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsTenantsGetPasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsTenantsGetPasskeyConfigCall) IfNoneMatch(entityTag string) *ProjectsTenantsGetPasskeyConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Context(ctx context.Context) *ProjectsTenantsGetPasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTenantsGetPasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.tenants.getPasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsGetPasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/passkeyConfig",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.projects.tenants.getPasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the config, for example: 'projects/my-awesome-project/passkeyConfig'.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/tenants/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -7744,17 +9259,17 @@ func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListTenantsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7928,17 +9443,17 @@ func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2Tenant{
 		ServerResponse: googleapi.ServerResponse{
@@ -8082,17 +9597,17 @@ func (c *ProjectsTenantsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -8231,17 +9746,17 @@ func (c *ProjectsTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8277,6 +9792,167 @@ func (c *ProjectsTenantsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.tenants.updatePasskeyConfig":
+
+type ProjectsTenantsUpdatePasskeyConfigCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// UpdatePasskeyConfig: Update a passkey configuration for an Identity
+// Toolkit project.
+//
+// - name: The name of the PasskeyConfig resource.
+func (r *ProjectsTenantsService) UpdatePasskeyConfig(name string, googlecloudidentitytoolkitadminv2passkeyconfig *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c := &ProjectsTenantsUpdatePasskeyConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudidentitytoolkitadminv2passkeyconfig = googlecloudidentitytoolkitadminv2passkeyconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// applies to the resource. Empty update mask will result in updating
+// nothing. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) UpdateMask(updateMask string) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Fields(s ...googleapi.Field) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Context(ctx context.Context) *ProjectsTenantsUpdatePasskeyConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2passkeyconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.tenants.updatePasskeyConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2PasskeyConfig.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsUpdatePasskeyConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2PasskeyConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2PasskeyConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a passkey configuration for an Identity Toolkit project.",
+	//   "flatPath": "v2/projects/{projectsId}/tenants/{tenantsId}/passkeyConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "identitytoolkit.projects.tenants.updatePasskeyConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the PasskeyConfig resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/tenants/[^/]+/passkeyConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The update mask applies to the resource. Empty update mask will result in updating nothing. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2PasskeyConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -8387,17 +10063,17 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -8530,17 +10206,17 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8682,17 +10358,17 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -8848,17 +10524,17 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9034,17 +10710,17 @@ func (c *ProjectsTenantsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2DefaultSupportedIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -9194,17 +10870,17 @@ func (c *ProjectsTenantsInboundSamlConfigsCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -9337,17 +11013,17 @@ func (c *ProjectsTenantsInboundSamlConfigsDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9488,17 +11164,17 @@ func (c *ProjectsTenantsInboundSamlConfigsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -9654,17 +11330,17 @@ func (c *ProjectsTenantsInboundSamlConfigsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListInboundSamlConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9840,17 +11516,17 @@ func (c *ProjectsTenantsInboundSamlConfigsPatchCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2InboundSamlConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -10002,17 +11678,17 @@ func (c *ProjectsTenantsOauthIdpConfigsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -10145,17 +11821,17 @@ func (c *ProjectsTenantsOauthIdpConfigsDeleteCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -10298,17 +11974,17 @@ func (c *ProjectsTenantsOauthIdpConfigsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -10464,17 +12140,17 @@ func (c *ProjectsTenantsOauthIdpConfigsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2ListOAuthIdpConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10652,17 +12328,17 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitAdminV2OAuthIdpConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -10708,6 +12384,352 @@ func (c *ProjectsTenantsOauthIdpConfigsPatchCall) Do(opts ...googleapi.CallOptio
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.getPasswordPolicy":
+
+type V2GetPasswordPolicyCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPasswordPolicy: Gets password policy config set on the project or
+// tenant.
+func (r *V2Service) GetPasswordPolicy() *V2GetPasswordPolicyCall {
+	c := &V2GetPasswordPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// TenantId sets the optional parameter "tenantId": The id of a tenant.
+func (c *V2GetPasswordPolicyCall) TenantId(tenantId string) *V2GetPasswordPolicyCall {
+	c.urlParams_.Set("tenantId", tenantId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V2GetPasswordPolicyCall) Fields(s ...googleapi.Field) *V2GetPasswordPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V2GetPasswordPolicyCall) IfNoneMatch(entityTag string) *V2GetPasswordPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V2GetPasswordPolicyCall) Context(ctx context.Context) *V2GetPasswordPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V2GetPasswordPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V2GetPasswordPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/passwordPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.getPasswordPolicy" call.
+// Exactly one of *GoogleCloudIdentitytoolkitV2PasswordPolicy or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2PasswordPolicy.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V2GetPasswordPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2PasswordPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2PasswordPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets password policy config set on the project or tenant.",
+	//   "flatPath": "v2/passwordPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.getPasswordPolicy",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "tenantId": {
+	//       "description": "The id of a tenant.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/passwordPolicy",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2PasswordPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.getRecaptchaConfig":
+
+type V2GetRecaptchaConfigCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetRecaptchaConfig: Gets parameters needed for reCAPTCHA analysis.
+func (r *V2Service) GetRecaptchaConfig() *V2GetRecaptchaConfigCall {
+	c := &V2GetRecaptchaConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// ClientType sets the optional parameter "clientType": reCAPTCHA
+// Enterprise uses separate site keys for different client types.
+// Specify the client type to get the corresponding key.
+//
+// Possible values:
+//
+//	"CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+//	"CLIENT_TYPE_WEB" - Client type is web.
+//	"CLIENT_TYPE_ANDROID" - Client type is android.
+//	"CLIENT_TYPE_IOS" - Client type is ios.
+func (c *V2GetRecaptchaConfigCall) ClientType(clientType string) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("clientType", clientType)
+	return c
+}
+
+// TenantId sets the optional parameter "tenantId": The id of a tenant.
+func (c *V2GetRecaptchaConfigCall) TenantId(tenantId string) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("tenantId", tenantId)
+	return c
+}
+
+// Version sets the optional parameter "version": The reCAPTCHA version.
+//
+// Possible values:
+//
+//	"RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+//
+// specified.
+//
+//	"RECAPTCHA_ENTERPRISE" - Use reCAPTCHA Enterprise.
+func (c *V2GetRecaptchaConfigCall) Version(version string) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V2GetRecaptchaConfigCall) Fields(s ...googleapi.Field) *V2GetRecaptchaConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V2GetRecaptchaConfigCall) IfNoneMatch(entityTag string) *V2GetRecaptchaConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V2GetRecaptchaConfigCall) Context(ctx context.Context) *V2GetRecaptchaConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V2GetRecaptchaConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V2GetRecaptchaConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/recaptchaConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.getRecaptchaConfig" call.
+// Exactly one of *GoogleCloudIdentitytoolkitV2RecaptchaConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIdentitytoolkitV2RecaptchaConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V2GetRecaptchaConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitV2RecaptchaConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIdentitytoolkitV2RecaptchaConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets parameters needed for reCAPTCHA analysis.",
+	//   "flatPath": "v2/recaptchaConfig",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.getRecaptchaConfig",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "clientType": {
+	//       "description": "reCAPTCHA Enterprise uses separate site keys for different client types. Specify the client type to get the corresponding key.",
+	//       "enum": [
+	//         "CLIENT_TYPE_UNSPECIFIED",
+	//         "CLIENT_TYPE_WEB",
+	//         "CLIENT_TYPE_ANDROID",
+	//         "CLIENT_TYPE_IOS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Client type is not specified.",
+	//         "Client type is web.",
+	//         "Client type is android.",
+	//         "Client type is ios."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "tenantId": {
+	//       "description": "The id of a tenant.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "version": {
+	//       "description": "The reCAPTCHA version.",
+	//       "enum": [
+	//         "RECAPTCHA_VERSION_UNSPECIFIED",
+	//         "RECAPTCHA_ENTERPRISE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The reCAPTCHA version is not specified.",
+	//         "Use reCAPTCHA Enterprise."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/recaptchaConfig",
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitV2RecaptchaConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

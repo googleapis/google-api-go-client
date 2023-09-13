@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package admin provides access to the Admin SDK API.
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	adminService, err := admin.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	adminService, err := admin.NewService(ctx, option.WithScopes(admin.AdminReportsUsageReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	adminService, err := admin.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	adminService, err := admin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package admin // import "google.golang.org/api/admin/reports/v1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "admin:reports_v1"
 const apiName = "admin"
@@ -564,7 +579,9 @@ type Channel struct {
 	// Optional.
 	Params map[string]string `json:"params,omitempty"`
 
-	// Payload: A Boolean value to indicate whether payload is wanted.
+	// Payload: A Boolean value to indicate whether payload is wanted. A
+	// payload is data that is sent in the body of an HTTP POST, PUT, or
+	// PATCH message and contains important information about the request.
 	// Optional.
 	Payload bool `json:"payload,omitempty"`
 
@@ -1000,39 +1017,37 @@ func (c *ActivitiesListCall) EventName(eventName string) *ActivitiesListCall {
 }
 
 // Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list. The list is composed of event
-// parameters that are manipulated by relational operators. Event
-// parameters are in the form `parameter1 name[parameter1
-// value],parameter2 name[parameter2 value],...` These event parameters
-// are associated with a specific `eventName`. An empty report is
-// returned if the filtered request's parameter does not belong to the
-// `eventName`. For more information about `eventName` parameters, see
-// the list of event names for various applications above in
-// `applicationName`. In the following Admin Activity example, the <>
-// operator is URL-encoded in the request's query string (%3C%3E):
-// GET...&eventName=CHANGE_CALENDAR_SETTING
-// &filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive
-// example, the list can be a view or edit event's `doc_id` parameter
-// with a value that is manipulated by an 'equal to' (==) or 'not equal
-// to' (<>) relational operator. In the first example, the report
-// returns each edited document's `doc_id`. In the second example, the
-// report returns each viewed document's `doc_id` that equals the value
-// 12345 and does not return any viewed document's which have a `doc_id`
-// value of 98765. The <> operator is URL-encoded in the request's query
-// string (%3C%3E): GET...&eventName=edit&filters=doc_id
-// GET...&eventName=view&filters=doc_id==12345,doc_id%3C%3E98765 The
-// relational operators include: - `==` - 'equal to'. - `<>` - 'not
-// equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is
-// URL-encoded (%3C). - `<=` - 'less than or equal to'. It is
-// URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E).
-// - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
-// *Note:* The API doesn't accept multiple values of a parameter. If a
-// particular parameter is supplied more than once in the API request,
-// the API only accepts the last value of that request parameter. In
-// addition, if an invalid request parameter is supplied in the API
-// request, the API ignores that request parameter and returns the
-// response corresponding to the remaining valid request parameters. If
-// no parameters are requested, all parameters are returned.
+// string is a comma-separated list composed of event parameters
+// manipulated by relational operators. Event parameters are in the form
+// `{parameter1 name}{relational operator}{parameter1 value},{parameter2
+// name}{relational operator}{parameter2 value},...` These event
+// parameters are associated with a specific `eventName`. An empty
+// report is returned if the request's parameter doesn't belong to the
+// `eventName`. For more information about the available `eventName`
+// fields for each application and their associated parameters, go to
+// the ApplicationName (#applicationname) table, then click through to
+// the Activity Events page in the Appendix for the application you
+// want. In the following Drive activity examples, the returned list
+// consists of all `edit` events where the `doc_id` parameter value
+// matches the conditions defined by the relational operator. In the
+// first example, the request returns all edited documents with a
+// `doc_id` value equal to `12345`. In the second example, the report
+// returns any edited documents where the `doc_id` value is not equal to
+// `98765`. The `<>` operator is URL-encoded in the request's query
+// string (`%3C%3E`): ``` GET...&eventName=edit&filters=doc_id==12345
+// GET...&eventName=edit&filters=doc_id%3C%3E98765 ``` A `filters` query
+// supports these relational operators: * `==`—'equal to'. *
+// `<>`—'not equal to'. Must be URL-encoded (%3C%3E). * `<`—'less
+// than'. Must be URL-encoded (%3C). * `<=`—'less than or equal to'.
+// Must be URL-encoded (%3C=). * `>`—'greater than'. Must be
+// URL-encoded (%3E). * `>=`—'greater than or equal to'. Must be
+// URL-encoded (%3E=). **Note:** The API doesn't accept multiple values
+// of the same parameter. If a parameter is supplied more than once in
+// the API request, the API only accepts the last value of that
+// parameter. In addition, if an invalid parameter is supplied in the
+// API request, the API ignores that parameter and returns the response
+// corresponding to the remaining valid parameters. If no parameters are
+// requested, all parameters are returned.
 func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 	c.urlParams_.Set("filters", filters)
 	return c
@@ -1165,17 +1180,17 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Activities{
 		ServerResponse: googleapi.ServerResponse{
@@ -1274,7 +1289,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list. The list is composed of event parameters that are manipulated by relational operators. Event parameters are in the form `parameter1 name[parameter1 value],parameter2 name[parameter2 value],...` These event parameters are associated with a specific `eventName`. An empty report is returned if the filtered request's parameter does not belong to the `eventName`. For more information about `eventName` parameters, see the list of event names for various applications above in `applicationName`. In the following Admin Activity example, the \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=CHANGE_CALENDAR_SETTING \u0026filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive example, the list can be a view or edit event's `doc_id` parameter with a value that is manipulated by an 'equal to' (==) or 'not equal to' (\u003c\u003e) relational operator. In the first example, the report returns each edited document's `doc_id`. In the second example, the report returns each viewed document's `doc_id` that equals the value 12345 and does not return any viewed document's which have a `doc_id` value of 98765. The \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=edit\u0026filters=doc_id GET...\u0026eventName=view\u0026filters=doc_id==12345,doc_id%3C%3E98765 The relational operators include: - `==` - 'equal to'. - `\u003c\u003e` - 'not equal to'. It is URL-encoded (%3C%3E). - `\u003c` - 'less than'. It is URL-encoded (%3C). - `\u003c=` - 'less than or equal to'. It is URL-encoded (%3C=). - `\u003e` - 'greater than'. It is URL-encoded (%3E). - `\u003e=` - 'greater than or equal to'. It is URL-encoded (%3E=). *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. If no parameters are requested, all parameters are returned. ",
+	//       "description": "The `filters` query string is a comma-separated list composed of event parameters manipulated by relational operators. Event parameters are in the form `{parameter1 name}{relational operator}{parameter1 value},{parameter2 name}{relational operator}{parameter2 value},...` These event parameters are associated with a specific `eventName`. An empty report is returned if the request's parameter doesn't belong to the `eventName`. For more information about the available `eventName` fields for each application and their associated parameters, go to the [ApplicationName](#applicationname) table, then click through to the Activity Events page in the Appendix for the application you want. In the following Drive activity examples, the returned list consists of all `edit` events where the `doc_id` parameter value matches the conditions defined by the relational operator. In the first example, the request returns all edited documents with a `doc_id` value equal to `12345`. In the second example, the report returns any edited documents where the `doc_id` value is not equal to `98765`. The `\u003c\u003e` operator is URL-encoded in the request's query string (`%3C%3E`): ``` GET...\u0026eventName=edit\u0026filters=doc_id==12345 GET...\u0026eventName=edit\u0026filters=doc_id%3C%3E98765 ``` A `filters` query supports these relational operators: * `==`—'equal to'. * `\u003c\u003e`—'not equal to'. Must be URL-encoded (%3C%3E). * `\u003c`—'less than'. Must be URL-encoded (%3C). * `\u003c=`—'less than or equal to'. Must be URL-encoded (%3C=). * `\u003e`—'greater than'. Must be URL-encoded (%3E). * `\u003e=`—'greater than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't accept multiple values of the same parameter. If a parameter is supplied more than once in the API request, the API only accepts the last value of that parameter. In addition, if an invalid parameter is supplied in the API request, the API ignores that parameter and returns the response corresponding to the remaining valid parameters. If no parameters are requested, all parameters are returned.",
 	//       "location": "query",
 	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
 	//       "type": "string"
@@ -1439,39 +1454,37 @@ func (c *ActivitiesWatchCall) EventName(eventName string) *ActivitiesWatchCall {
 }
 
 // Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list. The list is composed of event
-// parameters that are manipulated by relational operators. Event
-// parameters are in the form `parameter1 name[parameter1
-// value],parameter2 name[parameter2 value],...` These event parameters
-// are associated with a specific `eventName`. An empty report is
-// returned if the filtered request's parameter does not belong to the
-// `eventName`. For more information about `eventName` parameters, see
-// the list of event names for various applications above in
-// `applicationName`. In the following Admin Activity example, the <>
-// operator is URL-encoded in the request's query string (%3C%3E):
-// GET...&eventName=CHANGE_CALENDAR_SETTING
-// &filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive
-// example, the list can be a view or edit event's `doc_id` parameter
-// with a value that is manipulated by an 'equal to' (==) or 'not equal
-// to' (<>) relational operator. In the first example, the report
-// returns each edited document's `doc_id`. In the second example, the
-// report returns each viewed document's `doc_id` that equals the value
-// 12345 and does not return any viewed document's which have a `doc_id`
-// value of 98765. The <> operator is URL-encoded in the request's query
-// string (%3C%3E): GET...&eventName=edit&filters=doc_id
-// GET...&eventName=view&filters=doc_id==12345,doc_id%3C%3E98765 The
-// relational operators include: - `==` - 'equal to'. - `<>` - 'not
-// equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is
-// URL-encoded (%3C). - `<=` - 'less than or equal to'. It is
-// URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E).
-// - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
-// *Note:* The API doesn't accept multiple values of a parameter. If a
-// particular parameter is supplied more than once in the API request,
-// the API only accepts the last value of that request parameter. In
-// addition, if an invalid request parameter is supplied in the API
-// request, the API ignores that request parameter and returns the
-// response corresponding to the remaining valid request parameters. If
-// no parameters are requested, all parameters are returned.
+// string is a comma-separated list composed of event parameters
+// manipulated by relational operators. Event parameters are in the form
+// `{parameter1 name}{relational operator}{parameter1 value},{parameter2
+// name}{relational operator}{parameter2 value},...` These event
+// parameters are associated with a specific `eventName`. An empty
+// report is returned if the request's parameter doesn't belong to the
+// `eventName`. For more information about the available `eventName`
+// fields for each application and their associated parameters, go to
+// the ApplicationName (#applicationname) table, then click through to
+// the Activity Events page in the Appendix for the application you
+// want. In the following Drive activity examples, the returned list
+// consists of all `edit` events where the `doc_id` parameter value
+// matches the conditions defined by the relational operator. In the
+// first example, the request returns all edited documents with a
+// `doc_id` value equal to `12345`. In the second example, the report
+// returns any edited documents where the `doc_id` value is not equal to
+// `98765`. The `<>` operator is URL-encoded in the request's query
+// string (`%3C%3E`): ``` GET...&eventName=edit&filters=doc_id==12345
+// GET...&eventName=edit&filters=doc_id%3C%3E98765 ``` A `filters` query
+// supports these relational operators: * `==`—'equal to'. *
+// `<>`—'not equal to'. Must be URL-encoded (%3C%3E). * `<`—'less
+// than'. Must be URL-encoded (%3C). * `<=`—'less than or equal to'.
+// Must be URL-encoded (%3C=). * `>`—'greater than'. Must be
+// URL-encoded (%3E). * `>=`—'greater than or equal to'. Must be
+// URL-encoded (%3E=). **Note:** The API doesn't accept multiple values
+// of the same parameter. If a parameter is supplied more than once in
+// the API request, the API only accepts the last value of that
+// parameter. In addition, if an invalid parameter is supplied in the
+// API request, the API ignores that parameter and returns the response
+// corresponding to the remaining valid parameters. If no parameters are
+// requested, all parameters are returned.
 func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 	c.urlParams_.Set("filters", filters)
 	return c
@@ -1596,17 +1609,17 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -1705,7 +1718,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list. The list is composed of event parameters that are manipulated by relational operators. Event parameters are in the form `parameter1 name[parameter1 value],parameter2 name[parameter2 value],...` These event parameters are associated with a specific `eventName`. An empty report is returned if the filtered request's parameter does not belong to the `eventName`. For more information about `eventName` parameters, see the list of event names for various applications above in `applicationName`. In the following Admin Activity example, the \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=CHANGE_CALENDAR_SETTING \u0026filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive example, the list can be a view or edit event's `doc_id` parameter with a value that is manipulated by an 'equal to' (==) or 'not equal to' (\u003c\u003e) relational operator. In the first example, the report returns each edited document's `doc_id`. In the second example, the report returns each viewed document's `doc_id` that equals the value 12345 and does not return any viewed document's which have a `doc_id` value of 98765. The \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=edit\u0026filters=doc_id GET...\u0026eventName=view\u0026filters=doc_id==12345,doc_id%3C%3E98765 The relational operators include: - `==` - 'equal to'. - `\u003c\u003e` - 'not equal to'. It is URL-encoded (%3C%3E). - `\u003c` - 'less than'. It is URL-encoded (%3C). - `\u003c=` - 'less than or equal to'. It is URL-encoded (%3C=). - `\u003e` - 'greater than'. It is URL-encoded (%3E). - `\u003e=` - 'greater than or equal to'. It is URL-encoded (%3E=). *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. If no parameters are requested, all parameters are returned. ",
+	//       "description": "The `filters` query string is a comma-separated list composed of event parameters manipulated by relational operators. Event parameters are in the form `{parameter1 name}{relational operator}{parameter1 value},{parameter2 name}{relational operator}{parameter2 value},...` These event parameters are associated with a specific `eventName`. An empty report is returned if the request's parameter doesn't belong to the `eventName`. For more information about the available `eventName` fields for each application and their associated parameters, go to the [ApplicationName](#applicationname) table, then click through to the Activity Events page in the Appendix for the application you want. In the following Drive activity examples, the returned list consists of all `edit` events where the `doc_id` parameter value matches the conditions defined by the relational operator. In the first example, the request returns all edited documents with a `doc_id` value equal to `12345`. In the second example, the report returns any edited documents where the `doc_id` value is not equal to `98765`. The `\u003c\u003e` operator is URL-encoded in the request's query string (`%3C%3E`): ``` GET...\u0026eventName=edit\u0026filters=doc_id==12345 GET...\u0026eventName=edit\u0026filters=doc_id%3C%3E98765 ``` A `filters` query supports these relational operators: * `==`—'equal to'. * `\u003c\u003e`—'not equal to'. Must be URL-encoded (%3C%3E). * `\u003c`—'less than'. Must be URL-encoded (%3C). * `\u003c=`—'less than or equal to'. Must be URL-encoded (%3C=). * `\u003e`—'greater than'. Must be URL-encoded (%3E). * `\u003e=`—'greater than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't accept multiple values of the same parameter. If a parameter is supplied more than once in the API request, the API only accepts the last value of that parameter. In addition, if an invalid parameter is supplied in the API request, the API ignores that parameter and returns the response corresponding to the remaining valid parameters. If no parameters are requested, all parameters are returned.",
 	//       "location": "query",
 	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
 	//       "type": "string"
@@ -1840,7 +1853,7 @@ func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -1878,9 +1891,9 @@ type CustomerUsageReportsGetCall struct {
 // customer report's parameters, see the Customers Usage parameters
 // reference guides.
 //
-//   - date: Represents the date the usage occurred. The timestamp is in
-//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//     account's time zone for this.
+//   - date: Represents the date the usage occurred, based on UTC-8:00
+//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -2000,17 +2013,17 @@ func (c *CustomerUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UsageReports{
 		ServerResponse: googleapi.ServerResponse{
@@ -2039,7 +2052,7 @@ func (c *CustomerUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRe
 	//       "type": "string"
 	//     },
 	//     "date": {
-	//       "description": "Represents the date the usage occurred. The timestamp is in the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's time zone for this.",
+	//       "description": "Represents the date the usage occurred, based on UTC-8:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
 	//       "location": "path",
 	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
 	//       "required": true,
@@ -2108,9 +2121,9 @@ type EntityUsageReportsGetCall struct {
 // information about the entities report's parameters, see the Entities
 // Usage parameters reference guides.
 //
-//   - date: Represents the date the usage occurred. The timestamp is in
-//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//     account's time zone for this.
+//   - date: Represents the date the usage occurred, based on UTC-8:00
+//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
 //   - entityKey: Represents the key of the object to filter the data
 //     with. It is a string which can take the value `all` to get activity
 //     events for all users, or any other value for an app-specific
@@ -2273,17 +2286,17 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UsageReports{
 		ServerResponse: googleapi.ServerResponse{
@@ -2314,7 +2327,7 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 	//       "type": "string"
 	//     },
 	//     "date": {
-	//       "description": "Represents the date the usage occurred. The timestamp is in the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's time zone for this.",
+	//       "description": "Represents the date the usage occurred, based on UTC-8:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
 	//       "location": "path",
 	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
 	//       "required": true,
@@ -2415,9 +2428,9 @@ type UserUsageReportGetCall struct {
 // see the User Usage Report guide. For more information about the user
 // report's parameters, see the Users Usage parameters reference guides.
 //
-//   - date: Represents the date the usage occurred. The timestamp is in
-//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//     account's time zone for this.
+//   - date: Represents the date the usage occurred, based on UTC-8:00
+//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
 //   - userKey: Represents the profile ID or the user email for which the
 //     data should be filtered. Can be `all` for all information, or
 //     `userKey` for a user's unique Google Workspace profile ID or their
@@ -2597,17 +2610,17 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UsageReports{
 		ServerResponse: googleapi.ServerResponse{
@@ -2637,7 +2650,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "date": {
-	//       "description": "Represents the date the usage occurred. The timestamp is in the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's time zone for this.",
+	//       "description": "Represents the date the usage occurred, based on UTC-8:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
 	//       "location": "path",
 	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
 	//       "required": true,

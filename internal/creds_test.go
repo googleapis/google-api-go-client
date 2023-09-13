@@ -6,6 +6,7 @@ package internal
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -199,10 +200,9 @@ const validServiceAccountJSON = `{
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dumba-504%40appspot.gserviceaccount.com"
 }`
 
-func TestQuotaProjectFromCreds(t *testing.T) {
+func TestGetQuotaProject(t *testing.T) {
 	ctx := context.Background()
-
-	cred, err := credentialsFromJSON(
+	emptyCred, err := credentialsFromJSON(
 		ctx,
 		[]byte(validServiceAccountJSON),
 		&DialSettings{
@@ -212,17 +212,13 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
-	if want, got := "", QuotaProjectFromCreds(cred); want != got {
-		t.Errorf("QuotaProjectFromCreds(validServiceAccountJSON): want %q, got %q", want, got)
-	}
-
 	quotaProjectJSON := []byte(`
 {
 	"type": "authorized_user",
 	"quota_project_id": "foobar"
 }`)
 
-	cred, err = credentialsFromJSON(
+	quotaCred, err := credentialsFromJSON(
 		ctx,
 		[]byte(quotaProjectJSON),
 		&DialSettings{
@@ -232,8 +228,53 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
-	if want, got := "foobar", QuotaProjectFromCreds(cred); want != got {
-		t.Errorf("QuotaProjectFromCreds(quotaProjectJSON): want %q, got %q", want, got)
+
+	tests := []struct {
+		name      string
+		cred      *google.Credentials
+		clientOpt string
+		env       string
+		want      string
+	}{
+		{
+			name: "empty all",
+			cred: nil,
+			want: "",
+		},
+		{
+			name: "empty cred",
+			cred: emptyCred,
+			want: "",
+		},
+		{
+			name: "from cred",
+			cred: quotaCred,
+			want: "foobar",
+		},
+		{
+			name:      "from opt",
+			cred:      quotaCred,
+			clientOpt: "clientopt",
+			want:      "clientopt",
+		},
+		{
+			name: "from env",
+			cred: quotaCred,
+			env:  "envProject",
+			want: "envProject",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			oldEnv := os.Getenv(quotaProjectEnvVar)
+			if tt.env != "" {
+				os.Setenv(quotaProjectEnvVar, tt.env)
+			}
+			if want, got := tt.want, GetQuotaProject(tt.cred, tt.clientOpt); want != got {
+				t.Errorf("GetQuotaProject(%v, %q): want %q, got %q", tt.cred, tt.clientOpt, want, got)
+			}
+			os.Setenv(quotaProjectEnvVar, oldEnv)
+		})
 	}
 }
 

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package identitytoolkit provides access to the Identity Toolkit API.
 //
 // For product documentation, see: https://cloud.google.com/identity-platform
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx, option.WithScopes(identitytoolkit.FirebaseScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	identitytoolkitService, err := identitytoolkit.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package identitytoolkit // import "google.golang.org/api/identitytoolkit/v1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "identitytoolkit:v1"
 const apiName = "identitytoolkit"
@@ -324,7 +339,7 @@ type GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest struct {
 	LocalIds []string `json:"localIds,omitempty"`
 
 	// TenantId: If the accounts belong to an Identity Platform tenant, the
-	// ID of the tenant. If the accounts belong to an default Identity
+	// ID of the tenant. If the accounts belong to a default Identity
 	// Platform project, the field is not needed.
 	TenantId string `json:"tenantId,omitempty"`
 
@@ -781,6 +796,35 @@ func (s *GoogleCloudIdentitytoolkitV1DownloadAccountResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitV1EmailInfo: Information about email MFA.
+type GoogleCloudIdentitytoolkitV1EmailInfo struct {
+	// EmailAddress: Email address that a MFA verification should be sent
+	// to.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EmailAddress") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV1EmailInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV1EmailInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV1EmailTemplate: Email template
 type GoogleCloudIdentitytoolkitV1EmailTemplate struct {
 	// Body: Email body
@@ -1061,6 +1105,16 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 
 	Challenge string `json:"challenge,omitempty"`
 
+	// ClientType: The client type: web, Android or iOS. Required when
+	// reCAPTCHA Enterprise protection is enabled.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
+
 	// ContinueUrl: The Url to continue after user clicks the link sent in
 	// email. This is the url that will allow the web widget to handle the
 	// OOB code.
@@ -1099,6 +1153,15 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 	// NewEmail: The email address the account is being updated to. Required
 	// only for VERIFY_AND_CHANGE_EMAIL requests.
 	NewEmail string `json:"newEmail,omitempty"`
+
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+	// specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 
 	// RequestType: Required. The type of out-of-band (OOB) code to send.
 	// Depending on this value, other fields in this request will be
@@ -1302,6 +1365,10 @@ func (s *GoogleCloudIdentitytoolkitV1GetProjectConfigResponse) MarshalJSON() ([]
 // message for GetRecaptchaParam.
 type GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse struct {
 	Kind string `json:"kind,omitempty"`
+
+	// ProducerProjectNumber: The producer project number used to generate
+	// PIA tokens
+	ProducerProjectNumber string `json:"producerProjectNumber,omitempty"`
 
 	// RecaptchaSiteKey: The reCAPTCHA v2 site key used to invoke the
 	// reCAPTCHA service. Always present.
@@ -1530,6 +1597,9 @@ type GoogleCloudIdentitytoolkitV1MfaEnrollment struct {
 	// DisplayName: Display name for this mfa option e.g. "corp cell phone".
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EmailInfo: Contains information specific to email MFA.
+	EmailInfo *GoogleCloudIdentitytoolkitV1EmailInfo `json:"emailInfo,omitempty"`
+
 	// EnrolledAt: Timestamp when the account enrolled this second factor.
 	EnrolledAt string `json:"enrolledAt,omitempty"`
 
@@ -1541,6 +1611,9 @@ type GoogleCloudIdentitytoolkitV1MfaEnrollment struct {
 	// sign in, it will only show the obfuscated version of the associated
 	// phone number.
 	PhoneInfo string `json:"phoneInfo,omitempty"`
+
+	// TotpInfo: Contains information specific to TOTP MFA.
+	TotpInfo *GoogleCloudIdentitytoolkitV1TotpInfo `json:"totpInfo,omitempty"`
 
 	// UnobfuscatedPhoneInfo: Output only. Unobfuscated phone_info.
 	UnobfuscatedPhoneInfo string `json:"unobfuscatedPhoneInfo,omitempty"`
@@ -1972,6 +2045,16 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest struct {
 	// E.164 format.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
+	// PlayIntegrityToken: Android only. Used to assert application identity
+	// in place of a recaptcha token (and safety_net_token). At least one of
+	// (`ios_receipt` and `ios_secret`), `recaptcha_token`, , or
+	// `play_integrity_token` must be specified to verify the verification
+	// code is being sent on behalf of a real app and not an emulator. A
+	// Play Integrity Token can be generated via the PlayIntegrity API
+	// (https://developer.android.com/google/play/integrity) with applying
+	// SHA256 to the `phone_number` field as the nonce.
+	PlayIntegrityToken string `json:"playIntegrityToken,omitempty"`
+
 	// RecaptchaToken: Recaptcha token for app verification. At least one of
 	// (`ios_receipt` and `ios_secret`), `recaptcha_token`, or
 	// `safety_net_token` must be specified to verify the verification code
@@ -2068,7 +2151,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// CustomAttributes: JSON formatted custom attributes to be stored in
 	// the Identity Platform ID token. Specifying this field requires a
-	// Google OAuth 2.0 credential with proper permissions
+	// Google OAuth 2.0 credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	CustomAttributes string `json:"customAttributes,omitempty"`
 
@@ -2109,7 +2192,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// EmailVerified: Whether the user's email has been verified. Specifying
 	// this field requires a Google OAuth 2.0 credential with proper
-	// permissions
+	// [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	EmailVerified bool `json:"emailVerified,omitempty"`
 
@@ -2125,12 +2208,12 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// LinkProviderUserInfo: The provider to be linked to the user's
 	// account. Specifying this field requires a Google OAuth 2.0 credential
-	// with proper permissions
+	// with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	LinkProviderUserInfo *GoogleCloudIdentitytoolkitV1ProviderUserInfo `json:"linkProviderUserInfo,omitempty"`
 
 	// LocalId: The ID of the user. Specifying this field requires a Google
-	// OAuth 2.0 credential with proper permissions
+	// OAuth 2.0 credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control). For
 	// requests from end-users, an ID token should be passed instead.
 	LocalId string `json:"localId,omitempty"`
@@ -2138,7 +2221,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 	// Mfa: The multi-factor authentication related information to be set on
 	// the user's account. This will overwrite any previous multi-factor
 	// related information on the account. Specifying this field requires a
-	// Google OAuth 2.0 credential with proper permissions
+	// Google OAuth 2.0 credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	Mfa *GoogleCloudIdentitytoolkitV1MfaInfo `json:"mfa,omitempty"`
 
@@ -2171,7 +2254,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// TargetProjectId: The project ID for the project that the account
 	// belongs to. Specifying this field requires Google OAuth 2.0
-	// credential with proper permissions
+	// credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	// Requests from end users should pass an Identity Platform ID token
 	// instead.
@@ -2491,12 +2574,20 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest struct {
 	// DisplayName: The user's Game Center display name.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// GamePlayerId: The user's Game Center game player ID. A unique
+	// identifier for a player of the game.
+	// https://developer.apple.com/documentation/gamekit/gkplayer/3113960-gameplayerid
+	GamePlayerId string `json:"gamePlayerId,omitempty"`
+
 	// IdToken: A valid ID token for an Identity Platform account. If
 	// present, this request will link the Game Center player ID to the
 	// account represented by this ID token.
 	IdToken string `json:"idToken,omitempty"`
 
-	// PlayerId: Required. The user's Game Center player ID.
+	// PlayerId: Required. The user's Game Center player ID. Deprecated by
+	// Apple. Pass `playerID` along with `gamePlayerID` and `teamPlayerID`
+	// to initiate the migration of a user's Game Center player ID to
+	// `gamePlayerID`.
 	PlayerId string `json:"playerId,omitempty"`
 
 	// PublicKeyUrl: Required. The URL to fetch the Apple public key in
@@ -2509,6 +2600,12 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest struct {
 	// Signature: Required. The verification signature data generated by
 	// Apple.
 	Signature string `json:"signature,omitempty"`
+
+	// TeamPlayerId: The user's Game Center team player ID. A unique
+	// identifier for a player of all the games that you distribute using
+	// your developer account.
+	// https://developer.apple.com/documentation/gamekit/gkplayer/3174857-teamplayerid
+	TeamPlayerId string `json:"teamPlayerId,omitempty"`
 
 	// TenantId: The ID of the Identity Platform tenant the user is signing
 	// in to.
@@ -2550,6 +2647,11 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse struct {
 	// ExpiresIn: The number of seconds until the ID token expires.
 	ExpiresIn int64 `json:"expiresIn,omitempty,string"`
 
+	// GamePlayerId: The user's Game Center game player ID. A unique
+	// identifier for a player of the game.
+	// https://developer.apple.com/documentation/gamekit/gkplayer/3113960-gameplayerid
+	GamePlayerId string `json:"gamePlayerId,omitempty"`
+
 	// IdToken: An Identity Platform ID token for the authenticated user.
 	IdToken string `json:"idToken,omitempty"`
 
@@ -2560,12 +2662,20 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse struct {
 	// response.
 	LocalId string `json:"localId,omitempty"`
 
-	// PlayerId: The user's Game Center player ID.
+	// PlayerId: The user's Game Center player ID. Pass `playerID` along
+	// with `gamePlayerID` and `teamPlayerID` to initiate the migration of a
+	// user's Game Center player ID to `gamePlayerID`.
 	PlayerId string `json:"playerId,omitempty"`
 
 	// RefreshToken: An Identity Platform refresh token for the
 	// authenticated user.
 	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// TeamPlayerId: The user's Game Center team player ID. A unique
+	// identifier for a player of all the games that you distribute using
+	// your developer account.
+	// https://developer.apple.com/documentation/gamekit/gkplayer/3174857-teamplayerid
+	TeamPlayerId string `json:"teamPlayerId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2610,7 +2720,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithIdpRequest struct {
 
 	// PendingToken: An opaque string from a previous SignInWithIdp
 	// response. If set, it can be used to repeat the sign-in operation from
-	// the previous SignInWithIdp operation.
+	// the previous SignInWithIdp operation. This may be present if the user
+	// needs to confirm their account information as part of a previous
+	// federated login attempt, or perform account linking.
 	PendingToken string `json:"pendingToken,omitempty"`
 
 	// PostBody: If the user is signing in with an authorization response
@@ -2622,24 +2734,25 @@ type GoogleCloudIdentitytoolkitV1SignInWithIdpRequest struct {
 	// the provider ID of the IdP that issued the credential. For example,
 	// if the user is signing in to the Google provider using a Google ID
 	// token, this should be set to
-	// `id_token=[GOOGLE_ID_TOKEN]&providerId=google.com`, where
+	// id_token`=[GOOGLE_ID_TOKEN]&providerId=google.com`, where
 	// `[GOOGLE_ID_TOKEN]` should be replaced with the Google ID token. If
 	// the user is signing in to the Facebook provider using a Facebook
 	// authentication token, this should be set to
-	// `id_token=[FACEBOOK_AUTHENTICATION_TOKEN]&providerId=facebook.com&nonc
-	// e= [NONCE]`, where `[FACEBOOK_AUTHENTICATION_TOKEN]` should be
-	// replaced with the Facebook authentication token. Nonce is required
+	// id_token`=[FACEBOOK_AUTHENTICATION_TOKEN]&providerId=facebook.
+	// com&nonce= [NONCE]`, where `[FACEBOOK_AUTHENTICATION_TOKEN]` should
+	// be replaced with the Facebook authentication token. Nonce is required
 	// for validating the token. The request will fail if no nonce is
 	// provided. If the user is signing in to the Facebook provider using a
 	// Facebook access token, this should be set to
-	// `access_token=[FACEBOOK_ACCESS_TOKEN]&providerId=facebook.com`, where
-	// `[FACEBOOK_ACCESS_TOKEN]` should be replaced with the Facebook access
-	// token. If the user is signing in to the Twitter provider using a
-	// Twitter OAuth 1.0 credential, this should be set to
-	// `access_token=[TWITTER_ACCESS_TOKEN]&oauth_token_secret=[TWITTER_TOKEN
-	// _SECRET]&providerId=twitter.com`, where `[TWITTER_ACCESS_TOKEN]` and
-	// `[TWITTER_TOKEN_SECRET]` should be replaced with the Twitter OAuth
-	// access token and Twitter OAuth token secret respectively.
+	// access_token`=[FACEBOOK_ACCESS_TOKEN]&providerId=facebook. com`,
+	// where `[FACEBOOK_ACCESS_TOKEN]` should be replaced with the Facebook
+	// access token. If the user is signing in to the Twitter provider using
+	// a Twitter OAuth 1.0 credential, this should be set to
+	// access_token`=[TWITTER_ACCESS_TOKEN]&oauth_token_secret=
+	// [TWITTER_TOKEN_SECRET]&providerId=twitter.com`, where
+	// `[TWITTER_ACCESS_TOKEN]` and `[TWITTER_TOKEN_SECRET]` should be
+	// replaced with the Twitter OAuth access token and Twitter OAuth token
+	// secret respectively.
 	PostBody string `json:"postBody,omitempty"`
 
 	// RequestUri: Required. The URL to which the IdP redirects the user
@@ -2886,6 +2999,16 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest struct {
 	// assessment. Required when reCAPTCHA Enterprise is enabled.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// ClientType: The client type, web, android or ios. Required when
+	// reCAPTCHA Enterprise is enabled.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
+
 	DelegatedProjectNumber int64 `json:"delegatedProjectNumber,omitempty,string"`
 
 	// Email: Required. The email the user is signing in with. The length of
@@ -2903,6 +3026,15 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest struct {
 	Password string `json:"password,omitempty"`
 
 	PendingIdToken string `json:"pendingIdToken,omitempty"`
+
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+	// specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 
 	// ReturnSecureToken: Should always be true.
 	ReturnSecureToken bool `json:"returnSecureToken,omitempty"`
@@ -2988,6 +3120,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse struct {
 	// Registered: Whether the email is for an existing account. Always
 	// true.
 	Registered bool `json:"registered,omitempty"`
+
+	// UserNotifications: Warning notifications for the user.
+	UserNotifications []*GoogleCloudIdentitytoolkitV1UserNotification `json:"userNotifications,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3168,6 +3303,16 @@ type GoogleCloudIdentitytoolkitV1SignUpRequest struct {
 	// Required when reCAPTCHA enterprise is enabled.
 	CaptchaResponse string `json:"captchaResponse,omitempty"`
 
+	// ClientType: The client type: web, Android or iOS. Required when
+	// enabling reCAPTCHA enterprise protection.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
+
 	// Disabled: Whether the user will be disabled upon creation. Disabled
 	// accounts are inaccessible except for requests bearing a Google OAuth2
 	// credential with proper permissions
@@ -3223,6 +3368,15 @@ type GoogleCloudIdentitytoolkitV1SignUpRequest struct {
 
 	// PhotoUrl: The profile photo url of the user to create.
 	PhotoUrl string `json:"photoUrl,omitempty"`
+
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not
+	// specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 
 	// TargetProjectId: The project ID of the project which the user should
 	// belong to. Specifying this field requires a Google OAuth 2.0
@@ -3355,6 +3509,10 @@ func (s *GoogleCloudIdentitytoolkitV1SqlExpression) MarshalJSON() ([]byte, error
 	type NoMethod GoogleCloudIdentitytoolkitV1SqlExpression
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitV1TotpInfo: Information about TOTP MFA.
+type GoogleCloudIdentitytoolkitV1TotpInfo struct {
 }
 
 // GoogleCloudIdentitytoolkitV1UploadAccountRequest: Request message for
@@ -3667,6 +3825,55 @@ func (s *GoogleCloudIdentitytoolkitV1UserInfo) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// GoogleCloudIdentitytoolkitV1UserNotification: Warning notifications
+// for the user.
+type GoogleCloudIdentitytoolkitV1UserNotification struct {
+	// NotificationCode: Warning notification enum. Can be used for
+	// localization.
+	//
+	// Possible values:
+	//   "NOTIFICATION_CODE_UNSPECIFIED" - No notification specified.
+	//   "MISSING_LOWERCASE_CHARACTER" - Password missing lowercase
+	// character.
+	//   "MISSING_UPPERCASE_CHARACTER" - Password missing uppercase
+	// character.
+	//   "MISSING_NUMERIC_CHARACTER" - Password missing numeric character.
+	//   "MISSING_NON_ALPHANUMERIC_CHARACTER" - Password missing non
+	// alphanumeric character.
+	//   "MINIMUM_PASSWORD_LENGTH" - Password less than minimum required
+	// length.
+	//   "MAXIMUM_PASSWORD_LENGTH" - Password greater than maximum required
+	// length.
+	NotificationCode string `json:"notificationCode,omitempty"`
+
+	// NotificationMessage: Warning notification string. Can be used as
+	// fallback.
+	NotificationMessage string `json:"notificationMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NotificationCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NotificationCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitV1UserNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitV1UserNotification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitV1VerifyIosClientRequest: Request message
 // for VerifyIosClient
 type GoogleCloudIdentitytoolkitV1VerifyIosClientRequest struct {
@@ -3828,17 +4035,17 @@ func (c *AccountsCreateAuthUriCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1CreateAuthUriResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3955,17 +4162,17 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1DeleteAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4082,17 +4289,17 @@ func (c *AccountsIssueSamlResponseCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4212,17 +4419,17 @@ func (c *AccountsLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4342,17 +4549,17 @@ func (c *AccountsResetPasswordCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1ResetPasswordResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4471,17 +4678,17 @@ func (c *AccountsSendOobCodeCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetOobCodeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4602,17 +4809,17 @@ func (c *AccountsSendVerificationCodeCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SendVerificationCodeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4735,17 +4942,17 @@ func (c *AccountsSignInWithCustomTokenCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignInWithCustomTokenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4869,17 +5076,17 @@ func (c *AccountsSignInWithEmailLinkCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignInWithEmailLinkResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4929,7 +5136,18 @@ type AccountsSignInWithGameCenterCall struct {
 // bundle ID is required in the request header as
 // `x-ios-bundle-identifier`. An API key
 // (https://cloud.google.com/docs/authentication/api-keys) is required
-// in the request in order to identify the Google Cloud project.
+// in the request in order to identify the Google Cloud project. Apple
+// has deprecated the `playerID` field
+// (https://developer.apple.com/documentation/gamekit/gkplayer/1521127-playerid/).
+// The Apple platform Firebase SDK will use `gamePlayerID` and
+// `teamPlayerID` from version 10.5.0 and onwards. Upgrading to SDK
+// version 10.5.0 or later updates existing integrations that use
+// `playerID` to instead use `gamePlayerID` and `teamPlayerID`. When
+// making calls to `signInWithGameCenter`, you must include `playerID`
+// along with the new fields `gamePlayerID` and `teamPlayerID` to
+// successfully identify all existing users. Upgrading existing Game
+// Center sign in integrations to SDK version 10.5.0 or later is
+// irreversible.
 func (r *AccountsService) SignInWithGameCenter(googlecloudidentitytoolkitv1signinwithgamecenterrequest *GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest) *AccountsSignInWithGameCenterCall {
 	c := &AccountsSignInWithGameCenterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudidentitytoolkitv1signinwithgamecenterrequest = googlecloudidentitytoolkitv1signinwithgamecenterrequest
@@ -5003,17 +5221,17 @@ func (c *AccountsSignInWithGameCenterCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5027,7 +5245,7 @@ func (c *AccountsSignInWithGameCenterCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Signs in or signs up a user with iOS Game Center credentials. If the sign-in succeeds, a new Identity Platform ID token and refresh token are issued for the authenticated user. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
+	//   "description": "Signs in or signs up a user with iOS Game Center credentials. If the sign-in succeeds, a new Identity Platform ID token and refresh token are issued for the authenticated user. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project. Apple has [deprecated the `playerID` field](https://developer.apple.com/documentation/gamekit/gkplayer/1521127-playerid/). The Apple platform Firebase SDK will use `gamePlayerID` and `teamPlayerID` from version 10.5.0 and onwards. Upgrading to SDK version 10.5.0 or later updates existing integrations that use `playerID` to instead use `gamePlayerID` and `teamPlayerID`. When making calls to `signInWithGameCenter`, you must include `playerID` along with the new fields `gamePlayerID` and `teamPlayerID` to successfully identify all existing users. Upgrading existing Game Center sign in integrations to SDK version 10.5.0 or later is irreversible.",
 	//   "flatPath": "v1/accounts:signInWithGameCenter",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.accounts.signInWithGameCenter",
@@ -5142,17 +5360,17 @@ func (c *AccountsSignInWithIdpCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignInWithIdpResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5274,17 +5492,17 @@ func (c *AccountsSignInWithPasswordCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5408,17 +5626,17 @@ func (c *AccountsSignInWithPhoneNumberCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5543,17 +5761,17 @@ func (c *AccountsSignUpCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignUpResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5672,17 +5890,17 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdent
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5727,7 +5945,7 @@ type AccountsVerifyIosClientCall struct {
 }
 
 // VerifyIosClient: Verifies an iOS client is a real iOS device. If the
-// request is valid, a reciept will be sent in the response and a secret
+// request is valid, a receipt will be sent in the response and a secret
 // will be sent via Apple Push Notification Service. The client should
 // send both of them back to certain Identity Platform APIs in a later
 // call (for example, /accounts:sendVerificationCode), in order to
@@ -5807,17 +6025,17 @@ func (c *AccountsVerifyIosClientCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1VerifyIosClientResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5831,7 +6049,7 @@ func (c *AccountsVerifyIosClientCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	}
 	return ret, nil
 	// {
-	//   "description": "Verifies an iOS client is a real iOS device. If the request is valid, a reciept will be sent in the response and a secret will be sent via Apple Push Notification Service. The client should send both of them back to certain Identity Platform APIs in a later call (for example, /accounts:sendVerificationCode), in order to verify the client. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
+	//   "description": "Verifies an iOS client is a real iOS device. If the request is valid, a receipt will be sent in the response and a secret will be sent via Apple Push Notification Service. The client should send both of them back to certain Identity Platform APIs in a later call (for example, /accounts:sendVerificationCode), in order to verify the client. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
 	//   "flatPath": "v1/accounts:verifyIosClient",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.accounts.verifyIosClient",
@@ -5954,17 +6172,17 @@ func (c *ProjectsAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIde
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignUpResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6101,17 +6319,17 @@ func (c *ProjectsCreateSessionCookieCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6247,17 +6465,17 @@ func (c *ProjectsQueryAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1QueryUserInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6398,17 +6616,17 @@ func (c *ProjectsAccountsBatchCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1UploadAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6468,8 +6686,8 @@ type ProjectsAccountsBatchDeleteCall struct {
 // to be deleted, error info is contained in the response. The method
 // ignores accounts that do not exist or are duplicated in the request.
 // This method requires a Google OAuth 2.0 credential with proper
-// permissions.
-// (https://cloud.google.com/identity-platform/docs/access-control)
+// [permissions]
+// (https://cloud.google.com/identity-platform/docs/access-control).
 //
 //   - targetProjectId: If `tenant_id` is specified, the ID of the Google
 //     Cloud project that the Identity Platform tenant belongs to.
@@ -6552,17 +6770,17 @@ func (c *ProjectsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6576,7 +6794,7 @@ func (c *ProjectsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper permissions. (https://cloud.google.com/identity-platform/docs/access-control)",
+	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control).",
 	//   "flatPath": "v1/projects/{projectsId}/accounts:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.projects.accounts.batchDelete",
@@ -6743,17 +6961,17 @@ func (c *ProjectsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1DownloadAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6776,6 +6994,7 @@ func (c *ProjectsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "delegatedProjectNumber": {
+	//       "deprecated": true,
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -6929,17 +7148,17 @@ func (c *ProjectsAccountsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1DeleteAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7080,17 +7299,17 @@ func (c *ProjectsAccountsLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7226,17 +7445,17 @@ func (c *ProjectsAccountsQueryCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1QueryUserInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7376,17 +7595,17 @@ func (c *ProjectsAccountsSendOobCodeCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetOobCodeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7447,7 +7666,7 @@ type ProjectsAccountsUpdateCall struct {
 //
 //   - targetProjectId: The project ID for the project that the account
 //     belongs to. Specifying this field requires Google OAuth 2.0
-//     credential with proper permissions
+//     credential with proper [permissions]
 //     (https://cloud.google.com/identity-platform/docs/access-control).
 //     Requests from end users should pass an Identity Platform ID token
 //     instead.
@@ -7527,17 +7746,17 @@ func (c *ProjectsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7560,7 +7779,7 @@ func (c *ProjectsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "targetProjectId": {
-	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper permissions (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
+	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -7690,17 +7909,17 @@ func (c *ProjectsTenantsAccountsCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SignUpResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7850,17 +8069,17 @@ func (c *ProjectsTenantsCreateSessionCookieCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8013,17 +8232,17 @@ func (c *ProjectsTenantsAccountsBatchCreateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1UploadAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8092,15 +8311,15 @@ type ProjectsTenantsAccountsBatchDeleteCall struct {
 // to be deleted, error info is contained in the response. The method
 // ignores accounts that do not exist or are duplicated in the request.
 // This method requires a Google OAuth 2.0 credential with proper
-// permissions.
-// (https://cloud.google.com/identity-platform/docs/access-control)
+// [permissions]
+// (https://cloud.google.com/identity-platform/docs/access-control).
 //
 //   - targetProjectId: If `tenant_id` is specified, the ID of the Google
 //     Cloud project that the Identity Platform tenant belongs to.
 //     Otherwise, the ID of the Google Cloud project that accounts belong
 //     to.
 //   - tenantId: If the accounts belong to an Identity Platform tenant,
-//     the ID of the tenant. If the accounts belong to an default Identity
+//     the ID of the tenant. If the accounts belong to a default Identity
 //     Platform project, the field is not needed.
 func (r *ProjectsTenantsAccountsService) BatchDelete(targetProjectId string, tenantId string, googlecloudidentitytoolkitv1batchdeleteaccountsrequest *GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest) *ProjectsTenantsAccountsBatchDeleteCall {
 	c := &ProjectsTenantsAccountsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8181,17 +8400,17 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8205,7 +8424,7 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper permissions. (https://cloud.google.com/identity-platform/docs/access-control)",
+	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control).",
 	//   "flatPath": "v1/projects/{projectsId}/tenants/{tenantsId}/accounts:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.projects.tenants.accounts.batchDelete",
@@ -8222,7 +8441,7 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "tenantId": {
-	//       "description": "If the accounts belong to an Identity Platform tenant, the ID of the tenant. If the accounts belong to an default Identity Platform project, the field is not needed.",
+	//       "description": "If the accounts belong to an Identity Platform tenant, the ID of the tenant. If the accounts belong to a default Identity Platform project, the field is not needed.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -8378,17 +8597,17 @@ func (c *ProjectsTenantsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1DownloadAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8412,6 +8631,7 @@ func (c *ProjectsTenantsAccountsBatchGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "delegatedProjectNumber": {
+	//       "deprecated": true,
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -8574,17 +8794,17 @@ func (c *ProjectsTenantsAccountsDeleteCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1DeleteAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8738,17 +8958,17 @@ func (c *ProjectsTenantsAccountsLookupCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8896,17 +9116,17 @@ func (c *ProjectsTenantsAccountsQueryCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1QueryUserInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9059,17 +9279,17 @@ func (c *ProjectsTenantsAccountsSendOobCodeCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetOobCodeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9139,7 +9359,7 @@ type ProjectsTenantsAccountsUpdateCall struct {
 //
 //   - targetProjectId: The project ID for the project that the account
 //     belongs to. Specifying this field requires Google OAuth 2.0
-//     credential with proper permissions
+//     credential with proper [permissions]
 //     (https://cloud.google.com/identity-platform/docs/access-control).
 //     Requests from end users should pass an Identity Platform ID token
 //     instead.
@@ -9224,17 +9444,17 @@ func (c *ProjectsTenantsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1SetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9258,7 +9478,7 @@ func (c *ProjectsTenantsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "targetProjectId": {
-	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper permissions (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
+	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -9450,17 +9670,17 @@ func (c *V1GetProjectsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdenti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetProjectConfigResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9619,7 +9839,7 @@ func (c *V1GetPublicKeysCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -9735,17 +9955,17 @@ func (c *V1GetRecaptchaParamsCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9869,17 +10089,17 @@ func (c *V1GetSessionCookiePublicKeysCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudIdentitytoolkitV1GetSessionCookiePublicKeysResponse{
 		ServerResponse: googleapi.ServerResponse{

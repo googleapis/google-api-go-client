@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package driveactivity provides access to the Drive Activity API.
 //
 // For product documentation, see: https://developers.google.com/drive/activity/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	driveactivityService, err := driveactivity.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	driveactivityService, err := driveactivity.NewService(ctx, option.WithScopes(driveactivity.DriveActivityReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	driveactivityService, err := driveactivity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	driveactivityService, err := driveactivity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package driveactivity // import "google.golang.org/api/driveactivity/v2"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "driveactivity:v2"
 const apiName = "driveactivity"
@@ -503,11 +518,11 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 }
 
 // ConsolidationStrategy: How the individual activities are
-// consolidated. A set of activities may be consolidated into one
-// combined activity if they are related in some way, such as one actor
-// performing the same action on multiple targets, or multiple actors
-// performing the same action on a single target. The strategy defines
-// the rules for which activities are related.
+// consolidated. If a set of activities is related they can be
+// consolidated into one combined activity, such as one actor performing
+// the same action on multiple targets, or multiple actors performing
+// the same action on a single target. The strategy defines the rules
+// for which activities are related.
 type ConsolidationStrategy struct {
 	// Legacy: The individual activities are consolidated using the legacy
 	// strategy.
@@ -1304,7 +1319,7 @@ func (s *KnownUser) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Legacy: A strategy which consolidates activities using the grouping
+// Legacy: A strategy that consolidates activities using the grouping
 // rules from the legacy V1 Activity API. Similar actions occurring
 // within a window of time can be grouped across multiple targets (such
 // as moving a set of files at once) or multiple actors (such as several
@@ -1348,7 +1363,7 @@ func (s *Move) MarshalJSON() ([]byte, error) {
 type New1 struct {
 }
 
-// NoConsolidation: A strategy which does no consolidation of individual
+// NoConsolidation: A strategy that does no consolidation of individual
 // activities.
 type NoConsolidation struct {
 }
@@ -1531,12 +1546,12 @@ func (s *Post) MarshalJSON() ([]byte, error) {
 // QueryDriveActivityRequest: The request message for querying Drive
 // activity.
 type QueryDriveActivityRequest struct {
-	// AncestorName: Return activities for this Drive folder and all
+	// AncestorName: Return activities for this Drive folder, plus all
 	// children and descendants. The format is `items/ITEM_ID`.
 	AncestorName string `json:"ancestorName,omitempty"`
 
 	// ConsolidationStrategy: Details on how to consolidate related actions
-	// that make up the activity. If not set, then related actions are not
+	// that make up the activity. If not set, then related actions aren't
 	// consolidated.
 	ConsolidationStrategy *ConsolidationStrategy `json:"consolidationStrategy,omitempty"`
 
@@ -1549,8 +1564,10 @@ type QueryDriveActivityRequest struct {
 	// 1492812924310` - `time >= "2016-01-10T01:02:03-05:00" -
 	// `detail.action_detail_case`: Uses the "has" operator (:) and either a
 	// singular value or a list of allowed action types enclosed in
-	// parentheses. Examples: - `detail.action_detail_case: RENAME` -
-	// `detail.action_detail_case:(CREATE EDIT)` -
+	// parentheses, separated by a space. To exclude a result from the
+	// response, prepend a hyphen (`-`) to the beginning of the filter
+	// string. Examples: - `detail.action_detail_case:RENAME` -
+	// `detail.action_detail_case:(CREATE RESTORE)` -
 	// `-detail.action_detail_case:MOVE`
 	Filter string `json:"filter,omitempty"`
 
@@ -1558,16 +1575,16 @@ type QueryDriveActivityRequest struct {
 	// `items/ITEM_ID`.
 	ItemName string `json:"itemName,omitempty"`
 
-	// PageSize: The miminum number of activities desired in the response;
-	// the server will attempt to return at least this quanitity. The server
-	// may also return fewer activities if it has a partial response ready
+	// PageSize: The minimum number of activities desired in the response;
+	// the server attempts to return at least this quantity. The server may
+	// also return fewer activities if it has a partial response ready
 	// before the request times out. If not set, a default value is used.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: The token identifying which page of results to return. Set
+	// PageToken: The token identifies which page of results to return. Set
 	// this to the next_page_token value returned from a previous query to
 	// obtain the following page of results. If not set, the first page of
-	// results will be returned.
+	// results is returned.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AncestorName") to
@@ -1710,6 +1727,8 @@ type RestrictionChange struct {
 	// duplicates of items.
 	//   "DRIVE_FILE_STREAM" - When restricted, this prevents use of Drive
 	// File Stream.
+	//   "FILE_ORGANIZER_CAN_SHARE_FOLDERS" - When restricted, this limits
+	// sharing of folders to managers only.
 	Feature string `json:"feature,omitempty"`
 
 	// NewRestriction: The restriction in place after the change.
@@ -1936,7 +1955,10 @@ func (s *SystemEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Target: Information about the target of activity.
+// Target: Information about the target of activity. For more
+// information on how activity history is shared with users, see
+// Activity history visibility
+// (https://developers.google.com/drive/activity/v2#activityhistory).
 type Target struct {
 	// Drive: The target is a shared drive.
 	Drive *Drive `json:"drive,omitempty"`
@@ -2315,17 +2337,17 @@ func (c *ActivityQueryCall) Do(opts ...googleapi.CallOption) (*QueryDriveActivit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &QueryDriveActivityResponse{
 		ServerResponse: googleapi.ServerResponse{

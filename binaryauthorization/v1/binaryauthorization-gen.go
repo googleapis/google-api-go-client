@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package binaryauthorization provides access to the Binary Authorization API.
 //
 // For product documentation, see: https://cloud.google.com/binary-authorization/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	binaryauthorizationService, err := binaryauthorization.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package binaryauthorization // import "google.golang.org/api/binaryauthorization/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "binaryauthorization:v1"
 const apiName = "binaryauthorization"
@@ -143,6 +157,7 @@ func (s *Service) userAgent() string {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Attestors = NewProjectsAttestorsService(s)
+	rs.Platforms = NewProjectsPlatformsService(s)
 	rs.Policy = NewProjectsPolicyService(s)
 	return rs
 }
@@ -151,6 +166,8 @@ type ProjectsService struct {
 	s *Service
 
 	Attestors *ProjectsAttestorsService
+
+	Platforms *ProjectsPlatformsService
 
 	Policy *ProjectsPolicyService
 }
@@ -161,6 +178,27 @@ func NewProjectsAttestorsService(s *Service) *ProjectsAttestorsService {
 }
 
 type ProjectsAttestorsService struct {
+	s *Service
+}
+
+func NewProjectsPlatformsService(s *Service) *ProjectsPlatformsService {
+	rs := &ProjectsPlatformsService{s: s}
+	rs.Policies = NewProjectsPlatformsPoliciesService(s)
+	return rs
+}
+
+type ProjectsPlatformsService struct {
+	s *Service
+
+	Policies *ProjectsPlatformsPoliciesService
+}
+
+func NewProjectsPlatformsPoliciesService(s *Service) *ProjectsPlatformsPoliciesService {
+	rs := &ProjectsPlatformsPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsPlatformsPoliciesService struct {
 	s *Service
 }
 
@@ -205,7 +243,7 @@ type AdmissionRule struct {
 	//
 	// Possible values:
 	//   "EVALUATION_MODE_UNSPECIFIED" - Do not use.
-	//   "ALWAYS_ALLOW" - This rule allows all all pod creations.
+	//   "ALWAYS_ALLOW" - This rule allows all pod creations.
 	//   "REQUIRE_ATTESTATION" - This rule allows a pod creation if all the
 	// attestors listed in `require_attestations_by` have valid attestations
 	// for all of the images in the pod spec.
@@ -217,8 +255,9 @@ type AdmissionRule struct {
 	// `projects/*/attestors/*`. Each attestor must exist before a policy
 	// can reference it. To add an attestor to a policy the principal
 	// issuing the policy change request must be able to read the attestor
-	// resource. Note: this field must be non-empty when the evaluation_mode
-	// field specifies REQUIRE_ATTESTATION, otherwise it must be empty.
+	// resource. Note: this field must be non-empty when the
+	// `evaluation_mode` field specifies `REQUIRE_ATTESTATION`, otherwise it
+	// must be empty.
 	RequireAttestationsBy []string `json:"requireAttestationsBy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnforcementMode") to
@@ -278,6 +317,50 @@ func (s *AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AttestationAuthenticator: An attestation authenticator that will be
+// used to verify attestations. Typically this is just a set of public
+// keys. Conceptually, an authenticator can be treated as always
+// returning either "authenticated" or "not authenticated" when
+// presented with a signed attestation (almost always assumed to be a
+// DSSE (https://github.com/secure-systems-lab/dsse) attestation). The
+// details of how an authenticator makes this decision are specific to
+// the type of 'authenticator' that this message wraps.
+type AttestationAuthenticator struct {
+	// DisplayName: Optional. A user-provided name for this
+	// `AttestationAuthenticator`. This field has no effect on the policy
+	// evaluation behavior except to improve readability of messages in
+	// evaluation results.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// PkixPublicKeySet: Optional. A set of raw PKIX SubjectPublicKeyInfo
+	// format public keys. If any public key in the set validates the
+	// attestation signature, then the signature is considered authenticated
+	// (i.e. any one key is sufficient to authenticate).
+	PkixPublicKeySet *PkixPublicKeySet `json:"pkixPublicKeySet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttestationAuthenticator) MarshalJSON() ([]byte, error) {
+	type NoMethod AttestationAuthenticator
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AttestationOccurrence: Occurrence that represents a single
 // "attestation". The authenticity of an attestation can be verified
 // using the attached signature. If the verifier trusts the public key
@@ -328,6 +411,38 @@ type AttestationOccurrence struct {
 
 func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestationOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttestationSource: Specifies the locations for fetching the
+// provenance attestations.
+type AttestationSource struct {
+	// ContainerAnalysisAttestationProjects: The IDs of the GCP projects
+	// storing the SLSA attestations as Container Analysis Occurrences.
+	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContainerAnalysisAttestationProjects") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ContainerAnalysisAttestationProjects") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttestationSource) MarshalJSON() ([]byte, error) {
+	type NoMethod AttestationSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -388,22 +503,22 @@ type AttestorPublicKey struct {
 	// AsciiArmoredPgpPublicKey: ASCII-armored representation of a PGP
 	// public key, as the entire output by the command `gpg --export --armor
 	// foo@example.com` (either LF or CRLF line endings). When using this
-	// field, `id` should be left blank. The BinAuthz API handlers will
-	// calculate the ID and fill it in automatically. BinAuthz computes this
-	// ID as the OpenPGP RFC4880 V4 fingerprint, represented as upper-case
-	// hex. If `id` is provided by the caller, it will be overwritten by the
-	// API-calculated ID.
+	// field, `id` should be left blank. The Binary Authorization API
+	// handlers will calculate the ID and fill it in automatically. Binary
+	// Authorization computes this ID as the OpenPGP RFC4880 V4 fingerprint,
+	// represented as upper-case hex. If `id` is provided by the caller, it
+	// will be overwritten by the API-calculated ID.
 	AsciiArmoredPgpPublicKey string `json:"asciiArmoredPgpPublicKey,omitempty"`
 
 	// Comment: Optional. A descriptive comment. This field may be updated.
 	Comment string `json:"comment,omitempty"`
 
-	// Id: The ID of this public key. Signatures verified by BinAuthz must
-	// include the ID of the public key that can be used to verify them, and
-	// that ID must match the contents of this field exactly. Additional
-	// restrictions on this field can be imposed based on which public key
-	// type is encapsulated. See the documentation on `public_key` cases
-	// below for details.
+	// Id: The ID of this public key. Signatures verified by Binary
+	// Authorization must include the ID of the public key that can be used
+	// to verify them, and that ID must match the contents of this field
+	// exactly. Additional restrictions on this field can be imposed based
+	// on which public key type is encapsulated. See the documentation on
+	// `public_key` cases below for details.
 	Id string `json:"id,omitempty"`
 
 	// PkixPublicKey: A raw PKIX SubjectPublicKeyInfo format public key.
@@ -467,7 +582,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -484,9 +601,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -512,6 +627,124 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Check: A single check to perform against a Pod. Checks are grouped
+// into `CheckSet` objects, which are defined by the top-level policy.
+type Check struct {
+	// AlwaysDeny: Optional. A special-case check that always denies. Note
+	// that this still only applies when the scope of the `CheckSet` applies
+	// and the image isn't exempted by an image allowlist. This check is
+	// primarily useful for testing, or to set the default behavior for all
+	// unmatched scopes to "deny".
+	AlwaysDeny bool `json:"alwaysDeny,omitempty"`
+
+	// DisplayName: Optional. A user-provided name for this check. This
+	// field has no effect on the policy evaluation behavior except to
+	// improve readability of messages in evaluation results.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ImageAllowlist: Optional. Images exempted from this check. If any of
+	// the patterns match the image url, the check will not be evaluated.
+	ImageAllowlist *ImageAllowlist `json:"imageAllowlist,omitempty"`
+
+	// ImageFreshnessCheck: Optional. Require that an image is no older than
+	// a configured expiration time. Image age is determined by its upload
+	// time.
+	ImageFreshnessCheck *ImageFreshnessCheck `json:"imageFreshnessCheck,omitempty"`
+
+	// SimpleSigningAttestationCheck: Optional. Require a SimpleSigning-type
+	// attestation for every image in the deployment.
+	SimpleSigningAttestationCheck *SimpleSigningAttestationCheck `json:"simpleSigningAttestationCheck,omitempty"`
+
+	// SlsaCheck: Optional. Require that an image was built by a trusted
+	// builder (such as Google Cloud Build), meets requirements for Supply
+	// chain Levels for Software Artifacts (SLSA), and was built from a
+	// trusted source code repostitory.
+	SlsaCheck *SlsaCheck `json:"slsaCheck,omitempty"`
+
+	// TrustedDirectoryCheck: Optional. Require that an image lives in a
+	// trusted directory.
+	TrustedDirectoryCheck *TrustedDirectoryCheck `json:"trustedDirectoryCheck,omitempty"`
+
+	// VulnerabilityCheck: Optional. Require that an image does not contain
+	// vulnerabilities that violate the configured rules, such as based on
+	// severity levels.
+	VulnerabilityCheck *VulnerabilityCheck `json:"vulnerabilityCheck,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlwaysDeny") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AlwaysDeny") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Check) MarshalJSON() ([]byte, error) {
+	type NoMethod Check
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckSet: A conjunction of policy checks, scoped to a particular
+// namespace or Kubernetes service account. In order for evaluation of a
+// `CheckSet` to return "allowed" for a given image in a given Pod, one
+// of the following conditions must be satisfied: * The image is
+// explicitly exempted by an entry in `image_allowlist`, OR * ALL of the
+// `checks` evaluate to "allowed".
+type CheckSet struct {
+	// Checks: Optional. The checks to apply. The ultimate result of
+	// evaluating the check set will be "allow" if and only if every check
+	// in `checks` evaluates to "allow". If `checks` is empty, the default
+	// behavior is "always allow".
+	Checks []*Check `json:"checks,omitempty"`
+
+	// DisplayName: Optional. A user-provided name for this `CheckSet`. This
+	// field has no effect on the policy evaluation behavior except to
+	// improve readability of messages in evaluation results.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ImageAllowlist: Optional. Images exempted from this `CheckSet`. If
+	// any of the patterns match the image being evaluated, no checks in the
+	// `CheckSet` will be evaluated.
+	ImageAllowlist *ImageAllowlist `json:"imageAllowlist,omitempty"`
+
+	// Scope: Optional. The scope to which this `CheckSet` applies. If unset
+	// or an empty string (the default), applies to all namespaces and
+	// service accounts. See the `Scope` message documentation for details
+	// on scoping rules.
+	Scope *Scope `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Checks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Checks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckSet) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckSet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -587,6 +820,57 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GkePolicy: A Binary Authorization policy for a GKE cluster. This is
+// one type of policy that can occur as a `PlatformPolicy`.
+type GkePolicy struct {
+	// CheckSets: Optional. The `CheckSet` objects to apply, scoped by
+	// namespace or namespace and service account. Exactly one `CheckSet`
+	// will be evaluated for a given Pod (unless the list is empty, in which
+	// case the behavior is "always allow"). If multiple `CheckSet` objects
+	// have scopes that match the namespace and service account of the Pod
+	// being evaluated, only the `CheckSet` with the MOST SPECIFIC scope
+	// will match. `CheckSet` objects must be listed in order of decreasing
+	// specificity, i.e. if a scope matches a given service account (which
+	// must include the namespace), it must come before a `CheckSet` with a
+	// scope matching just that namespace. This property is enforced by
+	// server-side validation. The purpose of this restriction is to ensure
+	// that if more than one `CheckSet` matches a given Pod, the `CheckSet`
+	// that will be evaluated will always be the first in the list to match
+	// (because if any other matches, it must be less specific). If
+	// `check_sets` is empty, the default behavior is to allow all images.
+	// If `check_sets` is non-empty, the last `check_sets` entry must always
+	// be a `CheckSet` with no scope set, i.e. a catchall to handle any
+	// situation not caught by the preceding `CheckSet` objects.
+	CheckSets []*CheckSet `json:"checkSets,omitempty"`
+
+	// ImageAllowlist: Optional. Images exempted from this policy. If any of
+	// the patterns match the image being evaluated, the rest of the policy
+	// will not be evaluated.
+	ImageAllowlist *ImageAllowlist `json:"imageAllowlist,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckSets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckSets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GkePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IamPolicy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
 // collection of `bindings`. A `binding` binds one or more `members`, or
@@ -601,7 +885,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -610,17 +894,17 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type IamPolicy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -693,6 +977,69 @@ func (s *IamPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImageAllowlist: Images that are exempted from normal checks based on
+// name pattern only.
+type ImageAllowlist struct {
+	// AllowPattern: Required. A disjunction of image patterns to allow. If
+	// any of these patterns match, then the image is considered exempted by
+	// this allowlist.
+	AllowPattern []string `json:"allowPattern,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowPattern") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowPattern") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageAllowlist) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageAllowlist
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImageFreshnessCheck: An image freshness check, which rejects images
+// that were uploaded before the set number of days ago to the supported
+// repositories.
+type ImageFreshnessCheck struct {
+	// MaxUploadAgeDays: Required. The max number of days that is allowed
+	// since the image was uploaded. Must be greater than zero.
+	MaxUploadAgeDays int64 `json:"maxUploadAgeDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxUploadAgeDays") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxUploadAgeDays") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageFreshnessCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageFreshnessCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Jwt struct {
 	// CompactJwt: The compact encoding of a JWS, which is always three
 	// base64 encoded strings joined by periods. For details, see:
@@ -723,7 +1070,7 @@ func (s *Jwt) MarshalJSON() ([]byte, error) {
 }
 
 // ListAttestorsResponse: Response message for
-// BinauthzManagementService.ListAttestors.
+// BinauthzManagementServiceV1.ListAttestors.
 type ListAttestorsResponse struct {
 	// Attestors: The list of attestors.
 	Attestors []*Attestor `json:"attestors,omitempty"`
@@ -761,10 +1108,48 @@ func (s *ListAttestorsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PkixPublicKey: A public key in the PkixPublicKey format (see
-// https://tools.ietf.org/html/rfc5280#section-4.1.2.7 for details).
-// Public keys of this type are typically textually encoded using the
-// PEM format.
+// ListPlatformPoliciesResponse: Response message for
+// PlatformPolicyManagementService.ListPlatformPolicies.
+type ListPlatformPoliciesResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListPlatformPoliciesRequest.page_token field in the
+	// subsequent call to the `ListPlatformPolicies` method to retrieve the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PlatformPolicies: The list of platform policies.
+	PlatformPolicies []*PlatformPolicy `json:"platformPolicies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPlatformPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPlatformPoliciesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PkixPublicKey: A public key in the PkixPublicKey format
+// (https://tools.ietf.org/html/rfc5280#section-4.1.2.7). Public keys of
+// this type are typically textually encoded using the PEM format.
 type PkixPublicKey struct {
 	// PublicKeyPem: A PEM-encoded public key, as described in
 	// https://tools.ietf.org/html/rfc7468#section-13
@@ -839,6 +1224,83 @@ func (s *PkixPublicKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PkixPublicKeySet: A bundle of PKIX public keys, used to authenticate
+// attestation signatures. Generally, a signature is considered to be
+// authenticated by a `PkixPublicKeySet` if any of the public keys
+// verify it (i.e. it is an "OR" of the keys).
+type PkixPublicKeySet struct {
+	// PkixPublicKeys: Required. `pkix_public_keys` must have at least one
+	// entry.
+	PkixPublicKeys []*PkixPublicKey `json:"pkixPublicKeys,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PkixPublicKeys") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PkixPublicKeys") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PkixPublicKeySet) MarshalJSON() ([]byte, error) {
+	type NoMethod PkixPublicKeySet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PlatformPolicy: A Binary Authorization platform policy for
+// deployments on various platforms.
+type PlatformPolicy struct {
+	// Description: Optional. A description comment about the policy.
+	Description string `json:"description,omitempty"`
+
+	// GkePolicy: Optional. GKE platform-specific policy.
+	GkePolicy *GkePolicy `json:"gkePolicy,omitempty"`
+
+	// Name: Output only. The relative resource name of the Binary
+	// Authorization platform policy, in the form of
+	// `projects/*/platforms/*/policies/*`.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. Time when the policy was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlatformPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PlatformPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: A policy for container image binary authorization.
 type Policy struct {
 	// AdmissionWhitelistPatterns: Optional. Admission policy allowlisting.
@@ -876,7 +1338,7 @@ type Policy struct {
 	//
 	// Possible values:
 	//   "GLOBAL_POLICY_EVALUATION_MODE_UNSPECIFIED" - Not specified:
-	// DISABLE is assumed.
+	// `DISABLE` is assumed.
 	//   "ENABLE" - Enables system policy evaluation.
 	//   "DISABLE" - Disables system policy evaluation.
 	GlobalPolicyEvaluationMode string `json:"globalPolicyEvaluationMode,omitempty"`
@@ -929,6 +1391,43 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Scope: A scope specifier for `CheckSet` objects.
+type Scope struct {
+	// KubernetesNamespace: Optional. Matches all Kubernetes service
+	// accounts in the provided namespace, unless a more specific
+	// `kubernetes_service_account` scope already matched.
+	KubernetesNamespace string `json:"kubernetesNamespace,omitempty"`
+
+	// KubernetesServiceAccount: Optional. Matches a single Kubernetes
+	// service account, e.g. `my-namespace:my-service-account`.
+	// `kubernetes_service_account` scope is always more specific than
+	// `kubernetes_namespace` scope for the same namespace.
+	KubernetesServiceAccount string `json:"kubernetesServiceAccount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KubernetesNamespace")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KubernetesNamespace") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Scope) MarshalJSON() ([]byte, error) {
+	type NoMethod Scope
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1031,6 +1530,86 @@ func (s *Signature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SimpleSigningAttestationCheck: Require a signed DSSE
+// (https://github.com/secure-systems-lab/dsse) attestation with type
+// SimpleSigning.
+type SimpleSigningAttestationCheck struct {
+	// AttestationAuthenticators: Required. The authenticators required by
+	// this check to verify an attestation. Typically this is one or more
+	// PKIX public keys for signature verification. Only one authenticator
+	// needs to consider an attestation verified in order for an attestation
+	// to be considered fully authenticated. In otherwords, this list of
+	// authenticators is an "OR" of the authenticator results. At least one
+	// authenticator is required.
+	AttestationAuthenticators []*AttestationAuthenticator `json:"attestationAuthenticators,omitempty"`
+
+	// ContainerAnalysisAttestationProjects: Optional. The projects where
+	// attestations are stored as Container Analysis Occurrences. Only one
+	// attestation needs to successfully verify an image for this check to
+	// pass, so a single verified attestation found in any of
+	// `container_analysis_attestation_projects` is sufficient for the check
+	// to pass. When fetching Occurrences from Container Analysis, only
+	// 'AttestationOccurrence' kinds are considered. In the future,
+	// additional Occurrence kinds may be added to the query.
+	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AttestationAuthenticators") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AttestationAuthenticators") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SimpleSigningAttestationCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod SimpleSigningAttestationCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SlsaCheck: A SLSA provenance attestation check, which ensures that
+// images are built by a trusted builder using source code from its
+// trusted repositories only.
+type SlsaCheck struct {
+	// Rules: Specifies a list of verification rules for the SLSA
+	// attestations. An image is considered compliant with the SlsaCheck if
+	// any of the rules are satisfied.
+	Rules []*VerificationRule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Rules") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Rules") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlsaCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod SlsaCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
 type TestIamPermissionsRequest struct {
@@ -1097,16 +1676,65 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TrustedDirectoryCheck: A trusted directory check, which rejects
+// images that do not come from the set of user-configured trusted
+// directories.
+type TrustedDirectoryCheck struct {
+	// TrustedDirPatterns: Required. List of trusted directory patterns. A
+	// pattern is in the form "registry/path/to/directory". The registry
+	// domain part is defined as two or more dot-separated words, e.g.,
+	// `us.pkg.dev`, or `gcr.io`. Additionally, `*` can be used in three
+	// ways as wildcards: 1. leading `*` to match varying prefixes in
+	// registry subdomain (useful for location prefixes); 2. trailing `*`
+	// after registry/ to match varying endings; 3. trailing `**` after
+	// registry/ to match "/" as well. For example: --
+	// `gcr.io/my-project/my-repo` is valid to match a single directory --
+	// `*-docker.pkg.dev/my-project/my-repo` or `*.gcr.io/my-project` are
+	// valid to match varying prefixes -- `gcr.io/my-project/*` will match
+	// all direct directories in `my-project` -- `gcr.io/my-project/**`
+	// would match all directories in `my-project` -- `gcr.i*` is not
+	// allowed since the registry is not completely specified --
+	// `sub*domain.gcr.io/nginx` is not valid because only leading `*` or
+	// trailing `*` are allowed. -- `*pkg.dev/my-project/my-repo` is not
+	// valid because leading `*` can only match subdomain --
+	// `**-docker.pkg.dev` is not valid because one leading `*` is allowed,
+	// and that it cannot match `/`
+	TrustedDirPatterns []string `json:"trustedDirPatterns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TrustedDirPatterns")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrustedDirPatterns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrustedDirectoryCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod TrustedDirectoryCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserOwnedGrafeasNote: An user owned Grafeas note references a Grafeas
 // Attestation.Authority Note created by the user.
 type UserOwnedGrafeasNote struct {
 	// DelegationServiceAccountEmail: Output only. This field will contain
-	// the service account email address that this Attestor will use as the
+	// the service account email address that this attestor will use as the
 	// principal when querying Container Analysis. Attestor administrators
 	// must grant this service account the IAM role needed to read
 	// attestations from the note_reference in Container Analysis
 	// (`containeranalysis.notes.occurrences.viewer`). This email address is
-	// fixed for the lifetime of the Attestor, but callers should not make
+	// fixed for the lifetime of the attestor, but callers should not make
 	// any other assumptions about the service account email; future
 	// versions may use an email based on a different naming pattern.
 	DelegationServiceAccountEmail string `json:"delegationServiceAccountEmail,omitempty"`
@@ -1156,9 +1784,9 @@ func (s *UserOwnedGrafeasNote) MarshalJSON() ([]byte, error) {
 // ValidationHelperV1.ValidateAttestationOccurrence.
 type ValidateAttestationOccurrenceRequest struct {
 	// Attestation: Required. An AttestationOccurrence to be checked that it
-	// can be verified by the Attestor. It does not have to be an existing
+	// can be verified by the `Attestor`. It does not have to be an existing
 	// entity in Container Analysis. It must otherwise be a valid
-	// AttestationOccurrence.
+	// `AttestationOccurrence`.
 	Attestation *AttestationOccurrence `json:"attestation,omitempty"`
 
 	// OccurrenceNote: Required. The resource name of the Note to which the
@@ -1231,6 +1859,167 @@ type ValidateAttestationOccurrenceResponse struct {
 
 func (s *ValidateAttestationOccurrenceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateAttestationOccurrenceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VerificationRule: Specifies verification rules for evaluating the
+// SLSA attestations including: which builders to trust, where to fetch
+// the SLSA attestations generated by those builders, and other
+// builder-specific evaluation rules such as which source repositories
+// are trusted. An image is considered verified by the rule if any of
+// the fetched SLSA attestations is verified.
+type VerificationRule struct {
+	// AttestationSource: Specifies where to fetch the provenances
+	// attestations generated by the builder (group).
+	AttestationSource *AttestationSource `json:"attestationSource,omitempty"`
+
+	// ConfigBasedBuildRequired: If true, require the image to be built from
+	// a top-level configuration. `trusted_source_repo_patterns` specifies
+	// the repositories containing this configuration.
+	ConfigBasedBuildRequired bool `json:"configBasedBuildRequired,omitempty"`
+
+	// TrustedBuilder: Each verification rule is used for evaluation against
+	// provenances generated by a specific builder (group). For some of the
+	// builders, such as the Google Cloud Build, users don't need to
+	// explicitly specify their roots of trust in the policy since the
+	// evaluation service can automatically fetch them based on the builder
+	// (group).
+	//
+	// Possible values:
+	//   "BUILDER_UNSPECIFIED" - Should never happen.
+	//   "GOOGLE_CLOUD_BUILD" - The whole Google Cloud Build (GCB) builder
+	// group, including all GCB builder types.
+	TrustedBuilder string `json:"trustedBuilder,omitempty"`
+
+	// TrustedSourceRepoPatterns: List of trusted source code repository URL
+	// patterns. These patterns match the full repository URL without its
+	// scheme (e.g. `https://`). The patterns must not include schemes. For
+	// example, the pattern
+	// `source.cloud.google.com/my-project/my-repo-name` matches the
+	// following URLs: - `source.cloud.google.com/my-project/my-repo-name` -
+	// `git+ssh://source.cloud.google.com/my-project/my-repo-name` -
+	// `https://source.cloud.google.com/my-project/my-repo-name` A pattern
+	// matches a URL either exactly or with `*` wildcards. `*` can be used
+	// in only two ways: 1. trailing `*` after hosturi/ to match varying
+	// endings; 2. trailing `**` after hosturi/ to match `/` as well. `*`
+	// and `**` can only be used as wildcards and can only occur at the end
+	// of the pattern after a `/`. (So it's not possible to match a URL that
+	// contains literal `*`.) For example: - `github.com/my-project/my-repo`
+	// is valid to match a single repo - `github.com/my-project/*` will
+	// match all direct repos in `my-project` - `github.com/**` matches all
+	// repos in GitHub
+	TrustedSourceRepoPatterns []string `json:"trustedSourceRepoPatterns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttestationSource")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttestationSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VerificationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod VerificationRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityCheck: An image vulnerability check, which rejects
+// images that violate the configured vulnerability rules.
+type VulnerabilityCheck struct {
+	// AllowedCves: Optional. A list of specific CVEs to ignore even if the
+	// vulnerability level violates `maximumUnfixableSeverity` or
+	// `maximumFixableSeverity`. CVEs are listed in the format of Container
+	// Analysis note id. For example: - CVE-2021-20305 - CVE-2020-10543 The
+	// CVEs are applicable regardless of note provider project, e.g., an
+	// entry of `CVE-2021-20305` will allow vulnerabilities with a note name
+	// of either `projects/goog-vulnz/notes/CVE-2021-20305` or
+	// `projects/CUSTOM-PROJECT/notes/CVE-2021-20305`.
+	AllowedCves []string `json:"allowedCves,omitempty"`
+
+	// BlockedCves: Optional. A list of specific CVEs to always raise
+	// warnings about even if the vulnerability level meets
+	// `maximumUnfixableSeverity` or `maximumFixableSeverity`. CVEs are
+	// listed in the format of Container Analysis note id. For example: -
+	// CVE-2021-20305 - CVE-2020-10543 The CVEs are applicable regardless of
+	// note provider project, e.g., an entry of `CVE-2021-20305` will block
+	// vulnerabilities with a note name of either
+	// `projects/goog-vulnz/notes/CVE-2021-20305` or
+	// `projects/CUSTOM-PROJECT/notes/CVE-2021-20305`.
+	BlockedCves []string `json:"blockedCves,omitempty"`
+
+	// ContainerAnalysisVulnerabilityProjects: Optional. The projects where
+	// vulnerabilities are stored as Container Analysis Occurrences. Each
+	// project is expressed in the resource format of
+	// `projects/[PROJECT_ID]`, e.g., `projects/my-gcp-project`. An attempt
+	// will be made for each project to fetch vulnerabilities, and all valid
+	// vulnerabilities will be used to check against the vulnerability
+	// policy. If no valid scan is found in all projects configured here, an
+	// error will be returned for the check.
+	ContainerAnalysisVulnerabilityProjects []string `json:"containerAnalysisVulnerabilityProjects,omitempty"`
+
+	// MaximumFixableSeverity: Required. The threshold for severity for
+	// which a fix is currently available. This field is required and must
+	// be set.
+	//
+	// Possible values:
+	//   "MAXIMUM_ALLOWED_SEVERITY_UNSPECIFIED" - Not specified.
+	//   "BLOCK_ALL" - Block any vulnerability.
+	//   "MINIMAL" - Allow only minimal severity.
+	//   "LOW" - Allow only low severity and lower.
+	//   "MEDIUM" - Allow medium severity and lower.
+	//   "HIGH" - Allow high severity and lower.
+	//   "CRITICAL" - Allow critical severity and lower.
+	//   "ALLOW_ALL" - Allow all severity, even vulnerability with
+	// unspecified severity.
+	MaximumFixableSeverity string `json:"maximumFixableSeverity,omitempty"`
+
+	// MaximumUnfixableSeverity: Required. The threshold for severity for
+	// which a fix isn't currently available. This field is required and
+	// must be set.
+	//
+	// Possible values:
+	//   "MAXIMUM_ALLOWED_SEVERITY_UNSPECIFIED" - Not specified.
+	//   "BLOCK_ALL" - Block any vulnerability.
+	//   "MINIMAL" - Allow only minimal severity.
+	//   "LOW" - Allow only low severity and lower.
+	//   "MEDIUM" - Allow medium severity and lower.
+	//   "HIGH" - Allow high severity and lower.
+	//   "CRITICAL" - Allow critical severity and lower.
+	//   "ALLOW_ALL" - Allow all severity, even vulnerability with
+	// unspecified severity.
+	MaximumUnfixableSeverity string `json:"maximumUnfixableSeverity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedCves") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedCves") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityCheck
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1335,17 +2124,17 @@ func (c *ProjectsGetPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -1400,8 +2189,8 @@ type ProjectsUpdatePolicyCall struct {
 // UpdatePolicy: Creates or updates a project's policy, and returns a
 // copy of the new policy. A policy is always updated as a whole, to
 // avoid race conditions with concurrent policy enforcement (or
-// management!) requests. Returns NOT_FOUND if the project does not
-// exist, INVALID_ARGUMENT if the request is malformed.
+// management!) requests. Returns `NOT_FOUND` if the project does not
+// exist, `INVALID_ARGUMENT` if the request is malformed.
 //
 //   - name: Output only. The resource name, in the format
 //     `projects/*/policy`. There is at most one policy per project.
@@ -1479,17 +2268,17 @@ func (c *ProjectsUpdatePolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -1503,7 +2292,7 @@ func (c *ProjectsUpdatePolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates or updates a project's policy, and returns a copy of the new policy. A policy is always updated as a whole, to avoid race conditions with concurrent policy enforcement (or management!) requests. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request is malformed.",
+	//   "description": "Creates or updates a project's policy, and returns a copy of the new policy. A policy is always updated as a whole, to avoid race conditions with concurrent policy enforcement (or management!) requests. Returns `NOT_FOUND` if the project does not exist, `INVALID_ARGUMENT` if the request is malformed.",
 	//   "flatPath": "v1/projects/{projectsId}/policy",
 	//   "httpMethod": "PUT",
 	//   "id": "binaryauthorization.projects.updatePolicy",
@@ -1545,8 +2334,8 @@ type ProjectsAttestorsCreateCall struct {
 }
 
 // Create: Creates an attestor, and returns a copy of the new attestor.
-// Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if
-// the request is malformed, ALREADY_EXISTS if the attestor already
+// Returns `NOT_FOUND` if the project does not exist, `INVALID_ARGUMENT`
+// if the request is malformed, `ALREADY_EXISTS` if the attestor already
 // exists.
 //
 // - parent: The parent of this attestor.
@@ -1631,17 +2420,17 @@ func (c *ProjectsAttestorsCreateCall) Do(opts ...googleapi.CallOption) (*Attesto
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Attestor{
 		ServerResponse: googleapi.ServerResponse{
@@ -1655,7 +2444,7 @@ func (c *ProjectsAttestorsCreateCall) Do(opts ...googleapi.CallOption) (*Attesto
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an attestor, and returns a copy of the new attestor. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request is malformed, ALREADY_EXISTS if the attestor already exists.",
+	//   "description": "Creates an attestor, and returns a copy of the new attestor. Returns `NOT_FOUND` if the project does not exist, `INVALID_ARGUMENT` if the request is malformed, `ALREADY_EXISTS` if the attestor already exists.",
 	//   "flatPath": "v1/projects/{projectsId}/attestors",
 	//   "httpMethod": "POST",
 	//   "id": "binaryauthorization.projects.attestors.create",
@@ -1700,7 +2489,7 @@ type ProjectsAttestorsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an attestor. Returns NOT_FOUND if the attestor does
+// Delete: Deletes an attestor. Returns `NOT_FOUND` if the attestor does
 // not exist.
 //
 //   - name: The name of the attestors to delete, in the format
@@ -1773,17 +2562,17 @@ func (c *ProjectsAttestorsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1797,7 +2586,7 @@ func (c *ProjectsAttestorsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an attestor. Returns NOT_FOUND if the attestor does not exist.",
+	//   "description": "Deletes an attestor. Returns `NOT_FOUND` if the attestor does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/attestors/{attestorsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "binaryauthorization.projects.attestors.delete",
@@ -1835,7 +2624,7 @@ type ProjectsAttestorsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an attestor. Returns NOT_FOUND if the attestor does not
+// Get: Gets an attestor. Returns `NOT_FOUND` if the attestor does not
 // exist.
 //
 //   - name: The name of the attestor to retrieve, in the format
@@ -1921,17 +2710,17 @@ func (c *ProjectsAttestorsGetCall) Do(opts ...googleapi.CallOption) (*Attestor, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Attestor{
 		ServerResponse: googleapi.ServerResponse{
@@ -1945,7 +2734,7 @@ func (c *ProjectsAttestorsGetCall) Do(opts ...googleapi.CallOption) (*Attestor, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an attestor. Returns NOT_FOUND if the attestor does not exist.",
+	//   "description": "Gets an attestor. Returns `NOT_FOUND` if the attestor does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/attestors/{attestorsId}",
 	//   "httpMethod": "GET",
 	//   "id": "binaryauthorization.projects.attestors.get",
@@ -2090,17 +2879,17 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*I
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IamPolicy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2158,7 +2947,7 @@ type ProjectsAttestorsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists attestors. Returns INVALID_ARGUMENT if the project does
+// List: Lists attestors. Returns `INVALID_ARGUMENT` if the project does
 // not exist.
 //
 //   - parent: The resource name of the project associated with the
@@ -2261,17 +3050,17 @@ func (c *ProjectsAttestorsListCall) Do(opts ...googleapi.CallOption) (*ListAttes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAttestorsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2285,7 +3074,7 @@ func (c *ProjectsAttestorsListCall) Do(opts ...googleapi.CallOption) (*ListAttes
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists attestors. Returns INVALID_ARGUMENT if the project does not exist.",
+	//   "description": "Lists attestors. Returns `INVALID_ARGUMENT` if the project does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/attestors",
 	//   "httpMethod": "GET",
 	//   "id": "binaryauthorization.projects.attestors.list",
@@ -2437,17 +3226,17 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*I
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IamPolicy{
 		ServerResponse: googleapi.ServerResponse{
@@ -2587,17 +3376,17 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2652,7 +3441,7 @@ type ProjectsAttestorsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates an attestor. Returns NOT_FOUND if the attestor does
+// Update: Updates an attestor. Returns `NOT_FOUND` if the attestor does
 // not exist.
 //
 //   - name: The resource name, in the format: `projects/*/attestors/*`.
@@ -2731,17 +3520,17 @@ func (c *ProjectsAttestorsUpdateCall) Do(opts ...googleapi.CallOption) (*Attesto
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Attestor{
 		ServerResponse: googleapi.ServerResponse{
@@ -2755,7 +3544,7 @@ func (c *ProjectsAttestorsUpdateCall) Do(opts ...googleapi.CallOption) (*Attesto
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an attestor. Returns NOT_FOUND if the attestor does not exist.",
+	//   "description": "Updates an attestor. Returns `NOT_FOUND` if the attestor does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/attestors/{attestorsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "binaryauthorization.projects.attestors.update",
@@ -2796,8 +3585,9 @@ type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
 	header_                              http.Header
 }
 
-// ValidateAttestationOccurrence: Returns whether the given Attestation
-// for the given image URI was signed by the given Attestor
+// ValidateAttestationOccurrence: Returns whether the given
+// `Attestation` for the given image URI was signed by the given
+// `Attestor`
 //
 //   - attestor: The resource name of the Attestor of the occurrence, in
 //     the format `projects/*/attestors/*`.
@@ -2876,17 +3666,17 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ValidateAttestationOccurrenceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2900,7 +3690,7 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns whether the given Attestation for the given image URI was signed by the given Attestor",
+	//   "description": "Returns whether the given `Attestation` for the given image URI was signed by the given `Attestor`",
 	//   "flatPath": "v1/projects/{projectsId}/attestors/{attestorsId}:validateAttestationOccurrence",
 	//   "httpMethod": "POST",
 	//   "id": "binaryauthorization.projects.attestors.validateAttestationOccurrence",
@@ -2922,6 +3712,790 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "ValidateAttestationOccurrenceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "binaryauthorization.projects.platforms.policies.create":
+
+type ProjectsPlatformsPoliciesCreateCall struct {
+	s              *Service
+	parent         string
+	platformpolicy *PlatformPolicy
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a platform policy, and returns a copy of it. Returns
+// `NOT_FOUND` if the project or platform doesn't exist,
+// `INVALID_ARGUMENT` if the request is malformed, `ALREADY_EXISTS` if
+// the policy already exists, and `INVALID_ARGUMENT` if the policy
+// contains a platform-specific policy that does not match the platform
+// value specified in the URL.
+//
+// - parent: The parent of this platform policy.
+func (r *ProjectsPlatformsPoliciesService) Create(parent string, platformpolicy *PlatformPolicy) *ProjectsPlatformsPoliciesCreateCall {
+	c := &ProjectsPlatformsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.platformpolicy = platformpolicy
+	return c
+}
+
+// PolicyId sets the optional parameter "policyId": Required. The
+// platform policy ID.
+func (c *ProjectsPlatformsPoliciesCreateCall) PolicyId(policyId string) *ProjectsPlatformsPoliciesCreateCall {
+	c.urlParams_.Set("policyId", policyId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsPlatformsPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsPoliciesCreateCall) Context(ctx context.Context) *ProjectsPlatformsPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.platformpolicy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/policies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.policies.create" call.
+// Exactly one of *PlatformPolicy or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PlatformPolicy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPlatformsPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*PlatformPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PlatformPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a platform policy, and returns a copy of it. Returns `NOT_FOUND` if the project or platform doesn't exist, `INVALID_ARGUMENT` if the request is malformed, `ALREADY_EXISTS` if the policy already exists, and `INVALID_ARGUMENT` if the policy contains a platform-specific policy that does not match the platform value specified in the URL.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/{platformsId}/policies",
+	//   "httpMethod": "POST",
+	//   "id": "binaryauthorization.projects.platforms.policies.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent of this platform policy.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "policyId": {
+	//       "description": "Required. The platform policy ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/policies",
+	//   "request": {
+	//     "$ref": "PlatformPolicy"
+	//   },
+	//   "response": {
+	//     "$ref": "PlatformPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "binaryauthorization.projects.platforms.policies.delete":
+
+type ProjectsPlatformsPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a platform policy. Returns `NOT_FOUND` if the policy
+// doesn't exist.
+//
+//   - name: The name of the platform policy to delete, in the format
+//     `projects/*/platforms/*/policies/*`.
+func (r *ProjectsPlatformsPoliciesService) Delete(name string) *ProjectsPlatformsPoliciesDeleteCall {
+	c := &ProjectsPlatformsPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsPlatformsPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsPoliciesDeleteCall) Context(ctx context.Context) *ProjectsPlatformsPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.policies.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsPlatformsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a platform policy. Returns `NOT_FOUND` if the policy doesn't exist.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/{platformsId}/policies/{policiesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "binaryauthorization.projects.platforms.policies.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the platform policy to delete, in the format `projects/*/platforms/*/policies/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/[^/]+/policies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "binaryauthorization.projects.platforms.policies.get":
+
+type ProjectsPlatformsPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a platform policy. Returns `NOT_FOUND` if the policy
+// doesn't exist.
+//
+//   - name: The name of the platform policy to retrieve in the format
+//     `projects/*/platforms/*/policies/*`.
+func (r *ProjectsPlatformsPoliciesService) Get(name string) *ProjectsPlatformsPoliciesGetCall {
+	c := &ProjectsPlatformsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsPlatformsPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPlatformsPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsPlatformsPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsPoliciesGetCall) Context(ctx context.Context) *ProjectsPlatformsPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.policies.get" call.
+// Exactly one of *PlatformPolicy or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PlatformPolicy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPlatformsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*PlatformPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PlatformPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a platform policy. Returns `NOT_FOUND` if the policy doesn't exist.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/{platformsId}/policies/{policiesId}",
+	//   "httpMethod": "GET",
+	//   "id": "binaryauthorization.projects.platforms.policies.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the platform policy to retrieve in the format `projects/*/platforms/*/policies/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/[^/]+/policies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PlatformPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "binaryauthorization.projects.platforms.policies.list":
+
+type ProjectsPlatformsPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists platform policies owned by a project in the specified
+// platform. Returns `INVALID_ARGUMENT` if the project or the platform
+// doesn't exist.
+//
+//   - parent: The resource name of the platform associated with the
+//     platform policies using the format `projects/*/platforms/*`.
+func (r *ProjectsPlatformsPoliciesService) List(parent string) *ProjectsPlatformsPoliciesListCall {
+	c := &ProjectsPlatformsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server picks an appropriate default.
+func (c *ProjectsPlatformsPoliciesListCall) PageSize(pageSize int64) *ProjectsPlatformsPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListPlatformPoliciesResponse.next_page_token
+// returned from the previous call to the `ListPlatformPolicies` method.
+func (c *ProjectsPlatformsPoliciesListCall) PageToken(pageToken string) *ProjectsPlatformsPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsPlatformsPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsPlatformsPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsPlatformsPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsPoliciesListCall) Context(ctx context.Context) *ProjectsPlatformsPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/policies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.policies.list" call.
+// Exactly one of *ListPlatformPoliciesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPlatformPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPlatformsPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListPlatformPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPlatformPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists platform policies owned by a project in the specified platform. Returns `INVALID_ARGUMENT` if the project or the platform doesn't exist.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/{platformsId}/policies",
+	//   "httpMethod": "GET",
+	//   "id": "binaryauthorization.projects.platforms.policies.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListPlatformPoliciesResponse.next_page_token returned from the previous call to the `ListPlatformPolicies` method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the platform associated with the platform policies using the format `projects/*/platforms/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/policies",
+	//   "response": {
+	//     "$ref": "ListPlatformPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsPlatformsPoliciesListCall) Pages(ctx context.Context, f func(*ListPlatformPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "binaryauthorization.projects.platforms.policies.replacePlatformPolicy":
+
+type ProjectsPlatformsPoliciesReplacePlatformPolicyCall struct {
+	s              *Service
+	name           string
+	platformpolicy *PlatformPolicy
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// ReplacePlatformPolicy: Replaces a platform policy. Returns
+// `NOT_FOUND` if the policy doesn't exist.
+//
+//   - name: Output only. The relative resource name of the Binary
+//     Authorization platform policy, in the form of
+//     `projects/*/platforms/*/policies/*`.
+func (r *ProjectsPlatformsPoliciesService) ReplacePlatformPolicy(name string, platformpolicy *PlatformPolicy) *ProjectsPlatformsPoliciesReplacePlatformPolicyCall {
+	c := &ProjectsPlatformsPoliciesReplacePlatformPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.platformpolicy = platformpolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsPoliciesReplacePlatformPolicyCall) Fields(s ...googleapi.Field) *ProjectsPlatformsPoliciesReplacePlatformPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsPoliciesReplacePlatformPolicyCall) Context(ctx context.Context) *ProjectsPlatformsPoliciesReplacePlatformPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsPoliciesReplacePlatformPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsPoliciesReplacePlatformPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.platformpolicy)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.policies.replacePlatformPolicy" call.
+// Exactly one of *PlatformPolicy or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PlatformPolicy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPlatformsPoliciesReplacePlatformPolicyCall) Do(opts ...googleapi.CallOption) (*PlatformPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PlatformPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces a platform policy. Returns `NOT_FOUND` if the policy doesn't exist.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/{platformsId}/policies/{policiesId}",
+	//   "httpMethod": "PUT",
+	//   "id": "binaryauthorization.projects.platforms.policies.replacePlatformPolicy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The relative resource name of the Binary Authorization platform policy, in the form of `projects/*/platforms/*/policies/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/[^/]+/policies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "PlatformPolicy"
+	//   },
+	//   "response": {
+	//     "$ref": "PlatformPolicy"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3048,17 +4622,17 @@ func (c *ProjectsPolicyGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamP
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IamPolicy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3198,17 +4772,17 @@ func (c *ProjectsPolicySetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamP
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IamPolicy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3348,17 +4922,17 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3498,17 +5072,17 @@ func (c *SystempolicyGetPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{

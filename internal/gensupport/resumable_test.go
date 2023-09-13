@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"reflect"
 	"strings"
@@ -75,7 +74,7 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 	}
 
 	if ev.responseStatus != http.StatusServiceUnavailable {
-		buf, err := ioutil.ReadAll(req.Body)
+		buf, err := io.ReadAll(req.Body)
 		if err != nil {
 			return nil, fmt.Errorf("error reading from request data: %v", err)
 		}

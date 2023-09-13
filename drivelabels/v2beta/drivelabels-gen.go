@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package drivelabels provides access to the Drive Labels API.
 //
 // For product documentation, see: https://developers.google.com/drive/labels
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,31 @@
 //	ctx := context.Background()
 //	drivelabelsService, err := drivelabels.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	drivelabelsService, err := drivelabels.NewService(ctx, option.WithScopes(drivelabels.DriveLabelsReadonlyScope))
+//
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	drivelabelsService, err := drivelabels.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	drivelabelsService, err := drivelabels.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package drivelabels // import "google.golang.org/api/drivelabels/v2beta"
 
 import (
@@ -71,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "drivelabels:v2beta"
 const apiName = "drivelabels"
@@ -78,8 +97,34 @@ const apiVersion = "v2beta"
 const basePath = "https://drivelabels.googleapis.com/"
 const mtlsBasePath = "https://drivelabels.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See, edit, create, and delete all Google Drive labels in your
+	// organization, and see your organization's label-related admin
+	// policies
+	DriveAdminLabelsScope = "https://www.googleapis.com/auth/drive.admin.labels"
+
+	// See all Google Drive labels and label-related admin policies in your
+	// organization
+	DriveAdminLabelsReadonlyScope = "https://www.googleapis.com/auth/drive.admin.labels.readonly"
+
+	// See, edit, create, and delete your Google Drive labels
+	DriveLabelsScope = "https://www.googleapis.com/auth/drive.labels"
+
+	// See your Google Drive labels
+	DriveLabelsReadonlyScope = "https://www.googleapis.com/auth/drive.labels.readonly"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/drive.admin.labels",
+		"https://www.googleapis.com/auth/drive.admin.labels.readonly",
+		"https://www.googleapis.com/auth/drive.labels",
+		"https://www.googleapis.com/auth/drive.labels.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -2226,6 +2271,10 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	// Creator: Output only. The user who created this label.
 	Creator *GoogleAppsDriveLabelsV2betaUserInfo `json:"creator,omitempty"`
 
+	// Customer: Output only. The customer this label belongs to. For
+	// example: "customers/123abc789."
+	Customer string `json:"customer,omitempty"`
+
 	// DisableTime: Output only. The time this label was disabled. This
 	// value has no meaning when the label is not disabled.
 	DisableTime string `json:"disableTime,omitempty"`
@@ -2253,6 +2302,8 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	// items.
 	//   "ADMIN" - Admin-owned label. Only creatable and editable by admins.
 	// Supports some additional admin-only features.
+	//   "GOOGLE_APP" - A label owned by an internal Google application
+	// rather than a customer. These labels are read-only.
 	LabelType string `json:"labelType,omitempty"`
 
 	// LearnMoreUri: Custom URL to present to users to allow them to learn
@@ -2529,10 +2580,6 @@ type GoogleAppsDriveLabelsV2betaLabelLock struct {
 
 	// Name: Output only. Resource name of this LabelLock.
 	Name string `json:"name,omitempty"`
-
-	// PolicyUri: Output only. A URI referring to the policy that created
-	// this Lock.
-	PolicyUri string `json:"policyUri,omitempty"`
 
 	// State: Output only. This LabelLock's state.
 	//
@@ -3405,23 +3452,23 @@ type GoogleProtobufEmpty struct {
 }
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
-// representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness. For example,
-// the fields of this representation can be trivially provided to the
-// constructor of `java.awt.Color` in Java; it can also be trivially
-// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
-// and, with just a little work, it can be easily formatted into a CSS
-// `rgba()` string in JavaScript. This reference page doesn't carry
-// information about the absolute color space that should be used to
-// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications should assume the sRGB color space.
-// When color equality needs to be decided, implementations, unless
-// documented otherwise, treat two colors as equal if all their red,
-// green, blue, and alpha values each differ by at most 1e-5. Example
-// (Java): import com.google.type.Color; // ... public static
-// java.awt.Color fromProto(Color protocolor) { float alpha =
-// protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
-// return new java.awt.Color( protocolor.getRed(),
+// representation is designed for simplicity of conversion to and from
+// color representations in various languages over compactness. For
+// example, the fields of this representation can be trivially provided
+// to the constructor of `java.awt.Color` in Java; it can also be
+// trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
+// method in iOS; and, with just a little work, it can be easily
+// formatted into a CSS `rgba()` string in JavaScript. This reference
+// page doesn't have information about the absolute color space that
+// should be used to interpret the RGB value—for example, sRGB, Adobe
+// RGB, DCI-P3, and BT.2020. By default, applications should assume the
+// sRGB color space. When color equality needs to be decided,
+// implementations, unless documented otherwise, treat two colors as
+// equal if all their red, green, blue, and alpha values each differ by
+// at most `1e-5`. Example (Java): import com.google.type.Color; // ...
+// public static java.awt.Color fromProto(Color protocolor) { float
+// alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() :
+// 1.0; return new java.awt.Color( protocolor.getRed(),
 // protocolor.getGreen(), protocolor.getBlue(), alpha); } public static
 // Color toProto(java.awt.Color color) { float red = (float)
 // color.getRed(); float green = (float) color.getGreen(); float blue =
@@ -3670,17 +3717,17 @@ func (c *LabelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLab
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabel{
 		ServerResponse: googleapi.ServerResponse{
@@ -3717,7 +3764,11 @@ func (c *LabelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLab
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -3823,17 +3874,17 @@ func (c *LabelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3876,7 +3927,11 @@ func (c *LabelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpt
 	//   "path": "v2beta/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -3975,17 +4030,17 @@ func (c *LabelsDeltaCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4021,7 +4076,11 @@ func (c *LabelsDeltaCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabe
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4119,17 +4178,17 @@ func (c *LabelsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4165,7 +4224,11 @@ func (c *LabelsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLa
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4262,17 +4325,17 @@ func (c *LabelsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLab
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4308,7 +4371,11 @@ func (c *LabelsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLab
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -4447,17 +4514,17 @@ func (c *LabelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabels
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4513,7 +4580,13 @@ func (c *LabelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabels
 	//   "path": "v2beta/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -4531,6 +4604,14 @@ type LabelsListCall struct {
 // List: List labels.
 func (r *LabelsService) List() *LabelsListCall {
 	c := &LabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Customer sets the optional parameter "customer": The customer to
+// scope this list request to. For example: "customers/abcd1234". If
+// unset, will return all labels within the current customer.
+func (c *LabelsListCall) Customer(customer string) *LabelsListCall {
+	c.urlParams_.Set("customer", customer)
 	return c
 }
 
@@ -4694,17 +4775,17 @@ func (c *LabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabel
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaListLabelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4724,6 +4805,11 @@ func (c *LabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabel
 	//   "id": "drivelabels.labels.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "The customer to scope this list request to. For example: \"customers/abcd1234\". If unset, will return all labels within the current customer.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "languageCode": {
 	//       "description": "The BCP-47 language code to use for evaluating localized field labels. When not specified, values in the default configured language are used.",
 	//       "location": "query",
@@ -4786,7 +4872,13 @@ func (c *LabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabel
 	//   "path": "v2beta/labels",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaListLabelsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -4913,17 +5005,17 @@ func (c *LabelsPublishCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabel{
 		ServerResponse: googleapi.ServerResponse{
@@ -4959,7 +5051,11 @@ func (c *LabelsPublishCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLa
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5054,17 +5150,17 @@ func (c *LabelsUpdateLabelCopyModeCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabel{
 		ServerResponse: googleapi.ServerResponse{
@@ -5100,7 +5196,173 @@ func (c *LabelsUpdateLabelCopyModeCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabel"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
+	// }
+
+}
+
+// method id "drivelabels.labels.updatePermissions":
+
+type LabelsUpdatePermissionsCall struct {
+	s                                          *Service
+	parent                                     string
+	googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// UpdatePermissions: Updates a Label's permissions. If a permission for
+// the indicated principal doesn't exist, a new Label Permission is
+// created, otherwise the existing permission is updated. Permissions
+// affect the Label resource as a whole, are not revisioned, and do not
+// require publishing.
+//
+// - parent: The parent Label resource name.
+func (r *LabelsService) UpdatePermissions(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsUpdatePermissionsCall {
+	c := &LabelsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2betalabelpermission = googleappsdrivelabelsv2betalabelpermission
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsUpdatePermissionsCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsUpdatePermissionsCall) Fields(s ...googleapi.Field) *LabelsUpdatePermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsUpdatePermissionsCall) Context(ctx context.Context) *LabelsUpdatePermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsUpdatePermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2betalabelpermission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.updatePermissions" call.
+// Exactly one of *GoogleAppsDriveLabelsV2betaLabelPermission or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2betaLabelPermission.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2beta/labels/{labelsId}/permissions",
+	//   "httpMethod": "PATCH",
+	//   "id": "drivelabels.labels.updatePermissions",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2beta/{+parent}/permissions",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5116,7 +5378,7 @@ type LabelsLocksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Locks on a Label.
+// List: Lists the LabelLocks on a Label.
 //
 // - parent: Label on which Locks are applied. Format: labels/{label}.
 func (r *LabelsLocksService) List(parent string) *LabelsLocksListCall {
@@ -5216,17 +5478,17 @@ func (c *LabelsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDrive
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaListLabelLocksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5240,7 +5502,7 @@ func (c *LabelsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDrive
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Locks on a Label.",
+	//   "description": "Lists the LabelLocks on a Label.",
 	//   "flatPath": "v2beta/labels/{labelsId}/locks",
 	//   "httpMethod": "GET",
 	//   "id": "drivelabels.labels.locks.list",
@@ -5270,7 +5532,13 @@ func (c *LabelsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDrive
 	//   "path": "v2beta/{+parent}/locks",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaListLabelLocksResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -5300,7 +5568,7 @@ func (c *LabelsLocksListCall) Pages(ctx context.Context, f func(*GoogleAppsDrive
 
 type LabelsPermissionsBatchDeleteCall struct {
 	s                                                             *Service
-	labelsId                                                      string
+	parent                                                        string
 	googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest
 	urlParams_                                                    gensupport.URLParams
 	ctx_                                                          context.Context
@@ -5311,10 +5579,13 @@ type LabelsPermissionsBatchDeleteCall struct {
 // resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-// - labelsId: .
-func (r *LabelsPermissionsService) BatchDelete(labelsId string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsPermissionsBatchDeleteCall {
+//   - parent: The parent Label resource name shared by all permissions
+//     being deleted. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsPermissionsBatchDeleteCall {
 	c := &LabelsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.labelsId = labelsId
+	c.parent = parent
 	c.googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest = googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest
 	return c
 }
@@ -5359,7 +5630,7 @@ func (c *LabelsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/labels/{labelsId}/permissions:batchDelete")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions:batchDelete")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5367,7 +5638,7 @@ func (c *LabelsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"labelsId": c.labelsId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -5386,17 +5657,17 @@ func (c *LabelsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5415,22 +5686,28 @@ func (c *LabelsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "httpMethod": "POST",
 	//   "id": "drivelabels.labels.permissions.batchDelete",
 	//   "parameterOrder": [
-	//     "labelsId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "labelsId": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being deleted. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
 	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta/labels/{labelsId}/permissions:batchDelete",
+	//   "path": "v2beta/{+parent}/permissions:batchDelete",
 	//   "request": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5533,17 +5810,17 @@ func (c *LabelsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5579,7 +5856,11 @@ func (c *LabelsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5687,17 +5968,17 @@ func (c *LabelsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
 		ServerResponse: googleapi.ServerResponse{
@@ -5738,7 +6019,11 @@ func (c *LabelsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -5834,17 +6119,17 @@ func (c *LabelsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleP
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5882,7 +6167,11 @@ func (c *LabelsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//   "path": "v2beta/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6008,17 +6297,17 @@ func (c *LabelsPermissionsListCall) Do(opts ...googleapi.CallOption) (*GoogleApp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6067,7 +6356,13 @@ func (c *LabelsPermissionsListCall) Do(opts ...googleapi.CallOption) (*GoogleApp
 	//   "path": "v2beta/{+parent}/permissions",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -6093,9 +6388,9 @@ func (c *LabelsPermissionsListCall) Pages(ctx context.Context, f func(*GoogleApp
 	}
 }
 
-// method id "drivelabels.labels.permissions.patch":
+// method id "drivelabels.labels.revisions.updatePermissions":
 
-type LabelsPermissionsPatchCall struct {
+type LabelsRevisionsUpdatePermissionsCall struct {
 	s                                          *Service
 	parent                                     string
 	googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission
@@ -6104,15 +6399,15 @@ type LabelsPermissionsPatchCall struct {
 	header_                                    http.Header
 }
 
-// Patch: Updates a Label's permissions. If a permission for the
-// indicated principal doesn't exist, a new Label Permission is created,
-// otherwise the existing permission is updated. Permissions affect the
-// Label resource as a whole, are not revisioned, and do not require
-// publishing.
+// UpdatePermissions: Updates a Label's permissions. If a permission for
+// the indicated principal doesn't exist, a new Label Permission is
+// created, otherwise the existing permission is updated. Permissions
+// affect the Label resource as a whole, are not revisioned, and do not
+// require publishing.
 //
 // - parent: The parent Label resource name.
-func (r *LabelsPermissionsService) Patch(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsPermissionsPatchCall {
-	c := &LabelsPermissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *LabelsRevisionsService) UpdatePermissions(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsUpdatePermissionsCall {
+	c := &LabelsRevisionsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googleappsdrivelabelsv2betalabelpermission = googleappsdrivelabelsv2betalabelpermission
 	return c
@@ -6121,7 +6416,7 @@ func (r *LabelsPermissionsService) Patch(parent string, googleappsdrivelabelsv2b
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to
 // `true` in order to use the user's admin credentials. The server will
 // verify the user is an admin for the Label before allowing access.
-func (c *LabelsPermissionsPatchCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsPatchCall {
+func (c *LabelsRevisionsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsUpdatePermissionsCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
@@ -6129,7 +6424,7 @@ func (c *LabelsPermissionsPatchCall) UseAdminAccess(useAdminAccess bool) *Labels
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *LabelsPermissionsPatchCall) Fields(s ...googleapi.Field) *LabelsPermissionsPatchCall {
+func (c *LabelsRevisionsUpdatePermissionsCall) Fields(s ...googleapi.Field) *LabelsRevisionsUpdatePermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -6137,21 +6432,21 @@ func (c *LabelsPermissionsPatchCall) Fields(s ...googleapi.Field) *LabelsPermiss
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *LabelsPermissionsPatchCall) Context(ctx context.Context) *LabelsPermissionsPatchCall {
+func (c *LabelsRevisionsUpdatePermissionsCall) Context(ctx context.Context) *LabelsRevisionsUpdatePermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *LabelsPermissionsPatchCall) Header() http.Header {
+func (c *LabelsRevisionsUpdatePermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
+func (c *LabelsRevisionsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -6166,7 +6461,7 @@ func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -6179,7 +6474,7 @@ func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, erro
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "drivelabels.labels.permissions.patch" call.
+// Do executes the "drivelabels.labels.revisions.updatePermissions" call.
 // Exactly one of *GoogleAppsDriveLabelsV2betaLabelPermission or error
 // will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
@@ -6188,24 +6483,24 @@ func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, erro
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
+func (c *LabelsRevisionsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
 		ServerResponse: googleapi.ServerResponse{
@@ -6220,9 +6515,9 @@ func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	return ret, nil
 	// {
 	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
-	//   "flatPath": "v2beta/labels/{labelsId}/permissions/{permissionsId}",
+	//   "flatPath": "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions",
 	//   "httpMethod": "PATCH",
-	//   "id": "drivelabels.labels.permissions.patch",
+	//   "id": "drivelabels.labels.revisions.updatePermissions",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -6230,7 +6525,7 @@ func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	//     "parent": {
 	//       "description": "Required. The parent Label resource name.",
 	//       "location": "path",
-	//       "pattern": "^labels/[^/]+/permissions/[^/]+$",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -6240,13 +6535,17 @@ func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "v2beta/{+parent}",
+	//   "path": "v2beta/{+parent}/permissions",
 	//   "request": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6262,7 +6561,7 @@ type LabelsRevisionsLocksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Locks on a Label.
+// List: Lists the LabelLocks on a Label.
 //
 // - parent: Label on which Locks are applied. Format: labels/{label}.
 func (r *LabelsRevisionsLocksService) List(parent string) *LabelsRevisionsLocksListCall {
@@ -6362,17 +6661,17 @@ func (c *LabelsRevisionsLocksListCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaListLabelLocksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6386,7 +6685,7 @@ func (c *LabelsRevisionsLocksListCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Locks on a Label.",
+	//   "description": "Lists the LabelLocks on a Label.",
 	//   "flatPath": "v2beta/labels/{labelsId}/revisions/{revisionsId}/locks",
 	//   "httpMethod": "GET",
 	//   "id": "drivelabels.labels.revisions.locks.list",
@@ -6416,7 +6715,13 @@ func (c *LabelsRevisionsLocksListCall) Do(opts ...googleapi.CallOption) (*Google
 	//   "path": "v2beta/{+parent}/locks",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaListLabelLocksResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -6446,8 +6751,7 @@ func (c *LabelsRevisionsLocksListCall) Pages(ctx context.Context, f func(*Google
 
 type LabelsRevisionsPermissionsBatchDeleteCall struct {
 	s                                                             *Service
-	labelsId                                                      string
-	revisionsId                                                   string
+	parent                                                        string
 	googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest
 	urlParams_                                                    gensupport.URLParams
 	ctx_                                                          context.Context
@@ -6458,12 +6762,13 @@ type LabelsRevisionsPermissionsBatchDeleteCall struct {
 // resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-// - labelsId: .
-// - revisionsId: .
-func (r *LabelsRevisionsPermissionsService) BatchDelete(labelsId string, revisionsId string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchDeleteCall {
+//   - parent: The parent Label resource name shared by all permissions
+//     being deleted. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsRevisionsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchDeleteCall {
 	c := &LabelsRevisionsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.labelsId = labelsId
-	c.revisionsId = revisionsId
+	c.parent = parent
 	c.googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest = googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest
 	return c
 }
@@ -6508,7 +6813,7 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) doRequest(alt string) (*http
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions:batchDelete")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions:batchDelete")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6516,8 +6821,7 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) doRequest(alt string) (*http
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"labelsId":    c.labelsId,
-		"revisionsId": c.revisionsId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -6536,17 +6840,17 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -6565,28 +6869,28 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "httpMethod": "POST",
 	//   "id": "drivelabels.labels.revisions.permissions.batchDelete",
 	//   "parameterOrder": [
-	//     "labelsId",
-	//     "revisionsId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "labelsId": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being deleted. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
 	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "revisionsId": {
-	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions:batchDelete",
+	//   "path": "v2beta/{+parent}/permissions:batchDelete",
 	//   "request": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6689,17 +6993,17 @@ func (c *LabelsRevisionsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6735,7 +7039,11 @@ func (c *LabelsRevisionsPermissionsBatchUpdateCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6843,17 +7151,17 @@ func (c *LabelsRevisionsPermissionsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
 		ServerResponse: googleapi.ServerResponse{
@@ -6894,7 +7202,11 @@ func (c *LabelsRevisionsPermissionsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -6990,17 +7302,17 @@ func (c *LabelsRevisionsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7038,7 +7350,11 @@ func (c *LabelsRevisionsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v2beta/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.labels"
+	//   ]
 	// }
 
 }
@@ -7164,17 +7480,17 @@ func (c *LabelsRevisionsPermissionsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7223,7 +7539,13 @@ func (c *LabelsRevisionsPermissionsListCall) Do(opts ...googleapi.CallOption) (*
 	//   "path": "v2beta/{+parent}/permissions",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -7247,164 +7569,6 @@ func (c *LabelsRevisionsPermissionsListCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "drivelabels.labels.revisions.permissions.patch":
-
-type LabelsRevisionsPermissionsPatchCall struct {
-	s                                          *Service
-	parent                                     string
-	googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission
-	urlParams_                                 gensupport.URLParams
-	ctx_                                       context.Context
-	header_                                    http.Header
-}
-
-// Patch: Updates a Label's permissions. If a permission for the
-// indicated principal doesn't exist, a new Label Permission is created,
-// otherwise the existing permission is updated. Permissions affect the
-// Label resource as a whole, are not revisioned, and do not require
-// publishing.
-//
-// - parent: The parent Label resource name.
-func (r *LabelsRevisionsPermissionsService) Patch(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsPermissionsPatchCall {
-	c := &LabelsRevisionsPermissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleappsdrivelabelsv2betalabelpermission = googleappsdrivelabelsv2betalabelpermission
-	return c
-}
-
-// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
-// `true` in order to use the user's admin credentials. The server will
-// verify the user is an admin for the Label before allowing access.
-func (c *LabelsRevisionsPermissionsPatchCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsPatchCall {
-	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LabelsRevisionsPermissionsPatchCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LabelsRevisionsPermissionsPatchCall) Context(ctx context.Context) *LabelsRevisionsPermissionsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LabelsRevisionsPermissionsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LabelsRevisionsPermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2betalabelpermission)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "drivelabels.labels.revisions.permissions.patch" call.
-// Exactly one of *GoogleAppsDriveLabelsV2betaLabelPermission or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAppsDriveLabelsV2betaLabelPermission.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *LabelsRevisionsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
-	//   "flatPath": "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions/{permissionsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "drivelabels.labels.revisions.permissions.patch",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent Label resource name.",
-	//       "location": "path",
-	//       "pattern": "^labels/[^/]+/revisions/[^/]+/permissions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "useAdminAccess": {
-	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v2beta/{+parent}",
-	//   "request": {
-	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   }
-	// }
-
 }
 
 // method id "drivelabels.limits.getLabel":
@@ -7505,17 +7669,17 @@ func (c *LimitsGetLabelCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveL
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaLabelLimits{
 		ServerResponse: googleapi.ServerResponse{
@@ -7544,7 +7708,13 @@ func (c *LimitsGetLabelCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveL
 	//   "path": "v2beta/limits/label",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelLimits"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }
@@ -7567,6 +7737,14 @@ type UsersGetCapabilitiesCall struct {
 func (r *UsersService) GetCapabilities(name string) *UsersGetCapabilitiesCall {
 	c := &UsersGetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": The customer to
+// scope this request to. For example: "customers/abcd1234". If unset,
+// will return settings within the current customer.
+func (c *UsersGetCapabilitiesCall) Customer(customer string) *UsersGetCapabilitiesCall {
+	c.urlParams_.Set("customer", customer)
 	return c
 }
 
@@ -7647,17 +7825,17 @@ func (c *UsersGetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*GoogleApps
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2betaUserCapabilities{
 		ServerResponse: googleapi.ServerResponse{
@@ -7679,6 +7857,11 @@ func (c *UsersGetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*GoogleApps
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "The customer to scope this request to. For example: \"customers/abcd1234\". If unset, will return settings within the current customer.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The resource name of the user. Only \"users/me/capabilities\" is supported.",
 	//       "location": "path",
@@ -7690,7 +7873,13 @@ func (c *UsersGetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*GoogleApps
 	//   "path": "v2beta/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaUserCapabilities"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.admin.labels",
+	//     "https://www.googleapis.com/auth/drive.admin.labels.readonly",
+	//     "https://www.googleapis.com/auth/drive.labels",
+	//     "https://www.googleapis.com/auth/drive.labels.readonly"
+	//   ]
 	// }
 
 }

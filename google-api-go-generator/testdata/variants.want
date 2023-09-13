@@ -6,6 +6,17 @@
 
 // Package additionalpropsobjs provides access to the Example API.
 //
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
+//
 // # Creating a client
 //
 // Usage example:
@@ -15,24 +26,26 @@
 //	ctx := context.Background()
 //	additionalpropsobjsService, err := additionalpropsobjs.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	additionalpropsobjsService, err := additionalpropsobjs.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	additionalpropsobjsService, err := additionalpropsobjs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package additionalpropsobjs // import "google.golang.org/api/additionalpropsobjs/v1"
 
 import (
@@ -69,6 +82,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "additionalpropsobjs:v1"
 const apiName = "additionalpropsobjs"
@@ -474,6 +488,23 @@ func (s *MapFolder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *MapFolder) UnmarshalJSON(data []byte) error {
+	type NoMethod MapFolder
+	var s1 struct {
+		DefaultViewport []gensupport.JSONFloat64 `json:"defaultViewport"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DefaultViewport = make([]float64, len(s1.DefaultViewport))
+	for i := range s1.DefaultViewport {
+		s.DefaultViewport[i] = float64(s1.DefaultViewport[i])
+	}
+	return nil
+}
+
 type MapItem map[string]interface{}
 
 func (t MapItem) Type() string {
@@ -550,6 +581,23 @@ func (s *MapKmlLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *MapKmlLink) UnmarshalJSON(data []byte) error {
+	type NoMethod MapKmlLink
+	var s1 struct {
+		DefaultViewport []gensupport.JSONFloat64 `json:"defaultViewport"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DefaultViewport = make([]float64, len(s1.DefaultViewport))
+	for i := range s1.DefaultViewport {
+		s.DefaultViewport[i] = float64(s1.DefaultViewport[i])
+	}
+	return nil
+}
+
 type MapLayer struct {
 	// DefaultViewport: An array of four numbers (west, south, east, north)
 	// which defines the rectangular bounding box of the default viewport.
@@ -598,4 +646,21 @@ func (s *MapLayer) MarshalJSON() ([]byte, error) {
 	type NoMethod MapLayer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *MapLayer) UnmarshalJSON(data []byte) error {
+	type NoMethod MapLayer
+	var s1 struct {
+		DefaultViewport []gensupport.JSONFloat64 `json:"defaultViewport"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DefaultViewport = make([]float64, len(s1.DefaultViewport))
+	for i := range s1.DefaultViewport {
+		s.DefaultViewport[i] = float64(s1.DefaultViewport[i])
+	}
+	return nil
 }

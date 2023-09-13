@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package storagetransfer provides access to the Storage Transfer API.
 //
 // For product documentation, see: https://cloud.google.com/storage-transfer/docs
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	storagetransferService, err := storagetransfer.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	storagetransferService, err := storagetransfer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	storagetransferService, err := storagetransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package storagetransfer // import "google.golang.org/api/storagetransfer/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "storagetransfer:v1"
 const apiName = "storagetransfer"
@@ -344,6 +358,24 @@ type AwsS3Data struct {
 	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
 
+	// CloudfrontDomain: Optional. Cloudfront domain name pointing to this
+	// bucket (as origin), to use when fetching. Format:
+	// `https://{id}.cloudfront.net` or any valid custom domain
+	// `https://...`
+	CloudfrontDomain string `json:"cloudfrontDomain,omitempty"`
+
+	// CredentialsSecret: Optional. The Resource name of a secret in Secret
+	// Manager. The Azure SAS token must be stored in Secret Manager in JSON
+	// format: { "sas_token" : "SAS_TOKEN" } GoogleServiceAccount must be
+	// granted `roles/secretmanager.secretAccessor` for the resource. See
+	// [Configure access to a source: Microsoft Azure Blob Storage]
+	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
+	// for more information. If `credentials_secret` is specified, do not
+	// specify azure_credentials. This feature is in preview
+	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// `projects/{project_number}/secrets/{secret_name}`
+	CredentialsSecret string `json:"credentialsSecret,omitempty"`
+
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
 	// prefix. As such, it should generally not begin with a '/'.
@@ -400,6 +432,18 @@ type AzureBlobStorageData struct {
 	// Container: Required. The container to transfer from the Azure Storage
 	// account.
 	Container string `json:"container,omitempty"`
+
+	// CredentialsSecret: Optional. The Resource name of a secret in Secret
+	// Manager. The Azure SAS token must be stored in Secret Manager in JSON
+	// format: { "sas_token" : "SAS_TOKEN" } GoogleServiceAccount must be
+	// granted `roles/secretmanager.secretAccessor` for the resource. See
+	// [Configure access to a source: Microsoft Azure Blob Storage]
+	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
+	// for more information. If `credentials_secret` is specified, do not
+	// specify azure_credentials. This feature is in preview
+	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// `projects/{project_number}/secrets/{secret_name}`
+	CredentialsSecret string `json:"credentialsSecret,omitempty"`
 
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
@@ -711,6 +755,53 @@ type ErrorSummary struct {
 
 func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventStream: Specifies the Event-driven transfer options.
+// Event-driven transfers listen to an event stream to transfer updated
+// files.
+type EventStream struct {
+	// EventStreamExpirationTime: Specifies the data and time at which
+	// Storage Transfer Service stops listening for events from this stream.
+	// After this time, any transfers in progress will complete, but no new
+	// transfers are initiated.
+	EventStreamExpirationTime string `json:"eventStreamExpirationTime,omitempty"`
+
+	// EventStreamStartTime: Specifies the date and time that Storage
+	// Transfer Service starts listening for events from this stream. If no
+	// start time is specified or start time is in the past, Storage
+	// Transfer Service starts listening immediately.
+	EventStreamStartTime string `json:"eventStreamStartTime,omitempty"`
+
+	// Name: Required. Specifies a unique name of the resource such as AWS
+	// SQS ARN in the form 'arn:aws:sqs:region:account_id:queue_name', or
+	// Pub/Sub subscription resource name in the form
+	// 'projects/{project}/subscriptions/{sub}'.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EventStreamExpirationTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EventStreamExpirationTime") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventStream) MarshalJSON() ([]byte, error) {
+	type NoMethod EventStream
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1083,7 +1174,8 @@ type MetadataOptions struct {
 	// bucket's default storage class.
 	//   "STORAGE_CLASS_PRESERVE" - Preserve the object's original storage
 	// class. This is only supported for transfers from Google Cloud Storage
-	// buckets.
+	// buckets. REGIONAL and MULTI_REGIONAL storage classes will be mapped
+	// to STANDARD to ensure they can be written to the destination bucket.
 	//   "STORAGE_CLASS_STANDARD" - Set the storage class to STANDARD.
 	//   "STORAGE_CLASS_NEARLINE" - Set the storage class to NEARLINE.
 	//   "STORAGE_CLASS_COLDLINE" - Set the storage class to COLDLINE.
@@ -1360,8 +1452,8 @@ type Operation struct {
 	// `transferOperations/some/unique/name`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1828,6 +1920,11 @@ type TransferJob struct {
 	// length is 1024 bytes when Unicode-encoded.
 	Description string `json:"description,omitempty"`
 
+	// EventStream: Specifies the event stream for the transfer job for
+	// event-driven transfers. When EventStream is specified, the Schedule
+	// fields are ignored.
+	EventStream *EventStream `json:"eventStream,omitempty"`
+
 	// LastModificationTime: Output only. The time that the transfer job was
 	// last modified.
 	LastModificationTime string `json:"lastModificationTime,omitempty"`
@@ -1960,6 +2057,9 @@ type TransferOperation struct {
 	// entries.
 	ErrorBreakdowns []*ErrorSummary `json:"errorBreakdowns,omitempty"`
 
+	// LoggingConfig: Cloud Logging configuration.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
+
 	// Name: A globally unique ID assigned by the system.
 	Name string `json:"name,omitempty"`
 
@@ -1984,6 +2084,8 @@ type TransferOperation struct {
 	//   "ABORTED" - Aborted by the user.
 	//   "QUEUED" - Temporarily delayed by the system. No user action is
 	// required.
+	//   "SUSPENDING" - The operation is suspending and draining the ongoing
+	// work to completion.
 	Status string `json:"status,omitempty"`
 
 	// TransferJobName: The name of the transfer job that triggers this
@@ -2099,8 +2201,12 @@ type TransferSpec struct {
 	// GcsDataSource: A Cloud Storage data source.
 	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
 
-	// GcsIntermediateDataLocation: Cloud Storage intermediate data
-	// location.
+	// GcsIntermediateDataLocation: For transfers between file systems,
+	// specifies a Cloud Storage bucket to be used as an intermediate
+	// location through which to transfer data. See Transfer data between
+	// file systems
+	// (https://cloud.google.com/storage-transfer/docs/file-to-file) for
+	// more information.
 	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.
@@ -2312,17 +2418,17 @@ func (c *GoogleServiceAccountsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleServiceAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -2465,17 +2571,17 @@ func (c *ProjectsAgentPoolsCreateCall) Do(opts ...googleapi.CallOption) (*AgentP
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AgentPool{
 		ServerResponse: googleapi.ServerResponse{
@@ -2605,17 +2711,17 @@ func (c *ProjectsAgentPoolsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2751,17 +2857,17 @@ func (c *ProjectsAgentPoolsGetCall) Do(opts ...googleapi.CallOption) (*AgentPool
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AgentPool{
 		ServerResponse: googleapi.ServerResponse{
@@ -2922,17 +3028,17 @@ func (c *ProjectsAgentPoolsListCall) Do(opts ...googleapi.CallOption) (*ListAgen
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAgentPoolsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3108,17 +3214,17 @@ func (c *ProjectsAgentPoolsPatchCall) Do(opts ...googleapi.CallOption) (*AgentPo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AgentPool{
 		ServerResponse: googleapi.ServerResponse{
@@ -3249,17 +3355,17 @@ func (c *TransferJobsCreateCall) Do(opts ...googleapi.CallOption) (*TransferJob,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -3377,17 +3483,17 @@ func (c *TransferJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3532,17 +3638,17 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -3702,17 +3808,17 @@ func (c *TransferJobsListCall) Do(opts ...googleapi.CallOption) (*ListTransferJo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTransferJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3875,17 +3981,17 @@ func (c *TransferJobsPatchCall) Do(opts ...googleapi.CallOption) (*TransferJob, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TransferJob{
 		ServerResponse: googleapi.ServerResponse{
@@ -4020,17 +4126,17 @@ func (c *TransferJobsRunCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4180,17 +4286,17 @@ func (c *TransferOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4331,17 +4437,17 @@ func (c *TransferOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4505,17 +4611,17 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4683,17 +4789,17 @@ func (c *TransferOperationsPauseCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4825,17 +4931,17 @@ func (c *TransferOperationsResumeCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{

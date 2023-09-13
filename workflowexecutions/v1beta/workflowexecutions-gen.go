@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package workflowexecutions provides access to the Workflow Executions API.
 //
 // For product documentation, see: https://cloud.google.com/workflows
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	workflowexecutionsService, err := workflowexecutions.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package workflowexecutions // import "google.golang.org/api/workflowexecutions/v1beta"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "workflowexecutions:v1beta"
 const apiName = "workflowexecutions"
@@ -235,7 +249,7 @@ type Execution struct {
 	// CallLogLevel: The call logging level associated to this execution.
 	//
 	// Possible values:
-	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging specified.
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging level specified.
 	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
 	// returns, and all exceptions raised.
 	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
@@ -271,19 +285,13 @@ type Execution struct {
 	//   "SUCCEEDED" - The execution finished successfully.
 	//   "FAILED" - The execution failed with an error.
 	//   "CANCELLED" - The execution was stopped intentionally.
+	//   "UNAVAILABLE" - Reserved for future use.
+	//   "QUEUED" - Request has been placed in the backlog for processing at
+	// a later time.
 	State string `json:"state,omitempty"`
 
 	// Status: Output only. Status tracks the current steps and progress
-	// data of this execution. > **Preview:** This field is covered by the >
-	// Pre-GA Offerings Terms (https://cloud.google.com/terms/service-terms)
-	// of > the Google Cloud Terms of Service. Pre-GA features might have
-	// limited > support, and changes to pre-GA features might not be
-	// compatible with > other pre-GA versions. For more information, see
-	// the > launch stage descriptions
-	// (https://cloud.google.com/products#product-launch-stages). > This
-	// field is usable only if your project has access. See the > access
-	// request page
-	// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
+	// data of this execution.
 	Status *Status `json:"status,omitempty"`
 
 	// WorkflowRevisionId: Output only. Revision of the workflow this
@@ -457,17 +465,7 @@ func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Status: > **Preview:** This field is covered by the > Pre-GA
-// Offerings Terms (https://cloud.google.com/terms/service-terms) of >
-// the Google Cloud Terms of Service. Pre-GA features might have limited
-// > support, and changes to pre-GA features might not be compatible
-// with > other pre-GA versions. For more information, see the > launch
-// stage descriptions
-// (https://cloud.google.com/products#product-launch-stages). > This
-// field is usable only if your project has access. See the > access
-// request page
-// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
-// Represents the current status of this execution.
+// Status: Represents the current status of this execution.
 type Status struct {
 	// CurrentSteps: A list of currently executing or last executed step
 	// names for the workflow execution currently running. If the workflow
@@ -622,17 +620,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -768,17 +766,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -937,17 +935,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -1142,17 +1140,17 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListExecutionsResponse{
 		ServerResponse: googleapi.ServerResponse{

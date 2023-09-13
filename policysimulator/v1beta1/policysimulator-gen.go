@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -160,6 +160,7 @@ type FoldersService struct {
 
 func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 	rs := &FoldersLocationsService{s: s}
+	rs.OrgPolicyViolationsPreviews = NewFoldersLocationsOrgPolicyViolationsPreviewsService(s)
 	rs.Replays = NewFoldersLocationsReplaysService(s)
 	return rs
 }
@@ -167,27 +168,50 @@ func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 type FoldersLocationsService struct {
 	s *Service
 
+	OrgPolicyViolationsPreviews *FoldersLocationsOrgPolicyViolationsPreviewsService
+
 	Replays *FoldersLocationsReplaysService
+}
+
+func NewFoldersLocationsOrgPolicyViolationsPreviewsService(s *Service) *FoldersLocationsOrgPolicyViolationsPreviewsService {
+	rs := &FoldersLocationsOrgPolicyViolationsPreviewsService{s: s}
+	rs.Operations = NewFoldersLocationsOrgPolicyViolationsPreviewsOperationsService(s)
+	return rs
+}
+
+type FoldersLocationsOrgPolicyViolationsPreviewsService struct {
+	s *Service
+
+	Operations *FoldersLocationsOrgPolicyViolationsPreviewsOperationsService
+}
+
+func NewFoldersLocationsOrgPolicyViolationsPreviewsOperationsService(s *Service) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsService {
+	rs := &FoldersLocationsOrgPolicyViolationsPreviewsOperationsService{s: s}
+	return rs
+}
+
+type FoldersLocationsOrgPolicyViolationsPreviewsOperationsService struct {
+	s *Service
 }
 
 func NewFoldersLocationsReplaysService(s *Service) *FoldersLocationsReplaysService {
 	rs := &FoldersLocationsReplaysService{s: s}
-	rs.Results = NewFoldersLocationsReplaysResultsService(s)
+	rs.Operations = NewFoldersLocationsReplaysOperationsService(s)
 	return rs
 }
 
 type FoldersLocationsReplaysService struct {
 	s *Service
 
-	Results *FoldersLocationsReplaysResultsService
+	Operations *FoldersLocationsReplaysOperationsService
 }
 
-func NewFoldersLocationsReplaysResultsService(s *Service) *FoldersLocationsReplaysResultsService {
-	rs := &FoldersLocationsReplaysResultsService{s: s}
+func NewFoldersLocationsReplaysOperationsService(s *Service) *FoldersLocationsReplaysOperationsService {
+	rs := &FoldersLocationsReplaysOperationsService{s: s}
 	return rs
 }
 
-type FoldersLocationsReplaysResultsService struct {
+type FoldersLocationsReplaysOperationsService struct {
 	s *Service
 }
 
@@ -214,6 +238,7 @@ type OrganizationsService struct {
 
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
+	rs.OrgPolicyViolationsPreviews = NewOrganizationsLocationsOrgPolicyViolationsPreviewsService(s)
 	rs.Replays = NewOrganizationsLocationsReplaysService(s)
 	return rs
 }
@@ -221,27 +246,50 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 type OrganizationsLocationsService struct {
 	s *Service
 
+	OrgPolicyViolationsPreviews *OrganizationsLocationsOrgPolicyViolationsPreviewsService
+
 	Replays *OrganizationsLocationsReplaysService
+}
+
+func NewOrganizationsLocationsOrgPolicyViolationsPreviewsService(s *Service) *OrganizationsLocationsOrgPolicyViolationsPreviewsService {
+	rs := &OrganizationsLocationsOrgPolicyViolationsPreviewsService{s: s}
+	rs.Operations = NewOrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService(s)
+	return rs
+}
+
+type OrganizationsLocationsOrgPolicyViolationsPreviewsService struct {
+	s *Service
+
+	Operations *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService
+}
+
+func NewOrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService(s *Service) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService {
+	rs := &OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService struct {
+	s *Service
 }
 
 func NewOrganizationsLocationsReplaysService(s *Service) *OrganizationsLocationsReplaysService {
 	rs := &OrganizationsLocationsReplaysService{s: s}
-	rs.Results = NewOrganizationsLocationsReplaysResultsService(s)
+	rs.Operations = NewOrganizationsLocationsReplaysOperationsService(s)
 	return rs
 }
 
 type OrganizationsLocationsReplaysService struct {
 	s *Service
 
-	Results *OrganizationsLocationsReplaysResultsService
+	Operations *OrganizationsLocationsReplaysOperationsService
 }
 
-func NewOrganizationsLocationsReplaysResultsService(s *Service) *OrganizationsLocationsReplaysResultsService {
-	rs := &OrganizationsLocationsReplaysResultsService{s: s}
+func NewOrganizationsLocationsReplaysOperationsService(s *Service) *OrganizationsLocationsReplaysOperationsService {
+	rs := &OrganizationsLocationsReplaysOperationsService{s: s}
 	return rs
 }
 
-type OrganizationsLocationsReplaysResultsService struct {
+type OrganizationsLocationsReplaysOperationsService struct {
 	s *Service
 }
 
@@ -259,6 +307,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.OrgPolicyViolationsPreviews = NewProjectsLocationsOrgPolicyViolationsPreviewsService(s)
 	rs.Replays = NewProjectsLocationsReplaysService(s)
 	return rs
 }
@@ -266,27 +315,50 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	OrgPolicyViolationsPreviews *ProjectsLocationsOrgPolicyViolationsPreviewsService
+
 	Replays *ProjectsLocationsReplaysService
+}
+
+func NewProjectsLocationsOrgPolicyViolationsPreviewsService(s *Service) *ProjectsLocationsOrgPolicyViolationsPreviewsService {
+	rs := &ProjectsLocationsOrgPolicyViolationsPreviewsService{s: s}
+	rs.Operations = NewProjectsLocationsOrgPolicyViolationsPreviewsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsOrgPolicyViolationsPreviewsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService
+}
+
+func NewProjectsLocationsOrgPolicyViolationsPreviewsOperationsService(s *Service) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService {
+	rs := &ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsReplaysService(s *Service) *ProjectsLocationsReplaysService {
 	rs := &ProjectsLocationsReplaysService{s: s}
-	rs.Results = NewProjectsLocationsReplaysResultsService(s)
+	rs.Operations = NewProjectsLocationsReplaysOperationsService(s)
 	return rs
 }
 
 type ProjectsLocationsReplaysService struct {
 	s *Service
 
-	Results *ProjectsLocationsReplaysResultsService
+	Operations *ProjectsLocationsReplaysOperationsService
 }
 
-func NewProjectsLocationsReplaysResultsService(s *Service) *ProjectsLocationsReplaysResultsService {
-	rs := &ProjectsLocationsReplaysResultsService{s: s}
+func NewProjectsLocationsReplaysOperationsService(s *Service) *ProjectsLocationsReplaysOperationsService {
+	rs := &ProjectsLocationsReplaysOperationsService{s: s}
 	return rs
 }
 
-type ProjectsLocationsReplaysResultsService struct {
+type ProjectsLocationsReplaysOperationsService struct {
 	s *Service
 }
 
@@ -467,467 +539,6 @@ func (s *GoogleCloudPolicysimulatorV1ReplayResultsSummary) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1AccessStateDiff: A summary and
-// comparison of the member's access under the current (baseline)
-// policies and the proposed (simulated) policies for a single access
-// tuple.
-type GoogleCloudPolicysimulatorV1beta1AccessStateDiff struct {
-	// AccessChange: How the member's access, specified in the AccessState
-	// field, changed between the current (baseline) policies and proposed
-	// (simulated) policies.
-	//
-	// Possible values:
-	//   "ACCESS_CHANGE_TYPE_UNSPECIFIED" - The access change is
-	// unspecified.
-	//   "NO_CHANGE" - The member's access did not change. This includes the
-	// case where both baseline and simulated are UNKNOWN, but the unknown
-	// information is equivalent.
-	//   "UNKNOWN_CHANGE" - The member's access under both the current
-	// policies and the proposed policies is `UNKNOWN`, but the unknown
-	// information differs between them.
-	//   "ACCESS_REVOKED" - The member had access under the current policies
-	// (`GRANTED`), but will no longer have access after the proposed
-	// changes (`NOT_GRANTED`).
-	//   "ACCESS_GAINED" - The member did not have access under the current
-	// policies (`NOT_GRANTED`), but will have access after the proposed
-	// changes (`GRANTED`).
-	//   "ACCESS_MAYBE_REVOKED" - This result can occur for the following
-	// reasons: * The member had access under the current policies
-	// (`GRANTED`), but their access after the proposed changes is
-	// `UNKNOWN`. * The member's access under the current policies is
-	// `UNKNOWN`, but they will not have access after the proposed changes
-	// (`NOT_GRANTED`).
-	//   "ACCESS_MAYBE_GAINED" - This result can occur for the following
-	// reasons: * The member did not have access under the current policies
-	// (`NOT_GRANTED`), but their access after the proposed changes is
-	// `UNKNOWN`. * The member's access under the current policies is
-	// `UNKNOWN`, but they will have access after the proposed changes
-	// (`GRANTED`).
-	AccessChange string `json:"accessChange,omitempty"`
-
-	// Baseline: The results of evaluating the access tuple under the
-	// current (baseline) policies. If the AccessState couldn't be fully
-	// evaluated, this field explains why.
-	Baseline *GoogleCloudPolicysimulatorV1beta1ExplainedAccess `json:"baseline,omitempty"`
-
-	// Simulated: The results of evaluating the access tuple under the
-	// proposed (simulated) policies. If the AccessState couldn't be fully
-	// evaluated, this field explains why.
-	Simulated *GoogleCloudPolicysimulatorV1beta1ExplainedAccess `json:"simulated,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessChange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessChange") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1AccessStateDiff) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1AccessStateDiff
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1AccessTuple: Information about the
-// principal, resource, and permission to check.
-type GoogleCloudPolicysimulatorV1beta1AccessTuple struct {
-	// FullResourceName: Required. The full resource name that identifies
-	// the resource. For example,
-	// `//compute.googleapis.com/projects/my-project/zones/us-central1-a/inst
-	// ances/my-instance`. For examples of full resource names for Google
-	// Cloud services, see
-	// https://cloud.google.com/iam/help/troubleshooter/full-resource-names.
-	FullResourceName string `json:"fullResourceName,omitempty"`
-
-	// Permission: Required. The IAM permission to check for the specified
-	// principal and resource. For a complete list of IAM permissions, see
-	// https://cloud.google.com/iam/help/permissions/reference. For a
-	// complete list of predefined IAM roles and the permissions in each
-	// role, see https://cloud.google.com/iam/help/roles/reference.
-	Permission string `json:"permission,omitempty"`
-
-	// Principal: Required. The principal whose access you want to check, in
-	// the form of the email address that represents that principal. For
-	// example, `alice@example.com` or
-	// `my-service-account@my-project.iam.gserviceaccount.com`. The
-	// principal must be a Google Account or a service account. Other types
-	// of principals are not supported.
-	Principal string `json:"principal,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FullResourceName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1AccessTuple) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1AccessTuple
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1BindingExplanation: Details about
-// how a binding in a policy affects a principal's ability to use a
-// permission.
-type GoogleCloudPolicysimulatorV1beta1BindingExplanation struct {
-	// Access: Required. Indicates whether _this binding_ provides the
-	// specified permission to the specified principal for the specified
-	// resource. This field does _not_ indicate whether the principal
-	// actually has the permission for the resource. There might be another
-	// binding that overrides this binding. To determine whether the
-	// principal actually has the permission, use the `access` field in the
-	// TroubleshootIamPolicyResponse.
-	//
-	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "GRANTED" - The principal has the permission.
-	//   "NOT_GRANTED" - The principal does not have the permission.
-	//   "UNKNOWN_CONDITIONAL" - The principal has the permission only if a
-	// condition expression evaluates to `true`.
-	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
-	// have access to all of the policies that Policy Simulator needs to
-	// evaluate.
-	Access string `json:"access,omitempty"`
-
-	// Condition: A condition expression that prevents this binding from
-	// granting access unless the expression evaluates to `true`. To learn
-	// about IAM Conditions, see
-	// https://cloud.google.com/iam/docs/conditions-overview.
-	Condition *GoogleTypeExpr `json:"condition,omitempty"`
-
-	// Memberships: Indicates whether each principal in the binding includes
-	// the principal specified in the request, either directly or
-	// indirectly. Each key identifies a principal in the binding, and each
-	// value indicates whether the principal in the binding includes the
-	// principal in the request. For example, suppose that a binding
-	// includes the following principals: * `user:alice@example.com` *
-	// `group:product-eng@example.com` The principal in the replayed access
-	// tuple is `user:bob@example.com`. This user is a principal of the
-	// group `group:product-eng@example.com`. For the first principal in the
-	// binding, the key is `user:alice@example.com`, and the `membership`
-	// field in the value is set to `MEMBERSHIP_NOT_INCLUDED`. For the
-	// second principal in the binding, the key is
-	// `group:product-eng@example.com`, and the `membership` field in the
-	// value is set to `MEMBERSHIP_INCLUDED`.
-	Memberships map[string]GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership `json:"memberships,omitempty"`
-
-	// Relevance: The relevance of this binding to the overall determination
-	// for the entire policy.
-	//
-	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "NORMAL" - The data point has a limited effect on the result.
-	// Changing the data point is unlikely to affect the overall
-	// determination.
-	//   "HIGH" - The data point has a strong effect on the result. Changing
-	// the data point is likely to affect the overall determination.
-	Relevance string `json:"relevance,omitempty"`
-
-	// Role: The role that this binding grants. For example,
-	// `roles/compute.serviceAgent`. For a complete list of predefined IAM
-	// roles, as well as the permissions in each role, see
-	// https://cloud.google.com/iam/help/roles/reference.
-	Role string `json:"role,omitempty"`
-
-	// RolePermission: Indicates whether the role granted by this binding
-	// contains the specified permission.
-	//
-	// Possible values:
-	//   "ROLE_PERMISSION_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "ROLE_PERMISSION_INCLUDED" - The permission is included in the
-	// role.
-	//   "ROLE_PERMISSION_NOT_INCLUDED" - The permission is not included in
-	// the role.
-	//   "ROLE_PERMISSION_UNKNOWN_INFO_DENIED" - The user who created the
-	// Replay is not allowed to access the binding.
-	RolePermission string `json:"rolePermission,omitempty"`
-
-	// RolePermissionRelevance: The relevance of the permission's existence,
-	// or nonexistence, in the role to the overall determination for the
-	// entire policy.
-	//
-	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "NORMAL" - The data point has a limited effect on the result.
-	// Changing the data point is unlikely to affect the overall
-	// determination.
-	//   "HIGH" - The data point has a strong effect on the result. Changing
-	// the data point is likely to affect the overall determination.
-	RolePermissionRelevance string `json:"rolePermissionRelevance,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Access") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Access") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1BindingExplanation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1BindingExplanation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership
-// : Details about whether the binding includes the principal.
-type GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership struct {
-	// Membership: Indicates whether the binding includes the principal.
-	//
-	// Possible values:
-	//   "MEMBERSHIP_UNSPECIFIED" - Default value. This value is unused.
-	//   "MEMBERSHIP_INCLUDED" - The binding includes the principal. The
-	// principal can be included directly or indirectly. For example: * A
-	// principal is included directly if that principal is listed in the
-	// binding. * A principal is included indirectly if that principal is in
-	// a Google group or Google Workspace domain that is listed in the
-	// binding.
-	//   "MEMBERSHIP_NOT_INCLUDED" - The binding does not include the
-	// principal.
-	//   "MEMBERSHIP_UNKNOWN_INFO_DENIED" - The user who created the Replay
-	// is not allowed to access the binding.
-	//   "MEMBERSHIP_UNKNOWN_UNSUPPORTED" - The principal is an unsupported
-	// type. Only Google Accounts and service accounts are supported.
-	Membership string `json:"membership,omitempty"`
-
-	// Relevance: The relevance of the principal's status to the overall
-	// determination for the binding.
-	//
-	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "NORMAL" - The data point has a limited effect on the result.
-	// Changing the data point is unlikely to affect the overall
-	// determination.
-	//   "HIGH" - The data point has a strong effect on the result. Changing
-	// the data point is likely to affect the overall determination.
-	Relevance string `json:"relevance,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Membership") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Membership") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ExplainedAccess: Details about how a
-// set of policies, listed in ExplainedPolicy, resulted in a certain
-// AccessState when replaying an access tuple.
-type GoogleCloudPolicysimulatorV1beta1ExplainedAccess struct {
-	// AccessState: Whether the member in the access tuple has permission to
-	// access the resource in the access tuple under the given policies.
-	//
-	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "GRANTED" - The principal has the permission.
-	//   "NOT_GRANTED" - The principal does not have the permission.
-	//   "UNKNOWN_CONDITIONAL" - The principal has the permission only if a
-	// condition expression evaluates to `true`.
-	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
-	// have access to all of the policies that Policy Simulator needs to
-	// evaluate.
-	AccessState string `json:"accessState,omitempty"`
-
-	// Errors: If the AccessState is `UNKNOWN`, this field contains a list
-	// of errors explaining why the result is `UNKNOWN`. If the
-	// `AccessState` is `GRANTED` or `NOT_GRANTED`, this field is omitted.
-	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
-
-	// Policies: If the AccessState is `UNKNOWN`, this field contains the
-	// policies that led to that result. If the `AccessState` is `GRANTED`
-	// or `NOT_GRANTED`, this field is omitted.
-	Policies []*GoogleCloudPolicysimulatorV1beta1ExplainedPolicy `json:"policies,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessState") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessState") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ExplainedAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ExplainedAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ExplainedPolicy: Details about how a
-// specific IAM Policy contributed to the access check.
-type GoogleCloudPolicysimulatorV1beta1ExplainedPolicy struct {
-	// Access: Indicates whether _this policy_ provides the specified
-	// permission to the specified principal for the specified resource.
-	// This field does _not_ indicate whether the principal actually has the
-	// permission for the resource. There might be another policy that
-	// overrides this policy. To determine whether the principal actually
-	// has the permission, use the `access` field in the
-	// TroubleshootIamPolicyResponse.
-	//
-	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "GRANTED" - The principal has the permission.
-	//   "NOT_GRANTED" - The principal does not have the permission.
-	//   "UNKNOWN_CONDITIONAL" - The principal has the permission only if a
-	// condition expression evaluates to `true`.
-	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
-	// have access to all of the policies that Policy Simulator needs to
-	// evaluate.
-	Access string `json:"access,omitempty"`
-
-	// BindingExplanations: Details about how each binding in the policy
-	// affects the principal's ability, or inability, to use the permission
-	// for the resource. If the user who created the Replay does not have
-	// access to the policy, this field is omitted.
-	BindingExplanations []*GoogleCloudPolicysimulatorV1beta1BindingExplanation `json:"bindingExplanations,omitempty"`
-
-	// FullResourceName: The full resource name that identifies the
-	// resource. For example,
-	// `//compute.googleapis.com/projects/my-project/zones/us-central1-a/inst
-	// ances/my-instance`. If the user who created the Replay does not have
-	// access to the policy, this field is omitted. For examples of full
-	// resource names for Google Cloud services, see
-	// https://cloud.google.com/iam/help/troubleshooter/full-resource-names.
-	FullResourceName string `json:"fullResourceName,omitempty"`
-
-	// Policy: The IAM policy attached to the resource. If the user who
-	// created the Replay does not have access to the policy, this field is
-	// empty.
-	Policy *GoogleIamV1Policy `json:"policy,omitempty"`
-
-	// Relevance: The relevance of this policy to the overall determination
-	// in the TroubleshootIamPolicyResponse. If the user who created the
-	// Replay does not have access to the policy, this field is omitted.
-	//
-	// Possible values:
-	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Default value. This value is
-	// unused.
-	//   "NORMAL" - The data point has a limited effect on the result.
-	// Changing the data point is unlikely to affect the overall
-	// determination.
-	//   "HIGH" - The data point has a strong effect on the result. Changing
-	// the data point is likely to affect the overall determination.
-	Relevance string `json:"relevance,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Access") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Access") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ExplainedPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ExplainedPolicy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse: Response
-// message for Simulator.ListReplayResults.
-type GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse struct {
-	// NextPageToken: A token that you can use to retrieve the next page of
-	// ReplayResult objects. If this field is omitted, there are no
-	// subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ReplayResults: The results of running a Replay.
-	ReplayResults []*GoogleCloudPolicysimulatorV1beta1ReplayResult `json:"replayResults,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudPolicysimulatorV1beta1Replay: A resource describing a
 // `Replay`, or simulation.
 type GoogleCloudPolicysimulatorV1beta1Replay struct {
@@ -956,10 +567,6 @@ type GoogleCloudPolicysimulatorV1beta1Replay struct {
 	//   "SUCCEEDED" - The `Replay` has successfully completed.
 	//   "FAILED" - The `Replay` has finished with an error.
 	State string `json:"state,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
@@ -1033,41 +640,6 @@ func (s *GoogleCloudPolicysimulatorV1beta1ReplayConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1ReplayDiff: The difference between
-// the results of evaluating an access tuple under the current
-// (baseline) policies and under the proposed (simulated) policies. This
-// difference explains how a member's access could change if the
-// proposed policies were applied.
-type GoogleCloudPolicysimulatorV1beta1ReplayDiff struct {
-	// AccessDiff: A summary and comparison of the member's access under the
-	// current (baseline) policies and the proposed (simulated) policies for
-	// a single access tuple. The evaluation of the member's access is
-	// reported in the AccessState field.
-	AccessDiff *GoogleCloudPolicysimulatorV1beta1AccessStateDiff `json:"accessDiff,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessDiff") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessDiff") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ReplayDiff) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ReplayDiff
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata: Metadata
 // about a Replay operation.
 type GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata struct {
@@ -1093,65 +665,6 @@ type GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata struct {
 
 func (s *GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPolicysimulatorV1beta1ReplayResult: The result of
-// replaying a single access tuple against a simulated state.
-type GoogleCloudPolicysimulatorV1beta1ReplayResult struct {
-	// AccessTuple: The access tuple that was replayed. This field includes
-	// information about the member, resource, and permission that were
-	// involved in the access attempt.
-	AccessTuple *GoogleCloudPolicysimulatorV1beta1AccessTuple `json:"accessTuple,omitempty"`
-
-	// Diff: The difference between the member's access under the current
-	// (baseline) policies and the member's access under the proposed
-	// (simulated) policies. This field is only included for access tuples
-	// that were successfully replayed and had different results under the
-	// current policies and the proposed policies.
-	Diff *GoogleCloudPolicysimulatorV1beta1ReplayDiff `json:"diff,omitempty"`
-
-	// Error: The error that caused the access tuple replay to fail. This
-	// field is only included for access tuples that were not replayed
-	// successfully.
-	Error *GoogleRpcStatus `json:"error,omitempty"`
-
-	// LastSeenDate: The latest date this access tuple was seen in the logs.
-	LastSeenDate *GoogleTypeDate `json:"lastSeenDate,omitempty"`
-
-	// Name: The resource name of the `ReplayResult`, in the following
-	// format:
-	// `{projects|folders|organizations}/{resource-id}/locations/global/repla
-	// ys/{replay-id}/results/{replay-result-id}`, where `{resource-id}` is
-	// the ID of the project, folder, or organization that owns the Replay.
-	// Example:
-	// `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d
-	// 7d-8e03-479ce1833c36/results/1234`
-	Name string `json:"name,omitempty"`
-
-	// Parent: The Replay that the access tuple was included in.
-	Parent string `json:"parent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AccessTuple") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessTuple") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPolicysimulatorV1beta1ReplayResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPolicysimulatorV1beta1ReplayResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1330,7 +843,9 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -1347,9 +862,7 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -1735,153 +1248,9 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "policysimulator.folders.locations.replays.create":
+// method id "policysimulator.folders.locations.orgPolicyViolationsPreviews.operations.get":
 
-type FoldersLocationsReplaysCreateCall struct {
-	s                                       *Service
-	parent                                  string
-	googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
-}
-
-// Create: Creates and starts a Replay using the given ReplayConfig.
-//
-//   - parent: The parent resource where this Replay will be created. This
-//     resource must be a project, folder, or organization with a
-//     location. Example: `projects/my-example-project/locations/global`.
-func (r *FoldersLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *FoldersLocationsReplaysCreateCall {
-	c := &FoldersLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudpolicysimulatorv1beta1replay = googlecloudpolicysimulatorv1beta1replay
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *FoldersLocationsReplaysCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsReplaysCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *FoldersLocationsReplaysCreateCall) Context(ctx context.Context) *FoldersLocationsReplaysCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *FoldersLocationsReplaysCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FoldersLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpolicysimulatorv1beta1replay)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/replays")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "policysimulator.folders.locations.replays.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *FoldersLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates and starts a Replay using the given ReplayConfig.",
-	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays",
-	//   "httpMethod": "POST",
-	//   "id": "policysimulator.folders.locations.replays.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this Replay will be created. This resource must be a project, folder, or organization with a location. Example: `projects/my-example-project/locations/global`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/replays",
-	//   "request": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1Replay"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "policysimulator.folders.locations.replays.get":
-
-type FoldersLocationsReplaysGetCall struct {
+type FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -1890,17 +1259,13 @@ type FoldersLocationsReplaysGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified Replay. Each `Replay` is available for at
-// least 7 days.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 //
-//   - name: The name of the Replay to retrieve, in the following format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}`, where `{resource-id}` is the ID of the project,
-//     folder, or organization that owns the `Replay`. Example:
-//     `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
-//     4d7d-8e03-479ce1833c36`.
-func (r *FoldersLocationsReplaysService) Get(name string) *FoldersLocationsReplaysGetCall {
-	c := &FoldersLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - name: The name of the operation resource.
+func (r *FoldersLocationsOrgPolicyViolationsPreviewsOperationsService) Get(name string) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c := &FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -1908,7 +1273,7 @@ func (r *FoldersLocationsReplaysService) Get(name string) *FoldersLocationsRepla
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *FoldersLocationsReplaysGetCall) Fields(s ...googleapi.Field) *FoldersLocationsReplaysGetCall {
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1918,7 +1283,7 @@ func (c *FoldersLocationsReplaysGetCall) Fields(s ...googleapi.Field) *FoldersLo
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *FoldersLocationsReplaysGetCall) IfNoneMatch(entityTag string) *FoldersLocationsReplaysGetCall {
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1926,21 +1291,21 @@ func (c *FoldersLocationsReplaysGetCall) IfNoneMatch(entityTag string) *FoldersL
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *FoldersLocationsReplaysGetCall) Context(ctx context.Context) *FoldersLocationsReplaysGetCall {
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Context(ctx context.Context) *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *FoldersLocationsReplaysGetCall) Header() http.Header {
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *FoldersLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -1966,34 +1331,33 @@ func (c *FoldersLocationsReplaysGetCall) doRequest(alt string) (*http.Response, 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "policysimulator.folders.locations.replays.get" call.
-// Exactly one of *GoogleCloudPolicysimulatorV1beta1Replay or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPolicysimulatorV1beta1Replay.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
+// Do executes the "policysimulator.folders.locations.orgPolicyViolationsPreviews.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *FoldersLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicysimulatorV1beta1Replay, error) {
+func (c *FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPolicysimulatorV1beta1Replay{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2005,25 +1369,25 @@ func (c *FoldersLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified Replay. Each `Replay` is available for at least 7 days.",
-	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/orgPolicyViolationsPreviews/{orgPolicyViolationsPreviewsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "policysimulator.folders.locations.replays.get",
+	//   "id": "policysimulator.folders.locations.orgPolicyViolationsPreviews.operations.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Replay to retrieve, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}`, where `{resource-id}` is the ID of the project, folder, or organization that owns the `Replay`. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
+	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/locations/[^/]+/replays/[^/]+$",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/orgPolicyViolationsPreviews/[^/]+/operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1Replay"
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2032,53 +1396,32 @@ func (c *FoldersLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goog
 
 }
 
-// method id "policysimulator.folders.locations.replays.results.list":
+// method id "policysimulator.folders.locations.replays.operations.get":
 
-type FoldersLocationsReplaysResultsListCall struct {
+type FoldersLocationsReplaysOperationsGetCall struct {
 	s            *Service
-	parent       string
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
-// List: Lists the results of running a Replay.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 //
-//   - parent: The Replay whose results are listed, in the following
-//     format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}` Example:
-//     `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
-//     3-479ce1833c36`.
-func (r *FoldersLocationsReplaysResultsService) List(parent string) *FoldersLocationsReplaysResultsListCall {
-	c := &FoldersLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ReplayResult objects to return. Defaults to 5000. The maximum
-// value is 5000; values above 5000 are rounded down to 5000.
-func (c *FoldersLocationsReplaysResultsListCall) PageSize(pageSize int64) *FoldersLocationsReplaysResultsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous Simulator.ListReplayResults call. Provide
-// this token to retrieve the next page of results. When paginating, all
-// other parameters provided to [Simulator.ListReplayResults[] must
-// match the call that provided the page token.
-func (c *FoldersLocationsReplaysResultsListCall) PageToken(pageToken string) *FoldersLocationsReplaysResultsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+// - name: The name of the operation resource.
+func (r *FoldersLocationsReplaysOperationsService) Get(name string) *FoldersLocationsReplaysOperationsGetCall {
+	c := &FoldersLocationsReplaysOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *FoldersLocationsReplaysResultsListCall) Fields(s ...googleapi.Field) *FoldersLocationsReplaysResultsListCall {
+func (c *FoldersLocationsReplaysOperationsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsReplaysOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2088,7 +1431,7 @@ func (c *FoldersLocationsReplaysResultsListCall) Fields(s ...googleapi.Field) *F
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *FoldersLocationsReplaysResultsListCall) IfNoneMatch(entityTag string) *FoldersLocationsReplaysResultsListCall {
+func (c *FoldersLocationsReplaysOperationsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsReplaysOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2096,21 +1439,21 @@ func (c *FoldersLocationsReplaysResultsListCall) IfNoneMatch(entityTag string) *
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *FoldersLocationsReplaysResultsListCall) Context(ctx context.Context) *FoldersLocationsReplaysResultsListCall {
+func (c *FoldersLocationsReplaysOperationsGetCall) Context(ctx context.Context) *FoldersLocationsReplaysOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *FoldersLocationsReplaysResultsListCall) Header() http.Header {
+func (c *FoldersLocationsReplaysOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *FoldersLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *FoldersLocationsReplaysOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2123,7 +1466,7 @@ func (c *FoldersLocationsReplaysResultsListCall) doRequest(alt string) (*http.Re
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/results")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2131,41 +1474,38 @@ func (c *FoldersLocationsReplaysResultsListCall) doRequest(alt string) (*http.Re
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "policysimulator.folders.locations.replays.results.list" call.
-// Exactly one of
-// *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *FoldersLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse, error) {
+// Do executes the "policysimulator.folders.locations.replays.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsReplaysOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2177,36 +1517,218 @@ func (c *FoldersLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the results of running a Replay.",
-	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}/results",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "policysimulator.folders.locations.replays.results.list",
+	//   "id": "policysimulator.folders.locations.replays.operations.get",
 	//   "parameterOrder": [
-	//     "parent"
+	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/replays/[^/]+/operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "policysimulator.folders.locations.replays.operations.list":
+
+type FoldersLocationsReplaysOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
+//
+// - name: The name of the operation's parent resource.
+func (r *FoldersLocationsReplaysOperationsService) List(name string) *FoldersLocationsReplaysOperationsListCall {
+	c := &FoldersLocationsReplaysOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *FoldersLocationsReplaysOperationsListCall) Filter(filter string) *FoldersLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *FoldersLocationsReplaysOperationsListCall) PageSize(pageSize int64) *FoldersLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *FoldersLocationsReplaysOperationsListCall) PageToken(pageToken string) *FoldersLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsReplaysOperationsListCall) Fields(s ...googleapi.Field) *FoldersLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsReplaysOperationsListCall) IfNoneMatch(entityTag string) *FoldersLocationsReplaysOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsReplaysOperationsListCall) Context(ctx context.Context) *FoldersLocationsReplaysOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsReplaysOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsReplaysOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.folders.locations.replays.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsReplaysOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "policysimulator.folders.locations.replays.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/replays/[^/]+/operations$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of ReplayResult objects to return. Defaults to 5000. The maximum value is 5000; values above 5000 are rounded down to 5000.",
+	//       "description": "The standard list page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous Simulator.ListReplayResults call. Provide this token to retrieve the next page of results. When paginating, all other parameters provided to [Simulator.ListReplayResults[] must match the call that provided the page token.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Replay whose results are listed, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}` Example: `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/locations/[^/]+/replays/[^/]+$",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/{+parent}/results",
+	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse"
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2218,7 +1740,7 @@ func (c *FoldersLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *FoldersLocationsReplaysResultsListCall) Pages(ctx context.Context, f func(*GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse) error) error {
+func (c *FoldersLocationsReplaysOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -2333,17 +1855,17 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2388,6 +1910,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 
 type OperationsListCall struct {
 	s            *Service
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -2404,8 +1927,11 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
-func (r *OperationsService) List() *OperationsListCall {
+//
+// - name: The name of the operation's parent resource.
+func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
 	return c
 }
 
@@ -2413,13 +1939,6 @@ func (r *OperationsService) List() *OperationsListCall {
 // filter.
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// Name sets the optional parameter "name": The name of the operation's
-// parent resource.
-func (c *OperationsListCall) Name(name string) *OperationsListCall {
-	c.urlParams_.Set("name", name)
 	return c
 }
 
@@ -2485,13 +2004,16 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -2510,17 +2032,17 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2538,7 +2060,9 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//   "flatPath": "v1beta1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.operations.list",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "The standard list filter.",
@@ -2547,7 +2071,9 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//     },
 	//     "name": {
 	//       "description": "The name of the operation's parent resource.",
-	//       "location": "query",
+	//       "location": "path",
+	//       "pattern": "^operations$",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
@@ -2562,7 +2088,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/operations",
+	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningListOperationsResponse"
 	//   },
@@ -2594,153 +2120,9 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunnin
 	}
 }
 
-// method id "policysimulator.organizations.locations.replays.create":
+// method id "policysimulator.organizations.locations.orgPolicyViolationsPreviews.operations.get":
 
-type OrganizationsLocationsReplaysCreateCall struct {
-	s                                       *Service
-	parent                                  string
-	googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
-}
-
-// Create: Creates and starts a Replay using the given ReplayConfig.
-//
-//   - parent: The parent resource where this Replay will be created. This
-//     resource must be a project, folder, or organization with a
-//     location. Example: `projects/my-example-project/locations/global`.
-func (r *OrganizationsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *OrganizationsLocationsReplaysCreateCall {
-	c := &OrganizationsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudpolicysimulatorv1beta1replay = googlecloudpolicysimulatorv1beta1replay
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsReplaysCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsReplaysCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsReplaysCreateCall) Context(ctx context.Context) *OrganizationsLocationsReplaysCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsReplaysCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpolicysimulatorv1beta1replay)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/replays")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "policysimulator.organizations.locations.replays.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates and starts a Replay using the given ReplayConfig.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays",
-	//   "httpMethod": "POST",
-	//   "id": "policysimulator.organizations.locations.replays.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this Replay will be created. This resource must be a project, folder, or organization with a location. Example: `projects/my-example-project/locations/global`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/replays",
-	//   "request": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1Replay"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "policysimulator.organizations.locations.replays.get":
-
-type OrganizationsLocationsReplaysGetCall struct {
+type OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -2749,17 +2131,13 @@ type OrganizationsLocationsReplaysGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified Replay. Each `Replay` is available for at
-// least 7 days.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 //
-//   - name: The name of the Replay to retrieve, in the following format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}`, where `{resource-id}` is the ID of the project,
-//     folder, or organization that owns the `Replay`. Example:
-//     `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
-//     4d7d-8e03-479ce1833c36`.
-func (r *OrganizationsLocationsReplaysService) Get(name string) *OrganizationsLocationsReplaysGetCall {
-	c := &OrganizationsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - name: The name of the operation resource.
+func (r *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsService) Get(name string) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c := &OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -2767,7 +2145,7 @@ func (r *OrganizationsLocationsReplaysService) Get(name string) *OrganizationsLo
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsReplaysGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsReplaysGetCall {
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2777,7 +2155,7 @@ func (c *OrganizationsLocationsReplaysGetCall) Fields(s ...googleapi.Field) *Org
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsReplaysGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsReplaysGetCall {
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2785,21 +2163,21 @@ func (c *OrganizationsLocationsReplaysGetCall) IfNoneMatch(entityTag string) *Or
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsReplaysGetCall) Context(ctx context.Context) *OrganizationsLocationsReplaysGetCall {
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Context(ctx context.Context) *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsReplaysGetCall) Header() http.Header {
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2825,34 +2203,33 @@ func (c *OrganizationsLocationsReplaysGetCall) doRequest(alt string) (*http.Resp
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "policysimulator.organizations.locations.replays.get" call.
-// Exactly one of *GoogleCloudPolicysimulatorV1beta1Replay or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPolicysimulatorV1beta1Replay.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
+// Do executes the "policysimulator.organizations.locations.orgPolicyViolationsPreviews.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicysimulatorV1beta1Replay, error) {
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPolicysimulatorV1beta1Replay{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2864,25 +2241,25 @@ func (c *OrganizationsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified Replay. Each `Replay` is available for at least 7 days.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/orgPolicyViolationsPreviews/{orgPolicyViolationsPreviewsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "policysimulator.organizations.locations.replays.get",
+	//   "id": "policysimulator.organizations.locations.orgPolicyViolationsPreviews.operations.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Replay to retrieve, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}`, where `{resource-id}` is the ID of the project, folder, or organization that owns the `Replay`. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
+	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/replays/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/orgPolicyViolationsPreviews/[^/]+/operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1Replay"
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2891,53 +2268,32 @@ func (c *OrganizationsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) 
 
 }
 
-// method id "policysimulator.organizations.locations.replays.results.list":
+// method id "policysimulator.organizations.locations.replays.operations.get":
 
-type OrganizationsLocationsReplaysResultsListCall struct {
+type OrganizationsLocationsReplaysOperationsGetCall struct {
 	s            *Service
-	parent       string
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
-// List: Lists the results of running a Replay.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 //
-//   - parent: The Replay whose results are listed, in the following
-//     format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}` Example:
-//     `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
-//     3-479ce1833c36`.
-func (r *OrganizationsLocationsReplaysResultsService) List(parent string) *OrganizationsLocationsReplaysResultsListCall {
-	c := &OrganizationsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ReplayResult objects to return. Defaults to 5000. The maximum
-// value is 5000; values above 5000 are rounded down to 5000.
-func (c *OrganizationsLocationsReplaysResultsListCall) PageSize(pageSize int64) *OrganizationsLocationsReplaysResultsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous Simulator.ListReplayResults call. Provide
-// this token to retrieve the next page of results. When paginating, all
-// other parameters provided to [Simulator.ListReplayResults[] must
-// match the call that provided the page token.
-func (c *OrganizationsLocationsReplaysResultsListCall) PageToken(pageToken string) *OrganizationsLocationsReplaysResultsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+// - name: The name of the operation resource.
+func (r *OrganizationsLocationsReplaysOperationsService) Get(name string) *OrganizationsLocationsReplaysOperationsGetCall {
+	c := &OrganizationsLocationsReplaysOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OrganizationsLocationsReplaysResultsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsReplaysResultsListCall {
+func (c *OrganizationsLocationsReplaysOperationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsReplaysOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2947,7 +2303,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Fields(s ...googleapi.Fie
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsReplaysResultsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsReplaysResultsListCall {
+func (c *OrganizationsLocationsReplaysOperationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsReplaysOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2955,21 +2311,21 @@ func (c *OrganizationsLocationsReplaysResultsListCall) IfNoneMatch(entityTag str
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OrganizationsLocationsReplaysResultsListCall) Context(ctx context.Context) *OrganizationsLocationsReplaysResultsListCall {
+func (c *OrganizationsLocationsReplaysOperationsGetCall) Context(ctx context.Context) *OrganizationsLocationsReplaysOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OrganizationsLocationsReplaysResultsListCall) Header() http.Header {
+func (c *OrganizationsLocationsReplaysOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OrganizationsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsLocationsReplaysOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -2982,7 +2338,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) doRequest(alt string) (*h
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/results")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2990,41 +2346,38 @@ func (c *OrganizationsLocationsReplaysResultsListCall) doRequest(alt string) (*h
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "policysimulator.organizations.locations.replays.results.list" call.
-// Exactly one of
-// *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse, error) {
+// Do executes the "policysimulator.organizations.locations.replays.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsReplaysOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3036,36 +2389,218 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the results of running a Replay.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}/results",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "policysimulator.organizations.locations.replays.results.list",
+	//   "id": "policysimulator.organizations.locations.replays.operations.get",
 	//   "parameterOrder": [
-	//     "parent"
+	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/replays/[^/]+/operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "policysimulator.organizations.locations.replays.operations.list":
+
+type OrganizationsLocationsReplaysOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
+//
+// - name: The name of the operation's parent resource.
+func (r *OrganizationsLocationsReplaysOperationsService) List(name string) *OrganizationsLocationsReplaysOperationsListCall {
+	c := &OrganizationsLocationsReplaysOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *OrganizationsLocationsReplaysOperationsListCall) Filter(filter string) *OrganizationsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *OrganizationsLocationsReplaysOperationsListCall) PageSize(pageSize int64) *OrganizationsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *OrganizationsLocationsReplaysOperationsListCall) PageToken(pageToken string) *OrganizationsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsReplaysOperationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsReplaysOperationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsReplaysOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsReplaysOperationsListCall) Context(ctx context.Context) *OrganizationsLocationsReplaysOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsReplaysOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsReplaysOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.organizations.locations.replays.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsReplaysOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "policysimulator.organizations.locations.replays.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/replays/[^/]+/operations$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of ReplayResult objects to return. Defaults to 5000. The maximum value is 5000; values above 5000 are rounded down to 5000.",
+	//       "description": "The standard list page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous Simulator.ListReplayResults call. Provide this token to retrieve the next page of results. When paginating, all other parameters provided to [Simulator.ListReplayResults[] must match the call that provided the page token.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Replay whose results are listed, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}` Example: `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/replays/[^/]+$",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/{+parent}/results",
+	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse"
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3077,7 +2612,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Do(opts ...googleapi.Call
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsReplaysResultsListCall) Pages(ctx context.Context, f func(*GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse) error) error {
+func (c *OrganizationsLocationsReplaysOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -3095,153 +2630,9 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Pages(ctx context.Context
 	}
 }
 
-// method id "policysimulator.projects.locations.replays.create":
+// method id "policysimulator.projects.locations.orgPolicyViolationsPreviews.operations.get":
 
-type ProjectsLocationsReplaysCreateCall struct {
-	s                                       *Service
-	parent                                  string
-	googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
-}
-
-// Create: Creates and starts a Replay using the given ReplayConfig.
-//
-//   - parent: The parent resource where this Replay will be created. This
-//     resource must be a project, folder, or organization with a
-//     location. Example: `projects/my-example-project/locations/global`.
-func (r *ProjectsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *ProjectsLocationsReplaysCreateCall {
-	c := &ProjectsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudpolicysimulatorv1beta1replay = googlecloudpolicysimulatorv1beta1replay
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsReplaysCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsReplaysCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsReplaysCreateCall) Context(ctx context.Context) *ProjectsLocationsReplaysCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsReplaysCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpolicysimulatorv1beta1replay)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/replays")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "policysimulator.projects.locations.replays.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates and starts a Replay using the given ReplayConfig.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays",
-	//   "httpMethod": "POST",
-	//   "id": "policysimulator.projects.locations.replays.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this Replay will be created. This resource must be a project, folder, or organization with a location. Example: `projects/my-example-project/locations/global`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/replays",
-	//   "request": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1Replay"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "policysimulator.projects.locations.replays.get":
-
-type ProjectsLocationsReplaysGetCall struct {
+type ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -3250,17 +2641,13 @@ type ProjectsLocationsReplaysGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified Replay. Each `Replay` is available for at
-// least 7 days.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 //
-//   - name: The name of the Replay to retrieve, in the following format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}`, where `{resource-id}` is the ID of the project,
-//     folder, or organization that owns the `Replay`. Example:
-//     `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
-//     4d7d-8e03-479ce1833c36`.
-func (r *ProjectsLocationsReplaysService) Get(name string) *ProjectsLocationsReplaysGetCall {
-	c := &ProjectsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsService) Get(name string) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
+	c := &ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -3268,7 +2655,7 @@ func (r *ProjectsLocationsReplaysService) Get(name string) *ProjectsLocationsRep
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsReplaysGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsReplaysGetCall {
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3278,7 +2665,7 @@ func (c *ProjectsLocationsReplaysGetCall) Fields(s ...googleapi.Field) *Projects
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsReplaysGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsReplaysGetCall {
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3286,21 +2673,21 @@ func (c *ProjectsLocationsReplaysGetCall) IfNoneMatch(entityTag string) *Project
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsReplaysGetCall) Context(ctx context.Context) *ProjectsLocationsReplaysGetCall {
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsReplaysGetCall) Header() http.Header {
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3326,34 +2713,33 @@ func (c *ProjectsLocationsReplaysGetCall) doRequest(alt string) (*http.Response,
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "policysimulator.projects.locations.replays.get" call.
-// Exactly one of *GoogleCloudPolicysimulatorV1beta1Replay or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPolicysimulatorV1beta1Replay.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
+// Do executes the "policysimulator.projects.locations.orgPolicyViolationsPreviews.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicysimulatorV1beta1Replay, error) {
+func (c *ProjectsLocationsOrgPolicyViolationsPreviewsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPolicysimulatorV1beta1Replay{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3365,25 +2751,25 @@ func (c *ProjectsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified Replay. Each `Replay` is available for at least 7 days.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/orgPolicyViolationsPreviews/{orgPolicyViolationsPreviewsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "policysimulator.projects.locations.replays.get",
+	//   "id": "policysimulator.projects.locations.orgPolicyViolationsPreviews.operations.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Replay to retrieve, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}`, where `{resource-id}` is the ID of the project, folder, or organization that owns the `Replay`. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
+	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/replays/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/orgPolicyViolationsPreviews/[^/]+/operations/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1Replay"
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3392,53 +2778,32 @@ func (c *ProjectsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goo
 
 }
 
-// method id "policysimulator.projects.locations.replays.results.list":
+// method id "policysimulator.projects.locations.replays.operations.get":
 
-type ProjectsLocationsReplaysResultsListCall struct {
+type ProjectsLocationsReplaysOperationsGetCall struct {
 	s            *Service
-	parent       string
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
-// List: Lists the results of running a Replay.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 //
-//   - parent: The Replay whose results are listed, in the following
-//     format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}` Example:
-//     `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
-//     3-479ce1833c36`.
-func (r *ProjectsLocationsReplaysResultsService) List(parent string) *ProjectsLocationsReplaysResultsListCall {
-	c := &ProjectsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ReplayResult objects to return. Defaults to 5000. The maximum
-// value is 5000; values above 5000 are rounded down to 5000.
-func (c *ProjectsLocationsReplaysResultsListCall) PageSize(pageSize int64) *ProjectsLocationsReplaysResultsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous Simulator.ListReplayResults call. Provide
-// this token to retrieve the next page of results. When paginating, all
-// other parameters provided to [Simulator.ListReplayResults[] must
-// match the call that provided the page token.
-func (c *ProjectsLocationsReplaysResultsListCall) PageToken(pageToken string) *ProjectsLocationsReplaysResultsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsReplaysOperationsService) Get(name string) *ProjectsLocationsReplaysOperationsGetCall {
+	c := &ProjectsLocationsReplaysOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsReplaysResultsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsReplaysResultsListCall {
+func (c *ProjectsLocationsReplaysOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsReplaysOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3448,7 +2813,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) Fields(s ...googleapi.Field) *
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsReplaysResultsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsReplaysResultsListCall {
+func (c *ProjectsLocationsReplaysOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsReplaysOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3456,21 +2821,21 @@ func (c *ProjectsLocationsReplaysResultsListCall) IfNoneMatch(entityTag string) 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsReplaysResultsListCall) Context(ctx context.Context) *ProjectsLocationsReplaysResultsListCall {
+func (c *ProjectsLocationsReplaysOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsReplaysOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsReplaysResultsListCall) Header() http.Header {
+func (c *ProjectsLocationsReplaysOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsReplaysOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3483,7 +2848,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) doRequest(alt string) (*http.R
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/results")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -3491,41 +2856,38 @@ func (c *ProjectsLocationsReplaysResultsListCall) doRequest(alt string) (*http.R
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "policysimulator.projects.locations.replays.results.list" call.
-// Exactly one of
-// *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse, error) {
+// Do executes the "policysimulator.projects.locations.replays.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReplaysOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3537,36 +2899,218 @@ func (c *ProjectsLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the results of running a Replay.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}/results",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "policysimulator.projects.locations.replays.results.list",
+	//   "id": "policysimulator.projects.locations.replays.operations.get",
 	//   "parameterOrder": [
-	//     "parent"
+	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/replays/[^/]+/operations/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "policysimulator.projects.locations.replays.operations.list":
+
+type ProjectsLocationsReplaysOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsReplaysOperationsService) List(name string) *ProjectsLocationsReplaysOperationsListCall {
+	c := &ProjectsLocationsReplaysOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsReplaysOperationsListCall) Filter(filter string) *ProjectsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsReplaysOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsReplaysOperationsListCall) PageToken(pageToken string) *ProjectsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsReplaysOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsReplaysOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsReplaysOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsReplaysOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsReplaysOperationsListCall) Context(ctx context.Context) *ProjectsLocationsReplaysOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsReplaysOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReplaysOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.projects.locations.replays.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReplaysOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "policysimulator.projects.locations.replays.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/replays/[^/]+/operations$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of ReplayResult objects to return. Defaults to 5000. The maximum value is 5000; values above 5000 are rounded down to 5000.",
+	//       "description": "The standard list page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous Simulator.ListReplayResults call. Provide this token to retrieve the next page of results. When paginating, all other parameters provided to [Simulator.ListReplayResults[] must match the call that provided the page token.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Replay whose results are listed, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}` Example: `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/replays/[^/]+$",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/{+parent}/results",
+	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse"
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3578,7 +3122,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOptio
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsReplaysResultsListCall) Pages(ctx context.Context, f func(*GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse) error) error {
+func (c *ProjectsLocationsReplaysOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

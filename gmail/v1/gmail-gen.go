@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package gmail provides access to the Gmail API.
 //
 // For product documentation, see: https://developers.google.com/gmail/api/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	gmailService, err := gmail.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	gmailService, err := gmail.NewService(ctx, option.WithScopes(gmail.GmailSettingsSharingScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	gmailService, err := gmail.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	gmailService, err := gmail.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package gmail // import "google.golang.org/api/gmail/v1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "gmail:v1"
 const apiName = "gmail"
@@ -271,6 +286,7 @@ type UsersMessagesAttachmentsService struct {
 
 func NewUsersSettingsService(s *Service) *UsersSettingsService {
 	rs := &UsersSettingsService{s: s}
+	rs.Cse = NewUsersSettingsCseService(s)
 	rs.Delegates = NewUsersSettingsDelegatesService(s)
 	rs.Filters = NewUsersSettingsFiltersService(s)
 	rs.ForwardingAddresses = NewUsersSettingsForwardingAddressesService(s)
@@ -281,6 +297,8 @@ func NewUsersSettingsService(s *Service) *UsersSettingsService {
 type UsersSettingsService struct {
 	s *Service
 
+	Cse *UsersSettingsCseService
+
 	Delegates *UsersSettingsDelegatesService
 
 	Filters *UsersSettingsFiltersService
@@ -288,6 +306,39 @@ type UsersSettingsService struct {
 	ForwardingAddresses *UsersSettingsForwardingAddressesService
 
 	SendAs *UsersSettingsSendAsService
+}
+
+func NewUsersSettingsCseService(s *Service) *UsersSettingsCseService {
+	rs := &UsersSettingsCseService{s: s}
+	rs.Identities = NewUsersSettingsCseIdentitiesService(s)
+	rs.Keypairs = NewUsersSettingsCseKeypairsService(s)
+	return rs
+}
+
+type UsersSettingsCseService struct {
+	s *Service
+
+	Identities *UsersSettingsCseIdentitiesService
+
+	Keypairs *UsersSettingsCseKeypairsService
+}
+
+func NewUsersSettingsCseIdentitiesService(s *Service) *UsersSettingsCseIdentitiesService {
+	rs := &UsersSettingsCseIdentitiesService{s: s}
+	return rs
+}
+
+type UsersSettingsCseIdentitiesService struct {
+	s *Service
+}
+
+func NewUsersSettingsCseKeypairsService(s *Service) *UsersSettingsCseKeypairsService {
+	rs := &UsersSettingsCseKeypairsService{s: s}
+	return rs
+}
+
+type UsersSettingsCseKeypairsService struct {
+	s *Service
 }
 
 func NewUsersSettingsDelegatesService(s *Service) *UsersSettingsDelegatesService {
@@ -457,6 +508,155 @@ func (s *BatchModifyMessagesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CseIdentity: The client-side encryption (CSE) configuration for the
+// email address of an authenticated user. Gmail uses CSE configurations
+// to save drafts of client-side encrypted email messages, and to sign
+// and send encrypted email messages.
+type CseIdentity struct {
+	// EmailAddress: The email address for the sending identity. The email
+	// address must be the primary email address of the authenticated user.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// PrimaryKeyPairId: If a key pair is associated, the ID of the key
+	// pair, CseKeyPair.
+	PrimaryKeyPairId string `json:"primaryKeyPairId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EmailAddress") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CseIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod CseIdentity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CseKeyPair: A client-side encryption S/MIME key pair, which is
+// comprised of a public key, its certificate chain, and metadata for
+// its paired private key. Gmail uses the key pair to complete the
+// following tasks: - Sign outgoing client-side encrypted messages. -
+// Save and reopen drafts of client-side encrypted messages. - Save and
+// reopen sent messages. - Decrypt incoming or archived S/MIME messages.
+type CseKeyPair struct {
+	// DisableTime: Output only. If a key pair is set to `DISABLED`, the
+	// time that the key pair's state changed from `ENABLED` to `DISABLED`.
+	// This field is present only when the key pair is in state `DISABLED`.
+	DisableTime string `json:"disableTime,omitempty"`
+
+	// EnablementState: Output only. The current state of the key pair.
+	//
+	// Possible values:
+	//   "stateUnspecified" - The current state of the key pair is not set.
+	// The key pair is neither turned on nor turned off.
+	//   "enabled" - The key pair is turned on. For any email messages that
+	// this key pair encrypts, Gmail decrypts the messages and signs any
+	// outgoing mail with the private key. To turn on a key pair, use the
+	// EnableCseKeyPair method.
+	//   "disabled" - The key pair is turned off. Authenticated users cannot
+	// decrypt email messages nor sign outgoing messages. If a key pair is
+	// turned off for more than 30 days, you can permanently delete it. To
+	// turn off a key pair, use the DisableCseKeyPair method.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// KeyPairId: Output only. The immutable ID for the client-side
+	// encryption S/MIME key pair.
+	KeyPairId string `json:"keyPairId,omitempty"`
+
+	// Pem: Output only. The public key and its certificate chain, in PEM
+	// (https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format.
+	Pem string `json:"pem,omitempty"`
+
+	// Pkcs7: Input only. The public key and its certificate chain. The
+	// chain must be in PKCS#7 (https://en.wikipedia.org/wiki/PKCS_7) format
+	// and use PEM encoding and ASCII armor.
+	Pkcs7 string `json:"pkcs7,omitempty"`
+
+	// PrivateKeyMetadata: Metadata for instances of this key pair's private
+	// key.
+	PrivateKeyMetadata []*CsePrivateKeyMetadata `json:"privateKeyMetadata,omitempty"`
+
+	// SubjectEmailAddresses: Output only. The email address identities that
+	// are specified on the leaf certificate.
+	SubjectEmailAddresses []string `json:"subjectEmailAddresses,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisableTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisableTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CseKeyPair) MarshalJSON() ([]byte, error) {
+	type NoMethod CseKeyPair
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CsePrivateKeyMetadata: Metadata for a private key instance.
+type CsePrivateKeyMetadata struct {
+	// KaclsKeyMetadata: Metadata for a private key instance managed by an
+	// external key access control list service.
+	KaclsKeyMetadata *KaclsKeyMetadata `json:"kaclsKeyMetadata,omitempty"`
+
+	// PrivateKeyMetadataId: Output only. The immutable ID for the private
+	// key metadata instance.
+	PrivateKeyMetadataId string `json:"privateKeyMetadataId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KaclsKeyMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KaclsKeyMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CsePrivateKeyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CsePrivateKeyMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Delegate: Settings for a delegate. Delegates can read, send, and
 // delete messages, as well as view and add contacts, for the
 // delegator's account. See "Set up mail delegation" for more
@@ -506,6 +706,11 @@ func (s *Delegate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DisableCseKeyPairRequest: Requests to turn off a client-side
+// encryption key pair.
+type DisableCseKeyPairRequest struct {
+}
+
 // Draft: A draft email in the user's mailbox.
 type Draft struct {
 	// Id: The immutable ID of the draft.
@@ -539,6 +744,11 @@ func (s *Draft) MarshalJSON() ([]byte, error) {
 	type NoMethod Draft
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnableCseKeyPairRequest: Requests to turn on a client-side encryption
+// key pair.
+type EnableCseKeyPairRequest struct {
 }
 
 // Filter: Resource definition for Gmail filters. Filters apply to
@@ -938,6 +1148,42 @@ func (s *ImapSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KaclsKeyMetadata: Metadata for private keys managed by an external
+// key access control list service. For details about managing key
+// access, see Google Workspace CSE API Reference
+// (https://developers.google.com/workspace/cse/reference).
+type KaclsKeyMetadata struct {
+	// KaclsData: Opaque data generated and used by the key access control
+	// list service. Maximum size: 8 KiB.
+	KaclsData string `json:"kaclsData,omitempty"`
+
+	// KaclsUri: The URI of the key access control list service that manages
+	// the private key.
+	KaclsUri string `json:"kaclsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KaclsData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KaclsData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KaclsKeyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod KaclsKeyMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Label: Labels are used to categorize messages and threads within the
 // user's mailbox. The maximum number of labels supported for a user's
 // mailbox is 10,000.
@@ -1129,6 +1375,81 @@ type LanguageSettings struct {
 
 func (s *LanguageSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListCseIdentitiesResponse struct {
+	// CseIdentities: One page of the list of CSE identities configured for
+	// the user.
+	CseIdentities []*CseIdentity `json:"cseIdentities,omitempty"`
+
+	// NextPageToken: Pagination token to be passed to a subsequent
+	// ListCseIdentities call in order to retrieve the next page of
+	// identities. If this value is not returned or is the empty string,
+	// then no further pages remain.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CseIdentities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CseIdentities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCseIdentitiesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCseIdentitiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListCseKeyPairsResponse struct {
+	// CseKeyPairs: One page of the list of CSE key pairs installed for the
+	// user.
+	CseKeyPairs []*CseKeyPair `json:"cseKeyPairs,omitempty"`
+
+	// NextPageToken: Pagination token to be passed to a subsequent
+	// ListCseKeyPairs call in order to retrieve the next page of key pairs.
+	// If this value is not returned, then no further pages remain.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CseKeyPairs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CseKeyPairs") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCseKeyPairsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCseKeyPairsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1753,6 +2074,10 @@ func (s *ModifyThreadRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ObliterateCseKeyPairRequest: Request to obliterate a CSE key pair.
+type ObliterateCseKeyPairRequest struct {
+}
+
 // PopSettings: POP settings for an account.
 type PopSettings struct {
 	// AccessWindow: The range of messages which are accessible via POP.
@@ -2130,7 +2455,7 @@ type VacationSettings struct {
 
 	// RestrictToDomain: Flag that determines whether responses are sent to
 	// recipients who are outside of the user's domain. This feature is only
-	// available for G Suite users.
+	// available for Google Workspace users.
 	RestrictToDomain bool `json:"restrictToDomain,omitempty"`
 
 	// StartTime: An optional start time for sending auto-replies (epoch
@@ -2170,7 +2495,9 @@ func (s *VacationSettings) MarshalJSON() ([]byte, error) {
 // WatchRequest: Set up or update a new push notification watch on this
 // user's mailbox.
 type WatchRequest struct {
-	// LabelFilterAction: Filtering behavior of labelIds list specified.
+	// LabelFilterAction: Filtering behavior of `labelIds list` specified.
+	// This field is deprecated because it caused incorrect behavior in some
+	// cases; use `label_filter_behavior` instead.
 	//
 	// Possible values:
 	//   "include" - Only get push notifications for message changes
@@ -2178,6 +2505,17 @@ type WatchRequest struct {
 	//   "exclude" - Get push notifications for all message changes except
 	// those relating to labelIds specified.
 	LabelFilterAction string `json:"labelFilterAction,omitempty"`
+
+	// LabelFilterBehavior: Filtering behavior of `labelIds list` specified.
+	// This field replaces `label_filter_action`; if set,
+	// `label_filter_action` is ignored.
+	//
+	// Possible values:
+	//   "include" - Only get push notifications for message changes
+	// relating to labelIds specified.
+	//   "exclude" - Get push notifications for all message changes except
+	// those relating to labelIds specified.
+	LabelFilterBehavior string `json:"labelFilterBehavior,omitempty"`
 
 	// LabelIds: List of label_ids to restrict notifications about. By
 	// default, if unspecified, all changes are pushed out. If specified
@@ -2352,17 +2690,17 @@ func (c *UsersGetProfileCall) Do(opts ...googleapi.CallOption) (*Profile, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Profile{
 		ServerResponse: googleapi.ServerResponse{
@@ -2484,7 +2822,7 @@ func (c *UsersStopCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -2605,17 +2943,17 @@ func (c *UsersWatchCall) Do(opts ...googleapi.CallOption) (*WatchResponse, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WatchResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2802,17 +3140,17 @@ func (c *UsersDraftsCreateCall) Do(opts ...googleapi.CallOption) (*Draft, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -2828,7 +3166,7 @@ func (c *UsersDraftsCreateCall) Do(opts ...googleapi.CallOption) (*Draft, error)
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Draft{
@@ -2975,7 +3313,7 @@ func (c *UsersDraftsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -3142,17 +3480,17 @@ func (c *UsersDraftsGetCall) Do(opts ...googleapi.CallOption) (*Draft, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Draft{
 		ServerResponse: googleapi.ServerResponse{
@@ -3348,17 +3686,17 @@ func (c *UsersDraftsListCall) Do(opts ...googleapi.CallOption) (*ListDraftsRespo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDraftsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3587,17 +3925,17 @@ func (c *UsersDraftsSendCall) Do(opts ...googleapi.CallOption) (*Message, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -3613,7 +3951,7 @@ func (c *UsersDraftsSendCall) Do(opts ...googleapi.CallOption) (*Message, error)
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Message{
@@ -3822,17 +4160,17 @@ func (c *UsersDraftsUpdateCall) Do(opts ...googleapi.CallOption) (*Draft, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -3848,7 +4186,7 @@ func (c *UsersDraftsUpdateCall) Do(opts ...googleapi.CallOption) (*Draft, error)
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Draft{
@@ -4071,17 +4409,17 @@ func (c *UsersHistoryListCall) Do(opts ...googleapi.CallOption) (*ListHistoryRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListHistoryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4276,17 +4614,17 @@ func (c *UsersLabelsCreateCall) Do(opts ...googleapi.CallOption) (*Label, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Label{
 		ServerResponse: googleapi.ServerResponse{
@@ -4414,7 +4752,7 @@ func (c *UsersLabelsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -4551,17 +4889,17 @@ func (c *UsersLabelsGetCall) Do(opts ...googleapi.CallOption) (*Label, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Label{
 		ServerResponse: googleapi.ServerResponse{
@@ -4709,17 +5047,17 @@ func (c *UsersLabelsListCall) Do(opts ...googleapi.CallOption) (*ListLabelsRespo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLabelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4857,17 +5195,17 @@ func (c *UsersLabelsPatchCall) Do(opts ...googleapi.CallOption) (*Label, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Label{
 		ServerResponse: googleapi.ServerResponse{
@@ -5013,17 +5351,17 @@ func (c *UsersLabelsUpdateCall) Do(opts ...googleapi.CallOption) (*Label, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Label{
 		ServerResponse: googleapi.ServerResponse{
@@ -5162,7 +5500,7 @@ func (c *UsersMessagesBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5277,7 +5615,7 @@ func (c *UsersMessagesBatchModifyCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5391,7 +5729,7 @@ func (c *UsersMessagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -5565,17 +5903,17 @@ func (c *UsersMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Message{
 		ServerResponse: googleapi.ServerResponse{
@@ -5669,9 +6007,7 @@ type UsersMessagesImportCall struct {
 // standard email delivery scanning and classification similar to
 // receiving via SMTP. This method doesn't perform SPF checks, so it
 // might not work for some spam messages, such as those attempting to
-// perform domain spoofing. This method does not send a message. Note:
-// This function doesn't trigger forwarding rules or filters set up by
-// the user.
+// perform domain spoofing. This method does not send a message.
 //
 //   - userId: The user's email address. The special value `me` can be
 //     used to indicate the authenticated user.
@@ -5684,7 +6020,7 @@ func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMes
 
 // Deleted sets the optional parameter "deleted": Mark the email as
 // permanently deleted (not TRASH) and only visible in Google Vault to a
-// Vault administrator. Only used for G Suite accounts.
+// Vault administrator. Only used for Google Workspace accounts.
 func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall {
 	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
 	return c
@@ -5840,17 +6176,17 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -5866,7 +6202,7 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Message{
@@ -5881,7 +6217,7 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. This method doesn't perform SPF checks, so it might not work for some spam messages, such as those attempting to perform domain spoofing. This method does not send a message. Note: This function doesn't trigger forwarding rules or filters set up by the user.",
+	//   "description": "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. This method doesn't perform SPF checks, so it might not work for some spam messages, such as those attempting to perform domain spoofing. This method does not send a message.",
 	//   "flatPath": "gmail/v1/users/{userId}/messages/import",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.messages.import",
@@ -5907,7 +6243,7 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//   "parameters": {
 	//     "deleted": {
 	//       "default": "false",
-	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
+	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for Google Workspace accounts.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5989,7 +6325,7 @@ func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMes
 
 // Deleted sets the optional parameter "deleted": Mark the email as
 // permanently deleted (not TRASH) and only visible in Google Vault to a
-// Vault administrator. Only used for G Suite accounts.
+// Vault administrator. Only used for Google Workspace accounts.
 func (c *UsersMessagesInsertCall) Deleted(deleted bool) *UsersMessagesInsertCall {
 	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
 	return c
@@ -6129,17 +6465,17 @@ func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -6155,7 +6491,7 @@ func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, er
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Message{
@@ -6196,7 +6532,7 @@ func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//   "parameters": {
 	//     "deleted": {
 	//       "default": "false",
-	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
+	//       "description": "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for Google Workspace accounts.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6268,7 +6604,10 @@ func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMe
 }
 
 // LabelIds sets the optional parameter "labelIds": Only return messages
-// with labels that match all of the specified label IDs.
+// with labels that match all of the specified label IDs. Messages in a
+// thread might have labels that other messages in the same thread don't
+// have. To learn more, see Manage labels on messages and threads
+// (https://developers.google.com/gmail/api/guides/labels#manage_labels_on_messages_threads).
 func (c *UsersMessagesListCall) LabelIds(labelIds ...string) *UsersMessagesListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
@@ -6374,17 +6713,17 @@ func (c *UsersMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessagesR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListMessagesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6413,7 +6752,7 @@ func (c *UsersMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessagesR
 	//       "type": "boolean"
 	//     },
 	//     "labelIds": {
-	//       "description": "Only return messages with labels that match all of the specified label IDs.",
+	//       "description": "Only return messages with labels that match all of the specified label IDs. Messages in a thread might have labels that other messages in the same thread don't have. To learn more, see [Manage labels on messages and threads](https://developers.google.com/gmail/api/guides/labels#manage_labels_on_messages_threads).",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6571,17 +6910,17 @@ func (c *UsersMessagesModifyCall) Do(opts ...googleapi.CallOption) (*Message, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Message{
 		ServerResponse: googleapi.ServerResponse{
@@ -6646,7 +6985,8 @@ type UsersMessagesSendCall struct {
 }
 
 // Send: Sends the specified message to the recipients in the `To`,
-// `Cc`, and `Bcc` headers.
+// `Cc`, and `Bcc` headers. For example usage, see Sending email
+// (https://developers.google.com/gmail/api/guides/sending).
 //
 //   - userId: The user's email address. The special value `me` can be
 //     used to indicate the authenticated user.
@@ -6774,17 +7114,17 @@ func (c *UsersMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -6800,7 +7140,7 @@ func (c *UsersMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, erro
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Message{
@@ -6815,7 +7155,7 @@ func (c *UsersMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers.",
+	//   "description": "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers. For example usage, see [Sending email](https://developers.google.com/gmail/api/guides/sending).",
 	//   "flatPath": "gmail/v1/users/{userId}/messages/send",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.messages.send",
@@ -6952,17 +7292,17 @@ func (c *UsersMessagesTrashCall) Do(opts ...googleapi.CallOption) (*Message, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Message{
 		ServerResponse: googleapi.ServerResponse{
@@ -7097,17 +7437,17 @@ func (c *UsersMessagesUntrashCall) Do(opts ...googleapi.CallOption) (*Message, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Message{
 		ServerResponse: googleapi.ServerResponse{
@@ -7260,17 +7600,17 @@ func (c *UsersMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*Mes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &MessagePartBody{
 		ServerResponse: googleapi.ServerResponse{
@@ -7426,17 +7766,17 @@ func (c *UsersSettingsGetAutoForwardingCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AutoForwarding{
 		ServerResponse: googleapi.ServerResponse{
@@ -7576,17 +7916,17 @@ func (c *UsersSettingsGetImapCall) Do(opts ...googleapi.CallOption) (*ImapSettin
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ImapSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -7726,17 +8066,17 @@ func (c *UsersSettingsGetLanguageCall) Do(opts ...googleapi.CallOption) (*Langua
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LanguageSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -7876,17 +8216,17 @@ func (c *UsersSettingsGetPopCall) Do(opts ...googleapi.CallOption) (*PopSettings
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PopSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8026,17 +8366,17 @@ func (c *UsersSettingsGetVacationCall) Do(opts ...googleapi.CallOption) (*Vacati
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VacationSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8173,17 +8513,17 @@ func (c *UsersSettingsUpdateAutoForwardingCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AutoForwarding{
 		ServerResponse: googleapi.ServerResponse{
@@ -8316,17 +8656,17 @@ func (c *UsersSettingsUpdateImapCall) Do(opts ...googleapi.CallOption) (*ImapSet
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ImapSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8464,17 +8804,17 @@ func (c *UsersSettingsUpdateLanguageCall) Do(opts ...googleapi.CallOption) (*Lan
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LanguageSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8607,17 +8947,17 @@ func (c *UsersSettingsUpdatePopCall) Do(opts ...googleapi.CallOption) (*PopSetti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PopSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8750,17 +9090,17 @@ func (c *UsersSettingsUpdateVacationCall) Do(opts ...googleapi.CallOption) (*Vac
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VacationSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -8804,6 +9144,1758 @@ func (c *UsersSettingsUpdateVacationCall) Do(opts ...googleapi.CallOption) (*Vac
 
 }
 
+// method id "gmail.users.settings.cse.identities.create":
+
+type UsersSettingsCseIdentitiesCreateCall struct {
+	s           *Service
+	userId      string
+	cseidentity *CseIdentity
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates and configures a client-side encryption identity
+// that's authorized to send mail from the user account. Google
+// publishes the S/MIME certificate to a shared domain-wide directory so
+// that people within a Google Workspace organization can encrypt and
+// send mail to the identity.
+//
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseIdentitiesService) Create(userId string, cseidentity *CseIdentity) *UsersSettingsCseIdentitiesCreateCall {
+	c := &UsersSettingsCseIdentitiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.cseidentity = cseidentity
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseIdentitiesCreateCall) Fields(s ...googleapi.Field) *UsersSettingsCseIdentitiesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseIdentitiesCreateCall) Context(ctx context.Context) *UsersSettingsCseIdentitiesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseIdentitiesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseIdentitiesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cseidentity)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/identities")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.identities.create" call.
+// Exactly one of *CseIdentity or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseIdentity.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseIdentitiesCreateCall) Do(opts ...googleapi.CallOption) (*CseIdentity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseIdentity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates and configures a client-side encryption identity that's authorized to send mail from the user account. Google publishes the S/MIME certificate to a shared domain-wide directory so that people within a Google Workspace organization can encrypt and send mail to the identity.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.cse.identities.create",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/identities",
+	//   "request": {
+	//     "$ref": "CseIdentity"
+	//   },
+	//   "response": {
+	//     "$ref": "CseIdentity"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.identities.delete":
+
+type UsersSettingsCseIdentitiesDeleteCall struct {
+	s               *Service
+	userId          string
+	cseEmailAddress string
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Delete: Deletes a client-side encryption identity. The authenticated
+// user can no longer use the identity to send encrypted messages. You
+// cannot restore the identity after you delete it. Instead, use the
+// CreateCseIdentity method to create another identity with the same
+// configuration.
+//
+//   - cseEmailAddress: The primary email address associated with the
+//     client-side encryption identity configuration that's removed.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseIdentitiesService) Delete(userId string, cseEmailAddress string) *UsersSettingsCseIdentitiesDeleteCall {
+	c := &UsersSettingsCseIdentitiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.cseEmailAddress = cseEmailAddress
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseIdentitiesDeleteCall) Fields(s ...googleapi.Field) *UsersSettingsCseIdentitiesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseIdentitiesDeleteCall) Context(ctx context.Context) *UsersSettingsCseIdentitiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseIdentitiesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseIdentitiesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":          c.userId,
+		"cseEmailAddress": c.cseEmailAddress,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.identities.delete" call.
+func (c *UsersSettingsCseIdentitiesDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Deletes a client-side encryption identity. The authenticated user can no longer use the identity to send encrypted messages. You cannot restore the identity after you delete it. Instead, use the CreateCseIdentity method to create another identity with the same configuration.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
+	//   "httpMethod": "DELETE",
+	//   "id": "gmail.users.settings.cse.identities.delete",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "cseEmailAddress"
+	//   ],
+	//   "parameters": {
+	//     "cseEmailAddress": {
+	//       "description": "The primary email address associated with the client-side encryption identity configuration that's removed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.identities.get":
+
+type UsersSettingsCseIdentitiesGetCall struct {
+	s               *Service
+	userId          string
+	cseEmailAddress string
+	urlParams_      gensupport.URLParams
+	ifNoneMatch_    string
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Get: Retrieves a client-side encryption identity configuration.
+//
+//   - cseEmailAddress: The primary email address associated with the
+//     client-side encryption identity configuration that's retrieved.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseIdentitiesService) Get(userId string, cseEmailAddress string) *UsersSettingsCseIdentitiesGetCall {
+	c := &UsersSettingsCseIdentitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.cseEmailAddress = cseEmailAddress
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseIdentitiesGetCall) Fields(s ...googleapi.Field) *UsersSettingsCseIdentitiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersSettingsCseIdentitiesGetCall) IfNoneMatch(entityTag string) *UsersSettingsCseIdentitiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseIdentitiesGetCall) Context(ctx context.Context) *UsersSettingsCseIdentitiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseIdentitiesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseIdentitiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":          c.userId,
+		"cseEmailAddress": c.cseEmailAddress,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.identities.get" call.
+// Exactly one of *CseIdentity or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseIdentity.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseIdentitiesGetCall) Do(opts ...googleapi.CallOption) (*CseIdentity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseIdentity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a client-side encryption identity configuration.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.settings.cse.identities.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "cseEmailAddress"
+	//   ],
+	//   "parameters": {
+	//     "cseEmailAddress": {
+	//       "description": "The primary email address associated with the client-side encryption identity configuration that's retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
+	//   "response": {
+	//     "$ref": "CseIdentity"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly",
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.identities.list":
+
+type UsersSettingsCseIdentitiesListCall struct {
+	s            *Service
+	userId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the client-side encrypted identities for an authenticated
+// user.
+//
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseIdentitiesService) List(userId string) *UsersSettingsCseIdentitiesListCall {
+	c := &UsersSettingsCseIdentitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// identities to return. If not provided, the page size will default to
+// 20 entries.
+func (c *UsersSettingsCseIdentitiesListCall) PageSize(pageSize int64) *UsersSettingsCseIdentitiesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Pagination token
+// indicating which page of identities to return. If the token is not
+// supplied, then the API will return the first page of results.
+func (c *UsersSettingsCseIdentitiesListCall) PageToken(pageToken string) *UsersSettingsCseIdentitiesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseIdentitiesListCall) Fields(s ...googleapi.Field) *UsersSettingsCseIdentitiesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersSettingsCseIdentitiesListCall) IfNoneMatch(entityTag string) *UsersSettingsCseIdentitiesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseIdentitiesListCall) Context(ctx context.Context) *UsersSettingsCseIdentitiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseIdentitiesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseIdentitiesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/identities")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.identities.list" call.
+// Exactly one of *ListCseIdentitiesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCseIdentitiesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersSettingsCseIdentitiesListCall) Do(opts ...googleapi.CallOption) (*ListCseIdentitiesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCseIdentitiesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the client-side encrypted identities for an authenticated user.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.settings.cse.identities.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "default": "20",
+	//       "description": "The number of identities to return. If not provided, the page size will default to 20 entries.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Pagination token indicating which page of identities to return. If the token is not supplied, then the API will return the first page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/identities",
+	//   "response": {
+	//     "$ref": "ListCseIdentitiesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly",
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersSettingsCseIdentitiesListCall) Pages(ctx context.Context, f func(*ListCseIdentitiesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gmail.users.settings.cse.identities.patch":
+
+type UsersSettingsCseIdentitiesPatchCall struct {
+	s            *Service
+	userId       string
+	emailAddress string
+	cseidentity  *CseIdentity
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Associates a different key pair with an existing client-side
+// encryption identity. The updated key pair must validate against
+// Google's S/MIME certificate profiles
+// (https://support.google.com/a/answer/7300887).
+//
+//   - emailAddress: The email address of the client-side encryption
+//     identity to update.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseIdentitiesService) Patch(userId string, emailAddress string, cseidentity *CseIdentity) *UsersSettingsCseIdentitiesPatchCall {
+	c := &UsersSettingsCseIdentitiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.emailAddress = emailAddress
+	c.cseidentity = cseidentity
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseIdentitiesPatchCall) Fields(s ...googleapi.Field) *UsersSettingsCseIdentitiesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseIdentitiesPatchCall) Context(ctx context.Context) *UsersSettingsCseIdentitiesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseIdentitiesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseIdentitiesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cseidentity)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":       c.userId,
+		"emailAddress": c.emailAddress,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.identities.patch" call.
+// Exactly one of *CseIdentity or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseIdentity.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseIdentitiesPatchCall) Do(opts ...googleapi.CallOption) (*CseIdentity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseIdentity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887).",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}",
+	//   "httpMethod": "PATCH",
+	//   "id": "gmail.users.settings.cse.identities.patch",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "emailAddress"
+	//   ],
+	//   "parameters": {
+	//     "emailAddress": {
+	//       "description": "The email address of the client-side encryption identity to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}",
+	//   "request": {
+	//     "$ref": "CseIdentity"
+	//   },
+	//   "response": {
+	//     "$ref": "CseIdentity"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.keypairs.create":
+
+type UsersSettingsCseKeypairsCreateCall struct {
+	s          *Service
+	userId     string
+	csekeypair *CseKeyPair
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates and uploads a client-side encryption S/MIME public
+// key certificate chain and private key metadata for the authenticated
+// user.
+//
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseKeypairsService) Create(userId string, csekeypair *CseKeyPair) *UsersSettingsCseKeypairsCreateCall {
+	c := &UsersSettingsCseKeypairsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.csekeypair = csekeypair
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseKeypairsCreateCall) Fields(s ...googleapi.Field) *UsersSettingsCseKeypairsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseKeypairsCreateCall) Context(ctx context.Context) *UsersSettingsCseKeypairsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseKeypairsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseKeypairsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.csekeypair)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/keypairs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.keypairs.create" call.
+// Exactly one of *CseKeyPair or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseKeyPair.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseKeypairsCreateCall) Do(opts ...googleapi.CallOption) (*CseKeyPair, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseKeyPair{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates and uploads a client-side encryption S/MIME public key certificate chain and private key metadata for the authenticated user.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.cse.keypairs.create",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/keypairs",
+	//   "request": {
+	//     "$ref": "CseKeyPair"
+	//   },
+	//   "response": {
+	//     "$ref": "CseKeyPair"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.keypairs.disable":
+
+type UsersSettingsCseKeypairsDisableCall struct {
+	s                        *Service
+	userId                   string
+	keyPairId                string
+	disablecsekeypairrequest *DisableCseKeyPairRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Disable: Turns off a client-side encryption key pair. The
+// authenticated user can no longer use the key pair to decrypt incoming
+// CSE message texts or sign outgoing CSE mail. To regain access, use
+// the EnableCseKeyPair to turn on the key pair. After 30 days, you can
+// permanently delete the key pair by using the ObliterateCseKeyPair
+// method.
+//
+//   - keyPairId: The identifier of the key pair to turn off.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseKeypairsService) Disable(userId string, keyPairId string, disablecsekeypairrequest *DisableCseKeyPairRequest) *UsersSettingsCseKeypairsDisableCall {
+	c := &UsersSettingsCseKeypairsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.keyPairId = keyPairId
+	c.disablecsekeypairrequest = disablecsekeypairrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseKeypairsDisableCall) Fields(s ...googleapi.Field) *UsersSettingsCseKeypairsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseKeypairsDisableCall) Context(ctx context.Context) *UsersSettingsCseKeypairsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseKeypairsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseKeypairsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disablecsekeypairrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":    c.userId,
+		"keyPairId": c.keyPairId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.keypairs.disable" call.
+// Exactly one of *CseKeyPair or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseKeyPair.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseKeypairsDisableCall) Do(opts ...googleapi.CallOption) (*CseKeyPair, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseKeyPair{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Turns off a client-side encryption key pair. The authenticated user can no longer use the key pair to decrypt incoming CSE message texts or sign outgoing CSE mail. To regain access, use the EnableCseKeyPair to turn on the key pair. After 30 days, you can permanently delete the key pair by using the ObliterateCseKeyPair method.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:disable",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.cse.keypairs.disable",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "keyPairId"
+	//   ],
+	//   "parameters": {
+	//     "keyPairId": {
+	//       "description": "The identifier of the key pair to turn off.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:disable",
+	//   "request": {
+	//     "$ref": "DisableCseKeyPairRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CseKeyPair"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.keypairs.enable":
+
+type UsersSettingsCseKeypairsEnableCall struct {
+	s                       *Service
+	userId                  string
+	keyPairId               string
+	enablecsekeypairrequest *EnableCseKeyPairRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Enable: Turns on a client-side encryption key pair that was turned
+// off. The key pair becomes active again for any associated client-side
+// encryption identities.
+//
+//   - keyPairId: The identifier of the key pair to turn on.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseKeypairsService) Enable(userId string, keyPairId string, enablecsekeypairrequest *EnableCseKeyPairRequest) *UsersSettingsCseKeypairsEnableCall {
+	c := &UsersSettingsCseKeypairsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.keyPairId = keyPairId
+	c.enablecsekeypairrequest = enablecsekeypairrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseKeypairsEnableCall) Fields(s ...googleapi.Field) *UsersSettingsCseKeypairsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseKeypairsEnableCall) Context(ctx context.Context) *UsersSettingsCseKeypairsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseKeypairsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseKeypairsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enablecsekeypairrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":    c.userId,
+		"keyPairId": c.keyPairId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.keypairs.enable" call.
+// Exactly one of *CseKeyPair or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseKeyPair.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseKeypairsEnableCall) Do(opts ...googleapi.CallOption) (*CseKeyPair, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseKeyPair{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Turns on a client-side encryption key pair that was turned off. The key pair becomes active again for any associated client-side encryption identities.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:enable",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.cse.keypairs.enable",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "keyPairId"
+	//   ],
+	//   "parameters": {
+	//     "keyPairId": {
+	//       "description": "The identifier of the key pair to turn on.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:enable",
+	//   "request": {
+	//     "$ref": "EnableCseKeyPairRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CseKeyPair"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.keypairs.get":
+
+type UsersSettingsCseKeypairsGetCall struct {
+	s            *Service
+	userId       string
+	keyPairId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an existing client-side encryption key pair.
+//
+//   - keyPairId: The identifier of the key pair to retrieve.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseKeypairsService) Get(userId string, keyPairId string) *UsersSettingsCseKeypairsGetCall {
+	c := &UsersSettingsCseKeypairsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.keyPairId = keyPairId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseKeypairsGetCall) Fields(s ...googleapi.Field) *UsersSettingsCseKeypairsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersSettingsCseKeypairsGetCall) IfNoneMatch(entityTag string) *UsersSettingsCseKeypairsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseKeypairsGetCall) Context(ctx context.Context) *UsersSettingsCseKeypairsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseKeypairsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseKeypairsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":    c.userId,
+		"keyPairId": c.keyPairId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.keypairs.get" call.
+// Exactly one of *CseKeyPair or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CseKeyPair.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersSettingsCseKeypairsGetCall) Do(opts ...googleapi.CallOption) (*CseKeyPair, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CseKeyPair{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an existing client-side encryption key pair.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.settings.cse.keypairs.get",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "keyPairId"
+	//   ],
+	//   "parameters": {
+	//     "keyPairId": {
+	//       "description": "The identifier of the key pair to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}",
+	//   "response": {
+	//     "$ref": "CseKeyPair"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly",
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// method id "gmail.users.settings.cse.keypairs.list":
+
+type UsersSettingsCseKeypairsListCall struct {
+	s            *Service
+	userId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists client-side encryption key pairs for an authenticated
+// user.
+//
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseKeypairsService) List(userId string) *UsersSettingsCseKeypairsListCall {
+	c := &UsersSettingsCseKeypairsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of key
+// pairs to return. If not provided, the page size will default to 20
+// entries.
+func (c *UsersSettingsCseKeypairsListCall) PageSize(pageSize int64) *UsersSettingsCseKeypairsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Pagination token
+// indicating which page of key pairs to return. If the token is not
+// supplied, then the API will return the first page of results.
+func (c *UsersSettingsCseKeypairsListCall) PageToken(pageToken string) *UsersSettingsCseKeypairsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseKeypairsListCall) Fields(s ...googleapi.Field) *UsersSettingsCseKeypairsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersSettingsCseKeypairsListCall) IfNoneMatch(entityTag string) *UsersSettingsCseKeypairsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseKeypairsListCall) Context(ctx context.Context) *UsersSettingsCseKeypairsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseKeypairsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseKeypairsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/keypairs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": c.userId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.keypairs.list" call.
+// Exactly one of *ListCseKeyPairsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCseKeyPairsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersSettingsCseKeypairsListCall) Do(opts ...googleapi.CallOption) (*ListCseKeyPairsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCseKeyPairsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists client-side encryption key pairs for an authenticated user.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs",
+	//   "httpMethod": "GET",
+	//   "id": "gmail.users.settings.cse.keypairs.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "default": "20",
+	//       "description": "The number of key pairs to return. If not provided, the page size will default to 20 entries.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Pagination token indicating which page of key pairs to return. If the token is not supplied, then the API will return the first page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/keypairs",
+	//   "response": {
+	//     "$ref": "ListCseKeyPairsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://mail.google.com/",
+	//     "https://www.googleapis.com/auth/gmail.modify",
+	//     "https://www.googleapis.com/auth/gmail.readonly",
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersSettingsCseKeypairsListCall) Pages(ctx context.Context, f func(*ListCseKeyPairsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gmail.users.settings.cse.keypairs.obliterate":
+
+type UsersSettingsCseKeypairsObliterateCall struct {
+	s                           *Service
+	userId                      string
+	keyPairId                   string
+	obliteratecsekeypairrequest *ObliterateCseKeyPairRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Obliterate: Deletes a client-side encryption key pair permanently and
+// immediately. You can only permanently delete key pairs that have been
+// turned off for more than 30 days. To turn off a key pair, use the
+// DisableCseKeyPair method. Gmail can't restore or decrypt any messages
+// that were encrypted by an obliterated key. Authenticated users and
+// Google Workspace administrators lose access to reading the encrypted
+// messages.
+//
+//   - keyPairId: The identifier of the key pair to obliterate.
+//   - userId: The requester's primary email address. To indicate the
+//     authenticated user, you can use the special value `me`.
+func (r *UsersSettingsCseKeypairsService) Obliterate(userId string, keyPairId string, obliteratecsekeypairrequest *ObliterateCseKeyPairRequest) *UsersSettingsCseKeypairsObliterateCall {
+	c := &UsersSettingsCseKeypairsObliterateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.keyPairId = keyPairId
+	c.obliteratecsekeypairrequest = obliteratecsekeypairrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSettingsCseKeypairsObliterateCall) Fields(s ...googleapi.Field) *UsersSettingsCseKeypairsObliterateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersSettingsCseKeypairsObliterateCall) Context(ctx context.Context) *UsersSettingsCseKeypairsObliterateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersSettingsCseKeypairsObliterateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersSettingsCseKeypairsObliterateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.obliteratecsekeypairrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:obliterate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId":    c.userId,
+		"keyPairId": c.keyPairId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gmail.users.settings.cse.keypairs.obliterate" call.
+func (c *UsersSettingsCseKeypairsObliterateCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Deletes a client-side encryption key pair permanently and immediately. You can only permanently delete key pairs that have been turned off for more than 30 days. To turn off a key pair, use the DisableCseKeyPair method. Gmail can't restore or decrypt any messages that were encrypted by an obliterated key. Authenticated users and Google Workspace administrators lose access to reading the encrypted messages.",
+	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:obliterate",
+	//   "httpMethod": "POST",
+	//   "id": "gmail.users.settings.cse.keypairs.obliterate",
+	//   "parameterOrder": [
+	//     "userId",
+	//     "keyPairId"
+	//   ],
+	//   "parameters": {
+	//     "keyPairId": {
+	//       "description": "The identifier of the key pair to obliterate.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "default": "me",
+	//       "description": "The requester's primary email address. To indicate the authenticated user, you can use the special value `me`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:obliterate",
+	//   "request": {
+	//     "$ref": "ObliterateCseKeyPairRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/gmail.settings.basic",
+	//     "https://www.googleapis.com/auth/gmail.settings.sharing"
+	//   ]
+	// }
+
+}
+
 // method id "gmail.users.settings.delegates.create":
 
 type UsersSettingsDelegatesCreateCall struct {
@@ -8817,16 +10909,16 @@ type UsersSettingsDelegatesCreateCall struct {
 
 // Create: Adds a delegate with its verification status set directly to
 // `accepted`, without sending any verification email. The delegate user
-// must be a member of the same G Suite organization as the delegator
-// user. Gmail imposes limitations on the number of delegates and
-// delegators each user in a G Suite organization can have. These limits
-// depend on your organization, but in general each user can have up to
-// 25 delegates and up to 10 delegators. Note that a delegate user must
-// be referred to by their primary email address, and not an email
-// alias. Also note that when a new delegate is created, there may be up
-// to a one minute delay before the new delegate is available for use.
-// This method is only available to service account clients that have
-// been delegated domain-wide authority.
+// must be a member of the same Google Workspace organization as the
+// delegator user. Gmail imposes limitations on the number of delegates
+// and delegators each user in a Google Workspace organization can have.
+// These limits depend on your organization, but in general each user
+// can have up to 25 delegates and up to 10 delegators. Note that a
+// delegate user must be referred to by their primary email address, and
+// not an email alias. Also note that when a new delegate is created,
+// there may be up to a one minute delay before the new delegate is
+// available for use. This method is only available to service account
+// clients that have been delegated domain-wide authority.
 //
 //   - userId: User's email address. The special value "me" can be used to
 //     indicate the authenticated user.
@@ -8904,17 +10996,17 @@ func (c *UsersSettingsDelegatesCreateCall) Do(opts ...googleapi.CallOption) (*De
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Delegate{
 		ServerResponse: googleapi.ServerResponse{
@@ -8928,7 +11020,7 @@ func (c *UsersSettingsDelegatesCreateCall) Do(opts ...googleapi.CallOption) (*De
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a delegate with its verification status set directly to `accepted`, without sending any verification email. The delegate user must be a member of the same G Suite organization as the delegator user. Gmail imposes limitations on the number of delegates and delegators each user in a G Suite organization can have. These limits depend on your organization, but in general each user can have up to 25 delegates and up to 10 delegators. Note that a delegate user must be referred to by their primary email address, and not an email alias. Also note that when a new delegate is created, there may be up to a one minute delay before the new delegate is available for use. This method is only available to service account clients that have been delegated domain-wide authority.",
+	//   "description": "Adds a delegate with its verification status set directly to `accepted`, without sending any verification email. The delegate user must be a member of the same Google Workspace organization as the delegator user. Gmail imposes limitations on the number of delegates and delegators each user in a Google Workspace organization can have. These limits depend on your organization, but in general each user can have up to 25 delegates and up to 10 delegators. Note that a delegate user must be referred to by their primary email address, and not an email alias. Also note that when a new delegate is created, there may be up to a one minute delay before the new delegate is available for use. This method is only available to service account clients that have been delegated domain-wide authority.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/delegates",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.delegates.create",
@@ -9045,7 +11137,7 @@ func (c *UsersSettingsDelegatesDeleteCall) Do(opts ...googleapi.CallOption) erro
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -9184,17 +11276,17 @@ func (c *UsersSettingsDelegatesGetCall) Do(opts ...googleapi.CallOption) (*Deleg
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Delegate{
 		ServerResponse: googleapi.ServerResponse{
@@ -9343,17 +11435,17 @@ func (c *UsersSettingsDelegatesListCall) Do(opts ...googleapi.CallOption) (*List
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDelegatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9487,17 +11579,17 @@ func (c *UsersSettingsFiltersCreateCall) Do(opts ...googleapi.CallOption) (*Filt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Filter{
 		ServerResponse: googleapi.ServerResponse{
@@ -9622,7 +11714,7 @@ func (c *UsersSettingsFiltersDeleteCall) Do(opts ...googleapi.CallOption) error 
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -9757,17 +11849,17 @@ func (c *UsersSettingsFiltersGetCall) Do(opts ...googleapi.CallOption) (*Filter,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Filter{
 		ServerResponse: googleapi.ServerResponse{
@@ -9914,17 +12006,17 @@ func (c *UsersSettingsFiltersListCall) Do(opts ...googleapi.CallOption) (*ListFi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFiltersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10062,17 +12154,17 @@ func (c *UsersSettingsForwardingAddressesCreateCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ForwardingAddress{
 		ServerResponse: googleapi.ServerResponse{
@@ -10200,7 +12292,7 @@ func (c *UsersSettingsForwardingAddressesDeleteCall) Do(opts ...googleapi.CallOp
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -10335,17 +12427,17 @@ func (c *UsersSettingsForwardingAddressesGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ForwardingAddress{
 		ServerResponse: googleapi.ServerResponse{
@@ -10492,17 +12584,17 @@ func (c *UsersSettingsForwardingAddressesListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListForwardingAddressesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10644,17 +12736,17 @@ func (c *UsersSettingsSendAsCreateCall) Do(opts ...googleapi.CallOption) (*SendA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SendAs{
 		ServerResponse: googleapi.ServerResponse{
@@ -10782,7 +12874,7 @@ func (c *UsersSettingsSendAsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -10918,17 +13010,17 @@ func (c *UsersSettingsSendAsGetCall) Do(opts ...googleapi.CallOption) (*SendAs, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SendAs{
 		ServerResponse: googleapi.ServerResponse{
@@ -11077,17 +13169,17 @@ func (c *UsersSettingsSendAsListCall) Do(opts ...googleapi.CallOption) (*ListSen
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSendAsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11224,17 +13316,17 @@ func (c *UsersSettingsSendAsPatchCall) Do(opts ...googleapi.CallOption) (*SendAs
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SendAs{
 		ServerResponse: googleapi.ServerResponse{
@@ -11383,17 +13475,17 @@ func (c *UsersSettingsSendAsUpdateCall) Do(opts ...googleapi.CallOption) (*SendA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SendAs{
 		ServerResponse: googleapi.ServerResponse{
@@ -11529,7 +13621,7 @@ func (c *UsersSettingsSendAsVerifyCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -11651,7 +13743,7 @@ func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -11800,17 +13892,17 @@ func (c *UsersSettingsSendAsSmimeInfoGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SmimeInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -11964,17 +14056,17 @@ func (c *UsersSettingsSendAsSmimeInfoInsertCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SmimeInfo{
 		ServerResponse: googleapi.ServerResponse{
@@ -12127,17 +14219,17 @@ func (c *UsersSettingsSendAsSmimeInfoListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSmimeInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12276,7 +14368,7 @@ func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Do(opts ...googleapi.CallOp
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -12402,7 +14494,7 @@ func (c *UsersThreadsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -12567,17 +14659,17 @@ func (c *UsersThreadsGetCall) Do(opts ...googleapi.CallOption) (*Thread, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Thread{
 		ServerResponse: googleapi.ServerResponse{
@@ -12788,17 +14880,17 @@ func (c *UsersThreadsListCall) Do(opts ...googleapi.CallOption) (*ListThreadsRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListThreadsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12986,17 +15078,17 @@ func (c *UsersThreadsModifyCall) Do(opts ...googleapi.CallOption) (*Thread, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Thread{
 		ServerResponse: googleapi.ServerResponse{
@@ -13135,17 +15227,17 @@ func (c *UsersThreadsTrashCall) Do(opts ...googleapi.CallOption) (*Thread, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Thread{
 		ServerResponse: googleapi.ServerResponse{
@@ -13281,17 +15373,17 @@ func (c *UsersThreadsUntrashCall) Do(opts ...googleapi.CallOption) (*Thread, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Thread{
 		ServerResponse: googleapi.ServerResponse{

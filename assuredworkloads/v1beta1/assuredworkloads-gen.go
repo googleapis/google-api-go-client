@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,7 +6,18 @@
 
 // Package assuredworkloads provides access to the Assured Workloads API.
 //
-// For product documentation, see: https://cloud.google.com
+// For product documentation, see: https://cloud.google.com/learnmoreurl
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	assuredworkloadsService, err := assuredworkloads.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package assuredworkloads // import "google.golang.org/api/assuredworkloads/v1beta1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "assuredworkloads:v1beta1"
 const apiName = "assuredworkloads"
@@ -119,7 +133,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Organizations = NewOrganizationsService(s)
-	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -129,8 +142,6 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Organizations *OrganizationsService
-
-	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -178,7 +189,6 @@ type OrganizationsLocationsOperationsService struct {
 
 func NewOrganizationsLocationsWorkloadsService(s *Service) *OrganizationsLocationsWorkloadsService {
 	rs := &OrganizationsLocationsWorkloadsService{s: s}
-	rs.Organizations = NewOrganizationsLocationsWorkloadsOrganizationsService(s)
 	rs.Violations = NewOrganizationsLocationsWorkloadsViolationsService(s)
 	return rs
 }
@@ -186,42 +196,7 @@ func NewOrganizationsLocationsWorkloadsService(s *Service) *OrganizationsLocatio
 type OrganizationsLocationsWorkloadsService struct {
 	s *Service
 
-	Organizations *OrganizationsLocationsWorkloadsOrganizationsService
-
 	Violations *OrganizationsLocationsWorkloadsViolationsService
-}
-
-func NewOrganizationsLocationsWorkloadsOrganizationsService(s *Service) *OrganizationsLocationsWorkloadsOrganizationsService {
-	rs := &OrganizationsLocationsWorkloadsOrganizationsService{s: s}
-	rs.Locations = NewOrganizationsLocationsWorkloadsOrganizationsLocationsService(s)
-	return rs
-}
-
-type OrganizationsLocationsWorkloadsOrganizationsService struct {
-	s *Service
-
-	Locations *OrganizationsLocationsWorkloadsOrganizationsLocationsService
-}
-
-func NewOrganizationsLocationsWorkloadsOrganizationsLocationsService(s *Service) *OrganizationsLocationsWorkloadsOrganizationsLocationsService {
-	rs := &OrganizationsLocationsWorkloadsOrganizationsLocationsService{s: s}
-	rs.Workloads = NewOrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService(s)
-	return rs
-}
-
-type OrganizationsLocationsWorkloadsOrganizationsLocationsService struct {
-	s *Service
-
-	Workloads *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService
-}
-
-func NewOrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService(s *Service) *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService {
-	rs := &OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService{s: s}
-	return rs
-}
-
-type OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService struct {
-	s *Service
 }
 
 func NewOrganizationsLocationsWorkloadsViolationsService(s *Service) *OrganizationsLocationsWorkloadsViolationsService {
@@ -233,66 +208,31 @@ type OrganizationsLocationsWorkloadsViolationsService struct {
 	s *Service
 }
 
-func NewProjectsService(s *Service) *ProjectsService {
-	rs := &ProjectsService{s: s}
-	rs.Organizations = NewProjectsOrganizationsService(s)
-	return rs
-}
-
-type ProjectsService struct {
-	s *Service
-
-	Organizations *ProjectsOrganizationsService
-}
-
-func NewProjectsOrganizationsService(s *Service) *ProjectsOrganizationsService {
-	rs := &ProjectsOrganizationsService{s: s}
-	rs.Locations = NewProjectsOrganizationsLocationsService(s)
-	return rs
-}
-
-type ProjectsOrganizationsService struct {
-	s *Service
-
-	Locations *ProjectsOrganizationsLocationsService
-}
-
-func NewProjectsOrganizationsLocationsService(s *Service) *ProjectsOrganizationsLocationsService {
-	rs := &ProjectsOrganizationsLocationsService{s: s}
-	rs.Workloads = NewProjectsOrganizationsLocationsWorkloadsService(s)
-	return rs
-}
-
-type ProjectsOrganizationsLocationsService struct {
-	s *Service
-
-	Workloads *ProjectsOrganizationsLocationsWorkloadsService
-}
-
-func NewProjectsOrganizationsLocationsWorkloadsService(s *Service) *ProjectsOrganizationsLocationsWorkloadsService {
-	rs := &ProjectsOrganizationsLocationsWorkloadsService{s: s}
-	return rs
-}
-
-type ProjectsOrganizationsLocationsWorkloadsService struct {
-	s *Service
-}
-
 // GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest:
-// Request for acknowledging the violation Next Id: 4
+// Request for acknowledging the violation Next Id: 5
 type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
+	// AcknowledgeType: Optional. Acknowledge type of specified violation.
+	//
+	// Possible values:
+	//   "ACKNOWLEDGE_TYPE_UNSPECIFIED" - Acknowledge type unspecified.
+	//   "SINGLE_VIOLATION" - Acknowledge only the specific violation.
+	//   "EXISTING_CHILD_RESOURCE_VIOLATIONS" - Acknowledge specified
+	// orgPolicy violation and also associated resource violations.
+	AcknowledgeType string `json:"acknowledgeType,omitempty"`
+
 	// Comment: Required. Business justification explaining the need for
 	// violation acknowledgement
 	Comment string `json:"comment,omitempty"`
 
-	// NonCompliantOrgPolicy: Optional. Name of the OrgPolicy which was
+	// NonCompliantOrgPolicy: Optional. This field is deprecated and will be
+	// removed in future version of the API. Name of the OrgPolicy which was
 	// modified with non-compliant change and resulted in this violation.
 	// Format: projects/{project_number}/policies/{constraint_name}
 	// folders/{folder_id}/policies/{constraint_name}
 	// organizations/{organization_id}/policies/{constraint_name}
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Comment") to
+	// ForceSendFields is a list of field names (e.g. "AcknowledgeType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -300,12 +240,13 @@ type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Comment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AcknowledgeType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -323,33 +264,36 @@ type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse: A
-// response that includes the analysis of the hypothetical resource
-// move.
+// GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse:
+// Response containing the analysis results for the hypothetical
+// resource move.
 type GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse struct {
-	// Blockers: A list of blockers that should be addressed before moving
-	// the source project or project-based workload to the destination
-	// folder-based workload.
-	Blockers []string `json:"blockers,omitempty"`
+	// AssetMoveAnalyses: List of analysis results for each asset in scope.
+	AssetMoveAnalyses []*GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis `json:"assetMoveAnalyses,omitempty"`
+
+	// NextPageToken: The next page token. Is empty if the last page is
+	// reached.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Blockers") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AssetMoveAnalyses")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Blockers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssetMoveAnalyses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -357,6 +301,125 @@ func (s *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) MarshalJ
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis: Represents move
+// analysis results for an asset.
+type GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis struct {
+	// AnalysisGroups: List of eligible analyses performed for the asset.
+	AnalysisGroups []*GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup `json:"analysisGroups,omitempty"`
+
+	// Asset: The full resource name of the asset being analyzed. Example:
+	// //compute.googleapis.com/projects/my_project_123/zones/zone1/instances
+	// /instance1
+	Asset string `json:"asset,omitempty"`
+
+	// AssetType: Type of the asset being analyzed. Possible values will be
+	// among the ones listed here
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+	AssetType string `json:"assetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata:
+// Operation metadata to give request details of CreateWorkload.
+type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
+	// ComplianceRegime: Optional. Compliance controls that should be
+	// applied to the resources managed by the workload.
+	//
+	// Possible values:
+	//   "COMPLIANCE_REGIME_UNSPECIFIED" - Unknown compliance regime.
+	//   "IL4" - Information protection as per DoD IL4 requirements.
+	//   "CJIS" - Criminal Justice Information Services (CJIS) Security
+	// policies.
+	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
+	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
+	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data
+	// protection controls
+	//   "HIPAA" - Health Insurance Portability and Accountability Act
+	// controls
+	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
+	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
+	// Support controls
+	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls Available for public preview
+	// consumption. Don't create production workloads.
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "ISR_REGIONS" - Assured Workloads for Israel
+	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
+	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
+	//   "IL5" - Information protection as per DoD IL5 requirements.
+	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
+	ComplianceRegime string `json:"complianceRegime,omitempty"`
+
+	// CreateTime: Optional. Time when the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Optional. The display name of the workload.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Parent: Optional. The parent of the workload.
+	Parent string `json:"parent,omitempty"`
+
+	// ResourceSettings: Optional. Resource properties in the input that are
+	// used for creating/customizing workload resources.
+	ResourceSettings []*GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings `json:"resourceSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComplianceRegime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComplianceRegime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse:
+// Response for EnableResourceMonitoring endpoint.
+type GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse: Response of
@@ -433,6 +496,107 @@ func (s *GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup: Represents a
+// logical group of checks performed for an asset. If successful, the
+// group contains the analysis result, otherwise it contains an error
+// with the failure reason.
+type GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup struct {
+	// AnalysisResult: Result of a successful analysis.
+	AnalysisResult *GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult `json:"analysisResult,omitempty"`
+
+	// DisplayName: Name of the analysis group.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Error: Error details for a failed analysis.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1MoveAnalysisGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult: Represents the
+// successful move analysis results for a group.
+type GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult struct {
+	// Blockers: List of blockers. If not resolved, these will result in
+	// compliance violations in the target.
+	Blockers []*GoogleCloudAssuredworkloadsV1beta1MoveImpact `json:"blockers,omitempty"`
+
+	// Warnings: List of warnings. These are risks that may or may not
+	// result in compliance violations.
+	Warnings []*GoogleCloudAssuredworkloadsV1beta1MoveImpact `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Blockers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Blockers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1MoveAnalysisResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1MoveImpact: Represents the impact
+// of moving the asset to the target.
+type GoogleCloudAssuredworkloadsV1beta1MoveImpact struct {
+	// Detail: Explanation of the impact.
+	Detail string `json:"detail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Detail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Detail") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1MoveImpact) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1MoveImpact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest:
 // Request for restricting list of available resources in Workload
 // environment.
@@ -449,6 +613,10 @@ type GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest struct {
 	// regime, allowed list changes. See -
 	// https://cloud.google.com/assured-workloads/docs/supported-products
 	// for the list of supported resources.
+	//   "APPEND_COMPLIANT_RESOURCES" - Similar to ALLOW_COMPLIANT_RESOURCES
+	// but adds the list of compliant resources to the existing list of
+	// compliant resources. Effective org-policy of the Folder is considered
+	// to ensure there is no disruption to the existing customer workflows.
 	RestrictionType string `json:"restrictionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RestrictionType") to
@@ -484,16 +652,23 @@ type GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse struct {
 }
 
 // GoogleCloudAssuredworkloadsV1beta1Violation: Workload monitoring
-// Violation.
+// Violation. Next Id: 28
 type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// Acknowledged: A boolean that indicates if the violation is
 	// acknowledged
 	Acknowledged bool `json:"acknowledged,omitempty"`
 
 	// AcknowledgementTime: Optional. Timestamp when this violation was
-	// acknowledged last. This will be absent when acknowledged field is
+	// acknowledged first. Check exception_contexts to find the last time
+	// the violation was acknowledged when there are more than one
+	// violations. This field will be absent when acknowledged field is
 	// marked as false.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
+
+	// AssociatedOrgPolicyViolationId: Optional. Output only. Violation Id
+	// of the org-policy violation due to which the resource violation is
+	// caused. Empty for org-policy violations.
+	AssociatedOrgPolicyViolationId string `json:"associatedOrgPolicyViolationId,omitempty"`
 
 	// AuditLogLink: Output only. Immutable. Audit Log Link for violated
 	// resource Format:
@@ -511,6 +686,15 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// Description: Output only. Description for the Violation. e.g.
 	// OrgPolicy gcp.resourceLocations has non compliant value.
 	Description string `json:"description,omitempty"`
+
+	// ExceptionAuditLogLink: Output only. Immutable. Audit Log link to find
+	// business justification provided for violation exception. Format:
+	// https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{protoPayload.methodName}{timeRange}{organization}
+	ExceptionAuditLogLink string `json:"exceptionAuditLogLink,omitempty"`
+
+	// ExceptionContexts: Output only. List of all the exception detail
+	// added for the violation.
+	ExceptionContexts []*GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext `json:"exceptionContexts,omitempty"`
 
 	// Name: Output only. Immutable. Name of the Violation. Format:
 	// organizations/{organization}/locations/{location}/workloads/{workload_
@@ -530,12 +714,25 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// this violation.
 	OrgPolicyConstraint string `json:"orgPolicyConstraint,omitempty"`
 
+	// ParentProjectNumber: Optional. Output only. Parent project number
+	// where resource is present. Empty for org-policy violations.
+	ParentProjectNumber string `json:"parentProjectNumber,omitempty"`
+
 	// Remediation: Output only. Compliance violation remediation
 	Remediation *GoogleCloudAssuredworkloadsV1beta1ViolationRemediation `json:"remediation,omitempty"`
 
 	// ResolveTime: Output only. Time of the event which fixed the
 	// Violation. If the violation is ACTIVE this will be empty.
 	ResolveTime string `json:"resolveTime,omitempty"`
+
+	// ResourceName: Optional. Output only. Name of the resource like
+	// //storage.googleapis.com/myprojectxyz-testbucket. Empty for
+	// org-policy violations.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ResourceType: Optional. Output only. Type of the resource like
+	// compute.googleapis.com/Disk, etc. Empty for org-policy violations.
+	ResourceType string `json:"resourceType,omitempty"`
 
 	// State: Output only. State of the violation
 	//
@@ -549,6 +746,14 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// UpdateTime: Output only. The last time when the Violation record was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ViolationType: Output only. Type of the violation
+	//
+	// Possible values:
+	//   "VIOLATION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "ORG_POLICY" - Org Policy Violation.
+	//   "RESOURCE" - Resource Violation.
+	ViolationType string `json:"violationType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -573,6 +778,44 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 
 func (s *GoogleCloudAssuredworkloadsV1beta1Violation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1Violation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext:
+// Violation exception detail. Next Id: 6
+type GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext struct {
+	// AcknowledgementTime: Timestamp when the violation was acknowledged.
+	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
+
+	// Comment: Business justification provided towards the acknowledgement
+	// of the violation.
+	Comment string `json:"comment,omitempty"`
+
+	// UserName: Name of the user (or service account) who acknowledged the
+	// violation.
+	UserName string `json:"userName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcknowledgementTime")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcknowledgementTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -606,6 +849,8 @@ type GoogleCloudAssuredworkloadsV1beta1ViolationRemediation struct {
 	//
 	// "REMEDIATION_RESTRICT_CMEK_CRYPTO_KEY_PROJECTS_ORG_POLICY_VIOLATION"
 	// - Remediation type for gcp.restrictCmekCryptoKeyProjects
+	//   "REMEDIATION_RESOURCE_VIOLATION" - Remediation type for resource
+	// violation.
 	RemediationType string `json:"remediationType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompliantValues") to
@@ -739,7 +984,7 @@ func (s *GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGclou
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1beta1Workload: An Workload object for
+// GoogleCloudAssuredworkloadsV1beta1Workload: A Workload object for
 // managing highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// BillingAccount: Optional. The billing account used for the resources
@@ -775,7 +1020,15 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls Available for public preview
+	// consumption. Don't create production workloads.
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "ISR_REGIONS" - Assured Workloads for Israel
+	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
+	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
+	//   "IL5" - Information protection as per DoD IL5 requirements.
+	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the
@@ -797,6 +1050,10 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// characters are: lowercase and uppercase letters, numbers, hyphen, and
 	// spaces. Example: My Workload
 	DisplayName string `json:"displayName,omitempty"`
+
+	// EkmProvisioningResponse: Optional. Represents the Ekm Provisioning
+	// State of the given workload.
+	EkmProvisioningResponse *GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse `json:"ekmProvisioningResponse,omitempty"`
 
 	// EnableSovereignControls: Optional. Indicates the sovereignty status
 	// of the given workload. Currently meant to be used by Europe/Canada
@@ -846,12 +1103,21 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//  Read-only.
 	Name string `json:"name,omitempty"`
 
-	// Partner: Optional. Compliance Regime associated with this workload.
+	// Partner: Optional. Partner regime associated with this workload.
 	//
 	// Possible values:
-	//   "PARTNER_UNSPECIFIED" - Unknown compliance regime.
-	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime
+	//   "PARTNER_UNSPECIFIED"
+	//   "LOCAL_CONTROLS_BY_S3NS" - Enum representing S3NS (Thales) partner.
+	//   "SOVEREIGN_CONTROLS_BY_T_SYSTEMS" - Enum representing T_SYSTEM
+	// (TSI) partner.
+	//   "SOVEREIGN_CONTROLS_BY_SIA_MINSAIT" - Enum representing SIA_MINSAIT
+	// (Indra) partner.
+	//   "SOVEREIGN_CONTROLS_BY_PSN" - Enum representing PSN (TIM) partner.
 	Partner string `json:"partner,omitempty"`
+
+	// PartnerPermissions: Optional. Permissions granted to the AW Partner
+	// SA account for the customer workload
+	PartnerPermissions *GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions `json:"partnerPermissions,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
 	// resources managed by this Assured Workload. May be either empty or a
@@ -859,6 +1125,12 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// specified all resources are created under the parent organization.
 	// Format: folders/{folder_id}
 	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
+
+	// ResourceMonitoringEnabled: Output only. Indicates whether resource
+	// monitoring is enabled for workload or not. It is true when Resource
+	// feed is subscribed to AWM topic and AWM Service Agent Role is binded
+	// to AW Service Account for resource Assured workload.
+	ResourceMonitoringEnabled bool `json:"resourceMonitoringEnabled,omitempty"`
 
 	// ResourceSettings: Input only. Resource properties that are used to
 	// customize workload resources. These properties (such as custom
@@ -877,6 +1149,14 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// during GetWorkload call. In failure cases, user friendly error
 	// message is shown in SAA details page.
 	SaaEnrollmentResponse *GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse `json:"saaEnrollmentResponse,omitempty"`
+
+	// ViolationNotificationsEnabled: Optional. Indicates whether the e-mail
+	// notification for a violation is enabled for a workload. This value
+	// will be by default True, and if not present will be considered as
+	// true. This should only be updated via updateWorkload call. Any
+	// Changes to this field during the createWorkload call will not be
+	// honored. This will always be true while creating the workload.
+	ViolationNotificationsEnabled bool `json:"violationNotificationsEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -939,26 +1219,34 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadCJISSettings) MarshalJSON() (
 // GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus:
 // Represents the Compliance Status of this workload
 type GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus struct {
-	// AcknowledgedViolationCount: Count of active Violations which are
-	// acknowledged in the Workload.
+	// AcknowledgedResourceViolationCount: Number of current resource
+	// violations which are not acknowledged.
+	AcknowledgedResourceViolationCount int64 `json:"acknowledgedResourceViolationCount,omitempty"`
+
+	// AcknowledgedViolationCount: Number of current orgPolicy violations
+	// which are acknowledged.
 	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
 
-	// ActiveViolationCount: Count of active Violations which haven't been
-	// acknowledged.
+	// ActiveResourceViolationCount: Number of current resource violations
+	// which are acknowledged.
+	ActiveResourceViolationCount int64 `json:"activeResourceViolationCount,omitempty"`
+
+	// ActiveViolationCount: Number of current orgPolicy violations which
+	// are not acknowledged.
 	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "AcknowledgedViolationCount") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AcknowledgedResourceViolationCount") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "AcknowledgedViolationCount") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
+	// "AcknowledgedResourceViolationCount") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
@@ -968,6 +1256,75 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus struct {
 
 func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse:
+// External key management systems(EKM) Provisioning response
+type GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse struct {
+	// EkmProvisioningErrorDomain: Indicates Ekm provisioning error if any.
+	//
+	// Possible values:
+	//   "EKM_PROVISIONING_ERROR_DOMAIN_UNSPECIFIED" - No error domain
+	//   "UNSPECIFIED_ERROR" - Error but domain is unspecified.
+	//   "GOOGLE_SERVER_ERROR" - Internal logic breaks within provisioning
+	// code.
+	//   "EXTERNAL_USER_ERROR" - Error occurred with the customer not
+	// granting permission/creating resource.
+	//   "EXTERNAL_PARTNER_ERROR" - Error occurred within the partner's
+	// provisioning cluster.
+	//   "TIMEOUT_ERROR" - Resource wasn't provisioned in the required 7 day
+	// time period
+	EkmProvisioningErrorDomain string `json:"ekmProvisioningErrorDomain,omitempty"`
+
+	// EkmProvisioningErrorMapping: Detailed error message if Ekm
+	// provisioning fails
+	//
+	// Possible values:
+	//   "EKM_PROVISIONING_ERROR_MAPPING_UNSPECIFIED" - Error is
+	// unspecified.
+	//   "INVALID_SERVICE_ACCOUNT" - Service account is used is invalid.
+	//   "MISSING_METRICS_SCOPE_ADMIN_PERMISSION" - Iam permission
+	// monitoring.MetricsScopeAdmin wasn't applied.
+	//   "MISSING_EKM_CONNECTION_ADMIN_PERMISSION" - Iam permission
+	// cloudkms.ekmConnectionsAdmin wasn't applied.
+	EkmProvisioningErrorMapping string `json:"ekmProvisioningErrorMapping,omitempty"`
+
+	// EkmProvisioningState: Indicates Ekm enrollment Provisioning of a
+	// given workload.
+	//
+	// Possible values:
+	//   "EKM_PROVISIONING_STATE_UNSPECIFIED" - Default State for Ekm
+	// Provisioning
+	//   "EKM_PROVISIONING_STATE_PENDING" - Pending State for Ekm
+	// Provisioning
+	//   "EKM_PROVISIONING_STATE_FAILED" - Failed State for Ekm Provisioning
+	//   "EKM_PROVISIONING_STATE_COMPLETED" - Completed State for Ekm
+	// Provisioning
+	EkmProvisioningState string `json:"ekmProvisioningState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EkmProvisioningErrorDomain") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EkmProvisioningErrorDomain") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadEkmProvisioningResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1096,6 +1453,47 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings struct {
 
 func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions:
+// Permissions granted to the AW Partner SA account for the customer
+// workload
+type GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions struct {
+	// AssuredWorkloadsMonitoring: Optional. Allow partner to view violation
+	// alerts.
+	AssuredWorkloadsMonitoring bool `json:"assuredWorkloadsMonitoring,omitempty"`
+
+	// DataLogsViewer: Allow the partner to view inspectability logs and
+	// monitoring violations.
+	DataLogsViewer bool `json:"dataLogsViewer,omitempty"`
+
+	// ServiceAccessApprover: Optional. Allow partner to view access
+	// approval logs.
+	ServiceAccessApprover bool `json:"serviceAccessApprover,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssuredWorkloadsMonitoring") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssuredWorkloadsMonitoring") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1305,8 +1703,8 @@ type GoogleLongrunningOperation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1494,17 +1892,17 @@ func (c *OrganizationsLocationsOperationsGetCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1558,14 +1956,7 @@ type OrganizationsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *OrganizationsLocationsOperationsService) List(name string) *OrganizationsLocationsOperationsListCall {
@@ -1671,17 +2062,17 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1695,7 +2086,7 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "assuredworkloads.organizations.locations.operations.list",
@@ -1742,6 +2133,242 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove":
+
+type OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
+	s            *Service
+	target       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeWorkloadMove: Analyzes a hypothetical move of a source
+// resource to a target workload to surface compliance risks. The
+// analysis is best effort and is not guaranteed to be exhaustive.
+//
+//   - target: The resource ID of the folder-based destination workload.
+//     This workload is where the source resource will hypothetically be
+//     moved to. Specify the workload's relative resource name, formatted
+//     as:
+//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
+//     WORKLOAD_ID}" For example:
+//     "organizations/123/locations/us-east1/workloads/assured-workload-2".
+func (r *OrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(target string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c := &OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.target = target
+	return c
+}
+
+// AssetTypes sets the optional parameter "assetTypes": List of asset
+// types to be analyzed, including and under the source resource. If
+// empty, all assets are analyzed. The complete list of asset types is
+// available here
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AssetTypes(assetTypes ...string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size. If a
+// value is not specified, the default value of 10 is used.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token
+// from the previous response. It needs to be passed in the second and
+// following requests.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) PageToken(pageToken string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Project sets the optional parameter "project": The source type is a
+// project. Specify the project's relative resource name, formatted as
+// either a project number or a project ID: "projects/{PROJECT_NUMBER}"
+// or "projects/{PROJECT_ID}" For example: "projects/951040570662" when
+// specifying a project number, or "projects/my-project-123" when
+// specifying a project ID.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Project(project string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("project", project)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) IfNoneMatch(entityTag string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+target}:analyzeWorkloadMove")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"target": c.target,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove" call.
+// Exactly one of
+// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes a hypothetical move of a source resource to a target workload to surface compliance risks. The analysis is best effort and is not guaranteed to be exhaustive.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
+	//   "httpMethod": "GET",
+	//   "id": "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove",
+	//   "parameterOrder": [
+	//     "target"
+	//   ],
+	//   "parameters": {
+	//     "assetTypes": {
+	//       "description": "Optional. List of asset types to be analyzed, including and under the source resource. If empty, all assets are analyzed. The complete list of asset types is available [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Page size. If a value is not specified, the default value of 10 is used.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The page token from the previous response. It needs to be passed in the second and following requests.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "target": {
+	//       "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source resource will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+target}:analyzeWorkloadMove",
+	//   "response": {
+	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -1858,17 +2485,17 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2012,17 +2639,17 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2060,6 +2687,144 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "assuredworkloads.organizations.locations.workloads.enableResourceMonitoring":
+
+type OrganizationsLocationsWorkloadsEnableResourceMonitoringCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// EnableResourceMonitoring: Enable resource violation monitoring for a
+// workload.
+//
+//   - name: The `name` field is used to identify the workload. Format:
+//     organizations/{org_id}/locations/{location_id}/workloads/{workload_i
+//     d}.
+func (r *OrganizationsLocationsWorkloadsService) EnableResourceMonitoring(name string) *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall {
+	c := &OrganizationsLocationsWorkloadsEnableResourceMonitoringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:enableResourceMonitoring")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.workloads.enableResourceMonitoring" call.
+// Exactly one of
+// *GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enable resource violation monitoring for a workload.",
+	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:enableResourceMonitoring",
+	//   "httpMethod": "POST",
+	//   "id": "assuredworkloads.organizations.locations.workloads.enableResourceMonitoring",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The `name` field is used to identify the workload. Format: organizations/{org_id}/locations/{location_id}/workloads/{workload_id}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:enableResourceMonitoring",
+	//   "response": {
+	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2169,17 +2934,17 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1Workload{
 		ServerResponse: googleapi.ServerResponse{
@@ -2342,17 +3107,17 @@ func (c *OrganizationsLocationsWorkloadsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2532,17 +3297,17 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1Workload{
 		ServerResponse: googleapi.ServerResponse{
@@ -2693,17 +3458,17 @@ func (c *OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2739,195 +3504,6 @@ func (c *OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall) Do(opts ..
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "assuredworkloads.organizations.locations.workloads.organizations.locations.workloads.analyzeWorkloadMove":
-
-type OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
-	s            *Service
-	source       string
-	target       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// AnalyzeWorkloadMove: Analyzes a hypothetical move of a source project
-// or project-based workload to a target (destination) folder-based
-// workload.
-//
-//   - source: The source type is a project-based workload. Specify the
-//     workloads's relative resource name, formatted as:
-//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
-//     WORKLOAD_ID}" For example:
-//     "organizations/123/locations/us-east1/workloads/assured-workload-1".
-//   - target: The resource ID of the folder-based destination workload.
-//     This workload is where the source project will hypothetically be
-//     moved to. Specify the workload's relative resource name, formatted
-//     as:
-//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
-//     WORKLOAD_ID}" For example:
-//     "organizations/123/locations/us-east1/workloads/assured-workload-2".
-func (r *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(source string, target string) *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c := &OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.source = source
-	c.target = target
-	return c
-}
-
-// Project sets the optional parameter "project": The source type is a
-// project. Specify the project's relative resource name, formatted as
-// either a project number or a project ID: "projects/{PROJECT_NUMBER}"
-// or "projects/{PROJECT_ID}" For example: "projects/951040570662" when
-// specifying a project number, or "projects/my-project-123" when
-// specifying a project ID.
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Project(project string) *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("project", project)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Fields(s ...googleapi.Field) *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) IfNoneMatch(entityTag string) *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Context(ctx context.Context) *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+source}/{+target}:analyzeWorkloadMove")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"source": c.source,
-		"target": c.target,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "assuredworkloads.organizations.locations.workloads.organizations.locations.workloads.analyzeWorkloadMove" call.
-// Exactly one of
-// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsWorkloadsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Analyzes a hypothetical move of a source project or project-based workload to a target (destination) folder-based workload.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/organizations/{organizationsId1}/locations/{locationsId1}/workloads/{workloadsId1}:analyzeWorkloadMove",
-	//   "httpMethod": "GET",
-	//   "id": "assuredworkloads.organizations.locations.workloads.organizations.locations.workloads.analyzeWorkloadMove",
-	//   "parameterOrder": [
-	//     "source",
-	//     "target"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\"",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "target": {
-	//       "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source project will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+source}/{+target}:analyzeWorkloadMove",
-	//   "response": {
-	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -3033,17 +3609,17 @@ func (c *OrganizationsLocationsWorkloadsViolationsAcknowledgeCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3187,17 +3763,17 @@ func (c *OrganizationsLocationsWorkloadsViolationsGetCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1Violation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3376,17 +3952,17 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3474,193 +4050,4 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) Pages(ctx context.Co
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove":
-
-type ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall struct {
-	s            *Service
-	project      string
-	target       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// AnalyzeWorkloadMove: Analyzes a hypothetical move of a source project
-// or project-based workload to a target (destination) folder-based
-// workload.
-//
-//   - project: The source type is a project. Specify the project's
-//     relative resource name, formatted as either a project number or a
-//     project ID: "projects/{PROJECT_NUMBER}" or "projects/{PROJECT_ID}"
-//     For example: "projects/951040570662" when specifying a project
-//     number, or "projects/my-project-123" when specifying a project ID.
-//   - target: The resource ID of the folder-based destination workload.
-//     This workload is where the source project will hypothetically be
-//     moved to. Specify the workload's relative resource name, formatted
-//     as:
-//     "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{
-//     WORKLOAD_ID}" For example:
-//     "organizations/123/locations/us-east1/workloads/assured-workload-2".
-func (r *ProjectsOrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(project string, target string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c := &ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.target = target
-	return c
-}
-
-// Source sets the optional parameter "source": The source type is a
-// project-based workload. Specify the workloads's relative resource
-// name, formatted as:
-// "organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WO
-// RKLOAD_ID}" For example:
-// "organizations/123/locations/us-east1/workloads/assured-workload-1"
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Source(source string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("source", source)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Fields(s ...googleapi.Field) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) IfNoneMatch(entityTag string) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Context(ctx context.Context) *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+project}/{+target}:analyzeWorkloadMove")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-		"target":  c.target,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove" call.
-// Exactly one of
-// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsOrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Analyzes a hypothetical move of a source project or project-based workload to a target (destination) folder-based workload.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}:analyzeWorkloadMove",
-	//   "httpMethod": "GET",
-	//   "id": "assuredworkloads.projects.organizations.locations.workloads.analyzeWorkloadMove",
-	//   "parameterOrder": [
-	//     "project",
-	//     "target"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The source type is a project. Specify the project's relative resource name, formatted as either a project number or a project ID: \"projects/{PROJECT_NUMBER}\" or \"projects/{PROJECT_ID}\" For example: \"projects/951040570662\" when specifying a project number, or \"projects/my-project-123\" when specifying a project ID.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "source": {
-	//       "description": "The source type is a project-based workload. Specify the workloads's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-1\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "target": {
-	//       "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source project will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+project}/{+target}:analyzeWorkloadMove",
-	//   "response": {
-	//     "$ref": "GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

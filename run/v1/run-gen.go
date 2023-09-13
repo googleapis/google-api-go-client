@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package run provides access to the Cloud Run Admin API.
 //
 // For product documentation, see: https://cloud.google.com/run/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	runService, err := run.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	runService, err := run.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	runService, err := run.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package run // import "google.golang.org/api/run/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "run:v1"
 const apiName = "run"
@@ -499,9 +513,8 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuthorizedDomain: A domain that a user has been authorized to
-// administer. To authorize use of a domain, verify ownership via
-// Webmaster Central
-// (https://www.google.com/webmasters/verification/home).
+// administer. To authorize use of a domain, verify ownership via Search
+// Console (https://search.google.com/search-console/welcome).
 type AuthorizedDomain struct {
 	// Id: Relative name of the domain authorized for use. Example:
 	// `example.com`.
@@ -564,7 +577,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -581,9 +596,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -759,9 +772,7 @@ func (s *ConfigMapVolumeSource) MarshalJSON() ([]byte, error) {
 // linear history of Revisions, and optionally how the containers those
 // revisions reference are built. Users create new Revisions by updating
 // the Configuration's spec. The "latest created" revision's name is
-// available under status, as is the "latest ready" revision's name. See
-// also:
-// https://github.com/knative/specs/blob/main/specs/serving/overview.md#configuration
+// available under status, as is the "latest ready" revision's name.
 type Configuration struct {
 	// ApiVersion: The API version for this call such as
 	// "serving.knative.dev/v1".
@@ -905,29 +916,30 @@ type Container struct {
 	// references are not supported in Cloud Run.
 	Command []string `json:"command,omitempty"`
 
-	// Env: List of environment variables to set in the container.
+	// Env: List of environment variables to set in the container. EnvVar
+	// with duplicate names are generally allowed; if referencing a secret,
+	// the name must be unique for the container. For non-secret EnvVar
+	// names, the Container will only get the last-declared one.
 	Env []*EnvVar `json:"env,omitempty"`
 
 	// EnvFrom: Not supported by Cloud Run.
 	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
-	// Image: Required. URL of the Container image in Google Container
-	// Registry or Google Artifact Registry. More info:
-	// https://kubernetes.io/docs/concepts/containers/images
+	// Image: Required. Name of the container image in Dockerhub, Google
+	// Artifact Registry, or Google Container Registry. If the host is not
+	// provided, Dockerhub is assumed.
 	Image string `json:"image,omitempty"`
 
 	// ImagePullPolicy: Image pull policy. One of Always, Never,
 	// IfNotPresent. Defaults to Always if :latest tag is specified, or
-	// IfNotPresent otherwise. More info:
-	// https://kubernetes.io/docs/concepts/containers/images#updating-images
+	// IfNotPresent otherwise.
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
-	// LivenessProbe: Not supported by Cloud Run.
+	// LivenessProbe: Periodic probe of container liveness. Container will
+	// be restarted if the probe fails.
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
 
-	// Name: Name of the container specified as a DNS_LABEL. Currently
-	// unused in Cloud Run. More info:
-	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
+	// Name: Name of the container specified as a DNS_LABEL (RFC 1123).
 	Name string `json:"name,omitempty"`
 
 	// Ports: List of ports to expose from the container. Only a single port
@@ -940,8 +952,7 @@ type Container struct {
 	// ReadinessProbe: Not supported by Cloud Run.
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
 
-	// Resources: Compute Resources required by this container. More info:
-	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
+	// Resources: Compute Resources required by this container.
 	Resources *ResourceRequirements `json:"resources,omitempty"`
 
 	// SecurityContext: Not supported by Cloud Run.
@@ -951,8 +962,6 @@ type Container struct {
 	// other probes are disabled if a startup probe is provided, until it
 	// succeeds. Container will not receive traffic if the probe fails. If
 	// not provided, a default startup probe with TCP socket action is used.
-	// More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	StartupProbe *Probe `json:"startupProbe,omitempty"`
 
 	// TerminationMessagePath: Path at which the file to which the
@@ -1006,11 +1015,55 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContainerOverride: Per container override specification.
+type ContainerOverride struct {
+	// Args: Arguments to the entrypoint. The specified arguments replace
+	// and override any existing entrypoint arguments. Must be empty if
+	// `clear_args` is set to true.
+	Args []string `json:"args,omitempty"`
+
+	// ClearArgs: Optional. Set to True to clear all existing arguments.
+	ClearArgs bool `json:"clearArgs,omitempty"`
+
+	// Env: List of environment variables to set in the container. All
+	// specified environment variables are merged with existing environment
+	// variables. When the specified environment variables exist, these
+	// values override any existing values.
+	Env []*EnvVar `json:"env,omitempty"`
+
+	// Name: The name of the container specified as a DNS_LABEL.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContainerOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContainerPort: ContainerPort represents a network port in a single
 // container.
 type ContainerPort struct {
-	// ContainerPort: Port number the container listens on. This must be a
-	// valid port number, 0 < x < 65536.
+	// ContainerPort: Port number the container listens on. If present, this
+	// must be a valid port number, 0 < x < 65536. If not present, it will
+	// default to port 8080. For more information, see
+	// https://cloud.google.com/run/docs/container-contract#port
 	ContainerPort int64 `json:"containerPort,omitempty"`
 
 	// Name: If specified, used to specify which protocol to use. Allowed
@@ -1183,6 +1236,50 @@ func (s *DomainMappingStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EmptyDirVolumeSource: In memory (tmpfs) ephemeral storage. It is
+// ephemeral in the sense that when the sandbox is taken down, the data
+// is destroyed with it (it does not persist across sandbox runs).
+type EmptyDirVolumeSource struct {
+	// Medium: The medium on which the data is stored. The default is ""
+	// which means to use the node's default medium. Must be an empty string
+	// (default) or Memory. More info:
+	// https://kubernetes.io/docs/concepts/storage/volumes#emptydir
+	Medium string `json:"medium,omitempty"`
+
+	// SizeLimit: Limit on the storage usable by this EmptyDir volume. The
+	// size limit is also applicable for memory medium. The maximum usage on
+	// memory medium EmptyDir would be the minimum value between the
+	// SizeLimit specified here and the sum of memory limits of all
+	// containers. The default is nil which means that the limit is
+	// undefined. More info:
+	// https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
+	// Info in Kubernetes:
+	// https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	SizeLimit string `json:"sizeLimit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Medium") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Medium") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EmptyDirVolumeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod EmptyDirVolumeSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnvFromSource: Not supported by Cloud Run. EnvFromSource represents
 // the source of a set of ConfigMaps
 type EnvFromSource struct {
@@ -1333,28 +1430,22 @@ type Execution struct {
 	// ApiVersion: Optional. APIVersion defines the versioned schema of this
 	// representation of an object. Servers should convert recognized
 	// schemas to the latest internal value, and may reject unrecognized
-	// values. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+	// values.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// Kind: Optional. Kind is a string value representing the REST resource
 	// this object represents. Servers may infer this from the endpoint the
-	// client submits requests to. Cannot be updated. In CamelCase. More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// client submits requests to. Cannot be updated. In CamelCase.
 	Kind string `json:"kind,omitempty"`
 
-	// Metadata: Optional. Standard object's metadata. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// Metadata: Optional. Standard object's metadata.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: Optional. Specification of the desired behavior of an
-	// execution. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// execution.
 	Spec *ExecutionSpec `json:"spec,omitempty"`
 
-	// Status: Output only. Current status of an execution. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// Status: Output only. Current status of an execution.
 	Status *ExecutionStatus `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1435,11 +1526,11 @@ type ExecutionSpec struct {
 	// TaskCount: Optional. Specifies the desired number of tasks the
 	// execution should run. Setting to 1 means that parallelism is limited
 	// to 1 and the success of that task signals the success of the
-	// execution.
+	// execution. Defaults to 1.
 	TaskCount int64 `json:"taskCount,omitempty"`
 
-	// Template: Optional. Describes the task(s) that will be created when
-	// executing an execution.
+	// Template: Optional. The template used to create tasks for this
+	// execution.
 	Template *TaskTemplateSpec `json:"template,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Parallelism") to
@@ -1540,8 +1631,7 @@ func (s *ExecutionStatus) MarshalJSON() ([]byte, error) {
 }
 
 // ExecutionTemplateSpec: ExecutionTemplateSpec describes the metadata
-// and spec an Execution should have when created from a job. Based on:
-// https://github.com/kubernetes/api/blob/e771f807/core/v1/types.go#L3179-L3190
+// and spec an Execution should have when created from a job.
 type ExecutionTemplateSpec struct {
 	// Metadata: Optional. Optional metadata for this Execution, including
 	// labels and annotations. The following annotation keys set properties
@@ -1650,9 +1740,8 @@ type GRPCAction struct {
 	Port int64 `json:"port,omitempty"`
 
 	// Service: Service is the name of the service to place in the gRPC
-	// HealthCheckRequest (see
-	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
-	// this is not specified, the default behavior is defined by gRPC.
+	// HealthCheckRequest. If this is not specified, the default behavior is
+	// defined by gRPC.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Port") to
@@ -1709,10 +1798,8 @@ type GoogleCloudRunV1Condition struct {
 	Status string `json:"status,omitempty"`
 
 	// Type: type is used to communicate the status of the reconciliation
-	// process. See also:
-	// https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-conditions-and-reporting
-	// Types common to all resources include: * "Ready" or "Completed": True
-	// when the Resource is ready.
+	// process. Types common to all resources include: * "Ready" or
+	// "Completed": True when the Resource is ready.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -1796,6 +1883,10 @@ type HTTPGetAction struct {
 	// Path: Path to access on the HTTP server.
 	Path string `json:"path,omitempty"`
 
+	// Port: Port number to access on the container. Number must be in the
+	// range 1 to 65535.
+	Port int64 `json:"port,omitempty"`
+
 	// Scheme: Not supported by Cloud Run.
 	Scheme string `json:"scheme,omitempty"`
 
@@ -1825,7 +1916,7 @@ func (s *HTTPGetAction) MarshalJSON() ([]byte, error) {
 // HTTPHeader: HTTPHeader describes a custom header to be used in HTTP
 // probes
 type HTTPHeader struct {
-	// Name: The header field name
+	// Name: Required. The header field name
 	Name string `json:"name,omitempty"`
 
 	// Value: The header field value
@@ -1860,28 +1951,21 @@ type Job struct {
 	// ApiVersion: Optional. APIVersion defines the versioned schema of this
 	// representation of an object. Servers should convert recognized
 	// schemas to the latest internal value, and may reject unrecognized
-	// values. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+	// values.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// Kind: Optional. Kind is a string value representing the REST resource
 	// this object represents. Servers may infer this from the endpoint the
-	// client submits requests to. Cannot be updated. In CamelCase. More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// client submits requests to. Cannot be updated. In CamelCase.
 	Kind string `json:"kind,omitempty"`
 
-	// Metadata: Optional. Standard object's metadata. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// Metadata: Optional. Standard object's metadata.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
-	// Spec: Optional. Specification of the desired behavior of a job. More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// Spec: Optional. Specification of the desired behavior of a job.
 	Spec *JobSpec `json:"spec,omitempty"`
 
-	// Status: Output only. Current status of a job. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// Status: Output only. Current status of a job.
 	Status *JobStatus `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1986,8 +2070,8 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 // KeyToPath: Maps a string key to a path within a volume.
 type KeyToPath struct {
 	// Key: The Cloud Secret Manager secret version. Can be 'latest' for the
-	// latest value or an integer for a specific version. The key to
-	// project.
+	// latest value, or an integer or a secret alias for a specific version.
+	// The key to project.
 	Key string `json:"key,omitempty"`
 
 	// Mode: (Optional) Mode bits to use on this file, must be a value
@@ -2301,7 +2385,6 @@ type ListMeta struct {
 	// version of this object. It can be used by clients to determine when
 	// objects have changed. If the message is passed back to the server, it
 	// must be left unmodified.
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
 	// SelfLink: URL representing this object.
@@ -2517,8 +2600,7 @@ func (s *ListTasksResponse) MarshalJSON() ([]byte, error) {
 // LocalObjectReference contains enough information to let you locate
 // the referenced object inside the same namespace.
 type LocalObjectReference struct {
-	// Name: Name of the referent. More info:
-	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+	// Name: Name of the referent.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2544,7 +2626,7 @@ func (s *LocalObjectReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -2606,6 +2688,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
 	// `run.googleapis.com/client-name`: All resources. *
 	// `run.googleapis.com/cloudsql-instances`: Revision, Execution. *
+	// `run.googleapis.com/container-dependencies`: Revision. *
 	// `run.googleapis.com/cpu-throttling`: Revision. *
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/description`: Service. *
@@ -2614,6 +2697,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
 	// `run.googleapis.com/ingress`: Service. *
+	// `run.googleapis.com/launch-stage`: Service, Job. *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision. *
 	// `run.googleapis.com/secrets`: Revision, Execution. *
@@ -2622,16 +2706,13 @@ type ObjectMeta struct {
 	// `run.googleapis.com/startup-cpu-boost`: Revision. *
 	// `run.googleapis.com/vpc-access-connector`: Revision, Execution. *
 	// `run.googleapis.com/vpc-access-egress`: Revision, Execution.
-	// Execution. More info:
-	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// ClusterName: Not supported by Cloud Run
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// CreationTimestamp: UTC timestamp representing the server time when
-	// this object was created. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+	// this object was created.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// DeletionGracePeriodSeconds: Not supported by Cloud Run
@@ -2654,17 +2735,12 @@ type ObjectMeta struct {
 
 	// Labels: Map of string keys and values that can be used to organize
 	// and categorize (scope and select) objects. May match selectors of
-	// replication controllers and routes. More info:
-	// https://kubernetes.io/docs/user-guide/labels
+	// replication controllers and routes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Required. The name of the resource. In Cloud Run, name is
-	// required when creating top-level resources (Service, Job), must be
-	// unique within a Cloud Run project/region, and cannot be changed once
-	// created. More info:
-	// https://kubernetes.io/docs/user-guide/identifiers#names If ObjectMeta
-	// is part of a CreateServiceRequest, name must contain fewer than 50
-	// characters.
+	// Name: Required. The name of the resource. Name is required when
+	// creating top-level resources (Service, Job), must be unique within a
+	// Cloud Run project/region, and cannot be changed once created.
 	Name string `json:"name,omitempty"`
 
 	// Namespace: Required. Defines the space within each name must be
@@ -2681,15 +2757,13 @@ type ObjectMeta struct {
 	// concurrency, change detection, and the watch operation on a resource
 	// or set of resources. Clients must treat these values as opaque and
 	// passed unmodified back to the server or omit the value to disable
-	// conflict-detection. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+	// conflict-detection.
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
 	// SelfLink: URL representing this object.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Uid: Unique, system-generated identifier for this resource. More
-	// info: https://kubernetes.io/docs/user-guide/identifiers#uids
+	// Uid: Unique, system-generated identifier for this resource.
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
@@ -2711,6 +2785,45 @@ type ObjectMeta struct {
 
 func (s *ObjectMeta) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectMeta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Overrides: RunJob Overrides that contains Execution fields to be
+// overridden on the go.
+type Overrides struct {
+	// ContainerOverrides: Per container override specification.
+	ContainerOverrides []*ContainerOverride `json:"containerOverrides,omitempty"`
+
+	// TaskCount: The desired number of tasks the execution should run. Will
+	// replace existing task_count value.
+	TaskCount int64 `json:"taskCount,omitempty"`
+
+	// TimeoutSeconds: Duration in seconds the task may be active before the
+	// system will actively try to mark it failed and kill associated
+	// containers. Will replace existing timeout_seconds value.
+	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerOverrides")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Overrides) MarshalJSON() ([]byte, error) {
+	type NoMethod Overrides
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2772,7 +2885,7 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2781,17 +2894,17 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2889,8 +3002,7 @@ type Probe struct {
 	// InitialDelaySeconds: Number of seconds after the container has
 	// started before the probe is initiated. Defaults to 0 seconds. Minimum
 	// value is 0. Maximum value for liveness probe is 3600. Maximum value
-	// for startup probe is 240. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// for startup probe is 240.
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: How often (in seconds) to perform the probe. Default
@@ -2908,8 +3020,8 @@ type Probe struct {
 
 	// TimeoutSeconds: Number of seconds after which the probe times out.
 	// Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must
-	// be smaller than period_seconds. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// be smaller than period_seconds; if period_seconds is not set, must be
+	// less or equal than 10.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exec") to
@@ -2981,18 +3093,22 @@ func (s *ResourceRecord) MarshalJSON() ([]byte, error) {
 // ResourceRequirements: ResourceRequirements describes the compute
 // resource requirements.
 type ResourceRequirements struct {
-	// Limits: Only memory and CPU are supported. Limits describes the
-	// maximum amount of compute resources allowed. The values of the map is
-	// string form of the 'quantity' k8s type:
-	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
+	// Limits: Limits describes the maximum amount of compute resources
+	// allowed. Only 'cpu' and 'memory' keys are supported. * For supported
+	// 'cpu' values, go to
+	// https://cloud.google.com/run/docs/configuring/cpu. * For supported
+	// 'memory' values and syntax, go to
+	// https://cloud.google.com/run/docs/configuring/memory-limits
 	Limits map[string]string `json:"limits,omitempty"`
 
-	// Requests: Only memory and CPU are supported. Requests describes the
-	// minimum amount of compute resources required. If Requests is omitted
-	// for a container, it defaults to Limits if that is explicitly
-	// specified, otherwise to an implementation-defined value. The values
-	// of the map is string form of the 'quantity' k8s type:
-	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
+	// Requests: Requests describes the minimum amount of compute resources
+	// required. Only `cpu` and `memory` are supported. If Requests is
+	// omitted for a container, it defaults to Limits if that is explicitly
+	// specified, otherwise to an implementation-defined value. * For
+	// supported 'cpu' values, go to
+	// https://cloud.google.com/run/docs/configuring/cpu. * For supported
+	// 'memory' values and syntax, go to
+	// https://cloud.google.com/run/docs/configuring/memory-limits
 	Requests map[string]string `json:"requests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Limits") to
@@ -3079,9 +3195,7 @@ type RevisionSpec struct {
 	// Containers: Containers holds the single container that defines the
 	// unit of execution for this Revision. In the context of a Revision, we
 	// disallow a number of fields on this Container, including: name and
-	// lifecycle. In Cloud Run, only a single container may be provided. The
-	// runtime contract is documented here:
-	// https://github.com/knative/specs/blob/main/specs/serving/runtime-contract.md
+	// lifecycle. In Cloud Run, only a single container may be provided.
 	Containers []*Container `json:"containers,omitempty"`
 
 	// EnableServiceLinks: Not supported by Cloud Run.
@@ -3188,8 +3302,7 @@ func (s *RevisionStatus) MarshalJSON() ([]byte, error) {
 }
 
 // RevisionTemplate: RevisionTemplateSpec describes the data a revision
-// should have when created from a template. Based on:
-// https://github.com/kubernetes/api/blob/e771f807/core/v1/types.go#L3179-L3190
+// should have when created from a template.
 type RevisionTemplate struct {
 	// Metadata: Optional metadata for this Revision, including labels and
 	// annotations. Name will be generated by the Configuration. The
@@ -3238,11 +3351,9 @@ func (s *RevisionTemplate) MarshalJSON() ([]byte, error) {
 // may be specified by referencing the Configuration responsible for
 // creating them; in these cases the Route is additionally responsible
 // for monitoring the Configuration for "latest ready" revision changes,
-// and smoothly rolling out latest revisions. See also:
-// https://github.com/knative/specs/blob/main/specs/serving/overview.md#route
-// Cloud Run currently supports referencing a single Configuration to
-// automatically deploy the "latest ready" Revision from that
-// Configuration.
+// and smoothly rolling out latest revisions. Cloud Run currently
+// supports referencing a single Configuration to automatically deploy
+// the "latest ready" Revision from that Configuration.
 type Route struct {
 	// ApiVersion: The API version for this call such as
 	// "serving.knative.dev/v1".
@@ -3336,8 +3447,8 @@ type RouteStatus struct {
 	// Route that was last processed by the controller. Clients polling for
 	// completed reconciliation should poll until observedGeneration =
 	// metadata.generation and the Ready condition's status is True or
-	// False. Note that providing a trafficTarget that only has a
-	// configurationName will result in a Route that does not increment
+	// False. Note that providing a TrafficTarget that has
+	// latest_revision=True will result in a Route that does not increment
 	// either its metadata.generation or its observedGeneration, as new
 	// "latest ready" revisions from the Configuration are processed without
 	// an update to the Route's spec.
@@ -3379,6 +3490,33 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 
 // RunJobRequest: Request message for creating a new execution of a job.
 type RunJobRequest struct {
+	// Overrides: Optional. Private preview feature. Currently only
+	// available by invitation. Overrides specification for a given
+	// execution of a job. The specified values update the specification of
+	// the created execution.
+	Overrides *Overrides `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SecretEnvSource: Not supported by Cloud Run. SecretEnvSource selects
@@ -3425,8 +3563,9 @@ func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 // SecretKeySelector: SecretKeySelector selects a key of a Secret.
 type SecretKeySelector struct {
 	// Key: Required. A Cloud Secret Manager secret version. Must be
-	// 'latest' for the latest version or an integer for a specific version.
-	// The key of the secret to select from. Must be a valid secret key.
+	// 'latest' for the latest version, an integer for a specific version,
+	// or a version alias. The key of the secret to select from. Must be a
+	// valid secret key.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -3579,8 +3718,7 @@ func (s *SecurityContext) MarshalJSON() ([]byte, error) {
 // Configurations (much as a kubernetes Deployment orchestrates
 // ReplicaSets). The Service's controller will track the statuses of its
 // owned Configuration and Route, reflecting their statuses and
-// conditions as its own. See also:
-// https://github.com/knative/serving/blob/main/docs/spec/overview.md#service
+// conditions as its own.
 type Service struct {
 	// ApiVersion: The API version for this call. It must be
 	// "serving.knative.dev/v1".
@@ -3801,8 +3939,7 @@ type Status struct {
 	// operation.
 	Message string `json:"message,omitempty"`
 
-	// Metadata: Standard list metadata. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// Metadata: Standard list metadata.
 	Metadata *ListMeta `json:"metadata,omitempty"`
 
 	// Reason: A machine-readable description of why this operation is in
@@ -3811,9 +3948,7 @@ type Status struct {
 	// override it.
 	Reason string `json:"reason,omitempty"`
 
-	// Status: Status of the operation. One of: "Success" or "Failure". More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// Status: Status of the operation. One of: "Success" or "Failure".
 	Status string `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3905,8 +4040,7 @@ type StatusDetails struct {
 
 	// Kind: The kind attribute of the resource associated with the status
 	// StatusReason. On some operations may differ from the requested
-	// resource Kind. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// resource Kind.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The name attribute of the resource associated with the status
@@ -3920,8 +4054,7 @@ type StatusDetails struct {
 	RetryAfterSeconds int64 `json:"retryAfterSeconds,omitempty"`
 
 	// Uid: UID of the resource. (when there is a single resource which can
-	// be described). More info:
-	// https://kubernetes.io/docs/user-guide/identifiers#uids
+	// be described).
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Causes") to
@@ -3985,28 +4118,21 @@ type Task struct {
 	// ApiVersion: Optional. APIVersion defines the versioned schema of this
 	// representation of an object. Servers should convert recognized
 	// schemas to the latest internal value, and may reject unrecognized
-	// values. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+	// values.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// Kind: Optional. Kind is a string value representing the REST resource
 	// this object represents. Servers may infer this from the endpoint the
-	// client submits requests to. Cannot be updated. In CamelCase. More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// client submits requests to. Cannot be updated. In CamelCase.
 	Kind string `json:"kind,omitempty"`
 
-	// Metadata: Optional. Standard object's metadata. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// Metadata: Optional. Standard object's metadata.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
-	// Spec: Optional. Specification of the desired behavior of a task. More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// Spec: Optional. Specification of the desired behavior of a task.
 	Spec *TaskSpec `json:"spec,omitempty"`
 
-	// Status: Output only. Current status of a task. More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// Status: Output only. Current status of a task.
 	Status *TaskStatus `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4078,7 +4204,7 @@ type TaskSpec struct {
 	Containers []*Container `json:"containers,omitempty"`
 
 	// MaxRetries: Optional. Number of retries allowed per task, before
-	// marking this job failed.
+	// marking this job failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 
 	// ServiceAccountName: Optional. Email address of the IAM service
@@ -4091,12 +4217,11 @@ type TaskSpec struct {
 	// TimeoutSeconds: Optional. Duration in seconds the task may be active
 	// before the system will actively try to mark it failed and kill
 	// associated containers. This applies per attempt of a task, meaning
-	// each retry can run for the full timeout.
+	// each retry can run for the full timeout. Defaults to 600 seconds.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty,string"`
 
 	// Volumes: Optional. List of volumes that can be mounted by containers
-	// belonging to the task. More info:
-	// https://kubernetes.io/docs/concepts/storage/volumes
+	// belonging to the task.
 	Volumes []*Volume `json:"volumes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Containers") to
@@ -4190,8 +4315,6 @@ func (s *TaskStatus) MarshalJSON() ([]byte, error) {
 // have when created from a template.
 type TaskTemplateSpec struct {
 	// Spec: Optional. Specification of the desired behavior of the task.
-	// More info:
-	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 	Spec *TaskSpec `json:"spec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Spec") to
@@ -4286,33 +4409,29 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // TrafficTarget: TrafficTarget holds a single entry of the routing
 // table for a Route.
 type TrafficTarget struct {
-	// ConfigurationName: ConfigurationName of a configuration to whose
-	// latest revision which will be sent this portion of traffic. When the
-	// "status.latestReadyRevisionName" of the referenced configuration
-	// changes, traffic will automatically migrate from the prior "latest
-	// ready" revision to the new one. This field is never set in Route's
-	// status, only its spec. This is mutually exclusive with RevisionName.
-	// Cloud Run currently supports a single ConfigurationName.
+	// ConfigurationName: [Deprecated] Not supported in Cloud Run. It must
+	// be empty.
 	ConfigurationName string `json:"configurationName,omitempty"`
 
-	// LatestRevision: Optional. LatestRevision may be provided to indicate
-	// that the latest ready Revision of the Configuration should be used
-	// for this traffic target. When provided LatestRevision must be true if
-	// RevisionName is empty; it must be false when RevisionName is
-	// non-empty.
+	// LatestRevision: Uses the "status.latestReadyRevisionName" of the
+	// Service to determine the traffic target. When it changes, traffic
+	// will automatically migrate from the prior "latest ready" revision to
+	// the new one. This field must be false if RevisionName is set. This
+	// field defaults to true otherwise. If the field is set to true on
+	// Status, this means that the Revision was resolved from the Service's
+	// latest ready revision.
 	LatestRevision bool `json:"latestRevision,omitempty"`
 
 	// Percent: Percent specifies percent of the traffic to this Revision or
 	// Configuration. This defaults to zero if unspecified.
 	Percent int64 `json:"percent,omitempty"`
 
-	// RevisionName: RevisionName of a specific revision to which to send
-	// this portion of traffic. This is mutually exclusive with
-	// ConfigurationName.
+	// RevisionName: Points this traffic target to a specific Revision. This
+	// field is mutually exclusive with latest_revision.
 	RevisionName string `json:"revisionName,omitempty"`
 
-	// Tag: Optional. Tag is used to expose a dedicated url for referencing
-	// this target exclusively.
+	// Tag: Tag is used to expose a dedicated url for referencing this
+	// target exclusively.
 	Tag string `json:"tag,omitempty"`
 
 	// Url: Output only. URL displays the URL for accessing tagged traffic
@@ -4349,6 +4468,9 @@ func (s *TrafficTarget) MarshalJSON() ([]byte, error) {
 type Volume struct {
 	// ConfigMap: Not supported in Cloud Run.
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
+
+	// EmptyDir: Ephemeral storage used as a shared volume.
+	EmptyDir *EmptyDirVolumeSource `json:"emptyDir,omitempty"`
 
 	// Name: Volume's name. In Cloud Run Fully Managed, the name 'cloudsql'
 	// is reserved.
@@ -4534,17 +4656,17 @@ func (c *NamespacesAuthorizeddomainsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAuthorizedDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4713,17 +4835,17 @@ func (c *NamespacesConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Con
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Configuration{
 		ServerResponse: googleapi.ServerResponse{
@@ -4911,17 +5033,17 @@ func (c *NamespacesConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListConfigurationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5097,17 +5219,17 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DomainMapping{
 		ServerResponse: googleapi.ServerResponse{
@@ -5135,7 +5257,7 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -5272,17 +5394,17 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -5320,7 +5442,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -5441,17 +5563,17 @@ func (c *NamespacesDomainmappingsGetCall) Do(opts ...googleapi.CallOption) (*Dom
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DomainMapping{
 		ServerResponse: googleapi.ServerResponse{
@@ -5474,7 +5596,7 @@ func (c *NamespacesDomainmappingsGetCall) Do(opts ...googleapi.CallOption) (*Dom
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -5644,17 +5766,17 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainMappingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5703,7 +5825,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -5821,17 +5943,17 @@ func (c *NamespacesExecutionsCancelCall) Do(opts ...googleapi.CallOption) (*Exec
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -5912,9 +6034,7 @@ func (c *NamespacesExecutionsDeleteCall) Kind(kind string) *NamespacesExecutions
 
 // PropagationPolicy sets the optional parameter "propagationPolicy":
 // Specifies the propagation policy of delete. Cloud Run currently
-// ignores this setting, and deletes in the background. Please see
-// https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/
-// for more information.
+// ignores this setting.
 func (c *NamespacesExecutionsDeleteCall) PropagationPolicy(propagationPolicy string) *NamespacesExecutionsDeleteCall {
 	c.urlParams_.Set("propagationPolicy", propagationPolicy)
 	return c
@@ -5982,17 +6102,17 @@ func (c *NamespacesExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Stat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -6032,7 +6152,7 @@ func (c *NamespacesExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Stat
 	//       "type": "string"
 	//     },
 	//     "propagationPolicy": {
-	//       "description": "Optional. Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background. Please see https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for more information.",
+	//       "description": "Optional. Specifies the propagation policy of delete. Cloud Run currently ignores this setting.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6145,17 +6265,17 @@ func (c *NamespacesExecutionsGetCall) Do(opts ...googleapi.CallOption) (*Executi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -6343,17 +6463,17 @@ func (c *NamespacesExecutionsListCall) Do(opts ...googleapi.CallOption) (*ListEx
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListExecutionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6520,17 +6640,17 @@ func (c *NamespacesJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -6681,17 +6801,17 @@ func (c *NamespacesJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Status, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -6844,17 +6964,17 @@ func (c *NamespacesJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -7042,17 +7162,17 @@ func (c *NamespacesJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7223,17 +7343,17 @@ func (c *NamespacesJobsReplaceJobCall) Do(opts ...googleapi.CallOption) (*Job, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
@@ -7367,17 +7487,17 @@ func (c *NamespacesJobsRunCall) Do(opts ...googleapi.CallOption) (*Execution, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Execution{
 		ServerResponse: googleapi.ServerResponse{
@@ -7467,9 +7587,7 @@ func (c *NamespacesRevisionsDeleteCall) Kind(kind string) *NamespacesRevisionsDe
 
 // PropagationPolicy sets the optional parameter "propagationPolicy":
 // Specifies the propagation policy of delete. Cloud Run currently
-// ignores this setting, and deletes in the background. Please see
-// https://kubernetes.io/docs/concepts/architecture/garbage-collection/
-// for more information.
+// ignores this setting, and deletes in the background.
 func (c *NamespacesRevisionsDeleteCall) PropagationPolicy(propagationPolicy string) *NamespacesRevisionsDeleteCall {
 	c.urlParams_.Set("propagationPolicy", propagationPolicy)
 	return c
@@ -7537,17 +7655,17 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -7592,7 +7710,7 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 	//       "type": "string"
 	//     },
 	//     "propagationPolicy": {
-	//       "description": "Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background. Please see https://kubernetes.io/docs/concepts/architecture/garbage-collection/ for more information.",
+	//       "description": "Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7706,17 +7824,17 @@ func (c *NamespacesRevisionsGetCall) Do(opts ...googleapi.CallOption) (*Revision
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Revision{
 		ServerResponse: googleapi.ServerResponse{
@@ -7909,17 +8027,17 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRevisionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8094,17 +8212,17 @@ func (c *NamespacesRoutesGetCall) Do(opts ...googleapi.CallOption) (*Route, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Route{
 		ServerResponse: googleapi.ServerResponse{
@@ -8297,17 +8415,17 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRoutesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8487,17 +8605,17 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -8561,7 +8679,8 @@ type NamespacesServicesDeleteCall struct {
 //
 //   - name: The fully qualified name of the service to delete. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -8663,17 +8782,17 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -8711,7 +8830,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -8749,7 +8868,8 @@ type NamespacesServicesGetCall struct {
 //
 //   - name: The fully qualified name of the service to retrieve. It can
 //     be any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -8835,17 +8955,17 @@ func (c *NamespacesServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -8868,7 +8988,7 @@ func (c *NamespacesServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9036,17 +9156,17 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9142,7 +9262,8 @@ type NamespacesServicesReplaceServiceCall struct {
 //
 //   - name: The fully qualified name of the service to replace. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -9229,17 +9350,17 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -9267,7 +9388,7 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9385,17 +9506,17 @@ func (c *NamespacesTasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -9595,17 +9716,17 @@ func (c *NamespacesTasksListCall) Do(opts ...googleapi.CallOption) (*ListTasksRe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTasksResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9792,17 +9913,17 @@ func (c *ProjectsAuthorizeddomainsListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAuthorizedDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9996,17 +10117,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10194,17 +10315,17 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAuthorizedDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10373,17 +10494,17 @@ func (c *ProjectsLocationsConfigurationsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Configuration{
 		ServerResponse: googleapi.ServerResponse{
@@ -10571,17 +10692,17 @@ func (c *ProjectsLocationsConfigurationsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListConfigurationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10757,17 +10878,17 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DomainMapping{
 		ServerResponse: googleapi.ServerResponse{
@@ -10795,7 +10916,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10932,17 +11053,17 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -10980,7 +11101,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The name of the domain mapping to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -11101,17 +11222,17 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DomainMapping{
 		ServerResponse: googleapi.ServerResponse{
@@ -11134,7 +11255,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The name of the domain mapping to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/domainmappings/[^/]+$",
 	//       "required": true,
@@ -11304,17 +11425,17 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainMappingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11363,7 +11484,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "description": "Required. The namespace from which the domain mappings should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -11509,17 +11630,17 @@ func (c *ProjectsLocationsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -11658,17 +11779,17 @@ func (c *ProjectsLocationsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -11805,17 +11926,17 @@ func (c *ProjectsLocationsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11905,9 +12026,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Kind(kind string) *ProjectsLocati
 
 // PropagationPolicy sets the optional parameter "propagationPolicy":
 // Specifies the propagation policy of delete. Cloud Run currently
-// ignores this setting, and deletes in the background. Please see
-// https://kubernetes.io/docs/concepts/architecture/garbage-collection/
-// for more information.
+// ignores this setting, and deletes in the background.
 func (c *ProjectsLocationsRevisionsDeleteCall) PropagationPolicy(propagationPolicy string) *ProjectsLocationsRevisionsDeleteCall {
 	c.urlParams_.Set("propagationPolicy", propagationPolicy)
 	return c
@@ -11975,17 +12094,17 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -12030,7 +12149,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "propagationPolicy": {
-	//       "description": "Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background. Please see https://kubernetes.io/docs/concepts/architecture/garbage-collection/ for more information.",
+	//       "description": "Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12144,17 +12263,17 @@ func (c *ProjectsLocationsRevisionsGetCall) Do(opts ...googleapi.CallOption) (*R
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Revision{
 		ServerResponse: googleapi.ServerResponse{
@@ -12347,17 +12466,17 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRevisionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12532,17 +12651,17 @@ func (c *ProjectsLocationsRoutesGetCall) Do(opts ...googleapi.CallOption) (*Rout
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Route{
 		ServerResponse: googleapi.ServerResponse{
@@ -12735,17 +12854,17 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListRoutesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -12925,17 +13044,17 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -12999,7 +13118,8 @@ type ProjectsLocationsServicesDeleteCall struct {
 //
 //   - name: The fully qualified name of the service to delete. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -13101,17 +13221,17 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Status{
 		ServerResponse: googleapi.ServerResponse{
@@ -13149,7 +13269,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13187,7 +13307,8 @@ type ProjectsLocationsServicesGetCall struct {
 //
 //   - name: The fully qualified name of the service to retrieve. It can
 //     be any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -13273,17 +13394,17 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -13306,7 +13427,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13442,17 +13563,17 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -13649,17 +13770,17 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListServicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -13755,7 +13876,8 @@ type ProjectsLocationsServicesReplaceServiceCall struct {
 //
 //   - name: The fully qualified name of the service to replace. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -13842,17 +13964,17 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Service{
 		ServerResponse: googleapi.ServerResponse{
@@ -13880,7 +14002,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13993,17 +14115,17 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -14140,17 +14262,17 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{

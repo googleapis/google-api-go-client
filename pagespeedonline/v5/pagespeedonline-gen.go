@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package pagespeedonline provides access to the PageSpeed Insights API.
 //
 // For product documentation, see: https://developers.google.com/speed/docs/insights/v5/about
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	pagespeedonlineService, err := pagespeedonline.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package pagespeedonline // import "google.golang.org/api/pagespeedonline/v5"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "pagespeedonline:v5"
 const apiName = "pagespeedonline"
@@ -379,6 +393,10 @@ type Environment struct {
 	// device class.
 	BenchmarkIndex float64 `json:"benchmarkIndex,omitempty"`
 
+	// Credits: The version of libraries with which these results were
+	// generated. Ex: axe-core.
+	Credits map[string]string `json:"credits,omitempty"`
+
 	// HostUserAgent: The user agent string of the version of Chrome used.
 	HostUserAgent string `json:"hostUserAgent,omitempty"`
 
@@ -451,6 +469,52 @@ type I18n struct {
 
 func (s *I18n) MarshalJSON() ([]byte, error) {
 	type NoMethod I18n
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LhrEntity: Message containing an Entity.
+type LhrEntity struct {
+	// Category: Optional. An optional category name for the entity.
+	Category string `json:"category,omitempty"`
+
+	// Homepage: Optional. An optional homepage URL of the entity.
+	Homepage string `json:"homepage,omitempty"`
+
+	// IsFirstParty: Optional. An optional flag indicating if the entity is
+	// the first party.
+	IsFirstParty bool `json:"isFirstParty,omitempty"`
+
+	// IsUnrecognized: Optional. An optional flag indicating if the entity
+	// is not recognized.
+	IsUnrecognized bool `json:"isUnrecognized,omitempty"`
+
+	// Name: Required. Name of the entity.
+	Name string `json:"name,omitempty"`
+
+	// Origins: Required. A list of URL origin strings that belong to this
+	// entity.
+	Origins []string `json:"origins,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LhrEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod LhrEntity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -597,6 +661,9 @@ type LighthouseResultV5 struct {
 	// ConfigSettings: The configuration settings for this LHR.
 	ConfigSettings *ConfigSettings `json:"configSettings,omitempty"`
 
+	// Entities: Entity classification data.
+	Entities []*LhrEntity `json:"entities,omitempty"`
+
 	// Environment: Environment settings that were used when making this
 	// LHR.
 	Environment *Environment `json:"environment,omitempty"`
@@ -604,8 +671,16 @@ type LighthouseResultV5 struct {
 	// FetchTime: The time that this run was fetched.
 	FetchTime string `json:"fetchTime,omitempty"`
 
+	// FinalDisplayedUrl: URL displayed on the page after Lighthouse
+	// finishes.
+	FinalDisplayedUrl string `json:"finalDisplayedUrl,omitempty"`
+
 	// FinalUrl: The final resolved url that was audited.
 	FinalUrl string `json:"finalUrl,omitempty"`
+
+	// FullPageScreenshot: Screenshot data of the full page, along with node
+	// rects relevant to the audit results.
+	FullPageScreenshot interface{} `json:"fullPageScreenshot,omitempty"`
 
 	// I18n: The internationalization strings that are required to render
 	// the LHR.
@@ -614,6 +689,10 @@ type LighthouseResultV5 struct {
 	// LighthouseVersion: The lighthouse version that was used to generate
 	// this LHR.
 	LighthouseVersion string `json:"lighthouseVersion,omitempty"`
+
+	// MainDocumentUrl: URL of the main document request of the final
+	// navigation.
+	MainDocumentUrl string `json:"mainDocumentUrl,omitempty"`
 
 	// RequestedUrl: The original requested url.
 	RequestedUrl string `json:"requestedUrl,omitempty"`
@@ -1344,17 +1423,17 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PagespeedApiPagespeedResponseV5{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package discovery provides access to the API Discovery Service.
 //
 // For product documentation, see: https://developers.google.com/discovery/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	discoveryService, err := discovery.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	discoveryService, err := discovery.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	discoveryService, err := discovery.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package discovery // import "google.golang.org/api/discovery/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "discovery:v1"
 const apiName = "discovery"
@@ -282,11 +296,18 @@ type JsonSchema struct {
 	// Default: The default value of this property (if one exists).
 	Default string `json:"default,omitempty"`
 
+	// Deprecated -- Whether the parameter is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Description: A description of this object.
 	Description string `json:"description,omitempty"`
 
 	// Enum: Values this parameter may take (if it is an enum).
 	Enum []string `json:"enum,omitempty"`
+
+	// EnumDeprecated: The deprecation status for the enums. Each position
+	// maps to the corresponding value in the "enum" array.
+	EnumDeprecated []bool `json:"enumDeprecated,omitempty"`
 
 	// EnumDescriptions: The descriptions for the enums. Each position maps
 	// to the corresponding value in the "enum" array.
@@ -484,6 +505,11 @@ type RestDescription struct {
 	// API.
 	DocumentationLink string `json:"documentationLink,omitempty"`
 
+	// Endpoints: A list of location-based endpoint objects for this API.
+	// Each object contains the endpoint URL, location, description and
+	// deprecation status.
+	Endpoints []*RestDescriptionEndpoints `json:"endpoints,omitempty"`
+
 	// Etag: The ETag for this response.
 	Etag string `json:"etag,omitempty"`
 
@@ -664,6 +690,43 @@ func (s *RestDescriptionAuthOauth2Scopes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RestDescriptionEndpoints: A single endpoint object
+type RestDescriptionEndpoints struct {
+	// Deprecated -- Whether this endpoint is deprecated
+	Deprecated bool `json:"deprecated,omitempty"`
+
+	// Description: A string describing the host designated by the URL
+	Description string `json:"description,omitempty"`
+
+	// EndpointUrl: The URL of the endpoint target host
+	EndpointUrl string `json:"endpointUrl,omitempty"`
+
+	// Location: The location of the endpoint
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Deprecated") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestDescriptionEndpoints) MarshalJSON() ([]byte, error) {
+	type NoMethod RestDescriptionEndpoints
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RestDescriptionIcons: Links to 16x16 and 32x32 icons representing the
 // API.
 type RestDescriptionIcons struct {
@@ -697,6 +760,9 @@ func (s *RestDescriptionIcons) MarshalJSON() ([]byte, error) {
 }
 
 type RestMethod struct {
+	// Deprecated -- Whether this method is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Description: Description of this method.
 	Description string `json:"description,omitempty"`
 
@@ -754,7 +820,7 @@ type RestMethod struct {
 	// if the method supports media download.
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -762,10 +828,10 @@ type RestMethod struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Deprecated") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -974,13 +1040,16 @@ func (s *RestMethodResponse) MarshalJSON() ([]byte, error) {
 }
 
 type RestResource struct {
+	// Deprecated -- Whether this resource is deprecated.
+	Deprecated bool `json:"deprecated,omitempty"`
+
 	// Methods: Methods on this resource.
 	Methods map[string]RestMethod `json:"methods,omitempty"`
 
 	// Resources: Sub-resources on this resource.
 	Resources map[string]RestResource `json:"resources,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Methods") to
+	// ForceSendFields is a list of field names (e.g. "Deprecated") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -988,7 +1057,7 @@ type RestResource struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Methods") to include in
+	// NullFields is a list of field names (e.g. "Deprecated") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1102,17 +1171,17 @@ func (c *ApisGetRestCall) Do(opts ...googleapi.CallOption) (*RestDescription, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RestDescription{
 		ServerResponse: googleapi.ServerResponse{
@@ -1257,17 +1326,17 @@ func (c *ApisListCall) Do(opts ...googleapi.CallOption) (*DirectoryList, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DirectoryList{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package sts provides access to the Security Token Service API.
 //
 // For product documentation, see: http://cloud.google.com/iam/docs/workload-identity-federation
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	stsService, err := sts.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	stsService, err := sts.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	stsService, err := sts.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package sts // import "google.golang.org/api/sts/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "sts:v1"
 const apiName = "sts"
@@ -164,7 +178,9 @@ type GoogleIamV1Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -181,9 +197,7 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -302,6 +316,142 @@ type GoogleIdentityStsV1AccessBoundaryRule struct {
 
 func (s *GoogleIdentityStsV1AccessBoundaryRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1AccessBoundaryRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityStsV1ExchangeOauthTokenRequest: Request message for
+// ExchangeOauthToken
+type GoogleIdentityStsV1ExchangeOauthTokenRequest struct {
+	// ClientId: Optional. The client identifier for the OAuth 2.0 client
+	// that requested the provided token. It is REQUIRED when the [client]
+	// (https://www.rfc-editor.org/rfc/rfc6749#section-1.1) is not
+	// authenticating with the authorization server, i.e. when
+	// authentication method is [client authentication]
+	// (https://www.rfc-editor.org/rfc/rfc6749#section-3.2.1).
+	ClientId string `json:"clientId,omitempty"`
+
+	// Code: Optional. The authorization code that was previously from
+	// workforce identity federation's `authorize` endpoint. Required if the
+	// flow is authorization code flow, i.e. if grant_type is
+	// 'authorization_code'
+	Code string `json:"code,omitempty"`
+
+	// CodeVerifier: Optional. The code verifier for the PKCE request,
+	// Google Cloud CLI originally generates it before the authorization
+	// request. PKCE is used to protect authorization code from interception
+	// attacks. See https://www.rfc-editor.org/rfc/rfc7636#section-1.1 and
+	// https://www.rfc-editor.org/rfc/rfc7636#section-3. It is required when
+	// the flow is authorization code flow, i.e. if grant_type is
+	// 'authorization_code'
+	CodeVerifier string `json:"codeVerifier,omitempty"`
+
+	// GrantType: Required. The grant types are as follows: -
+	// 'authorization_code' : an authorization code flow, i.e. exchange of
+	// authorization code for the Oauth access token - 'refresh_token' : a
+	// refresh token flow, i.e. obtain a new access token by providing the
+	// refresh token. See https://www.rfc-editor.org/rfc/rfc6749#section-6
+	GrantType string `json:"grantType,omitempty"`
+
+	// RedirectUri: Optional. redirect_url is required when the flow is
+	// authorization code flow i.e. if grant_type is `authorization_code`
+	// See https://www.rfc-editor.org/rfc/rfc6749#section-4.1.3
+	RedirectUri string `json:"redirectUri,omitempty"`
+
+	// RefreshToken: Optional. The Refresh token is the credential that is
+	// used to obtain a new access token when the current access token
+	// becomes invalid or expires. Required when using refresh token flow,
+	// i.e. if `grant_type` is 'refresh_token' See
+	// https://www.rfc-editor.org/rfc/rfc6749#section-1.5 and
+	// https://www.rfc-editor.org/rfc/rfc6749#section-6
+	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// Scope: Optional. An optional list of scopes that are requested for
+	// the token to be returned. See
+	// https://www.rfc-editor.org/rfc/rfc6749#section-3.3 Must be a list of
+	// space-delimited, case-sensitive strings. Note: Currently, the scopes
+	// in the request are not supported
+	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityStsV1ExchangeOauthTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityStsV1ExchangeOauthTokenRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityStsV1ExchangeOauthTokenResponse: Response message for
+// ExchangeOauthToken. see
+// https://www.rfc-editor.org/rfc/rfc6749#section-5.1
+type GoogleIdentityStsV1ExchangeOauthTokenResponse struct {
+	// AccessToken: An OAuth 2.0 security token, issued by Google, in
+	// response to the Oauth token exchange request for the authorization
+	// code and refresh token flows. The returned access token
+	// (https://www.rfc-editor.org/rfc/rfc6749#section-4.1.4). Tokens can
+	// vary in size, depending, in part, on the size of mapped claims, up to
+	// a maximum of 12288 bytes (12 KB). Google reserves the right to change
+	// the token size and the maximum length at any time.
+	AccessToken string `json:"access_token,omitempty"`
+
+	// ExpiresIn: The amount of time, in seconds, between the time when the
+	// access token was issued and the time when the access token will
+	// expires.
+	ExpiresIn int64 `json:"expires_in,omitempty"`
+
+	// IdToken: Google issued ID token in response to the OAuth token
+	// exchange request for ID token flow.
+	IdToken string `json:"id_token,omitempty"`
+
+	// RefreshToken: A refresh token, issued by Google, in response to the
+	// OAuth token exchange request for refresh token flow
+	RefreshToken string `json:"refresh_token,omitempty"`
+
+	// Scope: A list of scopes associated with the returned token.
+	Scope string `json:"scope,omitempty"`
+
+	// TokenType: The type of token. Field reserved for RFC compliance. See
+	// https://www.rfc-editor.org/rfc/rfc6749#section-5.1
+	TokenType string `json:"token_type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityStsV1ExchangeOauthTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityStsV1ExchangeOauthTokenResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -961,17 +1111,17 @@ func (c *V1IntrospectCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIdentityStsV1IntrospectTokenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1002,6 +1152,141 @@ func (c *V1IntrospectCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV
 
 }
 
+// method id "sts.oauthtoken":
+
+type V1OauthtokenCall struct {
+	s                                            *Service
+	googleidentitystsv1exchangeoauthtokenrequest *GoogleIdentityStsV1ExchangeOauthTokenRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Oauthtoken: Exchanges a credential that represents the resource
+// owner's authorization for a Google-generated [OAuth 2.0 access token]
+// (https://www.rfc-editor.org/rfc/rfc6749#section-5) or [refreshes an
+// accesstoken] (https://www.rfc-editor.org/rfc/rfc6749#section-6)
+// following [the OAuth 2.0 authorization framework]
+// (https://tools.ietf.org/html/rfc8693) The credential can be one of
+// the following: - An authorization code issued by the workforce
+// identity federation authorization endpoint - A refresh token
+// (https://www.rfc-editor.org/rfc/rfc6749#section-10.4) issued by this
+// endpoint This endpoint is only meant to be called by the Google Cloud
+// CLI. Also note that this API only accepts the authorization code
+// issued for workforce pools.
+func (r *V1Service) Oauthtoken(googleidentitystsv1exchangeoauthtokenrequest *GoogleIdentityStsV1ExchangeOauthTokenRequest) *V1OauthtokenCall {
+	c := &V1OauthtokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleidentitystsv1exchangeoauthtokenrequest = googleidentitystsv1exchangeoauthtokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1OauthtokenCall) Fields(s ...googleapi.Field) *V1OauthtokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1OauthtokenCall) Context(ctx context.Context) *V1OauthtokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1OauthtokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1OauthtokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleidentitystsv1exchangeoauthtokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/oauthtoken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sts.oauthtoken" call.
+// Exactly one of *GoogleIdentityStsV1ExchangeOauthTokenResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleIdentityStsV1ExchangeOauthTokenResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V1OauthtokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1ExchangeOauthTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIdentityStsV1ExchangeOauthTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exchanges a credential that represents the resource owner's authorization for a Google-generated [OAuth 2.0 access token] (https://www.rfc-editor.org/rfc/rfc6749#section-5) or [refreshes an accesstoken] (https://www.rfc-editor.org/rfc/rfc6749#section-6) following [the OAuth 2.0 authorization framework] (https://tools.ietf.org/html/rfc8693) The credential can be one of the following: - An authorization code issued by the workforce identity federation authorization endpoint - A [refresh token](https://www.rfc-editor.org/rfc/rfc6749#section-10.4) issued by this endpoint This endpoint is only meant to be called by the Google Cloud CLI. Also note that this API only accepts the authorization code issued for workforce pools.",
+	//   "flatPath": "v1/oauthtoken",
+	//   "httpMethod": "POST",
+	//   "id": "sts.oauthtoken",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/oauthtoken",
+	//   "request": {
+	//     "$ref": "GoogleIdentityStsV1ExchangeOauthTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIdentityStsV1ExchangeOauthTokenResponse"
+	//   }
+	// }
+
+}
+
 // method id "sts.token":
 
 type V1TokenCall struct {
@@ -1015,9 +1300,9 @@ type V1TokenCall struct {
 // Token: Exchanges a credential for a Google OAuth 2.0 access token.
 // The token asserts an external identity within an identity pool, or it
 // applies a Credential Access Boundary to a Google access token. Note
-// that workforce pools do not support Credential Access Boundary at the
-// moment. When you call this method, do not send the `Authorization`
-// HTTP header in the request. This method does not require the
+// that workforce pools do not support Credential Access Boundaries.
+// When you call this method, do not send the `Authorization` HTTP
+// header in the request. This method does not require the
 // `Authorization` header, and using the header can cause the request to
 // fail.
 func (r *V1Service) Token(googleidentitystsv1exchangetokenrequest *GoogleIdentityStsV1ExchangeTokenRequest) *V1TokenCall {
@@ -1092,17 +1377,17 @@ func (c *V1TokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1Exch
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIdentityStsV1ExchangeTokenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1116,7 +1401,7 @@ func (c *V1TokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1Exch
 	}
 	return ret, nil
 	// {
-	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within an identity pool, or it applies a Credential Access Boundary to a Google access token. Note that workforce pools do not support Credential Access Boundary at the moment. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
+	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within an identity pool, or it applies a Credential Access Boundary to a Google access token. Note that workforce pools do not support Credential Access Boundaries. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
 	//   "flatPath": "v1/token",
 	//   "httpMethod": "POST",
 	//   "id": "sts.token",

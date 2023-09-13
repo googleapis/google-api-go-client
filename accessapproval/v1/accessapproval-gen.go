@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,7 +6,18 @@
 
 // Package accessapproval provides access to the Access Approval API.
 //
-// For product documentation, see: https://cloud.google.com/cloud-provider-access-management/access-approval/docs
+// For product documentation, see: https://cloud.google.com/assured-workloads/access-approval/docs
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	accessapprovalService, err := accessapproval.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	accessapprovalService, err := accessapproval.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	accessapprovalService, err := accessapproval.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package accessapproval // import "google.golang.org/api/accessapproval/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "accessapproval:v1"
 const apiName = "accessapproval"
@@ -304,6 +318,16 @@ type AccessApprovalSettings struct {
 	// resources of that resource. A maximum of 50 email addresses are
 	// allowed.
 	NotificationEmails []string `json:"notificationEmails,omitempty"`
+
+	// PreferNoBroadApprovalRequests: This preference is communicated to
+	// Google personnel when sending an approval request but can be
+	// overridden if necessary.
+	PreferNoBroadApprovalRequests bool `json:"preferNoBroadApprovalRequests,omitempty"`
+
+	// PreferredRequestExpirationDays: This preference is shared with Google
+	// personnel, but can be overridden if said personnel deems necessary.
+	// The approver ultimately can set the expiration at approval time.
+	PreferredRequestExpirationDays int64 `json:"preferredRequestExpirationDays,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -626,28 +650,30 @@ type Empty struct {
 type EnrolledService struct {
 	// CloudProduct: The product for which Access Approval will be enrolled.
 	// Allowed values are listed below (case-sensitive): * all * GA * App
-	// Engine * BigQuery * Cloud Bigtable * Cloud Key Management Service *
-	// Compute Engine * Cloud Dataflow * Cloud Dataproc * Cloud DLP * Cloud
-	// EKM * Cloud HSM * Cloud Identity and Access Management * Cloud
-	// Logging * Cloud Pub/Sub * Cloud Spanner * Cloud SQL * Cloud Storage *
-	// Google Kubernetes Engine * Organization Policy Serivice * Persistent
-	// Disk * Resource Manager * Secret Manager * Speaker ID Note: These
-	// values are supported as input for legacy purposes, but will not be
-	// returned from the API. * all * ga-only * appengine.googleapis.com *
-	// bigquery.googleapis.com * bigtable.googleapis.com *
-	// container.googleapis.com * cloudkms.googleapis.com *
-	// cloudresourcemanager.googleapis.com * cloudsql.googleapis.com *
-	// compute.googleapis.com * dataflow.googleapis.com *
-	// dataproc.googleapis.com * dlp.googleapis.com * iam.googleapis.com *
-	// logging.googleapis.com * orgpolicy.googleapis.com *
-	// pubsub.googleapis.com * spanner.googleapis.com *
-	// secretmanager.googleapis.com * speakerid.googleapis.com *
-	// storage.googleapis.com Calls to UpdateAccessApprovalSettings using
-	// 'all' or any of the XXX.googleapis.com will be translated to the
-	// associated product name ('all', 'App Engine', etc.). Note: 'all' will
-	// enroll the resource in all products supported at both 'GA' and
-	// 'Preview' levels. More information about levels of support is
-	// available at
+	// Engine * Artifact Registry * BigQuery * Certificate Authority Service
+	// * Cloud Bigtable * Cloud Key Management Service * Compute Engine *
+	// Cloud Composer * Cloud Dataflow * Cloud Dataproc * Cloud DLP * Cloud
+	// EKM * Cloud Firestore * Cloud HSM * Cloud Identity and Access
+	// Management * Cloud Logging * Cloud NAT * Cloud Pub/Sub * Cloud
+	// Spanner * Cloud SQL * Cloud Storage * Eventarc * Google Kubernetes
+	// Engine * Organization Policy Serivice * Persistent Disk * Resource
+	// Manager * Secret Manager * Speaker ID Note: These values are
+	// supported as input for legacy purposes, but will not be returned from
+	// the API. * all * ga-only * appengine.googleapis.com *
+	// artifactregistry.googleapis.com * bigquery.googleapis.com *
+	// bigtable.googleapis.com * container.googleapis.com *
+	// cloudkms.googleapis.com * cloudresourcemanager.googleapis.com *
+	// cloudsql.googleapis.com * compute.googleapis.com *
+	// dataflow.googleapis.com * dataproc.googleapis.com *
+	// dlp.googleapis.com * iam.googleapis.com * logging.googleapis.com *
+	// orgpolicy.googleapis.com * pubsub.googleapis.com *
+	// spanner.googleapis.com * secretmanager.googleapis.com *
+	// speakerid.googleapis.com * storage.googleapis.com Calls to
+	// UpdateAccessApprovalSettings using 'all' or any of the
+	// XXX.googleapis.com will be translated to the associated product name
+	// ('all', 'App Engine', etc.). Note: 'all' will enroll the resource in
+	// all products supported at both 'GA' and 'Preview' levels. More
+	// information about levels of support is available at
 	// https://cloud.google.com/access-approval/docs/supported-services
 	CloudProduct string `json:"cloudProduct,omitempty"`
 
@@ -884,17 +910,17 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1032,17 +1058,17 @@ func (c *FoldersGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -1180,17 +1206,17 @@ func (c *FoldersGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Access
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalServiceAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -1338,17 +1364,17 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -1489,17 +1515,17 @@ func (c *FoldersApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -1636,17 +1662,17 @@ func (c *FoldersApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -1788,17 +1814,17 @@ func (c *FoldersApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*Appr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -1931,17 +1957,17 @@ func (c *FoldersApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -2110,17 +2136,17 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListApprovalRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2285,17 +2311,17 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2433,17 +2459,17 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2581,17 +2607,17 @@ func (c *OrganizationsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalServiceAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -2739,17 +2765,17 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.Cal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -2890,17 +2916,17 @@ func (c *OrganizationsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3037,17 +3063,17 @@ func (c *OrganizationsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3189,17 +3215,17 @@ func (c *OrganizationsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3332,17 +3358,17 @@ func (c *OrganizationsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3511,17 +3537,17 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListApprovalRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3686,17 +3712,17 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3834,17 +3860,17 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -3982,17 +4008,17 @@ func (c *ProjectsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Acces
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalServiceAccount{
 		ServerResponse: googleapi.ServerResponse{
@@ -4140,17 +4166,17 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AccessApprovalSettings{
 		ServerResponse: googleapi.ServerResponse{
@@ -4291,17 +4317,17 @@ func (c *ProjectsApprovalRequestsApproveCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -4438,17 +4464,17 @@ func (c *ProjectsApprovalRequestsDismissCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -4590,17 +4616,17 @@ func (c *ProjectsApprovalRequestsGetCall) Do(opts ...googleapi.CallOption) (*App
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -4733,17 +4759,17 @@ func (c *ProjectsApprovalRequestsInvalidateCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ApprovalRequest{
 		ServerResponse: googleapi.ServerResponse{
@@ -4912,17 +4938,17 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListApprovalRequestsResponse{
 		ServerResponse: googleapi.ServerResponse{

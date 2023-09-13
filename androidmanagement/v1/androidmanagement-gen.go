@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package androidmanagement provides access to the Android Management API.
 //
 // For product documentation, see: https://developers.google.com/android/management
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	androidmanagementService, err := androidmanagement.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package androidmanagement // import "google.golang.org/api/androidmanagement/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "androidmanagement:v1"
 const apiName = "androidmanagement"
@@ -118,6 +132,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Enterprises = NewEnterprisesService(s)
+	s.ProvisioningInfo = NewProvisioningInfoService(s)
 	s.SignupUrls = NewSignupUrlsService(s)
 	return s, nil
 }
@@ -128,6 +143,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Enterprises *EnterprisesService
+
+	ProvisioningInfo *ProvisioningInfoService
 
 	SignupUrls *SignupUrlsService
 }
@@ -229,6 +246,15 @@ func NewEnterprisesWebTokensService(s *Service) *EnterprisesWebTokensService {
 }
 
 type EnterprisesWebTokensService struct {
+	s *Service
+}
+
+func NewProvisioningInfoService(s *Service) *ProvisioningInfoService {
+	rs := &ProvisioningInfoService{s: s}
+	return rs
+}
+
+type ProvisioningInfoService struct {
 	s *Service
 }
 
@@ -811,7 +837,10 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApplicationPolicy: Policy for an individual app.
+// ApplicationPolicy: Policy for an individual app. Note: Application
+// availability on a given device cannot be changed using this policy if
+// installAppsDisabled is enabled. The maximum number of applications
+// that you can specify per enterprise policy is 3,000.
 type ApplicationPolicy struct {
 	// AccessibleTrackIds: List of the app’s track IDs that a device
 	// belonging to the enterprise can access. If the list contains multiple
@@ -896,7 +925,8 @@ type ApplicationPolicy struct {
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
 	// DelegatedScopes: The scopes delegated to the app from Android Device
-	// Policy.
+	// Policy. These provide additional privileges for the applications they
+	// are applied to.
 	//
 	// Possible values:
 	//   "DELEGATED_SCOPE_UNSPECIFIED" - No delegation scope specified.
@@ -933,6 +963,19 @@ type ApplicationPolicy struct {
 	// Supported for fully managed devices and company-owned devices with a
 	// work profile on Android 12 and above. When delegation is supported
 	// and set, SECURITY_LOGS is ignored.
+	//   "CERT_SELECTION" - Grants access to selection of KeyChain
+	// certificates on behalf of requesting apps. Once granted, the
+	// delegated application will start receiving
+	// DelegatedAdminReceiver#onChoosePrivateKeyAlias
+	// (https://developer.android.com/reference/android/app/admin/DelegatedAdminReceiver#onChoosePrivateKeyAlias%28android.content.Context,%20android.content.Intent,%20int,%20android.net.Uri,%20java.lang.String%29).
+	// Allows the delegated application to call grantKeyPairToApp
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#grantKeyPairToApp%28android.content.ComponentName,%20java.lang.String,%20java.lang.String%29)
+	// and revokeKeyPairFromApp
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#revokeKeyPairFromApp%28android.content.ComponentName,%20java.lang.String,%20java.lang.String%29)
+	// methods. There can be at most one app that has this delegation.
+	// choosePrivateKeyRules must be empty and privateKeySelectionEnabled
+	// has no effect if certificate selection is delegated to an
+	// application.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
 
 	// Disabled: Whether the app is disabled. When disabled, the app data is
@@ -953,7 +996,8 @@ type ApplicationPolicy struct {
 	//   "FORCE_INSTALLED" - The app is automatically installed and can't be
 	// removed by the user.
 	//   "BLOCKED" - The app is blocked and can't be installed. If the app
-	// was installed under a previous policy, it will be uninstalled.
+	// was installed under a previous policy, it will be uninstalled. This
+	// also blocks its instant app functionality.
 	//   "AVAILABLE" - The app is available to install.
 	//   "REQUIRED_FOR_SETUP" - The app is automatically installed and can't
 	// be removed by the user and will prevent setup from completion until
@@ -968,7 +1012,7 @@ type ApplicationPolicy struct {
 
 	// LockTaskAllowed: Whether the app is allowed to lock itself in
 	// full-screen mode. DEPRECATED. Use InstallType KIOSK or
-	// kioskCustomLauncherEnabled to to configure a dedicated device.
+	// kioskCustomLauncherEnabled to configure a dedicated device.
 	LockTaskAllowed bool `json:"lockTaskAllowed,omitempty"`
 
 	// ManagedConfiguration: Managed configuration applied to the app. The
@@ -1003,6 +1047,20 @@ type ApplicationPolicy struct {
 	// These values override the default_permission_policy and
 	// permission_grants which apply to all apps.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
+
+	// WorkProfileWidgets: Specifies whether the app installed in the work
+	// profile is allowed to add widgets to the home screen.
+	//
+	// Possible values:
+	//   "WORK_PROFILE_WIDGETS_UNSPECIFIED" - Unspecified. Defaults to
+	// work_profile_widgets_default
+	//   "WORK_PROFILE_WIDGETS_ALLOWED" - Work profile widgets are allowed.
+	// This means the application will be able to add widgets to the home
+	// screen.
+	//   "WORK_PROFILE_WIDGETS_DISALLOWED" - Work profile widgets are
+	// disallowed. This means the application will not be able to add
+	// widgets to the home screen.
+	WorkProfileWidgets string `json:"workProfileWidgets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessibleTrackIds")
 	// to unconditionally include in API requests. By default, fields with
@@ -1045,8 +1103,8 @@ type ApplicationReport struct {
 	// DisplayName: The display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Events: List of app events. The most recent 20 events are stored in
-	// the list.
+	// Events: The list of app events which have occurred in the last 30
+	// hours.
 	Events []*ApplicationEvent `json:"events,omitempty"`
 
 	// InstallerPackageName: The package name of the app that installed this
@@ -1078,6 +1136,15 @@ type ApplicationReport struct {
 	//   "REMOVED" - App was removed from the device
 	//   "INSTALLED" - App is installed on the device
 	State string `json:"state,omitempty"`
+
+	// UserFacingType: Whether the app is user facing.
+	//
+	// Possible values:
+	//   "USER_FACING_TYPE_UNSPECIFIED" - App user facing type is
+	// unspecified.
+	//   "NOT_USER_FACING" - App is not user facing.
+	//   "USER_FACING" - App is user facing.
+	UserFacingType string `json:"userFacingType,omitempty"`
 
 	// VersionCode: The app version code, which can be used to determine
 	// whether one version is more recent than another.
@@ -1510,6 +1577,28 @@ type Command struct {
 	//   "LOCK_NOW" - Lock the device after password reset.
 	ResetPasswordFlags []string `json:"resetPasswordFlags,omitempty"`
 
+	// StartLostModeParams: Parameters for the START_LOST_MODE command to
+	// put the device into lost mode. See StartLostModeParams. If this is
+	// set, then it is suggested that type should not be set. In this case,
+	// the server automatically sets it to START_LOST_MODE. It is also
+	// acceptable to explicitly set type to START_LOST_MODE.
+	StartLostModeParams *StartLostModeParams `json:"startLostModeParams,omitempty"`
+
+	// StartLostModeStatus: Output only. Status of the START_LOST_MODE
+	// command to put the device into lost mode. See StartLostModeStatus.
+	StartLostModeStatus *StartLostModeStatus `json:"startLostModeStatus,omitempty"`
+
+	// StopLostModeParams: Parameters for the STOP_LOST_MODE command to take
+	// the device out of lost mode. See StopLostModeParams. If this is set,
+	// then it is suggested that type should not be set. In this case, the
+	// server automatically sets it to STOP_LOST_MODE. It is also acceptable
+	// to explicitly set type to STOP_LOST_MODE.
+	StopLostModeParams *StopLostModeParams `json:"stopLostModeParams,omitempty"`
+
+	// StopLostModeStatus: Output only. Status of the STOP_LOST_MODE command
+	// to take the device out of lost mode. See StopLostModeStatus.
+	StopLostModeStatus *StopLostModeStatus `json:"stopLostModeStatus,omitempty"`
+
 	// Type: The type of the command.
 	//
 	// Possible values:
@@ -1529,6 +1618,12 @@ type Command struct {
 	// can store data outside of its application data, for example in
 	// external storage or in a user dictionary. See also
 	// clear_apps_data_params.
+	//   "START_LOST_MODE" - Puts the device into lost mode. Only supported
+	// on fully managed devices or organization-owned devices with a managed
+	// profile. See also start_lost_mode_params.
+	//   "STOP_LOST_MODE" - Takes the device out of lost mode. Only
+	// supported on fully managed devices or organization-owned devices with
+	// a managed profile. See also stop_lost_mode_params.
 	Type string `json:"type,omitempty"`
 
 	// UserName: The resource name of the user that owns the device in the
@@ -1777,7 +1872,10 @@ func (s *ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CrossProfilePolicies: Cross-profile policies applied on the device.
+// CrossProfilePolicies: Controls the data from the work profile that
+// can be accessed from the personal profile and vice versa. A
+// nonComplianceDetail with MANAGEMENT_MODE is reported if the device
+// does not have a work profile.
 type CrossProfilePolicies struct {
 	// CrossProfileCopyPaste: Whether text copied from one profile (personal
 	// or work) can be pasted in the other profile.
@@ -1828,6 +1926,24 @@ type CrossProfilePolicies struct {
 	// work profile contacts to appear in personal profile contact searches
 	// and incoming calls
 	ShowWorkContactsInPersonalProfile string `json:"showWorkContactsInPersonalProfile,omitempty"`
+
+	// WorkProfileWidgetsDefault: Specifies the default behaviour for work
+	// profile widgets. If the policy does not specify work_profile_widgets
+	// for a specific application, it will behave according to the value
+	// specified here.
+	//
+	// Possible values:
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_UNSPECIFIED" - Unspecified. Defaults
+	// to WORK_PROFILE_WIDGETS_DEFAULT_DISALLOWED.
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_ALLOWED" - Work profile widgets are
+	// allowed by default. This means that if the policy does not specify
+	// work_profile_widgets as WORK_PROFILE_WIDGETS_DISALLOWED for the
+	// application, it will be able to add widgets to the home screen.
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_DISALLOWED" - Work profile widgets
+	// are disallowed by default. This means that if the policy does not
+	// specify work_profile_widgets as WORK_PROFILE_WIDGETS_ALLOWED for the
+	// application, it will be unable to add widgets to the home screen.
+	WorkProfileWidgetsDefault string `json:"workProfileWidgetsDefault,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CrossProfileCopyPaste") to unconditionally include in API requests.
@@ -1971,6 +2087,8 @@ type Device struct {
 	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
+	//   "LOST" - The device is lost. This state is only possible on
+	// organization-owned devices.
 	AppliedState string `json:"appliedState,omitempty"`
 
 	// CommonCriteriaModeInfo: Information about Common Criteria
@@ -2114,6 +2232,8 @@ type Device struct {
 	// the server.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
+	//   "LOST" - The device is lost. This state is only possible on
+	// organization-owned devices.
 	State string `json:"state,omitempty"`
 
 	// SystemProperties: Map of selected system properties name and value
@@ -2151,6 +2271,176 @@ type Device struct {
 
 func (s *Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceConnectivityManagement: Covers controls for device connectivity
+// such as Wi-Fi, USB data access, keyboard/mouse connections, and more.
+type DeviceConnectivityManagement struct {
+	// ConfigureWifi: Controls Wi-Fi configuring privileges. Based on the
+	// option set, user will have either full or limited or no control in
+	// configuring Wi-Fi networks.
+	//
+	// Possible values:
+	//   "CONFIGURE_WIFI_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_CONFIGURING_WIFI unless wifiConfigDisabled is set to true. If
+	// wifiConfigDisabled is set to true, this is equivalent to
+	// DISALLOW_CONFIGURING_WIFI.
+	//   "ALLOW_CONFIGURING_WIFI" - The user is allowed to configure Wi-Fi.
+	// wifiConfigDisabled is ignored.
+	//   "DISALLOW_ADD_WIFI_CONFIG" - Adding new Wi-Fi configurations is
+	// disallowed. The user is only able to switch between already
+	// configured networks. Supported on Android 13 and above, on fully
+	// managed devices and work profiles on company-owned devices. If the
+	// setting is not supported, ALLOW_CONFIGURING_WIFI is set. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 13. wifiConfigDisabled is ignored.
+	//   "DISALLOW_CONFIGURING_WIFI" - Disallows configuring Wi-Fi networks.
+	// The setting wifiConfigDisabled is ignored when this value is set.
+	// Supported on fully managed devices and work profile on company-owned
+	// devices, on all supported API levels. For fully managed devices,
+	// setting this removes all configured networks and retains only the
+	// networks configured using openNetworkConfiguration policy. For work
+	// profiles on company-owned devices, existing configured networks are
+	// not affected and the user is not allowed to add, remove, or modify
+	// Wi-Fi networks. Note: If a network connection can't be made at boot
+	// time and configuring Wi-Fi is disabled then network escape hatch will
+	// be shown in order to refresh the device policy (see
+	// networkEscapeHatchEnabled).
+	ConfigureWifi string `json:"configureWifi,omitempty"`
+
+	// TetheringSettings: Controls tethering settings. Based on the value
+	// set, the user is partially or fully disallowed from using different
+	// forms of tethering.
+	//
+	// Possible values:
+	//   "TETHERING_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_ALL_TETHERING unless tetheringConfigDisabled is set to true. If
+	// tetheringConfigDisabled is set to true, this is equivalent to
+	// DISALLOW_ALL_TETHERING.
+	//   "ALLOW_ALL_TETHERING" - Allows configuration and use of all forms
+	// of tethering. tetheringConfigDisabled is ignored.
+	//   "DISALLOW_WIFI_TETHERING" - Disallows the user from using Wi-Fi
+	// tethering. Supported on company owned devices running Android 13 and
+	// above. If the setting is not supported, ALLOW_ALL_TETHERING will be
+	// set. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13. tetheringConfigDisabled is ignored.
+	//   "DISALLOW_ALL_TETHERING" - Disallows all forms of tethering.
+	// Supported on fully managed devices and work profile on company-owned
+	// devices, on all supported android versions. The setting
+	// tetheringConfigDisabled is ignored.
+	TetheringSettings string `json:"tetheringSettings,omitempty"`
+
+	// UsbDataAccess: Controls what files and/or data can be transferred via
+	// USB. Supported only on company-owned devices.
+	//
+	// Possible values:
+	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_USB_DATA_TRANSFER, unless usbFileTransferDisabled is set to
+	// true. If usbFileTransferDisabled is set to true, this is equivalent
+	// to DISALLOW_USB_FILE_TRANSFER.
+	//   "ALLOW_USB_DATA_TRANSFER" - All types of USB data transfers are
+	// allowed. usbFileTransferDisabled is ignored.
+	//   "DISALLOW_USB_FILE_TRANSFER" - Transferring files over USB is
+	// disallowed. Other types of USB data connections, such as mouse and
+	// keyboard connection, are allowed. usbFileTransferDisabled is ignored.
+	//   "DISALLOW_USB_DATA_TRANSFER" - When set, all types of USB data
+	// transfers are prohibited. Supported for devices running Android 12 or
+	// above with USB HAL 1.3 or above. If the setting is not supported,
+	// DISALLOW_USB_FILE_TRANSFER will be set. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 12. A
+	// nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if the
+	// device does not have USB HAL 1.3 or above. usbFileTransferDisabled is
+	// ignored.
+	UsbDataAccess string `json:"usbDataAccess,omitempty"`
+
+	// WifiDirectSettings: Controls configuring and using Wi-Fi direct
+	// settings. Supported on company-owned devices running Android 13 and
+	// above.
+	//
+	// Possible values:
+	//   "WIFI_DIRECT_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
+	// ALLOW_WIFI_DIRECT
+	//   "ALLOW_WIFI_DIRECT" - The user is allowed to use Wi-Fi direct.
+	//   "DISALLOW_WIFI_DIRECT" - The user is not allowed to use Wi-Fi
+	// direct. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 13.
+	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigureWifi") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigureWifi") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceConnectivityManagement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceRadioState: Controls for device radio settings.
+type DeviceRadioState struct {
+	// AirplaneModeState: Controls whether airplane mode can be toggled by
+	// the user or not.
+	//
+	// Possible values:
+	//   "AIRPLANE_MODE_STATE_UNSPECIFIED" - Unspecified. Defaults to
+	// AIRPLANE_MODE_USER_CHOICE.
+	//   "AIRPLANE_MODE_USER_CHOICE" - The user is allowed to toggle
+	// airplane mode on or off.
+	//   "AIRPLANE_MODE_DISABLED" - Airplane mode is disabled. The user is
+	// not allowed to toggle airplane mode on. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 9.
+	AirplaneModeState string `json:"airplaneModeState,omitempty"`
+
+	// WifiState: Controls current state of Wi-Fi and if user can change its
+	// state.
+	//
+	// Possible values:
+	//   "WIFI_STATE_UNSPECIFIED" - Unspecified. Defaults to
+	// WIFI_STATE_USER_CHOICE
+	//   "WIFI_STATE_USER_CHOICE" - User is allowed to enable/disable Wi-Fi.
+	//   "WIFI_ENABLED" - Wi-Fi is on and the user is not allowed to turn it
+	// off. A nonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13.
+	//   "WIFI_DISABLED" - Wi-Fi is off and the user is not allowed to turn
+	// it on. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 13.
+	WifiState string `json:"wifiState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AirplaneModeState")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AirplaneModeState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceRadioState) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceRadioState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2328,6 +2618,13 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EnrollmentCompleteEvent: Represents that the device has completed
+// enrollment. User should be in the launcher at this point, device at
+// this point will be compliant and all setup steps have been completed.
+// Intentionally empty.
+type EnrollmentCompleteEvent struct {
+}
+
 // EnrollmentToken: An enrollment token.
 type EnrollmentToken struct {
 	// AdditionalData: Optional, arbitrary data associated with the
@@ -2459,6 +2756,7 @@ type Enterprise struct {
 	EnabledNotificationTypes []string `json:"enabledNotificationTypes,omitempty"`
 
 	// EnterpriseDisplayName: The name of the enterprise displayed to users.
+	// This field has a maximum length of 100 characters.
 	EnterpriseDisplayName string `json:"enterpriseDisplayName,omitempty"`
 
 	// Logo: An image displayed as a logo during device provisioning.
@@ -2520,7 +2818,15 @@ func (s *Enterprise) MarshalJSON() ([]byte, error) {
 
 // ExtensionConfig: Configuration to enable an app as an extension app,
 // with the capability of interacting with Android Device Policy
-// offline.
+// offline. For Android versions 13 and above, extension apps are exempt
+// from battery restrictions so will not be placed into the restricted
+// App Standby Bucket
+// (https://developer.android.com/topic/performance/appstandby#restricted-bucket).
+// Extensions apps are also protected against users clearing their data
+// or force-closing the application, although admins can continue to use
+// the clear app data command
+// (https://developer.android.com/management/reference/rest/v1/enterprises.devices/issueCommand#CommandType)
+// on extension apps if needed for Android 13 and above.
 type ExtensionConfig struct {
 	// NotificationReceiver: Fully qualified class name of the receiver
 	// service class for Android Device Policy to notify the extension app
@@ -2796,6 +3102,58 @@ func (s *HardwareInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *HardwareInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod HardwareInfo
+	var s1 struct {
+		BatteryShutdownTemperatures   []gensupport.JSONFloat64 `json:"batteryShutdownTemperatures"`
+		BatteryThrottlingTemperatures []gensupport.JSONFloat64 `json:"batteryThrottlingTemperatures"`
+		CpuShutdownTemperatures       []gensupport.JSONFloat64 `json:"cpuShutdownTemperatures"`
+		CpuThrottlingTemperatures     []gensupport.JSONFloat64 `json:"cpuThrottlingTemperatures"`
+		GpuShutdownTemperatures       []gensupport.JSONFloat64 `json:"gpuShutdownTemperatures"`
+		GpuThrottlingTemperatures     []gensupport.JSONFloat64 `json:"gpuThrottlingTemperatures"`
+		SkinShutdownTemperatures      []gensupport.JSONFloat64 `json:"skinShutdownTemperatures"`
+		SkinThrottlingTemperatures    []gensupport.JSONFloat64 `json:"skinThrottlingTemperatures"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BatteryShutdownTemperatures = make([]float64, len(s1.BatteryShutdownTemperatures))
+	for i := range s1.BatteryShutdownTemperatures {
+		s.BatteryShutdownTemperatures[i] = float64(s1.BatteryShutdownTemperatures[i])
+	}
+	s.BatteryThrottlingTemperatures = make([]float64, len(s1.BatteryThrottlingTemperatures))
+	for i := range s1.BatteryThrottlingTemperatures {
+		s.BatteryThrottlingTemperatures[i] = float64(s1.BatteryThrottlingTemperatures[i])
+	}
+	s.CpuShutdownTemperatures = make([]float64, len(s1.CpuShutdownTemperatures))
+	for i := range s1.CpuShutdownTemperatures {
+		s.CpuShutdownTemperatures[i] = float64(s1.CpuShutdownTemperatures[i])
+	}
+	s.CpuThrottlingTemperatures = make([]float64, len(s1.CpuThrottlingTemperatures))
+	for i := range s1.CpuThrottlingTemperatures {
+		s.CpuThrottlingTemperatures[i] = float64(s1.CpuThrottlingTemperatures[i])
+	}
+	s.GpuShutdownTemperatures = make([]float64, len(s1.GpuShutdownTemperatures))
+	for i := range s1.GpuShutdownTemperatures {
+		s.GpuShutdownTemperatures[i] = float64(s1.GpuShutdownTemperatures[i])
+	}
+	s.GpuThrottlingTemperatures = make([]float64, len(s1.GpuThrottlingTemperatures))
+	for i := range s1.GpuThrottlingTemperatures {
+		s.GpuThrottlingTemperatures[i] = float64(s1.GpuThrottlingTemperatures[i])
+	}
+	s.SkinShutdownTemperatures = make([]float64, len(s1.SkinShutdownTemperatures))
+	for i := range s1.SkinShutdownTemperatures {
+		s.SkinShutdownTemperatures[i] = float64(s1.SkinShutdownTemperatures[i])
+	}
+	s.SkinThrottlingTemperatures = make([]float64, len(s1.SkinThrottlingTemperatures))
+	for i := range s1.SkinThrottlingTemperatures {
+		s.SkinThrottlingTemperatures[i] = float64(s1.SkinThrottlingTemperatures[i])
+	}
+	return nil
+}
+
 // HardwareStatus: Hardware status. Temperatures may be compared to the
 // temperature thresholds available in hardwareInfo to determine
 // hardware health.
@@ -2850,6 +3208,48 @@ func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
+	type NoMethod HardwareStatus
+	var s1 struct {
+		BatteryTemperatures []gensupport.JSONFloat64 `json:"batteryTemperatures"`
+		CpuTemperatures     []gensupport.JSONFloat64 `json:"cpuTemperatures"`
+		CpuUsages           []gensupport.JSONFloat64 `json:"cpuUsages"`
+		FanSpeeds           []gensupport.JSONFloat64 `json:"fanSpeeds"`
+		GpuTemperatures     []gensupport.JSONFloat64 `json:"gpuTemperatures"`
+		SkinTemperatures    []gensupport.JSONFloat64 `json:"skinTemperatures"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BatteryTemperatures = make([]float64, len(s1.BatteryTemperatures))
+	for i := range s1.BatteryTemperatures {
+		s.BatteryTemperatures[i] = float64(s1.BatteryTemperatures[i])
+	}
+	s.CpuTemperatures = make([]float64, len(s1.CpuTemperatures))
+	for i := range s1.CpuTemperatures {
+		s.CpuTemperatures[i] = float64(s1.CpuTemperatures[i])
+	}
+	s.CpuUsages = make([]float64, len(s1.CpuUsages))
+	for i := range s1.CpuUsages {
+		s.CpuUsages[i] = float64(s1.CpuUsages[i])
+	}
+	s.FanSpeeds = make([]float64, len(s1.FanSpeeds))
+	for i := range s1.FanSpeeds {
+		s.FanSpeeds[i] = float64(s1.FanSpeeds[i])
+	}
+	s.GpuTemperatures = make([]float64, len(s1.GpuTemperatures))
+	for i := range s1.GpuTemperatures {
+		s.GpuTemperatures[i] = float64(s1.GpuTemperatures[i])
+	}
+	s.SkinTemperatures = make([]float64, len(s1.SkinTemperatures))
+	for i := range s1.SkinTemperatures {
+		s.SkinTemperatures[i] = float64(s1.SkinTemperatures[i])
+	}
+	return nil
 }
 
 // IssueCommandResponse: Response on issuing a command. This is
@@ -3460,6 +3860,53 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Location: The device location containing the latitude and longitude.
+type Location struct {
+	// Latitude: The latitude position of the location
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: The longitude position of the location
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Latitude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Location) UnmarshalJSON(data []byte) error {
+	type NoMethod Location
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // LogBufferSizeCriticalEvent: The usageLog buffer on the device has
 // reached 90% of its capacity, therefore older events may be dropped.
 // Intentionally empty.
@@ -3474,6 +3921,45 @@ type LoggingStartedEvent struct {
 // LoggingStoppedEvent: usageLog policy has been disabled. Intentionally
 // empty.
 type LoggingStoppedEvent struct {
+}
+
+// LostModeLocationEvent: A lost mode event containing the device
+// location and battery level as a percentage.
+type LostModeLocationEvent struct {
+	// BatteryLevel: The battery level as a number between 0 and 100
+	// inclusive
+	BatteryLevel int64 `json:"batteryLevel,omitempty"`
+
+	// Location: The device location
+	Location *Location `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatteryLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatteryLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LostModeLocationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod LostModeLocationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LostModeOutgoingPhoneCallEvent: An event indicating an outgoing phone
+// call has been made when a device is in lost mode. Intentionally
+// empty.
+type LostModeOutgoingPhoneCallEvent struct {
 }
 
 // ManagedConfigurationTemplate: The managed configurations template for
@@ -3870,6 +4356,8 @@ type NonComplianceDetail struct {
 	// SDK version is not high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been
 	// updated to the minimum version code specified by policy.
+	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
+	// requirements.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 
 	// PackageName: The package name indicating which app is out of
@@ -3908,6 +4396,9 @@ type NonComplianceDetail struct {
 	// the API level of the Android version running on the device. fieldPath
 	// specifies which field value is not supported. oncWifiContext is set.
 	// nonComplianceReason is set to API_LEVEL.
+	//   "ONC_WIFI_INVALID_ENTERPRISE_CONFIG" - The enterprise Wi-Fi network
+	// is missing either the root CA or domain name. nonComplianceReason is
+	// set to INVALID_VALUE.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -3964,6 +4455,8 @@ type NonComplianceDetailCondition struct {
 	// SDK version is not high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been
 	// updated to the minimum version code specified by policy.
+	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
+	// requirements.
 	NonComplianceReason string `json:"nonComplianceReason,omitempty"`
 
 	// PackageName: The package name of the app that's out of compliance. If
@@ -4086,8 +4579,8 @@ type Operation struct {
 	// operations/{unique_id}.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as Delete, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as Delete, the
 	// response is google.protobuf.Empty. If the original method is standard
 	// Get/Create/Update, the response should be the resource. For other
 	// methods, the response should have the type XxxResponse, where Xxx is
@@ -4605,7 +5098,8 @@ type PersonalUsagePolicies struct {
 	// managed by the user.
 	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
 
-	// CameraDisabled: Whether camera is disabled.
+	// CameraDisabled: If true, the camera is disabled on the personal
+	// profile.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off.
@@ -4632,7 +5126,8 @@ type PersonalUsagePolicies struct {
 	// be installed in the personal profile.
 	PersonalPlayStoreMode string `json:"personalPlayStoreMode,omitempty"`
 
-	// ScreenCaptureDisabled: Whether screen capture is disabled.
+	// ScreenCaptureDisabled: If true, screen capture is disabled for all
+	// users.
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4695,8 +5190,9 @@ type Policy struct {
 	//   "BETA" - The beta track, which provides the latest beta release.
 	AndroidDevicePolicyTracks []string `json:"androidDevicePolicyTracks,omitempty"`
 
-	// AppAutoUpdatePolicy: Deprecated. Use autoUpdateMode instead.When
-	// autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
+	// AppAutoUpdatePolicy: Recommended alternative: autoUpdateMode which is
+	// set per app, provides greater flexibility around update
+	// frequency.When autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
 	// AUTO_UPDATE_HIGH_PRIORITY, this field has no effect.The app auto
 	// update policy, which controls when automatic app updates can be
 	// applied.
@@ -4791,7 +5287,8 @@ type Policy struct {
 	CellBroadcastsConfigDisabled bool `json:"cellBroadcastsConfigDisabled,omitempty"`
 
 	// ChoosePrivateKeyRules: Rules for determining apps' access to private
-	// keys. See ChoosePrivateKeyRule for details.
+	// keys. See ChoosePrivateKeyRule for details. This must be empty if any
+	// application has CERT_SELECTION delegation scope.
 	ChoosePrivateKeyRules []*ChoosePrivateKeyRule `json:"choosePrivateKeyRules,omitempty"`
 
 	// ComplianceRules: Rules declaring which mitigating actions to take
@@ -4831,9 +5328,17 @@ type Policy struct {
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
+	// DeviceConnectivityManagement: Covers controls for device connectivity
+	// such as Wi-Fi, USB data access, keyboard/mouse connections, and more.
+	DeviceConnectivityManagement *DeviceConnectivityManagement `json:"deviceConnectivityManagement,omitempty"`
+
 	// DeviceOwnerLockScreenInfo: The device owner information to be shown
 	// on the lock screen.
 	DeviceOwnerLockScreenInfo *UserFacingMessage `json:"deviceOwnerLockScreenInfo,omitempty"`
+
+	// DeviceRadioState: Covers controls for radio state such as Wi-Fi,
+	// bluetooth, and more.
+	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
 
 	// EncryptionPolicy: Whether encryption is enabled
 	//
@@ -4995,7 +5500,10 @@ type Policy struct {
 	// an app in lock task mode, or the user is otherwise unable to reach
 	// device settings.Note: Setting wifiConfigDisabled to true will
 	// override this setting under specific circumstances. Please see
-	// wifiConfigDisabled for further details.
+	// wifiConfigDisabled for further details. Setting configureWifi to
+	// DISALLOW_CONFIGURING_WIFI will override this setting under specific
+	// circumstances. Please see DISALLOW_CONFIGURING_WIFI for further
+	// details.
 	NetworkEscapeHatchEnabled bool `json:"networkEscapeHatchEnabled,omitempty"`
 
 	// NetworkResetDisabled: Whether resetting network settings is disabled.
@@ -5092,7 +5600,8 @@ type Policy struct {
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
 	// ChoosePrivateKeyRules. For devices below Android P, setting this may
-	// leave enterprise keys vulnerable.
+	// leave enterprise keys vulnerable. This value will have no effect if
+	// any application has CERT_SELECTION delegation scope.
 	PrivateKeySelectionEnabled bool `json:"privateKeySelectionEnabled,omitempty"`
 
 	// RecommendedGlobalProxy: The network-independent global HTTP proxy.
@@ -5170,7 +5679,8 @@ type Policy struct {
 	SystemUpdate *SystemUpdate `json:"systemUpdate,omitempty"`
 
 	// TetheringConfigDisabled: Whether configuring tethering and portable
-	// hotspots is disabled.
+	// hotspots is disabled. If tetheringSettings is set to anything other
+	// than TETHERING_SETTINGS_UNSPECIFIED, this setting is ignored.
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
 
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
@@ -5202,8 +5712,15 @@ type Policy struct {
 	// VpnConfigDisabled: Whether configuring VPN is disabled.
 	VpnConfigDisabled bool `json:"vpnConfigDisabled,omitempty"`
 
-	// WifiConfigDisabled: Whether configuring Wi-Fi access points is
-	// disabled. Note: If a network connection can't be made at boot time
+	// WifiConfigDisabled: Whether configuring Wi-Fi networks is disabled.
+	// Supported on fully managed devices and work profiles on company-owned
+	// devices. For fully managed devices, setting this to true removes all
+	// configured networks and retains only the networks configured using
+	// openNetworkConfiguration. For work profiles on company-owned devices,
+	// existing configured networks are not affected and the user is not
+	// allowed to add, remove, or modify Wi-Fi networks. If configureWifi is
+	// set to anything other than CONFIGURE_WIFI_UNSPECIFIED, this setting
+	// is ignored. Note: If a network connection can't be made at boot time
 	// and configuring Wi-Fi is disabled then network escape hatch will be
 	// shown in order to refresh the device policy (see
 	// networkEscapeHatchEnabled).
@@ -5243,10 +5760,15 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // PolicyEnforcementRule: A rule that defines the actions to take if a
 // device or work profile is not compliant with the policy specified in
-// settingName.
+// settingName. In the case of multiple matching or multiple triggered
+// enforcement rules, a merge will occur with the most severe action
+// being taken. However, all triggered rules are still kept track of:
+// this includes initial trigger time and all associated non-compliance
+// details. In the situation where the most severe enforcement rule is
+// satisfied, the next most appropriate action is applied.
 type PolicyEnforcementRule struct {
-	// BlockAction: An action to block access to apps and data on a fully
-	// managed device or in a work profile. This action also triggers a
+	// BlockAction: An action to block access to apps and data on a company
+	// owned device or in a work profile. This action also triggers a
 	// user-facing notification with information (where possible) on how to
 	// correct the compliance issue. Note: wipeAction must also be
 	// specified.
@@ -5256,7 +5778,7 @@ type PolicyEnforcementRule struct {
 	// applications or passwordPolicies.
 	SettingName string `json:"settingName,omitempty"`
 
-	// WipeAction: An action to reset a fully managed device or delete a
+	// WipeAction: An action to reset a company owned device or delete a
 	// work profile. Note: blockAction must also be specified.
 	WipeAction *WipeAction `json:"wipeAction,omitempty"`
 
@@ -5388,6 +5910,72 @@ func (s *PowerManagementEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ProvisioningInfo: Information about a device that is available during
+// setup.
+type ProvisioningInfo struct {
+	// ApiLevel: The API level of the Android platform version running on
+	// the device.
+	ApiLevel int64 `json:"apiLevel,omitempty"`
+
+	// Brand: The brand of the device. For example, Google.
+	Brand string `json:"brand,omitempty"`
+
+	// Enterprise: The name of the enterprise in the form
+	// enterprises/{enterprise}.
+	Enterprise string `json:"enterprise,omitempty"`
+
+	// ManagementMode: The management mode of the device or profile.
+	//
+	// Possible values:
+	//   "MANAGEMENT_MODE_UNSPECIFIED" - This value is disallowed.
+	//   "DEVICE_OWNER" - Device owner. Android Device Policy has full
+	// control over the device.
+	//   "PROFILE_OWNER" - Profile owner. Android Device Policy has control
+	// over a managed profile on the device.
+	ManagementMode string `json:"managementMode,omitempty"`
+
+	// Model: The model of the device. For example, Asus Nexus 7.
+	Model string `json:"model,omitempty"`
+
+	// Name: The name of this resource in the form
+	// provisioningInfo/{provisioning_info}.
+	Name string `json:"name,omitempty"`
+
+	// Ownership: Ownership of the managed device.
+	//
+	// Possible values:
+	//   "OWNERSHIP_UNSPECIFIED" - Ownership is unspecified.
+	//   "COMPANY_OWNED" - Device is company-owned.
+	//   "PERSONALLY_OWNED" - Device is personally-owned.
+	Ownership string `json:"ownership,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProvisioningInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ProvisioningInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProxyInfo: Configuration info for an HTTP proxy. For a direct proxy,
 // set the host, port, and excluded_hosts fields. For a PAC script
 // proxy, set the pac_uri field.
@@ -5517,7 +6105,9 @@ type SetupAction struct {
 	// an intent containing an extra with key
 	// com.google.android.apps.work.clouddpc.EXTRA_LAUNCHED_AS_SETUP_ACTION
 	// set to the boolean value true to indicate that this is a setup action
-	// flow.
+	// flow. If SetupAction references an app, the corresponding installType
+	// in the application policy must be set as REQUIRED_FOR_SETUP or said
+	// setup will fail.
 	LaunchApp *LaunchAppAction `json:"launchApp,omitempty"`
 
 	// Title: Title of this action.
@@ -5753,6 +6343,93 @@ func (s *SpecificNonComplianceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StartLostModeParams: Parameters associated with the START_LOST_MODE
+// command to put the device into lost mode. At least one of the
+// parameters, not including the organization name, must be provided in
+// order for the device to be put into lost mode.
+type StartLostModeParams struct {
+	// LostEmailAddress: The email address displayed to the user when the
+	// device is in lost mode.
+	LostEmailAddress string `json:"lostEmailAddress,omitempty"`
+
+	// LostMessage: The message displayed to the user when the device is in
+	// lost mode.
+	LostMessage *UserFacingMessage `json:"lostMessage,omitempty"`
+
+	// LostOrganization: The organization name displayed to the user when
+	// the device is in lost mode.
+	LostOrganization *UserFacingMessage `json:"lostOrganization,omitempty"`
+
+	// LostPhoneNumber: The phone number displayed to the user when the
+	// device is in lost mode.
+	LostPhoneNumber *UserFacingMessage `json:"lostPhoneNumber,omitempty"`
+
+	// LostStreetAddress: The street address displayed to the user when the
+	// device is in lost mode.
+	LostStreetAddress *UserFacingMessage `json:"lostStreetAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LostEmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LostEmailAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartLostModeParams) MarshalJSON() ([]byte, error) {
+	type NoMethod StartLostModeParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StartLostModeStatus: Status of the START_LOST_MODE command to put the
+// device into lost mode.
+type StartLostModeStatus struct {
+	// Status: The status. See StartLostModeStatus.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "SUCCESS" - The device was put into lost mode.
+	//   "RESET_PASSWORD_RECENTLY" - The device could not be put into lost
+	// mode because the admin reset the device's password recently.
+	//   "USER_EXIT_LOST_MODE_RECENTLY" - The device could not be put into
+	// lost mode because the user exited lost mode recently.
+	//   "ALREADY_IN_LOST_MODE" - The device is already in lost mode.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartLostModeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod StartLostModeStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The Status type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -5863,6 +6540,81 @@ type StatusReportingSettings struct {
 
 func (s *StatusReportingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusReportingSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StopLostModeParams: Parameters associated with the STOP_LOST_MODE
+// command to take the device out of lost mode.
+type StopLostModeParams struct {
+}
+
+// StopLostModeStatus: Status of the STOP_LOST_MODE command to take the
+// device out of lost mode.
+type StopLostModeStatus struct {
+	// Status: The status. See StopLostModeStatus.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified. This value is not used.
+	//   "SUCCESS" - The device was taken out of lost mode.
+	//   "NOT_IN_LOST_MODE" - The device is not in lost mode.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StopLostModeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod StopLostModeStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StopLostModeUserAttemptEvent: A lost mode event indicating the user
+// has attempted to stop lost mode.
+type StopLostModeUserAttemptEvent struct {
+	// Status: The status of the attempt to stop lost mode.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - This value is not used.
+	//   "ATTEMPT_SUCCEEDED" - Indicates that the user successfully stopped
+	// lost mode.
+	//   "ATTEMPT_FAILED" - Indicates that the user's attempt to stop lost
+	// mode failed.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StopLostModeUserAttemptEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod StopLostModeUserAttemptEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6165,6 +6917,10 @@ type UsageLogEvent struct {
 	// network stack. Part of NETWORK_ACTIVITY_LOGS.
 	DnsEvent *DnsEvent `json:"dnsEvent,omitempty"`
 
+	// EnrollmentCompleteEvent: Device has completed enrollment. Part of
+	// AMAPI_LOGS.
+	EnrollmentCompleteEvent *EnrollmentCompleteEvent `json:"enrollmentCompleteEvent,omitempty"`
+
 	// EventId: Unique id of the event.
 	EventId int64 `json:"eventId,omitempty,string"`
 
@@ -6214,6 +6970,14 @@ type UsageLogEvent struct {
 	//   "WIPE_FAILURE" - Indicates wipe_failure_event has been set.
 	//   "CONNECT" - Indicates connect_event has been set.
 	//   "DNS" - Indicates dns_event has been set.
+	//   "STOP_LOST_MODE_USER_ATTEMPT" - Indicates
+	// stopLostModeUserAttemptEvent has been set.
+	//   "LOST_MODE_OUTGOING_PHONE_CALL" - Indicates
+	// lostModeOutgoingPhoneCallEvent has been set.
+	//   "LOST_MODE_LOCATION" - Indicates lostModeLocationEvent has been
+	// set.
+	//   "ENROLLMENT_COMPLETE" - Indicates enrollment_complete_event has
+	// been set.
 	EventType string `json:"eventType,omitempty"`
 
 	// FilePulledEvent: A file was downloaded from the device. Part of
@@ -6270,6 +7034,14 @@ type UsageLogEvent struct {
 	// SECURITY_LOGS.
 	LoggingStoppedEvent *LoggingStoppedEvent `json:"loggingStoppedEvent,omitempty"`
 
+	// LostModeLocationEvent: A lost mode location update when a device in
+	// lost mode.
+	LostModeLocationEvent *LostModeLocationEvent `json:"lostModeLocationEvent,omitempty"`
+
+	// LostModeOutgoingPhoneCallEvent: An outgoing phone call has been made
+	// when a device in lost mode.
+	LostModeOutgoingPhoneCallEvent *LostModeOutgoingPhoneCallEvent `json:"lostModeOutgoingPhoneCallEvent,omitempty"`
+
 	// MediaMountEvent: Removable media was mounted. Part of SECURITY_LOGS.
 	MediaMountEvent *MediaMountEvent `json:"mediaMountEvent,omitempty"`
 
@@ -6286,6 +7058,10 @@ type UsageLogEvent struct {
 	// RemoteLockEvent: The device or profile has been remotely locked via
 	// the LOCK command. Part of SECURITY_LOGS.
 	RemoteLockEvent *RemoteLockEvent `json:"remoteLockEvent,omitempty"`
+
+	// StopLostModeUserAttemptEvent: An attempt to take a device out of lost
+	// mode.
+	StopLostModeUserAttemptEvent *StopLostModeUserAttemptEvent `json:"stopLostModeUserAttemptEvent,omitempty"`
 
 	// WipeFailureEvent: The work profile or company-owned device failed to
 	// wipe when requested. This could be user initiated or admin initiated
@@ -6566,7 +7342,7 @@ func (s *WebToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WipeAction: An action to reset a fully managed device or delete a
+// WipeAction: An action to reset a company owned device or delete a
 // work profile. Note: blockAction must also be specified.
 type WipeAction struct {
 	// PreserveFrp: Whether the factory-reset protection data is preserved
@@ -6618,7 +7394,7 @@ type EnterprisesCreateCall struct {
 }
 
 // Create: Creates an enterprise. This is the last step in the
-// enterprise signup flow.
+// enterprise signup flow. See also: SigninDetail
 func (r *EnterprisesService) Create(enterprise *Enterprise) *EnterprisesCreateCall {
 	c := &EnterprisesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterprise = enterprise
@@ -6730,17 +7506,17 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Enterprise{
 		ServerResponse: googleapi.ServerResponse{
@@ -6754,13 +7530,14 @@ func (c *EnterprisesCreateCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an enterprise. This is the last step in the enterprise signup flow.",
+	//   "description": "Creates an enterprise. This is the last step in the enterprise signup flow. See also: SigninDetail",
 	//   "flatPath": "v1/enterprises",
 	//   "httpMethod": "POST",
 	//   "id": "androidmanagement.enterprises.create",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "agreementAccepted": {
+	//       "deprecated": true,
 	//       "description": "Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Do not set this field for any customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises). Set this to field to true for all EMM-managed enterprises (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).",
 	//       "location": "query",
 	//       "type": "boolean"
@@ -6878,17 +7655,17 @@ func (c *EnterprisesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7025,17 +7802,17 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Enterprise{
 		ServerResponse: googleapi.ServerResponse{
@@ -7200,17 +7977,17 @@ func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*ListEnterprises
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEnterprisesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7303,7 +8080,7 @@ type EnterprisesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an enterprise.
+// Patch: Updates an enterprise. See also: SigninDetail
 //
 //   - name: The name of the enterprise in the form
 //     enterprises/{enterpriseId}.
@@ -7389,17 +8166,17 @@ func (c *EnterprisesPatchCall) Do(opts ...googleapi.CallOption) (*Enterprise, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Enterprise{
 		ServerResponse: googleapi.ServerResponse{
@@ -7413,7 +8190,7 @@ func (c *EnterprisesPatchCall) Do(opts ...googleapi.CallOption) (*Enterprise, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an enterprise.",
+	//   "description": "Updates an enterprise. See also: SigninDetail",
 	//   "flatPath": "v1/enterprises/{enterprisesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidmanagement.enterprises.patch",
@@ -7554,17 +8331,17 @@ func (c *EnterprisesApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Appl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Application{
 		ServerResponse: googleapi.ServerResponse{
@@ -7620,7 +8397,9 @@ type EnterprisesDevicesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a device. This operation wipes the device.
+// Delete: Deletes a device. This operation wipes the device. Deleted
+// devices do not show up in enterprises.devices.list calls and a 404 is
+// returned from enterprises.devices.get.
 //
 //   - name: The name of the device in the form
 //     enterprises/{enterpriseId}/devices/{deviceId}.
@@ -7719,17 +8498,17 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7743,7 +8522,7 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a device. This operation wipes the device.",
+	//   "description": "Deletes a device. This operation wipes the device. Deleted devices do not show up in enterprises.devices.list calls and a 404 is returned from enterprises.devices.get.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidmanagement.enterprises.devices.delete",
@@ -7802,7 +8581,7 @@ type EnterprisesDevicesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a device.
+// Get: Gets a device. Deleted devices will respond with a 404 error.
 //
 //   - name: The name of the device in the form
 //     enterprises/{enterpriseId}/devices/{deviceId}.
@@ -7887,17 +8666,17 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -7911,7 +8690,7 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a device.",
+	//   "description": "Gets a device. Deleted devices will respond with a 404 error.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.get",
@@ -8029,17 +8808,17 @@ func (c *EnterprisesDevicesIssueCommandCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8094,7 +8873,8 @@ type EnterprisesDevicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists devices for a given enterprise.
+// List: Lists devices for a given enterprise. Deleted devices are not
+// returned in the response.
 //
 //   - parent: The name of the enterprise in the form
 //     enterprises/{enterpriseId}.
@@ -8193,17 +8973,17 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDevicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8217,7 +8997,7 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists devices for a given enterprise.",
+	//   "description": "Lists devices for a given enterprise. Deleted devices are not returned in the response.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.list",
@@ -8373,17 +9153,17 @@ func (c *EnterprisesDevicesPatchCall) Do(opts ...googleapi.CallOption) (*Device,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Device{
 		ServerResponse: googleapi.ServerResponse{
@@ -8523,17 +9303,17 @@ func (c *EnterprisesDevicesOperationsCancelCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8658,17 +9438,17 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8806,17 +9586,17 @@ func (c *EnterprisesDevicesOperationsGetCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -8870,14 +9650,7 @@ type EnterprisesDevicesOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.NOTE: the name binding allows API services to override
-// the binding to use different resource name schemes, such as
-// users/*/operations. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// UNIMPLEMENTED.
 //
 // - name: The name of the operation's parent resource.
 func (r *EnterprisesDevicesOperationsService) List(name string) *EnterprisesDevicesOperationsListCall {
@@ -8982,17 +9755,17 @@ func (c *EnterprisesDevicesOperationsListCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9006,7 +9779,7 @@ func (c *EnterprisesDevicesOperationsListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.operations.list",
@@ -9165,17 +9938,17 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EnrollmentToken{
 		ServerResponse: googleapi.ServerResponse{
@@ -9302,17 +10075,17 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9454,17 +10227,17 @@ func (c *EnterprisesEnrollmentTokensGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EnrollmentToken{
 		ServerResponse: googleapi.ServerResponse{
@@ -9622,17 +10395,17 @@ func (c *EnterprisesEnrollmentTokensListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListEnrollmentTokensResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9788,17 +10561,17 @@ func (c *EnterprisesPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9935,17 +10708,17 @@ func (c *EnterprisesPoliciesGetCall) Do(opts ...googleapi.CallOption) (*Policy, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -10096,17 +10869,17 @@ func (c *EnterprisesPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListPol
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPoliciesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10276,17 +11049,17 @@ func (c *EnterprisesPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Policy
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -10425,17 +11198,17 @@ func (c *EnterprisesWebAppsCreateCall) Do(opts ...googleapi.CallOption) (*WebApp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -10561,17 +11334,17 @@ func (c *EnterprisesWebAppsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -10708,17 +11481,17 @@ func (c *EnterprisesWebAppsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -10870,17 +11643,17 @@ func (c *EnterprisesWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListWebAppsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -11050,17 +11823,17 @@ func (c *EnterprisesWebAppsPatchCall) Do(opts ...googleapi.CallOption) (*WebApp,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebApp{
 		ServerResponse: googleapi.ServerResponse{
@@ -11200,17 +11973,17 @@ func (c *EnterprisesWebTokensCreateCall) Do(opts ...googleapi.CallOption) (*WebT
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &WebToken{
 		ServerResponse: googleapi.ServerResponse{
@@ -11246,6 +12019,154 @@ func (c *EnterprisesWebTokensCreateCall) Do(opts ...googleapi.CallOption) (*WebT
 	//   },
 	//   "response": {
 	//     "$ref": "WebToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// method id "androidmanagement.provisioningInfo.get":
+
+type ProvisioningInfoGetCall struct {
+	s            *Service
+	nameid       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the device provisioning information by the identifier
+// provided in the sign-in url.
+//
+//   - name: The identifier that Android Device Policy passes to the 3P
+//     sign-in page in the form of provisioningInfo/{provisioning_info}.
+func (r *ProvisioningInfoService) Get(nameid string) *ProvisioningInfoGetCall {
+	c := &ProvisioningInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProvisioningInfoGetCall) Fields(s ...googleapi.Field) *ProvisioningInfoGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProvisioningInfoGetCall) IfNoneMatch(entityTag string) *ProvisioningInfoGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProvisioningInfoGetCall) Context(ctx context.Context) *ProvisioningInfoGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProvisioningInfoGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProvisioningInfoGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.provisioningInfo.get" call.
+// Exactly one of *ProvisioningInfo or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProvisioningInfo.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProvisioningInfoGetCall) Do(opts ...googleapi.CallOption) (*ProvisioningInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProvisioningInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the device provisioning information by the identifier provided in the sign-in url.",
+	//   "flatPath": "v1/provisioningInfo/{provisioningInfoId}",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.provisioningInfo.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The identifier that Android Device Policy passes to the 3P sign-in page in the form of provisioningInfo/{provisioning_info}.",
+	//       "location": "path",
+	//       "pattern": "^provisioningInfo/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ProvisioningInfo"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidmanagement"
@@ -11347,17 +12268,17 @@ func (c *SignupUrlsCreateCall) Do(opts ...googleapi.CallOption) (*SignupUrl, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SignupUrl{
 		ServerResponse: googleapi.ServerResponse{

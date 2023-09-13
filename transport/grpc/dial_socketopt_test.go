@@ -17,7 +17,6 @@ import (
 	"time"
 
 	"golang.org/x/oauth2"
-	"golang.org/x/sys/unix"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	"google.golang.org/grpc"
@@ -78,7 +77,7 @@ func getTCPUserTimeout(conn net.Conn) (int, error) {
 	var timeout int
 	var syscalErr error
 	controlErr := rawConn.Control(func(fd uintptr) {
-		timeout, syscalErr = syscall.GetsockoptInt(int(fd), syscall.IPPROTO_TCP, unix.TCP_USER_TIMEOUT)
+		timeout, syscalErr = syscall.GetsockoptInt(int(fd), syscall.IPPROTO_TCP, tcpUserTimeoutOp)
 	})
 	if syscalErr != nil {
 		return 0, syscalErr

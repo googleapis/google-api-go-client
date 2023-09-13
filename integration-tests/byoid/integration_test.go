@@ -33,7 +33,7 @@ import (
 	"encoding/xml"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -148,7 +148,7 @@ func writeConfig(t *testing.T, c config, f func(name string)) {
 	t.Helper()
 
 	// Set up config file.
-	configFile, err := ioutil.TempFile("", "config.json")
+	configFile, err := os.CreateTemp("", "config.json")
 	if err != nil {
 		t.Fatalf("Error creating config file: %v", err)
 	}
@@ -223,7 +223,7 @@ func TestFileBasedCredentials(t *testing.T) {
 		t.Skip("skipping integration test")
 	}
 	// Set up Token as a file
-	tokenFile, err := ioutil.TempFile("", "token.txt")
+	tokenFile, err := os.CreateTemp("", "token.txt")
 	if err != nil {
 		t.Fatalf("Error creating token file:")
 	}
@@ -313,7 +313,7 @@ func TestAWSBasedCredentials(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to post data to AWS: %v", err)
 	}
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatalf("Failed to parse response body from AWS: %v", err)
 	}
@@ -369,7 +369,7 @@ func TestExecutableBasedCredentials(t *testing.T) {
 	}
 
 	// Set up Script as a executable file
-	scriptFile, err := ioutil.TempFile("", "script.sh")
+	scriptFile, err := os.CreateTemp("", "script.sh")
 	if err != nil {
 		t.Fatalf("Error creating token file:")
 	}
@@ -402,7 +402,7 @@ func TestConfigurableTokenLifetime(t *testing.T) {
 	}
 
 	// Set up Token as a file
-	tokenFile, err := ioutil.TempFile("", "token.txt")
+	tokenFile, err := os.CreateTemp("", "token.txt")
 	if err != nil {
 		t.Fatalf("Error creating token file:")
 	}
@@ -427,7 +427,7 @@ func TestConfigurableTokenLifetime(t *testing.T) {
 			File: tokenFile.Name(),
 		},
 	}, func(filename string) {
-		b, err := ioutil.ReadFile(filename)
+		b, err := os.ReadFile(filename)
 		if err != nil {
 			t.Fatalf("Coudn't read temp config file")
 		}
@@ -443,8 +443,8 @@ func TestConfigurableTokenLifetime(t *testing.T) {
 		}
 
 		now := time.Now()
-		expiryMax := now.Add(tokenLifetimeSeconds * time.Second)
-		expiryMin := expiryMax.Add(-safetyBuffer * time.Second)
+		expiryMax := now.Add((safetyBuffer + tokenLifetimeSeconds) * time.Second)
+		expiryMin := now.Add((tokenLifetimeSeconds - safetyBuffer) * time.Second)
 		if token.Expiry.Before(expiryMin) || token.Expiry.After(expiryMax) {
 			t.Fatalf("Expiry time not set correctly.  Got %v, want %v", token.Expiry, expiryMax)
 		}

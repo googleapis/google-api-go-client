@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package servicecontrol provides access to the Service Control API.
 //
 // For product documentation, see: https://cloud.google.com/service-control/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	servicecontrolService, err := servicecontrol.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	servicecontrolService, err := servicecontrol.NewService(ctx, option.WithScopes(servicecontrol.ServicecontrolScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	servicecontrolService, err := servicecontrol.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	servicecontrolService, err := servicecontrol.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package servicecontrol // import "google.golang.org/api/servicecontrol/v2"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "servicecontrol:v2"
 const apiName = "servicecontrol"
@@ -487,6 +502,10 @@ type AuthenticationInfo struct {
 	// keys/{key}"
 	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
 
+	// ServiceDelegationHistory: Records the history of delegated resource
+	// access across Google services.
+	ServiceDelegationHistory *ServiceDelegationHistory `json:"serviceDelegationHistory,omitempty"`
+
 	// ThirdPartyPrincipal: The third party identification (if any) of the
 	// authenticated user making the request. When the JSON object
 	// represented here has a proto equivalent, the proto name will be
@@ -837,8 +856,7 @@ func (s *ReportRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReportResponse: Response message for the Report method. If the
-// request contains any invalid data, the server returns an RPC error.
+// ReportResponse: Response message for the Report method.
 type ReportResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -924,15 +942,17 @@ func (s *Request) MarshalJSON() ([]byte, error) {
 
 // RequestMetadata: Metadata about the request.
 type RequestMetadata struct {
-	// CallerIp: The IP address of the caller. For caller from internet,
-	// this will be public IPv4 or IPv6 address. For caller from a Compute
-	// Engine VM with external IP address, this will be the VM's external IP
-	// address. For caller from a Compute Engine VM without external IP
-	// address, if the VM is in the same organization (or project) as the
-	// accessed resource, `caller_ip` will be the VM's internal IPv4
-	// address, otherwise the `caller_ip` will be redacted to
-	// "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for
-	// more information.
+	// CallerIp: The IP address of the caller. For a caller from the
+	// internet, this will be the public IPv4 or IPv6 address. For calls
+	// made from inside Google's internal production network from one GCP
+	// service to another, `caller_ip` will be redacted to "private". For a
+	// caller from a Compute Engine VM with a external IP address,
+	// `caller_ip` will be the VM's external IP address. For a caller from a
+	// Compute Engine VM without a external IP address, if the VM is in the
+	// same organization (or project) as the accessed resource, `caller_ip`
+	// will be the VM's internal IPv4 address, otherwise `caller_ip` will be
+	// redacted to "gce-internal-ip". See
+	// https://cloud.google.com/compute/docs/vpc/ for more information.
 	CallerIp string `json:"callerIp,omitempty"`
 
 	// CallerNetwork: The network of the caller. Set only if the network
@@ -951,7 +971,7 @@ type RequestMetadata struct {
 	// apitools-client/1.0 gcloud/0.9.62`: The request was made by the
 	// Google Cloud SDK CLI (gcloud). + `AppEngine-Google;
 	// (+http://code.google.com/appengine; appid: s~my-project`: The request
-	// was made from the `my-project` App Engine app. NOLINT
+	// was made from the `my-project` App Engine app.
 	CallerSuppliedUserAgent string `json:"callerSuppliedUserAgent,omitempty"`
 
 	// DestinationAttributes: The destination of a network activity, such as
@@ -1000,7 +1020,7 @@ type Resource struct {
 	// a resource that may be set by external tools to store and retrieve
 	// arbitrary metadata. They are not queryable and should be preserved
 	// when modifying objects. More info:
-	// https://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the resource was created.
@@ -1098,14 +1118,13 @@ type ResourceInfo struct {
 	// Container: Optional. The identifier of the container of this
 	// resource. For Google Cloud APIs, the resource container must be one
 	// of the following formats: - `projects/` - `folders/` -
-	// `organizations/` For the policy enforcement on the container level
-	// (VPCSC and Location Policy check), this field takes precedence on the
-	// container extracted from name when presents.
+	// `organizations/` Required for the policy enforcement on the container
+	// level (e.g. VPCSC, Location Policy check, Org Policy check).
 	Container string `json:"container,omitempty"`
 
-	// Location: Optional. The location of the resource. The value must be a
-	// valid zone, region or multiregion. For example: "europe-west4" or
-	// "northamerica-northeast1-a"
+	// Location: Optional. The location of the resource, it must be a valid
+	// zone, region or multiregion, for example: "europe-west4",
+	// "northamerica-northeast1-a". Required for location policy check.
 	Location string `json:"location,omitempty"`
 
 	// Name: The name of the resource referenced in the request.
@@ -1267,6 +1286,94 @@ type ServiceAccountDelegationInfo struct {
 
 func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountDelegationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceDelegationHistory: The history of delegation across multiple
+// services as the result of the original user's action. Such as
+// "service A uses its own account to do something for user B". This
+// differs from ServiceAccountDelegationInfo, which only tracks the
+// history of direct token exchanges (impersonation).
+type ServiceDelegationHistory struct {
+	// OriginalPrincipal: The original end user who initiated the request to
+	// GCP.
+	OriginalPrincipal string `json:"originalPrincipal,omitempty"`
+
+	// ServiceMetadata: Data identifying the service specific jobs or units
+	// of work that were involved in a chain of service calls.
+	ServiceMetadata []*ServiceMetadata `json:"serviceMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OriginalPrincipal")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OriginalPrincipal") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceDelegationHistory) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceDelegationHistory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMetadata: Metadata describing the service and additional
+// service specific information used to identify the job or unit of work
+// at hand.
+type ServiceMetadata struct {
+	// JobMetadata: Additional metadata provided by service teams to
+	// describe service specific job information that was triggered by the
+	// original principal.
+	JobMetadata googleapi.RawMessage `json:"jobMetadata,omitempty"`
+
+	// PrincipalSubject: A string representing the principal_subject
+	// associated with the identity. For most identities, the format will be
+	// `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject)` except for some GKE identities
+	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
+	// legacy format `serviceAccount:{identity pool name}[{subject}]` If the
+	// identity is a Google account (e.g. workspace user account or service
+	// account), this will be the email of the prefixed by
+	// `serviceAccount:`. For example:
+	// `serviceAccount:my-service-account@project-1.iam.gserviceaccount.com`.
+	//  If the identity is an individual user, the identity will be
+	// formatted as: `user:user_ABC@email.com`.
+	PrincipalSubject string `json:"principalSubject,omitempty"`
+
+	// ServiceDomain: The service's fully qualified domain name, e.g.
+	// "dataproc.googleapis.com".
+	ServiceDomain string `json:"serviceDomain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobMetadata") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1810,17 +1917,17 @@ func (c *ServicesCheckCall) Do(opts ...googleapi.CallOption) (*CheckResponse, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CheckResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1969,17 +2076,17 @@ func (c *ServicesReportCall) Do(opts ...googleapi.CallOption) (*ReportResponse, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReportResponse{
 		ServerResponse: googleapi.ServerResponse{

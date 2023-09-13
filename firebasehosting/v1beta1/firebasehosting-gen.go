@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package firebasehosting provides access to the Firebase Hosting API.
 //
 // For product documentation, see: https://firebase.google.com/docs/hosting/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	firebasehostingService, err := firebasehosting.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package firebasehosting // import "google.golang.org/api/firebasehosting/v1beta1"
 
 import (
@@ -75,6 +89,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "firebasehosting:v1beta1"
 const apiName = "firebasehosting"
@@ -184,6 +199,7 @@ type ProjectsOperationsService struct {
 func NewProjectsSitesService(s *Service) *ProjectsSitesService {
 	rs := &ProjectsSitesService{s: s}
 	rs.Channels = NewProjectsSitesChannelsService(s)
+	rs.CustomDomains = NewProjectsSitesCustomDomainsService(s)
 	rs.Domains = NewProjectsSitesDomainsService(s)
 	rs.Releases = NewProjectsSitesReleasesService(s)
 	rs.Versions = NewProjectsSitesVersionsService(s)
@@ -194,6 +210,8 @@ type ProjectsSitesService struct {
 	s *Service
 
 	Channels *ProjectsSitesChannelsService
+
+	CustomDomains *ProjectsSitesCustomDomainsService
 
 	Domains *ProjectsSitesDomainsService
 
@@ -220,6 +238,27 @@ func NewProjectsSitesChannelsReleasesService(s *Service) *ProjectsSitesChannelsR
 }
 
 type ProjectsSitesChannelsReleasesService struct {
+	s *Service
+}
+
+func NewProjectsSitesCustomDomainsService(s *Service) *ProjectsSitesCustomDomainsService {
+	rs := &ProjectsSitesCustomDomainsService{s: s}
+	rs.Operations = NewProjectsSitesCustomDomainsOperationsService(s)
+	return rs
+}
+
+type ProjectsSitesCustomDomainsService struct {
+	s *Service
+
+	Operations *ProjectsSitesCustomDomainsOperationsService
+}
+
+func NewProjectsSitesCustomDomainsOperationsService(s *Service) *ProjectsSitesCustomDomainsOperationsService {
+	rs := &ProjectsSitesCustomDomainsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsSitesCustomDomainsOperationsService struct {
 	s *Service
 }
 
@@ -443,6 +482,138 @@ func (s *CertHttpChallenge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CertVerification: A set of ACME challenges you can use to allow
+// Hosting to create an SSL certificate for your domain name before
+// directing traffic to Hosting servers. Use either the DNS or HTTP
+// challenge; it's not necessary to provide both.
+type CertVerification struct {
+	// Dns: Output only. A `TXT` record to add to your DNS records that
+	// confirms your intent to let Hosting create an SSL cert for your
+	// domain name.
+	Dns *DnsUpdates `json:"dns,omitempty"`
+
+	// Http: Output only. A file to add to your existing, non-Hosting
+	// hosting service that confirms your intent to let Hosting create an
+	// SSL cert for your domain name.
+	Http *HttpUpdate `json:"http,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dns") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertVerification) MarshalJSON() ([]byte, error) {
+	type NoMethod CertVerification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Certificate: An SSL certificate used to provide end-to-end encryption
+// for requests against your domain name. A `Certificate` can be an
+// actual SSL certificate or, for newly-created Custom Domains,
+// Hosting's intent to create one.
+type Certificate struct {
+	// CreateTime: Output only. The certificate's creation time. For
+	// `TEMPORARY` certs this is the time Hosting first generated challenges
+	// for your domain name. For all other cert types, it's the time the
+	// actual cert was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ExpireTime: Output only. The certificate's expiration time. After
+	// this time, the cert can no longer be used to provide secure
+	// communication between Hosting and your Site's visitors.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Issues: Output only. A set of errors Hosting encountered when
+	// attempting to create a cert for your domain name. Resolve these
+	// issues to ensure Hosting is able to provide secure communication with
+	// your site's visitors.
+	Issues []*Status `json:"issues,omitempty"`
+
+	// State: Output only. The state of the certificate. Only the
+	// `CERT_ACTIVE` and `CERT_EXPIRING_SOON` states provide SSL coverage
+	// for a domain name. If the state is `PROPAGATING` and Hosting had an
+	// active cert for the domain name before, that formerly-active cert
+	// provides SSL coverage for the domain name until the current cert
+	// propagates.
+	//
+	// Possible values:
+	//   "CERT_STATE_UNSPECIFIED" - The certificate's state is unspecified.
+	// The message is invalid if this is unspecified.
+	//   "CERT_PREPARING" - The initial state of every certificate,
+	// represents Hosting's intent to create a certificate, before requests
+	// to a Certificate Authority are made.
+	//   "CERT_VALIDATING" - Hosting is validating whether a domain name's
+	// DNS records are in a state that allow certificate creation on its
+	// behalf.
+	//   "CERT_PROPAGATING" - The certificate was recently created, and
+	// needs time to propagate in Hosting's CDN.
+	//   "CERT_ACTIVE" - The certificate is active, providing secure
+	// connections for the domain names it represents.
+	//   "CERT_EXPIRING_SOON" - The certificate is expiring, all domain
+	// names on it will be given new certificates.
+	//   "CERT_EXPIRED" - The certificate has expired. Hosting can no longer
+	// serve secure content on your domain name.
+	State string `json:"state,omitempty"`
+
+	// Type: Output only. The certificate's type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The certificate's type is unspecified. The
+	// message is invalid if this is unspecified.
+	//   "TEMPORARY" - A short-lived certificate type that covers a domain
+	// name temporarily, while Hosting creates a more permanent certificate.
+	//   "GROUPED" - The standard certificate for Spark plan
+	// `CustomDomain`s.
+	//   "PROJECT_GROUPED" - Blaze plan only. A certificate that covers from
+	// 1 to 100 domain names with `CustomDomain`s on the same Firebase
+	// project.
+	//   "DEDICATED" - Blaze plan only. A certificate that covers a single
+	// domain name.
+	Type string `json:"type,omitempty"`
+
+	// Verification: Output only. A set of ACME challenges you can add to
+	// your DNS records or existing, non-Hosting hosting provider to allow
+	// Hosting to create an SSL certificate for your domain name before you
+	// point traffic toward hosting. You can use thse challenges as part of
+	// a zero downtime transition from your old provider to Hosting.
+	Verification *CertVerification `json:"verification,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Certificate) MarshalJSON() ([]byte, error) {
+	type NoMethod Certificate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Channel: A `Channel` represents a stream of releases for a site. All
 // sites have a default `live` channel that serves content to the
 // Firebase-provided subdomains and any connected custom domains.
@@ -571,6 +742,10 @@ type CloudRunRewrite struct {
 	// ServiceId: Required. User-defined ID of the Cloud Run service.
 	ServiceId string `json:"serviceId,omitempty"`
 
+	// Tag: Optional. User-provided TrafficConfig tag to send traffic to.
+	// When omitted, traffic is sent to the service-wide URI
+	Tag string `json:"tag,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Region") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -590,6 +765,479 @@ type CloudRunRewrite struct {
 
 func (s *CloudRunRewrite) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudRunRewrite
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomDomain: A `CustomDomain` is an entity that links a domain name
+// to a Firebase Hosting Site. Add a `CustomDomain` to your Site to
+// allow Hosting to serve the Site's content in response to requests
+// against your domain name.
+type CustomDomain struct {
+	// Annotations: Annotations you can add to leave both human- and
+	// machine-readable metadata about your `CustomDomain`.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// Cert: Output only. The SSL certificate Hosting has for this
+	// `CustomDomain`'s domain name. For new `CustomDomain`s, this often
+	// represents Hosting's intent to create a certificate, rather than an
+	// actual cert. Check the `state` field for more.
+	Cert *Certificate `json:"cert,omitempty"`
+
+	// CertPreference: A field that lets you specify which SSL certificate
+	// type Hosting creates for your domain name. Spark plan `CustomDomain`s
+	// only have access to the `GROUPED` cert type, while Blaze plan can
+	// select any option.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The certificate's type is unspecified. The
+	// message is invalid if this is unspecified.
+	//   "TEMPORARY" - A short-lived certificate type that covers a domain
+	// name temporarily, while Hosting creates a more permanent certificate.
+	//   "GROUPED" - The standard certificate for Spark plan
+	// `CustomDomain`s.
+	//   "PROJECT_GROUPED" - Blaze plan only. A certificate that covers from
+	// 1 to 100 domain names with `CustomDomain`s on the same Firebase
+	// project.
+	//   "DEDICATED" - Blaze plan only. A certificate that covers a single
+	// domain name.
+	CertPreference string `json:"certPreference,omitempty"`
+
+	// CreateTime: Output only. The `CustomDomain`'s create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. The time the `CustomDomain` was deleted;
+	// null for `CustomDomains` that haven't been deleted. Deleted
+	// `CustomDomains` persist for approximately 30 days, after which time
+	// Hosting removes them completely. To restore a deleted `CustomDomain`,
+	// make an `UndeleteCustomDomain` request.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// Etag: Output only. A string that represents the current state of the
+	// `CustomDomain` and allows you to confirm its initial state in
+	// requests that would modify it. Use the tag to ensure consistency when
+	// making `UpdateCustomDomain`, `DeleteCustomDomain`, and
+	// `UndeleteCustomDomain` requests.
+	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. The minimum time before a soft-deleted
+	// `CustomDomain` is completely removed from Hosting; null for
+	// `CustomDomains` that haven't been deleted.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// HostState: Output only. The `HostState` of the domain name this
+	// `CustomDomain` refers to.
+	//
+	// Possible values:
+	//   "HOST_STATE_UNSPECIFIED" - Your `CustomDomain`'s host state is
+	// unspecified. The message is invalid if this is unspecified.
+	//   "HOST_UNHOSTED" - Your `CustomDomain`'s domain name isn't
+	// associated with any IP addresses.
+	//   "HOST_UNREACHABLE" - Your `CustomDomain`'s domain name can't be
+	// reached. Hosting services' DNS queries to find your domain name's IP
+	// addresses resulted in errors. See your `CustomDomain`'s `issues`
+	// field for more details.
+	//   "HOST_MISMATCH" - Your `CustomDomain`'s domain name has IP
+	// addresses that don't ultimately resolve to Hosting.
+	//   "HOST_CONFLICT" - Your `CustomDomain`'s domain name has IP
+	// addresses that resolve to both Hosting and other services. To ensure
+	// consistent results, remove `A` and `AAAA` records related to
+	// non-Hosting services.
+	//   "HOST_ACTIVE" - All requests against your `CustomDomain`'s domain
+	// name are served by Hosting. If the `CustomDomain`'s `OwnershipState`
+	// is also `ACTIVE`, Hosting serves your Hosting Site's content on the
+	// domain name.
+	HostState string `json:"hostState,omitempty"`
+
+	// Issues: Output only. A set of errors Hosting systems encountered when
+	// trying to establish Hosting's ability to serve secure content for
+	// your domain name. Resolve these issues to ensure your `CustomDomain`
+	// behaves properly.
+	Issues []*Status `json:"issues,omitempty"`
+
+	// Labels: Labels used for extra metadata and/or filtering.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The fully-qualified name of the `CustomDomain`.
+	Name string `json:"name,omitempty"`
+
+	// OwnershipState: Output only. The `OwnershipState` of the domain name
+	// this `CustomDomain` refers to.
+	//
+	// Possible values:
+	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your `CustomDomain`'s ownership
+	// state is unspecified. This should never happen.
+	//   "OWNERSHIP_MISSING" - Your `CustomDomain`'s domain name has no
+	// Hosting-related ownership records; no Firebase project has permission
+	// to act on the domain name's behalf.
+	//   "OWNERSHIP_UNREACHABLE" - Your `CustomDomain`'s domain name can't
+	// be reached. Hosting services' DNS queries to find your domain name's
+	// ownership records resulted in errors. See your `CustomDomain`'s
+	// `issues` field for more details.
+	//   "OWNERSHIP_MISMATCH" - Your `CustomDomain`'s domain name is owned
+	// by another Firebase project. Remove the conflicting `TXT` records and
+	// replace them with project-specific records for your current Firebase
+	// project.
+	//   "OWNERSHIP_CONFLICT" - Your `CustomDomain`'s domain name has
+	// conflicting `TXT` records that indicate ownership by both your
+	// current Firebase project and another project. Remove the other
+	// project's ownership records to grant the current project ownership.
+	//   "OWNERSHIP_PENDING" - Your `CustomDomain`'s DNS records are
+	// configured correctly. Hosting will transfer ownership of your domain
+	// to this `CustomDomain` within 24 hours.
+	//   "OWNERSHIP_ACTIVE" - Your `CustomDomain`'s domain name has `TXT`
+	// records that grant its project permission to act on its behalf.
+	OwnershipState string `json:"ownershipState,omitempty"`
+
+	// Reconciling: Output only. A field that, if true, indicates that
+	// Hosting's systems are attmepting to make the `CustomDomain`'s state
+	// match your preferred state. This is most frequently `true` when
+	// initially provisioning a `CustomDomain` after a `CreateCustomDomain`
+	// request or when creating a new SSL certificate to match an updated
+	// `cert_preference` after an `UpdateCustomDomain` request.
+	Reconciling bool `json:"reconciling,omitempty"`
+
+	// RedirectTarget: A domain name that this CustomDomain should direct
+	// traffic towards. If specified, Hosting will respond to requests
+	// against this CustomDomain with an HTTP 301 code, and route traffic to
+	// the specified `redirect_target` instead.
+	RedirectTarget string `json:"redirectTarget,omitempty"`
+
+	// RequiredDnsUpdates: Output only. A set of updates you should make to
+	// the domain name's DNS records to let Hosting serve secure content on
+	// its behalf.
+	RequiredDnsUpdates *DnsUpdates `json:"requiredDnsUpdates,omitempty"`
+
+	// UpdateTime: Output only. The last time the `CustomDomain` was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomDomain) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomDomain
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomDomainMetadata: Metadata associated with a`CustomDomain`
+// operation.
+type CustomDomainMetadata struct {
+	// CertState: The `CertState` of the domain name's SSL certificate.
+	//
+	// Possible values:
+	//   "CERT_STATE_UNSPECIFIED" - The certificate's state is unspecified.
+	// The message is invalid if this is unspecified.
+	//   "CERT_PREPARING" - The initial state of every certificate,
+	// represents Hosting's intent to create a certificate, before requests
+	// to a Certificate Authority are made.
+	//   "CERT_VALIDATING" - Hosting is validating whether a domain name's
+	// DNS records are in a state that allow certificate creation on its
+	// behalf.
+	//   "CERT_PROPAGATING" - The certificate was recently created, and
+	// needs time to propagate in Hosting's CDN.
+	//   "CERT_ACTIVE" - The certificate is active, providing secure
+	// connections for the domain names it represents.
+	//   "CERT_EXPIRING_SOON" - The certificate is expiring, all domain
+	// names on it will be given new certificates.
+	//   "CERT_EXPIRED" - The certificate has expired. Hosting can no longer
+	// serve secure content on your domain name.
+	CertState string `json:"certState,omitempty"`
+
+	// HostState: The `HostState` of the domain name this `CustomDomain`
+	// refers to.
+	//
+	// Possible values:
+	//   "HOST_STATE_UNSPECIFIED" - Your `CustomDomain`'s host state is
+	// unspecified. The message is invalid if this is unspecified.
+	//   "HOST_UNHOSTED" - Your `CustomDomain`'s domain name isn't
+	// associated with any IP addresses.
+	//   "HOST_UNREACHABLE" - Your `CustomDomain`'s domain name can't be
+	// reached. Hosting services' DNS queries to find your domain name's IP
+	// addresses resulted in errors. See your `CustomDomain`'s `issues`
+	// field for more details.
+	//   "HOST_MISMATCH" - Your `CustomDomain`'s domain name has IP
+	// addresses that don't ultimately resolve to Hosting.
+	//   "HOST_CONFLICT" - Your `CustomDomain`'s domain name has IP
+	// addresses that resolve to both Hosting and other services. To ensure
+	// consistent results, remove `A` and `AAAA` records related to
+	// non-Hosting services.
+	//   "HOST_ACTIVE" - All requests against your `CustomDomain`'s domain
+	// name are served by Hosting. If the `CustomDomain`'s `OwnershipState`
+	// is also `ACTIVE`, Hosting serves your Hosting Site's content on the
+	// domain name.
+	HostState string `json:"hostState,omitempty"`
+
+	// Issues: A list of issues that are currently preventing Hosting from
+	// completing the operation. These are generally DNS-related issues that
+	// Hosting encounters when querying a domain name's records or
+	// attempting to mint an SSL certificate.
+	Issues []*Status `json:"issues,omitempty"`
+
+	// LiveMigrationSteps: A set of DNS record updates and ACME challenges
+	// that allow you to transition domain names to Firebase Hosting with
+	// zero downtime. These updates allow Hosting's to create an SSL
+	// certificate and establish ownership for your custom domain before
+	// Hosting begins serving traffic on it. If your domain name is already
+	// in active use with another provider, add one of the challenges and
+	// make the recommended dns updates. After adding challenges and
+	// adjusting DNS records as necessary, wait for the `ownershipState` to
+	// be `OWNERSHIP_ACTIVE` and the `certState` to be `CERT_ACTIVE` before
+	// sending traffic to Hosting.
+	LiveMigrationSteps []*LiveMigrationStep `json:"liveMigrationSteps,omitempty"`
+
+	// OwnershipState: The `OwnershipState` of the domain name this
+	// `CustomDomain` refers to.
+	//
+	// Possible values:
+	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your `CustomDomain`'s ownership
+	// state is unspecified. This should never happen.
+	//   "OWNERSHIP_MISSING" - Your `CustomDomain`'s domain name has no
+	// Hosting-related ownership records; no Firebase project has permission
+	// to act on the domain name's behalf.
+	//   "OWNERSHIP_UNREACHABLE" - Your `CustomDomain`'s domain name can't
+	// be reached. Hosting services' DNS queries to find your domain name's
+	// ownership records resulted in errors. See your `CustomDomain`'s
+	// `issues` field for more details.
+	//   "OWNERSHIP_MISMATCH" - Your `CustomDomain`'s domain name is owned
+	// by another Firebase project. Remove the conflicting `TXT` records and
+	// replace them with project-specific records for your current Firebase
+	// project.
+	//   "OWNERSHIP_CONFLICT" - Your `CustomDomain`'s domain name has
+	// conflicting `TXT` records that indicate ownership by both your
+	// current Firebase project and another project. Remove the other
+	// project's ownership records to grant the current project ownership.
+	//   "OWNERSHIP_PENDING" - Your `CustomDomain`'s DNS records are
+	// configured correctly. Hosting will transfer ownership of your domain
+	// to this `CustomDomain` within 24 hours.
+	//   "OWNERSHIP_ACTIVE" - Your `CustomDomain`'s domain name has `TXT`
+	// records that grant its project permission to act on its behalf.
+	OwnershipState string `json:"ownershipState,omitempty"`
+
+	// QuickSetupUpdates: A set of DNS record updates that allow Hosting to
+	// serve secure content on your domain name. The record type determines
+	// the update's purpose: - `A` and `AAAA`: Updates your domain name's IP
+	// addresses so that they direct traffic to Hosting servers. - `TXT`:
+	// Updates ownership permissions on your domain name, letting Hosting
+	// know that your custom domain's project has permission to perfrom
+	// actions for that domain name. - `CAA`: Updates your domain name's
+	// list of authorized Certificate Authorities (CAs). Only present if you
+	// have existing `CAA` records that prohibit Hosting's CA from minting
+	// certs for your domain name. These updates include all DNS changes
+	// you'll need to get started with Hosting, but, if made all at once,
+	// can result in a brief period of downtime for your domain name--while
+	// Hosting creates and uploads an SSL cert, for example. If you'd like
+	// to add your domain name to Hosting without downtime, complete the
+	// `liveMigrationSteps` first, before making the remaining updates in
+	// this field.
+	QuickSetupUpdates *DnsUpdates `json:"quickSetupUpdates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertState") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomDomainMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomDomainMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsRecord: DNS records are resource records that define how systems
+// and services should behave when handling requests for a domain name.
+// For example, when you add `A` records to your domain name's DNS
+// records, you're informing other systems (e.g. your users' web
+// browsers) to contact those IPv4 addresses to retrieve resources
+// relevant to your domain name (e.g. your Hosting site files).
+type DnsRecord struct {
+	// DomainName: Output only. The domain name the record pertains to, e.g.
+	// `foo.bar.com.`.
+	DomainName string `json:"domainName,omitempty"`
+
+	// Rdata: Output only. The data of the record. The meaning of the value
+	// depends on record type: - A and AAAA: IP addresses for the domain
+	// name. - CNAME: Another domain to check for records. - TXT: Arbitrary
+	// text strings associated with the domain name. Hosting uses TXT
+	// records to determine a which Firebase Projects have permission to act
+	// on the domain name's behalf. - CAA: The record's flags, tag, and
+	// value, e.g. `0 issue "pki.goog".
+	Rdata string `json:"rdata,omitempty"`
+
+	// RequiredAction: Output only. An enum that indicates the a required
+	// action for this record.
+	//
+	// Possible values:
+	//   "NONE" - No action necessary.
+	//   "ADD" - Add this record to your DNS records.
+	//   "REMOVE" - Remove this record from your DNS records.
+	RequiredAction string `json:"requiredAction,omitempty"`
+
+	// Type: Output only. The record's type, which determines what data the
+	// record contains.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The record's type is unspecified. The message
+	// is invalid if this is unspecified.
+	//   "A" - An `A` record, as defined in [RFC
+	// 1035](https://tools.ietf.org/html/rfc1035). A records determine which
+	// IPv4 addresses a domain name directs traffic towards.
+	//   "CNAME" - A `CNAME` record, as defined in [RFC
+	// 1035](https://tools.ietf.org/html/rfc1035). `CNAME` or Canonical Name
+	// records map a domain name to a different, canonical domain name. If a
+	// `CNAME` record is present, it should be the only record on the domain
+	// name.
+	//   "TXT" - A `TXT` record, as defined in [RFC
+	// 1035](https://tools.ietf.org/html/rfc1035). `TXT` records hold
+	// arbitrary text data on a domain name. Hosting uses `TXT` records to
+	// establish which Firebase Project has permission to act on a domain
+	// name.
+	//   "AAAA" - An AAAA record, as defined in [RFC
+	// 3596](https://tools.ietf.org/html/rfc3596) AAAA records determine
+	// which IPv6 addresses a domain name directs traffic towards.
+	//   "CAA" - A CAA record, as defined in [RFC
+	// 6844](https://tools.ietf.org/html/rfc6844). CAA, or Certificate
+	// Authority Authorization, records determine which Certificate
+	// Authorities (SSL certificate minting organizations) are authorized to
+	// mint a certificate for the domain name. Firebase Hosting uses
+	// `pki.goog` as its primary CA. CAA records cascade. A CAA record on
+	// `foo.com` also applies to `bar.foo.com` unless `bar.foo.com` has its
+	// own set of CAA records. CAA records are optional. If a domain name
+	// and its parents have no CAA records, all CAs are authorized to mint
+	// certificates on its behalf. In general, Hosting only asks you to
+	// modify CAA records when doing so is required to unblock SSL cert
+	// creation.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DomainName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsRecord
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsRecordSet: A set of DNS records relevant to the set up and
+// maintenance of a Custom Domain in Firebase Hosting.
+type DnsRecordSet struct {
+	// CheckError: Output only. An error Hosting services encountered when
+	// querying your domain name's DNS records. Note: Hosting ignores
+	// `NXDOMAIN` errors, as those generally just mean that a domain name
+	// hasn't been set up yet.
+	CheckError *Status `json:"checkError,omitempty"`
+
+	// DomainName: Output only. The domain name the record set pertains to.
+	DomainName string `json:"domainName,omitempty"`
+
+	// Records: Output only. Records on the domain.
+	Records []*DnsRecord `json:"records,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckError") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckError") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsRecordSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsUpdates: A set of DNS record updates that you should make to allow
+// Hosting to serve secure content in response to requests against your
+// domain name. These updates present the current state of your domain
+// name's DNS records when Hosting last queried them, and the desired
+// set of records that Hosting needs to see before your Custom Domain
+// can be fully active.
+type DnsUpdates struct {
+	// CheckTime: The last time Hosting checked your CustomDomain's DNS
+	// records.
+	CheckTime string `json:"checkTime,omitempty"`
+
+	// Desired: The set of DNS records Hosting needs to serve secure content
+	// on the domain.
+	Desired []*DnsRecordSet `json:"desired,omitempty"`
+
+	// Discovered: The set of DNS records Hosting discovered when inspecting
+	// a domain.
+	Discovered []*DnsRecordSet `json:"discovered,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsUpdates) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsUpdates
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -834,6 +1482,51 @@ func (s *Header) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HttpUpdate: A file you can add to your existing, non-Hosting hosting
+// service that confirms your intent to allow Hosting's Certificate
+// Authorities to create an SSL certificate for your domain.
+type HttpUpdate struct {
+	// CheckError: Output only. An error encountered during the last
+	// contents check. If null, the check completed successfully.
+	CheckError *Status `json:"checkError,omitempty"`
+
+	// Desired: Output only. A text string to serve at the path.
+	Desired string `json:"desired,omitempty"`
+
+	// Discovered: Output only. Whether Hosting was able to find the
+	// required file contents on the specified path during its last check.
+	Discovered string `json:"discovered,omitempty"`
+
+	// LastCheckTime: Output only. The last time Hosting systems checked for
+	// the file contents.
+	LastCheckTime string `json:"lastCheckTime,omitempty"`
+
+	// Path: Output only. The path to the file.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckError") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckError") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpUpdate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // I18nConfig: If provided, i18n rewrites are enabled.
 type I18nConfig struct {
 	// Root: Required. The user-supplied path where country and language
@@ -899,6 +1592,45 @@ func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListCustomDomainsResponse: The response from `ListCustomDomains`.
+type ListCustomDomainsResponse struct {
+	// CustomDomains: A list of `CustomDomain` entities associated with the
+	// specified Firebase `Site`.
+	CustomDomains []*CustomDomain `json:"customDomains,omitempty"`
+
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListCustomDomains`. Page tokens are short-lived and should not be
+	// stored.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomDomains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomDomains") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomDomainsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomDomainsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDomainsResponse: The response to listing Domains.
 type ListDomainsResponse struct {
 	// Domains: The list of domains, if any exist.
@@ -930,6 +1662,43 @@ type ListDomainsResponse struct {
 
 func (s *ListDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDomainsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListOperationsResponse: The response message for
+// Operations.ListOperations.
+type ListOperationsResponse struct {
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: A list of operations that matches the specified filter in
+	// the request.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOperationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1082,6 +1851,78 @@ func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LiveMigrationStep: A set of updates including ACME challenges and DNS
+// records that allow Hosting to create an SSL certificate and establish
+// project ownership for your domain name before you direct traffic to
+// Hosting servers. Use these updates to facilitate zero downtime
+// migrations to Hosting from other services. After you've made the
+// recommended updates, check your custom domain's `ownershipState` and
+// `certState`. To avoid downtime, they should be `OWNERSHIP_ACTIVE` and
+// `CERT_ACTIVE`, respectively, before you update your `A` and `AAAA`
+// records.
+type LiveMigrationStep struct {
+	// CertVerification: Output only. A pair of ACME challenges that
+	// Hosting's Certificate Authority (CA) can use to create an SSL cert
+	// for your domain name. Use either the DNS or HTTP challenge; it's not
+	// necessary to provide both.
+	CertVerification *CertVerification `json:"certVerification,omitempty"`
+
+	// DnsUpdates: Output only. DNS updates to facilitate your domain's
+	// zero-downtime migration to Hosting.
+	DnsUpdates *DnsUpdates `json:"dnsUpdates,omitempty"`
+
+	// Issues: Output only. Issues that prevent the current step from
+	// completing.
+	Issues []*Status `json:"issues,omitempty"`
+
+	// State: Output only. The state of the live migration step, indicates
+	// whether you should work to complete the step now, in the future, or
+	// have already completed it.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The step's state is unspecified. The message
+	// is invalid if this is unspecified.
+	//   "PREPARING" - Hosting doesn't have enough information to construct
+	// the step yet. Complete any prior steps and/or resolve this step's
+	// issue to proceed.
+	//   "PENDING" - The step's state is pending. Complete prior steps
+	// before working on a `PENDING` step.
+	//   "INCOMPLETE" - The step is incomplete. You should complete any
+	// `certVerification` or `dnsUpdates` changes to complete it.
+	//   "PROCESSING" - You've done your part to update records and present
+	// challenges as necessary. Hosting is now completing background
+	// processes to complete the step, e.g. minting an SSL cert for your
+	// domain name.
+	//   "COMPLETE" - The step is complete. You've already made the
+	// necessary changes to your domain and/or prior hosting service to
+	// advance to the next step. Once all steps are complete, Hosting is
+	// ready to serve secure content on your domain.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertVerification") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertVerification") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveMigrationStep) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveMigrationStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1107,8 +1948,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1499,7 +2340,7 @@ func (s *ServingConfig) MarshalJSON() ([]byte, error) {
 // Site: A `Site` represents a Firebase Hosting site.
 type Site struct {
 	// AppId: Optional. The ID of a Web App
-	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
 	// associated with the Hosting site.
 	AppId string `json:"appId,omitempty"`
 
@@ -1512,9 +2353,9 @@ type Site struct {
 	// Name: Output only. The fully-qualified resource name of the Hosting
 	// site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
 	// PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
-	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
 	// ***(recommended)*** or its `ProjectId`
-	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
 	// Learn more about using project identifiers in Google's AIP 2510
 	// standard (https://google.aip.dev/cloud/2510).
 	Name string `json:"name,omitempty"`
@@ -1641,6 +2482,41 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteCustomDomainRequest: The request sent to
+// `UndeleteCustomDomain`.
+type UndeleteCustomDomainRequest struct {
+	// Etag: A tag that represents the state of the `CustomDomain` as you
+	// know it. If present, the supplied tag must match the current value on
+	// your `CustomDomain`, or the request fails.
+	Etag string `json:"etag,omitempty"`
+
+	// ValidateOnly: If true, Hosting validates that it's possible to
+	// complete your request but doesn't actually delete the `CustomDomain`.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteCustomDomainRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteCustomDomainRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1885,17 +2761,17 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1974,6 +2850,14 @@ func (c *ProjectsSitesCreateCall) SiteId(siteId string) *ProjectsSitesCreateCall
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validates that the site_id is available and that the request would
+// succeed, returning the expected resulting site or error.
+func (c *ProjectsSitesCreateCall) ValidateOnly(validateOnly bool) *ProjectsSitesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2041,17 +2925,17 @@ func (c *ProjectsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Site, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Site{
 		ServerResponse: googleapi.ServerResponse{
@@ -2084,6 +2968,11 @@ func (c *ProjectsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Site, error
 	//       "description": "Required. Immutable. A globally unique identifier for the Hosting site. This identifier is used to construct the Firebase-provisioned subdomains for the site, so it must also be a valid domain name label.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set, validates that the site_id is available and that the request would succeed, returning the expected resulting site or error.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/sites",
@@ -2186,17 +3075,17 @@ func (c *ProjectsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2338,17 +3227,17 @@ func (c *ProjectsSitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Site{
 		ServerResponse: googleapi.ServerResponse{
@@ -2488,17 +3377,17 @@ func (c *ProjectsSitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConf
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -2657,17 +3546,17 @@ func (c *ProjectsSitesListCall) Do(opts ...googleapi.CallOption) (*ListSitesResp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2759,9 +3648,9 @@ type ProjectsSitesPatchCall struct {
 //   - name: Output only. The fully-qualified resource name of the Hosting
 //     site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
 //     PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
-//     (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+//     (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
 //     ***(recommended)*** or its `ProjectId`
-//     (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+//     (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
 //     Learn more about using project identifiers in Google's AIP 2510
 //     standard (https://google.aip.dev/cloud/2510).
 func (r *ProjectsSitesService) Patch(nameid string, site *Site) *ProjectsSitesPatchCall {
@@ -2845,17 +3734,17 @@ func (c *ProjectsSitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Site{
 		ServerResponse: googleapi.ServerResponse{
@@ -2878,7 +3767,7 @@ func (c *ProjectsSitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).",
+	//       "description": "Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -3005,17 +3894,17 @@ func (c *ProjectsSitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -3162,17 +4051,17 @@ func (c *ProjectsSitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Cha
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -3305,17 +4194,17 @@ func (c *ProjectsSitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -3454,17 +4343,17 @@ func (c *ProjectsSitesChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -3623,17 +4512,17 @@ func (c *ProjectsSitesChannelsListCall) Do(opts ...googleapi.CallOption) (*ListC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3806,17 +4695,17 @@ func (c *ProjectsSitesChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Chan
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -3968,17 +4857,17 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -4023,6 +4912,161 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOptio
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.channels.releases.get":
+
+type ProjectsSitesChannelsReleasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified release for a site or channel. When used to
+// get a release for a site, this can get releases for both the default
+// `live` channel and any active preview channels for the specified
+// site.
+//
+//   - name: The fully-qualified resource name for the Hosting release, in
+//     either of the following formats: -
+//     sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID -
+//     sites/SITE_ID/releases/RELEASE_ID.
+func (r *ProjectsSitesChannelsReleasesService) Get(name string) *ProjectsSitesChannelsReleasesGetCall {
+	c := &ProjectsSitesChannelsReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesChannelsReleasesGetCall) Fields(s ...googleapi.Field) *ProjectsSitesChannelsReleasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesChannelsReleasesGetCall) IfNoneMatch(entityTag string) *ProjectsSitesChannelsReleasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesChannelsReleasesGetCall) Context(ctx context.Context) *ProjectsSitesChannelsReleasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesChannelsReleasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesChannelsReleasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.channels.releases.get" call.
+// Exactly one of *Release or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesChannelsReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Release{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified release for a site or channel. When used to get a release for a site, this can get releases for both the default `live` channel and any active preview channels for the specified site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/channels/{channelsId}/releases/{releasesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.channels.releases.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the Hosting release, in either of the following formats: - sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID - sites/SITE_ID/releases/RELEASE_ID ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+/releases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Release"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -4145,17 +5189,17 @@ func (c *ProjectsSitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4214,6 +5258,1397 @@ func (c *ProjectsSitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption)
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsSitesChannelsReleasesListCall) Pages(ctx context.Context, f func(*ListReleasesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "firebasehosting.projects.sites.customDomains.create":
+
+type ProjectsSitesCustomDomainsCreateCall struct {
+	s            *Service
+	parent       string
+	customdomain *CustomDomain
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a `CustomDomain`.
+//
+//   - parent: The `CustomDomain`'s parent, specifically a Firebase
+//     Hosting `Site`.
+func (r *ProjectsSitesCustomDomainsService) Create(parent string, customdomain *CustomDomain) *ProjectsSitesCustomDomainsCreateCall {
+	c := &ProjectsSitesCustomDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.customdomain = customdomain
+	return c
+}
+
+// CustomDomainId sets the optional parameter "customDomainId":
+// Required. The ID of the `CustomDomain`, which is the domain name
+// you'd like to use with Firebase Hosting.
+func (c *ProjectsSitesCustomDomainsCreateCall) CustomDomainId(customDomainId string) *ProjectsSitesCustomDomainsCreateCall {
+	c.urlParams_.Set("customDomainId", customDomainId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true,
+// Hosting validates that it's possible to complete your request but
+// doesn't actually create a new `CustomDomain`.
+func (c *ProjectsSitesCustomDomainsCreateCall) ValidateOnly(validateOnly bool) *ProjectsSitesCustomDomainsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsCreateCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsCreateCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdomain)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/customDomains")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a `CustomDomain`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.projects.sites.customDomains.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customDomainId": {
+	//       "description": "Required. The ID of the `CustomDomain`, which is the domain name you'd like to use with Firebase Hosting.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The `CustomDomain`'s parent, specifically a Firebase Hosting `Site`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, Hosting validates that it's possible to complete your request but doesn't actually create a new `CustomDomain`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/customDomains",
+	//   "request": {
+	//     "$ref": "CustomDomain"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.delete":
+
+type ProjectsSitesCustomDomainsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified `CustomDomain`.
+//
+// - name: The name of the `CustomDomain` to delete.
+func (r *ProjectsSitesCustomDomainsService) Delete(name string) *ProjectsSitesCustomDomainsDeleteCall {
+	c := &ProjectsSitesCustomDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If true, the
+// request succeeds even if the `CustomDomain` doesn't exist.
+func (c *ProjectsSitesCustomDomainsDeleteCall) AllowMissing(allowMissing bool) *ProjectsSitesCustomDomainsDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": A tag that represents the
+// state of the `CustomDomain` as you know it. If present, the supplied
+// tag must match the current value on your `CustomDomain`, or the
+// request fails.
+func (c *ProjectsSitesCustomDomainsDeleteCall) Etag(etag string) *ProjectsSitesCustomDomainsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true,
+// Hosting validates that it's possible to complete your request but
+// doesn't actually delete the `CustomDomain`.
+func (c *ProjectsSitesCustomDomainsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsSitesCustomDomainsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsDeleteCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsDeleteCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified `CustomDomain`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firebasehosting.projects.sites.customDomains.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If true, the request succeeds even if the `CustomDomain` doesn't exist.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "etag": {
+	//       "description": "A tag that represents the state of the `CustomDomain` as you know it. If present, the supplied tag must match the current value on your `CustomDomain`, or the request fails.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the `CustomDomain` to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, Hosting validates that it's possible to complete your request but doesn't actually delete the `CustomDomain`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.get":
+
+type ProjectsSitesCustomDomainsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified `CustomDomain`.
+//
+// - name: The name of the `CustomDomain` to get.
+func (r *ProjectsSitesCustomDomainsService) Get(name string) *ProjectsSitesCustomDomainsGetCall {
+	c := &ProjectsSitesCustomDomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsGetCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesCustomDomainsGetCall) IfNoneMatch(entityTag string) *ProjectsSitesCustomDomainsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsGetCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.get" call.
+// Exactly one of *CustomDomain or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomDomain.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsGetCall) Do(opts ...googleapi.CallOption) (*CustomDomain, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomDomain{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified `CustomDomain`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.customDomains.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the `CustomDomain` to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "CustomDomain"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.list":
+
+type ProjectsSitesCustomDomainsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists each `CustomDomain` associated with the specified parent
+// Hosting Site. Returns `CustomDomain`s in a consistent, but undefined,
+// order to facilitate pagination.
+//
+//   - parent: The Firebase Hosting `Site` with `CustomDomain` entities
+//     you'd like to list.
+func (r *ProjectsSitesCustomDomainsService) List(parent string) *ProjectsSitesCustomDomainsListCall {
+	c := &ProjectsSitesCustomDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The max number of
+// `CustomDomain` entities to return in a request. Defaults to 10.
+func (c *ProjectsSitesCustomDomainsListCall) PageSize(pageSize int64) *ProjectsSitesCustomDomainsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token from a
+// previous call to `ListCustomDomains` that tells the server where to
+// resume listing.
+func (c *ProjectsSitesCustomDomainsListCall) PageToken(pageToken string) *ProjectsSitesCustomDomainsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": If true, the
+// request returns soft-deleted `CustomDomain`s that haven't been
+// fully-deleted yet. To restore deleted `CustomDomain`s, make an
+// `UndeleteCustomDomain` request.
+func (c *ProjectsSitesCustomDomainsListCall) ShowDeleted(showDeleted bool) *ProjectsSitesCustomDomainsListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsListCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesCustomDomainsListCall) IfNoneMatch(entityTag string) *ProjectsSitesCustomDomainsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsListCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/customDomains")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.list" call.
+// Exactly one of *ListCustomDomainsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCustomDomainsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsListCall) Do(opts ...googleapi.CallOption) (*ListCustomDomainsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomDomainsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists each `CustomDomain` associated with the specified parent Hosting Site. Returns `CustomDomain`s in a consistent, but undefined, order to facilitate pagination.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.customDomains.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The max number of `CustomDomain` entities to return in a request. Defaults to 10.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token from a previous call to `ListCustomDomains` that tells the server where to resume listing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The Firebase Hosting `Site` with `CustomDomain` entities you'd like to list.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "If true, the request returns soft-deleted `CustomDomain`s that haven't been fully-deleted yet. To restore deleted `CustomDomain`s, make an `UndeleteCustomDomain` request.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/customDomains",
+	//   "response": {
+	//     "$ref": "ListCustomDomainsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSitesCustomDomainsListCall) Pages(ctx context.Context, f func(*ListCustomDomainsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "firebasehosting.projects.sites.customDomains.patch":
+
+type ProjectsSitesCustomDomainsPatchCall struct {
+	s            *Service
+	name         string
+	customdomain *CustomDomain
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates the specified `CustomDomain`.
+//
+// - name: Output only. The fully-qualified name of the `CustomDomain`.
+func (r *ProjectsSitesCustomDomainsService) Patch(name string, customdomain *CustomDomain) *ProjectsSitesCustomDomainsPatchCall {
+	c := &ProjectsSitesCustomDomainsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customdomain = customdomain
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If true,
+// Hosting creates the `CustomDomain` if it doesn't already exist.
+func (c *ProjectsSitesCustomDomainsPatchCall) AllowMissing(allowMissing bool) *ProjectsSitesCustomDomainsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The set of field
+// names from your `CustomDomain` that you want to update. A field will
+// be overwritten if, and only if, it's in the mask. If you don't
+// provide a mask, Hosting updates the entire `CustomDomain`.
+func (c *ProjectsSitesCustomDomainsPatchCall) UpdateMask(updateMask string) *ProjectsSitesCustomDomainsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true,
+// Hosting validates that it's possible to complete your request but
+// doesn't actually create or update the `CustomDomain`.
+func (c *ProjectsSitesCustomDomainsPatchCall) ValidateOnly(validateOnly bool) *ProjectsSitesCustomDomainsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsPatchCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsPatchCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdomain)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified `CustomDomain`.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "firebasehosting.projects.sites.customDomains.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If true, Hosting creates the `CustomDomain` if it doesn't already exist.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Output only. The fully-qualified name of the `CustomDomain`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The set of field names from your `CustomDomain` that you want to update. A field will be overwritten if, and only if, it's in the mask. If you don't provide a mask, Hosting updates the entire `CustomDomain`.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, Hosting validates that it's possible to complete your request but doesn't actually create or update the `CustomDomain`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "CustomDomain"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.undelete":
+
+type ProjectsSitesCustomDomainsUndeleteCall struct {
+	s                           *Service
+	name                        string
+	undeletecustomdomainrequest *UndeleteCustomDomainRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Undelete: Undeletes the specified `CustomDomain` if it has been
+// soft-deleted. Hosting retains soft-deleted CustomDomains for around
+// 30 days before permanently deleting them.
+//
+// - name: The name of the `CustomDomain` to delete.
+func (r *ProjectsSitesCustomDomainsService) Undelete(name string, undeletecustomdomainrequest *UndeleteCustomDomainRequest) *ProjectsSitesCustomDomainsUndeleteCall {
+	c := &ProjectsSitesCustomDomainsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeletecustomdomainrequest = undeletecustomdomainrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsUndeleteCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsUndeleteCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletecustomdomainrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.undelete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeletes the specified `CustomDomain` if it has been soft-deleted. Hosting retains soft-deleted CustomDomains for around 30 days before permanently deleting them.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "firebasehosting.projects.sites.customDomains.undelete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the `CustomDomain` to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteCustomDomainRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.operations.get":
+
+type ProjectsSitesCustomDomainsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Use this
+// method to poll the operation result at intervals as recommended by
+// the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsSitesCustomDomainsOperationsService) Get(name string) *ProjectsSitesCustomDomainsOperationsGetCall {
+	c := &ProjectsSitesCustomDomainsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesCustomDomainsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsSitesCustomDomainsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsOperationsGetCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.customDomains.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.customDomains.operations.list":
+
+type ProjectsSitesCustomDomainsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsSitesCustomDomainsOperationsService) List(name string) *ProjectsSitesCustomDomainsOperationsListCall {
+	c := &ProjectsSitesCustomDomainsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) Filter(filter string) *ProjectsSitesCustomDomainsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) PageSize(pageSize int64) *ProjectsSitesCustomDomainsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) PageToken(pageToken string) *ProjectsSitesCustomDomainsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsSitesCustomDomainsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsSitesCustomDomainsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) Context(ctx context.Context) *ProjectsSitesCustomDomainsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesCustomDomainsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.customDomains.operations.list" call.
+// Exactly one of *ListOperationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.customDomains.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/customDomains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}/operations",
+	//   "response": {
+	//     "$ref": "ListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSitesCustomDomainsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -4320,17 +6755,17 @@ func (c *ProjectsSitesDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Doma
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -4456,17 +6891,17 @@ func (c *ProjectsSitesDomainsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4603,17 +7038,17 @@ func (c *ProjectsSitesDomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -4767,17 +7202,17 @@ func (c *ProjectsSitesDomainsListCall) Do(opts ...googleapi.CallOption) (*ListDo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4943,17 +7378,17 @@ func (c *ProjectsSitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Doma
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -5099,17 +7534,17 @@ func (c *ProjectsSitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -5154,6 +7589,161 @@ func (c *ProjectsSitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.releases.get":
+
+type ProjectsSitesReleasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified release for a site or channel. When used to
+// get a release for a site, this can get releases for both the default
+// `live` channel and any active preview channels for the specified
+// site.
+//
+//   - name: The fully-qualified resource name for the Hosting release, in
+//     either of the following formats: -
+//     sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID -
+//     sites/SITE_ID/releases/RELEASE_ID.
+func (r *ProjectsSitesReleasesService) Get(name string) *ProjectsSitesReleasesGetCall {
+	c := &ProjectsSitesReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesReleasesGetCall) Fields(s ...googleapi.Field) *ProjectsSitesReleasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesReleasesGetCall) IfNoneMatch(entityTag string) *ProjectsSitesReleasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesReleasesGetCall) Context(ctx context.Context) *ProjectsSitesReleasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesReleasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesReleasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.releases.get" call.
+// Exactly one of *Release or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Release{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified release for a site or channel. When used to get a release for a site, this can get releases for both the default `live` channel and any active preview channels for the specified site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/releases/{releasesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.releases.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the Hosting release, in either of the following formats: - sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID - sites/SITE_ID/releases/RELEASE_ID ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/releases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Release"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -5276,17 +7866,17 @@ func (c *ProjectsSitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -5452,17 +8042,17 @@ func (c *ProjectsSitesVersionsCloneCall) Do(opts ...googleapi.CallOption) (*Oper
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -5612,17 +8202,17 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -5658,6 +8248,7 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 	//       "type": "string"
 	//     },
 	//     "versionId": {
+	//       "deprecated": true,
 	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"
@@ -5760,17 +8351,17 @@ func (c *ProjectsSitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -5807,6 +8398,159 @@ func (c *ProjectsSitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.projects.sites.versions.get":
+
+type ProjectsSitesVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the specified version that has been created for the
+// specified site. This can include versions that were created for the
+// default `live` channel or for any active preview channels for the
+// specified site.
+//
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/SITE_ID/versions/VERSION_ID.
+func (r *ProjectsSitesVersionsService) Get(name string) *ProjectsSitesVersionsGetCall {
+	c := &ProjectsSitesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSitesVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsSitesVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSitesVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsSitesVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSitesVersionsGetCall) Context(ctx context.Context) *ProjectsSitesVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSitesVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSitesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.projects.sites.versions.get" call.
+// Exactly one of *Version or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Version.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSitesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Version{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the specified version that has been created for the specified site. This can include versions that were created for the default `live` channel or for any active preview channels for the specified site.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/versions/{versionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.projects.sites.versions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the version, in the format: sites/SITE_ID/versions/VERSION_ID",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Version"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -5939,17 +8683,17 @@ func (c *ProjectsSitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6136,17 +8880,17 @@ func (c *ProjectsSitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Vers
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -6287,17 +9031,17 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PopulateVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6475,17 +9219,17 @@ func (c *ProjectsSitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -6672,17 +9416,17 @@ func (c *SitesGetConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6825,17 +9569,17 @@ func (c *SitesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*SiteConfig, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -6982,17 +9726,17 @@ func (c *SitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -7125,17 +9869,17 @@ func (c *SitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -7274,17 +10018,17 @@ func (c *SitesChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -7443,17 +10187,17 @@ func (c *SitesChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -7626,17 +10370,17 @@ func (c *SitesChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channel, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -7788,17 +10532,17 @@ func (c *SitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -7843,6 +10587,161 @@ func (c *SitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.sites.channels.releases.get":
+
+type SitesChannelsReleasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified release for a site or channel. When used to
+// get a release for a site, this can get releases for both the default
+// `live` channel and any active preview channels for the specified
+// site.
+//
+//   - name: The fully-qualified resource name for the Hosting release, in
+//     either of the following formats: -
+//     sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID -
+//     sites/SITE_ID/releases/RELEASE_ID.
+func (r *SitesChannelsReleasesService) Get(name string) *SitesChannelsReleasesGetCall {
+	c := &SitesChannelsReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesChannelsReleasesGetCall) Fields(s ...googleapi.Field) *SitesChannelsReleasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesChannelsReleasesGetCall) IfNoneMatch(entityTag string) *SitesChannelsReleasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesChannelsReleasesGetCall) Context(ctx context.Context) *SitesChannelsReleasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesChannelsReleasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesChannelsReleasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.channels.releases.get" call.
+// Exactly one of *Release or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesChannelsReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Release{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified release for a site or channel. When used to get a release for a site, this can get releases for both the default `live` channel and any active preview channels for the specified site.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/channels/{channelsId}/releases/{releasesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.sites.channels.releases.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the Hosting release, in either of the following formats: - sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID - sites/SITE_ID/releases/RELEASE_ID ",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+/channels/[^/]+/releases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Release"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -7965,17 +10864,17 @@ func (c *SitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8140,17 +11039,17 @@ func (c *SitesDomainsCreateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -8276,17 +11175,17 @@ func (c *SitesDomainsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -8423,17 +11322,17 @@ func (c *SitesDomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -8587,17 +11486,17 @@ func (c *SitesDomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListDomainsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -8763,17 +11662,17 @@ func (c *SitesDomainsUpdateCall) Do(opts ...googleapi.CallOption) (*Domain, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Domain{
 		ServerResponse: googleapi.ServerResponse{
@@ -8919,17 +11818,17 @@ func (c *SitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Release{
 		ServerResponse: googleapi.ServerResponse{
@@ -8974,6 +11873,161 @@ func (c *SitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, er
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.sites.releases.get":
+
+type SitesReleasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified release for a site or channel. When used to
+// get a release for a site, this can get releases for both the default
+// `live` channel and any active preview channels for the specified
+// site.
+//
+//   - name: The fully-qualified resource name for the Hosting release, in
+//     either of the following formats: -
+//     sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID -
+//     sites/SITE_ID/releases/RELEASE_ID.
+func (r *SitesReleasesService) Get(name string) *SitesReleasesGetCall {
+	c := &SitesReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesReleasesGetCall) Fields(s ...googleapi.Field) *SitesReleasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesReleasesGetCall) IfNoneMatch(entityTag string) *SitesReleasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesReleasesGetCall) Context(ctx context.Context) *SitesReleasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesReleasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesReleasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.releases.get" call.
+// Exactly one of *Release or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Release{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the specified release for a site or channel. When used to get a release for a site, this can get releases for both the default `live` channel and any active preview channels for the specified site.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/releases/{releasesId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.sites.releases.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the Hosting release, in either of the following formats: - sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID - sites/SITE_ID/releases/RELEASE_ID ",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+/releases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Release"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -9096,17 +12150,17 @@ func (c *SitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListReleasesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9272,17 +12326,17 @@ func (c *SitesVersionsCloneCall) Do(opts ...googleapi.CallOption) (*Operation, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -9432,17 +12486,17 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -9478,6 +12532,7 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 	//       "type": "string"
 	//     },
 	//     "versionId": {
+	//       "deprecated": true,
 	//       "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
 	//       "location": "query",
 	//       "type": "string"
@@ -9580,17 +12635,17 @@ func (c *SitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -9627,6 +12682,159 @@ func (c *SitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasehosting.sites.versions.get":
+
+type SitesVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get the specified version that has been created for the
+// specified site. This can include versions that were created for the
+// default `live` channel or for any active preview channels for the
+// specified site.
+//
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/SITE_ID/versions/VERSION_ID.
+func (r *SitesVersionsService) Get(name string) *SitesVersionsGetCall {
+	c := &SitesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesVersionsGetCall) Fields(s ...googleapi.Field) *SitesVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesVersionsGetCall) IfNoneMatch(entityTag string) *SitesVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesVersionsGetCall) Context(ctx context.Context) *SitesVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasehosting.sites.versions.get" call.
+// Exactly one of *Version or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Version.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Version{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the specified version that has been created for the specified site. This can include versions that were created for the default `live` channel or for any active preview channels for the specified site.",
+	//   "flatPath": "v1beta1/sites/{sitesId}/versions/{versionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "firebasehosting.sites.versions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully-qualified resource name for the version, in the format: sites/SITE_ID/versions/VERSION_ID",
+	//       "location": "path",
+	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Version"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/firebase",
+	//     "https://www.googleapis.com/auth/firebase.readonly"
 	//   ]
 	// }
 
@@ -9759,17 +12967,17 @@ func (c *SitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -9956,17 +13164,17 @@ func (c *SitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Version, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Version{
 		ServerResponse: googleapi.ServerResponse{
@@ -10107,17 +13315,17 @@ func (c *SitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption) (*Popu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &PopulateVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -10295,17 +13503,17 @@ func (c *SitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*ListVers
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListVersionFilesResponse{
 		ServerResponse: googleapi.ServerResponse{

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package workflows provides access to the Workflows API.
 //
 // For product documentation, see: https://cloud.google.com/workflows
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	workflowsService, err := workflows.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	workflowsService, err := workflows.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	workflowsService, err := workflows.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package workflows // import "google.golang.org/api/workflows/v1"
 
 import (
@@ -71,6 +84,7 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "workflows:v1"
 const apiName = "workflows"
@@ -277,7 +291,7 @@ type ListWorkflowsResponse struct {
 	// Unreachable: Unreachable resources.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// Workflows: The workflows which match the request.
+	// Workflows: The workflows that match the request.
 	Workflows []*Workflow `json:"workflows,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -307,7 +321,7 @@ func (s *ListWorkflowsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Location: A resource that represents Google Cloud Platform location.
+// Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
 	// city name. For example, "Tokyo".
@@ -382,8 +396,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -460,6 +474,42 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StateError: Describes an error related to the current state of the
+// workflow.
+type StateError struct {
+	// Details: Provides specifics about the error.
+	Details string `json:"details,omitempty"`
+
+	// Type: The type of this state error.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - No type specified.
+	//   "KMS_ERROR" - Caused by an issue with KMS.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StateError) MarshalJSON() ([]byte, error) {
+	type NoMethod StateError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -506,9 +556,32 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // Workflow: Workflow program to be executed by Workflows.
 type Workflow struct {
-	// CreateTime: Output only. The timestamp of when the workflow was
+	// CallLogLevel: Optional. Describes the level of platform logging to
+	// apply to calls and call responses during executions of this workflow.
+	// If both the workflow and the execution specify a logging level, the
+	// execution level takes precedence.
+	//
+	// Possible values:
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging level specified.
+	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
+	// returns, and all exceptions raised.
+	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
+	// steps within workflows.
+	//   "LOG_NONE" - Explicitly log nothing.
+	CallLogLevel string `json:"callLogLevel,omitempty"`
+
+	// CreateTime: Output only. The timestamp for when the workflow was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// CryptoKeyName: Optional. The resource name of a KMS crypto key used
+	// to encrypt or decrypt the data associated with the workflow. Format:
+	// projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/
+	// {cryptoKey} Using `-` as a wildcard for the `{project}` or not
+	// providing one at all will infer the project from the account. If not
+	// provided, data associated with the workflow will not be
+	// CMEK-encrypted.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 
 	// Description: Description of the workflow provided by the user. Must
 	// be at most 1000 unicode characters long.
@@ -517,7 +590,7 @@ type Workflow struct {
 	// Labels: Labels associated with this workflow. Labels can contain at
 	// most 64 entries. Keys and values can be no longer than 63 characters
 	// and can only contain lowercase letters, numeric characters,
-	// underscores and dashes. Label keys must start with a letter.
+	// underscores, and dashes. Label keys must start with a letter.
 	// International characters are allowed.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -525,16 +598,16 @@ type Workflow struct {
 	// projects/{project}/locations/{location}/workflows/{workflow}
 	Name string `json:"name,omitempty"`
 
-	// RevisionCreateTime: Output only. The timestamp that the latest
-	// revision of the workflow was created.
+	// RevisionCreateTime: Output only. The timestamp for the latest
+	// revision of the workflow's creation.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
 
 	// RevisionId: Output only. The revision of the workflow. A new revision
 	// of a workflow is created as a result of updating the following
 	// properties of a workflow: - Service account - Workflow code to be
-	// executed The format is "000001-a4d", where the first 6 characters
+	// executed The format is "000001-a4d", where the first six characters
 	// define the zero-padded revision ordinal number. They are followed by
-	// a hyphen and 3 hexadecimal random characters.
+	// a hyphen and three hexadecimal random characters.
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// ServiceAccount: The service account associated with the latest
@@ -559,16 +632,30 @@ type Workflow struct {
 	//   "STATE_UNSPECIFIED" - Invalid state.
 	//   "ACTIVE" - The workflow has been deployed successfully and is
 	// serving.
+	//   "UNAVAILABLE" - Workflow data is unavailable. See the `state_error`
+	// field.
 	State string `json:"state,omitempty"`
 
-	// UpdateTime: Output only. The last update timestamp of the workflow.
+	// StateError: Output only. Error regarding the state of the workflow.
+	// For example, this field will have error details if the execution data
+	// is unavailable due to revoked KMS key permissions.
+	StateError *StateError `json:"stateError,omitempty"`
+
+	// UpdateTime: Output only. The timestamp for when the workflow was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// UserEnvVars: Optional. User-defined environment variables associated
+	// with this workflow revision. This map has a maximum length of 20.
+	// Each string can take up to 40KiB. Keys cannot be empty strings and
+	// cannot start with “GOOGLE” or “WORKFLOWS".
+	UserEnvVars map[string]string `json:"userEnvVars,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CallLogLevel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -576,10 +663,10 @@ type Workflow struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CallLogLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -686,17 +773,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -858,17 +945,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1030,17 +1117,17 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -1178,17 +1265,17 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1242,14 +1329,7 @@ type ProjectsLocationsOperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
+// `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -1354,17 +1434,17 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1378,7 +1458,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "workflows.projects.locations.operations.list",
@@ -1455,7 +1535,7 @@ type ProjectsLocationsWorkflowsCreateCall struct {
 
 // Create: Creates a new workflow. If a workflow with the specified name
 // already exists in the specified project and location, the long
-// running operation will return ALREADY_EXISTS error.
+// running operation returns a ALREADY_EXISTS error.
 //
 //   - parent: Project and location in which the workflow should be
 //     created. Format: projects/{project}/locations/{location}.
@@ -1544,17 +1624,17 @@ func (c *ProjectsLocationsWorkflowsCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1568,7 +1648,7 @@ func (c *ProjectsLocationsWorkflowsCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new workflow. If a workflow with the specified name already exists in the specified project and location, the long running operation will return ALREADY_EXISTS error.",
+	//   "description": "Creates a new workflow. If a workflow with the specified name already exists in the specified project and location, the long running operation returns a ALREADY_EXISTS error.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows",
 	//   "httpMethod": "POST",
 	//   "id": "workflows.projects.locations.workflows.create",
@@ -1686,17 +1766,17 @@ func (c *ProjectsLocationsWorkflowsDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -1748,14 +1828,24 @@ type ProjectsLocationsWorkflowsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Workflow.
+// Get: Gets details of a single workflow.
 //
-//   - name: Name of the workflow which information should be retrieved.
-//     Format:
+//   - name: Name of the workflow for which information should be
+//     retrieved. Format:
 //     projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsService) Get(name string) *ProjectsLocationsWorkflowsGetCall {
 	c := &ProjectsLocationsWorkflowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RevisionId sets the optional parameter "revisionId": The revision of
+// the workflow to retrieve. If the revision_id is empty, the latest
+// revision is retrieved. The format is "000001-a4d", where the first
+// six characters define the zero-padded decimal revision number. They
+// are followed by a hyphen and three hexadecimal characters.
+func (c *ProjectsLocationsWorkflowsGetCall) RevisionId(revisionId string) *ProjectsLocationsWorkflowsGetCall {
+	c.urlParams_.Set("revisionId", revisionId)
 	return c
 }
 
@@ -1834,17 +1924,17 @@ func (c *ProjectsLocationsWorkflowsGetCall) Do(opts ...googleapi.CallOption) (*W
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Workflow{
 		ServerResponse: googleapi.ServerResponse{
@@ -1858,7 +1948,7 @@ func (c *ProjectsLocationsWorkflowsGetCall) Do(opts ...googleapi.CallOption) (*W
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single Workflow.",
+	//   "description": "Gets details of a single workflow.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}",
 	//   "httpMethod": "GET",
 	//   "id": "workflows.projects.locations.workflows.get",
@@ -1867,10 +1957,15 @@ func (c *ProjectsLocationsWorkflowsGetCall) Do(opts ...googleapi.CallOption) (*W
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the workflow which information should be retrieved. Format: projects/{project}/locations/{location}/workflows/{workflow}",
+	//       "description": "Required. Name of the workflow for which information should be retrieved. Format: projects/{project}/locations/{location}/workflows/{workflow}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revisionId": {
+	//       "description": "Optional. The revision of the workflow to retrieve. If the revision_id is empty, the latest revision is retrieved. The format is \"000001-a4d\", where the first six characters define the zero-padded decimal revision number. They are followed by a hyphen and three hexadecimal characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -1896,7 +1991,7 @@ type ProjectsLocationsWorkflowsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Workflows in a given project and location. The default
+// List: Lists workflows in a given project and location. The default
 // order is not specified.
 //
 //   - parent: Project and location from which the workflows should be
@@ -1915,9 +2010,9 @@ func (c *ProjectsLocationsWorkflowsListCall) Filter(filter string) *ProjectsLoca
 }
 
 // OrderBy sets the optional parameter "orderBy": Comma-separated list
-// of fields that that specify the order of the results. Default sorting
+// of fields that specify the order of the results. Default sorting
 // order for a field is ascending. To specify descending order for a
-// field, append a " desc" suffix. If not specified, the results will be
+// field, append a "desc" suffix. If not specified, the results are
 // returned in an unspecified order.
 func (c *ProjectsLocationsWorkflowsListCall) OrderBy(orderBy string) *ProjectsLocationsWorkflowsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -1925,10 +2020,10 @@ func (c *ProjectsLocationsWorkflowsListCall) OrderBy(orderBy string) *ProjectsLo
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// workflows to return per call. The service may return fewer than this
-// value. If the value is not specified, a default value of 500 will be
-// used. The maximum permitted value is 1000 and values greater than
-// 1000 will be coerced down to 1000.
+// workflows to return per call. The service might return fewer than
+// this value even if not at the end of the collection. If a value is
+// not specified, a default value of 500 is used. The maximum permitted
+// value is 1000 and values greater than 1000 are coerced down to 1000.
 func (c *ProjectsLocationsWorkflowsListCall) PageSize(pageSize int64) *ProjectsLocationsWorkflowsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2019,17 +2114,17 @@ func (c *ProjectsLocationsWorkflowsListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListWorkflowsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2043,7 +2138,7 @@ func (c *ProjectsLocationsWorkflowsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Workflows in a given project and location. The default order is not specified.",
+	//   "description": "Lists workflows in a given project and location. The default order is not specified.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows",
 	//   "httpMethod": "GET",
 	//   "id": "workflows.projects.locations.workflows.list",
@@ -2057,12 +2152,12 @@ func (c *ProjectsLocationsWorkflowsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma-separated list of fields that that specify the order of the results. Default sorting order for a field is ascending. To specify descending order for a field, append a \" desc\" suffix. If not specified, the results will be returned in an unspecified order.",
+	//       "description": "Comma-separated list of fields that specify the order of the results. Default sorting order for a field is ascending. To specify descending order for a field, append a \"desc\" suffix. If not specified, the results are returned in an unspecified order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of workflows to return per call. The service may return fewer than this value. If the value is not specified, a default value of 500 will be used. The maximum permitted value is 1000 and values greater than 1000 will be coerced down to 1000.",
+	//       "description": "Maximum number of workflows to return per call. The service might return fewer than this value even if not at the end of the collection. If a value is not specified, a default value of 500 is used. The maximum permitted value is 1000 and values greater than 1000 are coerced down to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2125,8 +2220,8 @@ type ProjectsLocationsWorkflowsPatchCall struct {
 
 // Patch: Updates an existing workflow. Running this method has no
 // impact on already running executions of the workflow. A new revision
-// of the workflow may be created as a result of a successful update
-// operation. In that case, such revision will be used in new workflow
+// of the workflow might be created as a result of a successful update
+// operation. In that case, the new revision is used in new workflow
 // executions.
 //
 //   - name: The resource name of the workflow. Format:
@@ -2212,17 +2307,17 @@ func (c *ProjectsLocationsWorkflowsPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2236,7 +2331,7 @@ func (c *ProjectsLocationsWorkflowsPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing workflow. Running this method has no impact on already running executions of the workflow. A new revision of the workflow may be created as a result of a successful update operation. In that case, such revision will be used in new workflow executions.",
+	//   "description": "Updates an existing workflow. Running this method has no impact on already running executions of the workflow. A new revision of the workflow might be created as a result of a successful update operation. In that case, the new revision is used in new workflow executions.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "workflows.projects.locations.workflows.patch",

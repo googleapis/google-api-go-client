@@ -14,7 +14,7 @@ import (
 	"crypto/rsa"
 	"encoding/base64"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"math/big"
 	"net/http"
 	"testing"
@@ -97,7 +97,7 @@ func TestValidateRS256(t *testing.T) {
 					}
 					return &http.Response{
 						StatusCode: 200,
-						Body:       ioutil.NopCloser(bytes.NewReader(b)),
+						Body:       io.NopCloser(bytes.NewReader(b)),
 						Header:     make(http.Header),
 					}
 				}),
@@ -207,7 +207,7 @@ func TestValidateES256(t *testing.T) {
 					}
 					return &http.Response{
 						StatusCode: 200,
-						Body:       ioutil.NopCloser(bytes.NewReader(b)),
+						Body:       io.NopCloser(bytes.NewReader(b)),
 						Header:     make(http.Header),
 					}
 				}),

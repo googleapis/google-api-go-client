@@ -231,13 +231,12 @@ func TestValidateES256(t *testing.T) {
 	}
 }
 
-func TestGetPayload(t *testing.T) {
+func TestParsePayload(t *testing.T) {
 	idToken, _ := createRS256JWT(t)
 	tests := []struct {
 		name                string
 		token               string
 		wantPayloadAudience string
-		wantPayload         *Payload
 		wantErr             bool
 	}{{
 		name:                "valid token",
@@ -251,16 +250,14 @@ func TestGetPayload(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ctx := context.Background()
-			v := &Validator{}
-			payload, err := v.GetPayload(ctx, tt.token)
+			payload, err := ParsePayload(tt.token)
 			gotErr := err != nil
 			if gotErr != tt.wantErr {
-				t.Errorf("GetPayload(ctx, %q) got error %v, wantErr = %v", tt.token, err, tt.wantErr)
+				t.Errorf("ParsePayload(%q) got error %v, wantErr = %v", tt.token, err, tt.wantErr)
 			}
 			if tt.wantPayloadAudience != "" {
 				if payload == nil || payload.Audience != tt.wantPayloadAudience {
-					t.Errorf("GetPayload(ctx, %q) got payload %+v, want payload with audience = %v", tt.token, payload, tt.wantPayloadAudience)
+					t.Errorf("ParsePayload(%q) got payload %+v, want payload with audience = %q", tt.token, payload, tt.wantPayloadAudience)
 				}
 			}
 		})

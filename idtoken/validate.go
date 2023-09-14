@@ -122,34 +122,21 @@ func Validate(ctx context.Context, idToken string, audience string) (*Payload, e
 	return defaultValidator.validate(ctx, idToken, audience)
 }
 
-// GetPayload parses the given token and returns its payload.
+// ParsePayload parses the given token and returns its payload.
 //
 // Warning: This function does not validate the token prior to parsing it.
 //
-// GetPayload is primarily meant to be used to inspect a token's payload. This is
+// ParsePayload is primarily meant to be used to inspect a token's payload. This is
 // useful when validation fails and the payload needs to be inspected.
 //
 // Note: A successful Validate() invocation with the same token will return an
 // identical payload.
-func (v *Validator) GetPayload(ctx context.Context, idToken string) (*Payload, error) {
+func ParsePayload(idToken string) (*Payload, error) {
 	jwt, err := parseJWT(idToken)
 	if err != nil {
 		return nil, err
 	}
 	return jwt.parsedPayload()
-}
-
-// GetPayload parses the given token and returns its payload.
-//
-// Warning: This function does not validate the token prior to parsing it.
-//
-// GetPayload is primarily meant to be used to inspect a token's payload. This is
-// useful when validation fails and the payload needs to be inspected.
-//
-// Note: A successful Validate() invocation with the same token will return an
-// identical payload.
-func GetPayload(ctx context.Context, idToken string) (*Payload, error) {
-	return defaultValidator.GetPayload(ctx, idToken)
 }
 
 func (v *Validator) validate(ctx context.Context, idToken string, audience string) (*Payload, error) {

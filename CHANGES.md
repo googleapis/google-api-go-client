@@ -1,5 +1,20 @@
 # Changes
 
+## [0.141.0](https://github.com/googleapis/google-api-go-client/compare/v0.140.0...v0.141.0) (2023-09-14)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2155](https://github.com/googleapis/google-api-go-client/issues/2155)) ([9a84e80](https://github.com/googleapis/google-api-go-client/commit/9a84e802e0a0bb8424950cdf2bcad83a90999496))
+* **all:** Auto-regenerate discovery clients ([#2159](https://github.com/googleapis/google-api-go-client/issues/2159)) ([2b846e5](https://github.com/googleapis/google-api-go-client/commit/2b846e55cfdffb0e5e100f5d75f06691fdb7d845))
+* **all:** Auto-regenerate discovery clients ([#2160](https://github.com/googleapis/google-api-go-client/issues/2160)) ([124e36e](https://github.com/googleapis/google-api-go-client/commit/124e36ed4056ec913dc30ace452277d20a0e059c))
+* **idtoken:** Add ParsePayload returning unvalidated token payload ([#2136](https://github.com/googleapis/google-api-go-client/issues/2136)) ([d541d8e](https://github.com/googleapis/google-api-go-client/commit/d541d8e4f6699db6216a0aeee5a7a5c23ed8a3b7))
+
+
+### Bug Fixes
+
+* **transport:** Remove conditional App Engine gen 1 Go hooks ([#2158](https://github.com/googleapis/google-api-go-client/issues/2158)) ([c2fa93e](https://github.com/googleapis/google-api-go-client/commit/c2fa93e001e9c6b60c17ac35161e6bdff0b2873e)), refs [#2128](https://github.com/googleapis/google-api-go-client/issues/2128)
+
 ## [0.140.0](https://github.com/googleapis/google-api-go-client/compare/v0.139.0...v0.140.0) (2023-09-11)
 
 

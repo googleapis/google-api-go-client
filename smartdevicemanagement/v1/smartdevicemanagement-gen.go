@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.UserinfoEmailScope))
+//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.SdmServiceScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -99,18 +99,19 @@ const mtlsBasePath = "https://smartdevicemanagement.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// See and/or control the devices that you selected
 	SdmServiceScope = "https://www.googleapis.com/auth/sdm.service"
-
-	// See your primary Google Account email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/sdm.service",
-		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -667,8 +668,8 @@ func (c *EnterprisesDevicesExecuteCommandCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 
@@ -815,8 +816,8 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleHom
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Device"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 
@@ -978,8 +979,8 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 
@@ -1127,8 +1128,8 @@ func (c *EnterprisesStructuresGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Structure"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 
@@ -1291,8 +1292,8 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListStructuresResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 
@@ -1439,8 +1440,8 @@ func (c *EnterprisesStructuresRoomsGetCall) Do(opts ...googleapi.CallOption) (*G
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 
@@ -1589,8 +1590,8 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListRoomsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sdm.service"
 	//   ]
 	// }
 

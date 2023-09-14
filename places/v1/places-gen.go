@@ -146,7 +146,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Text = NewTextService(s)
 	s.Places = NewPlacesService(s)
 	return s, nil
 }
@@ -156,8 +155,6 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Text *TextService
-
 	Places *PlacesService
 }
 
@@ -166,15 +163,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewTextService(s *Service) *TextService {
-	rs := &TextService{s: s}
-	return rs
-}
-
-type TextService struct {
-	s *Service
 }
 
 func NewPlacesService(s *Service) *PlacesService {
@@ -434,7 +422,7 @@ type GoogleMapsPlacesV1Place struct {
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive
-	// services.
+	// service s.
 	PriceLevel string `json:"priceLevel,omitempty"`
 
 	// Rating: Output only. A rating between 1.0 and 5.0, based on user
@@ -961,7 +949,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive
-	// services.
+	// service s.
 	PriceLevels []string `json:"priceLevels,omitempty"`
 
 	// RankPreference: How results will be ranked in the response.
@@ -1256,134 +1244,6 @@ func (s *GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLocalizedText
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// method id "places.Text.search":
-
-type TextSearchCall struct {
-	s                                   *Service
-	googlemapsplacesv1searchtextrequest *GoogleMapsPlacesV1SearchTextRequest
-	urlParams_                          gensupport.URLParams
-	ctx_                                context.Context
-	header_                             http.Header
-}
-
-// Search: Text query based place search.
-func (r *TextService) Search(googlemapsplacesv1searchtextrequest *GoogleMapsPlacesV1SearchTextRequest) *TextSearchCall {
-	c := &TextSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.googlemapsplacesv1searchtextrequest = googlemapsplacesv1searchtextrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *TextSearchCall) Fields(s ...googleapi.Field) *TextSearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *TextSearchCall) Context(ctx context.Context) *TextSearchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *TextSearchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *TextSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplacesv1searchtextrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/Text:search")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "places.Text.search" call.
-// Exactly one of *GoogleMapsPlacesV1SearchTextResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleMapsPlacesV1SearchTextResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *TextSearchCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1SearchTextResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleMapsPlacesV1SearchTextResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Text query based place search.",
-	//   "flatPath": "v1/Text:search",
-	//   "httpMethod": "POST",
-	//   "id": "places.Text.search",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/Text:search",
-	//   "request": {
-	//     "$ref": "GoogleMapsPlacesV1SearchTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleMapsPlacesV1SearchTextResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/maps-platform.places",
-	//     "https://www.googleapis.com/auth/maps-platform.places.textsearch"
-	//   ]
-	// }
-
 }
 
 // method id "places.places.searchText":

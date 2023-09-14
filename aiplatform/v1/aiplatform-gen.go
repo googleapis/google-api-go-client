@@ -3704,8 +3704,7 @@ func (s *GoogleCloudAiplatformV1CreateFeatureOperationMetadata) MarshalJSON() ([
 }
 
 // GoogleCloudAiplatformV1CreateFeatureRequest: Request message for
-// FeaturestoreService.CreateFeature and
-// FeatureRegistryService.CreateFeature.
+// FeaturestoreService.CreateFeature.
 type GoogleCloudAiplatformV1CreateFeatureRequest struct {
 	// Feature: Required. The Feature to create.
 	Feature *GoogleCloudAiplatformV1Feature `json:"feature,omitempty"`
@@ -3714,15 +3713,13 @@ type GoogleCloudAiplatformV1CreateFeatureRequest struct {
 	// the final component of the Feature's resource name. This value may be
 	// up to 128 characters, and valid characters are `[a-z0-9_]`. The first
 	// character cannot be a number. The value must be unique within an
-	// EntityType/FeatureGroup.
+	// EntityType .
 	FeatureId string `json:"featureId,omitempty"`
 
-	// Parent: Required. The resource name of the EntityType or FeatureGroup
-	// to create a Feature. Format:
+	// Parent: Required. The resource name of the EntityType to create a
+	// Feature. Format:
 	// `projects/{project}/locations/{location}/featurestores/{featurestore}/
 	// entityTypes/{entity_type}`
-	// `projects/{project}/locations/{location}/featureGroups/{feature_group}
-	// `
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Feature") to
@@ -8013,7 +8010,7 @@ type GoogleCloudAiplatformV1Feature struct {
 	// recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ValueType: Required. Immutable. Type of Feature value.
+	// ValueType: Immutable. Type of Feature value.
 	//
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - The value type is unspecified.
@@ -9875,6 +9872,11 @@ type GoogleCloudAiplatformV1Index struct {
 	// up to 128 characters long and can consist of any UTF-8 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EncryptionSpec: Immutable. Customer-managed encryption key spec for
+	// an Index. If set, this Index and all sub-resources of this Index will
+	// be secured by this key.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
+
 	// Etag: Used to perform consistent read-modify-write updates. If not
 	// set, a blind "overwrite" update happens.
 	Etag string `json:"etag,omitempty"`
@@ -9888,7 +9890,7 @@ type GoogleCloudAiplatformV1Index struct {
 	// Possible values:
 	//   "INDEX_UPDATE_METHOD_UNSPECIFIED" - Should not be used.
 	//   "BATCH_UPDATE" - BatchUpdate: user can call UpdateIndex with files
-	// on Cloud Storage of datapoints to update.
+	// on Cloud Storage of Datapoints to update.
 	//   "STREAM_UPDATE" - StreamUpdate: user can call
 	// UpsertDatapoints/DeleteDatapoints to update the Index and the updates
 	// will be applied in corresponding DeployedIndexes in nearly real-time.
@@ -9971,7 +9973,8 @@ type GoogleCloudAiplatformV1IndexDatapoint struct {
 
 	// Restricts: Optional. List of Restrict of the datapoint, used to
 	// perform "restricted searches" where boolean rule are used to filter
-	// the subset of the database eligible for matching. See:
+	// the subset of the database eligible for matching. This uses
+	// categorical tokens. See:
 	// https://cloud.google.com/vertex-ai/docs/matching-engine/filtering
 	Restricts []*GoogleCloudAiplatformV1IndexDatapointRestriction `json:"restricts,omitempty"`
 
@@ -10055,13 +10058,13 @@ func (s *GoogleCloudAiplatformV1IndexDatapointCrowdingTag) MarshalJSON() ([]byte
 // datapoint which describe its attributes(tokens) from each of several
 // attribute categories(namespaces).
 type GoogleCloudAiplatformV1IndexDatapointRestriction struct {
-	// AllowList: The attributes to allow in this namespace. eg: 'red'
+	// AllowList: The attributes to allow in this namespace. e.g.: 'red'
 	AllowList []string `json:"allowList,omitempty"`
 
-	// DenyList: The attributes to deny in this namespace. eg: 'blue'
+	// DenyList: The attributes to deny in this namespace. e.g.: 'blue'
 	DenyList []string `json:"denyList,omitempty"`
 
-	// Namespace: The namespace of this restriction. eg: color.
+	// Namespace: The namespace of this restriction. e.g.: color.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowList") to
@@ -10109,6 +10112,11 @@ type GoogleCloudAiplatformV1IndexEndpoint struct {
 	// the IndexEndpoint via private service connect. Only one of the
 	// fields, network or enable_private_service_connect, can be set.
 	EnablePrivateServiceConnect bool `json:"enablePrivateServiceConnect,omitempty"`
+
+	// EncryptionSpec: Immutable. Customer-managed encryption key spec for
+	// an IndexEndpoint. If set, this IndexEndpoint and all sub-resources of
+	// this IndexEndpoint will be secured by this key.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 
 	// Etag: Used to perform consistent read-modify-write updates. If not
 	// set, a blind "overwrite" update happens.
@@ -10941,8 +10949,7 @@ func (s *GoogleCloudAiplatformV1ListExecutionsResponse) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudAiplatformV1ListFeaturesResponse: Response message for
-// FeaturestoreService.ListFeatures. Response message for
-// FeatureRegistryService.ListFeatures.
+// FeaturestoreService.ListFeatures.
 type GoogleCloudAiplatformV1ListFeaturesResponse struct {
 	// Features: The Features matching the request.
 	Features []*GoogleCloudAiplatformV1Feature `json:"features,omitempty"`
@@ -27481,6 +27488,38 @@ type GoogleCloudAiplatformV1SuggestTrialsRequest struct {
 	// Trial was completed.
 	ClientId string `json:"clientId,omitempty"`
 
+	// Contexts: Optional. This allows you to specify the "context" for a
+	// Trial; a context is a slice (a subspace) of the search space. Typical
+	// uses for contexts: 1) You are using Vizier to tune a server for best
+	// performance, but there's a strong weekly cycle. The context specifies
+	// the day-of-week. This allows Tuesday to generalize from Wednesday
+	// without assuming that everything is identical. 2) Imagine you're
+	// optimizing some medical treatment for people. As they walk in the
+	// door, you know certain facts about them (e.g. sex, weight, height,
+	// blood-pressure). Put that information in the context, and Vizier will
+	// adapt its suggestions to the patient. 3) You want to do a fair A/B
+	// test efficiently. Specify the "A" and "B" conditions as contexts, and
+	// Vizier will generalize between "A" and "B" conditions. If they are
+	// similar, this will allow Vizier to converge to the optimum faster
+	// than if "A" and "B" were separate Studies. NOTE: You can also enter
+	// contexts as REQUESTED Trials, e.g. via the CreateTrial() RPC; that's
+	// the asynchronous option where you don't need a close association
+	// between contexts and suggestions. NOTE: All the Parameters you set in
+	// a context MUST be defined in the Study. NOTE: You must supply 0 or
+	// $suggestion_count contexts. If you don't supply any contexts, Vizier
+	// will make suggestions from the full search space specified in the
+	// StudySpec; if you supply a full set of context, each suggestion will
+	// match the corresponding context. NOTE: A Context with no features set
+	// matches anything, and allows suggestions from the full search space.
+	// NOTE: Contexts MUST lie within the search space specified in the
+	// StudySpec. It's an error if they don't. NOTE: Contexts preferentially
+	// match ACTIVE then REQUESTED trials before new suggestions are
+	// generated. NOTE: Generation of suggestions involves a match between a
+	// Context and (optionally) a REQUESTED trial; if that match is not
+	// fully specified, a suggestion will be geneated in the merged
+	// subspace.
+	Contexts []*GoogleCloudAiplatformV1TrialContext `json:"contexts,omitempty"`
+
 	// SuggestionCount: Required. The number of suggestions requested. It
 	// must be positive.
 	SuggestionCount int64 `json:"suggestionCount,omitempty"`
@@ -28636,6 +28675,46 @@ type GoogleCloudAiplatformV1Trial struct {
 
 func (s *GoogleCloudAiplatformV1Trial) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Trial
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1TrialContext: Next ID: 3
+type GoogleCloudAiplatformV1TrialContext struct {
+	// Description: A human-readable field which can store a description of
+	// this context. This will become part of the resulting Trial's
+	// description field.
+	Description string `json:"description,omitempty"`
+
+	// Parameters: If/when a Trial is generated or selected from this
+	// Context, its Parameters will match any parameters specified here.
+	// (I.e. if this context specifies parameter name:'a' int_value:3, then
+	// a resulting Trial will have int_value:3 for its parameter named 'a'.)
+	// Note that we first attempt to match existing REQUESTED Trials with
+	// contexts, and if there are no matches, we generate suggestions in the
+	// subspace defined by the parameters specified here. NOTE: a Context
+	// without any Parameters matches the entire feasible search space.
+	Parameters []*GoogleCloudAiplatformV1TrialParameter `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1TrialContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1TrialContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -48724,12 +48803,10 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall struct {
 
 // Create: Creates a new Feature in a given EntityType.
 //
-//   - parent: The resource name of the EntityType or FeatureGroup to
-//     create a Feature. Format:
+//   - parent: The resource name of the EntityType to create a Feature.
+//     Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`
-//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
-//     p}`.
+//     }/entityTypes/{entity_type}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Create(parent string, googlecloudaiplatformv1feature *GoogleCloudAiplatformV1Feature) *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -48741,7 +48818,7 @@ func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Create(parent
 // to use for the Feature, which will become the final component of the
 // Feature's resource name. This value may be up to 128 characters, and
 // valid characters are `[a-z0-9_]`. The first character cannot be a
-// number. The value must be unique within an EntityType/FeatureGroup.
+// number. The value must be unique within an EntityType .
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall) FeatureId(featureId string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall {
 	c.urlParams_.Set("featureId", featureId)
 	return c
@@ -48847,12 +48924,12 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "featureId": {
-	//       "description": "Required. The ID to use for the Feature, which will become the final component of the Feature's resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within an EntityType/FeatureGroup.",
+	//       "description": "Required. The ID to use for the Feature, which will become the final component of the Feature's resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within an EntityType .",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the EntityType or FeatureGroup to create a Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
+	//       "description": "Required. The resource name of the EntityType to create a Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -48887,9 +48964,7 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall struct {
 //
 //   - name: The name of the Features to be deleted. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}/features/{feature}`
-//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
-//     p}/features/{feature}`.
+//     }/entityTypes/{entity_type}/features/{feature}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Delete(name string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -48991,7 +49066,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Features to be deleted. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}`",
+	//       "description": "Required. The name of the Features to be deleted. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -49024,9 +49099,7 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall struct {
 //
 //   - name: The name of the Feature resource. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`
-//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
-//     p}`.
+//     }/entityTypes/{entity_type}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Get(name string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -49141,7 +49214,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Feature resource. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
+	//       "description": "Required. The name of the Feature resource. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -49174,9 +49247,7 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall struct {
 //
 //   - parent: The resource name of the Location to list Features. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`
-//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
-//     p}`.
+//     }/entityTypes/{entity_type}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) List(parent string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -49215,7 +49286,8 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) LatestStatsC
 // OrderBy sets the optional parameter "orderBy": A comma-separated list
 // of fields to order by, sorted in ascending order. Use "desc" after a
 // field name for descending. Supported fields: * `feature_id` *
-// `value_type` * `create_time` * `update_time`
+// `value_type` (Not supported for FeatureRegistry Feature) *
+// `create_time` * `update_time`
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) OrderBy(orderBy string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -49368,7 +49440,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) Do(opts ...g
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `feature_id` * `value_type` * `create_time` * `update_time`",
+	//       "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `feature_id` * `value_type` (Not supported for FeatureRegistry Feature) * `create_time` * `update_time`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -49384,7 +49456,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Location to list Features. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
+	//       "description": "Required. The resource name of the Location to list Features. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,

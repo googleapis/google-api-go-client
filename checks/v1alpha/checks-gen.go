@@ -1983,10 +1983,6 @@ type GoogleChecksReportV1alphaReport struct {
 	// AppBundle: Information about the analyzed app bundle.
 	AppBundle *GoogleChecksReportV1alphaAppBundle `json:"appBundle,omitempty"`
 
-	// BaseReport: Resource name of the base report used for comparison. May
-	// be absent if this is the first report generated for the app.
-	BaseReport string `json:"baseReport,omitempty"`
-
 	// Checks: List of checks that were run on the app bundle.
 	Checks []*GoogleChecksReportV1alphaCheck `json:"checks,omitempty"`
 

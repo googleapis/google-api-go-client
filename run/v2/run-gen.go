@@ -1037,7 +1037,7 @@ type GoogleCloudRunV2GRPCAction struct {
 
 	// Service: Service is the name of the service to place in the gRPC
 	// HealthCheckRequest (see
-	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
+	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md ). If
 	// this is not specified, the default behavior is defined by gRPC.
 	Service string `json:"service,omitempty"`
 
@@ -1513,6 +1513,42 @@ type GoogleCloudRunV2ListTasksResponse struct {
 
 func (s *GoogleCloudRunV2ListTasksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ListTasksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2NetworkInterface: VPC network settings.
+type GoogleCloudRunV2NetworkInterface struct {
+	// Network: The VPC network name to access to. Defaults to "default"
+	// network.
+	Network string `json:"network,omitempty"`
+
+	// Subnetwork: The VPC subnetwork name to access to. Defaults to the
+	// same vaule of network.
+	Subnetwork string `json:"subnetwork,omitempty"`
+
+	// Tags: Network tags applied to this VPC network.
+	Tags []string `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2NetworkInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2NetworkInterface
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2905,6 +2941,10 @@ type GoogleCloudRunV2VpcAccess struct {
 	//   "PRIVATE_RANGES_ONLY" - Only private IP ranges are routed through
 	// the VPC connector.
 	Egress string `json:"egress,omitempty"`
+
+	// NetworkInterfaces: VPC network to access to. Currently only single
+	// network interface is supported.
+	NetworkInterfaces []*GoogleCloudRunV2NetworkInterface `json:"networkInterfaces,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Connector") to
 	// unconditionally include in API requests. By default, fields with

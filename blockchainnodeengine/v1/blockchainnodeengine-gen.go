@@ -284,6 +284,12 @@ type ConnectionInfo struct {
 	// interact with a blockchain node.
 	EndpointInfo *EndpointInfo `json:"endpointInfo,omitempty"`
 
+	// ServiceAttachment: Output only. A service attachment that exposes a
+	// node, and has the following format:
+	// projects/{project}/regions/{region}/serviceAttachments/{service_attach
+	// ment_name}
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "EndpointInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -726,8 +732,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type

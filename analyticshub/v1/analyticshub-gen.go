@@ -505,7 +505,7 @@ type DataExchange struct {
 	// contact of the data exchange. Max Length: 1000 bytes.
 	PrimaryContact string `json:"primaryContact,omitempty"`
 
-	// SharingEnvironmentConfig: Required. Configurable data sharing
+	// SharingEnvironmentConfig: Optional. Configurable data sharing
 	// environment option for a data exchange.
 	SharingEnvironmentConfig *SharingEnvironmentConfig `json:"sharingEnvironmentConfig,omitempty"`
 

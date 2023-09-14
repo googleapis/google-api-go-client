@@ -2435,7 +2435,9 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequest struct {
 	// ConversationConfig: Configuration that applies to all conversations.
 	ConversationConfig *GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig `json:"conversationConfig,omitempty"`
 
-	// GcsSource: A cloud storage bucket source.
+	// GcsSource: A cloud storage bucket source. Note that any previously
+	// ingested objects from the source will be skipped to avoid
+	// duplication.
 	GcsSource *GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource `json:"gcsSource,omitempty"`
 
 	// Parent: Required. The parent resource for new conversations.
@@ -6023,7 +6025,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest struct {
 	// ConversationConfig: Configuration that applies to all conversations.
 	ConversationConfig *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig `json:"conversationConfig,omitempty"`
 
-	// GcsSource: A cloud storage bucket source.
+	// GcsSource: A cloud storage bucket source. Note that any previously
+	// ingested objects from the source will be skipped to avoid
+	// duplication.
 	GcsSource *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource `json:"gcsSource,omitempty"`
 
 	// Parent: Required. The parent resource for new conversations.

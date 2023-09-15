@@ -9279,6 +9279,12 @@ type GenerateDefaultLineItemRequest struct {
 	// times to the same person in a certain period of time. Line items of
 	// this type and their targeting cannot be created or updated using the
 	// API.
+	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
+	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Digital video out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -11586,6 +11592,12 @@ type LineItem struct {
 	// times to the same person in a certain period of time. Line items of
 	// this type and their targeting cannot be created or updated using the
 	// API.
+	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
+	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Digital video out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is

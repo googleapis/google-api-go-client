@@ -288,23 +288,23 @@ type CustomDomainMetadata struct {
 	// refers to.
 	//
 	// Possible values:
-	//   "HOST_STATE_UNSPECIFIED" - Your `CustomDomain`'s host state is
+	//   "HOST_STATE_UNSPECIFIED" - Your custom domain's host state is
 	// unspecified. The message is invalid if this is unspecified.
-	//   "HOST_UNHOSTED" - Your `CustomDomain`'s domain name isn't
-	// associated with any IP addresses.
-	//   "HOST_UNREACHABLE" - Your `CustomDomain`'s domain name can't be
+	//   "HOST_UNHOSTED" - Your custom domain's domain name isn't associated
+	// with any IP addresses.
+	//   "HOST_UNREACHABLE" - Your custom domain's domain name can't be
 	// reached. Hosting services' DNS queries to find your domain name's IP
-	// addresses resulted in errors. See your `CustomDomain`'s `issues`
-	// field for more details.
-	//   "HOST_MISMATCH" - Your `CustomDomain`'s domain name has IP
-	// addresses that don't ultimately resolve to Hosting.
-	//   "HOST_CONFLICT" - Your `CustomDomain`'s domain name has IP
-	// addresses that resolve to both Hosting and other services. To ensure
-	// consistent results, remove `A` and `AAAA` records related to
-	// non-Hosting services.
-	//   "HOST_ACTIVE" - All requests against your `CustomDomain`'s domain
-	// name are served by Hosting. If the `CustomDomain`'s `OwnershipState`
-	// is also `ACTIVE`, Hosting serves your Hosting Site's content on the
+	// addresses resulted in errors. See your `CustomDomain` object's
+	// `issues` field for more details.
+	//   "HOST_MISMATCH" - Your custom domain's domain name has IP addresses
+	// that don't ultimately resolve to Hosting.
+	//   "HOST_CONFLICT" - Your custom domain's domain name has IP addresses
+	// that resolve to both Hosting and other services. To ensure consistent
+	// results, remove `A` and `AAAA` records related to non-Hosting
+	// services.
+	//   "HOST_ACTIVE" - All requests against your custom domain's domain
+	// name are served by Hosting. If the custom domain's `OwnershipState`
+	// is also `ACTIVE`, Hosting serves your Hosting site's content on the
 	// domain name.
 	HostState string `json:"hostState,omitempty"`
 
@@ -316,11 +316,11 @@ type CustomDomainMetadata struct {
 
 	// LiveMigrationSteps: A set of DNS record updates and ACME challenges
 	// that allow you to transition domain names to Firebase Hosting with
-	// zero downtime. These updates allow Hosting's to create an SSL
+	// zero downtime. These updates allow Hosting to create an SSL
 	// certificate and establish ownership for your custom domain before
 	// Hosting begins serving traffic on it. If your domain name is already
 	// in active use with another provider, add one of the challenges and
-	// make the recommended dns updates. After adding challenges and
+	// make the recommended DNS updates. After adding challenges and
 	// adjusting DNS records as necessary, wait for the `ownershipState` to
 	// be `OWNERSHIP_ACTIVE` and the `certState` to be `CERT_ACTIVE` before
 	// sending traffic to Hosting.
@@ -330,27 +330,27 @@ type CustomDomainMetadata struct {
 	// `CustomDomain` refers to.
 	//
 	// Possible values:
-	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your `CustomDomain`'s ownership
+	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your custom domain's ownership
 	// state is unspecified. This should never happen.
-	//   "OWNERSHIP_MISSING" - Your `CustomDomain`'s domain name has no
+	//   "OWNERSHIP_MISSING" - Your custom domain's domain name has no
 	// Hosting-related ownership records; no Firebase project has permission
 	// to act on the domain name's behalf.
-	//   "OWNERSHIP_UNREACHABLE" - Your `CustomDomain`'s domain name can't
-	// be reached. Hosting services' DNS queries to find your domain name's
-	// ownership records resulted in errors. See your `CustomDomain`'s
-	// `issues` field for more details.
-	//   "OWNERSHIP_MISMATCH" - Your `CustomDomain`'s domain name is owned
-	// by another Firebase project. Remove the conflicting `TXT` records and
+	//   "OWNERSHIP_UNREACHABLE" - Your custom domain's domain name can't be
+	// reached. Hosting services' DNS queries to find your domain name's
+	// ownership records resulted in errors. See your `CustomDomain`
+	// object's `issues` field for more details.
+	//   "OWNERSHIP_MISMATCH" - Your custom domain's domain name is owned by
+	// another Firebase project. Remove the conflicting `TXT` records and
 	// replace them with project-specific records for your current Firebase
 	// project.
-	//   "OWNERSHIP_CONFLICT" - Your `CustomDomain`'s domain name has
+	//   "OWNERSHIP_CONFLICT" - Your custom domain's domain name has
 	// conflicting `TXT` records that indicate ownership by both your
 	// current Firebase project and another project. Remove the other
 	// project's ownership records to grant the current project ownership.
-	//   "OWNERSHIP_PENDING" - Your `CustomDomain`'s DNS records are
+	//   "OWNERSHIP_PENDING" - Your custom domain's DNS records are
 	// configured correctly. Hosting will transfer ownership of your domain
 	// to this `CustomDomain` within 24 hours.
-	//   "OWNERSHIP_ACTIVE" - Your `CustomDomain`'s domain name has `TXT`
+	//   "OWNERSHIP_ACTIVE" - Your custom domain's domain name has `TXT`
 	// records that grant its project permission to act on its behalf.
 	OwnershipState string `json:"ownershipState,omitempty"`
 
@@ -398,9 +398,9 @@ func (s *CustomDomainMetadata) MarshalJSON() ([]byte, error) {
 // DnsRecord: DNS records are resource records that define how systems
 // and services should behave when handling requests for a domain name.
 // For example, when you add `A` records to your domain name's DNS
-// records, you're informing other systems (e.g. your users' web
+// records, you're informing other systems (such as your users' web
 // browsers) to contact those IPv4 addresses to retrieve resources
-// relevant to your domain name (e.g. your Hosting site files).
+// relevant to your domain name (such as your Hosting site files).
 type DnsRecord struct {
 	// DomainName: Output only. The domain name the record pertains to, e.g.
 	// `foo.bar.com.`.
@@ -410,7 +410,7 @@ type DnsRecord struct {
 	// depends on record type: - A and AAAA: IP addresses for the domain
 	// name. - CNAME: Another domain to check for records. - TXT: Arbitrary
 	// text strings associated with the domain name. Hosting uses TXT
-	// records to determine a which Firebase Projects have permission to act
+	// records to determine which Firebase projects have permission to act
 	// on the domain name's behalf. - CAA: The record's flags, tag, and
 	// value, e.g. `0 issue "pki.goog".
 	Rdata string `json:"rdata,omitempty"`
@@ -483,8 +483,8 @@ func (s *DnsRecord) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DnsRecordSet: A set of DNS records relevant to the set up and
-// maintenance of a Custom Domain in Firebase Hosting.
+// DnsRecordSet: A set of DNS records relevant to the setup and
+// maintenance of a custom domain in Firebase Hosting.
 type DnsRecordSet struct {
 	// CheckError: Output only. An error Hosting services encountered when
 	// querying your domain name's DNS records. Note: Hosting ignores
@@ -525,10 +525,10 @@ func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
 // Hosting to serve secure content in response to requests against your
 // domain name. These updates present the current state of your domain
 // name's DNS records when Hosting last queried them, and the desired
-// set of records that Hosting needs to see before your Custom Domain
+// set of records that Hosting needs to see before your custom domain
 // can be fully active.
 type DnsUpdates struct {
-	// CheckTime: The last time Hosting checked your CustomDomain's DNS
+	// CheckTime: The last time Hosting checked your custom domain's DNS
 	// records.
 	CheckTime string `json:"checkTime,omitempty"`
 

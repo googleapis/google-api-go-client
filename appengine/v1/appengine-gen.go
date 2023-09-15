@@ -451,6 +451,12 @@ type Application struct {
 	// storing managed build docker images for this application.
 	GcrDomain string `json:"gcrDomain,omitempty"`
 
+	// GeneratedCustomerMetadata: Additional Google Generated Customer
+	// Metadata, this field won't be provided by default and can be
+	// requested by setting the IncludeExtraData field in
+	// GetApplicationRequest
+	GeneratedCustomerMetadata googleapi.RawMessage `json:"generatedCustomerMetadata,omitempty"`
+
 	Iap *IdentityAwareProxy `json:"iap,omitempty"`
 
 	// Id: Identifier of the Application resource. This identifier is
@@ -3340,6 +3346,11 @@ func (s *ScriptHandler) MarshalJSON() ([]byte, error) {
 // collection of versions that define a specific set of code used to
 // implement the functionality of that service.
 type Service struct {
+	// GeneratedCustomerMetadata: Additional Google Generated Customer
+	// Metadata, this field won't be provided by default and can be
+	// requested by setting the IncludeExtraData field in GetServiceRequest
+	GeneratedCustomerMetadata googleapi.RawMessage `json:"generatedCustomerMetadata,omitempty"`
+
 	// Id: Relative name of the service within the application. Example:
 	// default.@OutputOnly
 	Id string `json:"id,omitempty"`
@@ -3373,20 +3384,22 @@ type Service struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "GeneratedCustomerMetadata") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "GeneratedCustomerMetadata") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4126,7 +4139,7 @@ type VpcAccessConnector struct {
 	EgressSetting string `json:"egressSetting,omitempty"`
 
 	// Name: Full Serverless VPC Access Connector name e.g.
-	// /projects/my-project/locations/us-central1/connectors/c1.
+	// projects/my-project/locations/us-central1/connectors/c1.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EgressSetting") to
@@ -4340,6 +4353,24 @@ func (r *AppsService) Get(appsId string) *AppsGetCall {
 	return c
 }
 
+// IncludeExtraData sets the optional parameter "includeExtraData":
+// Options to include extra data
+//
+// Possible values:
+//
+//	"INCLUDE_EXTRA_DATA_UNSPECIFIED" - Unspecified: No extra data will
+//
+// be returned
+//
+//	"INCLUDE_EXTRA_DATA_NONE" - Do not return any extra data
+//	"INCLUDE_GOOGLE_GENERATED_METADATA" - Return GGCM associated with
+//
+// the resources
+func (c *AppsGetCall) IncludeExtraData(includeExtraData string) *AppsGetCall {
+	c.urlParams_.Set("includeExtraData", includeExtraData)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4451,6 +4482,21 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	//       "description": "Part of `name`. Name of the Application resource to get. Example: apps/myapp.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeExtraData": {
+	//       "description": "Options to include extra data",
+	//       "enum": [
+	//         "INCLUDE_EXTRA_DATA_UNSPECIFIED",
+	//         "INCLUDE_EXTRA_DATA_NONE",
+	//         "INCLUDE_GOOGLE_GENERATED_METADATA"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified: No extra data will be returned",
+	//         "Do not return any extra data",
+	//         "Return GGCM associated with the resources"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -190,7 +190,7 @@ type ServicesService struct {
 type AddEnableRulesMetadata struct {
 }
 
-// AddEnableRulesResponse: The response message of "AddEnableRules"
+// AddEnableRulesResponse: The response message of `AddEnableRules`
 // method.
 type AddEnableRulesResponse struct {
 	// AddedValues: The values added to the parent consumer policy.
@@ -1140,12 +1140,11 @@ type ConsumerPolicy struct {
 	// used for concurrency control.
 	Etag string `json:"etag,omitempty"`
 
-	// Name: Output only. The resource name of the policy. For example, We
-	// only allow consumer policy name as "default" for now:
+	// Name: Output only. The resource name of the policy. We only allow
+	// consumer policy name as `default` for now:
 	// `projects/12345/consumerPolicies/default`,
 	// `folders/12345/consumerPolicies/default`,
-	// `organizations/12345/consumerPolicies/default`. Legacy format:
-	// `projects/12345/consumerPoly`
+	// `organizations/12345/consumerPolicies/default`.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: The last-modified time.
@@ -1791,8 +1790,7 @@ type EnableRule struct {
 
 	// Groups: DEPRECATED: Please use field `values`. Service group should
 	// have prefix `groups/`. The names of the service groups that are
-	// enabled (Not Implemented). go/predefined-service-groups. Example:
-	// `groups/googleServices`.
+	// enabled (Not Implemented). Example: `groups/googleServices`.
 	Groups []string `json:"groups,omitempty"`
 
 	// Services: DEPRECATED: Please use field `values`. Service should have
@@ -1801,8 +1799,8 @@ type EnableRule struct {
 	Services []string `json:"services,omitempty"`
 
 	// Values: The names of the services or service groups that are enabled.
-	// Example: `services/storage.googleapis.com`, groups/googleServices`,
-	// groups/allServices`.
+	// Example: `services/storage.googleapis.com`, `groups/googleServices`,
+	// `groups/allServices`.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnableType") to
@@ -4693,7 +4691,7 @@ type RemoveEnableRulesMetadata struct {
 }
 
 // RemoveEnableRulesResponse: The response message of
-// "RemoveEnableRules" method.
+// `RemoveEnableRules` method.
 type RemoveEnableRulesResponse struct {
 	// Parent: The parent consumer policy. It can be
 	// `projects/12345/consumerPolicies/default`, or

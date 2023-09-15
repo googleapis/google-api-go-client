@@ -9,11 +9,17 @@ import (
 	"crypto/tls"
 	"errors"
 	"net/http"
+	"os"
+	"strings"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
+)
+
+const (
+	newAuthLibEnVar = "GOOGLE_API_GO_EXPERIMENTAL_USE_NEW_AUTH_LIB"
 )
 
 // DialSettings holds information needed to establish a connection with a
@@ -47,6 +53,7 @@ type DialSettings struct {
 	ImpersonationConfig           *impersonate.Config
 	EnableDirectPath              bool
 	EnableDirectPathXds           bool
+	EnableNewAuthLibrary          bool
 	AllowNonDefaultServiceAccount bool
 
 	// Google API system parameters. For more information please read:
@@ -75,6 +82,13 @@ func (ds *DialSettings) GetAudience() string {
 // HasCustomAudience returns true if a custom audience is provided by users.
 func (ds *DialSettings) HasCustomAudience() bool {
 	return len(ds.Audiences) > 0
+}
+
+func (ds *DialSettings) IsNewAuthLibraryEnabled() bool {
+	if ds.EnableNewAuthLibrary || strings.ToLower(os.Getenv(newAuthLibEnVar)) == "true" {
+		return true
+	}
+	return false
 }
 
 // Validate reports an error if ds is invalid.

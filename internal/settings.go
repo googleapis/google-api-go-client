@@ -10,7 +10,7 @@ import (
 	"errors"
 	"net/http"
 	"os"
-	"strings"
+	"strconv"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -85,8 +85,11 @@ func (ds *DialSettings) HasCustomAudience() bool {
 }
 
 func (ds *DialSettings) IsNewAuthLibraryEnabled() bool {
-	if ds.EnableNewAuthLibrary || strings.ToLower(os.Getenv(newAuthLibEnVar)) == "true" {
+	if ds.EnableNewAuthLibrary {
 		return true
+	}
+	if b, err := strconv.ParseBool(os.Getenv(newAuthLibEnVar)); err == nil {
+		return b
 	}
 	return false
 }

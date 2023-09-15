@@ -8462,6 +8462,12 @@ type GenerateDefaultLineItemRequest struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
 	// OTT insertion orders. This type is only applicable to line items with
 	// an insertion order of insertion_order_type `OVER_THE_TOP`.
+	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
+	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Digital video out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -10666,6 +10672,12 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
 	// OTT insertion orders. This type is only applicable to line items with
 	// an insertion order of insertion_order_type `OVER_THE_TOP`.
+	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
+	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Digital video out of home.
+	// Line items of this type and their targeting cannot be created or
+	// updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is

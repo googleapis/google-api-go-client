@@ -594,6 +594,45 @@ func (s *Aggregation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AggregationFunction: Preview: An identifier for an aggregation
+// function. Aggregation functions are SQL functions that group or
+// transform data from multiple points to a single point. This is a
+// preview feature and may be subject to change before final release.
+type AggregationFunction struct {
+	// Parameters: Optional. Parameters applied to the aggregation function.
+	// Only used for functions that require them.
+	Parameters []*Parameter `json:"parameters,omitempty"`
+
+	// Type: Required. The type of aggregation function, must be one of the
+	// following: "none" - no function. "percentile" - APPROX_QUANTILES() -
+	// 1 parameter numeric value "average" - AVG() "count" - COUNT()
+	// "count-distinct" - COUNT(DISTINCT) "count-distinct-approx" -
+	// APPROX_COUNT_DISTINCT() "max" - MAX() "min" - MIN() "sum" - SUM()
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parameters") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AggregationFunction) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregationFunction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AlertChart: A chart that displays alert policy data.
 type AlertChart struct {
 	// Name: Required. The resource name of the alert policy. The format is:
@@ -660,8 +699,69 @@ func (s *Axis) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Breakdown: Preview: A breakdown is an aggregation applied to the
+// measures over a specified column. A breakdown can result in multiple
+// series across a category for the provided measure. This is a preview
+// feature and may be subject to change before final release.
+type Breakdown struct {
+	// AggregationFunction: Required. The Aggregation function is applied
+	// across all data in each breakdown created.
+	AggregationFunction *AggregationFunction `json:"aggregationFunction,omitempty"`
+
+	// Column: Required. The name of the column in the dataset containing
+	// the breakdown values.
+	Column string `json:"column,omitempty"`
+
+	// Limit: Required. A limit to the number of breakdowns. If set to zero
+	// then all possible breakdowns are applied. The list of breakdowns is
+	// dependent on the value of the sort_order field.
+	Limit int64 `json:"limit,omitempty"`
+
+	// SortOrder: Required. The sort order is applied to the values of the
+	// breakdown column.
+	//
+	// Possible values:
+	//   "SORT_ORDER_UNSPECIFIED" - An unspecified sort order. This option
+	// is invalid when sorting is required.
+	//   "SORT_ORDER_NONE" - No sorting is applied.
+	//   "SORT_ORDER_ASCENDING" - The lowest-valued entries are selected
+	// first.
+	//   "SORT_ORDER_DESCENDING" - The highest-valued entries are selected
+	// first.
+	SortOrder string `json:"sortOrder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationFunction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationFunction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Breakdown) MarshalJSON() ([]byte, error) {
+	type NoMethod Breakdown
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChartOptions: Options to control visual rendering of a chart.
 type ChartOptions struct {
+	// DisplayHorizontal: Preview: Configures whether the charted values are
+	// shown on the horizontal or vertical axis. By default, values are
+	// represented the vertical axis. This is a preview feature and may be
+	// subject to change before final release.
+	DisplayHorizontal bool `json:"displayHorizontal,omitempty"`
+
 	// Mode: The chart mode.
 	//
 	// Possible values:
@@ -676,20 +776,21 @@ type ChartOptions struct {
 	// 95th percentile, and more.
 	Mode string `json:"mode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Mode") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DisplayHorizontal")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Mode") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayHorizontal") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -943,10 +1044,20 @@ func (s *DashboardFilter) MarshalJSON() ([]byte, error) {
 
 // DataSet: Groups a time series query definition with charting options.
 type DataSet struct {
+	// Breakdowns: Optional. The collection of breakdowns to be applied to
+	// the dataset.
+	Breakdowns []*Breakdown `json:"breakdowns,omitempty"`
+
+	// Dimensions: Optional. A collection of dimension columns.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+
 	// LegendTemplate: A template string for naming TimeSeries in the
 	// resulting data set. This should be a string with interpolations of
 	// the form ${label_name}, which will resolve to the label's value.
 	LegendTemplate string `json:"legendTemplate,omitempty"`
+
+	// Measures: Optional. A collection of measures.
+	Measures []*Measure `json:"measures,omitempty"`
 
 	// MinAlignmentPeriod: Optional. The lower bound on data point frequency
 	// for this data set, implemented by specifying the minimum alignment
@@ -992,7 +1103,7 @@ type DataSet struct {
 	// the Stackdriver metrics API.
 	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LegendTemplate") to
+	// ForceSendFields is a list of field names (e.g. "Breakdowns") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1000,13 +1111,12 @@ type DataSet struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LegendTemplate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Breakdowns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1014,6 +1124,96 @@ func (s *DataSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Dimension: Preview: A chart dimension for an SQL query. This is
+// applied over the x-axis. This is a preview feature and may be subject
+// to change before final release.
+type Dimension struct {
+	// Column: Required. The name of the column in the source SQL query that
+	// is used to chart the dimension.
+	Column string `json:"column,omitempty"`
+
+	// ColumnType: Optional. The type of the dimension column. This is
+	// relevant only if one of the bin_size fields is set. If it is empty,
+	// the type TIMESTAMP or INT64 will be assumed based on which bin_size
+	// field is set. If populated, this should be set to one of the
+	// following types: DATE, TIME, DATETIME, TIMESTAMP, BIGNUMERIC, INT64,
+	// NUMERIC, FLOAT64.
+	ColumnType string `json:"columnType,omitempty"`
+
+	// FloatBinSize: Optional. float_bin_size is used when the column type
+	// used for a dimension is a floating point numeric column.
+	FloatBinSize float64 `json:"floatBinSize,omitempty"`
+
+	// MaxBinCount: A limit to the number of bins generated. When 0 is
+	// specified, the maximum count is not enforced.
+	MaxBinCount int64 `json:"maxBinCount,omitempty"`
+
+	// NumericBinSize: numeric_bin_size is used when the column type used
+	// for a dimension is numeric or string.
+	NumericBinSize int64 `json:"numericBinSize,omitempty"`
+
+	// SortColumn: The column name to sort on for binning. This column can
+	// be the same column as this dimension or any other column used as a
+	// measure in the results. If sort_order is set to NONE, then this value
+	// is not used.
+	SortColumn string `json:"sortColumn,omitempty"`
+
+	// SortOrder: The sort order applied to the sort column.
+	//
+	// Possible values:
+	//   "SORT_ORDER_UNSPECIFIED" - An unspecified sort order. This option
+	// is invalid when sorting is required.
+	//   "SORT_ORDER_NONE" - No sorting is applied.
+	//   "SORT_ORDER_ASCENDING" - The lowest-valued entries are selected
+	// first.
+	//   "SORT_ORDER_DESCENDING" - The highest-valued entries are selected
+	// first.
+	SortOrder string `json:"sortOrder,omitempty"`
+
+	// TimeBinSize: time_bin_size is used when the data type specified by
+	// column is a time type and the bin size is determined by a time
+	// duration. If column_type is DATE, this must be a whole value multiple
+	// of 1 day. If column_type is TIME, this must be less than or equal to
+	// 24 hours.
+	TimeBinSize string `json:"timeBinSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Dimension) MarshalJSON() ([]byte, error) {
+	type NoMethod Dimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Dimension) UnmarshalJSON(data []byte) error {
+	type NoMethod Dimension
+	var s1 struct {
+		FloatBinSize gensupport.JSONFloat64 `json:"floatBinSize"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatBinSize = float64(s1.FloatBinSize)
+	return nil
 }
 
 // DroppedLabels: A set of (label, value) pairs that were removed from a
@@ -1448,6 +1648,44 @@ func (s *LogsPanel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Measure: Preview: A chart measure for an SQL query. This is applied
+// over the y-axis. This is a preview feature and may be subject to
+// change before final release.
+type Measure struct {
+	// AggregationFunction: Required. The aggregation function applied to
+	// the input column. This must not be set to "none" unless binning is
+	// disabled on the dimension. The aggregation function is used to group
+	// points on the dimension bins.
+	AggregationFunction *AggregationFunction `json:"aggregationFunction,omitempty"`
+
+	// Column: Required. The column name within in the dataset used for the
+	// measure.
+	Column string `json:"column,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationFunction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationFunction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Measure) MarshalJSON() ([]byte, error) {
+	type NoMethod Measure
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MetricsScope: Represents a Metrics Scope
 // (https://cloud.google.com/monitoring/settings#concept-scope) in Cloud
 // Monitoring, which specifies one or more Google projects and zero or
@@ -1726,6 +1964,37 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OpsAnalyticsQuery: Preview: A query that produces an aggregated
+// response and supporting data. This is a preview feature and may be
+// subject to change before final release.
+type OpsAnalyticsQuery struct {
+	// Sql: A SQL query to fetch time series, category series, or numeric
+	// series data.
+	Sql string `json:"sql,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sql") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sql") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod OpsAnalyticsQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Option: A protocol buffer option, which can be attached to a message,
 // field, enumeration, etc.
 type Option struct {
@@ -1763,6 +2032,53 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 	type NoMethod Option
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Parameter: Preview: Parameter value applied to the aggregation
+// function. This is a preview feature and may be subject to change
+// before final release.
+type Parameter struct {
+	// DoubleValue: A floating-point parameter value.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+
+	// IntValue: An integer parameter value.
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DoubleValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Parameter) MarshalJSON() ([]byte, error) {
+	type NoMethod Parameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Parameter) UnmarshalJSON(data []byte) error {
+	type NoMethod Parameter
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
 }
 
 // PickTimeSeriesFilter: Describes a ranking-based time series filter.
@@ -2920,6 +3236,11 @@ func (s *TimeSeriesFilterRatio) MarshalJSON() ([]byte, error) {
 // methods for querying time series data from the Stackdriver metrics
 // API.
 type TimeSeriesQuery struct {
+	// OpsAnalyticsQuery: Preview: A query used to fetch a time series,
+	// category series, or numeric series with SQL. This is a preview
+	// feature and may be subject to change before final release.
+	OpsAnalyticsQuery *OpsAnalyticsQuery `json:"opsAnalyticsQuery,omitempty"`
+
 	// OutputFullDuration: Optional. If set, Cloud Monitoring will treat the
 	// full query duration as the alignment period so that there will be
 	// only 1 output value.*Note: This could override the configured
@@ -2947,7 +3268,7 @@ type TimeSeriesQuery struct {
 	// field in MetricDescriptor.
 	UnitOverride string `json:"unitOverride,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OutputFullDuration")
+	// ForceSendFields is a list of field names (e.g. "OpsAnalyticsQuery")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2955,7 +3276,7 @@ type TimeSeriesQuery struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OutputFullDuration") to
+	// NullFields is a list of field names (e.g. "OpsAnalyticsQuery") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

@@ -2672,9 +2672,9 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ObjectMeta: k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is
-// metadata that all persisted resources must have, which includes all
-// objects users must create.
+// ObjectMeta: google.cloud.run.meta.v1.ObjectMeta is metadata that all
+// persisted resources must have, which includes all objects users must
+// create.
 type ObjectMeta struct {
 	// Annotations: Unstructured key value map stored with a resource that
 	// may be set by external tools to store and retrieve arbitrary
@@ -2692,6 +2692,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/cpu-throttling`: Revision. *
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/description`: Service. *
+	// `run.googleapis.com/disable-default-uri`: Service. *
 	// `run.googleapis.com/encryption-key-shutdown-hours`: Revision *
 	// `run.googleapis.com/encryption-key`: Revision, Execution. *
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
@@ -3462,7 +3463,7 @@ type RouteStatus struct {
 
 	// Url: URL holds the url that will distribute traffic over the provided
 	// traffic targets. It generally has the form:
-	// https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app
+	// `https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app`
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
@@ -3490,10 +3491,9 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 
 // RunJobRequest: Request message for creating a new execution of a job.
 type RunJobRequest struct {
-	// Overrides: Optional. Private preview feature. Currently only
-	// available by invitation. Overrides specification for a given
-	// execution of a job. The specified values update the specification of
-	// the created execution.
+	// Overrides: Optional. Overrides existing job configuration for one
+	// specific new job execution only, using the specified values to update
+	// the job configuration for the new execution.
 	Overrides *Overrides `json:"overrides,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Overrides") to
@@ -3738,6 +3738,7 @@ type Service struct {
 	// `run.googleapis.com/client-name` *
 	// `run.googleapis.com/custom-audiences` *
 	// `run.googleapis.com/description` *
+	// `run.googleapis.com/disable-default-uri` *
 	// `run.googleapis.com/gc-traffic-tags` * `run.googleapis.com/ingress` *
 	// `run.googleapis.com/ingress` sets the ingress settings for the
 	// Service. See the ingress settings documentation
@@ -3860,7 +3861,7 @@ type ServiceStatus struct {
 
 	// Url: URL that will distribute traffic over the provided traffic
 	// targets. It generally has the form
-	// https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app
+	// `https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app`
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to

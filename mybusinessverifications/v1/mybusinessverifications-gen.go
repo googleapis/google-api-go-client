@@ -121,7 +121,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Locations = NewLocationsService(s)
-	s.VerificationTokens = NewVerificationTokensService(s)
 	return s, nil
 }
 
@@ -131,8 +130,6 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Locations *LocationsService
-
-	VerificationTokens *VerificationTokensService
 }
 
 func (s *Service) userAgent() string {
@@ -160,15 +157,6 @@ func NewLocationsVerificationsService(s *Service) *LocationsVerificationsService
 }
 
 type LocationsVerificationsService struct {
-	s *Service
-}
-
-func NewVerificationTokensService(s *Service) *VerificationTokensService {
-	rs := &VerificationTokensService{s: s}
-	return rs
-}
-
-type VerificationTokensService struct {
 	s *Service
 }
 
@@ -420,71 +408,6 @@ func (s *FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GenerateVerificationTokenRequest: Request message for
-// Verifications.GenerateVerificationToken.
-type GenerateVerificationTokenRequest struct {
-	// Location: Required. The target location. Note: The location
-	// information should exactly match the target Location, otherwise the
-	// generated verification token won't be able to verify the target
-	// Location.
-	Location *Location `json:"location,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Location") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Location") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GenerateVerificationTokenRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GenerateVerificationTokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GenerateVerificationTokenResponse: Response message for
-// Verifications.GenerateVerificationToken.
-type GenerateVerificationTokenResponse struct {
-	// Token: The generated token to verify the location.
-	Token *VerificationToken `json:"token,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Token") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Token") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GenerateVerificationTokenResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GenerateVerificationTokenResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListVerificationsResponse: Response message for
 // Verifications.ListVerifications.
 type ListVerificationsResponse struct {
@@ -520,69 +443,6 @@ type ListVerificationsResponse struct {
 
 func (s *ListVerificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVerificationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Location: A subset of location info. See the [help center article]
-// (https://support.google.com/business/answer/3038177) for a detailed
-// description of these fields, or the category endpoint
-// (/my-business/reference/rest/v4/categories) for a list of valid
-// business categories.
-type Location struct {
-	// Address: Required. A precise, accurate address to describe your
-	// business location. PO boxes or mailboxes located at remote locations
-	// are not acceptable. At this time, you can specify a maximum of five
-	// `address_lines` values in the address.
-	Address *PostalAddress `json:"address,omitempty"`
-
-	// Name: Required. Location name should reflect your business's
-	// real-world name, as used consistently on your storefront, website,
-	// and stationery, and as known to customers. Any additional
-	// information, when relevant, can be included in other fields of the
-	// resource (for example, `Address`, `Categories`). Don't add
-	// unnecessary information to your name (for example, prefer "Google"
-	// over "Google Inc. - Mountain View Corporate Headquarters"). Don't
-	// include marketing taglines, store codes, special characters, hours or
-	// closed/open status, phone numbers, website URLs, service/product
-	// information, location/address or directions, or containment
-	// information (for example, "Chase ATM in Duane Reade").
-	Name string `json:"name,omitempty"`
-
-	// PrimaryCategoryId: Required. Id of the category that best describes
-	// the core business this location engages in. e.g. gcid:bakery.
-	PrimaryCategoryId string `json:"primaryCategoryId,omitempty"`
-
-	// PrimaryPhone: Optional. A phone number that connects to your
-	// individual business location as directly as possible. Use a local
-	// phone number instead of a central, call center helpline number
-	// whenever possible.
-	PrimaryPhone string `json:"primaryPhone,omitempty"`
-
-	// WebsiteUri: Optional. A URL for this business. If possible, use a URL
-	// that represents this individual business location instead of a
-	// generic website/URL that represents all locations, or the brand.
-	WebsiteUri string `json:"websiteUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Location) MarshalJSON() ([]byte, error) {
-	type NoMethod Location
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1870,131 +1730,4 @@ func (c *LocationsVerificationsListCall) Pages(ctx context.Context, f func(*List
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "mybusinessverifications.verificationTokens.generate":
-
-type VerificationTokensGenerateCall struct {
-	s                                *Service
-	generateverificationtokenrequest *GenerateVerificationTokenRequest
-	urlParams_                       gensupport.URLParams
-	ctx_                             context.Context
-	header_                          http.Header
-}
-
-// Generate: Generates a token for the provided location data as a
-// vetted partner (https://support.google.com/business/answer/7674102).
-// Throws PERMISSION_DENIED if the caller is not a vetted partner
-// account. Throws FAILED_PRECONDITION if the caller's VettedStatus is
-// INVALID.
-func (r *VerificationTokensService) Generate(generateverificationtokenrequest *GenerateVerificationTokenRequest) *VerificationTokensGenerateCall {
-	c := &VerificationTokensGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.generateverificationtokenrequest = generateverificationtokenrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *VerificationTokensGenerateCall) Fields(s ...googleapi.Field) *VerificationTokensGenerateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *VerificationTokensGenerateCall) Context(ctx context.Context) *VerificationTokensGenerateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *VerificationTokensGenerateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *VerificationTokensGenerateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generateverificationtokenrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/verificationTokens:generate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "mybusinessverifications.verificationTokens.generate" call.
-// Exactly one of *GenerateVerificationTokenResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GenerateVerificationTokenResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *VerificationTokensGenerateCall) Do(opts ...googleapi.CallOption) (*GenerateVerificationTokenResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GenerateVerificationTokenResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Generates a token for the provided location data as a vetted [partner](https://support.google.com/business/answer/7674102). Throws PERMISSION_DENIED if the caller is not a vetted partner account. Throws FAILED_PRECONDITION if the caller's VettedStatus is INVALID.",
-	//   "flatPath": "v1/verificationTokens:generate",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessverifications.verificationTokens.generate",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/verificationTokens:generate",
-	//   "request": {
-	//     "$ref": "GenerateVerificationTokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GenerateVerificationTokenResponse"
-	//   }
-	// }
-
 }

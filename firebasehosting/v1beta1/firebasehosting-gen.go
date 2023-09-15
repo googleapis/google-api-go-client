@@ -522,7 +522,7 @@ func (s *CertVerification) MarshalJSON() ([]byte, error) {
 
 // Certificate: An SSL certificate used to provide end-to-end encryption
 // for requests against your domain name. A `Certificate` can be an
-// actual SSL certificate or, for newly-created Custom Domains,
+// actual SSL certificate or, for newly-created custom domains,
 // Hosting's intent to create one.
 type Certificate struct {
 	// CreateTime: Output only. The certificate's creation time. For
@@ -533,7 +533,7 @@ type Certificate struct {
 
 	// ExpireTime: Output only. The certificate's expiration time. After
 	// this time, the cert can no longer be used to provide secure
-	// communication between Hosting and your Site's visitors.
+	// communication between Hosting and your site's visitors.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Issues: Output only. A set of errors Hosting encountered when
@@ -575,10 +575,9 @@ type Certificate struct {
 	// message is invalid if this is unspecified.
 	//   "TEMPORARY" - A short-lived certificate type that covers a domain
 	// name temporarily, while Hosting creates a more permanent certificate.
-	//   "GROUPED" - The standard certificate for Spark plan
-	// `CustomDomain`s.
+	//   "GROUPED" - The standard certificate for Spark plan custom domains.
 	//   "PROJECT_GROUPED" - Blaze plan only. A certificate that covers from
-	// 1 to 100 domain names with `CustomDomain`s on the same Firebase
+	// 1 to 100 domain names with custom domains on the same Firebase
 	// project.
 	//   "DEDICATED" - Blaze plan only. A certificate that covers a single
 	// domain name.
@@ -770,47 +769,46 @@ func (s *CloudRunRewrite) MarshalJSON() ([]byte, error) {
 }
 
 // CustomDomain: A `CustomDomain` is an entity that links a domain name
-// to a Firebase Hosting Site. Add a `CustomDomain` to your Site to
-// allow Hosting to serve the Site's content in response to requests
+// to a Firebase Hosting site. Add a `CustomDomain` to your site to
+// allow Hosting to serve the site's content in response to requests
 // against your domain name.
 type CustomDomain struct {
 	// Annotations: Annotations you can add to leave both human- and
 	// machine-readable metadata about your `CustomDomain`.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// Cert: Output only. The SSL certificate Hosting has for this
-	// `CustomDomain`'s domain name. For new `CustomDomain`s, this often
-	// represents Hosting's intent to create a certificate, rather than an
-	// actual cert. Check the `state` field for more.
+	// Cert: Output only. The SSL certificate Hosting has for this custom
+	// domain's domain name. For new custom domains, this often represents
+	// Hosting's intent to create a certificate, rather than an actual cert.
+	// Check the `state` field for more.
 	Cert *Certificate `json:"cert,omitempty"`
 
 	// CertPreference: A field that lets you specify which SSL certificate
-	// type Hosting creates for your domain name. Spark plan `CustomDomain`s
-	// only have access to the `GROUPED` cert type, while Blaze plan can
-	// select any option.
+	// type Hosting creates for your domain name. Spark plan custom domains
+	// only have access to the `GROUPED` cert type, while Blaze plan domains
+	// can select any option.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The certificate's type is unspecified. The
 	// message is invalid if this is unspecified.
 	//   "TEMPORARY" - A short-lived certificate type that covers a domain
 	// name temporarily, while Hosting creates a more permanent certificate.
-	//   "GROUPED" - The standard certificate for Spark plan
-	// `CustomDomain`s.
+	//   "GROUPED" - The standard certificate for Spark plan custom domains.
 	//   "PROJECT_GROUPED" - Blaze plan only. A certificate that covers from
-	// 1 to 100 domain names with `CustomDomain`s on the same Firebase
+	// 1 to 100 domain names with custom domains on the same Firebase
 	// project.
 	//   "DEDICATED" - Blaze plan only. A certificate that covers a single
 	// domain name.
 	CertPreference string `json:"certPreference,omitempty"`
 
-	// CreateTime: Output only. The `CustomDomain`'s create time.
+	// CreateTime: Output only. The custom domain's create time.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeleteTime: Output only. The time the `CustomDomain` was deleted;
-	// null for `CustomDomains` that haven't been deleted. Deleted
-	// `CustomDomains` persist for approximately 30 days, after which time
-	// Hosting removes them completely. To restore a deleted `CustomDomain`,
-	// make an `UndeleteCustomDomain` request.
+	// null for custom domains that haven't been deleted. Deleted custom
+	// domains persist for approximately 30 days, after which time Hosting
+	// removes them completely. To restore a deleted custom domain, make an
+	// `UndeleteCustomDomain` request.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
 	// Etag: Output only. A string that represents the current state of the
@@ -821,31 +819,31 @@ type CustomDomain struct {
 	Etag string `json:"etag,omitempty"`
 
 	// ExpireTime: Output only. The minimum time before a soft-deleted
-	// `CustomDomain` is completely removed from Hosting; null for
-	// `CustomDomains` that haven't been deleted.
+	// `CustomDomain` is completely removed from Hosting; null for custom
+	// domains that haven't been deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// HostState: Output only. The `HostState` of the domain name this
 	// `CustomDomain` refers to.
 	//
 	// Possible values:
-	//   "HOST_STATE_UNSPECIFIED" - Your `CustomDomain`'s host state is
+	//   "HOST_STATE_UNSPECIFIED" - Your custom domain's host state is
 	// unspecified. The message is invalid if this is unspecified.
-	//   "HOST_UNHOSTED" - Your `CustomDomain`'s domain name isn't
-	// associated with any IP addresses.
-	//   "HOST_UNREACHABLE" - Your `CustomDomain`'s domain name can't be
+	//   "HOST_UNHOSTED" - Your custom domain's domain name isn't associated
+	// with any IP addresses.
+	//   "HOST_UNREACHABLE" - Your custom domain's domain name can't be
 	// reached. Hosting services' DNS queries to find your domain name's IP
-	// addresses resulted in errors. See your `CustomDomain`'s `issues`
-	// field for more details.
-	//   "HOST_MISMATCH" - Your `CustomDomain`'s domain name has IP
-	// addresses that don't ultimately resolve to Hosting.
-	//   "HOST_CONFLICT" - Your `CustomDomain`'s domain name has IP
-	// addresses that resolve to both Hosting and other services. To ensure
-	// consistent results, remove `A` and `AAAA` records related to
-	// non-Hosting services.
-	//   "HOST_ACTIVE" - All requests against your `CustomDomain`'s domain
-	// name are served by Hosting. If the `CustomDomain`'s `OwnershipState`
-	// is also `ACTIVE`, Hosting serves your Hosting Site's content on the
+	// addresses resulted in errors. See your `CustomDomain` object's
+	// `issues` field for more details.
+	//   "HOST_MISMATCH" - Your custom domain's domain name has IP addresses
+	// that don't ultimately resolve to Hosting.
+	//   "HOST_CONFLICT" - Your custom domain's domain name has IP addresses
+	// that resolve to both Hosting and other services. To ensure consistent
+	// results, remove `A` and `AAAA` records related to non-Hosting
+	// services.
+	//   "HOST_ACTIVE" - All requests against your custom domain's domain
+	// name are served by Hosting. If the custom domain's `OwnershipState`
+	// is also `ACTIVE`, Hosting serves your Hosting site's content on the
 	// domain name.
 	HostState string `json:"hostState,omitempty"`
 
@@ -865,42 +863,42 @@ type CustomDomain struct {
 	// this `CustomDomain` refers to.
 	//
 	// Possible values:
-	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your `CustomDomain`'s ownership
+	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your custom domain's ownership
 	// state is unspecified. This should never happen.
-	//   "OWNERSHIP_MISSING" - Your `CustomDomain`'s domain name has no
+	//   "OWNERSHIP_MISSING" - Your custom domain's domain name has no
 	// Hosting-related ownership records; no Firebase project has permission
 	// to act on the domain name's behalf.
-	//   "OWNERSHIP_UNREACHABLE" - Your `CustomDomain`'s domain name can't
-	// be reached. Hosting services' DNS queries to find your domain name's
-	// ownership records resulted in errors. See your `CustomDomain`'s
-	// `issues` field for more details.
-	//   "OWNERSHIP_MISMATCH" - Your `CustomDomain`'s domain name is owned
-	// by another Firebase project. Remove the conflicting `TXT` records and
+	//   "OWNERSHIP_UNREACHABLE" - Your custom domain's domain name can't be
+	// reached. Hosting services' DNS queries to find your domain name's
+	// ownership records resulted in errors. See your `CustomDomain`
+	// object's `issues` field for more details.
+	//   "OWNERSHIP_MISMATCH" - Your custom domain's domain name is owned by
+	// another Firebase project. Remove the conflicting `TXT` records and
 	// replace them with project-specific records for your current Firebase
 	// project.
-	//   "OWNERSHIP_CONFLICT" - Your `CustomDomain`'s domain name has
+	//   "OWNERSHIP_CONFLICT" - Your custom domain's domain name has
 	// conflicting `TXT` records that indicate ownership by both your
 	// current Firebase project and another project. Remove the other
 	// project's ownership records to grant the current project ownership.
-	//   "OWNERSHIP_PENDING" - Your `CustomDomain`'s DNS records are
+	//   "OWNERSHIP_PENDING" - Your custom domain's DNS records are
 	// configured correctly. Hosting will transfer ownership of your domain
 	// to this `CustomDomain` within 24 hours.
-	//   "OWNERSHIP_ACTIVE" - Your `CustomDomain`'s domain name has `TXT`
+	//   "OWNERSHIP_ACTIVE" - Your custom domain's domain name has `TXT`
 	// records that grant its project permission to act on its behalf.
 	OwnershipState string `json:"ownershipState,omitempty"`
 
 	// Reconciling: Output only. A field that, if true, indicates that
-	// Hosting's systems are attmepting to make the `CustomDomain`'s state
+	// Hosting's systems are attmepting to make the custom domain's state
 	// match your preferred state. This is most frequently `true` when
 	// initially provisioning a `CustomDomain` after a `CreateCustomDomain`
 	// request or when creating a new SSL certificate to match an updated
 	// `cert_preference` after an `UpdateCustomDomain` request.
 	Reconciling bool `json:"reconciling,omitempty"`
 
-	// RedirectTarget: A domain name that this CustomDomain should direct
+	// RedirectTarget: A domain name that this `CustomDomain` should direct
 	// traffic towards. If specified, Hosting will respond to requests
-	// against this CustomDomain with an HTTP 301 code, and route traffic to
-	// the specified `redirect_target` instead.
+	// against this custom domain with an HTTP 301 code, and route traffic
+	// to the specified `redirect_target` instead.
 	RedirectTarget string `json:"redirectTarget,omitempty"`
 
 	// RequiredDnsUpdates: Output only. A set of updates you should make to
@@ -967,23 +965,23 @@ type CustomDomainMetadata struct {
 	// refers to.
 	//
 	// Possible values:
-	//   "HOST_STATE_UNSPECIFIED" - Your `CustomDomain`'s host state is
+	//   "HOST_STATE_UNSPECIFIED" - Your custom domain's host state is
 	// unspecified. The message is invalid if this is unspecified.
-	//   "HOST_UNHOSTED" - Your `CustomDomain`'s domain name isn't
-	// associated with any IP addresses.
-	//   "HOST_UNREACHABLE" - Your `CustomDomain`'s domain name can't be
+	//   "HOST_UNHOSTED" - Your custom domain's domain name isn't associated
+	// with any IP addresses.
+	//   "HOST_UNREACHABLE" - Your custom domain's domain name can't be
 	// reached. Hosting services' DNS queries to find your domain name's IP
-	// addresses resulted in errors. See your `CustomDomain`'s `issues`
-	// field for more details.
-	//   "HOST_MISMATCH" - Your `CustomDomain`'s domain name has IP
-	// addresses that don't ultimately resolve to Hosting.
-	//   "HOST_CONFLICT" - Your `CustomDomain`'s domain name has IP
-	// addresses that resolve to both Hosting and other services. To ensure
-	// consistent results, remove `A` and `AAAA` records related to
-	// non-Hosting services.
-	//   "HOST_ACTIVE" - All requests against your `CustomDomain`'s domain
-	// name are served by Hosting. If the `CustomDomain`'s `OwnershipState`
-	// is also `ACTIVE`, Hosting serves your Hosting Site's content on the
+	// addresses resulted in errors. See your `CustomDomain` object's
+	// `issues` field for more details.
+	//   "HOST_MISMATCH" - Your custom domain's domain name has IP addresses
+	// that don't ultimately resolve to Hosting.
+	//   "HOST_CONFLICT" - Your custom domain's domain name has IP addresses
+	// that resolve to both Hosting and other services. To ensure consistent
+	// results, remove `A` and `AAAA` records related to non-Hosting
+	// services.
+	//   "HOST_ACTIVE" - All requests against your custom domain's domain
+	// name are served by Hosting. If the custom domain's `OwnershipState`
+	// is also `ACTIVE`, Hosting serves your Hosting site's content on the
 	// domain name.
 	HostState string `json:"hostState,omitempty"`
 
@@ -995,11 +993,11 @@ type CustomDomainMetadata struct {
 
 	// LiveMigrationSteps: A set of DNS record updates and ACME challenges
 	// that allow you to transition domain names to Firebase Hosting with
-	// zero downtime. These updates allow Hosting's to create an SSL
+	// zero downtime. These updates allow Hosting to create an SSL
 	// certificate and establish ownership for your custom domain before
 	// Hosting begins serving traffic on it. If your domain name is already
 	// in active use with another provider, add one of the challenges and
-	// make the recommended dns updates. After adding challenges and
+	// make the recommended DNS updates. After adding challenges and
 	// adjusting DNS records as necessary, wait for the `ownershipState` to
 	// be `OWNERSHIP_ACTIVE` and the `certState` to be `CERT_ACTIVE` before
 	// sending traffic to Hosting.
@@ -1009,27 +1007,27 @@ type CustomDomainMetadata struct {
 	// `CustomDomain` refers to.
 	//
 	// Possible values:
-	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your `CustomDomain`'s ownership
+	//   "OWNERSHIP_STATE_UNSPECIFIED" - Your custom domain's ownership
 	// state is unspecified. This should never happen.
-	//   "OWNERSHIP_MISSING" - Your `CustomDomain`'s domain name has no
+	//   "OWNERSHIP_MISSING" - Your custom domain's domain name has no
 	// Hosting-related ownership records; no Firebase project has permission
 	// to act on the domain name's behalf.
-	//   "OWNERSHIP_UNREACHABLE" - Your `CustomDomain`'s domain name can't
-	// be reached. Hosting services' DNS queries to find your domain name's
-	// ownership records resulted in errors. See your `CustomDomain`'s
-	// `issues` field for more details.
-	//   "OWNERSHIP_MISMATCH" - Your `CustomDomain`'s domain name is owned
-	// by another Firebase project. Remove the conflicting `TXT` records and
+	//   "OWNERSHIP_UNREACHABLE" - Your custom domain's domain name can't be
+	// reached. Hosting services' DNS queries to find your domain name's
+	// ownership records resulted in errors. See your `CustomDomain`
+	// object's `issues` field for more details.
+	//   "OWNERSHIP_MISMATCH" - Your custom domain's domain name is owned by
+	// another Firebase project. Remove the conflicting `TXT` records and
 	// replace them with project-specific records for your current Firebase
 	// project.
-	//   "OWNERSHIP_CONFLICT" - Your `CustomDomain`'s domain name has
+	//   "OWNERSHIP_CONFLICT" - Your custom domain's domain name has
 	// conflicting `TXT` records that indicate ownership by both your
 	// current Firebase project and another project. Remove the other
 	// project's ownership records to grant the current project ownership.
-	//   "OWNERSHIP_PENDING" - Your `CustomDomain`'s DNS records are
+	//   "OWNERSHIP_PENDING" - Your custom domain's DNS records are
 	// configured correctly. Hosting will transfer ownership of your domain
 	// to this `CustomDomain` within 24 hours.
-	//   "OWNERSHIP_ACTIVE" - Your `CustomDomain`'s domain name has `TXT`
+	//   "OWNERSHIP_ACTIVE" - Your custom domain's domain name has `TXT`
 	// records that grant its project permission to act on its behalf.
 	OwnershipState string `json:"ownershipState,omitempty"`
 
@@ -1077,9 +1075,9 @@ func (s *CustomDomainMetadata) MarshalJSON() ([]byte, error) {
 // DnsRecord: DNS records are resource records that define how systems
 // and services should behave when handling requests for a domain name.
 // For example, when you add `A` records to your domain name's DNS
-// records, you're informing other systems (e.g. your users' web
+// records, you're informing other systems (such as your users' web
 // browsers) to contact those IPv4 addresses to retrieve resources
-// relevant to your domain name (e.g. your Hosting site files).
+// relevant to your domain name (such as your Hosting site files).
 type DnsRecord struct {
 	// DomainName: Output only. The domain name the record pertains to, e.g.
 	// `foo.bar.com.`.
@@ -1089,7 +1087,7 @@ type DnsRecord struct {
 	// depends on record type: - A and AAAA: IP addresses for the domain
 	// name. - CNAME: Another domain to check for records. - TXT: Arbitrary
 	// text strings associated with the domain name. Hosting uses TXT
-	// records to determine a which Firebase Projects have permission to act
+	// records to determine which Firebase projects have permission to act
 	// on the domain name's behalf. - CAA: The record's flags, tag, and
 	// value, e.g. `0 issue "pki.goog".
 	Rdata string `json:"rdata,omitempty"`
@@ -1162,8 +1160,8 @@ func (s *DnsRecord) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DnsRecordSet: A set of DNS records relevant to the set up and
-// maintenance of a Custom Domain in Firebase Hosting.
+// DnsRecordSet: A set of DNS records relevant to the setup and
+// maintenance of a custom domain in Firebase Hosting.
 type DnsRecordSet struct {
 	// CheckError: Output only. An error Hosting services encountered when
 	// querying your domain name's DNS records. Note: Hosting ignores
@@ -1204,10 +1202,10 @@ func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
 // Hosting to serve secure content in response to requests against your
 // domain name. These updates present the current state of your domain
 // name's DNS records when Hosting last queried them, and the desired
-// set of records that Hosting needs to see before your Custom Domain
+// set of records that Hosting needs to see before your custom domain
 // can be fully active.
 type DnsUpdates struct {
-	// CheckTime: The last time Hosting checked your CustomDomain's DNS
+	// CheckTime: The last time Hosting checked your custom domain's DNS
 	// records.
 	CheckTime string `json:"checkTime,omitempty"`
 
@@ -5288,8 +5286,8 @@ type ProjectsSitesCustomDomainsCreateCall struct {
 
 // Create: Creates a `CustomDomain`.
 //
-//   - parent: The `CustomDomain`'s parent, specifically a Firebase
-//     Hosting `Site`.
+//   - parent: The custom domain's parent, specifically a Firebase Hosting
+//     `Site`.
 func (r *ProjectsSitesCustomDomainsService) Create(parent string, customdomain *CustomDomain) *ProjectsSitesCustomDomainsCreateCall {
 	c := &ProjectsSitesCustomDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5418,7 +5416,7 @@ func (c *ProjectsSitesCustomDomainsCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The `CustomDomain`'s parent, specifically a Firebase Hosting `Site`.",
+	//       "description": "Required. The custom domain's parent, specifically a Firebase Hosting `Site`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -5778,7 +5776,7 @@ type ProjectsSitesCustomDomainsListCall struct {
 }
 
 // List: Lists each `CustomDomain` associated with the specified parent
-// Hosting Site. Returns `CustomDomain`s in a consistent, but undefined,
+// Hosting site. Returns `CustomDomain`s in a consistent, but undefined,
 // order to facilitate pagination.
 //
 //   - parent: The Firebase Hosting `Site` with `CustomDomain` entities
@@ -5912,7 +5910,7 @@ func (c *ProjectsSitesCustomDomainsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists each `CustomDomain` associated with the specified parent Hosting Site. Returns `CustomDomain`s in a consistent, but undefined, order to facilitate pagination.",
+	//   "description": "Lists each `CustomDomain` associated with the specified parent Hosting site. Returns `CustomDomain`s in a consistent, but undefined, order to facilitate pagination.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.sites.customDomains.list",
@@ -6174,7 +6172,7 @@ type ProjectsSitesCustomDomainsUndeleteCall struct {
 }
 
 // Undelete: Undeletes the specified `CustomDomain` if it has been
-// soft-deleted. Hosting retains soft-deleted CustomDomains for around
+// soft-deleted. Hosting retains soft-deleted custom domains for around
 // 30 days before permanently deleting them.
 //
 // - name: The name of the `CustomDomain` to delete.
@@ -6276,7 +6274,7 @@ func (c *ProjectsSitesCustomDomainsUndeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Undeletes the specified `CustomDomain` if it has been soft-deleted. Hosting retains soft-deleted CustomDomains for around 30 days before permanently deleting them.",
+	//   "description": "Undeletes the specified `CustomDomain` if it has been soft-deleted. Hosting retains soft-deleted custom domains for around 30 days before permanently deleting them.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/customDomains/{customDomainsId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.projects.sites.customDomains.undelete",

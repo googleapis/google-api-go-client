@@ -3367,11 +3367,19 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	//   "EVENT_TYPE_UNSPECIFIED" - Event type unknown.
 	//   "AUDIO_SEVERE_UNDERRUN" - Triggered when a audio devices run out of
 	// buffer data for more than 5 seconds.
+	//   "NETWORK_STATE_CHANGE" - Triggered immediately on any changes to a
+	// network connection.
 	//   "USB_ADDED" - Triggered when USB devices are added.
 	//   "USB_REMOVED" - Triggered when USB devices are removed.
 	//   "NETWORK_HTTPS_LATENCY_CHANGE" - Triggered when a new HTTPS latency
 	// problem was detected or the device has recovered form an existing
 	// HTTPS latency problem.
+	//   "WIFI_SIGNAL_STRENGTH_LOW" - Triggered when connected WiFi network
+	// signal strength drops below -70dBm.
+	//   "WIFI_SIGNAL_STRENGTH_RECOVERED" - Triggered when connected WiFi
+	// network signal strength is recovered from a signal drop.
+	//   "VPN_CONNECTION_STATE_CHANGE" - Triggered on changes to VPN
+	// connections.
 	EventType string `json:"eventType,omitempty"`
 
 	// HttpsLatencyChangeEvent: Output only. Payload for HTTPS latency
@@ -3381,6 +3389,11 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 
 	// Name: Output only. Resource name of the event.
 	Name string `json:"name,omitempty"`
+
+	// NetworkStateChangeEvent: Output only. Payload for network connection
+	// state change event. Present only when `event_type` is
+	// `NETWORK_STATE_CHANGE`.
+	NetworkStateChangeEvent *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent `json:"networkStateChangeEvent,omitempty"`
 
 	// ReportTime: Timestamp that represents when the event was reported.
 	ReportTime string `json:"reportTime,omitempty"`
@@ -3393,6 +3406,16 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	// User: Output only. Information about the user associated with the
 	// event.
 	User *GoogleChromeManagementV1TelemetryUserInfo `json:"user,omitempty"`
+
+	// VpnConnectionStateChangeEvent: Output only. Payload for VPN
+	// connection state change event. Present only when `event_type` is
+	// `VPN_CONNECTION_STATE_CHANGE`.
+	VpnConnectionStateChangeEvent *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent `json:"vpnConnectionStateChangeEvent,omitempty"`
+
+	// WifiSignalStrengthEvent: Output only. Payload for WiFi signal
+	// strength events. Present only when `event_type` is
+	// `WIFI_SIGNAL_STRENGTH_LOW` or `WIFI_SIGNAL_STRENGTH_RECOVERED`.
+	WifiSignalStrengthEvent *GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent `json:"wifiSignalStrengthEvent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AudioSevereUnderrunEvent") to unconditionally include in API
@@ -3429,11 +3452,19 @@ type GoogleChromeManagementV1TelemetryEventNotificationFilter struct {
 	//   "EVENT_TYPE_UNSPECIFIED" - Event type unknown.
 	//   "AUDIO_SEVERE_UNDERRUN" - Triggered when a audio devices run out of
 	// buffer data for more than 5 seconds.
+	//   "NETWORK_STATE_CHANGE" - Triggered immediately on any changes to a
+	// network connection.
 	//   "USB_ADDED" - Triggered when USB devices are added.
 	//   "USB_REMOVED" - Triggered when USB devices are removed.
 	//   "NETWORK_HTTPS_LATENCY_CHANGE" - Triggered when a new HTTPS latency
 	// problem was detected or the device has recovered form an existing
 	// HTTPS latency problem.
+	//   "WIFI_SIGNAL_STRENGTH_LOW" - Triggered when connected WiFi network
+	// signal strength drops below -70dBm.
+	//   "WIFI_SIGNAL_STRENGTH_RECOVERED" - Triggered when connected WiFi
+	// network signal strength is recovered from a signal drop.
+	//   "VPN_CONNECTION_STATE_CHANGE" - Triggered on changes to VPN
+	// connections.
 	EventTypes []string `json:"eventTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventTypes") to
@@ -3499,6 +3530,87 @@ type GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent struct {
 
 func (s *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent:
+// `TelemetryNetworkConnectionStateChangeEvent` is triggered on network
+// connection state changes. * Granular permission needed:
+// TELEMETRY_API_NETWORK_REPORT
+type GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent struct {
+	// ConnectionState: Current connection state of the network.
+	//
+	// Possible values:
+	//   "NETWORK_CONNECTION_STATE_UNSPECIFIED" - Network connection state
+	// unspecified.
+	//   "ONLINE" - The network is connected and internet connectivity is
+	// available.
+	//   "CONNECTED" - The network is connected and not in a detected portal
+	// state, but internet connectivity may not be available.
+	//   "PORTAL" - The network is connected but a portal state was
+	// detected. Internet connectivity may be limited.
+	//   "CONNECTING" - The network is in the process of connecting.
+	//   "NOT_CONNECTED" - The network is not connected.
+	ConnectionState string `json:"connectionState,omitempty"`
+
+	// Guid: Unique identifier of the network.
+	Guid string `json:"guid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent:
+// `TelemetryNetworkSignalStrengthEvent` is triggered on WiFi signal
+// strength events. * Granular permission needed:
+// TELEMETRY_API_NETWORK_REPORT
+type GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent struct {
+	// Guid: Unique identifier of the network.
+	Guid string `json:"guid,omitempty"`
+
+	// SignalStrengthDbm: Signal strength RSSI value.
+	SignalStrengthDbm int64 `json:"signalStrengthDbm,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Guid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Guid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryNetworkSignalStrengthEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

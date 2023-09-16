@@ -370,6 +370,34 @@ func (s *AcceptHubSpokeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AcceptHubSpokeResponse: The response for HubService.AcceptHubSpoke.
+type AcceptHubSpokeResponse struct {
+	// Spoke: The spoke that was operated on.
+	Spoke *Spoke `json:"spoke,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Spoke") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Spoke") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcceptHubSpokeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceptHubSpokeResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AcceptSpokeRequest: The request for HubService.AcceptSpoke.
 type AcceptSpokeRequest struct {
 	// RequestId: Optional. A request ID to identify requests. Specify a
@@ -2639,6 +2667,34 @@ type RejectHubSpokeRequest struct {
 
 func (s *RejectHubSpokeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectHubSpokeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RejectHubSpokeResponse: The response for HubService.RejectHubSpoke.
+type RejectHubSpokeResponse struct {
+	// Spoke: The spoke that was operated on.
+	Spoke *Spoke `json:"spoke,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Spoke") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Spoke") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RejectHubSpokeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RejectHubSpokeResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

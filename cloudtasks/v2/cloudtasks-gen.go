@@ -1110,7 +1110,7 @@ type PauseQueueRequest struct {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1119,17 +1119,17 @@ type PauseQueueRequest struct {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -1432,9 +1432,13 @@ type RetryConfig struct {
 	// MaxBackoff: A task will be scheduled for retry between min_backoff
 	// and max_backoff duration after it fails, if the queue's RetryConfig
 	// specifies that the task should be retried. If unspecified when the
-	// queue is created, Cloud Tasks will pick the default. `max_backoff`
-	// will be truncated to the nearest second. This field has the same
-	// meaning as max_backoff_seconds in queue.yaml/xml
+	// queue is created, Cloud Tasks will pick the default. The value must
+	// be given as a string that indicates the length of time (in seconds)
+	// followed by `s` (for "seconds"). For more information on the format,
+	// see the documentation for Duration
+	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
+	// `max_backoff` will be truncated to the nearest second. This field has
+	// the same meaning as max_backoff_seconds in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
 
@@ -1459,18 +1463,26 @@ type RetryConfig struct {
 	// the task has been attempted max_attempts times, no further attempts
 	// will be made and the task will be deleted. If zero, then the task age
 	// is unlimited. If unspecified when the queue is created, Cloud Tasks
-	// will pick the default. `max_retry_duration` will be truncated to the
-	// nearest second. This field has the same meaning as task_age_limit in
-	// queue.yaml/xml
+	// will pick the default. The value must be given as a string that
+	// indicates the length of time (in seconds) followed by `s` (for
+	// "seconds"). For the maximum possible value or the format, see the
+	// documentation for Duration
+	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
+	// `max_retry_duration` will be truncated to the nearest second. This
+	// field has the same meaning as task_age_limit in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
 
 	// MinBackoff: A task will be scheduled for retry between min_backoff
 	// and max_backoff duration after it fails, if the queue's RetryConfig
 	// specifies that the task should be retried. If unspecified when the
-	// queue is created, Cloud Tasks will pick the default. `min_backoff`
-	// will be truncated to the nearest second. This field has the same
-	// meaning as min_backoff_seconds in queue.yaml/xml
+	// queue is created, Cloud Tasks will pick the default. The value must
+	// be given as a string that indicates the length of time (in seconds)
+	// followed by `s` (for "seconds"). For more information on the format,
+	// see the documentation for Duration
+	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
+	// `min_backoff` will be truncated to the nearest second. This field has
+	// the same meaning as min_backoff_seconds in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
 
@@ -1703,6 +1715,10 @@ type Task struct {
 	// `dispatch_deadline` to at most a few seconds more than the app
 	// handler's timeout. For more information see Timeouts
 	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).
+	// The value must be given as a string that indicates the length of time
+	// (in seconds) followed by `s` (for "seconds"). For more information on
+	// the format, see the documentation for Duration
+	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
 	// `dispatch_deadline` will be truncated to the nearest millisecond. The
 	// deadline is an approximate deadline.
 	DispatchDeadline string `json:"dispatchDeadline,omitempty"`

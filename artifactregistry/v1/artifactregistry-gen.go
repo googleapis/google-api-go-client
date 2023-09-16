@@ -2675,7 +2675,8 @@ type Repository struct {
 	// configuration for the repositories of docker type.
 	DockerConfig *DockerRepositoryConfig `json:"dockerConfig,omitempty"`
 
-	// Format: The format of packages that are stored in the repository.
+	// Format: Optional. The format of packages that are stored in the
+	// repository.
 	//
 	// Possible values:
 	//   "FORMAT_UNSPECIFIED" - Unspecified package format.
@@ -2709,7 +2710,7 @@ type Repository struct {
 	// configuration for the repositories of maven type.
 	MavenConfig *MavenRepositoryConfig `json:"mavenConfig,omitempty"`
 
-	// Mode: The mode of the repository.
+	// Mode: Optional. The mode of the repository.
 	//
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Unspecified mode.

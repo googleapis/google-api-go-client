@@ -223,16 +223,28 @@ type ProjectsLocationsConnectionsEntityTypesEntitiesService struct {
 // Action: Action message contains metadata information about a single
 // action present in the external system.
 type Action struct {
+	// InputJsonSchema: JsonSchema representation of this actions's input
+	// schema
+	InputJsonSchema *JsonSchema `json:"inputJsonSchema,omitempty"`
+
 	// InputParameters: List containing input parameter metadata.
 	InputParameters []*InputParameter `json:"inputParameters,omitempty"`
 
 	// Name: Name of the action.
 	Name string `json:"name,omitempty"`
 
+	// ResultJsonSchema: JsonSchema representation of this actions's result
+	// schema
+	ResultJsonSchema *JsonSchema `json:"resultJsonSchema,omitempty"`
+
 	// ResultMetadata: List containing the metadata of result fields.
 	ResultMetadata []*ResultMetadata `json:"resultMetadata,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputParameters") to
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InputJsonSchema") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -240,7 +252,7 @@ type Action struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputParameters") to
+	// NullFields is a list of field names (e.g. "InputJsonSchema") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -314,8 +326,15 @@ type EntityType struct {
 	// entity type.
 	Fields []*Field `json:"fields,omitempty"`
 
+	// JsonSchema: JsonSchema representation of this entity's schema
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+
 	// Name: The name of the entity type.
 	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
@@ -540,6 +559,10 @@ type Field struct {
 	// Description: A brief description of the Field.
 	Description string `json:"description,omitempty"`
 
+	// JsonSchema: JsonSchema of the field, applicable only if field is of
+	// type `STRUCT`
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+
 	// Key: The following boolean field specifies if the current Field acts
 	// as a primary key or id if the parent is of type entity.
 	Key bool `json:"key,omitempty"`
@@ -638,6 +661,10 @@ type InputParameter struct {
 	// Description: A brief description of the Parameter.
 	Description string `json:"description,omitempty"`
 
+	// JsonSchema: JsonSchema of the parameter, applicable only if parameter
+	// is of type `STRUCT`
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+
 	// Name: Name of the Parameter.
 	Name string `json:"name,omitempty"`
 
@@ -663,6 +690,117 @@ type InputParameter struct {
 
 func (s *InputParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod InputParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JsonSchema: JsonSchema representation of schema metadata
+type JsonSchema struct {
+	// AdditionalDetails: Additional details apart from standard json schema
+	// fields, this gives flexibility to store metadata about the schema
+	AdditionalDetails googleapi.RawMessage `json:"additionalDetails,omitempty"`
+
+	// Default: The default value of the field or object described by this
+	// schema.
+	Default interface{} `json:"default,omitempty"`
+
+	// Description: A description of this schema.
+	Description string `json:"description,omitempty"`
+
+	// Enum: Possible values for an enumeration. This works in conjunction
+	// with `type` to represent types with a fixed set of legal values
+	Enum []interface{} `json:"enum,omitempty"`
+
+	// Format: Format of the value as per
+	// https://json-schema.org/understanding-json-schema/reference/string.html#format
+	Format string `json:"format,omitempty"`
+
+	// Items: Schema that applies to array values, applicable only if this
+	// is of type `array`.
+	Items *JsonSchema `json:"items,omitempty"`
+
+	// JdbcType: JDBC datatype of the field.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Datatype unspecified.
+	//   "INT" - Deprecated Int type, use INTEGER type instead.
+	//   "SMALLINT" - Small int type.
+	//   "DOUBLE" - Double type.
+	//   "DATE" - Date type.
+	//   "DATETIME" - Deprecated Datetime type.
+	//   "TIME" - Time type.
+	//   "STRING" - Deprecated string type, use VARCHAR type instead.
+	//   "LONG" - Deprecated Long type, use BIGINT type instead.
+	//   "BOOLEAN" - Boolean type.
+	//   "DECIMAL" - Decimal type.
+	//   "UUID" - Deprecated UUID type, use VARCHAR instead.
+	//   "BLOB" - Blob type.
+	//   "BIT" - Bit type.
+	//   "TINYINT" - Tiny int type.
+	//   "INTEGER" - Integer type.
+	//   "BIGINT" - Big int type.
+	//   "FLOAT" - Float type.
+	//   "REAL" - Real type.
+	//   "NUMERIC" - Numeric type.
+	//   "CHAR" - Char type.
+	//   "VARCHAR" - Varchar type.
+	//   "LONGVARCHAR" - Long varchar type.
+	//   "TIMESTAMP" - Timestamp type.
+	//   "NCHAR" - Nchar type.
+	//   "NVARCHAR" - Nvarchar type.
+	//   "LONGNVARCHAR" - Long Nvarchar type.
+	//   "NULL" - Null type.
+	//   "OTHER" - Other type.
+	//   "JAVA_OBJECT" - Java object type.
+	//   "DISTINCT" - Distinct type keyword.
+	//   "STRUCT" - Struct type.
+	//   "ARRAY" - Array type.
+	//   "CLOB" - Clob type.
+	//   "REF" - Ref type.
+	//   "DATALINK" - Datalink type.
+	//   "ROWID" - Row ID type.
+	//   "BINARY" - Binary type.
+	//   "VARBINARY" - Varbinary type.
+	//   "LONGVARBINARY" - Long Varbinary type.
+	//   "NCLOB" - Nclob type.
+	//   "SQLXML" - SQLXML type.
+	//   "REF_CURSOR" - Ref_cursor type.
+	//   "TIME_WITH_TIMEZONE" - Time with timezone type.
+	//   "TIMESTAMP_WITH_TIMEZONE" - Timestamp with timezone type.
+	JdbcType string `json:"jdbcType,omitempty"`
+
+	// Properties: The child schemas, applicable only if this is of type
+	// `object`. The key is the name of the property and the value is the
+	// json schema that describes that property
+	Properties map[string]JsonSchema `json:"properties,omitempty"`
+
+	// Required: Whether this property is required.
+	Required []string `json:"required,omitempty"`
+
+	// Type: JSON Schema Validation: A Vocabulary for Structural Validation
+	// of JSON
+	Type []string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JsonSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonSchema
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -984,6 +1122,10 @@ type ResultMetadata struct {
 
 	// Description: A brief description of the metadata field.
 	Description string `json:"description,omitempty"`
+
+	// JsonSchema: JsonSchema of the result, applicable only if parameter is
+	// of type `STRUCT`
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
 
 	// Name: Name of the metadata field.
 	Name string `json:"name,omitempty"`
@@ -1336,6 +1478,154 @@ func (c *ProjectsLocationsConnectionsActionsExecuteCall) Do(opts ...googleapi.Ca
 
 }
 
+// method id "connectors.projects.locations.connections.actions.get":
+
+type ProjectsLocationsConnectionsActionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the schema of the given action.
+//
+//   - name: Resource name of the Action. Format:
+//     projects/{project}/locations/{location}/connections/{connection}/act
+//     ions/{action}.
+func (r *ProjectsLocationsConnectionsActionsService) Get(name string) *ProjectsLocationsConnectionsActionsGetCall {
+	c := &ProjectsLocationsConnectionsActionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsActionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsActionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsActionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsActionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsActionsGetCall) Context(ctx context.Context) *ProjectsLocationsConnectionsActionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsActionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsActionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.actions.get" call.
+// Exactly one of *Action or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Action.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsConnectionsActionsGetCall) Do(opts ...googleapi.CallOption) (*Action, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Action{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the schema of the given action.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/actions/{actionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.actions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the Action. Format: projects/{project}/locations/{location}/connections/{connection}/actions/{action}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/actions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Action"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "connectors.projects.locations.connections.actions.list":
 
 type ProjectsLocationsConnectionsActionsListCall struct {
@@ -1370,6 +1660,22 @@ func (c *ProjectsLocationsConnectionsActionsListCall) PageSize(pageSize int64) *
 // of actions.
 func (c *ProjectsLocationsConnectionsActionsListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsActionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields of
+// the Action are returned in the response.
+//
+// Possible values:
+//
+//	"ACTION_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset value
+//
+// Defaults to FULL View.
+//
+//	"ACTION_VIEW_BASIC" - Return only action names.
+//	"ACTION_VIEW_FULL" - Return actions with schema.
+func (c *ProjectsLocationsConnectionsActionsListCall) View(view string) *ProjectsLocationsConnectionsActionsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -1497,6 +1803,21 @@ func (c *ProjectsLocationsConnectionsActionsListCall) Do(opts ...googleapi.CallO
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which fields of the Action are returned in the response.",
+	//       "enum": [
+	//         "ACTION_VIEW_UNSPECIFIED",
+	//         "ACTION_VIEW_BASIC",
+	//         "ACTION_VIEW_FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "VIEW_UNSPECIFIED. The unset value Defaults to FULL View.",
+	//         "Return only action names.",
+	//         "Return actions with schema."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v2/{+parent}/actions",
@@ -1529,6 +1850,154 @@ func (c *ProjectsLocationsConnectionsActionsListCall) Pages(ctx context.Context,
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "connectors.projects.locations.connections.entityTypes.get":
+
+type ProjectsLocationsConnectionsEntityTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets metadata of given entity type
+//
+//   - name: Resource name of the Entity Type. Format:
+//     projects/{project}/locations/{location}/connections/{connection}/ent
+//     ityTypes/{entityType}.
+func (r *ProjectsLocationsConnectionsEntityTypesService) Get(name string) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c := &ProjectsLocationsConnectionsEntityTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) Context(ctx context.Context) *ProjectsLocationsConnectionsEntityTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.entityTypes.get" call.
+// Exactly one of *EntityType or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EntityType.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsEntityTypesGetCall) Do(opts ...googleapi.CallOption) (*EntityType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EntityType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets metadata of given entity type",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/entityTypes/{entityTypesId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.entityTypes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the Entity Type. Format: projects/{project}/locations/{location}/connections/{connection}/entityTypes/{entityType}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/entityTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "EntityType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "connectors.projects.locations.connections.entityTypes.list":
@@ -1566,6 +2035,22 @@ func (c *ProjectsLocationsConnectionsEntityTypesListCall) PageSize(pageSize int6
 // page of entity types.
 func (c *ProjectsLocationsConnectionsEntityTypesListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsEntityTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields of
+// the Entity Type are returned in the response.
+//
+// Possible values:
+//
+//	"ENTITY_TYPE_VIEW_UNSPECIFIED" - VIEW_UNSPECIFIED. The unset value.
+//
+// Defaults to FULL View.
+//
+//	"ENTITY_TYPE_VIEW_BASIC" - Return only entity type names.
+//	"ENTITY_TYPE_VIEW_FULL" - Return entity types with schema
+func (c *ProjectsLocationsConnectionsEntityTypesListCall) View(view string) *ProjectsLocationsConnectionsEntityTypesListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -1692,6 +2177,21 @@ func (c *ProjectsLocationsConnectionsEntityTypesListCall) Do(opts ...googleapi.C
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which fields of the Entity Type are returned in the response.",
+	//       "enum": [
+	//         "ENTITY_TYPE_VIEW_UNSPECIFIED",
+	//         "ENTITY_TYPE_VIEW_BASIC",
+	//         "ENTITY_TYPE_VIEW_FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "VIEW_UNSPECIFIED. The unset value. Defaults to FULL View.",
+	//         "Return only entity type names.",
+	//         "Return entity types with schema"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -862,6 +862,10 @@ type Connection struct {
 	// stored. formatted like: gcr.io/{bucketName}/{imageName}
 	ImageLocation string `json:"imageLocation,omitempty"`
 
+	// IsTrustedTester: Output only. Is trusted tester program enabled for
+	// the project.
+	IsTrustedTester bool `json:"isTrustedTester,omitempty"`
+
 	// Labels: Optional. Resource labels to represent user-provided
 	// metadata. Refer to cloud documentation on labels for more details.
 	// https://cloud.google.com/compute/docs/labeling-resources
@@ -1144,6 +1148,9 @@ type ConnectorInfraConfig struct {
 	// ResourceRequests: System resource requests.
 	ResourceRequests *ResourceRequests `json:"resourceRequests,omitempty"`
 
+	// SharedDeployment: The name of shared connector deployment.
+	SharedDeployment string `json:"sharedDeployment,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "HpaConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1292,6 +1299,10 @@ type ConnectorVersionInfraConfig struct {
 
 	// ResourceRequests: Output only. System resource requests.
 	ResourceRequests *ResourceRequests `json:"resourceRequests,omitempty"`
+
+	// SharedDeployment: Output only. The name of shared connector
+	// deployment.
+	SharedDeployment string `json:"sharedDeployment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HpaConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -1895,8 +1906,15 @@ type EventingConfig struct {
 	// EnrichmentEnabled: Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
 
+	// PrivateConnectivityEnabled: Optional. Private Connectivity Enabled.
+	PrivateConnectivityEnabled bool `json:"privateConnectivityEnabled,omitempty"`
+
+	// PublicEventsListenerEndpoint: Optional. Public Events listener
+	// endpoint.
+	PublicEventsListenerEndpoint string `json:"publicEventsListenerEndpoint,omitempty"`
+
 	// RegistrationDestinationConfig: Registration endpoint for auto
-	// regsitration.
+	// registration.
 	RegistrationDestinationConfig *DestinationConfig `json:"registrationDestinationConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
@@ -2078,6 +2096,7 @@ type EventingStatus struct {
 	//   "STATE_UNSPECIFIED" - Default state.
 	//   "ACTIVE" - Eventing is enabled and ready to receive events.
 	//   "ERROR" - Eventing is not active due to an error.
+	//   "PUBLIC_ENDPOINT_REQUIRED" - Public endpoint required.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2298,6 +2317,9 @@ type Field struct {
 	// Field: Name of the Field.
 	Field string `json:"field,omitempty"`
 
+	// JsonSchema: JsonSchema representation of this entity's schema
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+
 	// Key: The following boolean field specifies if the current Field acts
 	// as a primary key or id if the parent is of type entity.
 	Key bool `json:"key,omitempty"`
@@ -2509,6 +2531,9 @@ type InputParameter struct {
 	// Description: A brief description of the Parameter.
 	Description string `json:"description,omitempty"`
 
+	// JsonSchema: JsonSchema representation of this action's parameter
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+
 	// Nullable: Specifies whether a null value is allowed.
 	Nullable bool `json:"nullable,omitempty"`
 
@@ -2534,6 +2559,117 @@ type InputParameter struct {
 
 func (s *InputParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod InputParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JsonSchema: JsonSchema representation of schema metadata
+type JsonSchema struct {
+	// Default: The default value of the field or object described by this
+	// schema.
+	Default interface{} `json:"default,omitempty"`
+
+	// Description: A description of this schema.
+	Description string `json:"description,omitempty"`
+
+	// Enum: Possible values for an enumeration. This works in conjunction
+	// with `type` to represent types with a fixed set of legal values
+	Enum []interface{} `json:"enum,omitempty"`
+
+	// Format: Format of the value as per
+	// https://json-schema.org/understanding-json-schema/reference/string.html#format
+	Format string `json:"format,omitempty"`
+
+	// Items: Schema that applies to array values, applicable only if this
+	// is of type `array`.
+	Items *JsonSchema `json:"items,omitempty"`
+
+	// JdbcType: JDBC datatype of the field.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Data type is not specified.
+	//   "DATA_TYPE_INT" - DEPRECATED! Use DATA_TYPE_INTEGER.
+	//   "DATA_TYPE_SMALLINT" - Short integer(int16) data type.
+	//   "DATA_TYPE_DOUBLE" - Double data type.
+	//   "DATA_TYPE_DATE" - Date data type.
+	//   "DATA_TYPE_DATETIME" - DEPRECATED! Use DATA_TYPE_TIMESTAMP.
+	//   "DATA_TYPE_TIME" - Time data type.
+	//   "DATA_TYPE_STRING" - DEPRECATED! Use DATA_TYPE_VARCHAR.
+	//   "DATA_TYPE_LONG" - DEPRECATED! Use DATA_TYPE_BIGINT.
+	//   "DATA_TYPE_BOOLEAN" - Boolean data type.
+	//   "DATA_TYPE_DECIMAL" - Decimal data type.
+	//   "DATA_TYPE_UUID" - DEPRECATED! Use DATA_TYPE_VARCHAR.
+	//   "DATA_TYPE_BLOB" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_BIT" - Bit data type.
+	//   "DATA_TYPE_TINYINT" - Small integer(int8) data type.
+	//   "DATA_TYPE_INTEGER" - Integer(int32) data type.
+	//   "DATA_TYPE_BIGINT" - Long integer(int64) data type.
+	//   "DATA_TYPE_FLOAT" - Float data type.
+	//   "DATA_TYPE_REAL" - Real data type.
+	//   "DATA_TYPE_NUMERIC" - Numeric data type.
+	//   "DATA_TYPE_CHAR" - Char data type.
+	//   "DATA_TYPE_VARCHAR" - Varchar data type.
+	//   "DATA_TYPE_LONGVARCHAR" - Longvarchar data type.
+	//   "DATA_TYPE_TIMESTAMP" - Timestamp data type.
+	//   "DATA_TYPE_NCHAR" - Nchar data type.
+	//   "DATA_TYPE_NVARCHAR" - Nvarchar data type.
+	//   "DATA_TYPE_LONGNVARCHAR" - Longnvarchar data type.
+	//   "DATA_TYPE_NULL" - Null data type.
+	//   "DATA_TYPE_OTHER" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_JAVA_OBJECT" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_DISTINCT" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_STRUCT" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_ARRAY" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_CLOB" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_REF" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_DATALINK" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_ROWID" - UNSUPPORTED! Row id data type.
+	//   "DATA_TYPE_BINARY" - UNSUPPORTED! Binary data type.
+	//   "DATA_TYPE_VARBINARY" - UNSUPPORTED! Variable binary data type.
+	//   "DATA_TYPE_LONGVARBINARY" - UNSUPPORTED! Long variable binary data
+	// type.
+	//   "DATA_TYPE_NCLOB" - UNSUPPORTED! NCLOB data type.
+	//   "DATA_TYPE_SQLXML" - UNSUPPORTED! SQL XML data type is not
+	// supported.
+	//   "DATA_TYPE_REF_CURSOR" - UNSUPPORTED! Cursor reference type is not
+	// supported.
+	//   "DATA_TYPE_TIME_WITH_TIMEZONE" - UNSUPPORTED! Use TIME or TIMESTAMP
+	// instead.
+	//   "DATA_TYPE_TIMESTAMP_WITH_TIMEZONE" - UNSUPPORTED! Use TIMESTAMP
+	// instead.
+	JdbcType string `json:"jdbcType,omitempty"`
+
+	// Properties: The child schemas, applicable only if this is of type
+	// `object`. The key is the name of the property and the value is the
+	// json schema that describes that property
+	Properties map[string]JsonSchema `json:"properties,omitempty"`
+
+	// Required: Whether this property is required.
+	Required []string `json:"required,omitempty"`
+
+	// Type: JSON Schema Validation: A Vocabulary for Structural Validation
+	// of JSON
+	Type []string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Default") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Default") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JsonSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonSchema
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3836,6 +3972,9 @@ type ResultMetadata struct {
 	// Field: Name of the result field.
 	Field string `json:"field,omitempty"`
 
+	// JsonSchema: JsonSchema representation of this action's result
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DataType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3920,9 +4059,17 @@ type RuntimeActionSchema struct {
 	// Action: Output only. Name of the action.
 	Action string `json:"action,omitempty"`
 
+	// InputJsonSchema: Output only. JsonSchema representation of this
+	// action's input metadata
+	InputJsonSchema *JsonSchema `json:"inputJsonSchema,omitempty"`
+
 	// InputParameters: Output only. List of input parameter metadata for
 	// the action.
 	InputParameters []*InputParameter `json:"inputParameters,omitempty"`
+
+	// ResultJsonSchema: Output only. JsonSchema representation of this
+	// action's result metadata
+	ResultJsonSchema *JsonSchema `json:"resultJsonSchema,omitempty"`
 
 	// ResultMetadata: Output only. List of result field metadata.
 	ResultMetadata []*ResultMetadata `json:"resultMetadata,omitempty"`
@@ -4040,6 +4187,10 @@ type RuntimeEntitySchema struct {
 
 	// Fields: Output only. List of fields in the entity.
 	Fields []*Field `json:"fields,omitempty"`
+
+	// JsonSchema: Output only. JsonSchema representation of this entity's
+	// metadata
+	JsonSchema *JsonSchema `json:"jsonSchema,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entity") to
 	// unconditionally include in API requests. By default, fields with

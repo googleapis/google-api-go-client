@@ -365,7 +365,7 @@ type Certificate struct {
 	// special-purposed certificates, served from Edge Points of Presence.
 	// See https://cloud.google.com/vpc/docs/edge-locations.
 	//   "ALL_REGIONS" - Certificates with ALL_REGIONS scope are served from
-	// all GCP regions. See
+	// all Google Cloud regions. See
 	// https://cloud.google.com/compute/docs/regions-zones.
 	Scope string `json:"scope,omitempty"`
 

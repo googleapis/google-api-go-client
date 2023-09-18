@@ -589,6 +589,81 @@ func (s *BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchWriteRequest: The request for BatchWrite.
+type BatchWriteRequest struct {
+	// MutationGroups: Required. The groups of mutations to be applied.
+	MutationGroups []*MutationGroup `json:"mutationGroups,omitempty"`
+
+	// RequestOptions: Common options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MutationGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MutationGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchWriteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchWriteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchWriteResponse: The result of applying a batch of mutations.
+type BatchWriteResponse struct {
+	// CommitTimestamp: The commit timestamp of the transaction that applied
+	// this batch. Present if `status` is `OK`, absent otherwise.
+	CommitTimestamp string `json:"commitTimestamp,omitempty"`
+
+	// Indexes: The mutation groups applied in this batch. The values index
+	// into the `mutation_groups` field in the corresponding
+	// `BatchWriteRequest`.
+	Indexes []int64 `json:"indexes,omitempty"`
+
+	// Status: An `OK` status indicates success. Any other status indicates
+	// a failure.
+	Status *Status `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitTimestamp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommitTimestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchWriteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchWriteResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BeginTransactionRequest: The request for BeginTransaction.
 type BeginTransactionRequest struct {
 	// Options: Required. Options for the new transaction.
@@ -3542,6 +3617,37 @@ type Mutation struct {
 
 func (s *Mutation) MarshalJSON() ([]byte, error) {
 	type NoMethod Mutation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MutationGroup: A group of mutations to be committed together. Related
+// mutations should be placed in a group. For example, two mutations
+// inserting rows with the same primary key prefix in both parent and
+// child tables are related.
+type MutationGroup struct {
+	// Mutations: Required. The mutations in this group.
+	Mutations []*Mutation `json:"mutations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mutations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mutations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MutationGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod MutationGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15015,6 +15121,162 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Do(opts ...googleapi
 	//   },
 	//   "response": {
 	//     "$ref": "BatchCreateSessionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.data"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.databases.sessions.batchWrite":
+
+type ProjectsInstancesDatabasesSessionsBatchWriteCall struct {
+	s                 *Service
+	session           string
+	batchwriterequest *BatchWriteRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// BatchWrite: Batches the supplied mutation groups in a collection of
+// efficient transactions. All mutations in a group are committed
+// atomically. However, mutations across groups can be committed
+// non-atomically in an unspecified order and thus, they must be
+// independent of each other. Partial failure is possible, i.e., some
+// groups may have been committed successfully, while some may have
+// failed. The results of individual batches are streamed into the
+// response as the batches are applied. BatchWrite requests are not
+// replay protected, meaning that each mutation group may be applied
+// more than once. Replays of non-idempotent mutations may have
+// undesirable effects. For example, replays of an insert mutation may
+// produce an already exists error or result in additional rows if using
+// generated or commit timestamp-based keys. We recommend structuring
+// your mutation groups to be idempotent to avoid this issue.
+//
+// - session: The session in which the batch request is to be run.
+func (r *ProjectsInstancesDatabasesSessionsService) BatchWrite(session string, batchwriterequest *BatchWriteRequest) *ProjectsInstancesDatabasesSessionsBatchWriteCall {
+	c := &ProjectsInstancesDatabasesSessionsBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.session = session
+	c.batchwriterequest = batchwriterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabasesSessionsBatchWriteCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesSessionsBatchWriteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabasesSessionsBatchWriteCall) Context(ctx context.Context) *ProjectsInstancesDatabasesSessionsBatchWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabasesSessionsBatchWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesSessionsBatchWriteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchwriterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+session}:batchWrite")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"session": c.session,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.sessions.batchWrite" call.
+// Exactly one of *BatchWriteResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BatchWriteResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesSessionsBatchWriteCall) Do(opts ...googleapi.CallOption) (*BatchWriteResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchWriteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Batches the supplied mutation groups in a collection of efficient transactions. All mutations in a group are committed atomically. However, mutations across groups can be committed non-atomically in an unspecified order and thus, they must be independent of each other. Partial failure is possible, i.e., some groups may have been committed successfully, while some may have failed. The results of individual batches are streamed into the response as the batches are applied. BatchWrite requests are not replay protected, meaning that each mutation group may be applied more than once. Replays of non-idempotent mutations may have undesirable effects. For example, replays of an insert mutation may produce an already exists error or result in additional rows if using generated or commit timestamp-based keys. We recommend structuring your mutation groups to be idempotent to avoid this issue.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:batchWrite",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.databases.sessions.batchWrite",
+	//   "parameterOrder": [
+	//     "session"
+	//   ],
+	//   "parameters": {
+	//     "session": {
+	//       "description": "Required. The session in which the batch request is to be run.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+session}:batchWrite",
+	//   "request": {
+	//     "$ref": "BatchWriteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchWriteResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

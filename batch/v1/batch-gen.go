@@ -1074,7 +1074,9 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 type Disk struct {
 	// DiskInterface: Local SSDs are available through both "SCSI" and
 	// "NVMe" interfaces. If not indicated, "NVMe" will be the default one
-	// for local ssds. We only support "SCSI" for persistent disks now.
+	// for local ssds. This field is ignored for persistent disks as the
+	// interface is chosen automatically. See
+	// https://cloud.google.com/compute/docs/disks/persistent-disks#choose_an_interface.
 	DiskInterface string `json:"diskInterface,omitempty"`
 
 	// Image: URL for a VM image to use as the data source for this disk.

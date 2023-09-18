@@ -263,6 +263,7 @@ type AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_P4" - Accelerator type is Nvidia Tesla P4.
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
 	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100.
+	//   "NVIDIA_L4" - Accelerator type is Nvidia Tesla L4.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
 	// Workstations.
 	//   "NVIDIA_TESLA_P100_VWS" - Accelerator type is NVIDIA Tesla P100
@@ -1252,6 +1253,10 @@ type Instance struct {
 	// instances with GPUs.
 	InstallGpuDriver bool `json:"installGpuDriver,omitempty"`
 
+	// InstanceMigrationEligibility: Output only. Checks how feasible a
+	// migration from UmN to WbI is.
+	InstanceMigrationEligibility *InstanceMigrationEligibility `json:"instanceMigrationEligibility,omitempty"`
+
 	// InstanceOwners: Input only. The owner of this instance after
 	// creation. Format: `alias@example.com` Currently supports one owner
 	// only. If not specified, all of the service account users of your VM
@@ -1314,10 +1319,6 @@ type Instance struct {
 	// after a notebook instance fully boots up. The path must be a URL or
 	// Cloud Storage path (`gs://path-to-file/file-name`).
 	PostStartupScript string `json:"postStartupScript,omitempty"`
-
-	// PreMigrationCheck: Output only. Check how possible a migration from
-	// UmN to WbI is.
-	PreMigrationCheck *PreMigrationCheck `json:"preMigrationCheck,omitempty"`
 
 	// ProxyUri: Output only. The proxy endpoint that is used to access the
 	// Jupyter notebook.
@@ -1448,6 +1449,63 @@ type InstanceConfig struct {
 
 func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceMigrationEligibility: InstanceMigrationEligibility represents
+// the feasibility information of a migration from UmN to WbI.
+type InstanceMigrationEligibility struct {
+	// Errors: Output only. Certain configurations make the UmN ineligible
+	// for an automatic migration. A manual migration is required.
+	//
+	// Possible values:
+	//   "ERROR_UNSPECIFIED" - Default type.
+	//   "DATAPROC_HUB" - The UmN uses Dataproc Hub and cannot be migrated.
+	Errors []string `json:"errors,omitempty"`
+
+	// Warnings: Output only. Certain configurations will be defaulted
+	// during the migration.
+	//
+	// Possible values:
+	//   "WARNING_UNSPECIFIED" - Default type.
+	//   "UNSUPPORTED_MACHINE_TYPE" - The UmN uses an machine type that's
+	// unsupported in WbI. It will be migrated with the default machine type
+	// n2-standard-4. Users can change the machine type after the migration.
+	//   "UNSUPPORTED_ACCELERATOR_TYPE" - The UmN uses an accelerator type
+	// that's unsupported in WbI. It will be migrated without an
+	// accelerator. User can attach an accelerator after the migration.
+	//   "UNSUPPORTED_OS" - The UmN uses an operating system that's
+	// unsupported in WbI (e.g. Debian 10, Ubuntu). It will be replaced with
+	// Debian 11 in WbI.
+	//   "NO_REMOVE_DATA_DISK" - This UmN is configured with
+	// no_remove_data_disk, which is no longer available in WbI.
+	//   "GCS_BACKUP" - This UmN is configured with the Cloud Storage backup
+	// feature, which is no longer available in WbI.
+	//   "POST_STARTUP_SCRIPT" - This UmN is configured with a post startup
+	// script. Please optionally provide the `post_startup_script_option`
+	// for the migration.
+	Warnings []string `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceMigrationEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceMigrationEligibility
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2007,8 +2065,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -2111,7 +2169,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2120,17 +2178,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members`, or principals, with a
 	// `role`. Optionally, may specify a `condition` that determines how and
@@ -2199,47 +2257,6 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PreMigrationCheck: PreMigrationCheck checks how feasible a migration
-// from UmN is.
-type PreMigrationCheck struct {
-	// Message: Message provides a summary or workaround.
-	Message string `json:"message,omitempty"`
-
-	// Result: Result returns the result of the check.
-	//
-	// Possible values:
-	//   "RESULT_UNSPECIFIED" - Default type.
-	//   "IDENTICAL" - UmN can be migrated to WbI as is minus non-relevant
-	// parts.
-	//   "PARTIAL" - Part of the UmN won't be ported. The migration might
-	// default some values.
-	//   "NOT_RECOMMENDED" - UmN has too many unsupported options for a
-	// migration to WbI.
-	Result string `json:"result,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Message") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Message") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PreMigrationCheck) MarshalJSON() ([]byte, error) {
-	type NoMethod PreMigrationCheck
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2593,6 +2610,10 @@ type Runtime struct {
 	// `projects/{project}/locations/{location}/runtimes/{runtimeId}`
 	Name string `json:"name,omitempty"`
 
+	// RuntimeMigrationEligibility: Output only. Checks how feasible a
+	// migration from GmN to WbI is.
+	RuntimeMigrationEligibility *RuntimeMigrationEligibility `json:"runtimeMigrationEligibility,omitempty"`
+
 	// SoftwareConfig: The config settings for software inside the runtime.
 	SoftwareConfig *RuntimeSoftwareConfig `json:"softwareConfig,omitempty"`
 
@@ -2809,6 +2830,65 @@ type RuntimeMetrics struct {
 
 func (s *RuntimeMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RuntimeMigrationEligibility: RuntimeMigrationEligibility represents
+// the feasibility information of a migration from GmN to WbI.
+type RuntimeMigrationEligibility struct {
+	// Errors: Output only. Certain configurations make the GmN ineligible
+	// for an automatic migration. A manual migration is required.
+	//
+	// Possible values:
+	//   "ERROR_UNSPECIFIED" - Default type.
+	//   "CUSTOM_CONTAINER" - The GmN is configured with custom container(s)
+	// and cannot be migrated.
+	Errors []string `json:"errors,omitempty"`
+
+	// Warnings: Output only. Certain configurations will be defaulted
+	// during the migration.
+	//
+	// Possible values:
+	//   "WARNING_UNSPECIFIED" - Default type.
+	//   "UNSUPPORTED_ACCELERATOR_TYPE" - The GmN uses an accelerator type
+	// that's unsupported in WbI. It will be migrated without an
+	// accelerator. Users can attach an accelerator after the migration.
+	//   "UNSUPPORTED_OS" - The GmN uses an operating system that's
+	// unsupported in WbI (e.g. Debian 10). It will be replaced with Debian
+	// 11 in WbI.
+	//   "RESERVED_IP_RANGE" - This GmN is configured with reserved IP
+	// range, which is no longer applicable in WbI.
+	//   "GOOGLE_MANAGED_NETWORK" - This GmN is configured with a Google
+	// managed network. Please provide the `network` and `subnet` options
+	// for the migration.
+	//   "POST_STARTUP_SCRIPT" - This GmN is configured with a post startup
+	// script. Please optionally provide the `post_startup_script_option`
+	// for the migration.
+	//   "SINGLE_USER" - This GmN is configured with single user mode.
+	// Please optionally provide the `service_account` option for the
+	// migration.
+	Warnings []string `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RuntimeMigrationEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod RuntimeMigrationEligibility
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3136,6 +3216,7 @@ type SetInstanceAcceleratorRequest struct {
 	//   "NVIDIA_TESLA_P4" - Accelerator type is Nvidia Tesla P4.
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
 	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100.
+	//   "NVIDIA_L4" - Accelerator type is Nvidia Tesla L4.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
 	// Workstations.
 	//   "NVIDIA_TESLA_P100_VWS" - Accelerator type is NVIDIA Tesla P100
@@ -6781,6 +6862,19 @@ func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocatio
 	return c
 }
 
+// Filter sets the optional parameter "filter": List filter.
+func (c *ProjectsLocationsInstancesListCall) Filter(filter string) *ProjectsLocationsInstancesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort results.
+// Supported values are "name", "name desc" or "" (unsorted).
+func (c *ProjectsLocationsInstancesListCall) OrderBy(orderBy string) *ProjectsLocationsInstancesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum return size
 // of the list call.
 func (c *ProjectsLocationsInstancesListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesListCall {
@@ -6903,6 +6997,16 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. List filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Sort results. Supported values are \"name\", \"name desc\" or \"\" (unsorted).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum return size of the list call.",
 	//       "format": "int32",
@@ -10843,6 +10947,19 @@ func (r *ProjectsLocationsRuntimesService) List(parent string) *ProjectsLocation
 	return c
 }
 
+// Filter sets the optional parameter "filter": List filter.
+func (c *ProjectsLocationsRuntimesListCall) Filter(filter string) *ProjectsLocationsRuntimesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort results.
+// Supported values are "name", "name desc" or "" (unsorted).
+func (c *ProjectsLocationsRuntimesListCall) OrderBy(orderBy string) *ProjectsLocationsRuntimesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum return size
 // of the list call.
 func (c *ProjectsLocationsRuntimesListCall) PageSize(pageSize int64) *ProjectsLocationsRuntimesListCall {
@@ -10965,6 +11082,16 @@ func (c *ProjectsLocationsRuntimesListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. List filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Sort results. Supported values are \"name\", \"name desc\" or \"\" (unsorted).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum return size of the list call.",
 	//       "format": "int32",

@@ -4489,6 +4489,10 @@ type UpgradeDependency struct {
 	// LocalName: Local name of the dependency.
 	LocalName string `json:"localName,omitempty"`
 
+	// Membership: Membership names are formatted as
+	// `projects//locations//memberships/`.
+	Membership string `json:"membership,omitempty"`
+
 	// ResourceName: Resource name of the dependency.
 	ResourceName string `json:"resourceName,omitempty"`
 
@@ -5533,8 +5537,8 @@ type VmwareCluster struct {
 	// of the preflight check job.
 	ValidationCheck *ValidationCheck `json:"validationCheck,omitempty"`
 
-	// Vcenter: Output only. VmwareVCenterConfig specifies vCenter config
-	// for the user cluster. Inherited from the admin cluster.
+	// Vcenter: VmwareVCenterConfig specifies vCenter config for the user
+	// cluster. Inherited from the admin cluster.
 	Vcenter *VmwareVCenterConfig `json:"vcenter,omitempty"`
 
 	// VmTrackingEnabled: Enable VM tracking.
@@ -6476,7 +6480,7 @@ func (s *VmwareStorageConfig) MarshalJSON() ([]byte, error) {
 // VmwareVCenterConfig: Represents configuration for the VMware VCenter
 // for the user cluster.
 type VmwareVCenterConfig struct {
-	// Address: The vCenter IP address.
+	// Address: Output only. The vCenter IP address.
 	Address string `json:"address,omitempty"`
 
 	// CaCertData: Contains the vCenter CA certificate public key for SSL
@@ -6529,6 +6533,9 @@ func (s *VmwareVCenterConfig) MarshalJSON() ([]byte, error) {
 // VmwareVersionInfo: Contains information about a specific Anthos on
 // VMware version.
 type VmwareVersionInfo struct {
+	// Dependencies: The list of upgrade dependencies for this version.
+	Dependencies []*UpgradeDependency `json:"dependencies,omitempty"`
+
 	// HasDependencies: If set, the cluster dependencies (e.g. the admin
 	// cluster, other user clusters managed by the same admin cluster) must
 	// be upgraded before this version can be installed or upgraded to.
@@ -6542,7 +6549,7 @@ type VmwareVersionInfo struct {
 	// Version: Version number e.g. 1.13.1-gke.1000.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HasDependencies") to
+	// ForceSendFields is a list of field names (e.g. "Dependencies") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6550,13 +6557,12 @@ type VmwareVersionInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HasDependencies") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Dependencies") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

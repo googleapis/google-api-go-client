@@ -1061,6 +1061,36 @@ func (s *Encryption) MarshalJSON() ([]byte, error) {
 type Fairplay struct {
 }
 
+// Fmp4Config: `fmp4` container configuration.
+type Fmp4Config struct {
+	// CodecTag: Optional. Specify the codec tag string that will be used in
+	// the media bitstream. When not specified, the codec appropriate value
+	// is used. Supported H265 codec tags: - `hvc1` (default) - `hev1`
+	CodecTag string `json:"codecTag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CodecTag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CodecTag") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Fmp4Config) MarshalJSON() ([]byte, error) {
+	type NoMethod Fmp4Config
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // H264CodecSettings: H264 codec settings.
 type H264CodecSettings struct {
 	// AllowOpenGop: Specifies whether an open Group of Pictures (GOP)
@@ -1886,6 +1916,9 @@ type MuxStream struct {
 	// 10-digit zero-padded suffix starting from 0 before the extension,
 	// such as `mux_stream0000000123.ts`.
 	FileName string `json:"fileName,omitempty"`
+
+	// Fmp4: Optional. `fmp4` container configuration.
+	Fmp4 *Fmp4Config `json:"fmp4,omitempty"`
 
 	// Key: A unique key for this multiplexed stream.
 	Key string `json:"key,omitempty"`

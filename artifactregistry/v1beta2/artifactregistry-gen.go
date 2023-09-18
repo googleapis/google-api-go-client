@@ -1416,7 +1416,8 @@ type Repository struct {
 	// Description: The user-provided description of the repository.
 	Description string `json:"description,omitempty"`
 
-	// Format: The format of packages that are stored in the repository.
+	// Format: Optional. The format of packages that are stored in the
+	// repository.
 	//
 	// Possible values:
 	//   "FORMAT_UNSPECIFIED" - Unspecified package format.

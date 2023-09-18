@@ -814,6 +814,9 @@ type CloudSqlSettings struct {
 	// Collation: The Cloud SQL default instance level collation.
 	Collation string `json:"collation,omitempty"`
 
+	// DataCacheConfig: Optional. Configuration for data cache.
+	DataCacheConfig *DataCacheConfig `json:"dataCacheConfig,omitempty"`
+
 	// DataDiskSizeGb: The storage capacity available to the database, in
 	// GB. The minimum (and default) size is 10GB.
 	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
@@ -1442,6 +1445,36 @@ type ConvertRowIdToColumn struct {
 
 func (s *ConvertRowIdToColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod ConvertRowIdToColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataCacheConfig: Data cache configurations.
+type DataCacheConfig struct {
+	// DataCacheEnabled: Optional. Whether data cache is enabled for the
+	// instance.
+	DataCacheEnabled bool `json:"dataCacheEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataCacheEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataCacheEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataCacheConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataCacheConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

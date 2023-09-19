@@ -319,6 +319,10 @@ type AccessApprovalSettings struct {
 	// allowed.
 	NotificationEmails []string `json:"notificationEmails,omitempty"`
 
+	// NotificationPubsubTopic: Optional. A pubsub topic to which
+	// notifications relating to approval requests should be sent.
+	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
+
 	// PreferNoBroadApprovalRequests: This preference is communicated to
 	// Google personnel when sending an approval request but can be
 	// overridden if necessary.

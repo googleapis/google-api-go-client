@@ -1225,8 +1225,8 @@ func (s *InListFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metadata: The dimensions and metrics currently accepted in reporting
-// methods.
+// Metadata: The dimensions, metrics and comparisons currently accepted
+// in reporting methods.
 type Metadata struct {
 	// Dimensions: The dimension descriptions.
 	Dimensions []*DimensionMetadata `json:"dimensions,omitempty"`

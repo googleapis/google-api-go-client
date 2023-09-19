@@ -193,6 +193,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ModelDeploymentMonitoringJobs = NewProjectsLocationsModelDeploymentMonitoringJobsService(s)
 	rs.Models = NewProjectsLocationsModelsService(s)
 	rs.NasJobs = NewProjectsLocationsNasJobsService(s)
+	rs.NotebookRuntimeTemplates = NewProjectsLocationsNotebookRuntimeTemplatesService(s)
+	rs.NotebookRuntimes = NewProjectsLocationsNotebookRuntimesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.PipelineJobs = NewProjectsLocationsPipelineJobsService(s)
 	rs.Publishers = NewProjectsLocationsPublishersService(s)
@@ -236,6 +238,10 @@ type ProjectsLocationsService struct {
 	Models *ProjectsLocationsModelsService
 
 	NasJobs *ProjectsLocationsNasJobsService
+
+	NotebookRuntimeTemplates *ProjectsLocationsNotebookRuntimeTemplatesService
+
+	NotebookRuntimes *ProjectsLocationsNotebookRuntimesService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -770,6 +776,24 @@ func NewProjectsLocationsNasJobsNasTrialDetailsService(s *Service) *ProjectsLoca
 }
 
 type ProjectsLocationsNasJobsNasTrialDetailsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNotebookRuntimeTemplatesService(s *Service) *ProjectsLocationsNotebookRuntimeTemplatesService {
+	rs := &ProjectsLocationsNotebookRuntimeTemplatesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebookRuntimeTemplatesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsNotebookRuntimesService(s *Service) *ProjectsLocationsNotebookRuntimesService {
+	rs := &ProjectsLocationsNotebookRuntimesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotebookRuntimesService struct {
 	s *Service
 }
 
@@ -1514,6 +1538,80 @@ type GoogleCloudAiplatformV1Artifact struct {
 
 func (s *GoogleCloudAiplatformV1Artifact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1Artifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata:
+// Metadata information for NotebookService.AssignNotebookRuntime.
+type GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata struct {
+	// GenericMetadata: The operation generic information.
+	GenericMetadata *GoogleCloudAiplatformV1GenericOperationMetadata `json:"genericMetadata,omitempty"`
+
+	// ProgressMessage: A human-readable message that shows the intermediate
+	// progress details of NotebookRuntime.
+	ProgressMessage string `json:"progressMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GenericMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AssignNotebookRuntimeOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AssignNotebookRuntimeRequest: Request message
+// for NotebookService.AssignNotebookRuntime.
+type GoogleCloudAiplatformV1AssignNotebookRuntimeRequest struct {
+	// NotebookRuntime: Required. Provide runtime specific information (e.g.
+	// runtime owner, notebook id) used for NotebookRuntime assignment.
+	NotebookRuntime *GoogleCloudAiplatformV1NotebookRuntime `json:"notebookRuntime,omitempty"`
+
+	// NotebookRuntimeId: Optional. User specified ID for the notebook
+	// runtime.
+	NotebookRuntimeId string `json:"notebookRuntimeId,omitempty"`
+
+	// NotebookRuntimeTemplate: Required. The resource name of the
+	// NotebookRuntimeTemplate based on which a NotebookRuntime will be
+	// assigned (reuse or create a new one).
+	NotebookRuntimeTemplate string `json:"notebookRuntimeTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NotebookRuntime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NotebookRuntime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1AssignNotebookRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AssignNotebookRuntimeRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3869,6 +3967,39 @@ func (s *GoogleCloudAiplatformV1CreateMetadataStoreOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata:
+//
+//	Metadata information for
+//
+// NotebookService.CreateNotebookRuntimeTemplate.
+type GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata struct {
+	// GenericMetadata: The operation generic information.
+	GenericMetadata *GoogleCloudAiplatformV1GenericOperationMetadata `json:"genericMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GenericMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1CreateNotebookRuntimeTemplateOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1CreatePipelineJobRequest: Request message for
 // PipelineService.CreatePipelineJob.
 type GoogleCloudAiplatformV1CreatePipelineJobRequest struct {
@@ -3882,7 +4013,7 @@ type GoogleCloudAiplatformV1CreatePipelineJobRequest struct {
 	// PipelineJobId: The ID to use for the PipelineJob, which will become
 	// the final component of the PipelineJob name. If not provided, an ID
 	// will be automatically generated. This value should be less than 128
-	// characters, and valid characters are /a-z-/.
+	// characters, and valid characters are `/a-z-/`.
 	PipelineJobId string `json:"pipelineJobId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
@@ -3983,7 +4114,7 @@ type GoogleCloudAiplatformV1CreateTensorboardRunRequest struct {
 	// TensorboardRunId: Required. The ID to use for the Tensorboard run,
 	// which becomes the final component of the Tensorboard run's resource
 	// name. This value should be 1-128 characters, and valid characters are
-	// /a-z-/.
+	// `/a-z-/`.
 	TensorboardRunId string `json:"tensorboardRunId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
@@ -5357,7 +5488,9 @@ type GoogleCloudAiplatformV1DeployedIndex struct {
 	// might be deployed to any ip ranges under the provided VPC network.
 	// The value should be the name of the address
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/addresses)
-	// Example: 'vertex-ai-ip-range'.
+	// Example: ['vertex-ai-ip-range']. For more information about subnets
+	// and network IP ranges, please see
+	// https://cloud.google.com/vpc/docs/subnets#manually_created_subnet_ip_ranges.
 	ReservedIpRanges []string `json:"reservedIpRanges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutomaticResources")
@@ -5536,7 +5669,7 @@ type GoogleCloudAiplatformV1DeployedModel struct {
 
 	// Id: Immutable. The ID of the DeployedModel. If not provided upon
 	// deployment, Vertex AI will generate a value for this ID. This value
-	// should be 1-10 characters, and valid characters are /[0-9]/.
+	// should be 1-10 characters, and valid characters are `/[0-9]/`.
 	Id string `json:"id,omitempty"`
 
 	// Model: Required. The resource name of the Model that this is the
@@ -11488,6 +11621,81 @@ func (s *GoogleCloudAiplatformV1ListNasTrialDetailsResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse: Response
+// message for NotebookService.ListNotebookRuntimeTemplates.
+type GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse struct {
+	// NextPageToken: A token to retrieve next page of results. Pass to
+	// ListNotebookRuntimeTemplatesRequest.page_token to obtain that page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NotebookRuntimeTemplates: List of NotebookRuntimeTemplates in the
+	// requested page.
+	NotebookRuntimeTemplates []*GoogleCloudAiplatformV1NotebookRuntimeTemplate `json:"notebookRuntimeTemplates,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ListNotebookRuntimesResponse: Response message
+// for NotebookService.ListNotebookRuntimes.
+type GoogleCloudAiplatformV1ListNotebookRuntimesResponse struct {
+	// NextPageToken: A token to retrieve next page of results. Pass to
+	// ListNotebookRuntimesRequest.page_token to obtain that page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NotebookRuntimes: List of NotebookRuntimes in the requested page.
+	NotebookRuntimes []*GoogleCloudAiplatformV1NotebookRuntime `json:"notebookRuntimes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1ListNotebookRuntimesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ListNotebookRuntimesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1ListOptimalTrialsRequest: Request message for
 // VizierService.ListOptimalTrials.
 type GoogleCloudAiplatformV1ListOptimalTrialsRequest struct {
@@ -15440,6 +15648,46 @@ func (s *GoogleCloudAiplatformV1Neighbor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudAiplatformV1NetworkSpec: Network spec.
+type GoogleCloudAiplatformV1NetworkSpec struct {
+	// EnableInternetAccess: Whether to enable public internet access.
+	// Default false.
+	EnableInternetAccess bool `json:"enableInternetAccess,omitempty"`
+
+	// Network: The full name of the Google Compute Engine network
+	// (https://cloud.google.com//compute/docs/networks-and-firewalls#networks)
+	Network string `json:"network,omitempty"`
+
+	// Subnetwork: The name of the subnet that this instance is in. Format:
+	// `projects/{project_id_or_number}/regions/{region}/subnetworks/{subnetw
+	// ork_id}`
+	Subnetwork string `json:"subnetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableInternetAccess") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableInternetAccess") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1NetworkSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NetworkSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1NfsMount: Represents a mount configuration for
 // Network File System (NFS) to mount.
 type GoogleCloudAiplatformV1NfsMount struct {
@@ -15478,6 +15726,327 @@ func (s *GoogleCloudAiplatformV1NfsMount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1NotebookEucConfig: The euc configuration of
+// NotebookRuntimeTemplate.
+type GoogleCloudAiplatformV1NotebookEucConfig struct {
+	// BypassActasCheck: Output only. Whether ActAs check is bypassed for
+	// service account attached to the VM. If false, we need ActAs check for
+	// the default Compute Engine Service account. When a Runtime is
+	// created, a VM is allocated using Default Compute Engine Service
+	// Account. Any user requesting to use this Runtime requires Service
+	// Account User (ActAs) permission over this SA. If true, Runtime owner
+	// is using EUC and does not require the above permission as VM no
+	// longer use default Compute Engine SA, but a P4SA.
+	BypassActasCheck bool `json:"bypassActasCheck,omitempty"`
+
+	// EucDisabled: Input only. Whether EUC is disabled in this
+	// NotebookRuntimeTemplate. In proto3, the default value of a boolean is
+	// false. In this way, by default EUC will be enabled for
+	// NotebookRuntimeTemplate.
+	EucDisabled bool `json:"eucDisabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BypassActasCheck") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BypassActasCheck") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1NotebookEucConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookEucConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookIdleShutdownConfig: The idle shutdown
+// configuration of NotebookRuntimeTemplate, which contains the
+// idle_timeout as required field.
+type GoogleCloudAiplatformV1NotebookIdleShutdownConfig struct {
+	// IdleShutdownDisabled: Whether Idle Shutdown is disabled in this
+	// NotebookRuntimeTemplate.
+	IdleShutdownDisabled bool `json:"idleShutdownDisabled,omitempty"`
+
+	// IdleTimeout: Required. Duration is accurate to the second. In
+	// Notebook, Idle Timeout is accurate to minute so the range of
+	// idle_timeout (second) is: 10 * 60 ~ 1440 * 60.
+	IdleTimeout string `json:"idleTimeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IdleShutdownDisabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdleShutdownDisabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1NotebookIdleShutdownConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookIdleShutdownConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookRuntime: A runtime is a virtual
+// machine allocated to a particular user for a particular Notebook file
+// on temporary basis with lifetime limited to 24 hours.
+type GoogleCloudAiplatformV1NotebookRuntime struct {
+	// CreateTime: Output only. Timestamp when this NotebookRuntime was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: The description of the NotebookRuntime.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Required. The display name of the NotebookRuntime. The
+	// name can be up to 128 characters long and can consist of any UTF-8
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExpirationTime: Output only. Timestamp when this NotebookRuntime will
+	// be expired: 1. System Predefined NotebookRuntime: 24 hours after
+	// creation. After expiration, system predifined runtime will be
+	// deleted. 2. User created NotebookRuntime: 6 months after last
+	// upgrade. After expiration, user created runtime will be stopped and
+	// allowed for upgrade.
+	ExpirationTime string `json:"expirationTime,omitempty"`
+
+	// HealthState: Output only. The health state of the NotebookRuntime.
+	//
+	// Possible values:
+	//   "HEALTH_STATE_UNSPECIFIED" - Unspecified health state.
+	//   "HEALTHY" - NotebookRuntime is in healthy state. Applies to ACTIVE
+	// state.
+	//   "UNHEALTHY" - NotebookRuntime is in unhealthy state. Applies to
+	// ACTIVE state.
+	HealthState string `json:"healthState,omitempty"`
+
+	// Labels: The labels with user-defined metadata to organize your
+	// NotebookRuntime. Label keys and values can be no longer than 64
+	// characters (Unicode codepoints), can only contain lowercase letters,
+	// numeric characters, underscores and dashes. International characters
+	// are allowed. No more than 64 user labels can be associated with one
+	// Dataset (System labels are excluded). See https://goo.gl/xmQnxf for
+	// more information and examples of labels. System reserved label keys
+	// are prefixed with "aiplatform.googleapis.com/" and are immutable.
+	// Following system labels exist for NotebookRuntime: *
+	// "aiplatform.googleapis.com/notebook_runtime_gce_instance_id": output
+	// only, its value is the Compute Engine instance id. *
+	// "aiplatform.googleapis.com/colab_enterprise_entry_service": its value
+	// is either "BigQuery" or "Vertex"; if absent, it should be "Vertex".
+	// This is to describe the entry service, either BigQuery or Vertex.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The resource name of the NotebookRuntime.
+	Name string `json:"name,omitempty"`
+
+	// NotebookRuntimeTemplateRef: Output only. The pointer to
+	// NotebookRuntimeTemplate this NotebookRuntime is created from.
+	NotebookRuntimeTemplateRef *GoogleCloudAiplatformV1NotebookRuntimeTemplateRef `json:"notebookRuntimeTemplateRef,omitempty"`
+
+	// ProxyUri: Output only. The proxy endpoint used to access the
+	// NotebookRuntime.
+	ProxyUri string `json:"proxyUri,omitempty"`
+
+	// RuntimeState: Output only. The runtime (instance) state of the
+	// NotebookRuntime.
+	//
+	// Possible values:
+	//   "RUNTIME_STATE_UNSPECIFIED" - Unspecified runtime state.
+	//   "RUNNING" - NotebookRuntime is in running state.
+	//   "BEING_STARTED" - NotebookRuntime is in starting state.
+	//   "BEING_STOPPED" - NotebookRuntime is in stopping state.
+	//   "STOPPED" - NotebookRuntime is in stopped state.
+	//   "BEING_UPGRADED" - NotebookRuntime is in upgrading state. It is in
+	// the middle of upgrading process.
+	RuntimeState string `json:"runtimeState,omitempty"`
+
+	// RuntimeUser: Required. The user email of the NotebookRuntime.
+	RuntimeUser string `json:"runtimeUser,omitempty"`
+
+	// ServiceAccount: Output only. The service account that the
+	// NotebookRuntime workload runs as.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this NotebookRuntime was most
+	// recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Version: Output only. The VM os image version of NotebookRuntime.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1NotebookRuntime) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookRuntime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookRuntimeTemplate: A template that
+// specifies runtime configurations such as machine type, runtime
+// version, network configurations, etc. Multiple runtimes can be
+// created from a runtime template.
+type GoogleCloudAiplatformV1NotebookRuntimeTemplate struct {
+	// CreateTime: Output only. Timestamp when this NotebookRuntimeTemplate
+	// was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DataPersistentDiskSpec: Optional. The specification of persistent
+	// disk attached to the runtime as data disk storage.
+	DataPersistentDiskSpec *GoogleCloudAiplatformV1PersistentDiskSpec `json:"dataPersistentDiskSpec,omitempty"`
+
+	// Description: The description of the NotebookRuntimeTemplate.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Required. The display name of the
+	// NotebookRuntimeTemplate. The name can be up to 128 characters long
+	// and can consist of any UTF-8 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Used to perform consistent read-modify-write updates. If not
+	// set, a blind "overwrite" update happens.
+	Etag string `json:"etag,omitempty"`
+
+	// EucConfig: EUC configuration of the NotebookRuntimeTemplate.
+	EucConfig *GoogleCloudAiplatformV1NotebookEucConfig `json:"eucConfig,omitempty"`
+
+	// IdleShutdownConfig: The idle shutdown configuration of
+	// NotebookRuntimeTemplate. This config will only be set when idle
+	// shutdown is enabled.
+	IdleShutdownConfig *GoogleCloudAiplatformV1NotebookIdleShutdownConfig `json:"idleShutdownConfig,omitempty"`
+
+	// IsDefault: Output only. The default template to use if not specified.
+	IsDefault bool `json:"isDefault,omitempty"`
+
+	// Labels: The labels with user-defined metadata to organize the
+	// NotebookRuntimeTemplates. Label keys and values can be no longer than
+	// 64 characters (Unicode codepoints), can only contain lowercase
+	// letters, numeric characters, underscores and dashes. International
+	// characters are allowed. See https://goo.gl/xmQnxf for more
+	// information and examples of labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MachineSpec: Optional. Immutable. The specification of a single
+	// machine for the template.
+	MachineSpec *GoogleCloudAiplatformV1MachineSpec `json:"machineSpec,omitempty"`
+
+	// Name: Output only. The resource name of the NotebookRuntimeTemplate.
+	Name string `json:"name,omitempty"`
+
+	// NetworkSpec: Optional. Network spec.
+	NetworkSpec *GoogleCloudAiplatformV1NetworkSpec `json:"networkSpec,omitempty"`
+
+	// ServiceAccount: The service account that the runtime workload runs
+	// as. You can use any service account within the same project, but you
+	// must have the service account user permission to use the instance. If
+	// not specified, the Compute Engine default service account
+	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
+	// is used.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this NotebookRuntimeTemplate
+	// was most recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1NotebookRuntimeTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookRuntimeTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1NotebookRuntimeTemplateRef: Points to a
+// NotebookRuntimeTemplateRef.
+type GoogleCloudAiplatformV1NotebookRuntimeTemplateRef struct {
+	// NotebookRuntimeTemplate: Immutable. A resource name of the
+	// NotebookRuntimeTemplate.
+	NotebookRuntimeTemplate string `json:"notebookRuntimeTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NotebookRuntimeTemplate") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NotebookRuntimeTemplate")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1NotebookRuntimeTemplateRef) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1NotebookRuntimeTemplateRef
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1PauseModelDeploymentMonitoringJobRequest:
 // Request message for JobService.PauseModelDeploymentMonitoringJob.
 type GoogleCloudAiplatformV1PauseModelDeploymentMonitoringJobRequest struct {
@@ -15486,6 +16055,41 @@ type GoogleCloudAiplatformV1PauseModelDeploymentMonitoringJobRequest struct {
 // GoogleCloudAiplatformV1PauseScheduleRequest: Request message for
 // ScheduleService.PauseSchedule.
 type GoogleCloudAiplatformV1PauseScheduleRequest struct {
+}
+
+// GoogleCloudAiplatformV1PersistentDiskSpec: Represents the spec of
+// persistent disk options.
+type GoogleCloudAiplatformV1PersistentDiskSpec struct {
+	// DiskSizeGb: Size in GB of the disk (default is 100GB).
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
+
+	// DiskType: Type of the disk (default is "pd-standard"). Valid values:
+	// "pd-ssd" (Persistent Disk Solid State Drive) "pd-standard"
+	// (Persistent Disk Hard Disk Drive) "pd-balanced" (Balanced Persistent
+	// Disk) "pd-extreme" (Extreme Persistent Disk)
+	DiskType string `json:"diskType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1PersistentDiskSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1PersistentDiskSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1PipelineJob: An instance of a machine learning
@@ -26415,6 +27019,45 @@ func (s *GoogleCloudAiplatformV1SpecialistPool) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SpecialistPool
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata:
+// Metadata information for NotebookService.StartNotebookRuntime.
+type GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata struct {
+	// GenericMetadata: The operation generic information.
+	GenericMetadata *GoogleCloudAiplatformV1GenericOperationMetadata `json:"genericMetadata,omitempty"`
+
+	// ProgressMessage: A human-readable message that shows the intermediate
+	// progress details of NotebookRuntime.
+	ProgressMessage string `json:"progressMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GenericMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GenericMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1StartNotebookRuntimeOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1StartNotebookRuntimeRequest: Request message
+// for NotebookService.StartNotebookRuntime.
+type GoogleCloudAiplatformV1StartNotebookRuntimeRequest struct {
 }
 
 // GoogleCloudAiplatformV1StopTrialRequest: Request message for
@@ -71962,6 +72605,1996 @@ func (c *ProjectsLocationsNasJobsNasTrialDetailsListCall) Pages(ctx context.Cont
 	}
 }
 
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.create":
+
+type ProjectsLocationsNotebookRuntimeTemplatesCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googlecloudaiplatformv1notebookruntimetemplate *GoogleCloudAiplatformV1NotebookRuntimeTemplate
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Creates a NotebookRuntimeTemplate.
+//
+//   - parent: The resource name of the Location to create the
+//     NotebookRuntimeTemplate. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) Create(parent string, googlecloudaiplatformv1notebookruntimetemplate *GoogleCloudAiplatformV1NotebookRuntimeTemplate) *ProjectsLocationsNotebookRuntimeTemplatesCreateCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudaiplatformv1notebookruntimetemplate = googlecloudaiplatformv1notebookruntimetemplate
+	return c
+}
+
+// NotebookRuntimeTemplateId sets the optional parameter
+// "notebookRuntimeTemplateId": User specified ID for the notebook
+// runtime template.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesCreateCall) NotebookRuntimeTemplateId(notebookRuntimeTemplateId string) *ProjectsLocationsNotebookRuntimeTemplatesCreateCall {
+	c.urlParams_.Set("notebookRuntimeTemplateId", notebookRuntimeTemplateId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesCreateCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1notebookruntimetemplate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notebookRuntimeTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a NotebookRuntimeTemplate.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "notebookRuntimeTemplateId": {
+	//       "description": "Optional. User specified ID for the notebook runtime template.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the Location to create the NotebookRuntimeTemplate. Format: `projects/{project}/locations/{location}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notebookRuntimeTemplates",
+	//   "request": {
+	//     "$ref": "GoogleCloudAiplatformV1NotebookRuntimeTemplate"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.delete":
+
+type ProjectsLocationsNotebookRuntimeTemplatesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a NotebookRuntimeTemplate.
+//
+//   - name: The name of the NotebookRuntimeTemplate resource to be
+//     deleted. Format:
+//     `projects/{project}/locations/{location}/notebookRuntimeTemplates/{n
+//     otebook_runtime_template}`.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) Delete(name string) *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a NotebookRuntimeTemplate.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates/{notebookRuntimeTemplatesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the NotebookRuntimeTemplate resource to be deleted. Format: `projects/{project}/locations/{location}/notebookRuntimeTemplates/{notebook_runtime_template}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimeTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.get":
+
+type ProjectsLocationsNotebookRuntimeTemplatesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a NotebookRuntimeTemplate.
+//
+//   - name: The name of the NotebookRuntimeTemplate resource. Format:
+//     `projects/{project}/locations/{location}/notebookRuntimeTemplates/{n
+//     otebook_runtime_template}`.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) Get(name string) *ProjectsLocationsNotebookRuntimeTemplatesGetCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimeTemplatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.get" call.
+// Exactly one of *GoogleCloudAiplatformV1NotebookRuntimeTemplate or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAiplatformV1NotebookRuntimeTemplate.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1NotebookRuntimeTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1NotebookRuntimeTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a NotebookRuntimeTemplate.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates/{notebookRuntimeTemplatesId}",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the NotebookRuntimeTemplate resource. Format: `projects/{project}/locations/{location}/notebookRuntimeTemplates/{notebook_runtime_template}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimeTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudAiplatformV1NotebookRuntimeTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.getIamPolicy":
+
+type ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall struct {
+	s          *Service
+	resource   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) GetIamPolicy(resource string) *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.getIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates/{notebookRuntimeTemplatesId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimeTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.list":
+
+type ProjectsLocationsNotebookRuntimeTemplatesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists NotebookRuntimeTemplates in a Location.
+//
+//   - parent: The resource name of the Location from which to list the
+//     NotebookRuntimeTemplates. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) List(parent string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for
+// filtering the results of the request. For field names both snake_case
+// and camelCase are supported. * `notebookRuntimeTemplate` supports =
+// and !=. `notebookRuntimeTemplate` represents the
+// NotebookRuntimeTemplate ID, i.e. the last segment of the
+// NotebookRuntimeTemplate's resource name. * `display_name` supports =
+// and != * `labels` supports general map functions that is: *
+// `labels.key=value` - key:value equality * `labels.key:* or labels:key
+// - key existence * A key including a space must be quoted. `labels."a
+// key". Some examples: *
+// `notebookRuntimeTemplate=notebookRuntimeTemplate123` *
+// `displayName="myDisplayName" * `labels.myKey="myValue"
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Filter(filter string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of fields to order by, sorted in ascending order. Use "desc" after a
+// field name for descending. Supported fields: * `display_name` *
+// `create_time` * `update_time` Example: `display_name, create_time
+// desc`.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) OrderBy(orderBy string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token. Typically obtained via
+// ListNotebookRuntimeTemplatesResponse.next_page_token of the previous
+// NotebookService.ListNotebookRuntimeTemplates call.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Mask specifying
+// which fields to read.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) ReadMask(readMask string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notebookRuntimeTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.list" call.
+// Exactly one of
+// *GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse.ServerRes
+// ponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists NotebookRuntimeTemplates in a Location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `notebookRuntimeTemplate` supports = and !=. `notebookRuntimeTemplate` represents the NotebookRuntimeTemplate ID, i.e. the last segment of the NotebookRuntimeTemplate's resource name. * `display_name` supports = and != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. Some examples: * `notebookRuntimeTemplate=notebookRuntimeTemplate123` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `display_name` * `create_time` * `update_time` Example: `display_name, create_time desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The standard list page token. Typically obtained via ListNotebookRuntimeTemplatesResponse.next_page_token of the previous NotebookService.ListNotebookRuntimeTemplates call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the Location from which to list the NotebookRuntimeTemplates. Format: `projects/{project}/locations/{location}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Optional. Mask specifying which fields to read.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notebookRuntimeTemplates",
+	//   "response": {
+	//     "$ref": "GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Pages(ctx context.Context, f func(*GoogleCloudAiplatformV1ListNotebookRuntimeTemplatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.setIamPolicy":
+
+type ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.setIamPolicy" call.
+// Exactly one of *GoogleIamV1Policy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates/{notebookRuntimeTemplatesId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimeTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "GoogleIamV1SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimeTemplates.testIamPermissions":
+
+type ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall struct {
+	s          *Service
+	resource   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsNotebookRuntimeTemplatesService) TestIamPermissions(resource string) *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall {
+	c := &ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Permissions sets the optional parameter "permissions": The set of
+// permissions to check for the `resource`. Permissions with wildcards
+// (such as `*` or `storage.*`) are not allowed. For more information
+// see IAM Overview
+// (https://cloud.google.com/iam/docs/overview#permissions).
+func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) Permissions(permissions ...string) *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall {
+	c.urlParams_.SetMulti("permissions", append([]string{}, permissions...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimeTemplates.testIamPermissions" call.
+// Exactly one of *GoogleIamV1TestIamPermissionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimeTemplatesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates/{notebookRuntimeTemplatesId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.notebookRuntimeTemplates.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "permissions": {
+	//       "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimeTemplates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "response": {
+	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimes.assign":
+
+type ProjectsLocationsNotebookRuntimesAssignCall struct {
+	s                                                   *Service
+	parent                                              string
+	googlecloudaiplatformv1assignnotebookruntimerequest *GoogleCloudAiplatformV1AssignNotebookRuntimeRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Assign: Assigns a NotebookRuntime to a user for a particular Notebook
+// file. This method will either returns an existing assignment or
+// generates a new one.
+//
+//   - parent: The resource name of the Location to get the
+//     NotebookRuntime assignment. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebookRuntimesService) Assign(parent string, googlecloudaiplatformv1assignnotebookruntimerequest *GoogleCloudAiplatformV1AssignNotebookRuntimeRequest) *ProjectsLocationsNotebookRuntimesAssignCall {
+	c := &ProjectsLocationsNotebookRuntimesAssignCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudaiplatformv1assignnotebookruntimerequest = googlecloudaiplatformv1assignnotebookruntimerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimesAssignCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesAssignCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimesAssignCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesAssignCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesAssignCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesAssignCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1assignnotebookruntimerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notebookRuntimes:assign")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.assign" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesAssignCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Assigns a NotebookRuntime to a user for a particular Notebook file. This method will either returns an existing assignment or generates a new one.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimes:assign",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.notebookRuntimes.assign",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the Location to get the NotebookRuntime assignment. Format: `projects/{project}/locations/{location}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notebookRuntimes:assign",
+	//   "request": {
+	//     "$ref": "GoogleCloudAiplatformV1AssignNotebookRuntimeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimes.delete":
+
+type ProjectsLocationsNotebookRuntimesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a NotebookRuntime.
+//
+//   - name: The name of the NotebookRuntime resource to be deleted.
+//     Instead of checking whether the name is in valid NotebookRuntime
+//     resource name format, directly throw NotFound exception if there is
+//     no such NotebookRuntime in spanner.
+func (r *ProjectsLocationsNotebookRuntimesService) Delete(name string) *ProjectsLocationsNotebookRuntimesDeleteCall {
+	c := &ProjectsLocationsNotebookRuntimesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimesDeleteCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a NotebookRuntime.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimes/{notebookRuntimesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "aiplatform.projects.locations.notebookRuntimes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the NotebookRuntime resource to be deleted. Instead of checking whether the name is in valid NotebookRuntime resource name format, directly throw NotFound exception if there is no such NotebookRuntime in spanner.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimes.get":
+
+type ProjectsLocationsNotebookRuntimesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a NotebookRuntime.
+//
+//   - name: The name of the NotebookRuntime resource. Instead of checking
+//     whether the name is in valid NotebookRuntime resource name format,
+//     directly throw NotFound exception if there is no such
+//     NotebookRuntime in spanner.
+func (r *ProjectsLocationsNotebookRuntimesService) Get(name string) *ProjectsLocationsNotebookRuntimesGetCall {
+	c := &ProjectsLocationsNotebookRuntimesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNotebookRuntimesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimesGetCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.get" call.
+// Exactly one of *GoogleCloudAiplatformV1NotebookRuntime or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudAiplatformV1NotebookRuntime.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1NotebookRuntime, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1NotebookRuntime{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a NotebookRuntime.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimes/{notebookRuntimesId}",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.notebookRuntimes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the NotebookRuntime resource. Instead of checking whether the name is in valid NotebookRuntime resource name format, directly throw NotFound exception if there is no such NotebookRuntime in spanner.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudAiplatformV1NotebookRuntime"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimes.list":
+
+type ProjectsLocationsNotebookRuntimesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists NotebookRuntimes in a Location.
+//
+//   - parent: The resource name of the Location from which to list the
+//     NotebookRuntimes. Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsNotebookRuntimesService) List(parent string) *ProjectsLocationsNotebookRuntimesListCall {
+	c := &ProjectsLocationsNotebookRuntimesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for
+// filtering the results of the request. For field names both snake_case
+// and camelCase are supported. * `notebookRuntime` supports = and !=.
+// `notebookRuntime` represents the NotebookRuntime ID, i.e. the last
+// segment of the NotebookRuntime's resource name. * `displayName`
+// supports = and != and regex. * `notebookRuntimeTemplate` supports =
+// and !=. `notebookRuntimeTemplate` represents the
+// NotebookRuntimeTemplate ID, i.e. the last segment of the
+// NotebookRuntimeTemplate's resource name. * `healthState` supports =
+// and !=. healthState enum: [HEALTHY, UNHEALTHY,
+// HEALTH_STATE_UNSPECIFIED]. * `runtimeState` supports = and !=.
+// runtimeState enum: [RUNTIME_STATE_UNSPECIFIED, RUNNING,
+// BEING_STARTED, BEING_STOPPED, STOPPED, BEING_UPGRADED]. *
+// `runtimeUser` supports = and !=. * API version is UI only: `uiState`
+// supports = and !=. uiState enum: [UI_RESOURCE_STATE_UNSPECIFIED,
+// UI_RESOURCE_STATE_BEING_CREATED, UI_RESOURCE_STATE_ACTIVE,
+// UI_RESOURCE_STATE_BEING_DELETED, UI_RESOURCE_STATE_CREATION_FAILED].
+// Some examples: * `notebookRuntime="notebookRuntime123" *
+// `displayName="myDisplayName" and `displayName=~"myDisplayNameRegex"
+// * `notebookRuntimeTemplate="notebookRuntimeTemplate321" *
+// `healthState=HEALTHY` * `runtimeState=RUNNING` *
+// `runtimeUser="test@google.com" *
+// `uiState=UI_RESOURCE_STATE_BEING_DELETED`
+func (c *ProjectsLocationsNotebookRuntimesListCall) Filter(filter string) *ProjectsLocationsNotebookRuntimesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of fields to order by, sorted in ascending order. Use "desc" after a
+// field name for descending. Supported fields: * `display_name` *
+// `create_time` * `update_time` Example: `display_name, create_time
+// desc`.
+func (c *ProjectsLocationsNotebookRuntimesListCall) OrderBy(orderBy string) *ProjectsLocationsNotebookRuntimesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsNotebookRuntimesListCall) PageSize(pageSize int64) *ProjectsLocationsNotebookRuntimesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token. Typically obtained via
+// ListNotebookRuntimesResponse.next_page_token of the previous
+// NotebookService.ListNotebookRuntimes call.
+func (c *ProjectsLocationsNotebookRuntimesListCall) PageToken(pageToken string) *ProjectsLocationsNotebookRuntimesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Mask specifying
+// which fields to read.
+func (c *ProjectsLocationsNotebookRuntimesListCall) ReadMask(readMask string) *ProjectsLocationsNotebookRuntimesListCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNotebookRuntimesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotebookRuntimesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimesListCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notebookRuntimes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.list" call.
+// Exactly one of *GoogleCloudAiplatformV1ListNotebookRuntimesResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudAiplatformV1ListNotebookRuntimesResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotebookRuntimesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ListNotebookRuntimesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ListNotebookRuntimesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists NotebookRuntimes in a Location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimes",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.notebookRuntimes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `notebookRuntime` supports = and !=. `notebookRuntime` represents the NotebookRuntime ID, i.e. the last segment of the NotebookRuntime's resource name. * `displayName` supports = and != and regex. * `notebookRuntimeTemplate` supports = and !=. `notebookRuntimeTemplate` represents the NotebookRuntimeTemplate ID, i.e. the last segment of the NotebookRuntimeTemplate's resource name. * `healthState` supports = and !=. healthState enum: [HEALTHY, UNHEALTHY, HEALTH_STATE_UNSPECIFIED]. * `runtimeState` supports = and !=. runtimeState enum: [RUNTIME_STATE_UNSPECIFIED, RUNNING, BEING_STARTED, BEING_STOPPED, STOPPED, BEING_UPGRADED]. * `runtimeUser` supports = and !=. * API version is UI only: `uiState` supports = and !=. uiState enum: [UI_RESOURCE_STATE_UNSPECIFIED, UI_RESOURCE_STATE_BEING_CREATED, UI_RESOURCE_STATE_ACTIVE, UI_RESOURCE_STATE_BEING_DELETED, UI_RESOURCE_STATE_CREATION_FAILED]. Some examples: * `notebookRuntime=\"notebookRuntime123\"` * `displayName=\"myDisplayName\"` and `displayName=~\"myDisplayNameRegex\"` * `notebookRuntimeTemplate=\"notebookRuntimeTemplate321\"` * `healthState=HEALTHY` * `runtimeState=RUNNING` * `runtimeUser=\"test@google.com\"` * `uiState=UI_RESOURCE_STATE_BEING_DELETED`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `display_name` * `create_time` * `update_time` Example: `display_name, create_time desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The standard list page token. Typically obtained via ListNotebookRuntimesResponse.next_page_token of the previous NotebookService.ListNotebookRuntimes call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the Location from which to list the NotebookRuntimes. Format: `projects/{project}/locations/{location}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Optional. Mask specifying which fields to read.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notebookRuntimes",
+	//   "response": {
+	//     "$ref": "GoogleCloudAiplatformV1ListNotebookRuntimesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotebookRuntimesListCall) Pages(ctx context.Context, f func(*GoogleCloudAiplatformV1ListNotebookRuntimesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "aiplatform.projects.locations.notebookRuntimes.start":
+
+type ProjectsLocationsNotebookRuntimesStartCall struct {
+	s                                                  *Service
+	name                                               string
+	googlecloudaiplatformv1startnotebookruntimerequest *GoogleCloudAiplatformV1StartNotebookRuntimeRequest
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Start: Starts a NotebookRuntime.
+//
+//   - name: The name of the NotebookRuntime resource to be started.
+//     Instead of checking whether the name is in valid NotebookRuntime
+//     resource name format, directly throw NotFound exception if there is
+//     no such NotebookRuntime in spanner.
+func (r *ProjectsLocationsNotebookRuntimesService) Start(name string, googlecloudaiplatformv1startnotebookruntimerequest *GoogleCloudAiplatformV1StartNotebookRuntimeRequest) *ProjectsLocationsNotebookRuntimesStartCall {
+	c := &ProjectsLocationsNotebookRuntimesStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudaiplatformv1startnotebookruntimerequest = googlecloudaiplatformv1startnotebookruntimerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotebookRuntimesStartCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotebookRuntimesStartCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotebookRuntimesStartCall) Context(ctx context.Context) *ProjectsLocationsNotebookRuntimesStartCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotebookRuntimesStartCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotebookRuntimesStartCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1startnotebookruntimerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:start")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.notebookRuntimes.start" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNotebookRuntimesStartCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts a NotebookRuntime.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notebookRuntimes/{notebookRuntimesId}:start",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.notebookRuntimes.start",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the NotebookRuntime resource to be started. Instead of checking whether the name is in valid NotebookRuntime resource name format, directly throw NotFound exception if there is no such NotebookRuntime in spanner.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notebookRuntimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:start",
+	//   "request": {
+	//     "$ref": "GoogleCloudAiplatformV1StartNotebookRuntimeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "aiplatform.projects.locations.operations.cancel":
 
 type ProjectsLocationsOperationsCancelCall struct {
@@ -72928,7 +75561,7 @@ func (r *ProjectsLocationsPipelineJobsService) Create(parent string, googlecloud
 // use for the PipelineJob, which will become the final component of the
 // PipelineJob name. If not provided, an ID will be automatically
 // generated. This value should be less than 128 characters, and valid
-// characters are /a-z-/.
+// characters are `/a-z-/`.
 func (c *ProjectsLocationsPipelineJobsCreateCall) PipelineJobId(pipelineJobId string) *ProjectsLocationsPipelineJobsCreateCall {
 	c.urlParams_.Set("pipelineJobId", pipelineJobId)
 	return c
@@ -73042,7 +75675,7 @@ func (c *ProjectsLocationsPipelineJobsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "pipelineJobId": {
-	//       "description": "The ID to use for the PipelineJob, which will become the final component of the PipelineJob name. If not provided, an ID will be automatically generated. This value should be less than 128 characters, and valid characters are /a-z-/.",
+	//       "description": "The ID to use for the PipelineJob, which will become the final component of the PipelineJob name. If not provided, an ID will be automatically generated. This value should be less than 128 characters, and valid characters are `/a-z-/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -83331,7 +85964,7 @@ func (r *ProjectsLocationsTensorboardsExperimentsService) Create(parent string, 
 // "tensorboardExperimentId": Required. The ID to use for the
 // Tensorboard experiment, which becomes the final component of the
 // Tensorboard experiment's resource name. This value should be 1-128
-// characters, and valid characters are /a-z-/.
+// characters, and valid characters are `/a-z-/`.
 func (c *ProjectsLocationsTensorboardsExperimentsCreateCall) TensorboardExperimentId(tensorboardExperimentId string) *ProjectsLocationsTensorboardsExperimentsCreateCall {
 	c.urlParams_.Set("tensorboardExperimentId", tensorboardExperimentId)
 	return c
@@ -83446,7 +86079,7 @@ func (c *ProjectsLocationsTensorboardsExperimentsCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "tensorboardExperimentId": {
-	//       "description": "Required. The ID to use for the Tensorboard experiment, which becomes the final component of the Tensorboard experiment's resource name. This value should be 1-128 characters, and valid characters are /a-z-/.",
+	//       "description": "Required. The ID to use for the Tensorboard experiment, which becomes the final component of the Tensorboard experiment's resource name. This value should be 1-128 characters, and valid characters are `/a-z-/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -85269,7 +87902,7 @@ func (r *ProjectsLocationsTensorboardsExperimentsRunsService) Create(parent stri
 // TensorboardRunId sets the optional parameter "tensorboardRunId":
 // Required. The ID to use for the Tensorboard run, which becomes the
 // final component of the Tensorboard run's resource name. This value
-// should be 1-128 characters, and valid characters are /a-z-/.
+// should be 1-128 characters, and valid characters are `/a-z-/`.
 func (c *ProjectsLocationsTensorboardsExperimentsRunsCreateCall) TensorboardRunId(tensorboardRunId string) *ProjectsLocationsTensorboardsExperimentsRunsCreateCall {
 	c.urlParams_.Set("tensorboardRunId", tensorboardRunId)
 	return c
@@ -85383,7 +88016,7 @@ func (c *ProjectsLocationsTensorboardsExperimentsRunsCreateCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "tensorboardRunId": {
-	//       "description": "Required. The ID to use for the Tensorboard run, which becomes the final component of the Tensorboard run's resource name. This value should be 1-128 characters, and valid characters are /a-z-/.",
+	//       "description": "Required. The ID to use for the Tensorboard run, which becomes the final component of the Tensorboard run's resource name. This value should be 1-128 characters, and valid characters are `/a-z-/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

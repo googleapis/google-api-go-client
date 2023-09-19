@@ -542,6 +542,7 @@ type Abi struct {
 	//   "ARM64_V8A" - ARM64_V8A abi.
 	//   "X86" - X86 abi.
 	//   "X86_64" - X86_64 abi.
+	//   "RISCV64" - RISCV64 abi.
 	Alias string `json:"alias,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alias") to

@@ -1,5 +1,18 @@
 # Changes
 
+## [0.142.0](https://github.com/googleapis/google-api-go-client/compare/v0.141.0...v0.142.0) (2023-09-19)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2161](https://github.com/googleapis/google-api-go-client/issues/2161)) ([d6822ad](https://github.com/googleapis/google-api-go-client/commit/d6822ad7882205ad60c6cd35997273b6c0d18d16))
+* **all:** Auto-regenerate discovery clients ([#2165](https://github.com/googleapis/google-api-go-client/issues/2165)) ([304fb51](https://github.com/googleapis/google-api-go-client/commit/304fb51a451f64eb6e91ed66e05a2bec7fe7288e))
+* **all:** Auto-regenerate discovery clients ([#2166](https://github.com/googleapis/google-api-go-client/issues/2166)) ([c4024ed](https://github.com/googleapis/google-api-go-client/commit/c4024ed757507b9e711a1c57b9efcd265a36be5f))
+* **all:** Auto-regenerate discovery clients ([#2168](https://github.com/googleapis/google-api-go-client/issues/2168)) ([0c5c2d2](https://github.com/googleapis/google-api-go-client/commit/0c5c2d24d5566d9bca6c1ad5922f821bb39966a0))
+* **all:** Auto-regenerate discovery clients ([#2171](https://github.com/googleapis/google-api-go-client/issues/2171)) ([da71d0a](https://github.com/googleapis/google-api-go-client/commit/da71d0a5b1d79d38dad62a4d83a612e7c705f0f1))
+* **all:** Use updated mtls config endpoint ([#2164](https://github.com/googleapis/google-api-go-client/issues/2164)) ([a8cadbf](https://github.com/googleapis/google-api-go-client/commit/a8cadbf156fa75f0fd7a46d80de485c15647c58a))
+* **internal:** Add some feature flags for new auth libs ([#2163](https://github.com/googleapis/google-api-go-client/issues/2163)) ([a34ad77](https://github.com/googleapis/google-api-go-client/commit/a34ad7790416dac4680e201d00f95be37b5de93c))
+
 ## [0.141.0](https://github.com/googleapis/google-api-go-client/compare/v0.140.0...v0.141.0) (2023-09-14)
 
 

@@ -15987,7 +15987,10 @@ func (c *PropertiesAdSenseLinksCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
 	// }
 
 }
@@ -16118,7 +16121,10 @@ func (c *PropertiesAdSenseLinksDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleProtobufEmpty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
 	// }
 
 }
@@ -16264,7 +16270,11 @@ func (c *PropertiesAdSenseLinksGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaAdSenseLink"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
 	// }
 
 }
@@ -16440,7 +16450,11 @@ func (c *PropertiesAdSenseLinksListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   "path": "v1alpha/{+parent}/adSenseLinks",
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListAdSenseLinksResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
 	// }
 
 }

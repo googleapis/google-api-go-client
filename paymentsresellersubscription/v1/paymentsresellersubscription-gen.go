@@ -790,7 +790,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byt
 type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	// BundleDetails: Output only. Output Only. Specifies the details for a
 	// bundle product.
-	BundleDetails *GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetails `json:"bundleDetails,omitempty"`
+	BundleDetails *ProductBundleDetails `json:"bundleDetails,omitempty"`
 
 	// FiniteBillingCycleDetails: Optional. Details for a subscription line
 	// item with finite billing cycles. If unset, the line item will be
@@ -847,48 +847,6 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Product
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetails:
-// Details for a bundle product.
-type GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetails struct {
-	// BundleElements: The individual products that are included in the
-	// bundle.
-	BundleElements []*GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement `json:"bundleElements,omitempty"`
-
-	// EntitlementMode: The entitlement mode of the bundle product.
-	//
-	// Possible values:
-	//   "ENTITLEMENT_MODE_UNSPECIFIED" - Unspecified. It's reserved as an
-	// unexpected value, should not be used.
-	//   "ENTITLEMENT_MODE_FULL" - All the bundle elements must be fully
-	// activated in a single request.
-	//   "ENTITLEMENT_MODE_INCREMENTAL" - The bundle elements could be
-	// incrementally activated.
-	EntitlementMode string `json:"entitlementMode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BundleElements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleElements") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1377,6 +1335,10 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// cost of sale based on the contract.
 	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
 
+	// BundleDetails: Output only. The bundle details for the line item.
+	// Only populated if the line item corresponds to a hard bundle.
+	BundleDetails *SubscriptionLineItemBundleDetails `json:"bundleDetails,omitempty"`
+
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
 
@@ -1468,6 +1430,42 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDet
+// ailsBundleElementDetails: The details for an element in the hard
+// bundle.
+type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails struct {
+	// Product: Output only. Product resource name that identifies the
+	// bundle element. The format is
+	// 'partners/{partner_id}/products/{product_id}'.
+	Product string `json:"product,omitempty"`
+
+	// UserAccountLinkedTime: Output only. The time when this product is
+	// linked to an end user.
+	UserAccountLinkedTime string `json:"userAccountLinkedTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Product") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Product") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1700,6 +1698,79 @@ type GoogleTypeLocalizedText struct {
 
 func (s *GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLocalizedText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductBundleDetails: Details for a bundle product.
+type ProductBundleDetails struct {
+	// BundleElements: The individual products that are included in the
+	// bundle.
+	BundleElements []*GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement `json:"bundleElements,omitempty"`
+
+	// EntitlementMode: The entitlement mode of the bundle product.
+	//
+	// Possible values:
+	//   "ENTITLEMENT_MODE_UNSPECIFIED" - Unspecified. It's reserved as an
+	// unexpected value, should not be used.
+	//   "ENTITLEMENT_MODE_FULL" - All the bundle elements must be fully
+	// activated in a single request.
+	//   "ENTITLEMENT_MODE_INCREMENTAL" - The bundle elements could be
+	// incrementally activated.
+	EntitlementMode string `json:"entitlementMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleElements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleElements") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductBundleDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductBundleDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubscriptionLineItemBundleDetails: The bundle details for a line item
+// corresponding to a hard bundle.
+type SubscriptionLineItemBundleDetails struct {
+	// BundleElementDetails: The details for each element in the hard
+	// bundle.
+	BundleElementDetails []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails `json:"bundleElementDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BundleElementDetails") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleElementDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscriptionLineItemBundleDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionLineItemBundleDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

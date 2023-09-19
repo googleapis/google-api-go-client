@@ -6650,6 +6650,10 @@ type LiaCountrySettings struct {
 	// Inventory: LIA inventory verification settings.
 	Inventory *LiaInventorySettings `json:"inventory,omitempty"`
 
+	// OmnichannelExperience: The omnichannel experience configured for this
+	// country.
+	OmnichannelExperience *LiaOmnichannelExperience `json:"omnichannelExperience,omitempty"`
+
 	// OnDisplayToOrder: LIA "On Display To Order" settings.
 	OnDisplayToOrder *LiaOnDisplayToOrderSettings `json:"onDisplayToOrder,omitempty"`
 
@@ -6721,6 +6725,49 @@ type LiaInventorySettings struct {
 
 func (s *LiaInventorySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LiaInventorySettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LiaOmnichannelExperience: Omnichannel experience details.
+type LiaOmnichannelExperience struct {
+	// Country: The CLDR country code (for example, "US").
+	Country string `json:"country,omitempty"`
+
+	// LsfType: The Local Store Front (LSF) type for this country.
+	// Acceptable values are: - "ghlsf" (Google-Hosted Local Store Front)
+	// - "mhlsfBasic" (Merchant-Hosted Local Store Front Basic) -
+	// "mhlsfFull" (Merchant-Hosted Local Store Front Full) More details
+	// about these types can be found here.
+	LsfType string `json:"lsfType,omitempty"`
+
+	// PickupTypes: The Pickup types for this country. Acceptable values
+	// are: - "pickupToday" - "pickupLater"
+	PickupTypes []string `json:"pickupTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Country") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiaOmnichannelExperience) MarshalJSON() ([]byte, error) {
+	type NoMethod LiaOmnichannelExperience
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6894,6 +6941,10 @@ type LiasettingsCustomBatchRequestEntry struct {
 	// "setInventoryVerificationContact" - "update"
 	Method string `json:"method,omitempty"`
 
+	// OmnichannelExperience: The omnichannel experience for a country.
+	// Required only for SetOmnichannelExperience.
+	OmnichannelExperience *LiaOmnichannelExperience `json:"omnichannelExperience,omitempty"`
+
 	// PosDataProviderId: The ID of POS data provider. Required only for
 	// SetPosProvider.
 	PosDataProviderId uint64 `json:"posDataProviderId,omitempty,string"`
@@ -6976,6 +7027,10 @@ type LiasettingsCustomBatchResponseEntry struct {
 
 	// LiaSettings: The retrieved or updated Lia settings.
 	LiaSettings *LiaSettings `json:"liaSettings,omitempty"`
+
+	// OmnichannelExperience: The updated omnichannel experience for a
+	// country.
+	OmnichannelExperience *LiaOmnichannelExperience `json:"omnichannelExperience,omitempty"`
 
 	// PosDataProviders: The list of POS data providers.
 	PosDataProviders []*PosDataProviders `json:"posDataProviders,omitempty"`
@@ -32978,6 +33033,196 @@ func (c *LiasettingsSetinventoryverificationcontactCall) Do(opts ...googleapi.Ca
 	//   "path": "{merchantId}/liasettings/{accountId}/setinventoryverificationcontact",
 	//   "response": {
 	//     "$ref": "LiasettingsSetInventoryVerificationContactResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.liasettings.setomnichannelexperience":
+
+type LiasettingsSetomnichannelexperienceCall struct {
+	s          *APIService
+	merchantId uint64
+	accountId  uint64
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Setomnichannelexperience: Sets the omnichannel experience for the
+// specified country.
+//
+//   - accountId: The ID of the account for which to retrieve accessible
+//     Business Profiles.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
+func (r *LiasettingsService) Setomnichannelexperience(merchantId uint64, accountId uint64) *LiasettingsSetomnichannelexperienceCall {
+	c := &LiasettingsSetomnichannelexperienceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.accountId = accountId
+	return c
+}
+
+// Country sets the optional parameter "country": The CLDR country code
+// (for example, "US") for which the omnichannel experience is selected.
+func (c *LiasettingsSetomnichannelexperienceCall) Country(country string) *LiasettingsSetomnichannelexperienceCall {
+	c.urlParams_.Set("country", country)
+	return c
+}
+
+// LsfType sets the optional parameter "lsfType": The Local Store Front
+// (LSF) type for this country. Acceptable values are: - "ghlsf"
+// (Google-Hosted Local Store Front) - "mhlsfBasic" (Merchant-Hosted
+// Local Store Front Basic) - "mhlsfFull" (Merchant-Hosted Local Store
+// Front Full) More details about these types can be found here.
+func (c *LiasettingsSetomnichannelexperienceCall) LsfType(lsfType string) *LiasettingsSetomnichannelexperienceCall {
+	c.urlParams_.Set("lsfType", lsfType)
+	return c
+}
+
+// PickupTypes sets the optional parameter "pickupTypes": The Pickup
+// types for this country. Acceptable values are: - "pickupToday" -
+// "pickupLater"
+func (c *LiasettingsSetomnichannelexperienceCall) PickupTypes(pickupTypes ...string) *LiasettingsSetomnichannelexperienceCall {
+	c.urlParams_.SetMulti("pickupTypes", append([]string{}, pickupTypes...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiasettingsSetomnichannelexperienceCall) Fields(s ...googleapi.Field) *LiasettingsSetomnichannelexperienceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiasettingsSetomnichannelexperienceCall) Context(ctx context.Context) *LiasettingsSetomnichannelexperienceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LiasettingsSetomnichannelexperienceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LiasettingsSetomnichannelexperienceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/liasettings/{accountId}/setomnichannelexperience")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"accountId":  strconv.FormatUint(c.accountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.liasettings.setomnichannelexperience" call.
+// Exactly one of *LiaOmnichannelExperience or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *LiaOmnichannelExperience.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LiasettingsSetomnichannelexperienceCall) Do(opts ...googleapi.CallOption) (*LiaOmnichannelExperience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LiaOmnichannelExperience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the omnichannel experience for the specified country.",
+	//   "flatPath": "{merchantId}/liasettings/{accountId}/setomnichannelexperience",
+	//   "httpMethod": "POST",
+	//   "id": "content.liasettings.setomnichannelexperience",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The ID of the account for which to retrieve accessible Business Profiles.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "country": {
+	//       "description": "The CLDR country code (for example, \"US\") for which the omnichannel experience is selected.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "lsfType": {
+	//       "description": "The Local Store Front (LSF) type for this country. Acceptable values are: - \"`ghlsf`\" (Google-Hosted Local Store Front) - \"`mhlsfBasic`\" (Merchant-Hosted Local Store Front Basic) - \"`mhlsfFull`\" (Merchant-Hosted Local Store Front Full) More details about these types can be found here.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and `accountId` must be the ID of a sub-account of this account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pickupTypes": {
+	//       "description": "The Pickup types for this country. Acceptable values are: - \"`pickupToday`\" - \"`pickupLater`\" ",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/liasettings/{accountId}/setomnichannelexperience",
+	//   "response": {
+	//     "$ref": "LiaOmnichannelExperience"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

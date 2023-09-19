@@ -1202,7 +1202,8 @@ type Location struct {
 	// locations are not acceptable. At this time, you can specify a maximum
 	// of five `address_lines` values in the address. This field should only
 	// be set for businesses that have a storefront. This field should not
-	// be set for locations of type `CUSTOMER_LOCATION_ONLY`.
+	// be set for locations of type `CUSTOMER_LOCATION_ONLY` but if set, any
+	// value provided will be discarded.
 	StorefrontAddress *PostalAddress `json:"storefrontAddress,omitempty"`
 
 	// Title: Required. Location name should reflect your business's

@@ -1471,7 +1471,10 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay struct {
 	// violations for. Any existing CustomConstraints with the same name
 	// will be overridden in the simulation. That is, violations will be
 	// determined as if all custom constraints in the overlay were
-	// instantiated.
+	// instantiated. Only a single custom_constraint is supported in the
+	// overlay at a time. For evaluating multiple constraints, multiple
+	// `GenerateOrgPolicyViolationsPreview` requests are made, where each
+	// request evaluates a single constraint.
 	CustomConstraints []*GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
 
 	// Policies: The OrgPolicy changes to preview violations for. Any
@@ -1579,6 +1582,21 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay) Marshal
 // OrgPolicyViolations than could fit in an embedded field. Thus, the
 // use of a child resource instead of a field.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview struct {
+	// CreateTime: Output only. Time when this `OrgPolicyViolationsPreview`
+	// was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomConstraints: Output only. The names of the constraints against
+	// which all `OrgPolicyViolations` were evaluated. If `OrgPolicyOverlay`
+	// only contains `PolicyOverlay` then it contains the name of the
+	// configured custom constraint, applicable to the specified policies.
+	// Otherwise it contains the name of the constraint specified in
+	// `CustomConstraintOverlay`. Format:
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_
+	// id}` Example:
+	// `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+	CustomConstraints []string `json:"customConstraints,omitempty"`
+
 	// Name: Output only. The resource name of the
 	// `OrgPolicyViolationsPreview`. It has the following format:
 	// `organizations/{organization}/locations/{location}/orgPolicyViolations
@@ -1617,7 +1635,7 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview struct {
 	// a single resource may violate multiple constraints.
 	ViolationsCount int64 `json:"violationsCount,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1625,8 +1643,8 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1750,7 +1768,10 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay struct {
 	// violations for. Any existing CustomConstraints with the same name
 	// will be overridden in the simulation. That is, violations will be
 	// determined as if all custom constraints in the overlay were
-	// instantiated.
+	// instantiated. Only a single custom_constraint is supported in the
+	// overlay at a time. For evaluating multiple constraints, multiple
+	// `GenerateOrgPolicyViolationsPreview` requests are made, where each
+	// request evaluates a single constraint.
 	CustomConstraints []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
 
 	// Policies: The OrgPolicy changes to preview violations for. Any
@@ -1858,6 +1879,21 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay) MarshalJ
 // OrgPolicyViolations than could fit in an embedded field. Thus, the
 // use of a child resource instead of a field.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview struct {
+	// CreateTime: Output only. Time when this `OrgPolicyViolationsPreview`
+	// was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomConstraints: Output only. The names of the constraints against
+	// which all `OrgPolicyViolations` were evaluated. If `OrgPolicyOverlay`
+	// only contains `PolicyOverlay` then it contains the name of the
+	// configured custom constraint, applicable to the specified policies.
+	// Otherwise it contains the name of the constraint specified in
+	// `CustomConstraintOverlay`. Format:
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_
+	// id}` Example:
+	// `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+	CustomConstraints []string `json:"customConstraints,omitempty"`
+
 	// Name: Output only. The resource name of the
 	// `OrgPolicyViolationsPreview`. It has the following format:
 	// `organizations/{organization}/locations/{location}/orgPolicyViolations
@@ -1896,7 +1932,7 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview struct {
 	// a single resource may violate multiple constraints.
 	ViolationsCount int64 `json:"violationsCount,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1904,8 +1940,8 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

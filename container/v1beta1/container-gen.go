@@ -869,12 +869,6 @@ func (s *AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AutoscaledRolloutPolicy: Autoscaled rollout policy uses cluster
-// autoscaler during blue-green upgrades to scale both the green and
-// blue pools.
-type AutoscaledRolloutPolicy struct {
-}
-
 // AvailableVersion: Deprecated.
 type AvailableVersion struct {
 	// Reason: Reason for availability.
@@ -1085,10 +1079,6 @@ func (s *BlueGreenInfo) MarshalJSON() ([]byte, error) {
 
 // BlueGreenSettings: Settings for blue-green upgrade.
 type BlueGreenSettings struct {
-	// AutoscaledRolloutPolicy: Autoscaled policy for cluster autoscaler
-	// enabled blue-green upgrade.
-	AutoscaledRolloutPolicy *AutoscaledRolloutPolicy `json:"autoscaledRolloutPolicy,omitempty"`
-
 	// NodePoolSoakDuration: Time needed after draining entire blue pool.
 	// After this period, blue pool will be cleaned up.
 	NodePoolSoakDuration string `json:"nodePoolSoakDuration,omitempty"`
@@ -1097,18 +1087,18 @@ type BlueGreenSettings struct {
 	StandardRolloutPolicy *StandardRolloutPolicy `json:"standardRolloutPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "AutoscaledRolloutPolicy") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "NodePoolSoakDuration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AutoscaledRolloutPolicy")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "NodePoolSoakDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -1603,7 +1593,8 @@ type Cluster struct {
 	// PrivateClusterConfig: Configuration for private cluster.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
-	// ProtectConfig: Enable/Disable Protect API features for the cluster.
+	// ProtectConfig: Deprecated: Use SecurityPostureConfig instead.
+	// Enable/Disable Protect API features for the cluster.
 	ProtectConfig *ProtectConfig `json:"protectConfig,omitempty"`
 
 	// ReleaseChannel: Release channel configuration. If left unspecified on
@@ -2073,8 +2064,8 @@ type ClusterUpdate struct {
 	// access to and from Google Services
 	DesiredPrivateIpv6GoogleAccess string `json:"desiredPrivateIpv6GoogleAccess,omitempty"`
 
-	// DesiredProtectConfig: Enable/Disable Protect API features for the
-	// cluster.
+	// DesiredProtectConfig: Deprecated: Use DesiredSecurityPostureConfig
+	// instead. Enable/Disable Protect API features for the cluster.
 	DesiredProtectConfig *ProtectConfig `json:"desiredProtectConfig,omitempty"`
 
 	// DesiredReleaseChannel: The desired release channel configuration.
@@ -5038,6 +5029,12 @@ type NodeConfig struct {
 	// 'pd-ssd' or 'pd-balanced') If unspecified, the default disk type is
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
+
+	// EnableConfidentialStorage: Optional. Enable confidential storage on
+	// Hyperdisk. boot_disk_kms_key is required when
+	// enable_confidential_storage is true. This is only available for
+	// private preview.
+	EnableConfidentialStorage bool `json:"enableConfidentialStorage,omitempty"`
 
 	// EphemeralStorageConfig: Parameters for the ephemeral storage
 	// filesystem. If unspecified, ephemeral storage is backed by the boot

@@ -297,6 +297,10 @@ func (s *GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata) MarshalJSON()
 // LabelStatus: The status of individual documents in the auto-labeling
 // process.
 type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelStatus struct {
+	// DocumentId: The document id of the auto-labeled document. This will
+	// replace the gcs_uri.
+	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
+
 	// GcsUri: The gcs_uri of the auto-labeling document, which uniquely
 	// identifies a dataset document.
 	GcsUri string `json:"gcsUri,omitempty"`
@@ -304,7 +308,7 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	// Status: The status of the document auto-labeling.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -312,8 +316,8 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -7671,7 +7675,7 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
-// Processor which configures a collection of documents.
+// Processor which configures a collection of documents. Next Id: 8.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
 	// dataset configuration.
@@ -11555,8 +11559,14 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
 
 	// ComputeStyleInfo: Turn on font identification model and return font
-	// style information.
+	// style information. Deprecated, use PremiumFeatures.compute_style_info
+	// instead.
 	ComputeStyleInfo bool `json:"computeStyleInfo,omitempty"`
+
+	// DisableCharacterBoxesDetection: Turn off character box detector in
+	// OCR engine. Character box detection is enabled by default in OCR 2.0+
+	// processors.
+	DisableCharacterBoxesDetection bool `json:"disableCharacterBoxesDetection,omitempty"`
 
 	// EnableImageQualityScores: Enables intelligent document quality scores
 	// after OCR. Can help with diagnosing why OCR responses are of poor
@@ -11574,6 +11584,9 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 
 	// Hints: Hints for the OCR model.
 	Hints *GoogleCloudDocumentaiV1beta3OcrConfigHints `json:"hints,omitempty"`
+
+	// PremiumFeatures: Configurations for premium OCR features.
+	PremiumFeatures *GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures `json:"premiumFeatures,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvancedOcrOptions")
 	// to unconditionally include in API requests. By default, fields with
@@ -11633,8 +11646,57 @@ func (s *GoogleCloudDocumentaiV1beta3OcrConfigHints) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures: Configurations
+// for premium OCR features.
+type GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures struct {
+	// ComputeStyleInfo: Turn on font identification model and return font
+	// style information.
+	ComputeStyleInfo bool `json:"computeStyleInfo,omitempty"`
+
+	// EnableMathOcr: Turn on the model that can extract LaTeX math
+	// formulas.
+	EnableMathOcr bool `json:"enableMathOcr,omitempty"`
+
+	// EnableSelectionMarkDetection: Turn on selection mark detector in OCR
+	// engine. Only available in OCR 2.0+ processors.
+	EnableSelectionMarkDetection bool `json:"enableSelectionMarkDetection,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComputeStyleInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComputeStyleInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3ProcessOptions: Options for Process API
 type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
+	// FromEnd: Only process certain pages from the end, same as above.
+	FromEnd int64 `json:"fromEnd,omitempty"`
+
+	// FromStart: Only process certain pages from the start, process all if
+	// the document has less pages.
+	FromStart int64 `json:"fromStart,omitempty"`
+
+	// IndividualPageSelector: Which pages to process (1-indexed).
+	IndividualPageSelector *GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector `json:"individualPageSelector,omitempty"`
+
 	// OcrConfig: Only applicable to `OCR_PROCESSOR`. Returns error if set
 	// on other processor types.
 	OcrConfig *GoogleCloudDocumentaiV1beta3OcrConfig `json:"ocrConfig,omitempty"`
@@ -11645,7 +11707,7 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 	// override.
 	SchemaOverride *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"schemaOverride,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OcrConfig") to
+	// ForceSendFields is a list of field names (e.g. "FromEnd") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -11653,7 +11715,7 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OcrConfig") to include in
+	// NullFields is a list of field names (e.g. "FromEnd") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -11664,6 +11726,35 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 
 func (s *GoogleCloudDocumentaiV1beta3ProcessOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector: A
+// list of individual page numbers.
+type GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector struct {
+	// Pages: Optional. Indices of the pages (starting from 1).
+	Pages []int64 `json:"pages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Pages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Pages") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

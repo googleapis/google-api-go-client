@@ -559,6 +559,10 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// when TransactionData is provided.
 	FraudPreventionAssessment *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment `json:"fraudPreventionAssessment,omitempty"`
 
+	// FraudSignals: Output only. Fraud Signals specific to the users
+	// involved in a payment transaction.
+	FraudSignals *GoogleCloudRecaptchaenterpriseV1FraudSignals `json:"fraudSignals,omitempty"`
+
 	// Name: Output only. The resource name for the Assessment in the format
 	// "projects/{project}/assessments/{assessment}".
 	Name string `json:"name,omitempty"`
@@ -1194,6 +1198,131 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrume
 		return err
 	}
 	s.Risk = float64(s1.Risk)
+	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudSignals: Fraud signals
+// describing users and cards involved in the transaction.
+type GoogleCloudRecaptchaenterpriseV1FraudSignals struct {
+	// CardSignals: Output only. Signals describing the payment card or
+	// cards used in this transaction.
+	CardSignals *GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals `json:"cardSignals,omitempty"`
+
+	// UserSignals: Output only. Signals describing the end user in this
+	// transaction.
+	UserSignals *GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals `json:"userSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals: Signals
+// describing the payment card used in this transaction.
+type GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals struct {
+	// CardLabels: Output only. The labels for the payment card in this
+	// transaction.
+	//
+	// Possible values:
+	//   "CARD_LABEL_UNSPECIFIED" - No label specified.
+	//   "PREPAID" - This card has been detected as prepaid.
+	//   "VIRTUAL" - This card has been detected as virtual, such as a card
+	// number generated for a single transaction or merchant.
+	//   "UNEXPECTED_LOCATION" - This card has been detected as being used
+	// in an unexpected geographic location.
+	CardLabels []string `json:"cardLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardLabels") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignalsCardSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals: Signals
+// describing the user involved in this transaction.
+type GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals struct {
+	// ActiveDaysLowerBound: Output only. This user (based on email, phone,
+	// and other identifiers) has been seen on the internet for at least
+	// this number of days.
+	ActiveDaysLowerBound int64 `json:"activeDaysLowerBound,omitempty"`
+
+	// SyntheticRisk: Output only. Likelihood (from 0.0 to 1.0) this user
+	// includes synthetic components in their identity, such as a randomly
+	// generated email address, temporary phone number, or fake shipping
+	// address.
+	SyntheticRisk float64 `json:"syntheticRisk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ActiveDaysLowerBound") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveDaysLowerBound") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals
+	var s1 struct {
+		SyntheticRisk gensupport.JSONFloat64 `json:"syntheticRisk"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SyntheticRisk = float64(s1.SyntheticRisk)
 	return nil
 }
 

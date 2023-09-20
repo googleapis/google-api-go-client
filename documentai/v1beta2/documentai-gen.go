@@ -261,6 +261,10 @@ func (s *GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata) MarshalJSON()
 // LabelStatus: The status of individual documents in the auto-labeling
 // process.
 type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelStatus struct {
+	// DocumentId: The document id of the auto-labeled document. This will
+	// replace the gcs_uri.
+	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
+
 	// GcsUri: The gcs_uri of the auto-labeling document, which uniquely
 	// identifies a dataset document.
 	GcsUri string `json:"gcsUri,omitempty"`
@@ -268,7 +272,7 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	// Status: The status of the document auto-labeling.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -276,8 +280,8 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -7657,7 +7661,7 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
-// Processor which configures a collection of documents.
+// Processor which configures a collection of documents. Next Id: 8.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
 	// dataset configuration.

@@ -345,6 +345,13 @@ func (s *AddGoogleAnalyticsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type AdminSdkConfig struct {
+	// DatabaseURL: **DEPRECATED.** _Instead, find the default Firebase
+	// Realtime Database instance name using the list endpoint
+	// (https://firebase.google.com/docs/reference/rest/database/database-management/rest/v1beta/projects.locations.instances/list)
+	// within the Firebase Realtime Database REST API. Note that the default
+	// instance for the Project might not yet be provisioned, so the return
+	// might not contain a default instance._ The default Firebase Realtime
+	// Database URL.
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
 	// LocationId: **DEPRECATED.** _Instead, use product-specific REST APIs

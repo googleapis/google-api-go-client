@@ -4406,11 +4406,6 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecExtractiveCon
 	// segments before each selected segments.
 	NumPreviousSegments int64 `json:"numPreviousSegments,omitempty"`
 
-	// ReturnExtractiveSegmentScore: Specifies whether to return the
-	// confidence score from the extractive segments in each search result.
-	// The default value is `false`.
-	ReturnExtractiveSegmentScore bool `json:"returnExtractiveSegmentScore,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "MaxExtractiveAnswerCount") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -4519,7 +4514,8 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpec s
 	IncludeCitations bool `json:"includeCitations,omitempty"`
 
 	// LanguageCode: Language code for Summary. Use language tags defined by
-	// BCP47.
+	// BCP47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Note: This is
+	// an experimental feature.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SummaryResultCount: The number of top results to generate the summary

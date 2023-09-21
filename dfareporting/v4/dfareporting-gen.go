@@ -13249,9 +13249,9 @@ type ReportsConfiguration struct {
 	LookbackConfiguration *LookbackConfiguration `json:"lookbackConfiguration,omitempty"`
 
 	// ReportGenerationTimeZoneId: Report generation time zone ID of this
-	// account. This is a required field that can only be changed by a
-	// superuser. Acceptable values are: - "1" for "America/New_York" - "2"
-	// for "Europe/London" - "3" for "Europe/Paris" - "4" for
+	// account. This is a required field that cannot be changed on update.
+	// Acceptable values are: - "1" for "America/New_York" - "2" for
+	// "Europe/London" - "3" for "Europe/Paris" - "4" for
 	// "Africa/Johannesburg" - "5" for "Asia/Jerusalem" - "6" for
 	// "Asia/Shanghai" - "7" for "Asia/Hong_Kong" - "8" for "Asia/Tokyo" -
 	// "9" for "Australia/Sydney" - "10" for "Asia/Dubai" - "11" for
@@ -25310,6 +25310,8 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 //	"OBJECT_SEARCH_LIFT_STUDY"
 //	"OBJECT_FLOODLIGHT_DV360_LINK"
 //	"OBJECT_ADVERTISER_CUSTOMER_LINK"
+//	"OBJECT_CONVERSION_DOMAIN"
+//	"OBJECT_ACCOUNT_CONVERSION_DOMAIN"
 func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	c.urlParams_.Set("objectType", objectType)
 	return c
@@ -25565,9 +25567,13 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//         "OBJECT_TARGETING_TEMPLATE",
 	//         "OBJECT_SEARCH_LIFT_STUDY",
 	//         "OBJECT_FLOODLIGHT_DV360_LINK",
-	//         "OBJECT_ADVERTISER_CUSTOMER_LINK"
+	//         "OBJECT_ADVERTISER_CUSTOMER_LINK",
+	//         "OBJECT_CONVERSION_DOMAIN",
+	//         "OBJECT_ACCOUNT_CONVERSION_DOMAIN"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
+	//         "",
 	//         "",
 	//         "",
 	//         "",

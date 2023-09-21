@@ -1517,17 +1517,23 @@ func (s *GoogleCloudRunV2ListTasksResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2NetworkInterface: VPC network settings.
+// GoogleCloudRunV2NetworkInterface: Direct VPC egress settings.
 type GoogleCloudRunV2NetworkInterface struct {
-	// Network: The VPC network name to access to. Defaults to "default"
-	// network.
+	// Network: The VPC network that the Cloud Run resource will be able to
+	// send traffic to. At least one of network or subnetwork must be
+	// specified. If both network and subnetwork are specified, the given
+	// VPC subnetwork must belong to the given VPC network. If network is
+	// not specified, it will be looked up from the subnetwork.
 	Network string `json:"network,omitempty"`
 
-	// Subnetwork: The VPC subnetwork name to access to. Defaults to the
-	// same vaule of network.
+	// Subnetwork: The VPC subnetwork that the Cloud Run resource will get
+	// IPs from. At least one of network or subnetwork must be specified. If
+	// both network and subnetwork are specified, the given VPC subnetwork
+	// must belong to the given VPC network. If subnetwork is not specified,
+	// the subnetwork with the same name with the network will be used.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
-	// Tags: Network tags applied to this VPC network.
+	// Tags: Network tags applied to this Cloud Run resource.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Network") to
@@ -2527,6 +2533,11 @@ type GoogleCloudRunV2Task struct {
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
+	// ScheduledTime: Output only. Represents time when the task was
+	// scheduled to run by the system. It is not guaranteed to be set in
+	// happens-before order across separate operations.
+	ScheduledTime string `json:"scheduledTime,omitempty"`
+
 	// ServiceAccount: Email address of the IAM service account associated
 	// with the Task of a Job. The service account represents the identity
 	// of the running task, and determines what permissions the task has. If
@@ -2920,15 +2931,14 @@ func (s *GoogleCloudRunV2VolumeMount) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRunV2VpcAccess: VPC Access settings. For more information
-// on creating a VPC Connector, visit
-// https://cloud.google.com/vpc/docs/configure-serverless-vpc-access For
-// information on how to configure Cloud Run with an existing VPC
-// Connector, visit
-// https://cloud.google.com/run/docs/configuring/connecting-vpc
+// on sending traffic to a VPC network, visit
+// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 type GoogleCloudRunV2VpcAccess struct {
 	// Connector: VPC Access connector name. Format:
 	// projects/{project}/locations/{location}/connectors/{connector}, where
-	// {project} can be project id or number.
+	// {project} can be project id or number. For more information on
+	// sending traffic to a VPC network via a connector, visit
+	// https://cloud.google.com/run/docs/configuring/vpc-connectors.
 	Connector string `json:"connector,omitempty"`
 
 	// Egress: Traffic VPC egress settings. If not provided, it defaults to
@@ -2942,7 +2952,7 @@ type GoogleCloudRunV2VpcAccess struct {
 	// the VPC connector.
 	Egress string `json:"egress,omitempty"`
 
-	// NetworkInterfaces: VPC network to access to. Currently only single
+	// NetworkInterfaces: Direct VPC egress settings. Currently only single
 	// network interface is supported.
 	NetworkInterfaces []*GoogleCloudRunV2NetworkInterface `json:"networkInterfaces,omitempty"`
 

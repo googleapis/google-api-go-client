@@ -412,6 +412,64 @@ type ProjectsLocationsServicesNlpService struct {
 	s *Service
 }
 
+// AccessDeterminationLogConfig: Configures consent audit log config for
+// FHIR create, read, update, and delete (CRUD) operations. Cloud audit
+// log for healthcare API must be enabled
+// (https://cloud.google.com/logging/docs/audit/configure-data-access#config-console-enable).
+// The consent-related logs are included as part of
+// `protoPayload.metadata`.
+type AccessDeterminationLogConfig struct {
+	// LogLevel: Optional. Controls the amount of detail to include as part
+	// of the audit logs.
+	//
+	// Possible values:
+	//   "LOG_LEVEL_UNSPECIFIED" - No log level specified. This value is
+	// unused.
+	//   "DISABLED" - No additional consent-related logging is added to
+	// audit logs.
+	//   "MINIMUM" - The following information is included: - One of the
+	// following
+	// [`consentMode`](https://cloud.google.com/healthcare-api/private/docs/h
+	// ow-tos/fhir-consent#audit_logs) fields:
+	// (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). - The accessor's
+	// request headers - The `log_level` of the
+	// [AccessDeterminationLogConfig](google.cloud.healthcare.v1beta1.fhir.Fh
+	// irStore.ConsentConfig.AccessDeterminationLogConfig) - The final
+	// consent evaluation (`PERMIT`, `DENY`, or `NO_CONSENT`) - A
+	// human-readable summary of the evaluation
+	//   "VERBOSE" - Includes `MINIMUM` and, for each resource owner,
+	// returns: - The resource owner's name - Most specific part of the
+	// `X-Consent-Scope` resulting in consensual determination - Timestamp
+	// of the applied enforcement leading to the decision - Enforcement
+	// version at the time the applicable consents were applied - The
+	// Consent resource name - The timestamp of the Consent resource used
+	// for enforcement - Policy type (PATIENT or ADMIN) Note that this mode
+	// adds some overhead to CRUD operations.
+	LogLevel string `json:"logLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessDeterminationLogConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessDeterminationLogConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Action: Specifies a selection of tags and an `Action` to apply to
 // each one.
 type Action struct {
@@ -522,6 +580,41 @@ type ActivateConsentRequest struct {
 
 func (s *ActivateConsentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivateConsentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdminConsents: List of admin Consent resources to be applied.
+type AdminConsents struct {
+	// Names: The versioned names of the admin Consent resource(s), in the
+	// format
+	// `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhir
+	// Stores/{fhir_store_id}/fhir/Consent/{resource_id}/_history/{version_id
+	// }`. For FHIR stores with `disable_resource_versioning=true`, the
+	// format is
+	// `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhir
+	// Stores/{fhir_store_id}/fhir/Consent/{resource_id}`.
+	Names []string `json:"names,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Names") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdminConsents) MarshalJSON() ([]byte, error) {
+	type NoMethod AdminConsents
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -793,6 +886,204 @@ type AnnotationStore struct {
 
 func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 	type NoMethod AnnotationStore
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplyAdminConsentsRequest: Request to apply the admin Consent
+// resources for the specified FHIR store.
+type ApplyAdminConsentsRequest struct {
+	// NewConsentsList: A new list of admin Consent resources to be applied.
+	// Any existing enforced Consents, which are specified in
+	// `consent_config.enforced_admin_consents` of the FhirStore, that are
+	// not part of this list will be disabled. An empty list is equivalent
+	// to clearing or disabling all Consents enforced on the FHIR store.
+	// When a FHIR store has `disable_resource_versioning=true` and this
+	// list contains a Consent resource that exists in
+	// `consent_config.enforced_admin_consents`, the method enforces any
+	// updates to the existing resource since the last enforcement. If the
+	// existing resource hasn't been updated since the last enforcement, the
+	// resource is unaffected. After the method finishes, the resulting
+	// consent enforcement model is determined by the contents of the
+	// Consent resource(s) when the method was called: * When
+	// `disable_resource_versioning=true`, the result is identical to the
+	// current resource(s) in the FHIR store. * When
+	// `disable_resource_versioning=false`, the result is based on the
+	// historical version(s) of the Consent resource(s) at the point in time
+	// when the method was called. At most 200 Consents can be specified.
+	NewConsentsList *AdminConsents `json:"newConsentsList,omitempty"`
+
+	// ValidateOnly: If true, the method only validates Consent resources to
+	// make sure they are supported. Otherwise, the method applies the
+	// aggregate consent information to update the enforcement model and
+	// reindex the FHIR resources. If all Consent resources can be applied
+	// successfully, the ApplyAdminConsentsResponse is returned containing
+	// the following fields: * `consent_apply_success` to indicate the
+	// number of Consent resources applied. * `affected_resources` to
+	// indicate the number of resources that might have had their consent
+	// access changed. If, however, one or more Consent resources are
+	// unsupported or cannot be applied, the method fails and
+	// ApplyAdminConsentsErrorDetail is is returned with details about the
+	// unsupported Consent resources.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewConsentsList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewConsentsList") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplyAdminConsentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplyAdminConsentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplyAdminConsentsResponse: Response when all admin Consent resources
+// in scope were processed and all affected resources were reindexed
+// successfully. This structure will be included in the response when
+// the operation finishes successfully.
+type ApplyAdminConsentsResponse struct {
+	// AffectedResources: The number of resources (including the Consent
+	// resources) that may have consent access change.
+	AffectedResources int64 `json:"affectedResources,omitempty,string"`
+
+	// ConsentApplySuccess: If `validate_only=false` in
+	// ApplyAdminConsentsRequest, this counter contains the number of
+	// Consent resources that were successfully applied. Otherwise, it is
+	// the number of Consent resources that are supported.
+	ConsentApplySuccess int64 `json:"consentApplySuccess,omitempty,string"`
+
+	// FailedResources: The number of resources (including the Consent
+	// resources) that ApplyAdminConsents failed to re-index.
+	FailedResources int64 `json:"failedResources,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AffectedResources")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AffectedResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplyAdminConsentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplyAdminConsentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplyConsentsRequest: Request to apply the Consent resources for the
+// specified FHIR store.
+type ApplyConsentsRequest struct {
+	// PatientScope: Optional. Scope down to a list of patients.
+	PatientScope *PatientScope `json:"patientScope,omitempty"`
+
+	// TimeRange: Optional. Scope down to patients whose most recent consent
+	// changes are in the time range. Can only be used with a versioning
+	// store (i.e. when disable_resource_versioning is set to false).
+	TimeRange *TimeRange `json:"timeRange,omitempty"`
+
+	// ValidateOnly: Optional. If true, the method only validates Consent
+	// resources to make sure they are supported. When the operation
+	// completes, ApplyConsentsResponse is returned where
+	// `consent_apply_success` and `consent_apply_failure` indicate
+	// supported and unsupported (or invalid) Consent resources,
+	// respectively. Otherwise, the method propagates the aggregate
+	// consensual information to the patient's resources. Upon success,
+	// `affected_resources` in the ApplyConsentsResponse indicates the
+	// number of resources that may have consensual access changed.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PatientScope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PatientScope") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplyConsentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplyConsentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplyConsentsResponse: Response when all Consent resources in scope
+// were processed and all affected resources were reindexed
+// successfully. This structure is included in the response when the
+// operation finishes successfully.
+type ApplyConsentsResponse struct {
+	// AffectedResources: The number of resources (including the Consent
+	// resources) that may have consensual access change.
+	AffectedResources int64 `json:"affectedResources,omitempty,string"`
+
+	// ConsentApplyFailure: If `validate_only = false` in
+	// ApplyConsentsRequest, this counter is the number of Consent resources
+	// that were failed to apply. Otherwise, it is the number of Consent
+	// resources that are not supported or invalid.
+	ConsentApplyFailure int64 `json:"consentApplyFailure,omitempty,string"`
+
+	// ConsentApplySuccess: If `validate_only = false` in
+	// ApplyConsentsRequest, this counter is the number of Consent resources
+	// that were successfully applied. Otherwise, it is the number of
+	// Consent resources that are supported.
+	ConsentApplySuccess int64 `json:"consentApplySuccess,omitempty,string"`
+
+	// FailedResources: The number of resources (including the Consent
+	// resources) that ApplyConsents failed to re-index.
+	FailedResources int64 `json:"failedResources,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AffectedResources")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AffectedResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplyConsentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplyConsentsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1550,6 +1841,75 @@ func (s *ConsentArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConsentConfig: Configures whether to enforce consent for the FHIR
+// store and which consent enforcement version is being used.
+type ConsentConfig struct {
+	// AccessDeterminationLogConfig: Optional. Specifies how the server logs
+	// the consent-aware requests. If not specified, the
+	// `AccessDeterminationLogConfig.LogLevel.MINIMUM` option is used.
+	AccessDeterminationLogConfig *AccessDeterminationLogConfig `json:"accessDeterminationLogConfig,omitempty"`
+
+	// AccessEnforced: Optional. If set to true, when accessing FHIR
+	// resources, the consent headers provided using SMART-on-FHIR
+	// (https://cloud.google.com/healthcare/private/docs/how-tos/smart-on-fhir)
+	// will be verified against consents given by patients. See the
+	// ConsentEnforcementVersion for the supported consent headers.
+	AccessEnforced bool `json:"accessEnforced,omitempty"`
+
+	// ConsentHeaderHandling: Optional. Different options to configure the
+	// behaviour of the server when handling the `X-Consent-Scope` header.
+	ConsentHeaderHandling *ConsentHeaderHandling `json:"consentHeaderHandling,omitempty"`
+
+	// EnforcedAdminConsents: The versioned names of the enforced admin
+	// Consent resource(s), in the format
+	// `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhir
+	// Stores/{fhir_store_id}/fhir/Consent/{resource_id}/_history/{version_id
+	// }`. For FHIR stores with `disable_resource_versioning=true`, the
+	// format is
+	// `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhir
+	// Stores/{fhir_store_id}/fhir/Consent/{resource_id}`. This field can
+	// only be updated using ApplyAdminConsents.
+	EnforcedAdminConsents []string `json:"enforcedAdminConsents,omitempty"`
+
+	// Version: Required. Specifies which consent enforcement version is
+	// being used for this FHIR store. This field can only be set once by
+	// either CreateFhirStore or UpdateFhirStore. After that, you must call
+	// ApplyConsents to change the version.
+	//
+	// Possible values:
+	//   "CONSENT_ENFORCEMENT_VERSION_UNSPECIFIED" - Users must specify an
+	// enforcement version or an error is returned.
+	//   "V1" - Enforcement version 1. See the [FHIR Consent resources in
+	// the Cloud Healthcare
+	// API](https://cloud.google.com/healthcare-api/private/docs/how-tos/fhir
+	// -consent) guide for more details.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AccessDeterminationLogConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AccessDeterminationLogConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConsentEvaluation: The detailed evaluation of a particular Consent.
 type ConsentEvaluation struct {
 	// EvaluationResult: The evaluation result.
@@ -1591,6 +1951,51 @@ type ConsentEvaluation struct {
 
 func (s *ConsentEvaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsentEvaluation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsentHeaderHandling: How the server handles the consent header.
+type ConsentHeaderHandling struct {
+	// Profile: Optional. Specifies the default server behavior when the
+	// header is empty. If not specified, the
+	// `ScopeProfile.PERMIT_EMPTY_SCOPE` option is used.
+	//
+	// Possible values:
+	//   "SCOPE_PROFILE_UNSPECIFIED" - If not specified, the default value
+	// `PERMIT_EMPTY_SCOPE` is used.
+	//   "PERMIT_EMPTY_SCOPE" - When no consent scopes are provided (for
+	// example, if there's an empty or missing header), then consent check
+	// is disabled, similar to when `access_enforced` is `false`. You can
+	// use audit logs to differentiate these two cases by looking at the
+	// value of `protopayload.metadata.consentMode`. If consents scopes are
+	// present, they must be valid and within the allowed limits, otherwise
+	// the request will be rejected with a `4xx` code.
+	//   "REQUIRED_ON_READ" - The consent header must be non-empty when
+	// performing read and search operations, otherwise the request is
+	// rejected with a `4xx` code. Additionally, invalid consent scopes or
+	// scopes exceeding the allowed limits are rejected.
+	Profile string `json:"profile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Profile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Profile") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentHeaderHandling) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentHeaderHandling
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3358,6 +3763,11 @@ type FhirStore struct {
 	//   "DISABLED" - References in complex data types are ignored.
 	//   "ENABLED" - References in complex data types are parsed.
 	ComplexDataTypeReferenceParsing string `json:"complexDataTypeReferenceParsing,omitempty"`
+
+	// ConsentConfig: Optional. Specifies whether this store has consent
+	// enforcement. Not available for DSTU2 FHIR version due to absence of
+	// Consent resources.
+	ConsentConfig *ConsentConfig `json:"consentConfig,omitempty"`
 
 	// DefaultSearchHandlingStrict: If true, overrides the default search
 	// behavior for this FHIR store to `handling=strict` which returns an
@@ -6210,13 +6620,16 @@ type OperationMetadata struct {
 	// CreateTime: The time at which the operation was created by the API.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EndTime: The time at which execution was completed.
+	// EndTime: The time at which execution workloads were completed. Some
+	// tasks will complete after this time such as logging audit logs.
 	EndTime string `json:"endTime,omitempty"`
 
 	// LogsUrl: A link to audit and error logs in the log viewer. Error logs
 	// are generated only by some operations, listed at Viewing error logs
 	// in Cloud Logging
-	// (https://cloud.google.com/healthcare/docs/how-tos/logging).
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging). The
+	// `end_time` specified in this URL may not match the end time on the
+	// metadata because logs are written asynchronously from execution.
 	LogsUrl string `json:"logsUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiMethodName") to
@@ -6407,6 +6820,36 @@ func (s *PatientId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PatientScope: Apply consents given by a list of patients.
+type PatientScope struct {
+	// PatientIds: Optional. The list of patient IDs whose Consent resources
+	// will be enforced. At most 10,000 patients can be specified. An empty
+	// list is equivalent to all patients (meaning the entire FHIR store).
+	PatientIds []string `json:"patientIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PatientIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PatientIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatientScope) MarshalJSON() ([]byte, error) {
+	type NoMethod PatientScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
 // collection of `bindings`. A `binding` binds one or more `members`, or
@@ -6525,6 +6968,14 @@ type ProgressCounter struct {
 
 	// Pending: The number of units that are pending in the operation.
 	Pending int64 `json:"pending,omitempty,string"`
+
+	// SecondaryFailure: The number of secondary units that failed in the
+	// operation.
+	SecondaryFailure int64 `json:"secondaryFailure,omitempty,string"`
+
+	// SecondarySuccess: The number of secondary units that succeeded in the
+	// operation.
+	SecondarySuccess int64 `json:"secondarySuccess,omitempty,string"`
 
 	// Success: The number of units that succeeded in the operation.
 	Success int64 `json:"success,omitempty,string"`
@@ -7727,6 +8178,45 @@ type TimePartitioning struct {
 
 func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
 	type NoMethod TimePartitioning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeRange: Apply consents given by patients whose most recent consent
+// changes are in the time range. Note that after identifying these
+// patients, the server applies all Consent resources given by those
+// patients, not just the Consent resources within the timestamp in the
+// range.
+type TimeRange struct {
+	// End: Optional. The latest consent change time, in format
+	// YYYY-MM-DDThh:mm:ss.sss+zz:zz If not specified, the system uses the
+	// time when ApplyConsents was called.
+	End string `json:"end,omitempty"`
+
+	// Start: Optional. The earliest consent change time, in format
+	// YYYY-MM-DDThh:mm:ss.sss+zz:zz If not specified, the system uses the
+	// FHIR store creation time.
+	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -22783,6 +23273,325 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 }
 
+// method id "healthcare.projects.locations.datasets.fhirStores.applyAdminConsents":
+
+type ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall struct {
+	s                         *Service
+	name                      string
+	applyadminconsentsrequest *ApplyAdminConsentsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// ApplyAdminConsents: Applies the admin Consent resources for the FHIR
+// store and reindexes the underlying resources in the FHIR store
+// according to the aggregate consents. This method also updates the
+// `consent_config.enforced_admin_consents` field of the FhirStore
+// unless `validate_only=true` in ApplyAdminConsentsRequest. Any admin
+// Consent resource change after this operation execution (including
+// deletion) requires you to call ApplyAdminConsents again for the
+// change to take effect. This method returns an Operation that can be
+// used to track the progress of the resources that were reindexed, by
+// calling GetOperation. Upon completion, the ApplyAdminConsentsResponse
+// additionally contains the number of resources that were reindexed. If
+// at least one Consent resource contains an error or fails be be
+// enforced for any reason, the method returns an error instead of an
+// Operation. No resources will be reindexed and the
+// `consent_config.enforced_admin_consents` field will be unchanged. To
+// enforce a consent check for data access,
+// `consent_config.access_enforced` must be set to true for the
+// FhirStore.
+//
+//   - name: The name of the FHIR store to enforce, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) ApplyAdminConsents(name string, applyadminconsentsrequest *ApplyAdminConsentsRequest) *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall {
+	c := &ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.applyadminconsentsrequest = applyadminconsentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applyadminconsentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:applyAdminConsents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.applyAdminConsents" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Applies the admin Consent resources for the FHIR store and reindexes the underlying resources in the FHIR store according to the aggregate consents. This method also updates the `consent_config.enforced_admin_consents` field of the FhirStore unless `validate_only=true` in ApplyAdminConsentsRequest. Any admin Consent resource change after this operation execution (including deletion) requires you to call ApplyAdminConsents again for the change to take effect. This method returns an Operation that can be used to track the progress of the resources that were reindexed, by calling GetOperation. Upon completion, the ApplyAdminConsentsResponse additionally contains the number of resources that were reindexed. If at least one Consent resource contains an error or fails be be enforced for any reason, the method returns an error instead of an Operation. No resources will be reindexed and the `consent_config.enforced_admin_consents` field will be unchanged. To enforce a consent check for data access, `consent_config.access_enforced` must be set to true for the FhirStore.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:applyAdminConsents",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.applyAdminConsents",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:applyAdminConsents",
+	//   "request": {
+	//     "$ref": "ApplyAdminConsentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.applyConsents":
+
+type ProjectsLocationsDatasetsFhirStoresApplyConsentsCall struct {
+	s                    *Service
+	name                 string
+	applyconsentsrequest *ApplyConsentsRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// ApplyConsents: Apply the Consent resources for the FHIR store and
+// reindex the underlying resources in the FHIR store according to the
+// aggregate consent. The aggregate consent of the patient in scope in
+// this request replaces any previous call of this method. Any Consent
+// resource change after this operation execution (including deletion)
+// requires you to call ApplyConsents again to have effect. This method
+// returns an Operation that can be used to track the progress of the
+// consent resources that were processed by calling GetOperation. Upon
+// completion, the ApplyConsentsResponse additionally contains the
+// number of resources that was reindexed. Errors are logged to Cloud
+// Logging (see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)). To
+// enforce consent check for data access,
+// `consent_config.access_enforced` must be set to true for the
+// FhirStore.
+//
+//   - name: The name of the FHIR store to enforce, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) ApplyConsents(name string, applyconsentsrequest *ApplyConsentsRequest) *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall {
+	c := &ProjectsLocationsDatasetsFhirStoresApplyConsentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.applyconsentsrequest = applyconsentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applyconsentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:applyConsents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.applyConsents" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresApplyConsentsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Apply the Consent resources for the FHIR store and reindex the underlying resources in the FHIR store according to the aggregate consent. The aggregate consent of the patient in scope in this request replaces any previous call of this method. Any Consent resource change after this operation execution (including deletion) requires you to call ApplyConsents again to have effect. This method returns an Operation that can be used to track the progress of the consent resources that were processed by calling GetOperation. Upon completion, the ApplyConsentsResponse additionally contains the number of resources that was reindexed. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). To enforce consent check for data access, `consent_config.access_enforced` must be set to true for the FhirStore.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:applyConsents",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.applyConsents",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:applyConsents",
+	//   "request": {
+	//     "$ref": "ApplyConsentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.fhirStores.configureSearch":
 
 type ProjectsLocationsDatasetsFhirStoresConfigureSearchCall struct {
@@ -25247,6 +26056,126 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Do(opts
 
 }
 
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.Consent-enforcement-status":
+
+type ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ConsentEnforcementStatus: Returns the consent enforcement status of a
+// single consent resource. On success, the response body contains a
+// JSON-encoded representation of a `Parameters`
+// (http://hl7.org/fhir/parameters.html) FHIR resource, containing the
+// current enforcement status. Does not support DSTU2.
+//
+//   - name: The name of the consent resource to find enforcement status,
+//     in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}/fhir/Consent/{consent_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConsentEnforcementStatus(name string) *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/$consent-enforcement-status")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Consent-enforcement-status" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirConsentEnforcementStatusCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "Returns the consent enforcement status of a single consent resource. On success, the response body contains a JSON-encoded representation of a `Parameters` (http://hl7.org/fhir/parameters.html) FHIR resource, containing the current enforcement status. Does not support DSTU2.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Consent/{ConsentId}/$consent-enforcement-status",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Consent-enforcement-status",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the consent resource to find enforcement status, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}/fhir/Consent/{consent_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/Consent/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}/$consent-enforcement-status",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.fhirStores.fhir.Observation-lastn":
 
 type ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall struct {
@@ -25376,6 +26305,158 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) Do(opts ..
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/fhir/Observation/$lastn",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-consent-enforcement-status":
+
+type ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// PatientConsentEnforcementStatus: Returns the consent enforcement
+// status of all consent resources for a patient. On success, the
+// response body contains a JSON-encoded representation of a bundle of
+// `Parameters` (http://hl7.org/fhir/parameters.html) FHIR resources,
+// containing the current enforcement status for each consent resource
+// of the patient. Does not support DSTU2.
+//
+//   - name: The name of the patient to find enforcement statuses, in the
+//     format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}/fhir/Patient/{patient_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) PatientConsentEnforcementStatus(name string) *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Count sets the optional parameter "_count": The maximum number of
+// results on a page. If not specified, 100 is used. May not be larger
+// than 1000.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) Count(Count int64) *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall {
+	c.urlParams_.Set("_count", fmt.Sprint(Count))
+	return c
+}
+
+// PageToken sets the optional parameter "_page_token": Used to retrieve
+// the first, previous, next, or last page of consent enforcement
+// statuses when using pagination. Value should be set to the value of
+// `_page_token` set in next or previous page links' URLs. Next and
+// previous page are returned in the response bundle's links field,
+// where `link.relation` is "previous" or "next". Omit `_page_token` if
+// no previous request has been made.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) PageToken(PageToken string) *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall {
+	c.urlParams_.Set("_page_token", PageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/$consent-enforcement-status")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-consent-enforcement-status" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientConsentEnforcementStatusCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "Returns the consent enforcement status of all consent resources for a patient. On success, the response body contains a JSON-encoded representation of a bundle of `Parameters` (http://hl7.org/fhir/parameters.html) FHIR resources, containing the current enforcement status for each consent resource of the patient. Does not support DSTU2.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$consent-enforcement-status",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-consent-enforcement-status",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "_count": {
+	//       "description": "Optional. The maximum number of results on a page. If not specified, 100 is used. May not be larger than 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "_page_token": {
+	//       "description": "Optional. Used to retrieve the first, previous, next, or last page of consent enforcement statuses when using pagination. Value should be set to the value of `_page_token` set in next or previous page links' URLs. Next and previous page are returned in the response bundle's links field, where `link.relation` is \"previous\" or \"next\". Omit `_page_token` if no previous request has been made.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the patient to find enforcement statuses, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}/fhir/Patient/{patient_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/Patient/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}/$consent-enforcement-status",
 	//   "response": {
 	//     "$ref": "HttpBody"
 	//   },

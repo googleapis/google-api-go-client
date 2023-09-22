@@ -926,7 +926,7 @@ func (s *DownloadParameters) MarshalJSON() ([]byte, error) {
 // EscalateCaseRequest: The request message for the EscalateCase
 // endpoint.
 type EscalateCaseRequest struct {
-	// Escalation: The escalation object to be sent with the escalation
+	// Escalation: The escalation information to be sent with the escalation
 	// request.
 	Escalation *Escalation `json:"escalation,omitempty"`
 
@@ -1035,14 +1035,13 @@ func (s *ListAttachmentsResponse) MarshalJSON() ([]byte, error) {
 
 // ListCasesResponse: The response message for the ListCases endpoint.
 type ListCasesResponse struct {
-	// Cases: The list of cases associated with the Google Cloud Resource,
-	// after any filters have been applied.
+	// Cases: The list of cases associated with the parent after any filters
+	// have been applied.
 	Cases []*Case `json:"cases,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results. This
-	// should be set in the `page_token` field of the subsequent
-	// `ListCasesRequest` message that is issued. If unspecified, there are
-	// no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this
+	// in the `page_token` field of subsequent `cases.list` requests. If
+	// unspecified, there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1306,10 +1305,9 @@ type SearchCaseClassificationsResponse struct {
 	// CaseClassifications: The classifications retrieved.
 	CaseClassifications []*CaseClassification `json:"caseClassifications,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results. This
-	// should be set in the `page_token` field of subsequent
-	// `SearchCaseClassificationsRequest` message that is issued. If
-	// unspecified, there are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this
+	// in the `page_token` field of subsequent `caseClassifications.list`
+	// requests. If unspecified, there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1343,14 +1341,13 @@ func (s *SearchCaseClassificationsResponse) MarshalJSON() ([]byte, error) {
 // SearchCasesResponse: The response message for the SearchCases
 // endpoint.
 type SearchCasesResponse struct {
-	// Cases: The list of cases associated with the Google Cloud Resource,
-	// after any filters have been applied.
+	// Cases: The list of cases associated with the parent after any filters
+	// have been applied.
 	Cases []*Case `json:"cases,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results. This
-	// should be set in the `page_token` field of subsequent
-	// `SearchCaseRequest` message that is issued. If unspecified, there are
-	// no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. Set this
+	// in the `page_token` field of subsequent `cases.search` requests. If
+	// unspecified, there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1442,26 +1439,33 @@ type CaseClassificationsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Retrieve valid classifications to be used when creating a
-// support case. The classications are hierarchical, with each
-// classification containing all levels of the hierarchy, separated by
-// " > ". For example "Technical Issue > Compute > Compute Engine".
-// Classification IDs returned by `caseClassifications.search` are
-// guaranteed to be valid for at least six months. If a given
-// classification is deactivated, it immediately stops being returned.
-// After six months, `case.create` requests using the classification ID
-// will fail. Here is an example of calling this endpoint using cURL:
-// ```shell curl \ --header "Authorization: Bearer $(gcloud auth
+// Search: Retrieve valid classifications to use when creating a support
+// case. Classifications are hierarchical. Each classification is a
+// string containing all levels of the hierarchy separated by " > ".
+// For example, "Technical Issue > Compute > Compute Engine".
+// Classification IDs returned by this endpoint are valid for at least
+// six months. When a classification is deactivated, this endpoint
+// immediately stops returning it. After six months, `case.create`
+// requests using the classification will fail. EXAMPLES: cURL: ```shell
+// curl \ --header "Authorization: Bearer $(gcloud auth
 // print-access-token)" \
 // 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?que
-// ry=display_name:"*Compute%20Engine*"' ```
+// ry=display_name:"*Compute%20Engine*"' ``` Python: ```python import
+// googleapiclient.discovery supportApiService =
+// googleapiclient.discovery.build( serviceName="cloudsupport",
+// version="v2",
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version=v2", ) request =
+// supportApiService.caseClassifications().search(
+// query='display_name:"*Compute Engine*"' ) print(request.execute())
+// ```
 func (r *CaseClassificationsService) Search() *CaseClassificationsSearchCall {
 	c := &CaseClassificationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of cases fetched with each request.
+// of classifications fetched with each request.
 func (c *CaseClassificationsSearchCall) PageSize(pageSize int64) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1475,10 +1479,10 @@ func (c *CaseClassificationsSearchCall) PageToken(pageToken string) *CaseClassif
 	return c
 }
 
-// Query sets the optional parameter "query": An expression written in
-// the Google Cloud filter language. If non-empty, then only cases whose
-// fields match the filter are returned. If empty, then no messages are
-// filtered out.
+// Query sets the optional parameter "query": An expression used to
+// filter case classifications. If it's an empty string, then no
+// filtering happens. Otherwise, case classifications will be returned
+// that match the filter.
 func (c *CaseClassificationsSearchCall) Query(query string) *CaseClassificationsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -1581,14 +1585,14 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve valid classifications to be used when creating a support case. The classications are hierarchical, with each classification containing all levels of the hierarchy, separated by `\" \u003e \"`. For example `\"Technical Issue \u003e Compute \u003e Compute Engine\"`. Classification IDs returned by `caseClassifications.search` are guaranteed to be valid for at least six months. If a given classification is deactivated, it immediately stops being returned. After six months, `case.create` requests using the classification ID will fail. Here is an example of calling this endpoint using cURL: ```shell curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:\"*Compute%20Engine*\"' ```",
+	//   "description": "Retrieve valid classifications to use when creating a support case. Classifications are hierarchical. Each classification is a string containing all levels of the hierarchy separated by `\" \u003e \"`. For example, `\"Technical Issue \u003e Compute \u003e Compute Engine\"`. Classification IDs returned by this endpoint are valid for at least six months. When a classification is deactivated, this endpoint immediately stops returning it. After six months, `case.create` requests using the classification will fail. EXAMPLES: cURL: ```shell curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ 'https://cloudsupport.googleapis.com/v2/caseClassifications:search?query=display_name:\"*Compute%20Engine*\"' ``` Python: ```python import googleapiclient.discovery supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=\"v2\", discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version=v2\", ) request = supportApiService.caseClassifications().search( query='display_name:\"*Compute Engine*\"' ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/caseClassifications:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.caseClassifications.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of cases fetched with each request.",
+	//       "description": "The maximum number of classifications fetched with each request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1599,7 +1603,7 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "An expression written in the Google Cloud filter language. If non-empty, then only cases whose fields match the filter are returned. If empty, then no messages are filtered out.",
+	//       "description": "An expression used to filter case classifications. If it's an empty string, then no filtering happens. Otherwise, case classifications will be returned that match the filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1647,13 +1651,20 @@ type CasesCloseCall struct {
 	header_          http.Header
 }
 
-// Close: Close the specified case. Here is an example of calling this
-// endpoint using cURL: ```shell
+// Close: Close a case. EXAMPLES: cURL: ```shell
 // case="projects/some-project/cases/43595344" curl \ --request POST \
 // --header "Authorization: Bearer $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$case:close" ```
+// "https://cloudsupport.googleapis.com/v2/$case:close" ``` Python:
+// ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().close(
+// name="projects/some-project/cases/43595344" )
+// print(request.execute()) ```
 //
-// - name: The fully qualified name of the case resource to be closed.
+// - name: The name of the case to close.
 func (r *CasesService) Close(name string, closecaserequest *CloseCaseRequest) *CasesCloseCall {
 	c := &CasesCloseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1752,7 +1763,7 @@ func (c *CasesCloseCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Close the specified case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case:close\" ```",
+	//   "description": "Close a case. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case:close\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().close( name=\"projects/some-project/cases/43595344\" ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}:close",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.close",
@@ -1761,7 +1772,7 @@ func (c *CasesCloseCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the case resource to be closed.",
+	//       "description": "Required. The name of the case to close.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
 	//       "required": true,
@@ -1793,12 +1804,11 @@ type CasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a new case and associate it with a Google Cloud
-// Resource. The case object must have the following fields set:
-// `display_name`, `description`, `classification`, and `priority`. If
-// you're just testing the API and don't want to route your case to an
-// agent, set `testCase=true`. Here is an example of calling this
-// endpoint using cURL: ```shell parent="projects/some-project" curl \
+// Create: Create a new case and associate it with a parent. It must
+// have the following fields set: `display_name`, `description`,
+// `classification`, and `priority`. If you're just testing the API and
+// don't want to route your case to an agent, set `testCase=true`.
+// EXAMPLES: cURL: ```shell parent="projects/some-project" curl \
 // --request POST \ --header "Authorization: Bearer $(gcloud auth
 // print-access-token)" \ --header 'Content-Type: application/json' \
 // --data '{ "display_name": "Test case created by me.", "description":
@@ -1807,10 +1817,21 @@ type CasesCreateCall struct {
 // TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, "time_zone":
 // "-07:00", "subscriber_email_addresses": [ "foo@domain.com",
 // "bar@domain.com" ], "testCase": true, "priority": "P3" }' \
-// "https://cloudsupport.googleapis.com/v2/$parent/cases" ```
+// "https://cloudsupport.googleapis.com/v2/$parent/cases" ``` Python:
+// ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().create( parent="projects/some-project",
+// body={ "displayName": "A Test Case", "description": "This is a test
+// case.", "testCase": True, "priority": "P2", "classification": { "id":
+// "100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2
+// TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8" }, }, )
+// print(request.execute()) ```
 //
-//   - parent: The name of the Google Cloud Resource under which the case
-//     should be created.
+//   - parent: The name of the parent under which the case should be
+//     created.
 func (r *CasesService) Create(parent string, case_ *Case) *CasesCreateCall {
 	c := &CasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1909,7 +1930,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new case and associate it with a Google Cloud Resource. The case object must have the following fields set: `display_name`, `description`, `classification`, and `priority`. If you're just testing the API and don't want to route your case to an agent, set `testCase=true`. Here is an example of calling this endpoint using cURL: ```shell parent=\"projects/some-project\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"display_name\": \"Test case created by me.\", \"description\": \"a random test case, feel free to close\", \"classification\": { \"id\": \"100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8\" }, \"time_zone\": \"-07:00\", \"subscriber_email_addresses\": [ \"foo@domain.com\", \"bar@domain.com\" ], \"testCase\": true, \"priority\": \"P3\" }' \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ```",
+	//   "description": "Create a new case and associate it with a parent. It must have the following fields set: `display_name`, `description`, `classification`, and `priority`. If you're just testing the API and don't want to route your case to an agent, set `testCase=true`. EXAMPLES: cURL: ```shell parent=\"projects/some-project\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header 'Content-Type: application/json' \\ --data '{ \"display_name\": \"Test case created by me.\", \"description\": \"a random test case, feel free to close\", \"classification\": { \"id\": \"100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8\" }, \"time_zone\": \"-07:00\", \"subscriber_email_addresses\": [ \"foo@domain.com\", \"bar@domain.com\" ], \"testCase\": true, \"priority\": \"P3\" }' \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().create( parent=\"projects/some-project\", body={ \"displayName\": \"A Test Case\", \"description\": \"This is a test case.\", \"testCase\": True, \"priority\": \"P2\", \"classification\": { \"id\": \"100IK2AKCLHMGRJ9CDGMOCGP8DM6UTB4BT262T31BT1M2T31DHNMENPO6KS36CPJ786L2TBFEHGN6NPI64R3CDHN8880G08I1H3MURR7DHII0GRCDTQM8\" }, }, ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.create",
@@ -1918,7 +1939,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the Google Cloud Resource under which the case should be created.",
+	//       "description": "Required. The name of the parent under which the case should be created.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1950,22 +1971,28 @@ type CasesEscalateCall struct {
 	header_             http.Header
 }
 
-// Escalate: Escalate a case. Escalating a case initiates the Google
-// Cloud Support escalation management process. This operation is only
-// available to certain Customer Care support services. Go to
-// https://cloud.google.com/support and look for 'Technical support
-// escalations' in the feature list to find out which support services
-// let you perform escalations. Here is an example of calling this
-// endpoint using cURL: ```shell
+// Escalate: Escalate a case, starting the Google Cloud Support
+// escalation management process. This operation is only available for
+// some support services. Go to https://cloud.google.com/support and
+// look for 'Technical support escalations' in the feature list to find
+// out which ones let you do that. EXAMPLES: cURL: ```shell
 // case="projects/some-project/cases/43595344" curl \ --request POST \
 // --header "Authorization: Bearer $(gcloud auth print-access-token)" \
 // --header "Content-Type: application/json" \ --data '{ "escalation": {
 // "reason": "BUSINESS_IMPACT", "justification": "This is a test
 // escalation." } }' \
-// "https://cloudsupport.googleapis.com/v2/$case:escalate" ```
+// "https://cloudsupport.googleapis.com/v2/$case:escalate" ``` Python:
+// ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().escalate(
+// name="projects/some-project/cases/43595344", body={ "escalation": {
+// "reason": "BUSINESS_IMPACT", "justification": "This is a test
+// escalation.", }, }, ) print(request.execute()) ```
 //
-//   - name: The fully qualified name of the Case resource to be
-//     escalated.
+// - name: The name of the case to be escalated.
 func (r *CasesService) Escalate(name string, escalatecaserequest *EscalateCaseRequest) *CasesEscalateCall {
 	c := &CasesEscalateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2064,7 +2091,7 @@ func (c *CasesEscalateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Escalate a case. Escalating a case initiates the Google Cloud Support escalation management process. This operation is only available to certain Customer Care support services. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which support services let you perform escalations. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"escalation\": { \"reason\": \"BUSINESS_IMPACT\", \"justification\": \"This is a test escalation.\" } }' \\ \"https://cloudsupport.googleapis.com/v2/$case:escalate\" ```",
+	//   "description": "Escalate a case, starting the Google Cloud Support escalation management process. This operation is only available for some support services. Go to https://cloud.google.com/support and look for 'Technical support escalations' in the feature list to find out which ones let you do that. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request POST \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"escalation\": { \"reason\": \"BUSINESS_IMPACT\", \"justification\": \"This is a test escalation.\" } }' \\ \"https://cloudsupport.googleapis.com/v2/$case:escalate\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().escalate( name=\"projects/some-project/cases/43595344\", body={ \"escalation\": { \"reason\": \"BUSINESS_IMPACT\", \"justification\": \"This is a test escalation.\", }, }, ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}:escalate",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.escalate",
@@ -2073,7 +2100,7 @@ func (c *CasesEscalateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the Case resource to be escalated.",
+	//       "description": "Required. The name of the case to be escalated.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
 	//       "required": true,
@@ -2105,13 +2132,20 @@ type CasesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve the specified case. Here is an example of calling this
-// endpoint using cURL: ```shell
+// Get: Retrieve a case. EXAMPLES: cURL: ```shell
 // case="projects/some-project/cases/16033687" curl \ --header
 // "Authorization: Bearer $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$case" ```
+// "https://cloudsupport.googleapis.com/v2/$case" ``` Python: ```python
+// import googleapiclient.discovery api_version = "v2" supportApiService
+// = googleapiclient.discovery.build( serviceName="cloudsupport",
+// version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().get(
+// name="projects/some-project/cases/43595344", )
+// print(request.execute()) ```
 //
-// - name: The fully qualified name of a case to be retrieved.
+// - name: The full name of a case to be retrieved.
 func (r *CasesService) Get(name string) *CasesGetCall {
 	c := &CasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2217,7 +2251,7 @@ func (c *CasesGetCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve the specified case. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/16033687\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case\" ```",
+	//   "description": "Retrieve a case. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/16033687\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$case\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().get( name=\"projects/some-project/cases/43595344\", ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.get",
@@ -2226,7 +2260,7 @@ func (c *CasesGetCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of a case to be retrieved.",
+	//       "description": "Required. The full name of a case to be retrieved.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
 	//       "required": true,
@@ -2255,34 +2289,39 @@ type CasesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieve all cases under the specified parent. Note: Listing
-// cases under an organization returns only the cases directly parented
-// by that organization. To retrieve all cases under an organization,
-// including cases parented by projects under that organization, use
-// `cases.search`. Here is an example of calling this endpoint using
+// List: Retrieve all cases under a parent, but not its children. For
+// example, listing cases under an organization only returns the cases
+// that are directly parented by that organization. To retrieve cases
+// under an organization and its projects, use `cases.search`. EXAMPLES:
 // cURL: ```shell parent="projects/some-project" curl \ --header
 // "Authorization: Bearer $(gcloud auth print-access-token)" \
-// "https://cloudsupport.googleapis.com/v2/$parent/cases" ```
+// "https://cloudsupport.googleapis.com/v2/$parent/cases" ``` Python:
+// ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().list(parent="projects/some-project")
+// print(request.execute()) ```
 //
-//   - parent: The fully qualified name of parent resource to list cases
-//     under.
+// - parent: The name of a parent to list cases under.
 func (r *CasesService) List(parent string) *CasesListCall {
 	c := &CasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression written in
-// filter language. If non-empty, the query returns the cases that match
-// the filter. Else, the query doesn't filter the cases. Filter
-// expressions use the following fields with the operators equals (`=`)
-// and `AND`: - `state`: The accepted values are `OPEN` or `CLOSED`. -
-// `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`.
-// You can specify multiple values for priority using the `OR` operator.
-// For example, `priority=P1 OR priority=P2`. - `creator.email`: The
-// email address of the case creator. Examples: - `state=CLOSED` -
-// `state=OPEN AND creator.email="tester@example.com" - `state=OPEN AND
-// (priority=P0 OR priority=P1)`
+// Filter sets the optional parameter "filter": An expression used to
+// filter cases. If it's an empty string, then no filtering happens.
+// Otherwise, the endpoint returns the cases that match the filter.
+// Expressions use the following fields separated by `AND` and specified
+// with `=`: - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be
+// `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for
+// priority using the `OR` operator. For example, `priority=P1 OR
+// priority=P2`. - `creator.email`: The email address of the case
+// creator. EXAMPLES: - `state=CLOSED` - `state=OPEN AND
+// creator.email="tester@example.com" - `state=OPEN AND (priority=P0 OR
+// priority=P1)`
 func (c *CasesListCall) Filter(filter string) *CasesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2402,7 +2441,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve all cases under the specified parent. Note: Listing cases under an organization returns only the cases directly parented by that organization. To retrieve all cases under an organization, including cases parented by projects under that organization, use `cases.search`. Here is an example of calling this endpoint using cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ```",
+	//   "description": "Retrieve all cases under a parent, but not its children. For example, listing cases under an organization only returns the cases that are directly parented by that organization. To retrieve cases under an organization and its projects, use `cases.search`. EXAMPLES: cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().list(parent=\"projects/some-project\") print(request.execute()) ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.list",
@@ -2411,7 +2450,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression written in filter language. If non-empty, the query returns the cases that match the filter. Else, the query doesn't filter the cases. Filter expressions use the following fields with the operators equals (`=`) and `AND`: - `state`: The accepted values are `OPEN` or `CLOSED`. - `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. Examples: - `state=CLOSED` - `state=OPEN AND creator.email=\"tester@example.com\"` - `state=OPEN AND (priority=P0 OR priority=P1)`",
+	//       "description": "An expression used to filter cases. If it's an empty string, then no filtering happens. Otherwise, the endpoint returns the cases that match the filter. Expressions use the following fields separated by `AND` and specified with `=`: - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. EXAMPLES: - `state=CLOSED` - `state=OPEN AND creator.email=\"tester@example.com\"` - `state=OPEN AND (priority=P0 OR priority=P1)`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2427,7 +2466,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The fully qualified name of parent resource to list cases under.",
+	//       "description": "Required. The name of a parent to list cases under.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -2477,14 +2516,21 @@ type CasesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Update the specified case. Only a subset of fields can be
-// updated. Here is an example of calling this endpoint using cURL:
-// ```shell case="projects/some-project/cases/43595344" curl \ --request
-// PATCH \ --header "Authorization: Bearer $(gcloud auth
+// Patch: Update a case. Only some fields can be updated. EXAMPLES:
+// cURL: ```shell case="projects/some-project/cases/43595344" curl \
+// --request PATCH \ --header "Authorization: Bearer $(gcloud auth
 // print-access-token)" \ --header "Content-Type: application/json" \
 // --data '{ "priority": "P1" }' \
 // "https://cloudsupport.googleapis.com/v2/$case?updateMask=priority"
-// ```
+// ``` Python: ```python import googleapiclient.discovery api_version =
+// "v2" supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().patch(
+// name="projects/some-project/cases/43112854", body={ "displayName":
+// "This is Now a New Title", "priority": "P2", }, )
+// print(request.execute()) ```
 //
 // - name: The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
@@ -2495,14 +2541,13 @@ func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
 }
 
 // UpdateMask sets the optional parameter "updateMask": A list of
-// attributes of the case object that should be updated as part of this
-// request. Supported values are `priority`, `display_name`, and
-// `subscriber_email_addresses`. If no fields are specified, all
-// supported fields are updated. WARNING: If you do not provide a field
-// mask, then you might accidentally clear some fields. For example, if
-// you leave the field mask empty and do not provide a value for
-// `subscriber_email_addresses`, then `subscriber_email_addresses` is
-// updated to empty.
+// attributes of the case that should be updated. Supported values are
+// `priority`, `display_name`, and `subscriber_email_addresses`. If no
+// fields are specified, all supported fields are updated. Be careful -
+// if you do not provide a field mask, then you might accidentally clear
+// some fields. For example, if you leave the field mask empty and do
+// not provide a value for `subscriber_email_addresses`, then
+// `subscriber_email_addresses` is updated to empty.
 func (c *CasesPatchCall) UpdateMask(updateMask string) *CasesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2599,7 +2644,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the specified case. Only a subset of fields can be updated. Here is an example of calling this endpoint using cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request PATCH \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"priority\": \"P1\" }' \\ \"https://cloudsupport.googleapis.com/v2/$case?updateMask=priority\" ```",
+	//   "description": "Update a case. Only some fields can be updated. EXAMPLES: cURL: ```shell case=\"projects/some-project/cases/43595344\" curl \\ --request PATCH \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ --header \"Content-Type: application/json\" \\ --data '{ \"priority\": \"P1\" }' \\ \"https://cloudsupport.googleapis.com/v2/$case?updateMask=priority\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().patch( name=\"projects/some-project/cases/43112854\", body={ \"displayName\": \"This is Now a New Title\", \"priority\": \"P2\", }, ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudsupport.cases.patch",
@@ -2615,7 +2660,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A list of attributes of the case object that should be updated as part of this request. Supported values are `priority`, `display_name`, and `subscriber_email_addresses`. If no fields are specified, all supported fields are updated. WARNING: If you do not provide a field mask, then you might accidentally clear some fields. For example, if you leave the field mask empty and do not provide a value for `subscriber_email_addresses`, then `subscriber_email_addresses` is updated to empty.",
+	//       "description": "A list of attributes of the case that should be updated. Supported values are `priority`, `display_name`, and `subscriber_email_addresses`. If no fields are specified, all supported fields are updated. Be careful - if you do not provide a field mask, then you might accidentally clear some fields. For example, if you leave the field mask empty and do not provide a value for `subscriber_email_addresses`, then `subscriber_email_addresses` is updated to empty.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2645,11 +2690,17 @@ type CasesSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search cases using the specified query. Here is an example of
-// calling this endpoint using cURL: ```shell
+// Search: Search for cases using a query. EXAMPLES: cURL: ```shell
 // parent="projects/some-project" curl \ --header "Authorization: Bearer
 // $(gcloud auth print-access-token)" \
 // "https://cloudsupport.googleapis.com/v2/$parent/cases:search" ```
+// Python: ```python import googleapiclient.discovery api_version = "v2"
+// supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/r
+// est?version={api_version}", ) request =
+// supportApiService.cases().search( parent="projects/some-project",
+// query="state=OPEN" ) print(request.execute()) ```
 func (r *CasesService) Search() *CasesSearchCall {
 	c := &CasesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2670,30 +2721,30 @@ func (c *CasesSearchCall) PageToken(pageToken string) *CasesSearchCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": The fully qualified name
-// of parent resource to search cases under.
+// Parent sets the optional parameter "parent": The name of the parent
+// resource to search for cases under.
 func (c *CasesSearchCall) Parent(parent string) *CasesSearchCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
-// Query sets the optional parameter "query": An expression written in
-// filter language. A query uses the following fields with the operators
-// equals (`=`) and `AND`: - `organization`: An organization name in the
+// Query sets the optional parameter "query": An expression used to
+// filter cases. Expressions use the following fields separated by `AND`
+// and specified with `=`: - `organization`: An organization name in the
 // form `organizations/`. - `project`: A project name in the form
-// `projects/`. - `state`: The accepted values are `OPEN` or `CLOSED`. -
-// `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`.
-// You can specify multiple values for priority using the `OR` operator.
-// For example, `priority=P1 OR priority=P2`. - `creator.email`: The
-// email address of the case creator. - `billingAccount`: A billing
-// account in the form `billingAccounts/` You must specify either
-// `organization` or `project`. To search across `displayName`,
-// `description`, and comments, use a global restriction with no keyword
-// or operator. For example, "my search". To search only cases updated
-// after a certain date, use `update_time` restricted with that
-// particular date, time, and timezone in ISO datetime format. For
-// example, `update_time>"2020-01-01T00:00:00-05:00". `update_time`
-// only supports the greater than operator (`>`). Examples: -
+// `projects/`. - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can
+// be `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values
+// for priority using the `OR` operator. For example, `priority=P1 OR
+// priority=P2`. - `creator.email`: The email address of the case
+// creator. - `billingAccount`: A billing account in the form
+// `billingAccounts/` You must specify either `organization` or
+// `project`. To search across `displayName`, `description`, and
+// comments, use a global restriction with no keyword or operator. For
+// example, "my search". To search only cases updated after a certain
+// date, use `update_time` restricted with that particular date, time,
+// and timezone in ISO datetime format. For example,
+// `update_time>"2020-01-01T00:00:00-05:00". `update_time` only
+// supports the greater than operator (`>`). Examples: -
 // `organization="organizations/123456789" -
 // `project="projects/my-project-id" - `project="projects/123456789" -
 // `billing_account="billingAccounts/123456-A0B0C0-CUZ789" -
@@ -2802,7 +2853,7 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Search cases using the specified query. Here is an example of calling this endpoint using cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases:search\" ```",
+	//   "description": "Search for cases using a query. EXAMPLES: cURL: ```shell parent=\"projects/some-project\" curl \\ --header \"Authorization: Bearer $(gcloud auth print-access-token)\" \\ \"https://cloudsupport.googleapis.com/v2/$parent/cases:search\" ``` Python: ```python import googleapiclient.discovery api_version = \"v2\" supportApiService = googleapiclient.discovery.build( serviceName=\"cloudsupport\", version=api_version, discoveryServiceUrl=f\"https://cloudsupport.googleapis.com/$discovery/rest?version={api_version}\", ) request = supportApiService.cases().search( parent=\"projects/some-project\", query=\"state=OPEN\" ) print(request.execute()) ```",
 	//   "flatPath": "v2beta/cases:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsupport.cases.search",
@@ -2820,12 +2871,12 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The fully qualified name of parent resource to search cases under.",
+	//       "description": "The name of the parent resource to search for cases under.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "An expression written in filter language. A query uses the following fields with the operators equals (`=`) and `AND`: - `organization`: An organization name in the form `organizations/`. - `project`: A project name in the form `projects/`. - `state`: The accepted values are `OPEN` or `CLOSED`. - `priority`: The accepted values are `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. - `billingAccount`: A billing account in the form `billingAccounts/` You must specify either `organization` or `project`. To search across `displayName`, `description`, and comments, use a global restriction with no keyword or operator. For example, `\"my search\"`. To search only cases updated after a certain date, use `update_time` restricted with that particular date, time, and timezone in ISO datetime format. For example, `update_time\u003e\"2020-01-01T00:00:00-05:00\"`. `update_time` only supports the greater than operator (`\u003e`). Examples: - `organization=\"organizations/123456789\"` - `project=\"projects/my-project-id\"` - `project=\"projects/123456789\"` - `billing_account=\"billingAccounts/123456-A0B0C0-CUZ789\"` - `organization=\"organizations/123456789\" AND state=CLOSED` - `project=\"projects/my-project-id\" AND creator.email=\"tester@example.com\"` - `project=\"projects/my-project-id\" AND (priority=P0 OR priority=P1)`",
+	//       "description": "An expression used to filter cases. Expressions use the following fields separated by `AND` and specified with `=`: - `organization`: An organization name in the form `organizations/`. - `project`: A project name in the form `projects/`. - `state`: Can be `OPEN` or `CLOSED`. - `priority`: Can be `P0`, `P1`, `P2`, `P3`, or `P4`. You can specify multiple values for priority using the `OR` operator. For example, `priority=P1 OR priority=P2`. - `creator.email`: The email address of the case creator. - `billingAccount`: A billing account in the form `billingAccounts/` You must specify either `organization` or `project`. To search across `displayName`, `description`, and comments, use a global restriction with no keyword or operator. For example, `\"my search\"`. To search only cases updated after a certain date, use `update_time` restricted with that particular date, time, and timezone in ISO datetime format. For example, `update_time\u003e\"2020-01-01T00:00:00-05:00\"`. `update_time` only supports the greater than operator (`\u003e`). Examples: - `organization=\"organizations/123456789\"` - `project=\"projects/my-project-id\"` - `project=\"projects/123456789\"` - `billing_account=\"billingAccounts/123456-A0B0C0-CUZ789\"` - `organization=\"organizations/123456789\" AND state=CLOSED` - `project=\"projects/my-project-id\" AND creator.email=\"tester@example.com\"` - `project=\"projects/my-project-id\" AND (priority=P0 OR priority=P1)`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

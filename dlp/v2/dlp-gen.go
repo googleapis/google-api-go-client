@@ -3770,7 +3770,8 @@ type GooglePrivacyDlpV2Error struct {
 	// Details: Detailed error codes and messages.
 	Details *GoogleRpcStatus `json:"details,omitempty"`
 
-	// Timestamps: The times the error occurred.
+	// Timestamps: The times the error occurred. List includes the oldest
+	// timestamp, and the last 9 ones.
 	Timestamps []string `json:"timestamps,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

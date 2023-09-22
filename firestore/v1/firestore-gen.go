@@ -1715,7 +1715,7 @@ type GoogleFirestoreAdminV1Database struct {
 	// keys is the project_id (eg: foo instead of v~foo).
 	KeyPrefix string `json:"keyPrefix,omitempty"`
 
-	// LocationId: The location of the database. Available databases are
+	// LocationId: The location of the database. Available locations are
 	// listed at https://cloud.google.com/firestore/docs/locations.
 	LocationId string `json:"locationId,omitempty"`
 

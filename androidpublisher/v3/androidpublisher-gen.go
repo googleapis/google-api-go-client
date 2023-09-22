@@ -6831,7 +6831,7 @@ type TracksListResponse struct {
 	// ("androidpublisher#tracksListResponse").
 	Kind string `json:"kind,omitempty"`
 
-	// Tracks: All tracks.
+	// Tracks: All tracks (including tracks with no releases).
 	Tracks []*Track `json:"tracks,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

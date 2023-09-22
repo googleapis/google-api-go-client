@@ -1216,6 +1216,7 @@ type SearchAnalyticsQueryRequest struct {
 	//   "AUTO"
 	//   "BY_PROPERTY"
 	//   "BY_PAGE"
+	//   "BY_NEWS_SHOWCASE_PANEL"
 	AggregationType string `json:"aggregationType,omitempty"`
 
 	// DataState: The data state to be fetched, can be full or all, the
@@ -1325,6 +1326,7 @@ type SearchAnalyticsQueryResponse struct {
 	//   "AUTO"
 	//   "BY_PROPERTY"
 	//   "BY_PAGE"
+	//   "BY_NEWS_SHOWCASE_PANEL"
 	ResponseAggregationType string `json:"responseAggregationType,omitempty"`
 
 	// Rows: A list of rows grouped by the key values in the order given in

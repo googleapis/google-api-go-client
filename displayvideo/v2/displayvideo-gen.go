@@ -9279,6 +9279,10 @@ type GenerateDefaultLineItemRequest struct {
 	// times to the same person in a certain period of time. Line items of
 	// this type and their targeting cannot be created or updated using the
 	// API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIEW" - YouTube video ads that
+	// aim to get more views with a variety of ad formats. Line items of
+	// this type and their targeting cannot be created or updated using the
+	// API.
 	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
 	// Line items of this type and their targeting cannot be created or
 	// updated using the API.
@@ -11590,6 +11594,10 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_TARGET_FREQUENCY" - The goal
 	// of this line item type is to show the YouTube ads target number of
 	// times to the same person in a certain period of time. Line items of
+	// this type and their targeting cannot be created or updated using the
+	// API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIEW" - YouTube video ads that
+	// aim to get more views with a variety of ad formats. Line items of
 	// this type and their targeting cannot be created or updated using the
 	// API.
 	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
@@ -18116,6 +18124,8 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MAXIMIZE_CONVERSIONS" -
 	// A bidding strategy that automatically maximizes number of conversions
 	// given a daily budget.
+	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPV" - A bidding
+	// strategy that automatically optimizes cost per video view.
 	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS" - A
 	// bidding strategy that automatically maximizes revenue while averaging
 	// a specific target Return On Ad Spend (ROAS).

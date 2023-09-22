@@ -1047,6 +1047,57 @@ func (s *AzureVmsDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BootDiskDefaults: BootDiskDefaults hold information about the boot
+// disk of a VM.
+type BootDiskDefaults struct {
+	// DeviceName: Optional. Specifies a unique device name of your choice
+	// that is reflected into the /dev/disk/by-id/google-* tree of a Linux
+	// operating system running within the instance. If not specified, the
+	// server chooses a default device name to apply to this disk, in the
+	// form persistent-disk-x, where x is a number assigned by Google
+	// Compute Engine. This field is only applicable for persistent disks.
+	DeviceName string `json:"deviceName,omitempty"`
+
+	// DiskName: Optional. The name of the disk.
+	DiskName string `json:"diskName,omitempty"`
+
+	// DiskType: Optional. The type of disk provisioning to use for the VM.
+	//
+	// Possible values:
+	//   "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED" - An unspecified disk type.
+	// Will be used as STANDARD.
+	//   "COMPUTE_ENGINE_DISK_TYPE_STANDARD" - A Standard disk type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_SSD" - SSD hard disk type.
+	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD
+	// persistent disks that balance performance and cost.
+	DiskType string `json:"diskType,omitempty"`
+
+	// Image: The image to use when creating the disk.
+	Image *DiskImageDefaults `json:"image,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BootDiskDefaults) MarshalJSON() ([]byte, error) {
+	type NoMethod BootDiskDefaults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelCloneJobRequest: Request message for 'CancelCloneJob' request.
 type CancelCloneJobRequest struct {
 }
@@ -1226,10 +1277,16 @@ type ComputeEngineDisksTargetDefaults struct {
 	// Disks: The details of each Persistent Disk to create.
 	Disks []*PersistentDiskDefaults `json:"disks,omitempty"`
 
+	// DisksTargetDefaults: Details of the disk only migration target.
+	DisksTargetDefaults *DisksMigrationDisksTargetDefaults `json:"disksTargetDefaults,omitempty"`
+
 	// TargetProject: The full path of the resource of type TargetProject
 	// which represents the Compute Engine project in which to create the
 	// Persistent Disks.
 	TargetProject string `json:"targetProject,omitempty"`
+
+	// VmTargetDefaults: Details of the VM migration target.
+	VmTargetDefaults *DisksMigrationVmTargetDefaults `json:"vmTargetDefaults,omitempty"`
 
 	// Zone: The zone in which to create the Persistent Disks.
 	Zone string `json:"zone,omitempty"`
@@ -1262,6 +1319,13 @@ func (s *ComputeEngineDisksTargetDefaults) MarshalJSON() ([]byte, error) {
 type ComputeEngineDisksTargetDetails struct {
 	// Disks: The details of each created Persistent Disk.
 	Disks []*PersistentDisk `json:"disks,omitempty"`
+
+	// DisksTargetDetails: Details of the disks-only migration target.
+	DisksTargetDetails *DisksMigrationDisksTargetDetails `json:"disksTargetDetails,omitempty"`
+
+	// VmTargetDetails: Details for the VM the migrated data disks are
+	// attached to.
+	VmTargetDetails *DisksMigrationVmTargetDetails `json:"vmTargetDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Disks") to
 	// unconditionally include in API requests. By default, fields with
@@ -1905,6 +1969,145 @@ type Disk struct {
 
 func (s *Disk) MarshalJSON() ([]byte, error) {
 	type NoMethod Disk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiskImageDefaults: Contains details about the image source used to
+// create the disk.
+type DiskImageDefaults struct {
+	// SourceImage: Required. The Image resource used when creating the
+	// disk.
+	SourceImage string `json:"sourceImage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SourceImage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceImage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiskImageDefaults) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskImageDefaults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DisksMigrationDisksTargetDefaults: Details for a disk only migration.
+type DisksMigrationDisksTargetDefaults struct {
+}
+
+// DisksMigrationDisksTargetDetails: Details for a disks-only migration.
+type DisksMigrationDisksTargetDetails struct {
+}
+
+// DisksMigrationVmTargetDefaults: Details for creation of a VM that
+// migrated data disks will be attached to.
+type DisksMigrationVmTargetDefaults struct {
+	// AdditionalLicenses: Optional. Additional licenses to assign to the
+	// VM.
+	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
+
+	// BootDiskDefaults: Optional. Details of the boot disk of the VM.
+	BootDiskDefaults *BootDiskDefaults `json:"bootDiskDefaults,omitempty"`
+
+	// ComputeScheduling: Optional. Compute instance scheduling information
+	// (if empty default is used).
+	ComputeScheduling *ComputeScheduling `json:"computeScheduling,omitempty"`
+
+	// Hostname: Optional. The hostname to assign to the VM.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Labels: Optional. A map of labels to associate with the VM.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MachineType: Required. The machine type to create the VM with.
+	MachineType string `json:"machineType,omitempty"`
+
+	// MachineTypeSeries: Optional. The machine type series to create the VM
+	// with. For presentation only.
+	MachineTypeSeries string `json:"machineTypeSeries,omitempty"`
+
+	// Metadata: Optional. The metadata key/value pairs to assign to the VM.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// NetworkInterfaces: Optional. NICs to attach to the VM.
+	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
+
+	// NetworkTags: Optional. A list of network tags to associate with the
+	// VM.
+	NetworkTags []string `json:"networkTags,omitempty"`
+
+	// SecureBoot: Optional. Defines whether the instance has Secure Boot
+	// enabled. This can be set to true only if the VM boot option is EFI.
+	SecureBoot bool `json:"secureBoot,omitempty"`
+
+	// ServiceAccount: Optional. The service account to associate the VM
+	// with.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// VmName: Required. The name of the VM to create.
+	VmName string `json:"vmName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalLicenses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalLicenses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisksMigrationVmTargetDefaults) MarshalJSON() ([]byte, error) {
+	type NoMethod DisksMigrationVmTargetDefaults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DisksMigrationVmTargetDetails: Details for the VM created VM as part
+// of disks migration.
+type DisksMigrationVmTargetDetails struct {
+	// VmUri: Output only. The URI of the Compute Engine VM.
+	VmUri string `json:"vmUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VmUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VmUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisksMigrationVmTargetDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DisksMigrationVmTargetDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3145,6 +3348,10 @@ type PersistentDiskDefaults struct {
 	// SourceDiskNumber: Required. The ordinal number of the source VM disk.
 	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
 
+	// VmAttachmentDetails: Optional. Details for attachment of the disk to
+	// a VM. Used when the disk is set to be attacked to a target VM.
+	VmAttachmentDetails *VmAttachmentDetails `json:"vmAttachmentDetails,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AdditionalLabels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3789,6 +3996,39 @@ type UtilizationReport struct {
 
 func (s *UtilizationReport) MarshalJSON() ([]byte, error) {
 	type NoMethod UtilizationReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmAttachmentDetails: Details for attachment of the disk to a VM.
+type VmAttachmentDetails struct {
+	// DeviceName: Optional. Specifies a unique device name of your choice
+	// that is reflected into the /dev/disk/by-id/google-* tree of a Linux
+	// operating system running within the instance. If not specified, the
+	// server chooses a default device name to apply to this disk, in the
+	// form persistent-disk-x, where x is a number assigned by Google
+	// Compute Engine. This field is only applicable for persistent disks.
+	DeviceName string `json:"deviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmAttachmentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VmAttachmentDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

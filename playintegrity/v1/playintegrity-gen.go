@@ -377,7 +377,7 @@ func (s *DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 // DeviceIntegrity: Contains the device attestation information.
 type DeviceIntegrity struct {
 	// DeviceRecognitionVerdict: Details about the integrity of the device
-	// the app is running on
+	// the app is running on.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Play does not have sufficient information to evaluate

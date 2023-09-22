@@ -564,6 +564,9 @@ type Environment struct {
 	// hyphen.
 	Name string `json:"name,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// State: The current state of the environment.
 	//
 	// Possible values:

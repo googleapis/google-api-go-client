@@ -2826,6 +2826,101 @@ func (s *GoogleCloudDialogflowCxV3ExportFlowResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ExportIntentsMetadata: Metadata returned for
+// the Intents.ExportIntents long running operation.
+type GoogleCloudDialogflowCxV3ExportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ExportIntentsRequest: The request message
+// for Intents.ExportIntents.
+type GoogleCloudDialogflowCxV3ExportIntentsRequest struct {
+	// DataFormat: Optional. The data format of the exported intents. If not
+	// specified, `BLOB` is assumed.
+	//
+	// Possible values:
+	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format. Treated as `BLOB`.
+	//   "BLOB" - Intents will be exported as raw bytes.
+	//   "JSON" - Intents will be exported in JSON format.
+	//   "CSV" - Intents will be exported in CSV format.
+	DataFormat string `json:"dataFormat,omitempty"`
+
+	// Intents: Required. The name of the intents to export. Format:
+	// `projects//locations//agents//intents/`.
+	Intents []string `json:"intents,omitempty"`
+
+	// IntentsContentInline: Optional. The option to return the serialized
+	// intents inline.
+	IntentsContentInline bool `json:"intentsContentInline,omitempty"`
+
+	// IntentsUri: Optional. The Google Cloud Storage
+	// (https://cloud.google.com/storage/docs/) URI to export the intents
+	// to. The format of this URI must be `gs:///`. Dialogflow performs a
+	// write operation for the Cloud Storage object on the caller's behalf,
+	// so your request authentication must have write permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
+	IntentsUri string `json:"intentsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataFormat") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ExportIntentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ExportIntentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ExportIntentsResponse: The response message
+// for Intents.ExportIntents.
+type GoogleCloudDialogflowCxV3ExportIntentsResponse struct {
+	// IntentsContent: Uncompressed byte content for intents. This field is
+	// populated only if `intents_content_inline` is set to true in
+	// ExportIntentsRequest.
+	IntentsContent *GoogleCloudDialogflowCxV3InlineDestination `json:"intentsContent,omitempty"`
+
+	// IntentsUri: The URI to a file containing the exported intents. This
+	// field is populated only if `intents_uri` is specified in
+	// ExportIntentsRequest.
+	IntentsUri string `json:"intentsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentsContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentsContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ExportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ExportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ExportTestCasesMetadata: Metadata returned
 // for the TestCases.ExportTestCases long running operation. This
 // message currently has no fields.
@@ -3943,6 +4038,142 @@ func (s *GoogleCloudDialogflowCxV3ImportFlowResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ImportIntentsMetadata: Metadata returned for
+// the Intents.ImportIntents long running operation.
+type GoogleCloudDialogflowCxV3ImportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ImportIntentsRequest: The request message
+// for Intents.ImportIntents.
+type GoogleCloudDialogflowCxV3ImportIntentsRequest struct {
+	// IntentsContent: Uncompressed byte content of intents.
+	IntentsContent *GoogleCloudDialogflowCxV3InlineSource `json:"intentsContent,omitempty"`
+
+	// IntentsUri: The Google Cloud Storage
+	// (https://cloud.google.com/storage/docs/) URI to import intents from.
+	// The format of this URI must be `gs:///`. Dialogflow performs a read
+	// operation for the Cloud Storage object on the caller's behalf, so
+	// your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
+	IntentsUri string `json:"intentsUri,omitempty"`
+
+	// MergeOption: Merge option for importing intents. If not specified,
+	// `REJECT` is assumed.
+	//
+	// Possible values:
+	//   "MERGE_OPTION_UNSPECIFIED" - Unspecified. Should not be used.
+	//   "REJECT" - DEPRECATED: Please use REPORT_CONFLICT instead. Fail the
+	// request if there are intents whose display names conflict with the
+	// display names of intents in the agent.
+	//   "REPLACE" - Replace the original intent in the agent with the new
+	// intent when display name conflicts exist.
+	//   "MERGE" - Merge the original intent with the new intent when
+	// display name conflicts exist.
+	//   "RENAME" - Create new intents with new display names to
+	// differentiate them from the existing intents when display name
+	// conflicts exist.
+	//   "REPORT_CONFLICT" - Report conflict information if display names
+	// conflict is detected. Otherwise, import intents.
+	//   "KEEP" - Keep the original intent and discard the conflicting new
+	// intent when display name conflicts exist.
+	MergeOption string `json:"mergeOption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentsContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentsContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportIntentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ImportIntentsResponse: The response message
+// for Intents.ImportIntents.
+type GoogleCloudDialogflowCxV3ImportIntentsResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportIntentsRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// Intents: The unique identifier of the imported intents. Format:
+	// `projects//locations//agents//intents/`.
+	Intents []string `json:"intents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources:
+// Conflicting resources detected during the import process. Only filled
+// when REPORT_CONFLICT is set in the request and there are conflicts in
+// the display names.
+type GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// IntentDisplayNames: Display names of conflicting intents.
+	IntentDisplayNames []string `json:"intentDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ImportTestCasesMetadata: Metadata returned
 // for the TestCases.ImportTestCases long running operation.
 type GoogleCloudDialogflowCxV3ImportTestCasesMetadata struct {
@@ -4036,6 +4267,67 @@ type GoogleCloudDialogflowCxV3ImportTestCasesResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportTestCasesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3InlineDestination: Inline destination for a
+// Dialogflow operation that writes or exports objects (e.g. intents)
+// outside of Dialogflow.
+type GoogleCloudDialogflowCxV3InlineDestination struct {
+	// Content: Output only. The uncompressed byte content for the objects.
+	// Only populated in responses.
+	Content string `json:"content,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3InlineDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3InlineDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3InlineSource: Inline source for a Dialogflow
+// operation that reads or imports objects (e.g. intents) into
+// Dialogflow.
+type GoogleCloudDialogflowCxV3InlineSource struct {
+	// Content: The uncompressed byte content for the objects.
+	Content string `json:"content,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3InlineSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3InlineSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10191,6 +10483,48 @@ func (s *GoogleCloudDialogflowCxV3beta1ExportFlowResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata: Metadata
+// returned for the Intents.ExportIntents long running operation.
+type GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ExportIntentsResponse: The response
+// message for Intents.ExportIntents.
+type GoogleCloudDialogflowCxV3beta1ExportIntentsResponse struct {
+	// IntentsContent: Uncompressed byte content for intents. This field is
+	// populated only if `intents_content_inline` is set to true in
+	// ExportIntentsRequest.
+	IntentsContent *GoogleCloudDialogflowCxV3beta1InlineDestination `json:"intentsContent,omitempty"`
+
+	// IntentsUri: The URI to a file containing the exported intents. This
+	// field is populated only if `intents_uri` is specified in
+	// ExportIntentsRequest.
+	IntentsUri string `json:"intentsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentsContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentsContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ExportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ExportTestCasesMetadata: Metadata
 // returned for the TestCases.ExportTestCases long running operation.
 // This message currently has no fields.
@@ -10757,6 +11091,82 @@ func (s *GoogleCloudDialogflowCxV3beta1ImportFlowResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata: Metadata
+// returned for the Intents.ImportIntents long running operation.
+type GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportIntentsResponse: The response
+// message for Intents.ImportIntents.
+type GoogleCloudDialogflowCxV3beta1ImportIntentsResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportIntentsRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// Intents: The unique identifier of the imported intents. Format:
+	// `projects//locations//agents//intents/`.
+	Intents []string `json:"intents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResource
+// s: Conflicting resources detected during the import process. Only
+// filled when REPORT_CONFLICT is set in the request and there are
+// conflicts in the display names.
+type GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// IntentDisplayNames: Display names of conflicting intents.
+	IntentDisplayNames []string `json:"intentDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata: Metadata
 // returned for the TestCases.ImportTestCases long running operation.
 type GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata struct {
@@ -10812,6 +11222,37 @@ type GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1InlineDestination: Inline destination
+// for a Dialogflow operation that writes or exports objects (e.g.
+// intents) outside of Dialogflow.
+type GoogleCloudDialogflowCxV3beta1InlineDestination struct {
+	// Content: Output only. The uncompressed byte content for the objects.
+	// Only populated in responses.
+	Content string `json:"content,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1InlineDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1InlineDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -33554,6 +33995,155 @@ func (c *ProjectsLocationsAgentsIntentsDeleteCall) Do(opts ...googleapi.CallOpti
 
 }
 
+// method id "dialogflow.projects.locations.agents.intents.export":
+
+type ProjectsLocationsAgentsIntentsExportCall struct {
+	s                                             *Service
+	parent                                        string
+	googleclouddialogflowcxv3exportintentsrequest *GoogleCloudDialogflowCxV3ExportIntentsRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Export: Exports the selected intents. This method is a long-running
+// operation
+// (https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: ExportIntentsMetadata - `response`:
+// ExportIntentsResponse
+//
+//   - parent: The name of the parent agent to export intents. Format:
+//     `projects//locations//agents/`.
+func (r *ProjectsLocationsAgentsIntentsService) Export(parent string, googleclouddialogflowcxv3exportintentsrequest *GoogleCloudDialogflowCxV3ExportIntentsRequest) *ProjectsLocationsAgentsIntentsExportCall {
+	c := &ProjectsLocationsAgentsIntentsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3exportintentsrequest = googleclouddialogflowcxv3exportintentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsIntentsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsIntentsExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsIntentsExportCall) Context(ctx context.Context) *ProjectsLocationsAgentsIntentsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsIntentsExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsIntentsExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3exportintentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/intents:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.intents.export" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsIntentsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exports the selected intents. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportIntentsMetadata - `response`: ExportIntentsResponse",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents:export",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.intents.export",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the parent agent to export intents. Format: `projects//locations//agents/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/intents:export",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3ExportIntentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.locations.agents.intents.get":
 
 type ProjectsLocationsAgentsIntentsGetCall struct {
@@ -33710,6 +34300,155 @@ func (c *ProjectsLocationsAgentsIntentsGetCall) Do(opts ...googleapi.CallOption)
 	//   "path": "v3/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowCxV3Intent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.intents.import":
+
+type ProjectsLocationsAgentsIntentsImportCall struct {
+	s                                             *Service
+	parent                                        string
+	googleclouddialogflowcxv3importintentsrequest *GoogleCloudDialogflowCxV3ImportIntentsRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Import: Imports the specified intents into the agent. This method is
+// a long-running operation
+// (https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation).
+// The returned `Operation` type has the following method-specific
+// fields: - `metadata`: ImportIntentsMetadata - `response`:
+// ImportIntentsResponse
+//
+//   - parent: The agent to import the intents into. Format:
+//     `projects//locations//agents/`.
+func (r *ProjectsLocationsAgentsIntentsService) Import(parent string, googleclouddialogflowcxv3importintentsrequest *GoogleCloudDialogflowCxV3ImportIntentsRequest) *ProjectsLocationsAgentsIntentsImportCall {
+	c := &ProjectsLocationsAgentsIntentsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3importintentsrequest = googleclouddialogflowcxv3importintentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsIntentsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsIntentsImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsIntentsImportCall) Context(ctx context.Context) *ProjectsLocationsAgentsIntentsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsIntentsImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsIntentsImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3importintentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/intents:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.intents.import" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsIntentsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports the specified intents into the agent. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportIntentsMetadata - `response`: ImportIntentsResponse",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents:import",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.intents.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The agent to import the intents into. Format: `projects//locations//agents/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/intents:import",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3ImportIntentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

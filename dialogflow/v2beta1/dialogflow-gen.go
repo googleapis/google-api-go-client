@@ -1786,6 +1786,48 @@ func (s *GoogleCloudDialogflowCxV3ExportFlowResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ExportIntentsMetadata: Metadata returned for
+// the Intents.ExportIntents long running operation.
+type GoogleCloudDialogflowCxV3ExportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ExportIntentsResponse: The response message
+// for Intents.ExportIntents.
+type GoogleCloudDialogflowCxV3ExportIntentsResponse struct {
+	// IntentsContent: Uncompressed byte content for intents. This field is
+	// populated only if `intents_content_inline` is set to true in
+	// ExportIntentsRequest.
+	IntentsContent *GoogleCloudDialogflowCxV3InlineDestination `json:"intentsContent,omitempty"`
+
+	// IntentsUri: The URI to a file containing the exported intents. This
+	// field is populated only if `intents_uri` is specified in
+	// ExportIntentsRequest.
+	IntentsUri string `json:"intentsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentsContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentsContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ExportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ExportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ExportTestCasesMetadata: Metadata returned
 // for the TestCases.ExportTestCases long running operation. This
 // message currently has no fields.
@@ -2350,6 +2392,82 @@ func (s *GoogleCloudDialogflowCxV3ImportFlowResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ImportIntentsMetadata: Metadata returned for
+// the Intents.ImportIntents long running operation.
+type GoogleCloudDialogflowCxV3ImportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ImportIntentsResponse: The response message
+// for Intents.ImportIntents.
+type GoogleCloudDialogflowCxV3ImportIntentsResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportIntentsRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// Intents: The unique identifier of the imported intents. Format:
+	// `projects//locations//agents//intents/`.
+	Intents []string `json:"intents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources:
+// Conflicting resources detected during the import process. Only filled
+// when REPORT_CONFLICT is set in the request and there are conflicts in
+// the display names.
+type GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// IntentDisplayNames: Display names of conflicting intents.
+	IntentDisplayNames []string `json:"intentDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ImportTestCasesMetadata: Metadata returned
 // for the TestCases.ImportTestCases long running operation.
 type GoogleCloudDialogflowCxV3ImportTestCasesMetadata struct {
@@ -2405,6 +2523,37 @@ type GoogleCloudDialogflowCxV3ImportTestCasesResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportTestCasesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3InlineDestination: Inline destination for a
+// Dialogflow operation that writes or exports objects (e.g. intents)
+// outside of Dialogflow.
+type GoogleCloudDialogflowCxV3InlineDestination struct {
+	// Content: Output only. The uncompressed byte content for the objects.
+	// Only populated in responses.
+	Content string `json:"content,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3InlineDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3InlineDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5678,6 +5827,48 @@ func (s *GoogleCloudDialogflowCxV3beta1ExportFlowResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata: Metadata
+// returned for the Intents.ExportIntents long running operation.
+type GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ExportIntentsResponse: The response
+// message for Intents.ExportIntents.
+type GoogleCloudDialogflowCxV3beta1ExportIntentsResponse struct {
+	// IntentsContent: Uncompressed byte content for intents. This field is
+	// populated only if `intents_content_inline` is set to true in
+	// ExportIntentsRequest.
+	IntentsContent *GoogleCloudDialogflowCxV3beta1InlineDestination `json:"intentsContent,omitempty"`
+
+	// IntentsUri: The URI to a file containing the exported intents. This
+	// field is populated only if `intents_uri` is specified in
+	// ExportIntentsRequest.
+	IntentsUri string `json:"intentsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntentsContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntentsContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ExportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ExportTestCasesMetadata: Metadata
 // returned for the TestCases.ExportTestCases long running operation.
 // This message currently has no fields.
@@ -6244,6 +6435,82 @@ func (s *GoogleCloudDialogflowCxV3beta1ImportFlowResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata: Metadata
+// returned for the Intents.ImportIntents long running operation.
+type GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportIntentsResponse: The response
+// message for Intents.ImportIntents.
+type GoogleCloudDialogflowCxV3beta1ImportIntentsResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportIntentsRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// Intents: The unique identifier of the imported intents. Format:
+	// `projects//locations//agents//intents/`.
+	Intents []string `json:"intents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportIntentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportIntentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResource
+// s: Conflicting resources detected during the import process. Only
+// filled when REPORT_CONFLICT is set in the request and there are
+// conflicts in the display names.
+type GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// IntentDisplayNames: Display names of conflicting intents.
+	IntentDisplayNames []string `json:"intentDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata: Metadata
 // returned for the TestCases.ImportTestCases long running operation.
 type GoogleCloudDialogflowCxV3beta1ImportTestCasesMetadata struct {
@@ -6299,6 +6566,37 @@ type GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportTestCasesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1InlineDestination: Inline destination
+// for a Dialogflow operation that writes or exports objects (e.g.
+// intents) outside of Dialogflow.
+type GoogleCloudDialogflowCxV3beta1InlineDestination struct {
+	// Content: Output only. The uncompressed byte content for the objects.
+	// Only populated in responses.
+	Content string `json:"content,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1InlineDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1InlineDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

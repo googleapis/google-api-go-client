@@ -484,6 +484,9 @@ type Environment struct {
 	// hyphen.
 	Name string `json:"name,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// State: The current state of the environment.
 	//
 	// Possible values:
@@ -2141,6 +2144,59 @@ func (s *StopAirflowCommandResponse) MarshalJSON() ([]byte, error) {
 type StorageConfig struct {
 }
 
+// TriggererResource: Configuration for resources used by Airflow
+// triggerers.
+type TriggererResource struct {
+	// Count: Optional. The number of triggerers.
+	Count int64 `json:"count,omitempty"`
+
+	// Cpu: Optional. CPU request and limit for a single Airflow triggerer
+	// replica.
+	Cpu float64 `json:"cpu,omitempty"`
+
+	// MemoryGb: Optional. Memory (GB) request and limit for a single
+	// Airflow triggerer replica.
+	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TriggererResource) MarshalJSON() ([]byte, error) {
+	type NoMethod TriggererResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *TriggererResource) UnmarshalJSON(data []byte) error {
+	type NoMethod TriggererResource
+	var s1 struct {
+		Cpu      gensupport.JSONFloat64 `json:"cpu"`
+		MemoryGb gensupport.JSONFloat64 `json:"memoryGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.MemoryGb = float64(s1.MemoryGb)
+	return nil
+}
+
 // WebServerConfig: The configuration settings for the Airflow web
 // server App Engine instance. Supported for Cloud Composer environments
 // in versions composer-1.*.*-airflow-*.*.*
@@ -2329,6 +2385,9 @@ func (s *WorkerResource) UnmarshalJSON(data []byte) error {
 type WorkloadsConfig struct {
 	// Scheduler: Optional. Resources used by Airflow schedulers.
 	Scheduler *SchedulerResource `json:"scheduler,omitempty"`
+
+	// Triggerer: Optional. Resources used by Airflow triggerers.
+	Triggerer *TriggererResource `json:"triggerer,omitempty"`
 
 	// WebServer: Optional. Resources used by Airflow web server.
 	WebServer *WebServerResource `json:"webServer,omitempty"`

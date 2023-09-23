@@ -814,7 +814,11 @@ type CloudSqlSettings struct {
 	// Collation: The Cloud SQL default instance level collation.
 	Collation string `json:"collation,omitempty"`
 
-	// DataCacheConfig: Optional. Configuration for data cache.
+	// DataCacheConfig: Optional. Data cache is an optional feature
+	// available for Cloud SQL for MySQL Enterprise Plus edition only. For
+	// more information on data cache, see Data cache overview
+	// (https://cloud.google.com/sql/help/mysql-data-cache) in Cloud SQL
+	// documentation.
 	DataCacheConfig *DataCacheConfig `json:"dataCacheConfig,omitempty"`
 
 	// DataDiskSizeGb: The storage capacity available to the database, in
@@ -1449,7 +1453,11 @@ func (s *ConvertRowIdToColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataCacheConfig: Data cache configurations.
+// DataCacheConfig: Data cache is an optional feature available for
+// Cloud SQL for MySQL Enterprise Plus edition only. For more
+// information on data cache, see Data cache overview
+// (https://cloud.google.com/sql/help/mysql-data-cache) in Cloud SQL
+// documentation.
 type DataCacheConfig struct {
 	// DataCacheEnabled: Optional. Whether data cache is enabled for the
 	// instance.

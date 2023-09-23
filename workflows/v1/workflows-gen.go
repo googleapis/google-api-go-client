@@ -610,7 +610,8 @@ type Workflow struct {
 	CallLogLevel string `json:"callLogLevel,omitempty"`
 
 	// CreateTime: Output only. The timestamp for when the workflow was
-	// created.
+	// created. This is a workflow-wide field and is not tied to a specific
+	// revision.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CryptoKeyName: Optional. The resource name of a KMS crypto key used
@@ -623,18 +624,21 @@ type Workflow struct {
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
 
 	// Description: Description of the workflow provided by the user. Must
-	// be at most 1000 unicode characters long.
+	// be at most 1000 Unicode characters long. This is a workflow-wide
+	// field and is not tied to a specific revision.
 	Description string `json:"description,omitempty"`
 
 	// Labels: Labels associated with this workflow. Labels can contain at
 	// most 64 entries. Keys and values can be no longer than 63 characters
 	// and can only contain lowercase letters, numeric characters,
 	// underscores, and dashes. Label keys must start with a letter.
-	// International characters are allowed.
+	// International characters are allowed. This is a workflow-wide field
+	// and is not tied to a specific revision.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name of the workflow. Format:
-	// projects/{project}/locations/{location}/workflows/{workflow}
+	// projects/{project}/locations/{location}/workflows/{workflow}. This is
+	// a workflow-wide field and is not tied to a specific revision.
 	Name string `json:"name,omitempty"`
 
 	// RevisionCreateTime: Output only. The timestamp for the latest
@@ -681,7 +685,8 @@ type Workflow struct {
 	StateError *StateError `json:"stateError,omitempty"`
 
 	// UpdateTime: Output only. The timestamp for when the workflow was last
-	// updated.
+	// updated. This is a workflow-wide field and is not tied to a specific
+	// revision.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// UserEnvVars: Optional. User-defined environment variables associated
@@ -2259,7 +2264,7 @@ type ProjectsLocationsWorkflowsListRevisionsCall struct {
 
 // ListRevisions: Lists revisions for a given workflow.
 //
-//   - name: Workflow from which the revisions should be listed. Format:
+//   - name: Workflow for which the revisions should be listed. Format:
 //     projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsService) ListRevisions(name string) *ProjectsLocationsWorkflowsListRevisionsCall {
 	c := &ProjectsLocationsWorkflowsListRevisionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2269,8 +2274,8 @@ func (r *ProjectsLocationsWorkflowsService) ListRevisions(name string) *Projects
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of revisions to return per page. If a value is not specified, a
-// default value of 20 is used. The maximum permitted value is 100 and
-// values greater than 100 coerced down to 100.
+// default value of 20 is used. The maximum permitted value is 100.
+// Values greater than 100 are coerced down to 100.
 func (c *ProjectsLocationsWorkflowsListRevisionsCall) PageSize(pageSize int64) *ProjectsLocationsWorkflowsListRevisionsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2392,14 +2397,14 @@ func (c *ProjectsLocationsWorkflowsListRevisionsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Workflow from which the revisions should be listed. Format: projects/{project}/locations/{location}/workflows/{workflow}",
+	//       "description": "Required. Workflow for which the revisions should be listed. Format: projects/{project}/locations/{location}/workflows/{workflow}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of revisions to return per page. If a value is not specified, a default value of 20 is used. The maximum permitted value is 100 and values greater than 100 coerced down to 100.",
+	//       "description": "The maximum number of revisions to return per page. If a value is not specified, a default value of 20 is used. The maximum permitted value is 100. Values greater than 100 are coerced down to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2460,7 +2465,8 @@ type ProjectsLocationsWorkflowsPatchCall struct {
 // executions.
 //
 //   - name: The resource name of the workflow. Format:
-//     projects/{project}/locations/{location}/workflows/{workflow}.
+//     projects/{project}/locations/{location}/workflows/{workflow}. This
+//     is a workflow-wide field and is not tied to a specific revision.
 func (r *ProjectsLocationsWorkflowsService) Patch(name string, workflow *Workflow) *ProjectsLocationsWorkflowsPatchCall {
 	c := &ProjectsLocationsWorkflowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2575,7 +2581,7 @@ func (c *ProjectsLocationsWorkflowsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow}",
+	//       "description": "The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow}. This is a workflow-wide field and is not tied to a specific revision.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+$",
 	//       "required": true,

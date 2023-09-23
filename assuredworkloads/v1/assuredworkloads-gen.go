@@ -363,6 +363,7 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
+	//   "IL2" - Information protection as per DoD IL2 requirements.
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
@@ -1009,6 +1010,7 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
+	//   "IL2" - Information protection as per DoD IL2 requirements.
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 

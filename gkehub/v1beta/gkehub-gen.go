@@ -705,10 +705,13 @@ func (s *CommonFeatureState) MarshalJSON() ([]byte, error) {
 // CommonFleetDefaultMemberConfigSpec contains default configuration
 // information for memberships of a fleet
 type CommonFleetDefaultMemberConfigSpec struct {
+	// Configmanagement: Config Management-specific spec.
+	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
+
 	// Identityservice: Identity Service-specific spec.
 	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Identityservice") to
+	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -716,7 +719,7 @@ type CommonFleetDefaultMemberConfigSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Identityservice") to
+	// NullFields is a list of field names (e.g. "Configmanagement") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

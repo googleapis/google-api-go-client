@@ -1039,7 +1039,15 @@ type Container struct {
 
 	// Volumes: Volumes to mount (bind mount) from the host machine files or
 	// directories into the container, formatted to match docker run's
-	// --volume option, e.g. /foo:/bar, or /foo:/bar:ro
+	// --volume option, e.g. /foo:/bar, or /foo:/bar:ro If the
+	// `TaskSpec.Volumes` field is specified but this field is not, Batch
+	// will mount each volume from the host machine to the container with
+	// the same mount path by default. In this case, the default mount
+	// option for containers will be read-only (ro) for existing persistent
+	// disks and read-write (rw) for other volume types, regardless of the
+	// original mount options specified in `TaskSpec.Volumes`. If you need
+	// different mount settings, you can explicitly configure them in this
+	// field.
 	Volumes []string `json:"volumes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1088,7 +1096,8 @@ type Disk struct {
 	// image values are supported for a boot disk: * `batch-debian`: use
 	// Batch Debian images. * `batch-centos`: use Batch CentOS images. *
 	// `batch-cos`: use Batch Container-Optimized images. *
-	// `batch-hpc-centos`: use Batch HPC CentOS images.
+	// `batch-hpc-centos`: use Batch HPC CentOS images. * `batch-hpc-rocky`:
+	// use Batch HPC Rocky Linux images.
 	Image string `json:"image,omitempty"`
 
 	// SizeGb: Disk size in GB. **Non-Boot Disk**: If the `type` specifies a
@@ -1253,6 +1262,11 @@ type InstancePolicy struct {
 	// migrated to use the SPOT model as the underlying technology. This old
 	// model will still be supported.
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
+
+	// Reservation: Optional. If specified, VMs will consume only the
+	// specified reservation. If not specified (default), VMs will consume
+	// any applicable reservation.
+	Reservation string `json:"reservation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with

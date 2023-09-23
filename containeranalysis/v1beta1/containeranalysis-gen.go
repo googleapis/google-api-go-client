@@ -2984,6 +2984,15 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance struct {
 	// for the single path to that file.
 	FileHashes map[string]ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
 
+	// ResolvedConnectedRepository: Output only. A copy of the build's
+	// `source.connected_repository`, if exists, with any revisions
+	// resolved.
+	ResolvedConnectedRepository *ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository `json:"resolvedConnectedRepository,omitempty"`
+
+	// ResolvedGitSource: Output only. A copy of the build's
+	// `source.git_source`, if exists, with any revisions resolved.
+	ResolvedGitSource *ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource `json:"resolvedGitSource,omitempty"`
+
 	// ResolvedRepoSource: A copy of the build's `source.repo_source`, if
 	// exists, with any revisions resolved.
 	ResolvedRepoSource *ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource `json:"resolvedRepoSource,omitempty"`
@@ -3577,6 +3586,9 @@ type Discovered struct {
 	// resource. Deprecated, do not use.
 	LastAnalysisTime string `json:"lastAnalysisTime,omitempty"`
 
+	// LastScanTime: The last time this resource was scanned.
+	LastScanTime string `json:"lastScanTime,omitempty"`
+
 	// SbomStatus: The status of an SBOM generation.
 	SbomStatus *SBOMStatus `json:"sbomStatus,omitempty"`
 
@@ -3715,7 +3727,7 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 
 // DocumentNote: DocumentNote represents an SPDX Document Creation
 // Information section:
-// https://spdx.github.io/spdx-spec/v2.3/document-creation-information/
+// https://spdx.github.io/spdx-spec/2-document-creation-information/
 type DocumentNote struct {
 	// DataLicence: Compliance with the SPDX specification includes
 	// populating the SPDX fields therein with data related to such fields
@@ -3751,7 +3763,7 @@ func (s *DocumentNote) MarshalJSON() ([]byte, error) {
 
 // DocumentOccurrence: DocumentOccurrence represents an SPDX Document
 // Creation Information section:
-// https://spdx.github.io/spdx-spec/v2.3/document-creation-information/
+// https://spdx.github.io/spdx-spec/2-document-creation-information/
 type DocumentOccurrence struct {
 	// CreateTime: Identify when the SPDX file was originally created. The
 	// date is to be specified according to combined date and time in UTC
@@ -7726,6 +7738,10 @@ type Vulnerability struct {
 	// this vulnerability. One entry per (version range and cpe_uri) the
 	// package vulnerability has manifested in.
 	Details []*Detail `json:"details,omitempty"`
+
+	// ExtraDetails: Occurrence-specific extra details about the
+	// vulnerability.
+	ExtraDetails string `json:"extraDetails,omitempty"`
 
 	// Severity: Note provider assigned impact of the vulnerability.
 	//

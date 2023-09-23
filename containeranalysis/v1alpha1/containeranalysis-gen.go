@@ -2970,6 +2970,15 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance struct {
 	// for the single path to that file.
 	FileHashes map[string]ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes `json:"fileHashes,omitempty"`
 
+	// ResolvedConnectedRepository: Output only. A copy of the build's
+	// `source.connected_repository`, if exists, with any revisions
+	// resolved.
+	ResolvedConnectedRepository *ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository `json:"resolvedConnectedRepository,omitempty"`
+
+	// ResolvedGitSource: Output only. A copy of the build's
+	// `source.git_source`, if exists, with any revisions resolved.
+	ResolvedGitSource *ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource `json:"resolvedGitSource,omitempty"`
+
 	// ResolvedRepoSource: A copy of the build's `source.repo_source`, if
 	// exists, with any revisions resolved.
 	ResolvedRepoSource *ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource `json:"resolvedRepoSource,omitempty"`

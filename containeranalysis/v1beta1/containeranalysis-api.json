@@ -815,7 +815,7 @@
       }
     }
   },
-  "revision": "20230829",
+  "revision": "20230915",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -2845,6 +2845,16 @@
           "readOnly": true,
           "type": "object"
         },
+        "resolvedConnectedRepository": {
+          "$ref": "ContaineranalysisGoogleDevtoolsCloudbuildV1ConnectedRepository",
+          "description": "Output only. A copy of the build's `source.connected_repository`, if exists, with any revisions resolved.",
+          "readOnly": true
+        },
+        "resolvedGitSource": {
+          "$ref": "ContaineranalysisGoogleDevtoolsCloudbuildV1GitSource",
+          "description": "Output only. A copy of the build's `source.git_source`, if exists, with any revisions resolved.",
+          "readOnly": true
+        },
         "resolvedRepoSource": {
           "$ref": "ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource",
           "description": "A copy of the build's `source.repo_source`, if exists, with any revisions resolved."
@@ -3227,6 +3237,11 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "lastScanTime": {
+          "description": "The last time this resource was scanned.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "sbomStatus": {
           "$ref": "SBOMStatus",
           "description": "The status of an SBOM generation."
@@ -3321,7 +3336,7 @@
       "type": "object"
     },
     "DocumentNote": {
-      "description": "DocumentNote represents an SPDX Document Creation Information section: https://spdx.github.io/spdx-spec/v2.3/document-creation-information/",
+      "description": "DocumentNote represents an SPDX Document Creation Information section: https://spdx.github.io/spdx-spec/2-document-creation-information/",
       "id": "DocumentNote",
       "properties": {
         "dataLicence": {
@@ -3336,7 +3351,7 @@
       "type": "object"
     },
     "DocumentOccurrence": {
-      "description": "DocumentOccurrence represents an SPDX Document Creation Information section: https://spdx.github.io/spdx-spec/v2.3/document-creation-information/",
+      "description": "DocumentOccurrence represents an SPDX Document Creation Information section: https://spdx.github.io/spdx-spec/2-document-creation-information/",
       "id": "DocumentOccurrence",
       "properties": {
         "createTime": {
@@ -5904,6 +5919,10 @@
             "$ref": "Detail"
           },
           "type": "array"
+        },
+        "extraDetails": {
+          "description": "Occurrence-specific extra details about the vulnerability.",
+          "type": "string"
         },
         "severity": {
           "description": "Note provider assigned impact of the vulnerability.",

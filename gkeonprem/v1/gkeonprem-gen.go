@@ -5538,7 +5538,7 @@ type VmwareCluster struct {
 	ValidationCheck *ValidationCheck `json:"validationCheck,omitempty"`
 
 	// Vcenter: VmwareVCenterConfig specifies vCenter config for the user
-	// cluster. Inherited from the admin cluster.
+	// cluster. If unspecified, it is inherited from the admin cluster.
 	Vcenter *VmwareVCenterConfig `json:"vcenter,omitempty"`
 
 	// VmTrackingEnabled: Enable VM tracking.

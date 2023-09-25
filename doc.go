@@ -84,4 +84,38 @@
 //			fmt.Println("Domain: %s", aErr.Domain())
 //		}
 //	}
+//
+// # Polling Operations
+//
+// If an API call returns an Operation, that means it could take some time to
+// complete the work initiated by the API call. Applications that are interested
+// in the end result of the operation they initiated should wait until the
+// Operation.Done field indicates it is finished. To do this, use the service's
+// Operation client, and a loop, like so:
+//
+//  op, err := myApiClient.CalculateFoo().Do()
+//  if err != nil {
+//		// handle err
+//  }
+//
+//	operationsService = NewOperationsService(myApiClient)
+//	for {
+//		if op.Done {
+//			break
+//		}
+//		// not done, sleep then poll again
+//		time.Sleep(1 * time.Second)
+//	
+//		op, err := operationsService.Get(op.Name).Do()
+//		if err != nil {
+//			// handle error
+//		}
+//	}
+//
+//  if op.Error != nil {
+//		// handle operation err
+//  }
+//
+//  // Do something with the response
+//  fmt.Println(op.Response)
 package api

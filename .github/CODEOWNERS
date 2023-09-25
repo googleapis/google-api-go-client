@@ -4,3 +4,6 @@
 # Give @yoshi-approver owners for all generated files.
 *.json @yoshi-approver
 *-gen.go @yoshi-approver
+
+# Give admins ownership of Renovate config explicitly
+.github/renovate.json @googleapis/yoshi-go-admins

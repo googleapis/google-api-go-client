@@ -93,19 +93,32 @@
 // Operation.Done field indicates it is finished. To do this, use the service's
 // Operation client, and a loop, like so:
 //
+//   import (
+//		gax "github.com/googleapis/gax-go/v2"
+//   )
+//
+//   // existing application code...
+//
+//   // API call that returns an Operation.
 //	 op, err := myApiClient.CalculateFoo().Do()
 //	 if err != nil {
 //		// handle err
 //	 }
 //
-//	 operationsService = NewOperationsService(myApiClient)
+//	 operationsService = myapi.NewOperationsService(myApiClient)
+//   pollingBackoff := gax.Backoff{
+// 	    Initial:    time.Second,
+// 	    Max:        time.Minute, // Max time between polling attempts.
+// 	    Multiplier: 2,
+//   }
 //	 for {
 //		if op.Done {
 //			break
 //		}
-//		// not done, sleep then poll again
-//		time.Sleep(1 * time.Second)
-//
+//		// not done, sleep with backoff, then poll again
+//		if err := gax.Sleep(ctx, pollingBackoff.Pause()); err != nil {
+//			// handle error
+//		}
 //		op, err := operationsService.Get(op.Name).Do()
 //		if err != nil {
 //			// handle error

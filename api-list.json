@@ -678,6 +678,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "backupdr:v1",
+      "name": "backupdr",
+      "version": "v1",
+      "title": "Backup and DR Service API",
+      "description": "",
+      "discoveryRestUrl": "https://backupdr.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "baremetalsolution:v2",
       "name": "baremetalsolution",
       "version": "v2",

@@ -95,25 +95,25 @@
 //
 //	 op, err := myApiClient.CalculateFoo().Do()
 //	 if err != nil {
-//			// handle err
+//		// handle err
 //	 }
 //
-//		operationsService = NewOperationsService(myApiClient)
-//		for {
-//			if op.Done {
-//				break
-//			}
-//			// not done, sleep then poll again
-//			time.Sleep(1 * time.Second)
-//
-//			op, err := operationsService.Get(op.Name).Do()
-//			if err != nil {
-//				// handle error
-//			}
+//	 operationsService = NewOperationsService(myApiClient)
+//	 for {
+//		if op.Done {
+//			break
 //		}
+//		// not done, sleep then poll again
+//		time.Sleep(1 * time.Second)
+//
+//		op, err := operationsService.Get(op.Name).Do()
+//		if err != nil {
+//			// handle error
+//		}
+//	 }
 //
 //	 if op.Error != nil {
-//			// handle operation err
+//		// handle operation err
 //	 }
 //
 //	 // Do something with the response

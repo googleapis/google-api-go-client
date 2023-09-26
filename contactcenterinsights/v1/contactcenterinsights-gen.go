@@ -2226,11 +2226,6 @@ func (s *GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDest
 type GoogleCloudContactcenterinsightsV1ExportInsightsDataResponse struct {
 }
 
-// GoogleCloudContactcenterinsightsV1ExportIssueModelResponse: Response
-// from export issue model
-type GoogleCloudContactcenterinsightsV1ExportIssueModelResponse struct {
-}
-
 // GoogleCloudContactcenterinsightsV1FaqAnswerData: Agent Assist
 // frequently-asked-question answer data.
 type GoogleCloudContactcenterinsightsV1FaqAnswerData struct {
@@ -2333,11 +2328,6 @@ func (s *GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, err
 // GoogleCloudContactcenterinsightsV1HoldData: The data for a hold
 // annotation.
 type GoogleCloudContactcenterinsightsV1HoldData struct {
-}
-
-// GoogleCloudContactcenterinsightsV1ImportIssueModelResponse: Response
-// from import issue model
-type GoogleCloudContactcenterinsightsV1ImportIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsMetadata: The
@@ -3656,6 +3646,11 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// ingesting conversations.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
 
+	// SpeechConfig: Optional. Default Speech-to-Text resources to be used
+	// while ingesting audio files. Optional, CCAI Insights will create a
+	// default if not provided.
+	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
+
 	// UpdateTime: Output only. The time at which the settings were last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3865,6 +3860,38 @@ func (s *GoogleCloudContactcenterinsightsV1SmartReplyData) UnmarshalJSON(data []
 	return nil
 }
 
+// GoogleCloudContactcenterinsightsV1SpeechConfig: Speech-to-Text
+// configuration.
+type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
+	// SpeechRecognizer: The fully-qualified Speech Recognizer resource
+	// name. Format:
+	// `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
+	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SpeechRecognizer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SpeechRecognizer") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1SpeechConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1SpeechConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata:
 // Metadata for undeploying an issue model.
 type GoogleCloudContactcenterinsightsV1UndeployIssueModelMetadata struct {
@@ -3997,6 +4024,10 @@ type GoogleCloudContactcenterinsightsV1UploadConversationRequest struct {
 	// RedactionConfig: Optional. DLP settings for transcript redaction.
 	// Optional, will default to the config specified in Settings.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
+
+	// SpeechConfig: Optional. Default Speech-to-Text configuration.
+	// Optional, will default to the config specified in Settings.
+	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conversation") to
 	// unconditionally include in API requests. By default, fields with
@@ -5816,11 +5847,6 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQue
 type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataResponse struct {
 }
 
-// GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse:
-// Response from export issue model
-type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse struct {
-}
-
 // GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData: Agent Assist
 // frequently-asked-question answer data.
 type GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData struct {
@@ -5923,11 +5949,6 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1GcsSource) MarshalJSON() ([]byt
 // GoogleCloudContactcenterinsightsV1alpha1HoldData: The data for a hold
 // annotation.
 type GoogleCloudContactcenterinsightsV1alpha1HoldData struct {
-}
-
-// GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse:
-// Response from import issue model
-type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata:
@@ -6853,6 +6874,38 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1SmartReplyData) UnmarshalJSON(d
 	return nil
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1SpeechConfig: Speech-to-Text
+// configuration.
+type GoogleCloudContactcenterinsightsV1alpha1SpeechConfig struct {
+	// SpeechRecognizer: The fully-qualified Speech Recognizer resource
+	// name. Format:
+	// `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
+	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SpeechRecognizer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SpeechRecognizer") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1SpeechConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1SpeechConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata:
 // Metadata for undeploying an issue model.
 type GoogleCloudContactcenterinsightsV1alpha1UndeployIssueModelMetadata struct {
@@ -6985,6 +7038,10 @@ type GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest struct {
 	// RedactionConfig: Optional. DLP settings for transcript redaction.
 	// Optional, will default to the config specified in Settings.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1alpha1RedactionConfig `json:"redactionConfig,omitempty"`
+
+	// SpeechConfig: Optional. Default Speech-to-Text configuration.
+	// Optional, will default to the config specified in Settings.
+	SpeechConfig *GoogleCloudContactcenterinsightsV1alpha1SpeechConfig `json:"speechConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conversation") to
 	// unconditionally include in API requests. By default, fields with

@@ -24097,10 +24097,9 @@ type PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall struct {
 // List: Lists SKAdNetworkConversionValueSchema on a stream. Properties
 // can have at most one SKAdNetworkConversionValueSchema.
 //
-//   - parent: Format:
-//     properties/{property_id}/dataStreams/{dataStream}/sKAdNetworkConvers
-//     ionValueSchema Example:
-//     properties/1234/dataStreams/5678/sKAdNetworkConversionValueSchema.
+//   - parent: The DataStream resource to list schemas for. Format:
+//     properties/{property_id}/dataStreams/{dataStream} Example:
+//     properties/1234/dataStreams/5678.
 func (r *PropertiesDataStreamsSKAdNetworkConversionValueSchemaService) List(parent string) *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall {
 	c := &PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24250,7 +24249,7 @@ func (c *PropertiesDataStreamsSKAdNetworkConversionValueSchemaListCall) Do(opts 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Format: properties/{property_id}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema Example: properties/1234/dataStreams/5678/sKAdNetworkConversionValueSchema",
+	//       "description": "Required. The DataStream resource to list schemas for. Format: properties/{property_id}/dataStreams/{dataStream} Example: properties/1234/dataStreams/5678",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/dataStreams/[^/]+$",
 	//       "required": true,

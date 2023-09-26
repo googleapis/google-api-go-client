@@ -1627,11 +1627,6 @@ type EncryptionConfig struct {
 	// encryption for all instances in the cluster.
 	GcePdKmsKeyName string `json:"gcePdKmsKeyName,omitempty"`
 
-	// KmsKey: Optional. The Cloud KMS key name to use for encrypting
-	// customer core content and cluster PD disk for all instances in the
-	// cluster.
-	KmsKey string `json:"kmsKey,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcePdKmsKeyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1766,19 +1761,19 @@ type ExecutionConfig struct {
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
 
 	// Ttl: Optional. The duration after which the workload will be
-	// terminated. When the workload exceeds this duration, it will be
-	// unconditionally terminated without waiting for ongoing work to
-	// finish. If ttl is not specified for a batch workload, the workload
-	// will be allowed to run until it exits naturally (or runs forever
-	// without exiting). If ttl is not specified for an interactive session,
-	// it defaults to 24h. If ttl is not specified for a batch that uses
-	// 2.1+ runtime version, it defaults to 4h. Minimum value is 10 minutes;
-	// maximum value is 14 days (see JSON representation of Duration
-	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
-	// If both ttl and idle_ttl are specified (for an interactive session),
-	// the conditions are treated as OR conditions: the workload will be
-	// terminated when it has been idle for idle_ttl or when ttl has been
-	// exceeded, whichever occurs first.
+	// terminated, specified as the JSON representation for Duration
+	// (https://protobuf.dev/programming-guides/proto3/#json). When the
+	// workload exceeds this duration, it will be unconditionally terminated
+	// without waiting for ongoing work to finish. If ttl is not specified
+	// for a batch workload, the workload will be allowed to run until it
+	// exits naturally (or run forever without exiting). If ttl is not
+	// specified for an interactive session, it defaults to 24 hours. If ttl
+	// is not specified for a batch that uses 2.1+ runtime version, it
+	// defaults to 4 hours. Minimum value is 10 minutes; maximum value is 14
+	// days. If both ttl and idle_ttl are specified (for an interactive
+	// session), the conditions are treated as OR conditions: the workload
+	// will be terminated when it has been idle for idle_ttl or when ttl has
+	// been exceeded, whichever occurs first.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IdleTtl") to
@@ -1864,12 +1859,12 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FlinkJob: A Dataproc job for running Apache Flink
-// (https://flink.apache.org/) applications on YARN.
+// FlinkJob: A Dataproc job for running Apache Flink applications on
+// YARN.
 type FlinkJob struct {
 	// Args: Optional. The arguments to pass to the driver. Do not include
 	// arguments, such as --conf, that can be set as job properties, since a
-	// collision may occur that causes an incorrect job submission.
+	// collision might occur that causes an incorrect job submission.
 	Args []string `json:"args,omitempty"`
 
 	// JarFileUris: Optional. HCFS URIs of jar files to add to the
@@ -1881,7 +1876,7 @@ type FlinkJob struct {
 
 	// MainClass: The name of the driver's main class. The jar file that
 	// contains the class must be in the default CLASSPATH or specified in
-	// jar_file_uris.
+	// jarFileUris.
 	MainClass string `json:"mainClass,omitempty"`
 
 	// MainJarFileUri: The HCFS URI of the jar file that contains the main
@@ -1890,12 +1885,12 @@ type FlinkJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Flink. Properties that conflict with values set by the
-	// Dataproc API may beoverwritten. Can include properties set
+	// Dataproc API might beoverwritten. Can include properties set
 	// in/etc/flink/conf/flink-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
-	// SavepointUri: Optional. HCFS URI of the savepoint which contains the
-	// last saved progress for this job
+	// SavepointUri: Optional. HCFS URI of the savepoint, which contains the
+	// last saved progress for starting the current job.
 	SavepointUri string `json:"savepointUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -2431,8 +2426,8 @@ type HadoopJob struct {
 
 	// Args: Optional. The arguments to pass to the driver. Do not include
 	// arguments, such as -libjars or -Dfoo=bar, that can be set as job
-	// properties, since a collision may occur that causes an incorrect job
-	// submission.
+	// properties, since a collision might occur that causes an incorrect
+	// job submission.
 	Args []string `json:"args,omitempty"`
 
 	// FileUris: Optional. HCFS (Hadoop Compatible Filesystem) URIs of files
@@ -2461,7 +2456,7 @@ type HadoopJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Hadoop. Properties that conflict with values set by the
-	// Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API might be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -2503,7 +2498,7 @@ type HiveJob struct {
 
 	// Properties: Optional. A mapping of property names and values, used to
 	// configure Hive. Properties that conflict with values set by the
-	// Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API might be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site.xml, /etc/hive/conf/hive-site.xml, and
 	// classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
@@ -3029,9 +3024,9 @@ type Job struct {
 	Done bool `json:"done,omitempty"`
 
 	// DriverControlFilesUri: Output only. If present, the location of
-	// miscellaneous control files which may be used as part of job setup
-	// and handling. If not present, control files may be placed in the same
-	// location as driver_output_uri.
+	// miscellaneous control files which can be used as part of job setup
+	// and handling. If not present, control files might be placed in the
+	// same location as driver_output_uri.
 	DriverControlFilesUri string `json:"driverControlFilesUri,omitempty"`
 
 	// DriverOutputResourceUri: Output only. A URI pointing to the location
@@ -3052,12 +3047,12 @@ type Job struct {
 
 	// JobUuid: Output only. A UUID that uniquely identifies a job within
 	// the project over time. This is in contrast to a user-settable
-	// reference.job_id that may be reused over time.
+	// reference.job_id that might be reused over time.
 	JobUuid string `json:"jobUuid,omitempty"`
 
 	// Labels: Optional. The labels to associate with this job. Label keys
 	// must contain 1 to 63 characters, and must conform to RFC 1035
-	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,
+	// (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty,
 	// but, if present, must contain 1 to 63 characters, and must conform to
 	// RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32
 	// labels can be associated with a job.
@@ -3095,7 +3090,7 @@ type Job struct {
 	SparkSqlJob *SparkSqlJob `json:"sparkSqlJob,omitempty"`
 
 	// Status: Output only. The job status. Additional application-specific
-	// status information may be contained in the type_job and
+	// status information might be contained in the type_job and
 	// yarn_applications fields.
 	Status *JobStatus `json:"status,omitempty"`
 
@@ -3107,7 +3102,7 @@ type Job struct {
 
 	// YarnApplications: Output only. The collection of YARN applications
 	// spun up by this job.Beta Feature: This report is available for
-	// testing purposes only. It may be changed before final release.
+	// testing purposes only. It might be changed before final release.
 	YarnApplications []*YarnApplication `json:"yarnApplications,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3250,16 +3245,16 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 // JobScheduling: Job scheduling options.
 type JobScheduling struct {
 	// MaxFailuresPerHour: Optional. Maximum number of times per hour a
-	// driver may be restarted as a result of driver exiting with non-zero
-	// code before job is reported failed.A job may be reported as thrashing
-	// if the driver exits with a non-zero code four times within a
-	// 10-minute window.Maximum value is 10.Note: This restartable job
+	// driver can be restarted as a result of driver exiting with non-zero
+	// code before job is reported failed.A job might be reported as
+	// thrashing if the driver exits with a non-zero code four times within
+	// a 10-minute window.Maximum value is 10.Note: This restartable job
 	// option is not supported in Dataproc workflow templates
 	// (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template).
 	MaxFailuresPerHour int64 `json:"maxFailuresPerHour,omitempty"`
 
 	// MaxFailuresTotal: Optional. Maximum total number of times a driver
-	// may be restarted as a result of the driver exiting with a non-zero
+	// can be restarted as a result of the driver exiting with a non-zero
 	// code. After the maximum number is reached, the job will be reported
 	// as failed.Maximum value is 240.Note: Currently, this restartable job
 	// option is not supported in Dataproc workflow templates
@@ -3329,10 +3324,10 @@ type JobStatus struct {
 	//   "SUBMITTED" - The Job is submitted to the agent.Applies to RUNNING
 	// state.
 	//   "QUEUED" - The Job has been received and is awaiting execution (it
-	// may be waiting for a condition to be met). See the "details" field
+	// might be waiting for a condition to be met). See the "details" field
 	// for the reason for the delay.Applies to RUNNING state.
 	//   "STALE_STATUS" - The agent-reported status is out of date, which
-	// may be caused by a loss of communication between the agent and
+	// can be caused by a loss of communication between the agent and
 	// Dataproc. If the agent does not send a timely update, the job will
 	// fail.Applies to RUNNING state.
 	Substate string `json:"substate,omitempty"`
@@ -3931,7 +3926,7 @@ func (s *ListWorkflowTemplatesResponse) MarshalJSON() ([]byte, error) {
 
 // LoggingConfig: The runtime logging config of the job.
 type LoggingConfig struct {
-	// DriverLogLevels: The per-package log levels for the driver. This may
+	// DriverLogLevels: The per-package log levels for the driver. This can
 	// include "root" package name to configure rootLogger. Examples: -
 	// 'com.google = FATAL' - 'root = INFO' - 'org.apache = DEBUG'
 	DriverLogLevels map[string]string `json:"driverLogLevels,omitempty"`
@@ -4472,6 +4467,9 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 
 // OrderedJob: A job executed by the workflow.
 type OrderedJob struct {
+	// FlinkJob: Optional. Job is a Flink job.
+	FlinkJob *FlinkJob `json:"flinkJob,omitempty"`
+
 	// HadoopJob: Optional. Job is a Hadoop job.
 	HadoopJob *HadoopJob `json:"hadoopJob,omitempty"`
 
@@ -4524,7 +4522,7 @@ type OrderedJob struct {
 	// TrinoJob: Optional. Job is a Trino job.
 	TrinoJob *TrinoJob `json:"trinoJob,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HadoopJob") to
+	// ForceSendFields is a list of field names (e.g. "FlinkJob") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4532,7 +4530,7 @@ type OrderedJob struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HadoopJob") to include in
+	// NullFields is a list of field names (e.g. "FlinkJob") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4631,7 +4629,7 @@ type PigJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Pig. Properties that conflict with values set by the
-	// Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API might be overwritten. Can include properties set in
 	// /etc/hadoop/conf/*-site.xml, /etc/pig/conf/pig.properties, and
 	// classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
@@ -4945,7 +4943,7 @@ type PySparkJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure PySpark. Properties that conflict with values set by the
-	// Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API might be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -5596,6 +5594,11 @@ type SessionTemplate struct {
 	// UpdateTime: Output only. The time the template was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// Uuid: Output only. A session template UUID (Unique Universal
+	// Identifier). The service generates this value when it creates the
+	// session template.
+	Uuid string `json:"uuid,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -5877,7 +5880,7 @@ type SparkJob struct {
 
 	// MainClass: The name of the driver's main class. The jar file that
 	// contains the class must be in the default CLASSPATH or specified in
-	// jar_file_uris.
+	// SparkJob.jar_file_uris.
 	MainClass string `json:"mainClass,omitempty"`
 
 	// MainJarFileUri: The HCFS URI of the jar file that contains the main
@@ -5886,7 +5889,7 @@ type SparkJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Spark. Properties that conflict with values set by the
-	// Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API might be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -5985,7 +5988,7 @@ type SparkRJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure SparkR. Properties that conflict with values set by the
-	// Dataproc API may be overwritten. Can include properties set in
+	// Dataproc API might be overwritten. Can include properties set in
 	// /etc/spark/conf/spark-defaults.conf and classes in user code.
 	Properties map[string]string `json:"properties,omitempty"`
 
@@ -6062,7 +6065,7 @@ type SparkSqlJob struct {
 
 	// Properties: Optional. A mapping of property names to values, used to
 	// configure Spark SQL's SparkConf. Properties that conflict with values
-	// set by the Dataproc API may be overwritten.
+	// set by the Dataproc API might be overwritten.
 	Properties map[string]string `json:"properties,omitempty"`
 
 	// QueryFileUri: The HCFS URI of the script that contains SQL queries.

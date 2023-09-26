@@ -1906,12 +1906,13 @@ type EventingConfig struct {
 	// EnrichmentEnabled: Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
 
+	// EventsListenerIngressEndpoint: Optional. Ingress endpoint of the
+	// event listener. This is used only when private connectivity is
+	// enabled.
+	EventsListenerIngressEndpoint string `json:"eventsListenerIngressEndpoint,omitempty"`
+
 	// PrivateConnectivityEnabled: Optional. Private Connectivity Enabled.
 	PrivateConnectivityEnabled bool `json:"privateConnectivityEnabled,omitempty"`
-
-	// PublicEventsListenerEndpoint: Optional. Public Events listener
-	// endpoint.
-	PublicEventsListenerEndpoint string `json:"publicEventsListenerEndpoint,omitempty"`
 
 	// RegistrationDestinationConfig: Registration endpoint for auto
 	// registration.
@@ -2056,6 +2057,11 @@ type EventingRuntimeData struct {
 	// value will populated after provisioning the events listener.
 	EventsListenerEndpoint string `json:"eventsListenerEndpoint,omitempty"`
 
+	// EventsListenerPscSa: Output only. Events listener PSC Service
+	// attachment. The value will be populated after provisioning the events
+	// listener with private connectivity enabled.
+	EventsListenerPscSa string `json:"eventsListenerPscSa,omitempty"`
+
 	// Status: Output only. Current status of eventing.
 	Status *EventingStatus `json:"status,omitempty"`
 
@@ -2096,7 +2102,7 @@ type EventingStatus struct {
 	//   "STATE_UNSPECIFIED" - Default state.
 	//   "ACTIVE" - Eventing is enabled and ready to receive events.
 	//   "ERROR" - Eventing is not active due to an error.
-	//   "PUBLIC_ENDPOINT_REQUIRED" - Public endpoint required.
+	//   "INGRESS_ENDPOINT_REQUIRED" - Ingress endpoint required.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -4058,6 +4064,13 @@ func (s *RoleGrant) MarshalJSON() ([]byte, error) {
 type RuntimeActionSchema struct {
 	// Action: Output only. Name of the action.
 	Action string `json:"action,omitempty"`
+
+	// Description: Output only. Brief Description of action
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Output only. Display Name of action to be shown on
+	// client side
+	DisplayName string `json:"displayName,omitempty"`
 
 	// InputJsonSchema: Output only. JsonSchema representation of this
 	// action's input metadata

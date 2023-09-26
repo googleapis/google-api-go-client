@@ -492,6 +492,120 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutomationEvent: Payload proto for
+// "clouddeploy.googleapis.com/automation" Platform Log event that
+// describes the Automation related events.
+type AutomationEvent struct {
+	// Automation: The name of the `AutomationRun`.
+	Automation string `json:"automation,omitempty"`
+
+	// Message: Debug message for when there is an update on the
+	// AutomationRun. Provides further details about the resource creation
+	// or state change.
+	Message string `json:"message,omitempty"`
+
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
+	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
+	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Automation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Automation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomationRunEvent: Payload proto for
+// "clouddeploy.googleapis.com/automation_run" Platform Log event that
+// describes the AutomationRun related events.
+type AutomationRunEvent struct {
+	// AutomationId: Identifier of the `Automation`.
+	AutomationId string `json:"automationId,omitempty"`
+
+	// AutomationRun: The name of the `AutomationRun`.
+	AutomationRun string `json:"automationRun,omitempty"`
+
+	// DestinationTargetId: ID of the `Target` to which the `AutomationRun`
+	// is created.
+	DestinationTargetId string `json:"destinationTargetId,omitempty"`
+
+	// Message: Debug message for when there is an update on the
+	// AutomationRun. Provides further details about the resource creation
+	// or state change.
+	Message string `json:"message,omitempty"`
+
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
+	// RuleId: Identifier of the `Automation` rule.
+	RuleId string `json:"ruleId,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
+	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
+	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutomationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutomationId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationRunEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationRunEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the

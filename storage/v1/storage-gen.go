@@ -11395,6 +11395,14 @@ func (r *ObjectsService) Restore(bucket string, object string, object2 *Object) 
 	return c
 }
 
+// CopySourceAcl sets the optional parameter "copySourceAcl": If true,
+// copies the source object's ACL; otherwise, uses the bucket's default
+// object ACL. The default is false.
+func (c *ObjectsRestoreCall) CopySourceAcl(copySourceAcl bool) *ObjectsRestoreCall {
+	c.urlParams_.Set("copySourceAcl", fmt.Sprint(copySourceAcl))
+	return c
+}
+
 // IfGenerationMatch sets the optional parameter "ifGenerationMatch":
 // Makes the operation conditional on whether the object's one live
 // generation matches the given value. Setting to 0 makes the operation
@@ -11555,6 +11563,11 @@ func (c *ObjectsRestoreCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "copySourceAcl": {
+	//       "description": "If true, copies the source object's ACL; otherwise, uses the bucket's default object ACL. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "generation": {
 	//       "description": "Selects a specific revision of this object.",

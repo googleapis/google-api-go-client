@@ -223,6 +223,12 @@ type ProjectsLocationsConnectionsEntityTypesEntitiesService struct {
 // Action: Action message contains metadata information about a single
 // action present in the external system.
 type Action struct {
+	// Description: Brief Description of action
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display Name of action to be shown on client side
+	DisplayName string `json:"displayName,omitempty"`
+
 	// InputJsonSchema: JsonSchema representation of this actions's input
 	// schema
 	InputJsonSchema *JsonSchema `json:"inputJsonSchema,omitempty"`
@@ -244,7 +250,7 @@ type Action struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "InputJsonSchema") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -252,13 +258,12 @@ type Action struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputJsonSchema") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -604,6 +609,11 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 // InputParameter: Input Parameter message contains metadata about the
 // parameters required for executing an Action.
 type InputParameter struct {
+	// AdditionalDetails: The following map contains fields that are not
+	// explicitly mentioned above,this give connectors the flexibility to
+	// add new metadata fields.
+	AdditionalDetails googleapi.RawMessage `json:"additionalDetails,omitempty"`
+
 	// DataType: The data type of the Parameter
 	//
 	// Possible values:
@@ -671,20 +681,21 @@ type InputParameter struct {
 	// Nullable: Specifies whether a null value is allowed.
 	Nullable bool `json:"nullable,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataType") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdditionalDetails")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdditionalDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1012,7 +1023,7 @@ type QueryParameter struct {
 	//   "TIMESTAMP_WITH_TIMEZONE" - Timestamp with timezone type.
 	DataType string `json:"dataType,omitempty"`
 
-	Value string `json:"value,omitempty"`
+	Value interface{} `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataType") to
 	// unconditionally include in API requests. By default, fields with

@@ -344,6 +344,69 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byt
 // to an end user. The end user identity is inferred from the request
 // OAuth context.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct {
+	// LineItemEntitlementDetails: Optional. The line items to be entitled.
+	// If unspecified, all line items will be entitled.
+	LineItemEntitlementDetails []*GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails `json:"lineItemEntitlementDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LineItemEntitlementDetails") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "LineItemEntitlementDetails") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLin
+// eItemEntitlementDetails: The details of the line item to be entitled.
+type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails struct {
+	// LineItemIndex: Required. The index of the line item to be entitled.
+	LineItemIndex int64 `json:"lineItemIndex,omitempty"`
+
+	// Products: Optional. Only applicable if the line item corresponds to a
+	// hard bundle. Product resource names that identify the bundle elements
+	// to be entitled in the line item. If unspecified, all bundle elements
+	// will be entitled. The format is
+	// 'partners/{partner_id}/products/{product_id}'.
+	Products []string `json:"products,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LineItemIndex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LineItemIndex") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct {

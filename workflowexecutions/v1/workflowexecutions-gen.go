@@ -214,8 +214,8 @@ type Callback struct {
 	// that have not been processed by a waiting execution step.
 	AvailablePayloads []string `json:"availablePayloads,omitempty"`
 
-	// Method: Output only. The method accepted by the callback. E.g. GET,
-	// POST, PUT.
+	// Method: Output only. The method accepted by the callback. For
+	// example: GET, POST, PUT.
 	Method string `json:"method,omitempty"`
 
 	// Name: Output only. The resource name of the callback. Format:
@@ -401,8 +401,8 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 
 // ExportDataResponse: Response for the ExportData method.
 type ExportDataResponse struct {
-	// Data: The JSON string with customer data and metadata of an execution
-	// of the given name
+	// Data: The JSON string with customer data and metadata for an
+	// execution with the given name
 	Data string `json:"data,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1267,9 +1267,10 @@ type ProjectsLocationsWorkflowsExecutionsExportDataCall struct {
 }
 
 // ExportData: Returns all metadata stored about an execution, excluding
-// most data that is already accessible via other API methods.
+// most data that is already accessible using other API methods.
 //
-//   - name: Name of the execution to be data exported. Format:
+//   - name: Name of the execution for which data is to be exported.
+//     Format:
 //     projects/{project}/locations/{location}/workflows/{workflow}/executi
 //     ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) ExportData(name string) *ProjectsLocationsWorkflowsExecutionsExportDataCall {
@@ -1377,7 +1378,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all metadata stored about an execution, excluding most data that is already accessible via other API methods.",
+	//   "description": "Returns all metadata stored about an execution, excluding most data that is already accessible using other API methods.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions/{executionsId}:exportData",
 	//   "httpMethod": "GET",
 	//   "id": "workflowexecutions.projects.locations.workflows.executions.exportData",
@@ -1386,7 +1387,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsExportDataCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the execution to be data exported. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}",
+	//       "description": "Required. Name of the execution for which data is to be exported. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -1863,9 +1864,9 @@ type ProjectsLocationsWorkflowsExecutionsCallbacksListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of active callbacks which belong to the
-// execution with the given name. The returned callbacks are ordered by
-// callback ID. first).
+// List: Returns a list of active callbacks that belong to the execution
+// with the given name. The returned callbacks are ordered by callback
+// ID.
 //
 //   - parent: Name of the execution for which the callbacks should be
 //     listed. Format:
@@ -1994,7 +1995,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of active callbacks which belong to the execution with the given name. The returned callbacks are ordered by callback ID. first).",
+	//   "description": "Returns a list of active callbacks that belong to the execution with the given name. The returned callbacks are ordered by callback ID.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions/{executionsId}/callbacks",
 	//   "httpMethod": "GET",
 	//   "id": "workflowexecutions.projects.locations.workflows.executions.callbacks.list",

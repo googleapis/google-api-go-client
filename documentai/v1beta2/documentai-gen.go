@@ -7661,7 +7661,7 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
-// Processor which configures a collection of documents. Next Id: 8.
+// Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
 	// dataset configuration.

@@ -406,9 +406,6 @@ type GoogleMapsPlacesV1Place struct {
 	// the place, in national format.
 	NationalPhoneNumber string `json:"nationalPhoneNumber,omitempty"`
 
-	// OpeningHours: Output only. The regular hours of operation.
-	OpeningHours *GoogleMapsPlacesV1PlaceOpeningHours `json:"openingHours,omitempty"`
-
 	// PlusCode: Output only. Plus code of the place location lat/long.
 	PlusCode *GoogleMapsPlacesV1PlacePlusCode `json:"plusCode,omitempty"`
 
@@ -429,21 +426,24 @@ type GoogleMapsPlacesV1Place struct {
 	// reviews of this place.
 	Rating float64 `json:"rating,omitempty"`
 
+	// RegularOpeningHours: Output only. The regular hours of operation.
+	RegularOpeningHours *GoogleMapsPlacesV1PlaceOpeningHours `json:"regularOpeningHours,omitempty"`
+
+	// RegularSecondaryOpeningHours: Output only. Contains an array of
+	// entries for information about regular secondary hours of a business.
+	// Secondary hours are different from a business's main hours. For
+	// example, a restaurant can specify drive through hours or delivery
+	// hours as its secondary hours. This field populates the type subfield,
+	// which draws from a predefined list of opening hours types (such as
+	// DRIVE_THROUGH, PICKUP, or TAKEOUT) based on the types of the place.
+	RegularSecondaryOpeningHours []*GoogleMapsPlacesV1PlaceOpeningHours `json:"regularSecondaryOpeningHours,omitempty"`
+
 	// Reservable: Output only. Specifies if the place supports
 	// reservations.
 	Reservable bool `json:"reservable,omitempty"`
 
 	// Reviews: Output only. List of reviews about this place.
 	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
-
-	// SecondaryOpeningHours: Output only. Contains an array of entries for
-	// information about regular secondary hours of a business. Secondary
-	// hours are different from a business's main hours. For example, a
-	// restaurant can specify drive through hours or delivery hours as its
-	// secondary hours. This field populates the type subfield, which draws
-	// from a predefined list of opening hours types (such as DRIVE_THROUGH,
-	// PICKUP, or TAKEOUT) based on the types of the place.
-	SecondaryOpeningHours []*GoogleMapsPlacesV1PlaceOpeningHours `json:"secondaryOpeningHours,omitempty"`
 
 	// ServesBeer: Output only. Specifies if the place serves beer.
 	ServesBeer bool `json:"servesBeer,omitempty"`
@@ -494,10 +494,6 @@ type GoogleMapsPlacesV1Place struct {
 	// chain (e.g. an IKEA store), this will usually be the website for the
 	// individual store, not the overall chain.
 	WebsiteUri string `json:"websiteUri,omitempty"`
-
-	// WheelchairAccessibleEntrance: Output only. [Deprecated!] Specifies if
-	// the place has an entrance that is wheelchair-accessible.
-	WheelchairAccessibleEntrance bool `json:"wheelchairAccessibleEntrance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddressComponents")
 	// to unconditionally include in API requests. By default, fields with

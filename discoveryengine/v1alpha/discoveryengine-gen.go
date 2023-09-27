@@ -441,6 +441,7 @@ func NewProjectsLocationsDataStoresService(s *Service) *ProjectsLocationsDataSto
 	rs.Operations = NewProjectsLocationsDataStoresOperationsService(s)
 	rs.Schemas = NewProjectsLocationsDataStoresSchemasService(s)
 	rs.ServingConfigs = NewProjectsLocationsDataStoresServingConfigsService(s)
+	rs.SiteSearchEngine = NewProjectsLocationsDataStoresSiteSearchEngineService(s)
 	rs.UserEvents = NewProjectsLocationsDataStoresUserEventsService(s)
 	return rs
 }
@@ -459,6 +460,8 @@ type ProjectsLocationsDataStoresService struct {
 	Schemas *ProjectsLocationsDataStoresSchemasService
 
 	ServingConfigs *ProjectsLocationsDataStoresServingConfigsService
+
+	SiteSearchEngine *ProjectsLocationsDataStoresSiteSearchEngineService
 
 	UserEvents *ProjectsLocationsDataStoresUserEventsService
 }
@@ -550,6 +553,15 @@ func NewProjectsLocationsDataStoresServingConfigsService(s *Service) *ProjectsLo
 }
 
 type ProjectsLocationsDataStoresServingConfigsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDataStoresSiteSearchEngineService(s *Service) *ProjectsLocationsDataStoresSiteSearchEngineService {
+	rs := &ProjectsLocationsDataStoresSiteSearchEngineService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataStoresSiteSearchEngineService struct {
 	s *Service
 }
 
@@ -1437,8 +1449,7 @@ type GoogleCloudDiscoveryengineV1alphaCompleteQueryRequest struct {
 	// events. * `document-completable` - Using suggestions taken directly
 	// from user-imported document fields marked as completable. Default
 	// values: * `document` is the default model for regular dataStores. *
-	// `search-history` is the default model for
-	// IndustryVertical.SITE_SEARCH dataStores.
+	// `search-history` is the default model for site search dataStores.
 	QueryModel string `json:"queryModel,omitempty"`
 
 	// UserPseudoId: A unique identifier for tracking visitors. For example,
@@ -3562,6 +3573,199 @@ type GoogleCloudDiscoveryengineV1alphaRecommendResponseRecommendationResult stru
 
 func (s *GoogleCloudDiscoveryengineV1alphaRecommendResponseRecommendationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaRecommendResponseRecommendationResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata: Metadata
+// related to the progress of the SiteSearchEngineService.RecrawlUris
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// InvalidUris: Unique URIs in the request that don't match any
+	// TargetSite in the DataStore, only match TargetSites that haven't been
+	// fully indexed, or match a TargetSite with type EXCLUDE.
+	InvalidUris []string `json:"invalidUris,omitempty"`
+
+	// PendingCount: Total number of URIs that have yet to be crawled.
+	PendingCount int64 `json:"pendingCount,omitempty"`
+
+	// QuotaExceededCount: Total number of URIs that were rejected due to
+	// insufficient indexing resources.
+	QuotaExceededCount int64 `json:"quotaExceededCount,omitempty"`
+
+	// SuccessCount: Total number of URIs that have been crawled so far.
+	SuccessCount int64 `json:"successCount,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ValidUrisCount: Total number of unique URIs in the request that are
+	// not in invalid_uris.
+	ValidUrisCount int64 `json:"validUrisCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest: Request message
+// for SiteSearchEngineService.RecrawlUris method.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest struct {
+	// Uris: Required. List of URIs to crawl. At most 10K URIs are
+	// supported, otherwise an INVALID_ARGUMENT error is thrown. Each URI
+	// should match at least one TargetSite in `site_search_engine`.
+	Uris []string `json:"uris,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uris") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse: Response
+// message for SiteSearchEngineService.RecrawlUris method.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse struct {
+	// FailedUris: URIs that were not crawled before the LRO terminated.
+	FailedUris []string `json:"failedUris,omitempty"`
+
+	// FailureSamples: Details for a sample of up to 10 `failed_uris`.
+	FailureSamples []*GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo `json:"failureSamples,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedUris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedUris") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo:
+// Details about why a particular URI failed to be crawled. Each
+// FailureInfo contains one FailureReason per CorpusType.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo struct {
+	// FailureReasons: List of failure reasons by corpus type (e.g. desktop,
+	// mobile).
+	FailureReasons []*GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason `json:"failureReasons,omitempty"`
+
+	// Uri: URI that failed to be crawled.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureReasons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureReasons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailure
+// Reason: Details about why crawling failed for a particular
+// CorpusType, e.g. DESKTOP and MOBILE crawling may fail for different
+// reasons.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason struct {
+	// CorpusType: DESKTOP, MOBILE, or CORPUS_TYPE_UNSPECIFIED.
+	//
+	// Possible values:
+	//   "CORPUS_TYPE_UNSPECIFIED" - Default value.
+	//   "DESKTOP" - Denotes a crawling attempt for the desktop version of a
+	// page.
+	//   "MOBILE" - Denotes a crawling attempt for the mobile version of a
+	// page.
+	CorpusType string `json:"corpusType,omitempty"`
+
+	// ErrorMessage: Reason why the URI was not crawled.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CorpusType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CorpusType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7204,8 +7408,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) Query(query st
 // `document-completable` - Using suggestions taken directly from
 // user-imported document fields marked as completable. Default values:
 // * `document` is the default model for regular dataStores. *
-// `search-history` is the default model for
-// IndustryVertical.SITE_SEARCH dataStores.
+// `search-history` is the default model for site search dataStores.
 func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) QueryModel(queryModel string) *ProjectsLocationsCollectionsDataStoresCompleteQueryCall {
 	c.urlParams_.Set("queryModel", queryModel)
 	return c
@@ -7354,7 +7557,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "queryModel": {
-	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for IndustryVertical.SITE_SEARCH dataStores.",
+	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12013,6 +12216,151 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchCall) Pages(c
 	}
 }
 
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.recrawlUris":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall struct {
+	s                                                   *Service
+	siteSearchEngine                                    string
+	googleclouddiscoveryenginev1alpharecrawlurisrequest *GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// RecrawlUris: Request on-demand recrawl for a list of URIs.
+//
+//   - siteSearchEngine: Full resource name of the SiteSearchEngine, such
+//     as
+//     `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`
+//     .
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService) RecrawlUris(siteSearchEngine string, googleclouddiscoveryenginev1alpharecrawlurisrequest *GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	c.googleclouddiscoveryenginev1alpharecrawlurisrequest = googleclouddiscoveryenginev1alpharecrawlurisrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alpharecrawlurisrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:recrawlUris")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.recrawlUris" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request on-demand recrawl for a list of URIs.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine:recrawlUris",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.recrawlUris",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "siteSearchEngine": {
+	//       "description": "Required. Full resource name of the SiteSearchEngine, such as `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:recrawlUris",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.get":
 
 type ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall struct {
@@ -14119,8 +14467,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) Query(query string) *Proj
 // `document-completable` - Using suggestions taken directly from
 // user-imported document fields marked as completable. Default values:
 // * `document` is the default model for regular dataStores. *
-// `search-history` is the default model for
-// IndustryVertical.SITE_SEARCH dataStores.
+// `search-history` is the default model for site search dataStores.
 func (c *ProjectsLocationsDataStoresCompleteQueryCall) QueryModel(queryModel string) *ProjectsLocationsDataStoresCompleteQueryCall {
 	c.urlParams_.Set("queryModel", queryModel)
 	return c
@@ -14269,7 +14616,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "queryModel": {
-	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for IndustryVertical.SITE_SEARCH dataStores.",
+	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18571,6 +18918,151 @@ func (c *ProjectsLocationsDataStoresServingConfigsSearchCall) Pages(ctx context.
 		}
 		c.googleclouddiscoveryenginev1alphasearchrequest.PageToken = x.NextPageToken
 	}
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.recrawlUris":
+
+type ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall struct {
+	s                                                   *Service
+	siteSearchEngine                                    string
+	googleclouddiscoveryenginev1alpharecrawlurisrequest *GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// RecrawlUris: Request on-demand recrawl for a list of URIs.
+//
+//   - siteSearchEngine: Full resource name of the SiteSearchEngine, such
+//     as
+//     `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`
+//     .
+func (r *ProjectsLocationsDataStoresSiteSearchEngineService) RecrawlUris(siteSearchEngine string, googleclouddiscoveryenginev1alpharecrawlurisrequest *GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest) *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	c.googleclouddiscoveryenginev1alpharecrawlurisrequest = googleclouddiscoveryenginev1alpharecrawlurisrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alpharecrawlurisrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:recrawlUris")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.recrawlUris" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request on-demand recrawl for a list of URIs.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine:recrawlUris",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.recrawlUris",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "siteSearchEngine": {
+	//       "description": "Required. Full resource name of the SiteSearchEngine, such as `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:recrawlUris",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "discoveryengine.projects.locations.dataStores.userEvents.collect":

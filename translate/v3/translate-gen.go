@@ -384,7 +384,13 @@ type BatchTranslateDocumentRequest struct {
 	// is_translate_native_pdf_only: false && pdf_native_only: false
 	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
 
-	// FormatConversions: Optional.
+	// FormatConversions: Optional. The file format conversion map that is
+	// applied to all input files. The map key is the original mime_type.
+	// The map value is the target mime_type of translated documents.
+	// Supported file format conversion includes: - `application/pdf` to
+	// `application/vnd.openxmlformats-officedocument.wordprocessingml.docume
+	// nt` If nothing specified, output files will be in the same format as
+	// the original file.
 	FormatConversions map[string]string `json:"formatConversions,omitempty"`
 
 	// Glossaries: Optional. Glossaries to be applied. It's keyed by target
@@ -3042,8 +3048,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//     "$ref": "SupportedLanguages"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4133,8 +4138,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "SupportedLanguages"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -6191,8 +6195,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -6339,8 +6342,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "Glossary"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -6543,8 +6545,7 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "ListGlossariesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -7148,8 +7149,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Do(opts ...googleapi
 	//     "$ref": "GlossaryEntry"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -7325,8 +7325,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Do(opts ...googleap
 	//     "$ref": "ListGlossaryEntriesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

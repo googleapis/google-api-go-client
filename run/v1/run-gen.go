@@ -2692,7 +2692,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/cpu-throttling`: Revision. *
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/description`: Service. *
-	// `run.googleapis.com/disable-default-uri`: Service. *
+	// `run.googleapis.com/disable-default-url`: Service. *
 	// `run.googleapis.com/encryption-key-shutdown-hours`: Revision *
 	// `run.googleapis.com/encryption-key`: Revision, Execution. *
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
@@ -3738,7 +3738,7 @@ type Service struct {
 	// `run.googleapis.com/client-name` *
 	// `run.googleapis.com/custom-audiences` *
 	// `run.googleapis.com/description` *
-	// `run.googleapis.com/disable-default-uri` *
+	// `run.googleapis.com/disable-default-url` *
 	// `run.googleapis.com/gc-traffic-tags` * `run.googleapis.com/ingress` *
 	// `run.googleapis.com/ingress` sets the ingress settings for the
 	// Service. See the ingress settings documentation
@@ -3845,12 +3845,10 @@ type ServiceStatus struct {
 	// `True`.
 	LatestReadyRevisionName string `json:"latestReadyRevisionName,omitempty"`
 
-	// ObservedGeneration: Returns the generation last fully processed by
-	// the system. This will only match metadata.generation when
-	// reconciliation is complete. Clients polling for completed
-	// reconciliation should poll until observedGeneration =
-	// metadata.generation and the Ready condition's status is True or
-	// False.
+	// ObservedGeneration: Returns the generation last seen by the system.
+	// Clients polling for completed reconciliation should poll until
+	// observedGeneration = metadata.generation and the Ready condition's
+	// status is True or False.
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
 
 	// Traffic: Holds the configured traffic distribution. These entries

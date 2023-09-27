@@ -5379,8 +5379,8 @@ type GoogleCloudDocumentaiV1OcrConfig struct {
 	ComputeStyleInfo bool `json:"computeStyleInfo,omitempty"`
 
 	// DisableCharacterBoxesDetection: Turn off character box detector in
-	// OCR engine. Character box detection is enabled by default in OCR 2.0+
-	// processors.
+	// OCR engine. Character box detection is enabled by default in OCR 2.0
+	// (and later) processors.
 	DisableCharacterBoxesDetection bool `json:"disableCharacterBoxesDetection,omitempty"`
 
 	// EnableImageQualityScores: Enables intelligent document quality scores
@@ -5473,7 +5473,7 @@ type GoogleCloudDocumentaiV1OcrConfigPremiumFeatures struct {
 	EnableMathOcr bool `json:"enableMathOcr,omitempty"`
 
 	// EnableSelectionMarkDetection: Turn on selection mark detector in OCR
-	// engine. Only available in OCR 2.0+ processors.
+	// engine. Only available in OCR 2.0 (and later) processors.
 	EnableSelectionMarkDetection bool `json:"enableSelectionMarkDetection,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComputeStyleInfo") to
@@ -5505,8 +5505,8 @@ type GoogleCloudDocumentaiV1ProcessOptions struct {
 	// FromEnd: Only process certain pages from the end, same as above.
 	FromEnd int64 `json:"fromEnd,omitempty"`
 
-	// FromStart: Only process certain pages from the start, process all if
-	// the document has less pages.
+	// FromStart: Only process certain pages from the start. Process all if
+	// the document has fewer pages.
 	FromStart int64 `json:"fromStart,omitempty"`
 
 	// IndividualPageSelector: Which pages to process (1-indexed).
@@ -11279,7 +11279,7 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
-// Processor which configures a collection of documents. Next Id: 8.
+// Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
 	// dataset configuration.

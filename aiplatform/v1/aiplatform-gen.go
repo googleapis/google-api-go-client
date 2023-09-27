@@ -315,6 +315,7 @@ func NewProjectsLocationsDatasetsService(s *Service) *ProjectsLocationsDatasetsS
 	rs := &ProjectsLocationsDatasetsService{s: s}
 	rs.AnnotationSpecs = NewProjectsLocationsDatasetsAnnotationSpecsService(s)
 	rs.DataItems = NewProjectsLocationsDatasetsDataItemsService(s)
+	rs.DatasetVersions = NewProjectsLocationsDatasetsDatasetVersionsService(s)
 	rs.Operations = NewProjectsLocationsDatasetsOperationsService(s)
 	rs.SavedQueries = NewProjectsLocationsDatasetsSavedQueriesService(s)
 	return rs
@@ -326,6 +327,8 @@ type ProjectsLocationsDatasetsService struct {
 	AnnotationSpecs *ProjectsLocationsDatasetsAnnotationSpecsService
 
 	DataItems *ProjectsLocationsDatasetsDataItemsService
+
+	DatasetVersions *ProjectsLocationsDatasetsDatasetVersionsService
 
 	Operations *ProjectsLocationsDatasetsOperationsService
 
@@ -395,6 +398,15 @@ func NewProjectsLocationsDatasetsDataItemsOperationsService(s *Service) *Project
 }
 
 type ProjectsLocationsDatasetsDataItemsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatasetsDatasetVersionsService(s *Service) *ProjectsLocationsDatasetsDatasetVersionsService {
+	rs := &ProjectsLocationsDatasetsDatasetVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsDatasetVersionsService struct {
 	s *Service
 }
 
@@ -4803,6 +4815,55 @@ func (s *GoogleCloudAiplatformV1Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1DatasetVersion: Describes the dataset version.
+type GoogleCloudAiplatformV1DatasetVersion struct {
+	// BigQueryDatasetName: Output only. Name of the associated BigQuery
+	// dataset.
+	BigQueryDatasetName string `json:"bigQueryDatasetName,omitempty"`
+
+	// CreateTime: Output only. Timestamp when this DatasetVersion was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Etag: Used to perform consistent read-modify-write updates. If not
+	// set, a blind "overwrite" update happens.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name of the DatasetVersion.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this DatasetVersion was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BigQueryDatasetName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigQueryDatasetName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1DatasetVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1DatasetVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1DedicatedResources: A description of resources
 // that are dedicated to a DeployedModel, and that need a higher degree
 // of manual configuration.
@@ -7503,6 +7564,9 @@ type GoogleCloudAiplatformV1ExportDataConfig struct {
 	// ListAnnotations.
 	AnnotationsFilter string `json:"annotationsFilter,omitempty"`
 
+	// FilterSplit: Split based on the provided filters for each set.
+	FilterSplit *GoogleCloudAiplatformV1ExportFilterSplit `json:"filterSplit,omitempty"`
+
 	// FractionSplit: Split based on fractions defining the size of each
 	// set.
 	FractionSplit *GoogleCloudAiplatformV1ExportFractionSplit `json:"fractionSplit,omitempty"`
@@ -7788,6 +7852,62 @@ func (s *GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport) Marsha
 // GoogleCloudAiplatformV1ExportFeatureValuesResponse: Response message
 // for FeaturestoreService.ExportFeatureValues.
 type GoogleCloudAiplatformV1ExportFeatureValuesResponse struct {
+}
+
+// GoogleCloudAiplatformV1ExportFilterSplit: Assigns input data to
+// training, validation, and test sets based on the given filters, data
+// pieces not matched by any filter are ignored. Currently only
+// supported for Datasets containing DataItems. If any of the filters in
+// this message are to match nothing, then they can be set as '-' (the
+// minus sign). Supported only for unstructured Datasets.
+type GoogleCloudAiplatformV1ExportFilterSplit struct {
+	// TestFilter: Required. A filter on DataItems of the Dataset. DataItems
+	// that match this filter are used to test the Model. A filter with same
+	// syntax as the one used in DatasetService.ListDataItems may be used.
+	// If a single DataItem is matched by more than one of the FilterSplit
+	// filters, then it is assigned to the first set that applies to it in
+	// the training, validation, test order.
+	TestFilter string `json:"testFilter,omitempty"`
+
+	// TrainingFilter: Required. A filter on DataItems of the Dataset.
+	// DataItems that match this filter are used to train the Model. A
+	// filter with same syntax as the one used in
+	// DatasetService.ListDataItems may be used. If a single DataItem is
+	// matched by more than one of the FilterSplit filters, then it is
+	// assigned to the first set that applies to it in the training,
+	// validation, test order.
+	TrainingFilter string `json:"trainingFilter,omitempty"`
+
+	// ValidationFilter: Required. A filter on DataItems of the Dataset.
+	// DataItems that match this filter are used to validate the Model. A
+	// filter with same syntax as the one used in
+	// DatasetService.ListDataItems may be used. If a single DataItem is
+	// matched by more than one of the FilterSplit filters, then it is
+	// assigned to the first set that applies to it in the training,
+	// validation, test order.
+	ValidationFilter string `json:"validationFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TestFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TestFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1ExportFilterSplit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ExportFilterSplit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFractionSplit: Assigns the input data to
@@ -10927,6 +11047,44 @@ type GoogleCloudAiplatformV1ListDataLabelingJobsResponse struct {
 
 func (s *GoogleCloudAiplatformV1ListDataLabelingJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListDataLabelingJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ListDatasetVersionsResponse: Response message
+// for DatasetService.ListDatasetVersions.
+type GoogleCloudAiplatformV1ListDatasetVersionsResponse struct {
+	// DatasetVersions: A list of DatasetVersions that matches the specified
+	// filter in the request.
+	DatasetVersions []*GoogleCloudAiplatformV1DatasetVersion `json:"datasetVersions,omitempty"`
+
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetVersions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetVersions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1ListDatasetVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ListDatasetVersionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14337,6 +14495,10 @@ type GoogleCloudAiplatformV1ModelMonitoringAlertConfig struct {
 	// by Cloud Logging.
 	EnableLogging bool `json:"enableLogging,omitempty"`
 
+	// NotificationChannels: Resource names of the NotificationChannels to
+	// send alert. Must be of the format `projects//notificationChannels/`
+	NotificationChannels []string `json:"notificationChannels,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "EmailAlertConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -15846,14 +16008,15 @@ type GoogleCloudAiplatformV1NotebookRuntime struct {
 	// characters (Unicode codepoints), can only contain lowercase letters,
 	// numeric characters, underscores and dashes. International characters
 	// are allowed. No more than 64 user labels can be associated with one
-	// Dataset (System labels are excluded). See https://goo.gl/xmQnxf for
-	// more information and examples of labels. System reserved label keys
-	// are prefixed with "aiplatform.googleapis.com/" and are immutable.
-	// Following system labels exist for NotebookRuntime: *
+	// NotebookRuntime (System labels are excluded). See
+	// https://goo.gl/xmQnxf for more information and examples of labels.
+	// System reserved label keys are prefixed with
+	// "aiplatform.googleapis.com/" and are immutable. Following system
+	// labels exist for NotebookRuntime: *
 	// "aiplatform.googleapis.com/notebook_runtime_gce_instance_id": output
 	// only, its value is the Compute Engine instance id. *
 	// "aiplatform.googleapis.com/colab_enterprise_entry_service": its value
-	// is either "BigQuery" or "Vertex"; if absent, it should be "Vertex".
+	// is either "bigquery" or "vertex"; if absent, it should be "vertex".
 	// This is to describe the entry service, either BigQuery or Vertex.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -15863,6 +16026,17 @@ type GoogleCloudAiplatformV1NotebookRuntime struct {
 	// NotebookRuntimeTemplateRef: Output only. The pointer to
 	// NotebookRuntimeTemplate this NotebookRuntime is created from.
 	NotebookRuntimeTemplateRef *GoogleCloudAiplatformV1NotebookRuntimeTemplateRef `json:"notebookRuntimeTemplateRef,omitempty"`
+
+	// NotebookRuntimeType: Output only. The type of the notebook runtime.
+	//
+	// Possible values:
+	//   "NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED" - Unspecified notebook runtime
+	// type, NotebookRuntimeType will default to USER_DEFINED.
+	//   "USER_DEFINED" - runtime or template with coustomized
+	// configurations from user.
+	//   "ONE_CLICK" - runtime or template with system defined
+	// configurations.
+	NotebookRuntimeType string `json:"notebookRuntimeType,omitempty"`
 
 	// ProxyUri: Output only. The proxy endpoint used to access the
 	// NotebookRuntime.
@@ -15975,6 +16149,18 @@ type GoogleCloudAiplatformV1NotebookRuntimeTemplate struct {
 
 	// NetworkSpec: Optional. Network spec.
 	NetworkSpec *GoogleCloudAiplatformV1NetworkSpec `json:"networkSpec,omitempty"`
+
+	// NotebookRuntimeType: Optional. Immutable. The type of the notebook
+	// runtime template.
+	//
+	// Possible values:
+	//   "NOTEBOOK_RUNTIME_TYPE_UNSPECIFIED" - Unspecified notebook runtime
+	// type, NotebookRuntimeType will default to USER_DEFINED.
+	//   "USER_DEFINED" - runtime or template with coustomized
+	// configurations from user.
+	//   "ONE_CLICK" - runtime or template with system defined
+	// configurations.
+	NotebookRuntimeType string `json:"notebookRuntimeType,omitempty"`
 
 	// ServiceAccount: The service account that the runtime workload runs
 	// as. You can use any service account within the same project, but you
@@ -16200,7 +16386,9 @@ type GoogleCloudAiplatformV1PipelineJob struct {
 	TemplateMetadata *GoogleCloudAiplatformV1PipelineTemplateMetadata `json:"templateMetadata,omitempty"`
 
 	// TemplateUri: A template uri from where the PipelineJob.pipeline_spec,
-	// if empty, will be downloaded.
+	// if empty, will be downloaded. Currently, only uri from Vertex
+	// Template Registry & Gallery is supported. Reference to
+	// https://cloud.google.com/vertex-ai/docs/pipelines/create-pipeline-template.
 	TemplateUri string `json:"templateUri,omitempty"`
 
 	// UpdateTime: Output only. Timestamp when this PipelineJob was most
@@ -39892,6 +40080,827 @@ func (c *ProjectsLocationsDatasetsDataItemsOperationsWaitCall) Do(opts ...google
 	//     }
 	//   },
 	//   "path": "v1/{+name}:wait",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.datasets.datasetVersions.create":
+
+type ProjectsLocationsDatasetsDatasetVersionsCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googlecloudaiplatformv1datasetversion *GoogleCloudAiplatformV1DatasetVersion
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Create a version from a Dataset.
+//
+//   - parent: The name of the Dataset resource. Format:
+//     `projects/{project}/locations/{location}/datasets/{dataset}`.
+func (r *ProjectsLocationsDatasetsDatasetVersionsService) Create(parent string, googlecloudaiplatformv1datasetversion *GoogleCloudAiplatformV1DatasetVersion) *ProjectsLocationsDatasetsDatasetVersionsCreateCall {
+	c := &ProjectsLocationsDatasetsDatasetVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudaiplatformv1datasetversion = googlecloudaiplatformv1datasetversion
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDatasetVersionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDatasetVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDatasetVersionsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDatasetVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDatasetVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDatasetVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudaiplatformv1datasetversion)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/datasetVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.datasets.datasetVersions.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDatasetVersionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a version from a Dataset.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/datasetVersions",
+	//   "httpMethod": "POST",
+	//   "id": "aiplatform.projects.locations.datasets.datasetVersions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the Dataset resource. Format: `projects/{project}/locations/{location}/datasets/{dataset}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/datasetVersions",
+	//   "request": {
+	//     "$ref": "GoogleCloudAiplatformV1DatasetVersion"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.datasets.datasetVersions.delete":
+
+type ProjectsLocationsDatasetsDatasetVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Dataset version.
+//
+//   - name: The resource name of the Dataset version to delete. Format:
+//     `projects/{project}/locations/{location}/datasets/{dataset}/datasetV
+//     ersions/{dataset_version}`.
+func (r *ProjectsLocationsDatasetsDatasetVersionsService) Delete(name string) *ProjectsLocationsDatasetsDatasetVersionsDeleteCall {
+	c := &ProjectsLocationsDatasetsDatasetVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDatasetVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDatasetVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDatasetVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDatasetVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDatasetVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDatasetVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.datasets.datasetVersions.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDatasetVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Dataset version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/datasetVersions/{datasetVersionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "aiplatform.projects.locations.datasets.datasetVersions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Dataset version to delete. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/datasetVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.datasets.datasetVersions.get":
+
+type ProjectsLocationsDatasetsDatasetVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Dataset version.
+//
+//   - name: The resource name of the Dataset version to delete. Format:
+//     `projects/{project}/locations/{location}/datasets/{dataset}/datasetV
+//     ersions/{dataset_version}`.
+func (r *ProjectsLocationsDatasetsDatasetVersionsService) Get(name string) *ProjectsLocationsDatasetsDatasetVersionsGetCall {
+	c := &ProjectsLocationsDatasetsDatasetVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Mask specifying
+// which fields to read.
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) ReadMask(readMask string) *ProjectsLocationsDatasetsDatasetVersionsGetCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDatasetVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDatasetVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDatasetVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.datasets.datasetVersions.get" call.
+// Exactly one of *GoogleCloudAiplatformV1DatasetVersion or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudAiplatformV1DatasetVersion.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDatasetVersionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1DatasetVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1DatasetVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Dataset version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/datasetVersions/{datasetVersionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.datasets.datasetVersions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Dataset version to delete. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/datasetVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Mask specifying which fields to read.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudAiplatformV1DatasetVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "aiplatform.projects.locations.datasets.datasetVersions.list":
+
+type ProjectsLocationsDatasetsDatasetVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DatasetVersions in a Dataset.
+//
+//   - parent: The resource name of the Dataset to list DatasetVersions
+//     from. Format:
+//     `projects/{project}/locations/{location}/datasets/{dataset}`.
+func (r *ProjectsLocationsDatasetsDatasetVersionsService) List(parent string) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c := &ProjectsLocationsDatasetsDatasetVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Filter(filter string) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of fields to order by, sorted in ascending order. Use "desc" after a
+// field name for descending.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) OrderBy(orderBy string) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Mask specifying
+// which fields to read.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) ReadMask(readMask string) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDatasetVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/datasetVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.datasets.datasetVersions.list" call.
+// Exactly one of *GoogleCloudAiplatformV1ListDatasetVersionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAiplatformV1ListDatasetVersionsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ListDatasetVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ListDatasetVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists DatasetVersions in a Dataset.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/datasetVersions",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.datasets.datasetVersions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the Dataset to list DatasetVersions from. Format: `projects/{project}/locations/{location}/datasets/{dataset}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Optional. Mask specifying which fields to read.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/datasetVersions",
+	//   "response": {
+	//     "$ref": "GoogleCloudAiplatformV1ListDatasetVersionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatasetsDatasetVersionsListCall) Pages(ctx context.Context, f func(*GoogleCloudAiplatformV1ListDatasetVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "aiplatform.projects.locations.datasets.datasetVersions.restore":
+
+type ProjectsLocationsDatasetsDatasetVersionsRestoreCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Restore: Restores a dataset version.
+//
+//   - name: The name of the DatasetVersion resource. Format:
+//     `projects/{project}/locations/{location}/datasets/{dataset}/datasetV
+//     ersions/{dataset_version}`.
+func (r *ProjectsLocationsDatasetsDatasetVersionsService) Restore(name string) *ProjectsLocationsDatasetsDatasetVersionsRestoreCall {
+	c := &ProjectsLocationsDatasetsDatasetVersionsRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDatasetVersionsRestoreCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDatasetVersionsRestoreCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDatasetVersionsRestoreCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDatasetVersionsRestoreCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDatasetVersionsRestoreCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDatasetVersionsRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDatasetVersionsRestoreCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDatasetVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:restore")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.datasets.datasetVersions.restore" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDatasetVersionsRestoreCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Restores a dataset version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/datasetVersions/{datasetVersionsId}:restore",
+	//   "httpMethod": "GET",
+	//   "id": "aiplatform.projects.locations.datasets.datasetVersions.restore",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the DatasetVersion resource. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/datasetVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:restore",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
 	//   },

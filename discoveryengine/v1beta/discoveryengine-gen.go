@@ -1885,6 +1885,168 @@ func (s *GoogleCloudDiscoveryengineV1alphaPurgeUserEventsResponse) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata: Metadata
+// related to the progress of the SiteSearchEngineService.RecrawlUris
+// operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// InvalidUris: Unique URIs in the request that don't match any
+	// TargetSite in the DataStore, only match TargetSites that haven't been
+	// fully indexed, or match a TargetSite with type EXCLUDE.
+	InvalidUris []string `json:"invalidUris,omitempty"`
+
+	// PendingCount: Total number of URIs that have yet to be crawled.
+	PendingCount int64 `json:"pendingCount,omitempty"`
+
+	// QuotaExceededCount: Total number of URIs that were rejected due to
+	// insufficient indexing resources.
+	QuotaExceededCount int64 `json:"quotaExceededCount,omitempty"`
+
+	// SuccessCount: Total number of URIs that have been crawled so far.
+	SuccessCount int64 `json:"successCount,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ValidUrisCount: Total number of unique URIs in the request that are
+	// not in invalid_uris.
+	ValidUrisCount int64 `json:"validUrisCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse: Response
+// message for SiteSearchEngineService.RecrawlUris method.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse struct {
+	// FailedUris: URIs that were not crawled before the LRO terminated.
+	FailedUris []string `json:"failedUris,omitempty"`
+
+	// FailureSamples: Details for a sample of up to 10 `failed_uris`.
+	FailureSamples []*GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo `json:"failureSamples,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedUris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedUris") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo:
+// Details about why a particular URI failed to be crawled. Each
+// FailureInfo contains one FailureReason per CorpusType.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo struct {
+	// FailureReasons: List of failure reasons by corpus type (e.g. desktop,
+	// mobile).
+	FailureReasons []*GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason `json:"failureReasons,omitempty"`
+
+	// Uri: URI that failed to be crawled.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureReasons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureReasons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailure
+// Reason: Details about why crawling failed for a particular
+// CorpusType, e.g. DESKTOP and MOBILE crawling may fail for different
+// reasons.
+type GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason struct {
+	// CorpusType: DESKTOP, MOBILE, or CORPUS_TYPE_UNSPECIFIED.
+	//
+	// Possible values:
+	//   "CORPUS_TYPE_UNSPECIFIED" - Default value.
+	//   "DESKTOP" - Denotes a crawling attempt for the desktop version of a
+	// page.
+	//   "MOBILE" - Denotes a crawling attempt for the mobile version of a
+	// page.
+	CorpusType string `json:"corpusType,omitempty"`
+
+	// ErrorMessage: Reason why the URI was not crawled.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CorpusType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CorpusType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaRecrawlUrisResponseFailureInfoFailureReason
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSchema: Defines the structure and
 // layout of a type of document data.
 type GoogleCloudDiscoveryengineV1alphaSchema struct {
@@ -5903,8 +6065,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) Query(query st
 // `document-completable` - Using suggestions taken directly from
 // user-imported document fields marked as completable. Default values:
 // * `document` is the default model for regular dataStores. *
-// `search-history` is the default model for
-// IndustryVertical.SITE_SEARCH dataStores.
+// `search-history` is the default model for site search dataStores.
 func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) QueryModel(queryModel string) *ProjectsLocationsCollectionsDataStoresCompleteQueryCall {
 	c.urlParams_.Set("queryModel", queryModel)
 	return c
@@ -6052,7 +6213,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "queryModel": {
-	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for IndustryVertical.SITE_SEARCH dataStores.",
+	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12666,8 +12827,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) Query(query string) *Proj
 // `document-completable` - Using suggestions taken directly from
 // user-imported document fields marked as completable. Default values:
 // * `document` is the default model for regular dataStores. *
-// `search-history` is the default model for
-// IndustryVertical.SITE_SEARCH dataStores.
+// `search-history` is the default model for site search dataStores.
 func (c *ProjectsLocationsDataStoresCompleteQueryCall) QueryModel(queryModel string) *ProjectsLocationsDataStoresCompleteQueryCall {
 	c.urlParams_.Set("queryModel", queryModel)
 	return c
@@ -12815,7 +12975,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "queryModel": {
-	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for IndustryVertical.SITE_SEARCH dataStores.",
+	//       "description": "Selects data model of query suggestions for serving. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

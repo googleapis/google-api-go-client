@@ -1453,6 +1453,10 @@ func (s *Destination) MarshalJSON() ([]byte, error) {
 // Entity: A workspace entity that may represent a tag, trigger,
 // variable, or folder in addition to its status in the workspace.
 type Entity struct {
+	// BuiltInVariable: The built in variable being represented by the
+	// entity.
+	BuiltInVariable *BuiltInVariable `json:"builtInVariable,omitempty"`
+
 	// ChangeStatus: Represents how the entity has been changed in the
 	// workspace.
 	//
@@ -1467,8 +1471,14 @@ type Entity struct {
 	// Client: The client being represented by the entity.
 	Client *Client `json:"client,omitempty"`
 
+	// CustomTemplate: The custom template being represented by the entity.
+	CustomTemplate *CustomTemplate `json:"customTemplate,omitempty"`
+
 	// Folder: The folder being represented by the entity.
 	Folder *Folder `json:"folder,omitempty"`
+
+	// GtagConfig: The gtag config being represented by the entity.
+	GtagConfig *GtagConfig `json:"gtagConfig,omitempty"`
 
 	// Tag: The tag being represented by the entity.
 	Tag *Tag `json:"tag,omitempty"`
@@ -1482,7 +1492,10 @@ type Entity struct {
 	// Variable: The variable being represented by the entity.
 	Variable *Variable `json:"variable,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ChangeStatus") to
+	// Zone: The zone being represented by the entity.
+	Zone *Zone `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuiltInVariable") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1490,12 +1503,13 @@ type Entity struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ChangeStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BuiltInVariable") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

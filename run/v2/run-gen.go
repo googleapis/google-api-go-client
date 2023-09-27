@@ -569,6 +569,47 @@ func (s *GoogleCloudRunV2Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2ContainerOverride: Per-container override
+// specification.
+type GoogleCloudRunV2ContainerOverride struct {
+	// Args: Optional. Arguments to the entrypoint. Will replace existing
+	// args for override.
+	Args []string `json:"args,omitempty"`
+
+	// ClearArgs: Optional. True if the intention is to clear out existing
+	// args list.
+	ClearArgs bool `json:"clearArgs,omitempty"`
+
+	// Env: List of environment variables to set in the container. Will be
+	// merged with existing env for override.
+	Env []*GoogleCloudRunV2EnvVar `json:"env,omitempty"`
+
+	// Name: The name of the container specified as a DNS_LABEL.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Args") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Args") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ContainerOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ContainerOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2ContainerPort: ContainerPort represents a network
 // port in a single container.
 type GoogleCloudRunV2ContainerPort struct {
@@ -1559,6 +1600,45 @@ func (s *GoogleCloudRunV2NetworkInterface) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2Overrides: RunJob Overrides that contains Execution
+// fields to be overridden.
+type GoogleCloudRunV2Overrides struct {
+	// ContainerOverrides: Per container override specification.
+	ContainerOverrides []*GoogleCloudRunV2ContainerOverride `json:"containerOverrides,omitempty"`
+
+	// TaskCount: Optional. The desired number of tasks the execution should
+	// run. Will replace existing task_count value.
+	TaskCount int64 `json:"taskCount,omitempty"`
+
+	// Timeout: Duration in seconds the task may be active before the system
+	// will actively try to mark it failed and kill associated containers.
+	// Will replace existing timeout_seconds value.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerOverrides")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2Overrides) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Overrides
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2Probe: Probe describes a health check to be performed
 // against a container to determine whether it is alive or ready to
 // receive traffic.
@@ -2013,6 +2093,11 @@ type GoogleCloudRunV2RunJobRequest struct {
 	// Etag: A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
+
+	// Overrides: Overrides specification for a given execution of a job. If
+	// provided, overrides will be applied to update the execution or task
+	// spec.
+	Overrides *GoogleCloudRunV2Overrides `json:"overrides,omitempty"`
 
 	// ValidateOnly: Indicates that the request should be validated without
 	// actually deleting any resources.
@@ -5097,8 +5182,8 @@ type ProjectsLocationsJobsExecutionsCancelCall struct {
 // Cancel: Cancels an Execution.
 //
 //   - name: The name of the Execution to cancel. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}, where {project} can be project id or number.
+//     `projects/{project}/locations/{location}/jobs/{job}/executions/{exec
+//     ution}`, where `{project}` can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) Cancel(name string, googlecloudrunv2cancelexecutionrequest *GoogleCloudRunV2CancelExecutionRequest) *ProjectsLocationsJobsExecutionsCancelCall {
 	c := &ProjectsLocationsJobsExecutionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5206,7 +5291,7 @@ func (c *ProjectsLocationsJobsExecutionsCancelCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Execution to cancel. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
+	//       "description": "Required. The name of the Execution to cancel. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -5240,8 +5325,8 @@ type ProjectsLocationsJobsExecutionsDeleteCall struct {
 // Delete: Deletes an Execution.
 //
 //   - name: The name of the Execution to delete. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}, where {project} can be project id or number.
+//     `projects/{project}/locations/{location}/jobs/{job}/executions/{exec
+//     ution}`, where `{project}` can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) Delete(name string) *ProjectsLocationsJobsExecutionsDeleteCall {
 	c := &ProjectsLocationsJobsExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5364,7 +5449,7 @@ func (c *ProjectsLocationsJobsExecutionsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the Execution to delete. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
+	//       "description": "Required. The name of the Execution to delete. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -5401,8 +5486,8 @@ type ProjectsLocationsJobsExecutionsGetCall struct {
 // Get: Gets information about an Execution.
 //
 //   - name: The full name of the Execution. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}, where {project} can be project id or number.
+//     `projects/{project}/locations/{location}/jobs/{job}/executions/{exec
+//     ution}`, where `{project}` can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) Get(name string) *ProjectsLocationsJobsExecutionsGetCall {
 	c := &ProjectsLocationsJobsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5517,7 +5602,7 @@ func (c *ProjectsLocationsJobsExecutionsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Execution. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
+	//       "description": "Required. The full name of the Execution. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -5550,8 +5635,8 @@ type ProjectsLocationsJobsExecutionsListCall struct {
 //
 //   - parent: The Execution from which the Executions should be listed.
 //     To list all Executions across Jobs, use "-" instead of Job name.
-//     Format: projects/{project}/locations/{location}/jobs/{job}, where
-//     {project} can be project id or number.
+//     Format: `projects/{project}/locations/{location}/jobs/{job}`, where
+//     `{project}` can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) List(parent string) *ProjectsLocationsJobsExecutionsListCall {
 	c := &ProjectsLocationsJobsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5700,7 +5785,7 @@ func (c *ProjectsLocationsJobsExecutionsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}, where {project} can be project id or number.",
+	//       "description": "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: `projects/{project}/locations/{location}/jobs/{job}`, where `{project}` can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,

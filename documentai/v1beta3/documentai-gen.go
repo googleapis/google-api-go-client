@@ -7675,7 +7675,7 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
-// Processor which configures a collection of documents. Next Id: 8.
+// Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
 	// dataset configuration.
@@ -8361,6 +8361,61 @@ type GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId struct {
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentMetadata: Metadata about a
+// document.
+type GoogleCloudDocumentaiV1beta3DocumentMetadata struct {
+	// DatasetType: Type of the dataset split to which the document belongs.
+	//
+	// Possible values:
+	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
+	// set.
+	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
+	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
+	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
+	DatasetType string `json:"datasetType,omitempty"`
+
+	// DisplayName: The display name of the document.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DocumentId: Document identifier.
+	DocumentId *GoogleCloudDocumentaiV1beta3DocumentId `json:"documentId,omitempty"`
+
+	// LabelingState: Labelling state of the document.
+	//
+	// Possible values:
+	//   "DOCUMENT_LABELING_STATE_UNSPECIFIED" - Default value if the enum
+	// is not set.
+	//   "DOCUMENT_LABELED" - Document has been labelled.
+	//   "DOCUMENT_UNLABELED" - Document has not been labelled.
+	//   "DOCUMENT_AUTO_LABELED" - Document has been auto-labelled.
+	LabelingState string `json:"labelingState,omitempty"`
+
+	// PageCount: Number of pages in the document.
+	PageCount int64 `json:"pageCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11353,6 +11408,113 @@ func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDocumentaiV1beta3ListDocumentsRequest struct {
+	// Filter: Optional. Query to filter the documents based on
+	// https://google.aip.dev/160. ## Currently support query strings are:
+	// `SplitType=DATASET_SPLIT_TEST|DATASET_SPLIT_TRAIN|DATASET_SPLIT_UNASSI
+	// GNED` -
+	// `LabelingState=DOCUMENT_LABELED|DOCUMENT_UNLABELED|DOCUMENT_AUTO_LABEL
+	// ED` - `DisplayName=\"file_name.pdf\" - `EntityType=abc/def` -
+	// `TagName=\"auto-labeling-running\"|\"sampled\" Note: - Only `AND`,
+	// `=` and `!=` are supported. e.g. `DisplayName=file_name AND
+	// EntityType!=abc` IS supported. - Wildcard `*` is supported only in
+	// `DisplayName` filter - No duplicate filter keys are allowed, e.g.
+	// `EntityType=a AND EntityType=b` is NOT supported. - String match is
+	// case sensitive (for filter `DisplayName` & `EntityType`).
+	Filter string `json:"filter,omitempty"`
+
+	// PageSize: The maximum number of documents to return. The service may
+	// return fewer than this value. If unspecified, at most 20 documents
+	// will be returned. The maximum value is 100; values above 100 will be
+	// coerced to 100.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: A page token, received from a previous `ListDocuments`
+	// call. Provide this to retrieve the subsequent page. When paginating,
+	// all other parameters provided to `ListDocuments` must match the call
+	// that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ReturnTotalSize: Optional. Controls if the ListDocuments request
+	// requires a total size of matched documents. See
+	// ListDocumentsResponse.total_size. Enabling this flag may adversely
+	// impact performance. Defaults to false.
+	ReturnTotalSize bool `json:"returnTotalSize,omitempty"`
+
+	// Skip: Optional. Number of results to skip beginning from the
+	// `page_token` if provided.
+	// https://google.aip.dev/158#skipping-results. It must be a
+	// non-negative integer. Negative values wil be rejected. Note that this
+	// is not the number of pages to skip. If this value causes the cursor
+	// to move past the end of results,
+	// `ListDocumentsResponse.document_metadata` and
+	// `ListDocumentsResponse.next_page_token` will be empty.
+	Skip int64 `json:"skip,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ListDocumentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ListDocumentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDocumentaiV1beta3ListDocumentsResponse struct {
+	// DocumentMetadata: Document metadata corresponding to the listed
+	// documents.
+	DocumentMetadata []*GoogleCloudDocumentaiV1beta3DocumentMetadata `json:"documentMetadata,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Total count of documents queried.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ListDocumentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ListDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3ListEvaluationsResponse: The response
 // from `ListEvaluations`.
 type GoogleCloudDocumentaiV1beta3ListEvaluationsResponse struct {
@@ -11564,8 +11726,8 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	ComputeStyleInfo bool `json:"computeStyleInfo,omitempty"`
 
 	// DisableCharacterBoxesDetection: Turn off character box detector in
-	// OCR engine. Character box detection is enabled by default in OCR 2.0+
-	// processors.
+	// OCR engine. Character box detection is enabled by default in OCR 2.0
+	// (and later) processors.
 	DisableCharacterBoxesDetection bool `json:"disableCharacterBoxesDetection,omitempty"`
 
 	// EnableImageQualityScores: Enables intelligent document quality scores
@@ -11658,7 +11820,7 @@ type GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures struct {
 	EnableMathOcr bool `json:"enableMathOcr,omitempty"`
 
 	// EnableSelectionMarkDetection: Turn on selection mark detector in OCR
-	// engine. Only available in OCR 2.0+ processors.
+	// engine. Only available in OCR 2.0 (and later) processors.
 	EnableSelectionMarkDetection bool `json:"enableSelectionMarkDetection,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComputeStyleInfo") to
@@ -11690,8 +11852,8 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 	// FromEnd: Only process certain pages from the end, same as above.
 	FromEnd int64 `json:"fromEnd,omitempty"`
 
-	// FromStart: Only process certain pages from the start, process all if
-	// the document has less pages.
+	// FromStart: Only process certain pages from the start. Process all if
+	// the document has fewer pages.
 	FromStart int64 `json:"fromStart,omitempty"`
 
 	// IndividualPageSelector: Which pages to process (1-indexed).
@@ -17215,6 +17377,173 @@ func (c *ProjectsLocationsProcessorsDatasetImportDocumentsCall) Do(opts ...googl
 	//   ]
 	// }
 
+}
+
+// method id "documentai.projects.locations.processors.dataset.listDocuments":
+
+type ProjectsLocationsProcessorsDatasetListDocumentsCall struct {
+	s                                                *Service
+	dataset                                          string
+	googleclouddocumentaiv1beta3listdocumentsrequest *GoogleCloudDocumentaiV1beta3ListDocumentsRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// ListDocuments: Returns a list of documents present in the dataset.
+//
+//   - dataset: The resource name of the dataset to be listed. Format:
+//     projects/{project}/locations/{location}/processors/{processor}/datas
+//     et.
+func (r *ProjectsLocationsProcessorsDatasetService) ListDocuments(dataset string, googleclouddocumentaiv1beta3listdocumentsrequest *GoogleCloudDocumentaiV1beta3ListDocumentsRequest) *ProjectsLocationsProcessorsDatasetListDocumentsCall {
+	c := &ProjectsLocationsProcessorsDatasetListDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.dataset = dataset
+	c.googleclouddocumentaiv1beta3listdocumentsrequest = googleclouddocumentaiv1beta3listdocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsDatasetListDocumentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsDatasetListDocumentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsDatasetListDocumentsCall) Context(ctx context.Context) *ProjectsLocationsProcessorsDatasetListDocumentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsDatasetListDocumentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsDatasetListDocumentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3listdocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+dataset}:listDocuments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"dataset": c.dataset,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.dataset.listDocuments" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3ListDocumentsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1beta3ListDocumentsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsDatasetListDocumentsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3ListDocumentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1beta3ListDocumentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of documents present in the dataset.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/dataset:listDocuments",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.dataset.listDocuments",
+	//   "parameterOrder": [
+	//     "dataset"
+	//   ],
+	//   "parameters": {
+	//     "dataset": {
+	//       "description": "Required. The resource name of the dataset to be listed. Format: projects/{project}/locations/{location}/processors/{processor}/dataset",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/dataset$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+dataset}:listDocuments",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ListDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ListDocumentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorsDatasetListDocumentsCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1beta3ListDocumentsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleclouddocumentaiv1beta3listdocumentsrequest.PageToken = pt }(c.googleclouddocumentaiv1beta3listdocumentsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleclouddocumentaiv1beta3listdocumentsrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "documentai.projects.locations.processors.dataset.updateDatasetSchema":

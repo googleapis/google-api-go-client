@@ -336,7 +336,13 @@ type BatchTranslateDocumentRequest struct {
 	// is_translate_native_pdf_only: false && pdf_native_only: false
 	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
 
-	// FormatConversions: Optional.
+	// FormatConversions: Optional. File format conversion map to be applied
+	// to all input files. Map's key is the original mime_type. Map's value
+	// is the target mime_type of translated documents. Supported file
+	// format conversion includes: - `application/pdf` to
+	// `application/vnd.openxmlformats-officedocument.wordprocessingml.docume
+	// nt` If nothing specified, output files will be in the same format as
+	// the original file.
 	FormatConversions map[string]string `json:"formatConversions,omitempty"`
 
 	// Glossaries: Optional. Glossaries to be applied. It's keyed by target

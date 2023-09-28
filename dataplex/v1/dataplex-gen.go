@@ -2307,14 +2307,15 @@ func (s *GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataQualityDimensionResult:
-// DataQualityDimensionResult provides a more detailed, per-dimension
-// view of the results.
-type GoogleCloudDataplexV1DataQualityDimensionResult struct {
-	// Passed: Whether the dimension passed or failed.
-	Passed bool `json:"passed,omitempty"`
+// GoogleCloudDataplexV1DataQualityDimension: A dimension captures data
+// quality intent about a defined subset of the rules specified.
+type GoogleCloudDataplexV1DataQualityDimension struct {
+	// Name: The dimension name a rule belongs to. Supported dimensions are
+	// "COMPLETENESS", "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS",
+	// "INTEGRITY"
+	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Passed") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2322,8 +2323,42 @@ type GoogleCloudDataplexV1DataQualityDimensionResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Passed") to include in API
+	// NullFields is a list of field names (e.g. "Name") to include in API
 	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityDimensionResult:
+// DataQualityDimensionResult provides a more detailed, per-dimension
+// view of the results.
+type GoogleCloudDataplexV1DataQualityDimensionResult struct {
+	// Dimension: Output only. The dimension config specified in the
+	// DataQualitySpec, as is.
+	Dimension *GoogleCloudDataplexV1DataQualityDimension `json:"dimension,omitempty"`
+
+	// Passed: Whether the dimension passed or failed.
+	Passed bool `json:"passed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimension") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimension") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

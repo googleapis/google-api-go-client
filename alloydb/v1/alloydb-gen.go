@@ -666,8 +666,7 @@ type Cluster struct {
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
 	// "projects/{project}/global/networks/{network_id}". This is required
-	// to create a cluster. It can be updated, but it cannot be removed.
-	// Deprecated, use network_config.network instead.
+	// to create a cluster. Deprecated, use network_config.network instead.
 	Network string `json:"network,omitempty"`
 
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
@@ -746,6 +745,50 @@ type Cluster struct {
 
 func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectionInfo: ConnectionInfo singleton resource.
+// https://google.aip.dev/156
+type ConnectionInfo struct {
+	// InstanceUid: Output only. The unique ID of the Instance.
+	InstanceUid string `json:"instanceUid,omitempty"`
+
+	// IpAddress: Output only. The private network IP address for the
+	// Instance. This is the default IP for the instance and is always
+	// created (even if enable_public_ip is set). This is the connection
+	// endpoint for an end-user application.
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// Name: The name of the ConnectionInfo singleton resource, e.g.:
+	// projects/{project}/locations/{location}/clusters/*/instances/*/connect
+	// ionInfo This field currently has no semantic meaning.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceUid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceUid") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1008,6 +1051,94 @@ type FailoverInstanceRequest struct {
 
 func (s *FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FailoverInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateClientCertificateRequest: Message for requests to generate a
+// client certificate signed by the Cluster CA.
+type GenerateClientCertificateRequest struct {
+	// CertDuration: Optional. An optional hint to the endpoint to generate
+	// the client certificate with the requested duration. The duration can
+	// be from 1 hour to 24 hours. The endpoint may or may not honor the
+	// hint. If the hint is left unspecified or is not honored, then the
+	// endpoint will pick an appropriate default duration.
+	CertDuration string `json:"certDuration,omitempty"`
+
+	// PublicKey: Optional. The public key from the client.
+	PublicKey string `json:"publicKey,omitempty"`
+
+	// RequestId: Optional. An optional request ID to identify requests.
+	// Specify a unique request ID so that if you must retry your request,
+	// the server will know to ignore the request if it has already been
+	// completed. The server will guarantee that for at least 60 minutes
+	// after the first request. For example, consider a situation where you
+	// make an initial request and the request times out. If you make the
+	// request again with the same request ID, the server can check if
+	// original operation with the same request ID was received, and if so,
+	// will ignore the second request. This prevents clients from
+	// accidentally creating duplicate commitments. The request ID must be a
+	// valid UUID with the exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertDuration") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateClientCertificateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateClientCertificateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateClientCertificateResponse: Message returned by a
+// GenerateClientCertificate operation.
+type GenerateClientCertificateResponse struct {
+	// CaCert: Optional. The pem-encoded cluster ca X.509 certificate.
+	CaCert string `json:"caCert,omitempty"`
+
+	// PemCertificateChain: Output only. The pem-encoded chain that may be
+	// used to verify the X.509 certificate. Expected to be in
+	// issuer-to-root order according to RFC 5246.
+	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CaCert") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaCert") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateClientCertificateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateClientCertificateResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1719,8 +1850,7 @@ type NetworkConfig struct {
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
 	// "projects/{project_number}/global/networks/{network_id}". This is
-	// required to create a cluster. It can be updated, but it cannot be
-	// removed.
+	// required to create a cluster.
 	Network string `json:"network,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
@@ -2417,6 +2547,12 @@ type StorageDatabasecenterPartnerapiV1mainBackupConfiguration struct {
 	// BackupRetentionSettings: Backup retention settings.
 	BackupRetentionSettings *StorageDatabasecenterPartnerapiV1mainRetentionSettings `json:"backupRetentionSettings,omitempty"`
 
+	// PointInTimeRecoveryEnabled: Whether point-in-time recovery is
+	// enabled. This is optional field, if the database service does not
+	// have this feature or metadata is not available in control plane, this
+	// can be omitted.
+	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AutomatedBackupEnabled") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2485,6 +2621,40 @@ func (s *StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainCompliance: Contains compliance
+// information about a security standard indicating unmet
+// recommendations.
+type StorageDatabasecenterPartnerapiV1mainCompliance struct {
+	// Standard: Industry-wide compliance standards or benchmarks, such as
+	// CIS, PCI, and OWASP.
+	Standard string `json:"standard,omitempty"`
+
+	// Version: Version of the standard or benchmark, for example, 1.1
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Standard") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainCompliance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
 // DatabaseResourceFeed is the top level proto to be used to ingest
 // different database resource level events into Condor platform.
@@ -2499,13 +2669,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "RESOURCE_METADATA" - Database resource metadata feed from control
 	// plane
 	//   "OBSERVABILITY_DATA" - Database resource monitoring data
-	//   "COMPLIANCE_DATA" - Database resource compliance feed
+	//   "SECURITY_FINDING_DATA" - Database resource security health signal
+	// data
 	FeedType string `json:"feedType,omitempty"`
+
+	// ResourceHealthSignalData: More feed data would be added in subsequent
+	// CLs
+	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 
 	// ResourceId: Required. Primary key associated with the Resource
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 
-	// ResourceMetadata: More feed data would be added in subsequent CLs
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FeedTimestamp") to
@@ -2531,6 +2705,118 @@ func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData:
+//
+//	Common model for database resource health signal data.
+type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struct {
+	// AdditionalMetadata: Any other additional metadata
+	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
+
+	// Compliance: Industry standards associated with this signal; if this
+	// signal is an issue, that could be a violation of the associated
+	// industry standard(s). For example, AUTO_BACKUP_DISABLED signal is
+	// associated with CIS GCP 1.1, CIS GCP 1.2, CIS GCP 1.3, NIST 800-53
+	// and ISO-27001 compliance standards. If a database resource does not
+	// have automated backup enable, it will violate these following
+	// industry standards.
+	Compliance []*StorageDatabasecenterPartnerapiV1mainCompliance `json:"compliance,omitempty"`
+
+	// Description: Description associated with signal
+	Description string `json:"description,omitempty"`
+
+	// EventTime: The last time at which the event described by this signal
+	// took place
+	EventTime string `json:"eventTime,omitempty"`
+
+	// ExternalUri: The external-uri of the signal, using which more
+	// information about this signal can be obtained. In GCP, this will take
+	// user to SCC page to get more details about signals.
+	ExternalUri string `json:"externalUri,omitempty"`
+
+	// Name: The name of the signal, ex: PUBLIC_SQL_INSTANCE,
+	// SQL_LOG_ERROR_VERBOSITY etc.
+	Name string `json:"name,omitempty"`
+
+	// Provider: Cloud provider name. Ex: GCP/AWS/Azure/OnPrem/SelfManaged
+	//
+	// Possible values:
+	//   "PROVIDER_UNSPECIFIED"
+	//   "GCP" - Google cloud platform provider
+	//   "AWS" - Amazon web service
+	//   "AZURE" - Azure web service
+	//   "ONPREM" - On-prem database resources.
+	//   "SELFMANAGED" - Self-managed database provider. These are resources
+	// on a cloud platform, e.g., database resource installed in a GCE VM,
+	// but not a managed database service.
+	//   "PROVIDER_OTHER" - For the rest of the other categories. Other
+	// refers to the rest of other database service providers, this could be
+	// smaller cloud provider. This needs to be provided when the provider
+	// is known, but it is not present in the existing set of enum values.
+	Provider string `json:"provider,omitempty"`
+
+	// ResourceContainer: Closest parent container of this resource. In GCP,
+	// 'container' refers to a Cloud Resource Manager project. It must be
+	// resource name of a Cloud Resource Manager project with the format of
+	// "provider//", such as "gcp/projects/123".
+	ResourceContainer string `json:"resourceContainer,omitempty"`
+
+	// ResourceName: Database resource name associated with the signal.
+	// Resource name to follow CAIS resource_name format as noted here
+	// go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// SignalClass: The class of the signal, such as if it's a THREAT or
+	// VULNERABILITY.
+	//
+	// Possible values:
+	//   "CLASS_UNSPECIFIED" - Unspecified signal class.
+	//   "THREAT" - Describes unwanted or malicious activity.
+	//   "VULNERABILITY" - Describes a potential weakness in software that
+	// increases risk to Confidentiality & Integrity & Availability.
+	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
+	// resource/asset configuration that increases risk.
+	//   "OBSERVATION" - Describes a security observation that is for
+	// informational purposes.
+	//   "ERROR" - Describes an error that prevents some SCC functionality.
+	SignalClass string `json:"signalClass,omitempty"`
+
+	// SignalId: Unique identifier for the signal. This is an unique id
+	// which would be mainatined by partner to identify a signal.
+	SignalId string `json:"signalId,omitempty"`
+
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The signal requires attention and has not been addressed
+	// yet.
+	//   "RESOLVED" - The signal has been fixed, triaged as a non-issue or
+	// otherwise addressed and is no longer active.
+	//   "MUTED" - The signal has been muted.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceId:
 // DatabaseResourceId will serve as primary key for any resource
 // ingestion event.
@@ -2543,14 +2829,24 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	//   "GCP" - Google cloud platform provider
 	//   "AWS" - Amazon web service
 	//   "AZURE" - Azure web service
-	//   "ONPREM" - On-prem database provider
-	//   "SELFMANAGED" - Self-managed database provider
-	//   "PROVIDER_OTHER" - For rest of the other category
+	//   "ONPREM" - On-prem database resources.
+	//   "SELFMANAGED" - Self-managed database provider. These are resources
+	// on a cloud platform, e.g., database resource installed in a GCE VM,
+	// but not a managed database service.
+	//   "PROVIDER_OTHER" - For the rest of the other categories. Other
+	// refers to the rest of other database service providers, this could be
+	// smaller cloud provider. This needs to be provided when the provider
+	// is known, but it is not present in the existing set of enum values.
 	Provider string `json:"provider,omitempty"`
 
+	// ProviderDescription: Optional. Needs to be used only when the
+	// provider is PROVIDER_OTHER.
+	ProviderDescription string `json:"providerDescription,omitempty"`
+
 	// ResourceType: Required. The type of resource this ID is identifying.
-	// Ex google.sqladmin.Instance, google.alloydb.cluster,
-	// google.sqladmin.Backup REQUIRED
+	// Ex alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
+	// spanner.googleapis.com/Instance REQUIRED Please refer
+	// go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// UniqueId: Required. A service-local token that distinguishes this
@@ -2604,16 +2900,26 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "HEALTHY" - The instance is running.
 	//   "UNHEALTHY" - Instance being created, updated, deleted or under
 	// maintenance
+	//   "SUSPENDED" - When instance is suspended
+	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
 	CurrentState string `json:"currentState,omitempty"`
 
-	// ExpectedState: The actual instance state.
+	// CustomMetadata: Any custom metadata associated with the resource (a
+	// JSON field)
+	CustomMetadata googleapi.RawMessage `json:"customMetadata,omitempty"`
+
+	// ExpectedState: The state that the instance is expected to be in. For
+	// example, an instance state can transition to UNHEALTHY due to wrong
+	// patch update, while the expected state will remain at the HEALTHY.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED"
 	//   "HEALTHY" - The instance is running.
 	//   "UNHEALTHY" - Instance being created, updated, deleted or under
 	// maintenance
+	//   "SUSPENDED" - When instance is suspended
+	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
 	ExpectedState string `json:"expectedState,omitempty"`
 
@@ -2632,23 +2938,26 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// Location: The resource location. REQUIRED
 	Location string `json:"location,omitempty"`
 
-	// PrimaryResourceId: Unique identifier for this resource's immediate
-	// parent resource. This parent resource id would be used to build
-	// resource hierarchy in condor platform.
+	// PrimaryResourceId: Identifier for this resource's immediate
+	// parent/primary resource if the current resource is a replica or
+	// derived form of another Database resource. Else it would be NULL.
+	// REQUIRED if the immediate parent exists when first time resource is
+	// getting ingested
 	PrimaryResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"primaryResourceId,omitempty"`
 
 	// Product: The product this resource represents.
 	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
 
 	// ResourceContainer: Closest parent Cloud Resource Manager container of
-	// this resource. It must either be resource name of a Cloud Resource
-	// Manager project, for ex: "projects/123".
+	// this resource. It must be resource name of a Cloud Resource Manager
+	// project with the format of "provider//", such as "gcp/projects/123".
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
-	// ResourceName: Required. Different from unique_id, a resource name can
-	// be reused over time. That is after a resource named "ABC" is deleted,
-	// the name "ABC" can be used to to create a new resource within the
-	// same source.
+	// ResourceName: Required. Different from DatabaseResourceId.unique_id,
+	// a resource name can be reused over time. That is, after a resource
+	// named "ABC" is deleted, the name "ABC" can be used to to create a new
+	// resource within the same source. Resource name to follow CAIS
+	// resource_name format as noted here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// UpdationTime: The time at which the resource was updated and recorded
@@ -4973,6 +5282,155 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "alloydb.projects.locations.clusters.generateClientCertificate":
+
+type ProjectsLocationsClustersGenerateClientCertificateCall struct {
+	s                                *Service
+	parent                           string
+	generateclientcertificaterequest *GenerateClientCertificateRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// GenerateClientCertificate: Generate a client certificate signed by a
+// Cluster CA. The sole purpose of this endpoint is to support AlloyDB
+// connectors and the Auth Proxy client. The endpoint's behavior is
+// subject to change without notice, so do not rely on its behavior
+// remaining constant. Future changes will not break AlloyDB connectors
+// or the Auth Proxy client.
+//
+//   - parent: The name of the parent resource. The required format is: *
+//     projects/{project}/locations/{location}/clusters/{cluster}.
+func (r *ProjectsLocationsClustersService) GenerateClientCertificate(parent string, generateclientcertificaterequest *GenerateClientCertificateRequest) *ProjectsLocationsClustersGenerateClientCertificateCall {
+	c := &ProjectsLocationsClustersGenerateClientCertificateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.generateclientcertificaterequest = generateclientcertificaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersGenerateClientCertificateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Context(ctx context.Context) *ProjectsLocationsClustersGenerateClientCertificateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersGenerateClientCertificateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generateclientcertificaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:generateClientCertificate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.generateClientCertificate" call.
+// Exactly one of *GenerateClientCertificateResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenerateClientCertificateResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Do(opts ...googleapi.CallOption) (*GenerateClientCertificateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateClientCertificateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generate a client certificate signed by a Cluster CA. The sole purpose of this endpoint is to support AlloyDB connectors and the Auth Proxy client. The endpoint's behavior is subject to change without notice, so do not rely on its behavior remaining constant. Future changes will not break AlloyDB connectors or the Auth Proxy client.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:generateClientCertificate",
+	//   "httpMethod": "POST",
+	//   "id": "alloydb.projects.locations.clusters.generateClientCertificate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource. The required format is: * projects/{project}/locations/{location}/clusters/{cluster}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:generateClientCertificate",
+	//   "request": {
+	//     "$ref": "GenerateClientCertificateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GenerateClientCertificateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "alloydb.projects.locations.clusters.get":
 
 type ProjectsLocationsClustersGetCall struct {
@@ -6769,6 +7227,177 @@ func (c *ProjectsLocationsClustersInstancesGetCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Instance"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "alloydb.projects.locations.clusters.instances.getConnectionInfo":
+
+type ProjectsLocationsClustersInstancesGetConnectionInfoCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConnectionInfo: Get instance metadata used for a connection.
+//
+//   - parent: The name of the parent resource. The required format is:
+//     projects/{project}/locations/{location}/clusters/{cluster}/instances
+//     /{instance}.
+func (r *ProjectsLocationsClustersInstancesService) GetConnectionInfo(parent string) *ProjectsLocationsClustersInstancesGetConnectionInfoCall {
+	c := &ProjectsLocationsClustersInstancesGetConnectionInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) RequestId(requestId string) *ProjectsLocationsClustersInstancesGetConnectionInfoCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersInstancesGetConnectionInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsClustersInstancesGetConnectionInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) Context(ctx context.Context) *ProjectsLocationsClustersInstancesGetConnectionInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectionInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.instances.getConnectionInfo" call.
+// Exactly one of *ConnectionInfo or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConnectionInfo.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) Do(opts ...googleapi.CallOption) (*ConnectionInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConnectionInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get instance metadata used for a connection.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/instances/{instancesId}/connectionInfo",
+	//   "httpMethod": "GET",
+	//   "id": "alloydb.projects.locations.clusters.instances.getConnectionInfo",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource. The required format is: projects/{project}/locations/{location}/clusters/{cluster}/instances/{instance}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/connectionInfo",
+	//   "response": {
+	//     "$ref": "ConnectionInfo"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -8908,7 +8908,9 @@ func (c *AppsRuntimesListCall) Do(opts ...googleapi.CallOption) (*ListRuntimesRe
 	//     "$ref": "ListRuntimesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 

@@ -2965,15 +2965,8 @@ type WhenExpression struct {
 	// Possible values:
 	//   "EXPRESSION_OPERATOR_UNSPECIFIED" - Default enum type; should not
 	// be used.
-	//   "DOES_NOT_EXIST" - Input does not exist.
-	//   "EQUALS" - Input equals values.
-	//   "DOUBLE_EQUALS" - Input double equals values.
 	//   "IN" - Input is in values.
-	//   "NOT_EQUALS" - Input does not equal values.
 	//   "NOT_IN" - Input is not in values.
-	//   "EXISTS" - Input exists.
-	//   "GREATER_THAN" - Input is greater than values.
-	//   "LESS_THAN" - Input is less than values.
 	ExpressionOperator string `json:"expressionOperator,omitempty"`
 
 	// Input: Input is the string for guard checking which can be a static

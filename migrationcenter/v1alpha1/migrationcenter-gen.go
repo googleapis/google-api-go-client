@@ -2215,12 +2215,12 @@ func (s *GCSPayloadInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GenericInsight: An insight about an asset (experimental insight)
+// GenericInsight: A generic insight about an asset.
 type GenericInsight struct {
 	// AdditionalInformation: Output only. Additional information about the
 	// insight, each entry can be a logical entry and must make sense if it
 	// is displayed with line breaks between each entry. Text can contain md
-	// style links
+	// style links.
 	AdditionalInformation []string `json:"additionalInformation,omitempty"`
 
 	// DefaultMessage: Output only. In case message_code is not yet known by
@@ -6150,10 +6150,20 @@ type VirtualMachinePreferences struct {
 	// and recommendations for Compute Engine target.
 	ComputeEnginePreferences *ComputeEnginePreferences `json:"computeEnginePreferences,omitempty"`
 
+	// NetworkCostParameters: Optional. Parameters that affect network cost
+	// estimations. If not set, default values will be used for the
+	// parameters.
+	NetworkCostParameters *VirtualMachinePreferencesNetworkCostParameters `json:"networkCostParameters,omitempty"`
+
 	// RegionPreferences: Region preferences for assets using this
 	// preference set. If you are unsure which value to set, the migration
 	// service API region is often a good value to start with.
 	RegionPreferences *RegionPreferences `json:"regionPreferences,omitempty"`
+
+	// SizingOptimizationCustomParameters: Optional. Custom data to use for
+	// sizing optimizations. Relevant when SizingOptimizationStrategy is set
+	// to "custom".
+	SizingOptimizationCustomParameters *VirtualMachinePreferencesSizingOptimizationCustomParameters `json:"sizingOptimizationCustomParameters,omitempty"`
 
 	// SizingOptimizationStrategy: Sizing optimization strategy specifies
 	// the preferred strategy used when extrapolating usage data to
@@ -6174,6 +6184,10 @@ type VirtualMachinePreferences struct {
 	//   "SIZING_OPTIMIZATION_STRATEGY_AGGRESSIVE" - Virtual machine sizing
 	// will match the reported usage, with little slack. Using this option
 	// can help reduce costs.
+	//   "SIZING_OPTIMIZATION_STRATEGY_CUSTOM" - Virtual machine sizing will
+	// be determined by custom parameters. While not supported in the v1
+	// API, this value is converted to UNSPECIFIED in conversions to the v1
+	// API.
 	SizingOptimizationStrategy string `json:"sizingOptimizationStrategy,omitempty"`
 
 	// SoleTenancyPreferences: Preferences concerning Sole Tenant nodes and
@@ -6220,6 +6234,106 @@ func (s *VirtualMachinePreferences) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualMachinePreferences
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VirtualMachinePreferencesNetworkCostParameters: Parameters that
+// affect network cost estimations.
+type VirtualMachinePreferencesNetworkCostParameters struct {
+	// EstimatedEgressTrafficPercentage: Optional. An estimated percentage
+	// of priced outbound traffic (egress traffic) from the measured
+	// outbound traffic. Must be in the interval [0, 100].
+	EstimatedEgressTrafficPercentage int64 `json:"estimatedEgressTrafficPercentage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EstimatedEgressTrafficPercentage") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EstimatedEgressTrafficPercentage") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VirtualMachinePreferencesNetworkCostParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualMachinePreferencesNetworkCostParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VirtualMachinePreferencesSizingOptimizationCustomParameters: Custom
+// data to use for sizing optimizations.
+type VirtualMachinePreferencesSizingOptimizationCustomParameters struct {
+	// AggregationMethod: Optional. Type of statistical aggregation of a
+	// resource utilization data, on which to base the sizing metrics.
+	//
+	// Possible values:
+	//   "AGGREGATION_METHOD_UNSPECIFIED" - Unspecified aggregation method.
+	// Can be used for default value.
+	//   "AGGREGATION_METHOD_AVERAGE" - Average of utilization data.
+	//   "AGGREGATION_METHOD_MEDIAN" - Median of utilization data.
+	//   "AGGREGATION_METHOD_NINETY_FIFTH_PERCENTILE" - 95th percentile of
+	// utilization data.
+	//   "AGGREGATION_METHOD_PEAK" - Peak of utilization data.
+	AggregationMethod string `json:"aggregationMethod,omitempty"`
+
+	// CpuUsagePercentage: Optional. Desired percentage of CPU usage. Must
+	// be in the interval [1, 100] (or 0 for default value).
+	CpuUsagePercentage int64 `json:"cpuUsagePercentage,omitempty"`
+
+	// MemoryUsagePercentage: Optional. Desired percentage of memory usage.
+	// Must be in the interval [1, 100] (or 0 for default value).
+	MemoryUsagePercentage int64 `json:"memoryUsagePercentage,omitempty"`
+
+	// StorageMultiplier: Optional. Desired increase factor of storage,
+	// relative to currently used storage. Must be in the interval [1.0,
+	// 2.0] (or 0 for default value).
+	StorageMultiplier float64 `json:"storageMultiplier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationMethod")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationMethod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VirtualMachinePreferencesSizingOptimizationCustomParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualMachinePreferencesSizingOptimizationCustomParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *VirtualMachinePreferencesSizingOptimizationCustomParameters) UnmarshalJSON(data []byte) error {
+	type NoMethod VirtualMachinePreferencesSizingOptimizationCustomParameters
+	var s1 struct {
+		StorageMultiplier gensupport.JSONFloat64 `json:"storageMultiplier"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.StorageMultiplier = float64(s1.StorageMultiplier)
+	return nil
 }
 
 // VmwareDiskConfig: VMware disk config details.

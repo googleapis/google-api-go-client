@@ -2086,12 +2086,12 @@ func (s *FstabEntryList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GenericInsight: An insight about an asset (experimental insight)
+// GenericInsight: A generic insight about an asset.
 type GenericInsight struct {
 	// AdditionalInformation: Output only. Additional information about the
 	// insight, each entry can be a logical entry and must make sense if it
 	// is displayed with line breaks between each entry. Text can contain md
-	// style links
+	// style links.
 	AdditionalInformation []string `json:"additionalInformation,omitempty"`
 
 	// DefaultMessage: Output only. In case message_code is not yet known by
@@ -4153,8 +4153,8 @@ type PerformanceSample struct {
 	// Network: Network usage sample.
 	Network *NetworkUsageSample `json:"network,omitempty"`
 
-	// SampleTime: Time the sample was If omitted, the frame report time
-	// will be used.
+	// SampleTime: Time the sample was collected. If omitted, the frame
+	// report time will be used.
 	SampleTime string `json:"sampleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cpu") to

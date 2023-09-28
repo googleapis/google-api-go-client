@@ -876,6 +876,16 @@ type BitbucketServerConfig struct {
 	// the project.
 	PeeredNetwork string `json:"peeredNetwork,omitempty"`
 
+	// PeeredNetworkIpRange: Immutable. IP range within the peered network.
+	// This is specified in CIDR notation with a slash and the subnet prefix
+	// size. You can optionally specify an IP address before the subnet
+	// prefix value. e.g. `192.168.0.0/29` would specify an IP range
+	// starting at 192.168.0.0 with a 29 bit prefix size. `/16` would
+	// specify a prefix size of 16 bits, with an automatically determined IP
+	// within the peered VPC. If unspecified, a value of `/24` will be used.
+	// The field only has an effect if peered_network is set.
+	PeeredNetworkIpRange string `json:"peeredNetworkIpRange,omitempty"`
+
 	// Secrets: Required. Secret Manager secrets needed by the config.
 	Secrets *BitbucketServerSecrets `json:"secrets,omitempty"`
 
@@ -4579,6 +4589,15 @@ type SourceProvenance struct {
 	// package such as a gzipped tarfile (`.tar.gz`), the `FileHash` will be
 	// for the single path to that file.
 	FileHashes map[string]FileHashes `json:"fileHashes,omitempty"`
+
+	// ResolvedConnectedRepository: Output only. A copy of the build's
+	// `source.connected_repository`, if exists, with any revisions
+	// resolved.
+	ResolvedConnectedRepository *ConnectedRepository `json:"resolvedConnectedRepository,omitempty"`
+
+	// ResolvedGitSource: Output only. A copy of the build's
+	// `source.git_source`, if exists, with any revisions resolved.
+	ResolvedGitSource *GitSource `json:"resolvedGitSource,omitempty"`
 
 	// ResolvedRepoSource: A copy of the build's `source.repo_source`, if
 	// exists, with any revisions resolved.

@@ -671,8 +671,7 @@ type Cluster struct {
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
 	// "projects/{project}/global/networks/{network_id}". This is required
-	// to create a cluster. It can be updated, but it cannot be removed.
-	// Deprecated, use network_config.network instead.
+	// to create a cluster. Deprecated, use network_config.network instead.
 	Network string `json:"network,omitempty"`
 
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
@@ -1080,7 +1079,7 @@ type GenerateClientCertificateRequest struct {
 	CertDuration string `json:"certDuration,omitempty"`
 
 	// PemCsr: Optional. A pem-encoded X.509 certificate signing request
-	// (CSR).
+	// (CSR). It is recommended to use public_key instead.
 	PemCsr string `json:"pemCsr,omitempty"`
 
 	// PublicKey: Optional. The public key from the client.
@@ -1886,8 +1885,7 @@ type NetworkConfig struct {
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
 	// "projects/{project_number}/global/networks/{network_id}". This is
-	// required to create a cluster. It can be updated, but it cannot be
-	// removed.
+	// required to create a cluster.
 	Network string `json:"network,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
@@ -2584,6 +2582,12 @@ type StorageDatabasecenterPartnerapiV1mainBackupConfiguration struct {
 	// BackupRetentionSettings: Backup retention settings.
 	BackupRetentionSettings *StorageDatabasecenterPartnerapiV1mainRetentionSettings `json:"backupRetentionSettings,omitempty"`
 
+	// PointInTimeRecoveryEnabled: Whether point-in-time recovery is
+	// enabled. This is optional field, if the database service does not
+	// have this feature or metadata is not available in control plane, this
+	// can be omitted.
+	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AutomatedBackupEnabled") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2652,6 +2656,40 @@ func (s *StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainCompliance: Contains compliance
+// information about a security standard indicating unmet
+// recommendations.
+type StorageDatabasecenterPartnerapiV1mainCompliance struct {
+	// Standard: Industry-wide compliance standards or benchmarks, such as
+	// CIS, PCI, and OWASP.
+	Standard string `json:"standard,omitempty"`
+
+	// Version: Version of the standard or benchmark, for example, 1.1
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Standard") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainCompliance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
 // DatabaseResourceFeed is the top level proto to be used to ingest
 // different database resource level events into Condor platform.
@@ -2666,13 +2704,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "RESOURCE_METADATA" - Database resource metadata feed from control
 	// plane
 	//   "OBSERVABILITY_DATA" - Database resource monitoring data
-	//   "COMPLIANCE_DATA" - Database resource compliance feed
+	//   "SECURITY_FINDING_DATA" - Database resource security health signal
+	// data
 	FeedType string `json:"feedType,omitempty"`
+
+	// ResourceHealthSignalData: More feed data would be added in subsequent
+	// CLs
+	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 
 	// ResourceId: Required. Primary key associated with the Resource
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 
-	// ResourceMetadata: More feed data would be added in subsequent CLs
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FeedTimestamp") to
@@ -2698,6 +2740,118 @@ func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData:
+//
+//	Common model for database resource health signal data.
+type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struct {
+	// AdditionalMetadata: Any other additional metadata
+	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
+
+	// Compliance: Industry standards associated with this signal; if this
+	// signal is an issue, that could be a violation of the associated
+	// industry standard(s). For example, AUTO_BACKUP_DISABLED signal is
+	// associated with CIS GCP 1.1, CIS GCP 1.2, CIS GCP 1.3, NIST 800-53
+	// and ISO-27001 compliance standards. If a database resource does not
+	// have automated backup enable, it will violate these following
+	// industry standards.
+	Compliance []*StorageDatabasecenterPartnerapiV1mainCompliance `json:"compliance,omitempty"`
+
+	// Description: Description associated with signal
+	Description string `json:"description,omitempty"`
+
+	// EventTime: The last time at which the event described by this signal
+	// took place
+	EventTime string `json:"eventTime,omitempty"`
+
+	// ExternalUri: The external-uri of the signal, using which more
+	// information about this signal can be obtained. In GCP, this will take
+	// user to SCC page to get more details about signals.
+	ExternalUri string `json:"externalUri,omitempty"`
+
+	// Name: The name of the signal, ex: PUBLIC_SQL_INSTANCE,
+	// SQL_LOG_ERROR_VERBOSITY etc.
+	Name string `json:"name,omitempty"`
+
+	// Provider: Cloud provider name. Ex: GCP/AWS/Azure/OnPrem/SelfManaged
+	//
+	// Possible values:
+	//   "PROVIDER_UNSPECIFIED"
+	//   "GCP" - Google cloud platform provider
+	//   "AWS" - Amazon web service
+	//   "AZURE" - Azure web service
+	//   "ONPREM" - On-prem database resources.
+	//   "SELFMANAGED" - Self-managed database provider. These are resources
+	// on a cloud platform, e.g., database resource installed in a GCE VM,
+	// but not a managed database service.
+	//   "PROVIDER_OTHER" - For the rest of the other categories. Other
+	// refers to the rest of other database service providers, this could be
+	// smaller cloud provider. This needs to be provided when the provider
+	// is known, but it is not present in the existing set of enum values.
+	Provider string `json:"provider,omitempty"`
+
+	// ResourceContainer: Closest parent container of this resource. In GCP,
+	// 'container' refers to a Cloud Resource Manager project. It must be
+	// resource name of a Cloud Resource Manager project with the format of
+	// "provider//", such as "gcp/projects/123".
+	ResourceContainer string `json:"resourceContainer,omitempty"`
+
+	// ResourceName: Database resource name associated with the signal.
+	// Resource name to follow CAIS resource_name format as noted here
+	// go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// SignalClass: The class of the signal, such as if it's a THREAT or
+	// VULNERABILITY.
+	//
+	// Possible values:
+	//   "CLASS_UNSPECIFIED" - Unspecified signal class.
+	//   "THREAT" - Describes unwanted or malicious activity.
+	//   "VULNERABILITY" - Describes a potential weakness in software that
+	// increases risk to Confidentiality & Integrity & Availability.
+	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
+	// resource/asset configuration that increases risk.
+	//   "OBSERVATION" - Describes a security observation that is for
+	// informational purposes.
+	//   "ERROR" - Describes an error that prevents some SCC functionality.
+	SignalClass string `json:"signalClass,omitempty"`
+
+	// SignalId: Unique identifier for the signal. This is an unique id
+	// which would be mainatined by partner to identify a signal.
+	SignalId string `json:"signalId,omitempty"`
+
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The signal requires attention and has not been addressed
+	// yet.
+	//   "RESOLVED" - The signal has been fixed, triaged as a non-issue or
+	// otherwise addressed and is no longer active.
+	//   "MUTED" - The signal has been muted.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceId:
 // DatabaseResourceId will serve as primary key for any resource
 // ingestion event.
@@ -2710,14 +2864,24 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	//   "GCP" - Google cloud platform provider
 	//   "AWS" - Amazon web service
 	//   "AZURE" - Azure web service
-	//   "ONPREM" - On-prem database provider
-	//   "SELFMANAGED" - Self-managed database provider
-	//   "PROVIDER_OTHER" - For rest of the other category
+	//   "ONPREM" - On-prem database resources.
+	//   "SELFMANAGED" - Self-managed database provider. These are resources
+	// on a cloud platform, e.g., database resource installed in a GCE VM,
+	// but not a managed database service.
+	//   "PROVIDER_OTHER" - For the rest of the other categories. Other
+	// refers to the rest of other database service providers, this could be
+	// smaller cloud provider. This needs to be provided when the provider
+	// is known, but it is not present in the existing set of enum values.
 	Provider string `json:"provider,omitempty"`
 
+	// ProviderDescription: Optional. Needs to be used only when the
+	// provider is PROVIDER_OTHER.
+	ProviderDescription string `json:"providerDescription,omitempty"`
+
 	// ResourceType: Required. The type of resource this ID is identifying.
-	// Ex google.sqladmin.Instance, google.alloydb.cluster,
-	// google.sqladmin.Backup REQUIRED
+	// Ex alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
+	// spanner.googleapis.com/Instance REQUIRED Please refer
+	// go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// UniqueId: Required. A service-local token that distinguishes this
@@ -2771,16 +2935,26 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "HEALTHY" - The instance is running.
 	//   "UNHEALTHY" - Instance being created, updated, deleted or under
 	// maintenance
+	//   "SUSPENDED" - When instance is suspended
+	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
 	CurrentState string `json:"currentState,omitempty"`
 
-	// ExpectedState: The actual instance state.
+	// CustomMetadata: Any custom metadata associated with the resource (a
+	// JSON field)
+	CustomMetadata googleapi.RawMessage `json:"customMetadata,omitempty"`
+
+	// ExpectedState: The state that the instance is expected to be in. For
+	// example, an instance state can transition to UNHEALTHY due to wrong
+	// patch update, while the expected state will remain at the HEALTHY.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED"
 	//   "HEALTHY" - The instance is running.
 	//   "UNHEALTHY" - Instance being created, updated, deleted or under
 	// maintenance
+	//   "SUSPENDED" - When instance is suspended
+	//   "DELETED" - Instance is deleted.
 	//   "STATE_OTHER" - For rest of the other category
 	ExpectedState string `json:"expectedState,omitempty"`
 
@@ -2799,23 +2973,26 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// Location: The resource location. REQUIRED
 	Location string `json:"location,omitempty"`
 
-	// PrimaryResourceId: Unique identifier for this resource's immediate
-	// parent resource. This parent resource id would be used to build
-	// resource hierarchy in condor platform.
+	// PrimaryResourceId: Identifier for this resource's immediate
+	// parent/primary resource if the current resource is a replica or
+	// derived form of another Database resource. Else it would be NULL.
+	// REQUIRED if the immediate parent exists when first time resource is
+	// getting ingested
 	PrimaryResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"primaryResourceId,omitempty"`
 
 	// Product: The product this resource represents.
 	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
 
 	// ResourceContainer: Closest parent Cloud Resource Manager container of
-	// this resource. It must either be resource name of a Cloud Resource
-	// Manager project, for ex: "projects/123".
+	// this resource. It must be resource name of a Cloud Resource Manager
+	// project with the format of "provider//", such as "gcp/projects/123".
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
-	// ResourceName: Required. Different from unique_id, a resource name can
-	// be reused over time. That is after a resource named "ABC" is deleted,
-	// the name "ABC" can be used to to create a new resource within the
-	// same source.
+	// ResourceName: Required. Different from DatabaseResourceId.unique_id,
+	// a resource name can be reused over time. That is, after a resource
+	// named "ABC" is deleted, the name "ABC" can be used to to create a new
+	// resource within the same source. Resource name to follow CAIS
+	// resource_name format as noted here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// UpdationTime: The time at which the resource was updated and recorded

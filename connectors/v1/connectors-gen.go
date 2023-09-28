@@ -1131,6 +1131,10 @@ func (s *Connector) MarshalJSON() ([]byte, error) {
 // rate limit threshold which need to be configurable for every
 // connector version
 type ConnectorInfraConfig struct {
+	// ConnectionRatelimitWindowSeconds: The window used for ratelimiting
+	// runtime requests to connections.
+	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
+
 	// HpaConfig: HPA autoscaling config.
 	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
 
@@ -1151,20 +1155,22 @@ type ConnectorInfraConfig struct {
 	// SharedDeployment: The name of shared connector deployment.
 	SharedDeployment string `json:"sharedDeployment,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HpaConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ConnectionRatelimitWindowSeconds") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HpaConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ConnectionRatelimitWindowSeconds") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1283,6 +1289,10 @@ func (s *ConnectorVersion) MarshalJSON() ([]byte, error) {
 // like rate limit threshold which need to be configurable for every
 // connector version
 type ConnectorVersionInfraConfig struct {
+	// ConnectionRatelimitWindowSeconds: Output only. The window used for
+	// ratelimiting runtime requests to connections.
+	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
+
 	// HpaConfig: Output only. HPA autoscaling config.
 	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
 
@@ -1304,20 +1314,22 @@ type ConnectorVersionInfraConfig struct {
 	// deployment.
 	SharedDeployment string `json:"sharedDeployment,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HpaConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ConnectionRatelimitWindowSeconds") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HpaConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ConnectionRatelimitWindowSeconds") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

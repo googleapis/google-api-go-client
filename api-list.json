@@ -6084,6 +6084,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "vmwareengine:v1",
+      "name": "vmwareengine",
+      "version": "v1",
+      "title": "VMware Engine API",
+      "description": "The Google VMware Engine API lets you programmatically manage VMware environments.",
+      "discoveryRestUrl": "https://vmwareengine.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/solutions/vmware-as-a-service",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "vpcaccess:v1beta1",
       "name": "vpcaccess",
       "version": "v1beta1",

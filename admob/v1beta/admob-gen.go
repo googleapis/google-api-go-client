@@ -888,6 +888,8 @@ type CampaignReportSpec struct {
 	//   "AVERAGE_CPI" - The average cost per install. This means the
 	// average amount that was spent to acquire a new user. The currency is
 	// the reporting currency for campaigns.
+	//   "INTERACTIONS" - The number of times a user interacts with an ad.
+	// This consists of clicks and engagements.
 	Metrics []string `json:"metrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to

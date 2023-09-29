@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	healthcareService, err := healthcare.NewService(ctx, option.WithScopes(healthcare.CloudPlatformScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -94,6 +99,9 @@ const mtlsBasePath = "https://healthcare.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Read, write and manage healthcare data
+	CloudHealthcareScope = "https://www.googleapis.com/auth/cloud-healthcare"
+
 	// See, edit, configure, and delete your Google Cloud data and see the
 	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -102,6 +110,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-healthcare",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1463,8 +1472,8 @@ type DeidentifyConfig struct {
 	// region of origin during de-identification. Using this option results
 	// in a significant reduction of throughput, and is not compatible with
 	// `LOCATION` or `ORGANIZATION_NAME` infoTypes. `LOCATION` must be
-	// excluded within `TextConfig`, and must also be excluded within
-	// `ImageConfig` if image redaction is required.
+	// excluded within TextConfig, and must also be excluded within
+	// ImageConfig if image redaction is required.
 	UseRegionalDataProcessing bool `json:"useRegionalDataProcessing,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dicom") to
@@ -6488,6 +6497,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 	//     "$ref": "Location"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -6676,6 +6686,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//     "$ref": "ListLocationsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -6857,6 +6868,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7010,6 +7022,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7146,6 +7159,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7294,6 +7308,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7469,6 +7484,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7642,6 +7658,7 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "$ref": "ListDatasetsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7821,6 +7838,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -7968,6 +7986,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -8118,6 +8137,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Do(opts ...googleapi.C
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -8265,6 +8285,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Do(opts ...g
 	//     "$ref": "CheckDataAccessResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -8423,6 +8444,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Do(opts ...googleapi.
 	//     "$ref": "ConsentStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -8556,6 +8578,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Do(opts ...googleapi.
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -8703,6 +8726,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Do(opts
 	//     "$ref": "EvaluateUserConsentsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -8870,6 +8894,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Do(opts ...googleapi.Cal
 	//     "$ref": "ConsentStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -9045,6 +9070,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Do(opts ...goog
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -9230,6 +9256,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Do(opts ...googleapi.Ca
 	//     "$ref": "ListConsentStoresResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -9413,6 +9440,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Do(opts ...googleapi.C
 	//     "$ref": "ConsentStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -9584,6 +9612,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Do(opts 
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -9731,6 +9760,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Do(opts ...goog
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -9881,6 +9911,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Do(opts .
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10041,6 +10072,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) D
 	//     "$ref": "AttributeDefinition"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10178,6 +10210,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) D
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10324,6 +10357,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Do(o
 	//     "$ref": "AttributeDefinition"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10510,6 +10544,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Do(
 	//     "$ref": "ListAttributeDefinitionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10695,6 +10730,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Do
 	//     "$ref": "AttributeDefinition"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10838,6 +10874,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Do(op
 	//     "$ref": "ConsentArtifact"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -10973,6 +11010,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Do(op
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -11119,6 +11157,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Do(opts 
 	//     "$ref": "ConsentArtifact"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -11331,6 +11370,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Do(opts
 	//     "$ref": "ListConsentArtifactsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -11503,6 +11543,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Do(opts ...
 	//     "$ref": "Consent"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -11645,6 +11686,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Do(opts ...go
 	//     "$ref": "Consent"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -11784,6 +11826,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Do(opts ...go
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -11923,6 +11966,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Do(op
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -12077,6 +12121,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Do(opts ...googl
 	//     "$ref": "Consent"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -12290,6 +12335,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Do(opts ...goog
 	//     "$ref": "ListConsentsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -12524,6 +12570,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Do(opt
 	//     "$ref": "ListConsentRevisionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -12710,6 +12757,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Do(opts ...goo
 	//     "$ref": "Consent"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -12861,6 +12909,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Do(opts ...go
 	//     "$ref": "Consent"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13012,6 +13061,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Do(opts ...go
 	//     "$ref": "Consent"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13154,6 +13204,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Do(o
 	//     "$ref": "ArchiveUserDataMappingResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13296,6 +13347,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Do(op
 	//     "$ref": "UserDataMapping"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13428,6 +13480,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Do(op
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13574,6 +13627,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Do(opts 
 	//     "$ref": "UserDataMapping"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13784,6 +13838,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Do(opts
 	//     "$ref": "ListUserDataMappingsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -13967,6 +14022,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Do(opt
 	//     "$ref": "UserDataMapping"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -14122,6 +14178,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Do(opts ...googleapi.Ca
 	//     "$ref": "DicomStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -14275,6 +14332,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Do(opts ...googleap
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -14408,6 +14466,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -14557,6 +14616,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -14703,6 +14763,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Do(opts ...googleapi.CallO
 	//     "$ref": "DicomStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -14878,6 +14939,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Do(opts ...google
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15027,6 +15089,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15236,6 +15299,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Do(opts ...googleapi.Call
 	//     "$ref": "ListDicomStoresResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15415,6 +15479,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Do(opts ...googleapi.Cal
 	//     "$ref": "DicomStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15554,6 +15619,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Do(opts ...
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15692,6 +15758,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Do(opts ...goo
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15830,6 +15897,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -15977,6 +16045,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Do(opts ...google
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16105,6 +16174,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Do(opts ...goog
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16255,6 +16325,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Do(opts ...
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16406,6 +16477,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16544,6 +16616,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Do(opt
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16681,6 +16754,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Do(opts .
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16820,6 +16894,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Do(o
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -16958,6 +17033,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Do(opts
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17086,6 +17162,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17241,6 +17318,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17380,6 +17458,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17517,6 +17596,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) Do
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17656,6 +17736,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17810,6 +17891,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -17951,6 +18033,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18092,6 +18175,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18233,6 +18317,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18372,6 +18457,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18513,6 +18599,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18668,6 +18755,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Do(opts ...googleapi.Cal
 	//     "$ref": "FhirStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18818,6 +18906,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Do(opts ...googleapi
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -18951,6 +19040,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Do(opts ...googleapi.Cal
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -19104,6 +19194,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Do(opts ...googleapi.Cal
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -19250,6 +19341,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "FhirStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -19396,6 +19488,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Do(opts ...
 	//     "$ref": "FhirStoreMetrics"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -19571,6 +19664,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Do(opts ...googlea
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -19776,6 +19870,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -19985,6 +20080,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Do(opts ...googleapi.CallO
 	//     "$ref": "ListFhirStoresResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -20164,6 +20260,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Do(opts ...googleapi.Call
 	//     "$ref": "FhirStore"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -20311,6 +20408,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Do(opts ...googlea
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -20461,6 +20559,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Do(opts ...g
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -20689,6 +20788,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -20827,6 +20927,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Do(opts ...go
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -20984,6 +21085,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Do(opts ..
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21112,6 +21214,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Do(opts ...goo
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21276,6 +21379,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Do(opts .
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21419,6 +21523,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Do(opts ..
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21570,6 +21675,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Do(opts .
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21719,6 +21825,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Do(opts ...googleapi
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21829,6 +21936,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Do(opts ...googleapi
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -21974,6 +22082,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Do(opts ...go
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -22165,6 +22274,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Do(opts ...googleap
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -22284,6 +22394,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Do(opts ...googleapi.
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -22414,6 +22525,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Do(opts ...googleapi.C
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -22576,6 +22688,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -22755,6 +22868,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -22881,6 +22995,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Do(opts ...googleapi
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23007,6 +23122,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Do(opts ...googleapi.
 	//     "$ref": "HttpBody"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23162,6 +23278,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Hl7V2Store"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23295,6 +23412,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23446,6 +23564,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23592,6 +23711,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Do(opts ...googleapi.CallO
 	//     "$ref": "Hl7V2Store"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23767,6 +23887,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -23937,6 +24058,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) Do(opts ...googleapi.Ca
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -24146,6 +24268,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	//     "$ref": "ListHl7V2StoresResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -24325,6 +24448,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	//     "$ref": "Hl7V2Store"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -24472,6 +24596,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...google
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -24622,6 +24747,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -24769,6 +24895,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -24901,6 +25028,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -25094,6 +25222,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -25245,6 +25374,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	//     "$ref": "IngestMessageResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -25537,6 +25667,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//     "$ref": "ListMessagesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -25722,6 +25853,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -25873,6 +26005,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Do(opts ...googleapi.Cal
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -26021,6 +26154,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -26206,6 +26340,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Do(opts ...googleapi.CallO
 	//     "$ref": "ListOperationsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -26372,6 +26507,7 @@ func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) Do(opts ...googleapi.C
 	//     "$ref": "AnalyzeEntitiesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }

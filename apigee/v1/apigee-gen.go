@@ -585,6 +585,7 @@ type OrganizationsEnvgroupsAttachmentsService struct {
 
 func NewOrganizationsEnvironmentsService(s *Service) *OrganizationsEnvironmentsService {
 	rs := &OrganizationsEnvironmentsService{s: s}
+	rs.AddonsConfig = NewOrganizationsEnvironmentsAddonsConfigService(s)
 	rs.Analytics = NewOrganizationsEnvironmentsAnalyticsService(s)
 	rs.Apis = NewOrganizationsEnvironmentsApisService(s)
 	rs.ArchiveDeployments = NewOrganizationsEnvironmentsArchiveDeploymentsService(s)
@@ -597,6 +598,7 @@ func NewOrganizationsEnvironmentsService(s *Service) *OrganizationsEnvironmentsS
 	rs.Queries = NewOrganizationsEnvironmentsQueriesService(s)
 	rs.References = NewOrganizationsEnvironmentsReferencesService(s)
 	rs.Resourcefiles = NewOrganizationsEnvironmentsResourcefilesService(s)
+	rs.SecurityActions = NewOrganizationsEnvironmentsSecurityActionsService(s)
 	rs.SecurityIncidents = NewOrganizationsEnvironmentsSecurityIncidentsService(s)
 	rs.SecurityReports = NewOrganizationsEnvironmentsSecurityReportsService(s)
 	rs.SecurityStats = NewOrganizationsEnvironmentsSecurityStatsService(s)
@@ -609,6 +611,8 @@ func NewOrganizationsEnvironmentsService(s *Service) *OrganizationsEnvironmentsS
 
 type OrganizationsEnvironmentsService struct {
 	s *Service
+
+	AddonsConfig *OrganizationsEnvironmentsAddonsConfigService
 
 	Analytics *OrganizationsEnvironmentsAnalyticsService
 
@@ -634,6 +638,8 @@ type OrganizationsEnvironmentsService struct {
 
 	Resourcefiles *OrganizationsEnvironmentsResourcefilesService
 
+	SecurityActions *OrganizationsEnvironmentsSecurityActionsService
+
 	SecurityIncidents *OrganizationsEnvironmentsSecurityIncidentsService
 
 	SecurityReports *OrganizationsEnvironmentsSecurityReportsService
@@ -647,6 +653,15 @@ type OrganizationsEnvironmentsService struct {
 	Targetservers *OrganizationsEnvironmentsTargetserversService
 
 	TraceConfig *OrganizationsEnvironmentsTraceConfigService
+}
+
+func NewOrganizationsEnvironmentsAddonsConfigService(s *Service) *OrganizationsEnvironmentsAddonsConfigService {
+	rs := &OrganizationsEnvironmentsAddonsConfigService{s: s}
+	return rs
+}
+
+type OrganizationsEnvironmentsAddonsConfigService struct {
+	s *Service
 }
 
 func NewOrganizationsEnvironmentsAnalyticsService(s *Service) *OrganizationsEnvironmentsAnalyticsService {
@@ -862,6 +877,15 @@ func NewOrganizationsEnvironmentsResourcefilesService(s *Service) *Organizations
 }
 
 type OrganizationsEnvironmentsResourcefilesService struct {
+	s *Service
+}
+
+func NewOrganizationsEnvironmentsSecurityActionsService(s *Service) *OrganizationsEnvironmentsSecurityActionsService {
+	rs := &OrganizationsEnvironmentsSecurityActionsService{s: s}
+	return rs
+}
+
+type OrganizationsEnvironmentsSecurityActionsService struct {
 	s *Service
 }
 
@@ -1466,6 +1490,9 @@ type GoogleCloudApigeeV1AddonsConfig struct {
 	// AdvancedApiOpsConfig: Configuration for the Advanced API Ops add-on.
 	AdvancedApiOpsConfig *GoogleCloudApigeeV1AdvancedApiOpsConfig `json:"advancedApiOpsConfig,omitempty"`
 
+	// AnalyticsConfig: Configuration for the Analytics add-on.
+	AnalyticsConfig *GoogleCloudApigeeV1AnalyticsConfig `json:"analyticsConfig,omitempty"`
+
 	// ApiSecurityConfig: Configuration for the API Security add-on.
 	ApiSecurityConfig *GoogleCloudApigeeV1ApiSecurityConfig `json:"apiSecurityConfig,omitempty"`
 
@@ -1478,6 +1505,10 @@ type GoogleCloudApigeeV1AddonsConfig struct {
 
 	// MonetizationConfig: Configuration for the Monetization add-on.
 	MonetizationConfig *GoogleCloudApigeeV1MonetizationConfig `json:"monetizationConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdvancedApiOpsConfig") to unconditionally include in API requests.
@@ -1649,6 +1680,53 @@ type GoogleCloudApigeeV1AliasRevisionConfig struct {
 
 func (s *GoogleCloudApigeeV1AliasRevisionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1AliasRevisionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1AnalyticsConfig: Configuration for the Analytics
+// add-on.
+type GoogleCloudApigeeV1AnalyticsConfig struct {
+	// Enabled: Whether the Analytics add-on is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ExpireTimeMillis: Output only. Time at which the Analytics add-on
+	// expires in milliseconds since epoch. If unspecified, the add-on will
+	// never expire.
+	ExpireTimeMillis int64 `json:"expireTimeMillis,omitempty,string"`
+
+	// State: Output only. The state of the Analytics add-on.
+	//
+	// Possible values:
+	//   "ADDON_STATE_UNSPECIFIED" - Default value.
+	//   "ENABLING" - Add-on is in progress of enabling.
+	//   "ENABLED" - Add-on is fully enabled and ready to use.
+	//   "DISABLING" - Add-on is in progress of disabling.
+	//   "DISABLED" - Add-on is fully disabled.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The latest update time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AnalyticsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AnalyticsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4751,6 +4829,16 @@ func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1DisableSecurityActionRequest: Message to disable
+// an enabled SecurityAction.
+type GoogleCloudApigeeV1DisableSecurityActionRequest struct {
+}
+
+// GoogleCloudApigeeV1EnableSecurityActionRequest: Message to enable a
+// disabled SecurityAction.
+type GoogleCloudApigeeV1EnableSecurityActionRequest struct {
+}
+
 // GoogleCloudApigeeV1EndpointAttachment: Apigee endpoint attachment.
 // For more information, see [Southbound networking patterns]
 // (https://cloud.google.com/apigee/docs/api-platform/architecture/southbound-networking-patterns-endpoints).
@@ -5033,6 +5121,9 @@ func (s *GoogleCloudApigeeV1Environment) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1EnvironmentConfig struct {
+	// AddonsConfig: The latest runtime configurations for add-ons.
+	AddonsConfig *GoogleCloudApigeeV1RuntimeAddonsConfig `json:"addonsConfig,omitempty"`
+
 	// ArcConfigLocation: The location for the config blob of API Runtime
 	// Control, aka Envoy Adapter, for op-based authentication as a URI,
 	// e.g. a Cloud Storage URI. This is only used by Envoy-based gateways.
@@ -5122,21 +5213,20 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ArcConfigLocation")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AddonsConfig") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ArcConfigLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AddonsConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7434,6 +7524,44 @@ func (s *GoogleCloudApigeeV1ListRatePlansResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListSecurityActionsResponse: Contains a list of
+// SecurityActions in response to a ListSecurityActionRequest.
+type GoogleCloudApigeeV1ListSecurityActionsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityActions: The SecurityActions for the specified environment.
+	SecurityActions []*GoogleCloudApigeeV1SecurityAction `json:"securityActions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListSecurityActionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityActionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListSecurityIncidentsResponse: Response for
 // ListSecurityIncidents.
 type GoogleCloudApigeeV1ListSecurityIncidentsResponse struct {
@@ -8392,6 +8520,16 @@ type GoogleCloudApigeeV1Organization struct {
 	//   "DELETING" - The resource is being deleted.
 	//   "UPDATING" - The resource is being updated.
 	State string `json:"state,omitempty"`
+
+	// SubscriptionPlan: Output only. Subscription plan that the customer
+	// has purchased. Output only.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_PLAN_UNSPECIFIED" - Subscription plan not specified.
+	//   "SUBSCRIPTION_2021" - Traditional subscription plan.
+	//   "SUBSCRIPTION_2024" - New subscription plan that provides standard
+	// proxy and scaled proxy implementation.
+	SubscriptionPlan string `json:"subscriptionPlan,omitempty"`
 
 	// SubscriptionType: Output only. DEPRECATED: This will eventually be
 	// replaced by BillingType. Subscription type of the Apigee
@@ -10008,6 +10146,117 @@ func (s *GoogleCloudApigeeV1RoutingRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1RuntimeAddonsConfig: RuntimeAddonsConfig defines
+// the runtime configurations for add-ons in an environment.
+type GoogleCloudApigeeV1RuntimeAddonsConfig struct {
+	// AnalyticsConfig: Runtime configuration for Analytics add-on.
+	AnalyticsConfig *GoogleCloudApigeeV1RuntimeAnalyticsConfig `json:"analyticsConfig,omitempty"`
+
+	// ApiSecurityConfig: Runtime configuration for API Security add-on.
+	ApiSecurityConfig *GoogleCloudApigeeV1RuntimeApiSecurityConfig `json:"apiSecurityConfig,omitempty"`
+
+	// Name: Name of the addons config in the format:
+	// `organizations/{org}/environments/{env}/addonsConfig`
+	Name string `json:"name,omitempty"`
+
+	// RevisionId: Revision number used by the runtime to detect config
+	// changes.
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// Uid: UID is to detect if config is recreated after deletion. The
+	// add-on config will only be deleted when the environment itself gets
+	// deleted, thus it will always be the same as the UID of
+	// EnvironmentConfig.
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1RuntimeAddonsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeAddonsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1RuntimeAnalyticsConfig: Runtime configuration for
+// the Analytics add-on.
+type GoogleCloudApigeeV1RuntimeAnalyticsConfig struct {
+	// BillingPipelineEnabled: If Runtime should send billing data to AX or
+	// not.
+	BillingPipelineEnabled bool `json:"billingPipelineEnabled,omitempty"`
+
+	// Enabled: If the Analytics is enabled or not.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BillingPipelineEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingPipelineEnabled")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1RuntimeAnalyticsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeAnalyticsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1RuntimeApiSecurityConfig: Runtime configuration
+// for the API Security add-on.
+type GoogleCloudApigeeV1RuntimeApiSecurityConfig struct {
+	// Enabled: If the API Security is enabled or not.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1RuntimeApiSecurityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeApiSecurityConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1RuntimeConfig: Runtime configuration for the
 // organization. Response for GetRuntimeConfig.
 type GoogleCloudApigeeV1RuntimeConfig struct {
@@ -10526,6 +10775,272 @@ func (s *GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1SecurityAction: A SecurityAction is rule that can
+// be enforced at an environment level. The result is one of: - A denied
+// API call - An explicitly allowed API call - A flagged API call (HTTP
+// headers added before the target receives it) At least one condition
+// is required to create a SecurityAction.
+type GoogleCloudApigeeV1SecurityAction struct {
+	// Allow: Allow a request through if it matches this SecurityAction.
+	Allow *GoogleCloudApigeeV1SecurityActionAllow `json:"allow,omitempty"`
+
+	// ConditionConfig: Required. A valid SecurityAction must contain at
+	// least one condition.
+	ConditionConfig *GoogleCloudApigeeV1SecurityActionConditionConfig `json:"conditionConfig,omitempty"`
+
+	// CreateTime: Output only. The create time for this SecurityAction.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Deny: Deny a request through if it matches this SecurityAction.
+	Deny *GoogleCloudApigeeV1SecurityActionDeny `json:"deny,omitempty"`
+
+	// Description: Optional. An optional user provided description of the
+	// SecurityAction.
+	Description string `json:"description,omitempty"`
+
+	// ExpireTime: The expiration for this SecurityAction.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Flag: Flag a request through if it matches this SecurityAction.
+	Flag *GoogleCloudApigeeV1SecurityActionFlag `json:"flag,omitempty"`
+
+	// Name: Immutable. This field is ignored during creation as per
+	// AIP-133. Please set the `security_action_id` field in the
+	// CreateSecurityActionRequest when creating a new SecurityAction.
+	// Format:
+	// organizations/{org}/environments/{env}/securityActions/{security_actio
+	// n}
+	Name string `json:"name,omitempty"`
+
+	// State: Required. Only an ENABLED SecurityAction is enforced. An
+	// ENABLED SecurityAction past its expiration time will not be enforced.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This only exists for
+	// forward compatibility. A create request with this value will be
+	// rejected.
+	//   "ENABLED" - An ENABLED SecurityAction is actively enforced if the
+	// `expiration_time` is in the future.
+	//   "DISABLED" - A disabled SecurityAction is never enforced.
+	State string `json:"state,omitempty"`
+
+	// Ttl: Input only. The TTL for this SecurityAction.
+	Ttl string `json:"ttl,omitempty"`
+
+	// UpdateTime: Output only. The update time for this SecurityAction.
+	// This reflects when this SecurityAction changed states.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Allow") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Allow") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityActionAllow: Message that should be set in
+// case of an Allow Action. This does not have any fields.
+type GoogleCloudApigeeV1SecurityActionAllow struct {
+}
+
+// GoogleCloudApigeeV1SecurityActionConditionConfig: The following are a
+// list of conditions. A valid SecurityAction must contain at least one
+// condition. Within a condition, each element is ORed. Across
+// conditions elements are ANDed. For example if a SecurityAction has
+// the following: api_keys: ["key1", "key2"] and developers: ["dev1",
+// "dev2"] then this is interpreted as: enforce the action if the
+// incoming request has ((api_key = "key1" OR api_key="key") AND
+// (developer="dev1" OR developer="dev2"))
+type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
+	// BotReasons: Optional. A list of Bot Reasons. Current options:
+	// Flooder, Brute Guessor, Static Content Scraper, OAuth Abuser, Robot
+	// Abuser, TorListRule, Advanced Anomaly Detection and Advanced API
+	// Scraper.
+	BotReasons []string `json:"botReasons,omitempty"`
+
+	// IpAddressRanges: Optional. A list of IP addresses. This could be
+	// either IPv4 or IPv6. Limited to 100 per action.
+	IpAddressRanges []string `json:"ipAddressRanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BotReasons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BotReasons") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityActionConditionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityActionConditionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityActionDeny: Message that should be set in
+// case of a Deny Action.
+type GoogleCloudApigeeV1SecurityActionDeny struct {
+	// ResponseCode: Optional. The HTTP response code if the Action = DENY.
+	ResponseCode int64 `json:"responseCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResponseCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResponseCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityActionDeny) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityActionDeny
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityActionFlag: The message that should be set
+// in the case of a Flag action.
+type GoogleCloudApigeeV1SecurityActionFlag struct {
+	// Headers: Optional. A list of HTTP headers to be sent to the target in
+	// case of a FLAG SecurityAction. Limit 5 headers per SecurityAction. At
+	// least one is mandatory.
+	Headers []*GoogleCloudApigeeV1SecurityActionHttpHeader `json:"headers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Headers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Headers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityActionFlag) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityActionFlag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityActionHttpHeader: An HTTP header.
+type GoogleCloudApigeeV1SecurityActionHttpHeader struct {
+	// Name: The header name to be sent to the target.
+	Name string `json:"name,omitempty"`
+
+	// Value: The header value to be sent to the target.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityActionHttpHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityActionHttpHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityActionsConfig: SecurityActionsConfig
+// reflects the current state of the SecurityActions feature. This is a
+// singleton resource: https://google.aip.dev/156
+type GoogleCloudApigeeV1SecurityActionsConfig struct {
+	// Enabled: The flag that controls whether this feature is enabled. This
+	// is `unset` by default. When this flag is `false`, even if individual
+	// rules are enabled, no SecurityActions will be enforced.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Name: This is a singleton resource, the name will always be set by
+	// SecurityActions and any user input will be ignored. The name is
+	// always:
+	// `organizations/{org}/environments/{env}/security_actions_config`
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The update time for configuration.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityActionsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityActionsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1SecurityIncident: Represents an SecurityIncident
 // resource.
 type GoogleCloudApigeeV1SecurityIncident struct {
@@ -10705,9 +11220,8 @@ type GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation struct {
 	// the security profile.
 	AttachTime string `json:"attachTime,omitempty"`
 
-	// Name: Immutable. Name of the profile-environment association
-	// resource. Format:
-	// organizations/{org}/securityProfiles/{profile}/environments/{env}
+	// Name: Immutable. Name of the environment that the profile is attached
+	// to.
 	Name string `json:"name,omitempty"`
 
 	// SecurityProfileRevisionId: Revision ID of the security profile.
@@ -11173,6 +11687,41 @@ type GoogleCloudApigeeV1Session struct {
 
 func (s *GoogleCloudApigeeV1Session) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Session
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SetAddonEnablementRequest: Request for
+// SetAddonEnablement.
+type GoogleCloudApigeeV1SetAddonEnablementRequest struct {
+	// AnalyticsEnabled: If the Analytics should be enabled in the
+	// environment.
+	AnalyticsEnabled bool `json:"analyticsEnabled,omitempty"`
+
+	// ApiSecurityEnabled: If the API Security should be enabled in the
+	// environment.
+	ApiSecurityEnabled bool `json:"apiSecurityEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SetAddonEnablementRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SetAddonEnablementRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -33226,6 +33775,153 @@ func (c *OrganizationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 
 }
 
+// method id "apigee.organizations.environments.getAddonsConfig":
+
+type OrganizationsEnvironmentsGetAddonsConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAddonsConfig: Gets the add-ons config of an environment.
+//
+//   - name: Name of the add-ons config. Must be in the format of
+//     `/organizations/{org}/environments/{env}/addonsConfig`.
+func (r *OrganizationsEnvironmentsService) GetAddonsConfig(name string) *OrganizationsEnvironmentsGetAddonsConfigCall {
+	c := &OrganizationsEnvironmentsGetAddonsConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsGetAddonsConfigCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsGetAddonsConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsGetAddonsConfigCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsGetAddonsConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsGetAddonsConfigCall) Context(ctx context.Context) *OrganizationsEnvironmentsGetAddonsConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsGetAddonsConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsGetAddonsConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.getAddonsConfig" call.
+// Exactly one of *GoogleCloudApigeeV1AddonsConfig or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1AddonsConfig.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsGetAddonsConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AddonsConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1AddonsConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the add-ons config of an environment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/addonsConfig",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.getAddonsConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the add-ons config. Must be in the format of `/organizations/{org}/environments/{env}/addonsConfig`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/addonsConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1AddonsConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.environments.getApiSecurityRuntimeConfig":
 
 type OrganizationsEnvironmentsGetApiSecurityRuntimeConfigCall struct {
@@ -33845,6 +34541,157 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1/{+resource}:getIamPolicy",
 	//   "response": {
 	//     "$ref": "GoogleIamV1Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.getSecurityActionsConfig":
+
+type OrganizationsEnvironmentsGetSecurityActionsConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecurityActionsConfig: GetSecurityActionConfig returns the current
+// SecurityActions configuration.
+//
+//   - name: The name of the SecurityActionsConfig to retrieve. This will
+//     always be:
+//     `organizations/{org}/environments/{env}/security_actions_config`.
+func (r *OrganizationsEnvironmentsService) GetSecurityActionsConfig(name string) *OrganizationsEnvironmentsGetSecurityActionsConfigCall {
+	c := &OrganizationsEnvironmentsGetSecurityActionsConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsGetSecurityActionsConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsGetSecurityActionsConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) Context(ctx context.Context) *OrganizationsEnvironmentsGetSecurityActionsConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.getSecurityActionsConfig" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityActionsConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1SecurityActionsConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsGetSecurityActionsConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityActionsConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityActionsConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetSecurityActionConfig returns the current SecurityActions configuration.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActionsConfig",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.getSecurityActionsConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityActionsConfig to retrieve. This will always be: `organizations/{org}/environments/{env}/security_actions_config`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityActionsConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityActionsConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -35206,6 +36053,168 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Do(opts ...googleapi.Ca
 
 }
 
+// method id "apigee.organizations.environments.updateSecurityActionsConfig":
+
+type OrganizationsEnvironmentsUpdateSecurityActionsConfigCall struct {
+	s                                        *Service
+	name                                     string
+	googlecloudapigeev1securityactionsconfig *GoogleCloudApigeeV1SecurityActionsConfig
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// UpdateSecurityActionsConfig: UpdateSecurityActionConfig updates the
+// current SecurityActions configuration. This method is used to
+// enable/disable the feature at the environment level.
+//
+//   - name: This is a singleton resource, the name will always be set by
+//     SecurityActions and any user input will be ignored. The name is
+//     always:
+//     `organizations/{org}/environments/{env}/security_actions_config`.
+func (r *OrganizationsEnvironmentsService) UpdateSecurityActionsConfig(name string, googlecloudapigeev1securityactionsconfig *GoogleCloudApigeeV1SecurityActionsConfig) *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall {
+	c := &OrganizationsEnvironmentsUpdateSecurityActionsConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityactionsconfig = googlecloudapigeev1securityactionsconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update.
+func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) UpdateMask(updateMask string) *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) Context(ctx context.Context) *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityactionsconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.updateSecurityActionsConfig" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityActionsConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1SecurityActionsConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsUpdateSecurityActionsConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityActionsConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityActionsConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "UpdateSecurityActionConfig updates the current SecurityActions configuration. This method is used to enable/disable the feature at the environment level.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActionsConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.environments.updateSecurityActionsConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "This is a singleton resource, the name will always be set by SecurityActions and any user input will be ignored. The name is always: `organizations/{org}/environments/{env}/security_actions_config`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityActionsConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityActionsConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityActionsConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.environments.updateTraceConfig":
 
 type OrganizationsEnvironmentsUpdateTraceConfigCall struct {
@@ -35357,6 +36366,150 @@ func (c *OrganizationsEnvironmentsUpdateTraceConfigCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1TraceConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.addonsConfig.setAddonEnablement":
+
+type OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall struct {
+	s                                            *Service
+	name                                         string
+	googlecloudapigeev1setaddonenablementrequest *GoogleCloudApigeeV1SetAddonEnablementRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// SetAddonEnablement: Updates an add-on enablement status of an
+// environment.
+//
+//   - name: Name of the add-ons config. Must be in the format of
+//     `/organizations/{org}/environments/{env}/addonsConfig`.
+func (r *OrganizationsEnvironmentsAddonsConfigService) SetAddonEnablement(name string, googlecloudapigeev1setaddonenablementrequest *GoogleCloudApigeeV1SetAddonEnablementRequest) *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall {
+	c := &OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1setaddonenablementrequest = googlecloudapigeev1setaddonenablementrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) Context(ctx context.Context) *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1setaddonenablementrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setAddonEnablement")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.addonsConfig.setAddonEnablement" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsAddonsConfigSetAddonEnablementCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an add-on enablement status of an environment.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/addonsConfig:setAddonEnablement",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.addonsConfig.setAddonEnablement",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the add-ons config. Must be in the format of `/organizations/{org}/environments/{env}/addonsConfig`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/addonsConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:setAddonEnablement",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SetAddonEnablementRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -36192,10 +37345,9 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Override(override boo
 // deployment will be capturing traffic from another environment under a
 // shared environment group or if traffic will be rerouted to a
 // different environment due to a base path removal. The
-// generateDeployChangeReport API (generateDeployChangeReport) may be
-// used to examine routing changes before issuing the deployment
-// request, and its response will indicate if a sequenced rollout is
-// recommended for the deployment.
+// generateDeployChangeReport API may be used to examine routing changes
+// before issuing the deployment request, and its response will indicate
+// if a sequenced rollout is recommended for the deployment.
 func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) SequencedRollout(sequencedRollout bool) *OrganizationsEnvironmentsApisRevisionsDeployCall {
 	c.urlParams_.Set("sequencedRollout", fmt.Sprint(sequencedRollout))
 	return c
@@ -36318,7 +37470,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeployCall) Do(opts ...googleapi.
 	//       "type": "boolean"
 	//     },
 	//     "sequencedRollout": {
-	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [generateDeployChangeReport API](generateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
+	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the routing rules for this deployment and the environment changes to add the deployment will be rolled out in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The generateDeployChangeReport API may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -36523,10 +37675,10 @@ func (r *OrganizationsEnvironmentsApisRevisionsService) Undeploy(name string) *O
 // is likely to be a rare use case; it is only needed when the intended
 // effect of undeploying this proxy is to cause the traffic it currently
 // handles to be rerouted to some other existing proxy in the
-// environment group. The GenerateUndeployChangeReport API
-// (GenerateUndeployChangeReport) may be used to examine routing changes
-// before issuing the undeployment request, and its response will
-// indicate if a sequenced rollout is recommended for the undeployment.
+// environment group. The GenerateUndeployChangeReport API may be used
+// to examine routing changes before issuing the undeployment request,
+// and its response will indicate if a sequenced rollout is recommended
+// for the undeployment.
 func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) SequencedRollout(sequencedRollout bool) *OrganizationsEnvironmentsApisRevisionsUndeployCall {
 	c.urlParams_.Set("sequencedRollout", fmt.Sprint(sequencedRollout))
 	return c
@@ -36634,7 +37786,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsUndeployCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "sequencedRollout": {
-	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the environment group routing rules corresponding to this deployment will be removed before removing the deployment from the runtime. This is likely to be a rare use case; it is only needed when the intended effect of undeploying this proxy is to cause the traffic it currently handles to be rerouted to some other existing proxy in the environment group. The [GenerateUndeployChangeReport API](GenerateUndeployChangeReport) may be used to examine routing changes before issuing the undeployment request, and its response will indicate if a sequenced rollout is recommended for the undeployment.",
+	//       "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, the environment group routing rules corresponding to this deployment will be removed before removing the deployment from the runtime. This is likely to be a rare use case; it is only needed when the intended effect of undeploying this proxy is to cause the traffic it currently handles to be rerouted to some other existing proxy in the environment group. The GenerateUndeployChangeReport API may be used to examine routing changes before issuing the undeployment request, and its response will indicate if a sequenced rollout is recommended for the undeployment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -44668,6 +45820,827 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Do(opts ...googleapi.
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.environments.securityActions.create":
+
+type OrganizationsEnvironmentsSecurityActionsCreateCall struct {
+	s                                 *Service
+	parent                            string
+	googlecloudapigeev1securityaction *GoogleCloudApigeeV1SecurityAction
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: CreateSecurityAction creates a SecurityAction.
+//
+//   - parent: The organization and environment that this SecurityAction
+//     applies to. Format: organizations/{org}/environments/{env}.
+func (r *OrganizationsEnvironmentsSecurityActionsService) Create(parent string, googlecloudapigeev1securityaction *GoogleCloudApigeeV1SecurityAction) *OrganizationsEnvironmentsSecurityActionsCreateCall {
+	c := &OrganizationsEnvironmentsSecurityActionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityaction = googlecloudapigeev1securityaction
+	return c
+}
+
+// SecurityActionId sets the optional parameter "securityActionId":
+// Required. The ID to use for the SecurityAction, which will become the
+// final component of the action's resource name. This value should be
+// 0-61 characters, and valid format is (^a-z
+// ([a-z0-9-]{​0,61}[a-z0-9])?$).
+func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) SecurityActionId(securityActionId string) *OrganizationsEnvironmentsSecurityActionsCreateCall {
+	c.urlParams_.Set("securityActionId", securityActionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityaction)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityActions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.create" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityAction or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityAction.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityActionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "CreateSecurityAction creates a SecurityAction.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActions",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityActions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The organization and environment that this SecurityAction applies to. Format: organizations/{org}/environments/{env}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "securityActionId": {
+	//       "description": "Required. The ID to use for the SecurityAction, which will become the final component of the action's resource name. This value should be 0-61 characters, and valid format is (^[a-z]([a-z0-9-]{​0,61}[a-z0-9])?$).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityActions",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityAction"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityAction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityActions.disable":
+
+type OrganizationsEnvironmentsSecurityActionsDisableCall struct {
+	s                                               *Service
+	name                                            string
+	googlecloudapigeev1disablesecurityactionrequest *GoogleCloudApigeeV1DisableSecurityActionRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// Disable: Disable a SecurityAction. The `state` of the SecurityAction
+// after disabling is `DISABLED`. `DisableSecurityAction` can be called
+// on SecurityActions in the state `ENABLED`; SecurityActions in a
+// different state (including `DISABLED`) return an error.
+//
+//   - name: The name of the SecurityAction to disable. Format:
+//     organizations/{org}/environments/{env}/securityActions/{security_act
+//     ion}.
+func (r *OrganizationsEnvironmentsSecurityActionsService) Disable(name string, googlecloudapigeev1disablesecurityactionrequest *GoogleCloudApigeeV1DisableSecurityActionRequest) *OrganizationsEnvironmentsSecurityActionsDisableCall {
+	c := &OrganizationsEnvironmentsSecurityActionsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1disablesecurityactionrequest = googlecloudapigeev1disablesecurityactionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1disablesecurityactionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.disable" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityAction or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityAction.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityActionsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disable a SecurityAction. The `state` of the SecurityAction after disabling is `DISABLED`. `DisableSecurityAction` can be called on SecurityActions in the state `ENABLED`; SecurityActions in a different state (including `DISABLED`) return an error.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActions/{securityActionsId}:disable",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityActions.disable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityAction to disable. Format: organizations/{org}/environments/{env}/securityActions/{security_action}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityActions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:disable",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1DisableSecurityActionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityAction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityActions.enable":
+
+type OrganizationsEnvironmentsSecurityActionsEnableCall struct {
+	s                                              *Service
+	name                                           string
+	googlecloudapigeev1enablesecurityactionrequest *GoogleCloudApigeeV1EnableSecurityActionRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Enable: Enable a SecurityAction. The `state` of the SecurityAction
+// after enabling is `ENABLED`. `EnableSecurityAction` can be called on
+// SecurityActions in the state `DISABLED`; SecurityActions in a
+// different state (including `ENABLED) return an error.
+//
+//   - name: The name of the SecurityAction to enable. Format:
+//     organizations/{org}/environments/{env}/securityActions/{security_act
+//     ion}.
+func (r *OrganizationsEnvironmentsSecurityActionsService) Enable(name string, googlecloudapigeev1enablesecurityactionrequest *GoogleCloudApigeeV1EnableSecurityActionRequest) *OrganizationsEnvironmentsSecurityActionsEnableCall {
+	c := &OrganizationsEnvironmentsSecurityActionsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1enablesecurityactionrequest = googlecloudapigeev1enablesecurityactionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1enablesecurityactionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.enable" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityAction or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityAction.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityActionsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enable a SecurityAction. The `state` of the SecurityAction after enabling is `ENABLED`. `EnableSecurityAction` can be called on SecurityActions in the state `DISABLED`; SecurityActions in a different state (including `ENABLED) return an error.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActions/{securityActionsId}:enable",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityActions.enable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecurityAction to enable. Format: organizations/{org}/environments/{env}/securityActions/{security_action}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityActions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:enable",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1EnableSecurityActionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityAction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityActions.get":
+
+type OrganizationsEnvironmentsSecurityActionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a SecurityAction by name.
+//
+//   - name: The fully qualified name of the SecurityAction to retrieve.
+//     Format:
+//     organizations/{org}/environments/{env}/securityActions/{security_act
+//     ion}.
+func (r *OrganizationsEnvironmentsSecurityActionsService) Get(name string) *OrganizationsEnvironmentsSecurityActionsGetCall {
+	c := &OrganizationsEnvironmentsSecurityActionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityActionsGetCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityActionsGetCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityActionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityActionsGetCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.get" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityAction or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityAction.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityActionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a SecurityAction by name.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActions/{securityActionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityActions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The fully qualified name of the SecurityAction to retrieve. Format: organizations/{org}/environments/{env}/securityActions/{security_action}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityActions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityAction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.environments.securityActions.list":
+
+type OrganizationsEnvironmentsSecurityActionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of SecurityActions. This returns both enabled
+// and disabled actions.
+//
+//   - parent: The parent, which owns this collection of SecurityActions.
+//     Format: organizations/{org}/environments/{env}.
+func (r *OrganizationsEnvironmentsSecurityActionsService) List(parent string) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c := &OrganizationsEnvironmentsSecurityActionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to
+// filter List results. https://google.aip.dev/160. Allows for filtering
+// over: state and api_proxies. E.g.: state = ACTIVE AND apiProxies:foo.
+// Filtering by action is not supported
+// https://github.com/aip-dev/google.aip.dev/issues/624
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) Filter(filter string) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of SecurityActions to return. If unspecified, at most 50
+// SecurityActions will be returned. The maximum value is 1000; values
+// above 1000 will be coerced to 1000.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) PageSize(pageSize int64) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSecurityActions` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListSecurityActions` must match the call that provided
+// the page token.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) PageToken(pageToken string) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityActionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityActions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityActions.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListSecurityActionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ListSecurityActionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityActionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityActionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of SecurityActions. This returns both enabled and disabled actions.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityActions",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.securityActions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression to filter List results. https://google.aip.dev/160. Allows for filtering over: state and api_proxies. E.g.: state = ACTIVE AND apiProxies:foo. Filtering by action is not supported https://github.com/aip-dev/google.aip.dev/issues/624",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of SecurityActions to return. If unspecified, at most 50 SecurityActions will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListSecurityActions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSecurityActions` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of SecurityActions. Format: organizations/{org}/environments/{env}",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityActions",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListSecurityActionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEnvironmentsSecurityActionsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityActionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "apigee.organizations.environments.securityIncidents.get":
@@ -55606,8 +57579,8 @@ func (r *OrganizationsSecurityProfilesService) Create(parent string, googlecloud
 // SecurityProfileId sets the optional parameter "securityProfileId":
 // Required. The ID to use for the SecurityProfile, which will become
 // the final component of the action's resource name. This value should
-// be 4-63 characters, and valid characters are /(^a-z
-// ([a-z0-9-]{​0,61}[a-z0-9])?$/.
+// be 1-63 characters and validated by "(^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$)".
 func (c *OrganizationsSecurityProfilesCreateCall) SecurityProfileId(securityProfileId string) *OrganizationsSecurityProfilesCreateCall {
 	c.urlParams_.Set("securityProfileId", securityProfileId)
 	return c
@@ -55721,7 +57694,7 @@ func (c *OrganizationsSecurityProfilesCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "securityProfileId": {
-	//       "description": "Required. The ID to use for the SecurityProfile, which will become the final component of the action's resource name. This value should be 4-63 characters, and valid characters are /(^[a-z]([a-z0-9-]{​0,61}[a-z0-9])?$/.",
+	//       "description": "Required. The ID to use for the SecurityProfile, which will become the final component of the action's resource name. This value should be 1-63 characters and validated by \"(^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$)\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

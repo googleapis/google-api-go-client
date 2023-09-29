@@ -308,6 +308,10 @@ func (s *GoogleMapsPlacesV1Circle) UnmarshalJSON(data []byte) error {
 
 // GoogleMapsPlacesV1Place: All the information representing a Place.
 type GoogleMapsPlacesV1Place struct {
+	// AccessibilityOptions: Output only. Information about the
+	// accessibility options a place offers.
+	AccessibilityOptions *GoogleMapsPlacesV1PlaceAccessibilityOptions `json:"accessibilityOptions,omitempty"`
+
 	// AddressComponents: Output only. Repeated components for each locality
 	// level.
 	AddressComponents []*GoogleMapsPlacesV1PlaceAddressComponent `json:"addressComponents,omitempty"`
@@ -495,15 +499,16 @@ type GoogleMapsPlacesV1Place struct {
 	// individual store, not the overall chain.
 	WebsiteUri string `json:"websiteUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AddressComponents")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AccessibilityOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AddressComponents") to
+	// NullFields is a list of field names (e.g. "AccessibilityOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -531,6 +536,38 @@ func (s *GoogleMapsPlacesV1Place) UnmarshalJSON(data []byte) error {
 	}
 	s.Rating = float64(s1.Rating)
 	return nil
+}
+
+// GoogleMapsPlacesV1PlaceAccessibilityOptions: Information about the
+// accessibility options a place offers.
+type GoogleMapsPlacesV1PlaceAccessibilityOptions struct {
+	// WheelchairAccessibleEntrance: Places has wheelchair accessible
+	// entrance.
+	WheelchairAccessibleEntrance bool `json:"wheelchairAccessibleEntrance,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "WheelchairAccessibleEntrance") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "WheelchairAccessibleEntrance") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1PlaceAccessibilityOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceAccessibilityOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1PlaceAddressComponent: The structured components

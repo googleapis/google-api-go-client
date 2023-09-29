@@ -2975,6 +2975,29 @@ type TextStyle struct {
 	//   "P_EXTRA_LARGE" - Extra large padding
 	Padding string `json:"padding,omitempty"`
 
+	// PointerLocation: The pointer location for this widget (also sometimes
+	// called a "tail")
+	//
+	// Possible values:
+	//   "POINTER_LOCATION_UNSPECIFIED" - No visual pointer
+	//   "PL_TOP" - Placed in the middle of the top of the widget
+	//   "PL_RIGHT" - Placed in the middle of the right side of the widget
+	//   "PL_BOTTOM" - Placed in the middle of the bottom of the widget
+	//   "PL_LEFT" - Placed in the middle of the left side of the widget
+	//   "PL_TOP_LEFT" - Placed on the left side of the top of the widget
+	//   "PL_TOP_RIGHT" - Placed on the right side of the top of the widget
+	//   "PL_RIGHT_TOP" - Placed on the top of the right side of the widget
+	//   "PL_RIGHT_BOTTOM" - Placed on the bottom of the right side of the
+	// widget
+	//   "PL_BOTTOM_RIGHT" - Placed on the right side of the bottom of the
+	// widget
+	//   "PL_BOTTOM_LEFT" - Placed on the left side of the bottom of the
+	// widget
+	//   "PL_LEFT_BOTTOM" - Placed on the bottom of the left side of the
+	// widget
+	//   "PL_LEFT_TOP" - Placed on the top of the left side of the widget
+	PointerLocation string `json:"pointerLocation,omitempty"`
+
 	// TextColor: The text color as a hex string. "#RRGGBB" or "#RGB"
 	TextColor string `json:"textColor,omitempty"`
 

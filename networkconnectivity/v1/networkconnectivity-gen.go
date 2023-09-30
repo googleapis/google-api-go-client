@@ -332,7 +332,7 @@ type ProjectsLocationsSpokesService struct {
 type AcceptHubSpokeRequest struct {
 	// RequestId: Optional. A request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server
-	// will know to ignore the request if it has already been completed. The
+	// knows to ignore the request if it has already been completed. The
 	// server guarantees that a request doesn't result in creation of
 	// duplicate commitments for at least 60 minutes. For example, consider
 	// a situation where you make an initial request and the request times
@@ -402,7 +402,7 @@ func (s *AcceptHubSpokeResponse) MarshalJSON() ([]byte, error) {
 type AcceptSpokeRequest struct {
 	// RequestId: Optional. A request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server
-	// will know to ignore the request if it has already been completed. The
+	// knows to ignore the request if it has already been completed. The
 	// server guarantees that a request doesn't result in creation of
 	// duplicate commitments for at least 60 minutes. For example, consider
 	// a situation where you make an initial request and the request times
@@ -830,17 +830,18 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // Filter: Filter matches L4 traffic.
 type Filter struct {
 	// DestRange: Optional. The destination IP range of outgoing packets
-	// that this policy based route applies to. Default is "0.0.0.0/0" if
+	// that this policy-based route applies to. Default is "0.0.0.0/0" if
 	// protocol version is IPv4.
 	DestRange string `json:"destRange,omitempty"`
 
-	// IpProtocol: Optional. The IP protocol that this policy based route
+	// IpProtocol: Optional. The IP protocol that this policy-based route
 	// applies to. Valid values are 'TCP', 'UDP', and 'ALL'. Default is
 	// 'ALL'.
 	IpProtocol string `json:"ipProtocol,omitempty"`
 
-	// ProtocolVersion: Required. Internet protocol versions this policy
-	// based route applies to. For this version, only IPV4 is supported.
+	// ProtocolVersion: Required. Internet protocol versions this
+	// policy-based route applies to. For this version, only IPV4 is
+	// supported.
 	//
 	// Possible values:
 	//   "PROTOCOL_VERSION_UNSPECIFIED" - Default value.
@@ -848,7 +849,7 @@ type Filter struct {
 	ProtocolVersion string `json:"protocolVersion,omitempty"`
 
 	// SrcRange: Optional. The source IP range of outgoing packets that this
-	// policy based route applies to. Default is "0.0.0.0/0" if protocol
+	// policy-based route applies to. Default is "0.0.0.0/0" if protocol
 	// version is IPv4.
 	SrcRange string `json:"srcRange,omitempty"`
 
@@ -1247,10 +1248,10 @@ func (s *Hub) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InterconnectAttachment: InterconnectAttachment to which this route
+// InterconnectAttachment: InterconnectAttachment that this route
 // applies to.
 type InterconnectAttachment struct {
-	// Region: Optional. Cloud region to install this policy based route on
+	// Region: Optional. Cloud region to install this policy-based route on
 	// interconnect attachment. Use `all` to install it on all interconnect
 	// attachments.
 	Region string `json:"region,omitempty"`
@@ -1785,7 +1786,7 @@ type ListPolicyBasedRoutesResponse struct {
 	// value means no more result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// PolicyBasedRoutes: Policy based routes to be returned.
+	// PolicyBasedRoutes: Policy-based routes to be returned.
 	PolicyBasedRoutes []*PolicyBasedRoute `json:"policyBasedRoutes,omitempty"`
 
 	// Unreachable: Locations that could not be reached.
@@ -2378,13 +2379,13 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PolicyBasedRoute: Policy Based Routes (PBR) are more powerful routes
-// that allows GCP customers to route their L4 network traffic based on
-// not just destination IP, but also source IP, protocol and more. A PBR
-// always take precedence when it conflicts with other types of routes.
-// Next id: 22
+// PolicyBasedRoute: Policy-based routes route L4 network traffic based
+// on not just destination IP address, but also source IP address,
+// protocol, and more. If a policy-based route conflicts with other
+// types of routes, the policy-based route always take precedence.
 type PolicyBasedRoute struct {
-	// CreateTime: Output only. Time when the PolicyBasedRoute was created.
+	// CreateTime: Output only. Time when the policy-based route was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. An optional description of this resource.
@@ -2394,12 +2395,12 @@ type PolicyBasedRoute struct {
 	// Filter: Required. The filter to match L4 traffic.
 	Filter *Filter `json:"filter,omitempty"`
 
-	// InterconnectAttachment: Optional. The interconnect attachments to
-	// which this route applies to.
+	// InterconnectAttachment: Optional. The interconnect attachments that
+	// this policy-based route applies to.
 	InterconnectAttachment *InterconnectAttachment `json:"interconnectAttachment,omitempty"`
 
 	// Kind: Output only. Type of this resource. Always
-	// networkconnectivity#policyBasedRoute for Policy Based Route
+	// networkconnectivity#policyBasedRoute for policy-based Route
 	// resources.
 	Kind string `json:"kind,omitempty"`
 
@@ -2412,12 +2413,13 @@ type PolicyBasedRoute struct {
 	Name string `json:"name,omitempty"`
 
 	// Network: Required. Fully-qualified URL of the network that this route
-	// applies to. e.g. projects/my-project/global/networks/my-network.
+	// applies to, for example:
+	// projects/my-project/global/networks/my-network.
 	Network string `json:"network,omitempty"`
 
-	// NextHopIlbIp: Optional. The IP of a global access enabled L4 ILB that
-	// should be the next hop to handle matching packets. For this version,
-	// only next_hop_ilb_ip is supported.
+	// NextHopIlbIp: Optional. The IP address of a global-access-enabled L4
+	// ILB that is the next hop for matching packets. For this version, only
+	// nextHopIlbIp is supported.
 	NextHopIlbIp string `json:"nextHopIlbIp,omitempty"`
 
 	// NextHopOtherRoutes: Optional. Other routes that will be referenced to
@@ -2431,9 +2433,9 @@ type PolicyBasedRoute struct {
 	// applied on other PBRs with a lower priority.
 	NextHopOtherRoutes string `json:"nextHopOtherRoutes,omitempty"`
 
-	// Priority: Optional. The priority of this policy based route. Priority
+	// Priority: Optional. The priority of this policy-based route. Priority
 	// is used to break ties in cases where there are more than one matching
-	// policy based routes found. In cases where multiple policy based
+	// policy-based routes found. In cases where multiple policy-based
 	// routes are matched, the one with the lowest-numbered priority value
 	// wins. The default value is 1000. The priority value must be from 1 to
 	// 65535, inclusive.
@@ -2443,10 +2445,11 @@ type PolicyBasedRoute struct {
 	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// UpdateTime: Output only. Time when the PolicyBasedRoute was updated.
+	// UpdateTime: Output only. Time when the policy-based route was
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VirtualMachine: Optional. VM instances to which this policy based
+	// VirtualMachine: Optional. VM instances to which this policy-based
 	// route applies to.
 	VirtualMachine *VirtualMachine `json:"virtualMachine,omitempty"`
 
@@ -2633,7 +2636,7 @@ type RejectHubSpokeRequest struct {
 
 	// RequestId: Optional. A request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server
-	// will know to ignore the request if it has already been completed. The
+	// knows to ignore the request if it has already been completed. The
 	// server guarantees that a request doesn't result in creation of
 	// duplicate commitments for at least 60 minutes. For example, consider
 	// a situation where you make an initial request and the request times
@@ -2707,7 +2710,7 @@ type RejectSpokeRequest struct {
 
 	// RequestId: Optional. A request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server
-	// will know to ignore the request if it has already been completed. The
+	// knows to ignore the request if it has already been completed. The
 	// server guarantees that a request doesn't result in creation of
 	// duplicate commitments for at least 60 minutes. For example, consider
 	// a situation where you make an initial request and the request times
@@ -3709,10 +3712,10 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VirtualMachine: VM instances to which this policy based route applies
+// VirtualMachine: VM instances to which this policy-based route applies
 // to.
 type VirtualMachine struct {
-	// Tags: Optional. A list of VM instance tags to which this policy based
+	// Tags: Optional. A list of VM instance tags the this policy-based
 	// route applies to. VM instances that have ANY of tags specified here
 	// will install this PBR.
 	Tags []string `json:"tags,omitempty"`
@@ -3746,10 +3749,10 @@ type Warnings struct {
 	//
 	// Possible values:
 	//   "WARNING_UNSPECIFIED" - Default value.
-	//   "RESOURCE_NOT_ACTIVE" - The policy based route is not active and
+	//   "RESOURCE_NOT_ACTIVE" - The policy-based route is not active and
 	// functioning. Common causes are the dependent network was deleted or
 	// the resource project was turned off.
-	//   "RESOURCE_BEING_MODIFIED" - The policy based route is being
+	//   "RESOURCE_BEING_MODIFIED" - The policy-based route is being
 	// modified (e.g. created/deleted) at this time.
 	Code string `json:"code,omitempty"`
 
@@ -4155,9 +4158,9 @@ type ProjectsLocationsGlobalHubsAcceptSpokeCall struct {
 }
 
 // AcceptSpoke: Accepts a proposal to attach a Network Connectivity
-// Center spoke to the hub.
+// Center spoke to a hub.
 //
-// - name: The name of the hub.
+// - name: The name of the hub into which to accept the spoke.
 func (r *ProjectsLocationsGlobalHubsService) AcceptSpoke(name string, accepthubspokerequest *AcceptHubSpokeRequest) *ProjectsLocationsGlobalHubsAcceptSpokeCall {
 	c := &ProjectsLocationsGlobalHubsAcceptSpokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4256,7 +4259,7 @@ func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Accepts a proposal to attach a Network Connectivity Center spoke to the hub.",
+	//   "description": "Accepts a proposal to attach a Network Connectivity Center spoke to a hub.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:acceptSpoke",
 	//   "httpMethod": "POST",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.acceptSpoke",
@@ -4265,7 +4268,7 @@ func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the hub.",
+	//       "description": "Required. The name of the hub into which to accept the spoke.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
 	//       "required": true,
@@ -4317,12 +4320,12 @@ func (c *ProjectsLocationsGlobalHubsCreateCall) HubId(hubId string) *ProjectsLoc
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server guarantees that a request
-// doesn't result in creation of duplicate commitments for at least 60
-// minutes. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with
-// the same request ID, the server can check to see whether the original
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that a request doesn't
+// result in creation of duplicate commitments for at least 60 minutes.
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check to see whether the original
 // operation was received. If it was, the server ignores the second
 // request. This behavior prevents clients from mistakenly creating
 // duplicate commitments. The request ID must be a valid UUID, with the
@@ -4445,7 +4448,7 @@ func (c *ProjectsLocationsGlobalHubsCreateCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4485,12 +4488,12 @@ func (r *ProjectsLocationsGlobalHubsService) Delete(name string) *ProjectsLocati
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server guarantees that a request
-// doesn't result in creation of duplicate commitments for at least 60
-// minutes. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with
-// the same request ID, the server can check to see whether the original
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that a request doesn't
+// result in creation of duplicate commitments for at least 60 minutes.
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check to see whether the original
 // operation was received. If it was, the server ignores the second
 // request. This behavior prevents clients from mistakenly creating
 // duplicate commitments. The request ID must be a valid UUID, with the
@@ -4603,7 +4606,7 @@ func (c *ProjectsLocationsGlobalHubsDeleteCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5457,12 +5460,12 @@ func (r *ProjectsLocationsGlobalHubsService) Patch(name string, hub *Hub) *Proje
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server guarantees that a request
-// doesn't result in creation of duplicate commitments for at least 60
-// minutes. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with
-// the same request ID, the server can check to see whether the original
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that a request doesn't
+// result in creation of duplicate commitments for at least 60 minutes.
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check to see whether the original
 // operation was received. If it was, the server ignores the second
 // request. This behavior prevents clients from mistakenly creating
 // duplicate commitments. The request ID must be a valid UUID, with the
@@ -5591,7 +5594,7 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5628,11 +5631,11 @@ type ProjectsLocationsGlobalHubsRejectSpokeCall struct {
 }
 
 // RejectSpoke: Rejects a Network Connectivity Center spoke from being
-// attached to the hub. If the spoke was previously in the `ACTIVE`
-// state, it transitions to the `INACTIVE` state and is no longer able
-// to connect to other spokes that are attached to the hub.
+// attached to a hub. If the spoke was previously in the `ACTIVE` state,
+// it transitions to the `INACTIVE` state and is no longer able to
+// connect to other spokes that are attached to the hub.
 //
-// - name: The name of the hub.
+// - name: The name of the hub from which to reject the spoke.
 func (r *ProjectsLocationsGlobalHubsService) RejectSpoke(name string, rejecthubspokerequest *RejectHubSpokeRequest) *ProjectsLocationsGlobalHubsRejectSpokeCall {
 	c := &ProjectsLocationsGlobalHubsRejectSpokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5731,7 +5734,7 @@ func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Rejects a Network Connectivity Center spoke from being attached to the hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.",
+	//   "description": "Rejects a Network Connectivity Center spoke from being attached to a hub. If the spoke was previously in the `ACTIVE` state, it transitions to the `INACTIVE` state and is no longer able to connect to other spokes that are attached to the hub.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}:rejectSpoke",
 	//   "httpMethod": "POST",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.rejectSpoke",
@@ -5740,7 +5743,7 @@ func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the hub.",
+	//       "description": "Required. The name of the hub from which to reject the spoke.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/hubs/[^/]+$",
 	//       "required": true,
@@ -7624,7 +7627,7 @@ type ProjectsLocationsGlobalPolicyBasedRoutesCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new PolicyBasedRoute in a given project and
+// Create: Creates a new policy-based route in a given project and
 // location.
 //
 // - parent: The parent resource's name of the PolicyBasedRoute.
@@ -7636,7 +7639,7 @@ func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Create(parent string, 
 }
 
 // PolicyBasedRouteId sets the optional parameter "policyBasedRouteId":
-// Required. Unique id for the Policy Based Route to create.
+// Required. Unique id for the policy-based route to create.
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) PolicyBasedRouteId(policyBasedRouteId string) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
 	c.urlParams_.Set("policyBasedRouteId", policyBasedRouteId)
 	return c
@@ -7751,7 +7754,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new PolicyBasedRoute in a given project and location.",
+	//   "description": "Creates a new policy-based route in a given project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes",
 	//   "httpMethod": "POST",
 	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.create",
@@ -7767,7 +7770,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "policyBasedRouteId": {
-	//       "description": "Required. Unique id for the Policy Based Route to create.",
+	//       "description": "Required. Unique id for the policy-based route to create.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7801,9 +7804,9 @@ type ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single PolicyBasedRoute.
+// Delete: Deletes a single policy-based route.
 //
-// - name: Name of the PolicyBasedRoute resource to delete.
+// - name: Name of the policy-based route resource to delete.
 func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Delete(name string) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {
 	c := &ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7914,7 +7917,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a single PolicyBasedRoute.",
+	//   "description": "Deletes a single policy-based route.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.delete",
@@ -7923,7 +7926,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the PolicyBasedRoute resource to delete.",
+	//       "description": "Required. Name of the policy-based route resource to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/policyBasedRoutes/[^/]+$",
 	//       "required": true,
@@ -7957,7 +7960,7 @@ type ProjectsLocationsGlobalPolicyBasedRoutesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single PolicyBasedRoute.
+// Get: Gets details of a single policy-based route.
 //
 // - name: Name of the PolicyBasedRoute resource to get.
 func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Get(name string) *ProjectsLocationsGlobalPolicyBasedRoutesGetCall {
@@ -8065,7 +8068,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single PolicyBasedRoute.",
+	//   "description": "Gets details of a single policy-based route.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes/{policyBasedRoutesId}",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.get",
@@ -8278,7 +8281,7 @@ type ProjectsLocationsGlobalPolicyBasedRoutesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists PolicyBasedRoutes in a given project and location.
+// List: Lists policy-based routes in a given project and location.
 //
 // - parent: The parent resource's name.
 func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) List(parent string) *ProjectsLocationsGlobalPolicyBasedRoutesListCall {
@@ -8413,7 +8416,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists PolicyBasedRoutes in a given project and location.",
+	//   "description": "Lists policy-based routes in a given project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/policyBasedRoutes",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.global.policyBasedRoutes.list",
@@ -15106,12 +15109,12 @@ func (r *ProjectsLocationsSpokesService) Create(parent string, spoke *Spoke) *Pr
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server guarantees that a request
-// doesn't result in creation of duplicate commitments for at least 60
-// minutes. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with
-// the same request ID, the server can check to see whether the original
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that a request doesn't
+// result in creation of duplicate commitments for at least 60 minutes.
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check to see whether the original
 // operation was received. If it was, the server ignores the second
 // request. This behavior prevents clients from mistakenly creating
 // duplicate commitments. The request ID must be a valid UUID, with the
@@ -15236,7 +15239,7 @@ func (c *ProjectsLocationsSpokesCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15281,12 +15284,12 @@ func (r *ProjectsLocationsSpokesService) Delete(name string) *ProjectsLocationsS
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server guarantees that a request
-// doesn't result in creation of duplicate commitments for at least 60
-// minutes. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with
-// the same request ID, the server can check to see whether the original
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that a request doesn't
+// result in creation of duplicate commitments for at least 60 minutes.
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check to see whether the original
 // operation was received. If it was, the server ignores the second
 // request. This behavior prevents clients from mistakenly creating
 // duplicate commitments. The request ID must be a valid UUID, with the
@@ -15399,7 +15402,7 @@ func (c *ProjectsLocationsSpokesDeleteCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15977,12 +15980,12 @@ func (r *ProjectsLocationsSpokesService) Patch(name string, spoke *Spoke) *Proje
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server guarantees that a request
-// doesn't result in creation of duplicate commitments for at least 60
-// minutes. For example, consider a situation where you make an initial
-// request and the request times out. If you make the request again with
-// the same request ID, the server can check to see whether the original
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that a request doesn't
+// result in creation of duplicate commitments for at least 60 minutes.
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check to see whether the original
 // operation was received. If it was, the server ignores the second
 // request. This behavior prevents clients from mistakenly creating
 // duplicate commitments. The request ID must be a valid UUID, with the
@@ -16111,7 +16114,7 @@ func (c *ProjectsLocationsSpokesPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

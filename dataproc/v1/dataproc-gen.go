@@ -2799,6 +2799,10 @@ type InstanceGroupConfig struct {
 	// provide additional features.
 	Preemptibility string `json:"preemptibility,omitempty"`
 
+	// StartupConfig: Optional. Configuration to handle the startup of
+	// instances during cluster create and update process.
+	StartupConfig *StartupConfig `json:"startupConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6111,6 +6115,10 @@ type SparkStandaloneAutoscalingConfig struct {
 	// operations.Bounds: 0s, 1d.
 	GracefulDecommissionTimeout string `json:"gracefulDecommissionTimeout,omitempty"`
 
+	// RemoveOnlyIdleWorkers: Optional. Remove only idle workers when
+	// scaling down cluster
+	RemoveOnlyIdleWorkers bool `json:"removeOnlyIdleWorkers,omitempty"`
+
 	// ScaleDownFactor: Required. Fraction of required executors to remove
 	// from Spark Serverless clusters. A scale-down factor of 1.0 will
 	// result in scaling down so that there are no more executors for the
@@ -6227,6 +6235,57 @@ func (s *StartClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartClusterRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StartupConfig: Configuration to handle the startup of instances
+// during cluster create and update process.
+type StartupConfig struct {
+	// RequiredRegistrationFraction: Optional. The config setting to enable
+	// cluster creation/ updation to be successful only after
+	// required_registration_fraction of instances are up and running. This
+	// configuration is applicable to only secondary workers for now. The
+	// cluster will fail if required_registration_fraction of instances are
+	// not available. This will include instance creation, agent
+	// registration, and service registration (if enabled).
+	RequiredRegistrationFraction float64 `json:"requiredRegistrationFraction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RequiredRegistrationFraction") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RequiredRegistrationFraction") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StartupConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *StartupConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod StartupConfig
+	var s1 struct {
+		RequiredRegistrationFraction gensupport.JSONFloat64 `json:"requiredRegistrationFraction"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RequiredRegistrationFraction = float64(s1.RequiredRegistrationFraction)
+	return nil
 }
 
 // StateHistory: Historical state information.

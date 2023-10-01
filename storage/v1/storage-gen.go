@@ -2118,6 +2118,12 @@ type Object struct {
 	// versioning.
 	Generation int64 `json:"generation,omitempty,string"`
 
+	// HardDeleteTime: This is the time (in the future) when the
+	// soft-deleted object will no longer be restorable. It is equal to the
+	// soft delete time plus the current soft delete retention duration of
+	// the bucket.
+	HardDeleteTime string `json:"hardDeleteTime,omitempty"`
+
 	// Id: The ID of the object, including the bucket name, object name, and
 	// generation number.
 	Id string `json:"id,omitempty"`
@@ -2173,6 +2179,10 @@ type Object struct {
 	// Size: Content-Length of the data in bytes.
 	Size uint64 `json:"size,omitempty,string"`
 
+	// SoftDeleteTime: The time at which the object became soft-deleted in
+	// RFC 3339 format.
+	SoftDeleteTime string `json:"softDeleteTime,omitempty"`
+
 	// StorageClass: Storage class of the object.
 	StorageClass string `json:"storageClass,omitempty"`
 
@@ -2188,9 +2198,9 @@ type Object struct {
 	// TimeCreated: The creation time of the object in RFC 3339 format.
 	TimeCreated string `json:"timeCreated,omitempty"`
 
-	// TimeDeleted: The deletion time of the object in RFC 3339 format. Will
-	// be returned if and only if this version of the object has been
-	// deleted.
+	// TimeDeleted: The time at which the object became noncurrent in RFC
+	// 3339 format. Will be returned if and only if this version of the
+	// object has been deleted.
 	TimeDeleted string `json:"timeDeleted,omitempty"`
 
 	// TimeStorageClassUpdated: The time at which the object's storage class

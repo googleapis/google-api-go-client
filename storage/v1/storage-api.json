@@ -26,7 +26,7 @@
   "description": "Stores and retrieves potentially large, immutable data objects.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-  "etag": "\"3130343038333638363030353132373033343437\"",
+  "etag": "\"32313532343139313031303538363232393732\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
     "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
@@ -3263,7 +3263,7 @@
       }
     }
   },
-  "revision": "20230922",
+  "revision": "20230926",
   "rootUrl": "https://storage.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -4310,6 +4310,11 @@
           "format": "int64",
           "type": "string"
         },
+        "hardDeleteTime": {
+          "description": "This is the time (in the future) when the soft-deleted object will no longer be restorable. It is equal to the soft delete time plus the current soft delete retention duration of the bucket.",
+          "format": "date-time",
+          "type": "string"
+        },
         "id": {
           "description": "The ID of the object, including the bucket name, object name, and generation number.",
           "type": "string"
@@ -4391,6 +4396,11 @@
           "format": "uint64",
           "type": "string"
         },
+        "softDeleteTime": {
+          "description": "The time at which the object became soft-deleted in RFC 3339 format.",
+          "format": "date-time",
+          "type": "string"
+        },
         "storageClass": {
           "description": "Storage class of the object.",
           "type": "string"
@@ -4405,7 +4415,7 @@
           "type": "string"
         },
         "timeDeleted": {
-          "description": "The deletion time of the object in RFC 3339 format. Will be returned if and only if this version of the object has been deleted.",
+          "description": "The time at which the object became noncurrent in RFC 3339 format. Will be returned if and only if this version of the object has been deleted.",
           "format": "date-time",
           "type": "string"
         },

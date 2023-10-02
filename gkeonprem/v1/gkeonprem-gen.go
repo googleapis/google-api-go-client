@@ -4486,9 +4486,6 @@ type UpgradeDependency struct {
 	// CurrentVersion: Current version of the dependency e.g. 1.15.0.
 	CurrentVersion string `json:"currentVersion,omitempty"`
 
-	// LocalName: Local name of the dependency.
-	LocalName string `json:"localName,omitempty"`
-
 	// Membership: Membership names are formatted as
 	// `projects//locations//memberships/`.
 	Membership string `json:"membership,omitempty"`

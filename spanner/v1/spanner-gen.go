@@ -3982,14 +3982,15 @@ type PartitionQueryRequest struct {
 	PartitionOptions *PartitionOptions `json:"partitionOptions,omitempty"`
 
 	// Sql: Required. The query request to generate partitions for. The
-	// request will fail if the query is not root partitionable. The query
-	// plan of a root partitionable query has a single distributed union
-	// operator. A distributed union operator conceptually divides one or
-	// more tables into multiple splits, remotely evaluates a subquery
-	// independently on each split, and then unions all results. This must
-	// not contain DML commands, such as INSERT, UPDATE, or DELETE. Use
-	// ExecuteStreamingSql with a PartitionedDml transaction for large,
-	// partition-friendly DML operations.
+	// request will fail if the query is not root partitionable. For a query
+	// to be root partitionable, it needs to satisfy a few conditions. For
+	// example, the first operator in the query execution plan must be a
+	// distributed union operator. For more information about other
+	// conditions, see Read data in parallel
+	// (https://cloud.google.com/spanner/docs/reads#read_data_in_parallel).
+	// The query request must not contain DML commands, such as INSERT,
+	// UPDATE, or DELETE. Use ExecuteStreamingSql with a PartitionedDml
+	// transaction for large, partition-friendly DML operations.
 	Sql string `json:"sql,omitempty"`
 
 	// Transaction: Read only snapshot transactions are supported,
@@ -15152,9 +15153,10 @@ type ProjectsInstancesDatabasesSessionsBatchWriteCall struct {
 // replay protected, meaning that each mutation group may be applied
 // more than once. Replays of non-idempotent mutations may have
 // undesirable effects. For example, replays of an insert mutation may
-// produce an already exists error or result in additional rows if using
-// generated or commit timestamp-based keys. We recommend structuring
-// your mutation groups to be idempotent to avoid this issue.
+// produce an already exists error or if you use generated or commit
+// timestamp-based keys, it may result in additional rows being added to
+// the mutation's table. We recommend structuring your mutation groups
+// to be idempotent to avoid this issue.
 //
 // - session: The session in which the batch request is to be run.
 func (r *ProjectsInstancesDatabasesSessionsService) BatchWrite(session string, batchwriterequest *BatchWriteRequest) *ProjectsInstancesDatabasesSessionsBatchWriteCall {
@@ -15255,7 +15257,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchWriteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Batches the supplied mutation groups in a collection of efficient transactions. All mutations in a group are committed atomically. However, mutations across groups can be committed non-atomically in an unspecified order and thus, they must be independent of each other. Partial failure is possible, i.e., some groups may have been committed successfully, while some may have failed. The results of individual batches are streamed into the response as the batches are applied. BatchWrite requests are not replay protected, meaning that each mutation group may be applied more than once. Replays of non-idempotent mutations may have undesirable effects. For example, replays of an insert mutation may produce an already exists error or result in additional rows if using generated or commit timestamp-based keys. We recommend structuring your mutation groups to be idempotent to avoid this issue.",
+	//   "description": "Batches the supplied mutation groups in a collection of efficient transactions. All mutations in a group are committed atomically. However, mutations across groups can be committed non-atomically in an unspecified order and thus, they must be independent of each other. Partial failure is possible, i.e., some groups may have been committed successfully, while some may have failed. The results of individual batches are streamed into the response as the batches are applied. BatchWrite requests are not replay protected, meaning that each mutation group may be applied more than once. Replays of non-idempotent mutations may have undesirable effects. For example, replays of an insert mutation may produce an already exists error or if you use generated or commit timestamp-based keys, it may result in additional rows being added to the mutation's table. We recommend structuring your mutation groups to be idempotent to avoid this issue.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:batchWrite",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.batchWrite",

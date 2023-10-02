@@ -836,6 +836,10 @@ type FirewallEndpoint struct {
 	// CreateTime: Output only. Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Description: Optional. Description of the firewall endpoint. Max
+	// length 2048 characters.
+	Description string `json:"description,omitempty"`
+
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2544,8 +2548,8 @@ type SecurityProfile struct {
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Immutable. Name of the SecurityProfile resource. It matches
-	// pattern
+	// Name: Immutable. Identifier. Name of the SecurityProfile resource. It
+	// matches pattern
 	// `projects|organizations/*/locations/{location}/securityProfiles/{secur
 	// ity_profile}`.
 	Name string `json:"name,omitempty"`
@@ -2611,8 +2615,8 @@ type SecurityProfileGroup struct {
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Immutable. Name of the SecurityProfileGroup resource. It
-	// matches pattern
+	// Name: Immutable. Identifier. Name of the SecurityProfileGroup
+	// resource. It matches pattern
 	// `projects|organizations/*/locations/{location}/securityProfileGroups/{
 	// security_profile_group}`.
 	Name string `json:"name,omitempty"`
@@ -6874,8 +6878,8 @@ type OrganizationsLocationsSecurityProfileGroupsPatchCall struct {
 
 // Patch: Updates the parameters of a single SecurityProfileGroup.
 //
-//   - name: Immutable. Name of the SecurityProfileGroup resource. It
-//     matches pattern
+//   - name: Immutable. Identifier. Name of the SecurityProfileGroup
+//     resource. It matches pattern
 //     `projects|organizations/*/locations/{location}/securityProfileGroups
 //     /{security_profile_group}`.
 func (r *OrganizationsLocationsSecurityProfileGroupsService) Patch(name string, securityprofilegroup *SecurityProfileGroup) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
@@ -6995,7 +6999,7 @@ func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Name of the SecurityProfileGroup resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.",
+	//       "description": "Immutable. Identifier. Name of the SecurityProfileGroup resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfileGroups/{security_profile_group}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfileGroups/[^/]+$",
 	//       "required": true,
@@ -7685,8 +7689,8 @@ type OrganizationsLocationsSecurityProfilesPatchCall struct {
 
 // Patch: Updates the parameters of a single SecurityProfile.
 //
-//   - name: Immutable. Name of the SecurityProfile resource. It matches
-//     pattern
+//   - name: Immutable. Identifier. Name of the SecurityProfile resource.
+//     It matches pattern
 //     `projects|organizations/*/locations/{location}/securityProfiles/{sec
 //     urity_profile}`.
 func (r *OrganizationsLocationsSecurityProfilesService) Patch(name string, securityprofile *SecurityProfile) *OrganizationsLocationsSecurityProfilesPatchCall {
@@ -7806,7 +7810,7 @@ func (c *OrganizationsLocationsSecurityProfilesPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Name of the SecurityProfile resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfiles/{security_profile}`.",
+	//       "description": "Immutable. Identifier. Name of the SecurityProfile resource. It matches pattern `projects|organizations/*/locations/{location}/securityProfiles/{security_profile}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/securityProfiles/[^/]+$",
 	//       "required": true,

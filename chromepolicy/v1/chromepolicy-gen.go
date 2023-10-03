@@ -242,65 +242,6 @@ type MediaService struct {
 	s *Service
 }
 
-type ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle struct {
-	// DeprecatedInFavorOf: In the event that this policy was deprecated in
-	// favor of another policy, the fully qualified namespace(s) of the new
-	// policies as they will show in PolicyAPI.
-	DeprecatedInFavorOf []string `json:"deprecatedInFavorOf,omitempty"`
-
-	// Description: Description about current life cycle.
-	Description string `json:"description,omitempty"`
-
-	// EndSupport: End supporting date for current policy.
-	EndSupport *GoogleTypeDate `json:"endSupport,omitempty"`
-
-	// PolicyApiLifecycleStage: Indicate current life cycle stage of the
-	// policy API.
-	//
-	// Possible values:
-	//   "API_UNSPECIFIED" - unspecified.
-	//   "API_PREVIEW" - Policy is not working yet, but giving developers
-	// heads up on format. This stage can transfer to API_DEVELOPEMNT or
-	// API_CURRENT.
-	//   "API_DEVELOPMENT" - Policy can change format in backward
-	// incompatible way (breaking change). This stage can transfer to
-	// API_CURRENT or API_DEPRECATED. This could be used for policies
-	// launched only to TTs or launched to selected customers for emergency
-	// usage.
-	//   "API_CURRENT" - Policy in official format. Policy can change format
-	// in backward compatible way (non-breaking change). Example: this
-	// policy can introduce a new field, which is considered non-breaking
-	// change, when field masks are properly utilized. This stage can
-	// transfer to API_DEPRECATED.
-	//   "API_DEPRECATED" - Please stop using this policy. This policy is
-	// deprecated and may/will be removed in the future. Most likely a new
-	// policy was introduced to replace this one.
-	PolicyApiLifecycleStage string `json:"policyApiLifecycleStage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeprecatedInFavorOf")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeprecatedInFavorOf") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle) MarshalJSON() ([]byte, error) {
-	type NoMethod ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleChromePolicyVersionsV1AdditionalTargetKeyName: Additional key
 // names that will be used to identify the target of the policy value.
 type GoogleChromePolicyVersionsV1AdditionalTargetKeyName struct {
@@ -1045,6 +986,71 @@ func (s *GoogleChromePolicyVersionsV1NumericRangeConstraint) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyVersionsV1PolicyApiLifecycle: Lifecycle
+// information.
+type GoogleChromePolicyVersionsV1PolicyApiLifecycle struct {
+	// DeprecatedInFavorOf: In the event that this policy was deprecated in
+	// favor of another policy, the fully qualified namespace(s) of the new
+	// policies as they will show in PolicyAPI. Could only be set if
+	// policy_api_lifecycle_stage is API_DEPRECATED.
+	DeprecatedInFavorOf []string `json:"deprecatedInFavorOf,omitempty"`
+
+	// Description: Description about current life cycle.
+	Description string `json:"description,omitempty"`
+
+	// EndSupport: End supporting date for current policy. Attempting to
+	// modify a policy after its end support date will result in a Bad
+	// Request (400 error). Could only be set if policy_api_lifecycle_stage
+	// is API_DEPRECATED.
+	EndSupport *GoogleTypeDate `json:"endSupport,omitempty"`
+
+	// PolicyApiLifecycleStage: Indicates current life cycle stage of the
+	// policy API.
+	//
+	// Possible values:
+	//   "API_UNSPECIFIED" - Policy Api Lifecycle is Unspecified.
+	//   "API_PREVIEW" - Policy is not working yet, but giving developers
+	// heads up on format. This stage can transfer to API_DEVELOPEMNT or
+	// API_CURRENT.
+	//   "API_DEVELOPMENT" - Policy can change format in backward
+	// incompatible way (breaking change). This stage can transfer to
+	// API_CURRENT or API_DEPRECATED. This could be used for policies
+	// launched only to TTs or launched to selected customers for emergency
+	// usage.
+	//   "API_CURRENT" - Policy in official format. Policy can change format
+	// in backward compatible way (non-breaking change). Example: this
+	// policy can introduce a new field, which is considered non-breaking
+	// change, when field masks are properly utilized. This stage can
+	// transfer to API_DEPRECATED.
+	//   "API_DEPRECATED" - Please stop using this policy. This policy is
+	// deprecated and may/will be removed in the future. Most likely a new
+	// policy was introduced to replace this one.
+	PolicyApiLifecycleStage string `json:"policyApiLifecycleStage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeprecatedInFavorOf")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeprecatedInFavorOf") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1PolicyApiLifecycle) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1PolicyApiLifecycle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyVersionsV1PolicyModificationError: Error
 // information for a modification request of a specific policy on a
 // specific target.
@@ -1189,7 +1195,7 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	Notices []*GoogleChromePolicyVersionsV1PolicySchemaNoticeDescription `json:"notices,omitempty"`
 
 	// PolicyApiLifecycle: Output only. Current lifecycle information.
-	PolicyApiLifecycle *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle `json:"policyApiLifecycle,omitempty"`
+	PolicyApiLifecycle *GoogleChromePolicyVersionsV1PolicyApiLifecycle `json:"policyApiLifecycle,omitempty"`
 
 	// PolicyDescription: Output only. Description about the policy schema
 	// for user consumption.

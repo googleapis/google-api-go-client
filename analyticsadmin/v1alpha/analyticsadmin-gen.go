@@ -231,7 +231,9 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.ExpandedDataSets = NewPropertiesExpandedDataSetsService(s)
 	rs.FirebaseLinks = NewPropertiesFirebaseLinksService(s)
 	rs.GoogleAdsLinks = NewPropertiesGoogleAdsLinksService(s)
+	rs.RollupPropertySourceLinks = NewPropertiesRollupPropertySourceLinksService(s)
 	rs.SearchAds360Links = NewPropertiesSearchAds360LinksService(s)
+	rs.SubpropertyEventFilters = NewPropertiesSubpropertyEventFiltersService(s)
 	rs.UserLinks = NewPropertiesUserLinksService(s)
 	return rs
 }
@@ -267,7 +269,11 @@ type PropertiesService struct {
 
 	GoogleAdsLinks *PropertiesGoogleAdsLinksService
 
+	RollupPropertySourceLinks *PropertiesRollupPropertySourceLinksService
+
 	SearchAds360Links *PropertiesSearchAds360LinksService
+
+	SubpropertyEventFilters *PropertiesSubpropertyEventFiltersService
 
 	UserLinks *PropertiesUserLinksService
 }
@@ -434,12 +440,30 @@ type PropertiesGoogleAdsLinksService struct {
 	s *Service
 }
 
+func NewPropertiesRollupPropertySourceLinksService(s *Service) *PropertiesRollupPropertySourceLinksService {
+	rs := &PropertiesRollupPropertySourceLinksService{s: s}
+	return rs
+}
+
+type PropertiesRollupPropertySourceLinksService struct {
+	s *Service
+}
+
 func NewPropertiesSearchAds360LinksService(s *Service) *PropertiesSearchAds360LinksService {
 	rs := &PropertiesSearchAds360LinksService{s: s}
 	return rs
 }
 
 type PropertiesSearchAds360LinksService struct {
+	s *Service
+}
+
+func NewPropertiesSubpropertyEventFiltersService(s *Service) *PropertiesSubpropertyEventFiltersService {
+	rs := &PropertiesSubpropertyEventFiltersService{s: s}
+	return rs
+}
+
+type PropertiesSubpropertyEventFiltersService struct {
 	s *Service
 }
 
@@ -3584,6 +3608,150 @@ type GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest: Request
+// message for CreateRollupProperty RPC.
+type GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest struct {
+	// RollupProperty: Required. The roll-up property to create.
+	RollupProperty *GoogleAnalyticsAdminV1alphaProperty `json:"rollupProperty,omitempty"`
+
+	// SourceProperties: Optional. The resource names of properties that
+	// will be sources to the created roll-up property.
+	SourceProperties []string `json:"sourceProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RollupProperty") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RollupProperty") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse: Response
+// message for CreateRollupProperty RPC.
+type GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse struct {
+	// RollupProperty: The created roll-up property.
+	RollupProperty *GoogleAnalyticsAdminV1alphaProperty `json:"rollupProperty,omitempty"`
+
+	// RollupPropertySourceLinks: The created roll-up property source links.
+	RollupPropertySourceLinks []*GoogleAnalyticsAdminV1alphaRollupPropertySourceLink `json:"rollupPropertySourceLinks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "RollupProperty") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RollupProperty") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest: Request message
+// for CreateSubproperty RPC.
+type GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest struct {
+	// Parent: Required. The ordinary property for which to create a
+	// subproperty. Format: properties/property_id Example: properties/123
+	Parent string `json:"parent,omitempty"`
+
+	// Subproperty: Required. The subproperty to create.
+	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
+
+	// SubpropertyEventFilter: Optional. The subproperty event filter to
+	// create on an ordinary property.
+	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse: Response
+// message for CreateSubproperty RPC.
+type GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse struct {
+	// Subproperty: The created subproperty.
+	Subproperty *GoogleAnalyticsAdminV1alphaProperty `json:"subproperty,omitempty"`
+
+	// SubpropertyEventFilter: The created subproperty event filter.
+	SubpropertyEventFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilter,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Subproperty") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subproperty") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaCreateUserLinkRequest: Request message for
 // CreateUserLink RPC. Users can have multiple email addresses
 // associated with their Google account, and one of these email
@@ -6063,6 +6231,44 @@ func (s *GoogleAnalyticsAdminV1alphaListPropertiesResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse:
+// Response message for ListRollupPropertySourceLinks RPC.
+type GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RollupPropertySourceLinks: List of RollupPropertySourceLinks.
+	RollupPropertySourceLinks []*GoogleAnalyticsAdminV1alphaRollupPropertySourceLink `json:"rollupPropertySourceLinks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasRespon
 // se: Response message for ListSKAdNetworkConversionValueSchemas RPC
 type GoogleAnalyticsAdminV1alphaListSKAdNetworkConversionValueSchemasResponse struct {
@@ -6138,6 +6344,44 @@ type GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse:
+// Response message for ListSubpropertyEventFilter RPC.
+type GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SubpropertyEventFilters: List of subproperty event filters.
+	SubpropertyEventFilters []*GoogleAnalyticsAdminV1alphaSubpropertyEventFilter `json:"subpropertyEventFilters,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6495,8 +6739,7 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	// PropertyType: Immutable. The property type for this Property
 	// resource. When creating a property, if the type is
 	// "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY" will be
-	// implied. "SUBPROPERTY" and "ROLLUP_PROPERTY" types cannot yet be
-	// created with the Google Analytics Admin API.
+	// implied.
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
@@ -6669,6 +6912,46 @@ type GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaProvisionAccountTicketResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaRollupPropertySourceLink: A link that
+// references a source property under the parent rollup property.
+type GoogleAnalyticsAdminV1alphaRollupPropertySourceLink struct {
+	// Name: Output only. Resource name of this RollupPropertySourceLink.
+	// Format:
+	// 'properties/{property_id}/rollupPropertySourceLinks/{rollup_property_s
+	// ource_link}' Format: 'properties/123/rollupPropertySourceLinks/456'
+	Name string `json:"name,omitempty"`
+
+	// SourceProperty: Immutable. Resource name of the source property.
+	// Format: properties/{property_id} Example: "properties/789"
+	SourceProperty string `json:"sourceProperty,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaRollupPropertySourceLink
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7146,6 +7429,251 @@ type GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutResponse struc
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertyEventFilter: A resource message
+// representing a GA4 Subproperty event filter.
+type GoogleAnalyticsAdminV1alphaSubpropertyEventFilter struct {
+	// ApplyToProperty: Immutable. Resource name of the Subproperty that
+	// uses this filter.
+	ApplyToProperty string `json:"applyToProperty,omitempty"`
+
+	// FilterClauses: Required. Unordered list. Filter clauses that define
+	// the SubpropertyEventFilter. All clauses are AND'ed together to
+	// determine what data is sent to the subproperty.
+	FilterClauses []*GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause `json:"filterClauses,omitempty"`
+
+	// Name: Output only. Format:
+	// properties/{ordinary_property_id}/subpropertyEventFilters/{sub_propert
+	// y_event_filter} Example: properties/1234/subpropertyEventFilters/5678
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplyToProperty") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplyToProperty") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause: A clause for
+// defining a filter. A filter may be inclusive (events satisfying the
+// filter clause are included in the subproperty's data) or exclusive
+// (events satisfying the filter clause are excluded from the
+// subproperty's data).
+type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause struct {
+	// FilterClauseType: Required. The type for the filter clause.
+	//
+	// Possible values:
+	//   "FILTER_CLAUSE_TYPE_UNSPECIFIED" - Filter clause type unknown or
+	// not specified.
+	//   "INCLUDE" - Events will be included in the Sub property if the
+	// filter clause is met.
+	//   "EXCLUDE" - Events will be excluded from the Sub property if the
+	// filter clause is met.
+	FilterClauseType string `json:"filterClauseType,omitempty"`
+
+	// FilterExpression: Required. The logical expression for what events
+	// are sent to the subproperty.
+	FilterExpression *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression `json:"filterExpression,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterClauseType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterClauseType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterClause
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition: A
+// specific filter expression
+type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition struct {
+	// FieldName: Required. The field that is being filtered.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// NullFilter: A filter for null values.
+	NullFilter bool `json:"nullFilter,omitempty"`
+
+	// StringFilter: A filter for a string-type dimension that matches a
+	// particular pattern.
+	StringFilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter `json:"stringFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter
+// : A filter for a string-type dimension that matches a particular
+// pattern.
+type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter struct {
+	// CaseSensitive: Optional. If true, the string value is case sensitive.
+	// If false, the match is case-insensitive.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// MatchType: Required. The match type for the string filter.
+	//
+	// Possible values:
+	//   "MATCH_TYPE_UNSPECIFIED" - Match type unknown or not specified.
+	//   "EXACT" - Exact match of the string value.
+	//   "BEGINS_WITH" - Begins with the string value.
+	//   "ENDS_WITH" - Ends with the string value.
+	//   "CONTAINS" - Contains the string value.
+	//   "FULL_REGEXP" - Full regular expression matches with the string
+	// value.
+	//   "PARTIAL_REGEXP" - Partial regular expression matches with the
+	// string value.
+	MatchType string `json:"matchType,omitempty"`
+
+	// Value: Required. The string value used for the matching.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterConditionStringFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression: A
+// logical expression of Subproperty event filters.
+type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression struct {
+	// FilterCondition: Creates a filter that matches a specific event. This
+	// cannot be set on the top level SubpropertyEventFilterExpression.
+	FilterCondition *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterCondition `json:"filterCondition,omitempty"`
+
+	// NotExpression: A filter expression to be NOT'ed (inverted,
+	// complemented). It can only include a filter. This cannot be set on
+	// the top level SubpropertyEventFilterExpression.
+	NotExpression *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression `json:"notExpression,omitempty"`
+
+	// OrGroup: A list of expressions to OR’ed together. Must only contain
+	// not_expression or filter_condition expressions.
+	OrGroup *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList `json:"orGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterCondition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterCondition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList: A
+// list of Subproperty event filter expressions.
+type GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList struct {
+	// FilterExpressions: Required. Unordered list. A list of Subproperty
+	// event filter expressions
+	FilterExpressions []*GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpression `json:"filterExpressions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterExpressions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterExpressions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSubpropertyEventFilterExpressionList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest: Request
@@ -12063,6 +12591,263 @@ func (c *PropertiesCreateConnectedSiteTagCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateConnectedSiteTagResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.createRollupProperty":
+
+type PropertiesCreateRollupPropertyCall struct {
+	s                                                      *Service
+	googleanalyticsadminv1alphacreaterolluppropertyrequest *GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// CreateRollupProperty: Create a roll-up property and all roll-up
+// property source links.
+func (r *PropertiesService) CreateRollupProperty(googleanalyticsadminv1alphacreaterolluppropertyrequest *GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest) *PropertiesCreateRollupPropertyCall {
+	c := &PropertiesCreateRollupPropertyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphacreaterolluppropertyrequest = googleanalyticsadminv1alphacreaterolluppropertyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesCreateRollupPropertyCall) Fields(s ...googleapi.Field) *PropertiesCreateRollupPropertyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesCreateRollupPropertyCall) Context(ctx context.Context) *PropertiesCreateRollupPropertyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesCreateRollupPropertyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesCreateRollupPropertyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphacreaterolluppropertyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:createRollupProperty")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.createRollupProperty" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesCreateRollupPropertyCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a roll-up property and all roll-up property source links.",
+	//   "flatPath": "v1alpha/properties:createRollupProperty",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.createRollupProperty",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:createRollupProperty",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateRollupPropertyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateRollupPropertyResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.createSubproperty":
+
+type PropertiesCreateSubpropertyCall struct {
+	s                                                   *Service
+	googleanalyticsadminv1alphacreatesubpropertyrequest *GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// CreateSubproperty: Create a subproperty and a subproperty event
+// filter that applies to the created subproperty.
+func (r *PropertiesService) CreateSubproperty(googleanalyticsadminv1alphacreatesubpropertyrequest *GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest) *PropertiesCreateSubpropertyCall {
+	c := &PropertiesCreateSubpropertyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleanalyticsadminv1alphacreatesubpropertyrequest = googleanalyticsadminv1alphacreatesubpropertyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesCreateSubpropertyCall) Fields(s ...googleapi.Field) *PropertiesCreateSubpropertyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesCreateSubpropertyCall) Context(ctx context.Context) *PropertiesCreateSubpropertyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesCreateSubpropertyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesCreateSubpropertyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphacreatesubpropertyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/properties:createSubproperty")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.createSubproperty" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesCreateSubpropertyCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a subproperty and a subproperty event filter that applies to the created subproperty.",
+	//   "flatPath": "v1alpha/properties:createSubproperty",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.createSubproperty",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha/properties:createSubproperty",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateSubpropertyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaCreateSubpropertyResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"
@@ -28468,6 +29253,650 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*G
 
 }
 
+// method id "analyticsadmin.properties.rollupPropertySourceLinks.create":
+
+type PropertiesRollupPropertySourceLinksCreateCall struct {
+	s                                                   *Service
+	parent                                              string
+	googleanalyticsadminv1alpharolluppropertysourcelink *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Create: Creates a roll-up property source link. Only roll-up
+// properties can have source links, so this method will throw an error
+// if used on other types of properties.
+//
+// - parent: Format: properties/{property_id} Example: properties/1234.
+func (r *PropertiesRollupPropertySourceLinksService) Create(parent string, googleanalyticsadminv1alpharolluppropertysourcelink *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink) *PropertiesRollupPropertySourceLinksCreateCall {
+	c := &PropertiesRollupPropertySourceLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alpharolluppropertysourcelink = googleanalyticsadminv1alpharolluppropertysourcelink
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesRollupPropertySourceLinksCreateCall) Fields(s ...googleapi.Field) *PropertiesRollupPropertySourceLinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesRollupPropertySourceLinksCreateCall) Context(ctx context.Context) *PropertiesRollupPropertySourceLinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesRollupPropertySourceLinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesRollupPropertySourceLinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alpharolluppropertysourcelink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/rollupPropertySourceLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.rollupPropertySourceLinks.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesRollupPropertySourceLinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaRollupPropertySourceLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaRollupPropertySourceLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a roll-up property source link. Only roll-up properties can have source links, so this method will throw an error if used on other types of properties.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/rollupPropertySourceLinks",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.rollupPropertySourceLinks.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Format: properties/{property_id} Example: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/rollupPropertySourceLinks",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaRollupPropertySourceLink"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaRollupPropertySourceLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.rollupPropertySourceLinks.delete":
+
+type PropertiesRollupPropertySourceLinksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a roll-up property source link. Only roll-up
+// properties can have source links, so this method will throw an error
+// if used on other types of properties.
+//
+//   - name: Format:
+//     properties/{property_id}/rollupPropertySourceLinks/{rollup_property_
+//     source_link_id} Example:
+//     properties/1234/rollupPropertySourceLinks/5678.
+func (r *PropertiesRollupPropertySourceLinksService) Delete(name string) *PropertiesRollupPropertySourceLinksDeleteCall {
+	c := &PropertiesRollupPropertySourceLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesRollupPropertySourceLinksDeleteCall) Fields(s ...googleapi.Field) *PropertiesRollupPropertySourceLinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesRollupPropertySourceLinksDeleteCall) Context(ctx context.Context) *PropertiesRollupPropertySourceLinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesRollupPropertySourceLinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesRollupPropertySourceLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.rollupPropertySourceLinks.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesRollupPropertySourceLinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a roll-up property source link. Only roll-up properties can have source links, so this method will throw an error if used on other types of properties.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/rollupPropertySourceLinks/{rollupPropertySourceLinksId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.rollupPropertySourceLinks.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: properties/{property_id}/rollupPropertySourceLinks/{rollup_property_source_link_id} Example: properties/1234/rollupPropertySourceLinks/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/rollupPropertySourceLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.rollupPropertySourceLinks.get":
+
+type PropertiesRollupPropertySourceLinksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single roll-up property source Link. Only roll-up
+// properties can have source links, so this method will throw an error
+// if used on other types of properties.
+//
+//   - name: The name of the roll-up property source link to lookup.
+//     Format:
+//     properties/{property_id}/rollupPropertySourceLinks/{rollup_property_
+//     source_link_id} Example:
+//     properties/123/rollupPropertySourceLinks/456.
+func (r *PropertiesRollupPropertySourceLinksService) Get(name string) *PropertiesRollupPropertySourceLinksGetCall {
+	c := &PropertiesRollupPropertySourceLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesRollupPropertySourceLinksGetCall) Fields(s ...googleapi.Field) *PropertiesRollupPropertySourceLinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesRollupPropertySourceLinksGetCall) IfNoneMatch(entityTag string) *PropertiesRollupPropertySourceLinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesRollupPropertySourceLinksGetCall) Context(ctx context.Context) *PropertiesRollupPropertySourceLinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesRollupPropertySourceLinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesRollupPropertySourceLinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.rollupPropertySourceLinks.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaRollupPropertySourceLink.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesRollupPropertySourceLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaRollupPropertySourceLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaRollupPropertySourceLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single roll-up property source Link. Only roll-up properties can have source links, so this method will throw an error if used on other types of properties.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/rollupPropertySourceLinks/{rollupPropertySourceLinksId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.rollupPropertySourceLinks.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the roll-up property source link to lookup. Format: properties/{property_id}/rollupPropertySourceLinks/{rollup_property_source_link_id} Example: properties/123/rollupPropertySourceLinks/456",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/rollupPropertySourceLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaRollupPropertySourceLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.rollupPropertySourceLinks.list":
+
+type PropertiesRollupPropertySourceLinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists roll-up property source Links on a property. Only roll-up
+// properties can have source links, so this method will throw an error
+// if used on other types of properties.
+//
+//   - parent: The name of the roll-up property to list roll-up property
+//     source links under. Format: properties/{property_id} Example:
+//     properties/1234.
+func (r *PropertiesRollupPropertySourceLinksService) List(parent string) *PropertiesRollupPropertySourceLinksListCall {
+	c := &PropertiesRollupPropertySourceLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. The service may return fewer than this value,
+// even if there are additional pages. If unspecified, at most 50
+// resources will be returned. The maximum value is 200; (higher values
+// will be coerced to the maximum)
+func (c *PropertiesRollupPropertySourceLinksListCall) PageSize(pageSize int64) *PropertiesRollupPropertySourceLinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRollupPropertySourceLinks` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `ListRollupPropertySourceLinks` must
+// match the call that provided the page token.
+func (c *PropertiesRollupPropertySourceLinksListCall) PageToken(pageToken string) *PropertiesRollupPropertySourceLinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesRollupPropertySourceLinksListCall) Fields(s ...googleapi.Field) *PropertiesRollupPropertySourceLinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesRollupPropertySourceLinksListCall) IfNoneMatch(entityTag string) *PropertiesRollupPropertySourceLinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesRollupPropertySourceLinksListCall) Context(ctx context.Context) *PropertiesRollupPropertySourceLinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesRollupPropertySourceLinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesRollupPropertySourceLinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/rollupPropertySourceLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.rollupPropertySourceLinks.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesRollupPropertySourceLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists roll-up property source Links on a property. Only roll-up properties can have source links, so this method will throw an error if used on other types of properties.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/rollupPropertySourceLinks",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.rollupPropertySourceLinks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRollupPropertySourceLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRollupPropertySourceLinks` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the roll-up property to list roll-up property source links under. Format: properties/{property_id} Example: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/rollupPropertySourceLinks",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesRollupPropertySourceLinksListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListRollupPropertySourceLinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "analyticsadmin.properties.searchAds360Links.create":
 
 type PropertiesSearchAds360LinksCreateCall struct {
@@ -29250,6 +30679,805 @@ func (c *PropertiesSearchAds360LinksPatchCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchAds360Link"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.subpropertyEventFilters.create":
+
+type PropertiesSubpropertyEventFiltersCreateCall struct {
+	s                                                 *Service
+	parent                                            string
+	googleanalyticsadminv1alphasubpropertyeventfilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Create: Creates a subproperty Event Filter.
+//
+//   - parent: The ordinary property for which to create a subproperty
+//     event filter. Format: properties/property_id Example:
+//     properties/123.
+func (r *PropertiesSubpropertyEventFiltersService) Create(parent string, googleanalyticsadminv1alphasubpropertyeventfilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter) *PropertiesSubpropertyEventFiltersCreateCall {
+	c := &PropertiesSubpropertyEventFiltersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphasubpropertyeventfilter = googleanalyticsadminv1alphasubpropertyeventfilter
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSubpropertyEventFiltersCreateCall) Fields(s ...googleapi.Field) *PropertiesSubpropertyEventFiltersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSubpropertyEventFiltersCreateCall) Context(ctx context.Context) *PropertiesSubpropertyEventFiltersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSubpropertyEventFiltersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertyEventFiltersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphasubpropertyeventfilter)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/subpropertyEventFilters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertyEventFilters.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSubpropertyEventFiltersCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSubpropertyEventFilter, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSubpropertyEventFilter{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a subproperty Event Filter.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/subpropertyEventFilters",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.subpropertyEventFilters.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The ordinary property for which to create a subproperty event filter. Format: properties/property_id Example: properties/123",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/subpropertyEventFilters",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.subpropertyEventFilters.delete":
+
+type PropertiesSubpropertyEventFiltersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a subproperty event filter.
+//
+//   - name: Resource name of the subproperty event filter to delete.
+//     Format:
+//     properties/property_id/subpropertyEventFilters/subproperty_event_fil
+//     ter Example: properties/123/subpropertyEventFilters/456.
+func (r *PropertiesSubpropertyEventFiltersService) Delete(name string) *PropertiesSubpropertyEventFiltersDeleteCall {
+	c := &PropertiesSubpropertyEventFiltersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSubpropertyEventFiltersDeleteCall) Fields(s ...googleapi.Field) *PropertiesSubpropertyEventFiltersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSubpropertyEventFiltersDeleteCall) Context(ctx context.Context) *PropertiesSubpropertyEventFiltersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSubpropertyEventFiltersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertyEventFiltersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertyEventFilters.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesSubpropertyEventFiltersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a subproperty event filter.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/subpropertyEventFilters/{subpropertyEventFiltersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.subpropertyEventFilters.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the subproperty event filter to delete. Format: properties/property_id/subpropertyEventFilters/subproperty_event_filter Example: properties/123/subpropertyEventFilters/456",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/subpropertyEventFilters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.subpropertyEventFilters.get":
+
+type PropertiesSubpropertyEventFiltersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single subproperty Event Filter.
+//
+//   - name: Resource name of the subproperty event filter to lookup.
+//     Format:
+//     properties/property_id/subpropertyEventFilters/subproperty_event_fil
+//     ter Example: properties/123/subpropertyEventFilters/456.
+func (r *PropertiesSubpropertyEventFiltersService) Get(name string) *PropertiesSubpropertyEventFiltersGetCall {
+	c := &PropertiesSubpropertyEventFiltersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSubpropertyEventFiltersGetCall) Fields(s ...googleapi.Field) *PropertiesSubpropertyEventFiltersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesSubpropertyEventFiltersGetCall) IfNoneMatch(entityTag string) *PropertiesSubpropertyEventFiltersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSubpropertyEventFiltersGetCall) Context(ctx context.Context) *PropertiesSubpropertyEventFiltersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSubpropertyEventFiltersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertyEventFiltersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertyEventFilters.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSubpropertyEventFiltersGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSubpropertyEventFilter, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSubpropertyEventFilter{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single subproperty Event Filter.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/subpropertyEventFilters/{subpropertyEventFiltersId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.subpropertyEventFilters.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the subproperty event filter to lookup. Format: properties/property_id/subpropertyEventFilters/subproperty_event_filter Example: properties/123/subpropertyEventFilters/456",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/subpropertyEventFilters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.subpropertyEventFilters.list":
+
+type PropertiesSubpropertyEventFiltersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all subproperty Event Filters on a property.
+//
+//   - parent: Resource name of the ordinary property. Format:
+//     properties/property_id Example: properties/123.
+func (r *PropertiesSubpropertyEventFiltersService) List(parent string) *PropertiesSubpropertyEventFiltersListCall {
+	c := &PropertiesSubpropertyEventFiltersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. The service may return fewer than this value,
+// even if there are additional pages. If unspecified, at most 50
+// resources will be returned. The maximum value is 200; (higher values
+// will be coerced to the maximum)
+func (c *PropertiesSubpropertyEventFiltersListCall) PageSize(pageSize int64) *PropertiesSubpropertyEventFiltersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSubpropertyEventFilters` call. Provide
+// this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListSubpropertyEventFilters` must match the
+// call that provided the page token.
+func (c *PropertiesSubpropertyEventFiltersListCall) PageToken(pageToken string) *PropertiesSubpropertyEventFiltersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSubpropertyEventFiltersListCall) Fields(s ...googleapi.Field) *PropertiesSubpropertyEventFiltersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesSubpropertyEventFiltersListCall) IfNoneMatch(entityTag string) *PropertiesSubpropertyEventFiltersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSubpropertyEventFiltersListCall) Context(ctx context.Context) *PropertiesSubpropertyEventFiltersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSubpropertyEventFiltersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertyEventFiltersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/subpropertyEventFilters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertyEventFilters.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSubpropertyEventFiltersListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all subproperty Event Filters on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/subpropertyEventFilters",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.subpropertyEventFilters.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListSubpropertyEventFilters` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSubpropertyEventFilters` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the ordinary property. Format: properties/property_id Example: properties/123",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/subpropertyEventFilters",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesSubpropertyEventFiltersListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListSubpropertyEventFiltersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.subpropertyEventFilters.patch":
+
+type PropertiesSubpropertyEventFiltersPatchCall struct {
+	s                                                 *Service
+	name                                              string
+	googleanalyticsadminv1alphasubpropertyeventfilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Patch: Updates a subproperty Event Filter.
+//
+//   - name: Output only. Format:
+//     properties/{ordinary_property_id}/subpropertyEventFilters/{sub_prope
+//     rty_event_filter} Example:
+//     properties/1234/subpropertyEventFilters/5678.
+func (r *PropertiesSubpropertyEventFiltersService) Patch(name string, googleanalyticsadminv1alphasubpropertyeventfilter *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter) *PropertiesSubpropertyEventFiltersPatchCall {
+	c := &PropertiesSubpropertyEventFiltersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphasubpropertyeventfilter = googleanalyticsadminv1alphasubpropertyeventfilter
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. Field names must be in snake case (for
+// example, "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesSubpropertyEventFiltersPatchCall) UpdateMask(updateMask string) *PropertiesSubpropertyEventFiltersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSubpropertyEventFiltersPatchCall) Fields(s ...googleapi.Field) *PropertiesSubpropertyEventFiltersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSubpropertyEventFiltersPatchCall) Context(ctx context.Context) *PropertiesSubpropertyEventFiltersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSubpropertyEventFiltersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSubpropertyEventFiltersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphasubpropertyeventfilter)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.subpropertyEventFilters.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSubpropertyEventFilter.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSubpropertyEventFiltersPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSubpropertyEventFilter, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSubpropertyEventFilter{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a subproperty Event Filter.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/subpropertyEventFilters/{subpropertyEventFiltersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.subpropertyEventFilters.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Format: properties/{ordinary_property_id}/subpropertyEventFilters/{sub_property_event_filter} Example: properties/1234/subpropertyEventFilters/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/subpropertyEventFilters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. Field names must be in snake case (for example, \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSubpropertyEventFilter"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

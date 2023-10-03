@@ -1644,6 +1644,9 @@ type Finding struct {
 	// Kubernetes: Kubernetes resources associated with the finding.
 	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
 
+	// LoadBalancers: The load balancers associated with the finding.
+	LoadBalancers []*LoadBalancer `json:"loadBalancers,omitempty"`
+
 	// MitreAttack: MITRE ATT&CK tactics and techniques related to this
 	// finding. See: https://attack.mitre.org
 	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
@@ -1715,6 +1718,9 @@ type Finding struct {
 	// marks are entirely managed by the user and come from the
 	// SecurityMarks resource that belongs to the finding.
 	SecurityMarks *SecurityMarks `json:"securityMarks,omitempty"`
+
+	// SecurityPosture: The security posture associated with the finding.
+	SecurityPosture *SecurityPosture `json:"securityPosture,omitempty"`
 
 	// Severity: The severity of the finding. This field is managed by the
 	// source that writes the finding.
@@ -3645,6 +3651,9 @@ type Kubernetes struct {
 	// information.
 	Nodes []*Node `json:"nodes,omitempty"`
 
+	// Objects: Kubernetes objects related to the finding.
+	Objects []*Object `json:"objects,omitempty"`
+
 	// Pods: Kubernetes Pods
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/pod)
 	// associated with the finding. This field contains Pod records for each
@@ -3909,6 +3918,35 @@ func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoadBalancer: Contains information related to the load balancer
+// associated with the finding.
+type LoadBalancer struct {
+	// Name: The name of the load balancer associated with the finding.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoadBalancer) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadBalancer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MemoryHashSignature: A signature corresponding to memory page hashes.
 type MemoryHashSignature struct {
 	// BinaryFamily: The binary family.
@@ -4163,6 +4201,48 @@ type NodePool struct {
 
 func (s *NodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePool
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Object: Kubernetes object related to the finding, uniquely identified
+// by GKNN. Used if the object Kind is not one of Pod, Node, NodePool,
+// Binding, or AccessReview.
+type Object struct {
+	// Group: Kubernetes object group, such as "policy.k8s.io/v1".
+	Group string `json:"group,omitempty"`
+
+	// Kind: Kubernetes object kind, such as “Namespace”.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Kubernetes object name. For details see
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/.
+	Name string `json:"name,omitempty"`
+
+	// Ns: Kubernetes object namespace. Must be a valid DNS label. Named
+	// "ns" to avoid collision with C++ namespace keyword. For details see
+	// https://kubernetes.io/docs/tasks/administer-cluster/namespaces/.
+	Ns string `json:"ns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Group") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Object) MarshalJSON() ([]byte, error) {
+	type NoMethod Object
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4698,6 +4778,53 @@ type SecurityMarks struct {
 
 func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityMarks
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecurityPosture: Represents a posture that is deployed on Google
+// Cloud by the Security Command Center Posture Management service. A
+// posture contains one or more policy sets. A policy set is a group of
+// policies that enforce a set of security rules on Google Cloud.
+type SecurityPosture struct {
+	// ChangedPolicy: The name of the policy that has been updated, for
+	// example, `projects/{project_id}/policies/{constraint_name}`.
+	ChangedPolicy string `json:"changedPolicy,omitempty"`
+
+	// Name: Name of the posture, for example,
+	// `organizations/{org_id}/locations/{location}/postures/{posture_name}`.
+	Name string `json:"name,omitempty"`
+
+	// PostureDeployment: The name of the posture deployment, for example,
+	// `projects/{project_id}/posturedeployments/{posture_deployment_id}`.
+	PostureDeployment string `json:"postureDeployment,omitempty"`
+
+	// PostureDeploymentResource: The project, folder, or organization on
+	// which the posture is deployed, for example, `projects/{project_id}`.
+	PostureDeploymentResource string `json:"postureDeploymentResource,omitempty"`
+
+	// RevisionId: The version of the posture, for example, `c7cfa2a8`.
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangedPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChangedPolicy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityPosture) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityPosture
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

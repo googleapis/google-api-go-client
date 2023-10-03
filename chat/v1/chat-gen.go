@@ -1659,7 +1659,7 @@ type GoogleAppsCardV1Action struct {
 	// action is being processed, set `LoadIndicator`
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
 	// to `NONE`. For card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// (https://developers.google.com/chat/api/guides/v1/messages/create#create)
 	// in Chat apps, you must also set the action's `ResponseType`
 	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages#responsetype)
 	// to `UPDATE_MESSAGE` and use the same `card_id`
@@ -1934,7 +1934,7 @@ type GoogleAppsCardV1Card struct {
 	// Add-ons and Chat apps. For Chat apps, you can use fixed footers in
 	// dialogs (https://developers.google.com/chat/how-tos/dialogs), but not
 	// card messages
-	// (https://developers.google.com/chat/api/guides/message-formats/cards).
+	// (https://developers.google.com/chat/api/guides/v1/messages/create#create).
 	FixedFooter *GoogleAppsCardV1CardFixedFooter `json:"fixedFooter,omitempty"`
 
 	// Header: The header of the card. A header usually contains a leading
@@ -2033,7 +2033,7 @@ func (s *GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
 // Add-ons and Chat apps. For Chat apps, you can use fixed footers in
 // dialogs (https://developers.google.com/chat/how-tos/dialogs), but not
 // card messages
-// (https://developers.google.com/chat/api/guides/message-formats/cards).
+// (https://developers.google.com/chat/api/guides/v1/messages/create#create).
 type GoogleAppsCardV1CardFixedFooter struct {
 	// PrimaryButton: The primary button of the fixed footer. The button
 	// must be a text button with text and color set.
@@ -2339,7 +2339,7 @@ type GoogleAppsCardV1DecoratedText struct {
 	// Text: Required. The primary text. Supports simple formatting. For
 	// more information about formatting text, see Formatting text in Google
 	// Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card-formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Text string `json:"text,omitempty"`
@@ -2857,7 +2857,7 @@ type GoogleAppsCardV1Section struct {
 	// Header: Text that appears at the top of a section. Supports simple
 	// HTML formatted text. For more information about formatting text, see
 	// Formatting text in Google Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card-formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
@@ -3293,7 +3293,7 @@ func (s *GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/chat/ui/widgets/text-paragraph). For
 // more information about formatting text, see Formatting text in Google
 // Chat apps
-// (https://developers.google.com/chat/api/guides/message-formats/cards##card-formatting)
+// (https://developers.google.com/chat/format-messages#card-formatting)
 // and Formatting text in Google Workspace Add-ons
 // (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 type GoogleAppsCardV1TextParagraph struct {
@@ -3427,7 +3427,7 @@ type GoogleAppsCardV1Widget struct {
 	// TextParagraph: Displays a text paragraph. Supports simple HTML
 	// formatted text. For more information about formatting text, see
 	// Formatting text in Google Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card-formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	// For example, the following JSON creates a bolded text: ```
@@ -3709,7 +3709,7 @@ type KeyValue struct {
 	// BottomLabel: The text of the bottom label. Formatted text supported.
 	// For more information about formatting text, see Formatting text in
 	// Google Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	BottomLabel string `json:"bottomLabel,omitempty"`
@@ -3720,7 +3720,7 @@ type KeyValue struct {
 	// Content: The text of the content. Formatted text supported and always
 	// required. For more information about formatting text, see Formatting
 	// text in Google Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Content string `json:"content,omitempty"`
@@ -3775,7 +3775,7 @@ type KeyValue struct {
 	// TopLabel: The text of the top label. Formatted text supported. For
 	// more information about formatting text, see Formatting text in Google
 	// Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	TopLabel string `json:"topLabel,omitempty"`
@@ -4221,8 +4221,8 @@ type Message struct {
 	// also @mention a Google Chat user
 	// (https://developers.google.com/chat/format-messages#messages-@mention),
 	// or everyone in the space. To learn about creating text messages, see
-	// Create a text message
-	// (https://developers.google.com/chat/api/guides/message-formats/text).
+	// Send a text message
+	// (https://developers.google.com/chat/api/guides/v1/messages/create#create-text-messages).
 	Text string `json:"text,omitempty"`
 
 	// Thread: The thread the message belongs to. For example usage, see
@@ -4407,7 +4407,7 @@ type Section struct {
 	// Header: The header of the section. Formatted text is supported. For
 	// more information about formatting text, see Formatting text in Google
 	// Chat apps
-	// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+	// (https://developers.google.com/chat/format-messages#card-formatting)
 	// and Formatting text in Google Workspace Add-ons
 	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
@@ -4882,7 +4882,7 @@ func (s *TextButton) MarshalJSON() ([]byte, error) {
 // TextParagraph: A paragraph of text. Formatted text supported. For
 // more information about formatting text, see Formatting text in Google
 // Chat apps
-// (https://developers.google.com/chat/api/guides/message-formats/cards#card_text_formatting)
+// (https://developers.google.com/chat/format-messages#card-formatting)
 // and Formatting text in Google Workspace Add-ons
 // (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 type TextParagraph struct {

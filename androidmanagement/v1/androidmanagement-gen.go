@@ -1927,19 +1927,30 @@ type CrossProfilePolicies struct {
 	// is less than 14.
 	ExemptionsToShowWorkContactsInPersonalProfile *PackageNameList `json:"exemptionsToShowWorkContactsInPersonalProfile,omitempty"`
 
-	// ShowWorkContactsInPersonalProfile: Whether contacts stored in the
-	// work profile can be shown in personal profile contact searches and
-	// incoming calls.
+	// ShowWorkContactsInPersonalProfile: Whether personal apps can access
+	// contacts stored in the work profile.See also
+	// exemptions_to_show_work_contacts_in_personal_profile.
 	//
 	// Possible values:
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_UNSPECIFIED" - Unspecified.
-	// Defaults to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED.
-	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED" - Prevents work
-	// profile contacts from appearing in personal profile contact searches
-	// and incoming calls
+	// Defaults to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. When this
+	// is set, exemptions_to_show_work_contacts_in_personal_profile must not
+	// be set.
+	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED" - Prevents
+	// personal apps from accessing work profile contacts and looking up
+	// work contacts. When this is set, personal apps specified in
+	// exemptions_to_show_work_contacts_in_personal_profile are allowlisted
+	// and can access work profile contacts directly. Supported on Android
+	// 7.0 and above. A nonComplianceDetail with API_LEVEL is reported if
+	// the Android version is less than 7.0.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED" - Default. Allows
-	// work profile contacts to appear in personal profile contact searches
-	// and incoming calls
+	// apps in the personal profile to access work profile contacts
+	// including contact searches and incoming calls. When this is set,
+	// personal apps specified in
+	// exemptions_to_show_work_contacts_in_personal_profile are blocklisted
+	// and can not access work profile contacts directly. Supported on
+	// Android 7.0 and above. A nonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 7.0.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM" -
 	// Prevents most personal apps from accessing work profile contacts
 	// including contact searches and incoming calls, except for the OEM
@@ -5430,6 +5441,8 @@ type Policy struct {
 	//   "IRIS" - Disable iris authentication on secure keyguard screens.
 	//   "BIOMETRICS" - Disable all biometric authentication on secure
 	// keyguard screens.
+	//   "SHORTCUTS" - Disable all shortcuts on secure keyguard screen on
+	// Android 14 and above.
 	//   "ALL_FEATURES" - Disable all current and future keyguard
 	// customizations.
 	KeyguardDisabledFeatures []string `json:"keyguardDisabledFeatures,omitempty"`
@@ -6165,7 +6178,24 @@ func (s *SetupAction) MarshalJSON() ([]byte, error) {
 }
 
 // SigninDetail: A resource containing sign in details for an
-// enterprise.
+// enterprise. Use enterprises to manage SigninDetails for a given
+// enterprise. For an enterprise, we can have any number of
+// SigninDetails that is uniquely identified by combination of the
+// following three fields (signin_url, allow_personal_usage, token_tag).
+// One cannot create two SigninDetails with the same (signin_url,
+// allow_personal_usage, token_tag). (token_tag is an optional field)
+// Patch: The operation updates the current list of SigninDetails with
+// the new list of SigninDetails. If the stored SigninDetail
+// configuration is passed, it returns the same signin_enrollment_token
+// and qr_code. If we pass multiple identical SigninDetail
+// configurations that are not stored, it will store the first one
+// amongst those SigninDetail configurations and if the configuration
+// already exists we cannot request it more than once in a particular
+// patch API call, otherwise it will give a duplicate key error and the
+// whole operation will fail. If we remove certain SigninDetail
+// configuration from the request then it will get removed from the
+// storage. And then we can request for another signin_enrollment_token
+// and qr_code for the same SigninDetail configuration.
 type SigninDetail struct {
 	// AllowPersonalUsage: Controls whether personal usage is allowed on a
 	// device provisioned with this enrollment token.For company-owned
@@ -6203,6 +6233,10 @@ type SigninDetail struct {
 	// login, or https://enterprise.google.com/android/enroll/invalid for a
 	// failed login.
 	SigninUrl string `json:"signinUrl,omitempty"`
+
+	// TokenTag: An EMM-specified tag to distinguish between instances of
+	// SigninDetail.
+	TokenTag string `json:"tokenTag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowPersonalUsage")
 	// to unconditionally include in API requests. By default, fields with

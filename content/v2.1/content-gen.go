@@ -31256,7 +31256,7 @@ type FreelistingsprogramRequestreviewCall struct {
 }
 
 // Requestreview: Requests a review of free listings in a specific
-// region. This method is only available to selected merchants.
+// region.
 //
 // - merchantId: The ID of the account.
 func (r *FreelistingsprogramService) Requestreview(merchantId int64, requestreviewfreelistingsrequest *RequestReviewFreeListingsRequest) *FreelistingsprogramRequestreviewCall {
@@ -31332,7 +31332,7 @@ func (c *FreelistingsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Requests a review of free listings in a specific region. This method is only available to selected merchants.",
+	//   "description": "Requests a review of free listings in a specific region.",
 	//   "flatPath": "{merchantId}/freelistingsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.freelistingsprogram.requestreview",
@@ -33053,7 +33053,12 @@ type LiasettingsSetomnichannelexperienceCall struct {
 }
 
 // Setomnichannelexperience: Sets the omnichannel experience for the
-// specified country.
+// specified country. Only supported for merchants whose POS data
+// provider is trusted to enable the corresponding experience. For more
+// context, see these help articles about LFP
+// (https://support.google.com/merchants/answer/7676652) and how to get
+// started (https://support.google.com/merchants/answer/7676578) with
+// it.
 //
 //   - accountId: The ID of the account for which to retrieve accessible
 //     Business Profiles.
@@ -33180,7 +33185,7 @@ func (c *LiasettingsSetomnichannelexperienceCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the omnichannel experience for the specified country.",
+	//   "description": "Sets the omnichannel experience for the specified country. Only supported for merchants whose POS data provider is trusted to enable the corresponding experience. For more context, see these help articles [about LFP](https://support.google.com/merchants/answer/7676652) and [how to get started](https://support.google.com/merchants/answer/7676578) with it.",
 	//   "flatPath": "{merchantId}/liasettings/{accountId}/setomnichannelexperience",
 	//   "httpMethod": "POST",
 	//   "id": "content.liasettings.setomnichannelexperience",
@@ -50693,7 +50698,7 @@ type ShoppingadsprogramRequestreviewCall struct {
 }
 
 // Requestreview: Requests a review of Shopping ads in a specific
-// region. This method is only available to selected merchants.
+// region.
 //
 // - merchantId: The ID of the account.
 func (r *ShoppingadsprogramService) Requestreview(merchantId int64, requestreviewshoppingadsrequest *RequestReviewShoppingAdsRequest) *ShoppingadsprogramRequestreviewCall {
@@ -50769,7 +50774,7 @@ func (c *ShoppingadsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) e
 	}
 	return nil
 	// {
-	//   "description": "Requests a review of Shopping ads in a specific region. This method is only available to selected merchants.",
+	//   "description": "Requests a review of Shopping ads in a specific region.",
 	//   "flatPath": "{merchantId}/shoppingadsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.shoppingadsprogram.requestreview",

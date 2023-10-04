@@ -2235,6 +2235,7 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "NUMBER" - Field value type is Number.
 	//   "INTEGER" - Field value type is Integer.
 	//   "BOOLEAN" - Field value type is Boolean.
+	//   "GEOLOCATION" - Field value type is Geolocation.
 	FieldType string `json:"fieldType,omitempty"`
 
 	// IndexableOption: If indexable_option is INDEXABLE_ENABLED, field
@@ -4785,6 +4786,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponse struct {
 	// Facets: Results of facets requested by user.
 	Facets []*GoogleCloudDiscoveryengineV1alphaSearchResponseFacet `json:"facets,omitempty"`
 
+	GeoSearchDebugInfo []*GoogleCloudDiscoveryengineV1alphaSearchResponseGeoSearchDebugInfo `json:"geoSearchDebugInfo,omitempty"`
+
 	// GuidedSearchResult: Guided search result.
 	GuidedSearchResult *GoogleCloudDiscoveryengineV1alphaSearchResponseGuidedSearchResult `json:"guidedSearchResult,omitempty"`
 
@@ -4910,6 +4913,40 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseFacetFacetValue struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseFacetFacetValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseFacetFacetValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchResponseGeoSearchDebugInfo:
+// Debug information specifically related to forward geocoding issues
+// arising from Geolocation Search.
+type GoogleCloudDiscoveryengineV1alphaSearchResponseGeoSearchDebugInfo struct {
+	// ErrorMessage: The error produced.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// OriginalAddressQuery: The address from which forward geocoding
+	// ingestion produced issues.
+	OriginalAddressQuery string `json:"originalAddressQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseGeoSearchDebugInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchResponseGeoSearchDebugInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5877,6 +5914,19 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfig struct {
 	// field must be a UTF-8 encoded string with a length limit of 1024
 	// characters.
 	Name string `json:"name,omitempty"`
+
+	// ResultDisplayType: The type of snippet to display in UCS widget. -
+	// RESULT_DISPLAY_TYPE_UNSPECIFIED for existing users. - SNIPPET for new
+	// non-enterprise search users. - EXTRACTIVE_ANSWER for new enterprise
+	// search users.
+	//
+	// Possible values:
+	//   "RESULT_DISPLAY_TYPE_UNSPECIFIED" - Unspecified display type
+	// (default to showing snippet).
+	//   "SNIPPET" - Display results from the snippet field.
+	//   "EXTRACTIVE_ANSWER" - Display results from extractive answers
+	// field.
+	ResultDisplayType string `json:"resultDisplayType,omitempty"`
 
 	// SolutionType: Required. Immutable. Specifies the solution type that
 	// this WidgetConfig can be used for.

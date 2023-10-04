@@ -4044,6 +4044,10 @@ type VulnerabilityOccurrence struct {
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
 
+	// ExtraDetails: Occurrence-specific extra details about the
+	// vulnerability.
+	ExtraDetails string `json:"extraDetails,omitempty"`
+
 	// FixAvailable: Output only. Whether at least one of the affected
 	// packages has a fix available.
 	FixAvailable bool `json:"fixAvailable,omitempty"`

@@ -7410,10 +7410,6 @@ type VulnerabilityNote struct {
 	// vulnerability.
 	Details []*Detail `json:"details,omitempty"`
 
-	// ExtraDetails: Occurrence-specific extra details about the
-	// vulnerability.
-	ExtraDetails string `json:"extraDetails,omitempty"`
-
 	// Severity: The note provider assigned severity of this vulnerability.
 	//
 	// Possible values:
@@ -7516,6 +7512,10 @@ type VulnerabilityOccurrence struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+
+	// ExtraDetails: Occurrence-specific extra details about the
+	// vulnerability.
+	ExtraDetails string `json:"extraDetails,omitempty"`
 
 	// FixAvailable: Output only. Whether at least one of the affected
 	// packages has a fix available.

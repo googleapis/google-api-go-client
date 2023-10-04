@@ -1430,6 +1430,7 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "NUMBER" - Field value type is Number.
 	//   "INTEGER" - Field value type is Integer.
 	//   "BOOLEAN" - Field value type is Boolean.
+	//   "GEOLOCATION" - Field value type is Geolocation.
 	FieldType string `json:"fieldType,omitempty"`
 
 	// IndexableOption: If indexable_option is INDEXABLE_ENABLED, field
@@ -5075,6 +5076,8 @@ type GoogleCloudDiscoveryengineV1betaSearchResponse struct {
 	// Facets: Results of facets requested by user.
 	Facets []*GoogleCloudDiscoveryengineV1betaSearchResponseFacet `json:"facets,omitempty"`
 
+	GeoSearchDebugInfo []*GoogleCloudDiscoveryengineV1betaSearchResponseGeoSearchDebugInfo `json:"geoSearchDebugInfo,omitempty"`
+
 	// GuidedSearchResult: Guided search result.
 	GuidedSearchResult *GoogleCloudDiscoveryengineV1betaSearchResponseGuidedSearchResult `json:"guidedSearchResult,omitempty"`
 
@@ -5200,6 +5203,40 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseFacetFacetValue struct {
 
 func (s *GoogleCloudDiscoveryengineV1betaSearchResponseFacetFacetValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseFacetFacetValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseGeoSearchDebugInfo:
+// Debug information specifically related to forward geocoding issues
+// arising from Geolocation Search.
+type GoogleCloudDiscoveryengineV1betaSearchResponseGeoSearchDebugInfo struct {
+	// ErrorMessage: The error produced.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// OriginalAddressQuery: The address from which forward geocoding
+	// ingestion produced issues.
+	OriginalAddressQuery string `json:"originalAddressQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseGeoSearchDebugInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseGeoSearchDebugInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

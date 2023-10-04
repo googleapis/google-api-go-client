@@ -8413,6 +8413,10 @@ type VulnerabilityDetails struct {
 	//   "CRITICAL" - Critical Impact
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
 
+	// ExtraDetails: Occurrence-specific extra details about the
+	// vulnerability.
+	ExtraDetails string `json:"extraDetails,omitempty"`
+
 	// PackageIssue: The set of affected locations and their fixes (if
 	// available) within the associated resource.
 	PackageIssue []*PackageIssue `json:"packageIssue,omitempty"`

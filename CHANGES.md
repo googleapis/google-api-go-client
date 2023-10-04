@@ -1,5 +1,20 @@
 # Changes
 
+## [0.144.0](https://github.com/googleapis/google-api-go-client/compare/v0.143.0...v0.144.0) (2023-10-04)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2187](https://github.com/googleapis/google-api-go-client/issues/2187)) ([65ec288](https://github.com/googleapis/google-api-go-client/commit/65ec288cfc33018f944b9e139ca3d3afaf5caee1))
+* **all:** Auto-regenerate discovery clients ([#2189](https://github.com/googleapis/google-api-go-client/issues/2189)) ([ec24c23](https://github.com/googleapis/google-api-go-client/commit/ec24c233d0b917fba3d2a51edea9b8bee940f919))
+* **all:** Auto-regenerate discovery clients ([#2190](https://github.com/googleapis/google-api-go-client/issues/2190)) ([f930302](https://github.com/googleapis/google-api-go-client/commit/f9303021c3e888ec75ccaf5aaebc0c646655c669))
+* **all:** Auto-regenerate discovery clients ([#2191](https://github.com/googleapis/google-api-go-client/issues/2191)) ([0132460](https://github.com/googleapis/google-api-go-client/commit/013246038d46546a6e3f3bf3d7d492c24489029a))
+* **all:** Auto-regenerate discovery clients ([#2192](https://github.com/googleapis/google-api-go-client/issues/2192)) ([8a3eb9b](https://github.com/googleapis/google-api-go-client/commit/8a3eb9bca62a75671e97a7b57dd786a5c520515a))
+* **all:** Auto-regenerate discovery clients ([#2193](https://github.com/googleapis/google-api-go-client/issues/2193)) ([55f1113](https://github.com/googleapis/google-api-go-client/commit/55f1113904bd3c786d5f956f71899f7bf86fc1e8))
+* **all:** Auto-regenerate discovery clients ([#2195](https://github.com/googleapis/google-api-go-client/issues/2195)) ([0c82427](https://github.com/googleapis/google-api-go-client/commit/0c82427738cda79e331d5cf418bb24dc9235a32f))
+* **all:** Auto-regenerate discovery clients ([#2196](https://github.com/googleapis/google-api-go-client/issues/2196)) ([34e0216](https://github.com/googleapis/google-api-go-client/commit/34e02167d9a3f2d6a72be25a0865a5b86825d80e))
+* **all:** Auto-regenerate discovery clients ([#2197](https://github.com/googleapis/google-api-go-client/issues/2197)) ([5779cfc](https://github.com/googleapis/google-api-go-client/commit/5779cfc67b64c813eb013fc093aaf6accff096dd))
+
 ## [0.143.0](https://github.com/googleapis/google-api-go-client/compare/v0.142.0...v0.143.0) (2023-09-25)
 
 

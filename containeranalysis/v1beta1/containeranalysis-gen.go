@@ -4847,6 +4847,10 @@ type GrafeasV1beta1VulnerabilityDetails struct {
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
 
+	// ExtraDetails: Occurrence-specific extra details about the
+	// vulnerability.
+	ExtraDetails string `json:"extraDetails,omitempty"`
+
 	// LongDescription: Output only. A detailed description of this
 	// vulnerability.
 	LongDescription string `json:"longDescription,omitempty"`
@@ -7738,10 +7742,6 @@ type Vulnerability struct {
 	// this vulnerability. One entry per (version range and cpe_uri) the
 	// package vulnerability has manifested in.
 	Details []*Detail `json:"details,omitempty"`
-
-	// ExtraDetails: Occurrence-specific extra details about the
-	// vulnerability.
-	ExtraDetails string `json:"extraDetails,omitempty"`
 
 	// Severity: Note provider assigned impact of the vulnerability.
 	//

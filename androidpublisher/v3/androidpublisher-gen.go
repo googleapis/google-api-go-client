@@ -9930,7 +9930,7 @@ func (c *EditsDeobfuscationfilesUploadCall) Do(opts ...googleapi.CallOption) (*D
 	//     "accept": [
 	//       "application/octet-stream"
 	//     ],
-	//     "maxSize": "1258291200",
+	//     "maxSize": "1677721600",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

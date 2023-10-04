@@ -3814,7 +3814,8 @@ func (s *GoogleCloudAiplatformV1CreateFeatureOperationMetadata) MarshalJSON() ([
 }
 
 // GoogleCloudAiplatformV1CreateFeatureRequest: Request message for
-// FeaturestoreService.CreateFeature.
+// FeaturestoreService.CreateFeature. Request message for
+// FeatureRegistryService.CreateFeature.
 type GoogleCloudAiplatformV1CreateFeatureRequest struct {
 	// Feature: Required. The Feature to create.
 	Feature *GoogleCloudAiplatformV1Feature `json:"feature,omitempty"`
@@ -3823,13 +3824,9 @@ type GoogleCloudAiplatformV1CreateFeatureRequest struct {
 	// the final component of the Feature's resource name. This value may be
 	// up to 128 characters, and valid characters are `[a-z0-9_]`. The first
 	// character cannot be a number. The value must be unique within an
-	// EntityType .
+	// EntityType/FeatureGroup.
 	FeatureId string `json:"featureId,omitempty"`
 
-	// Parent: Required. The resource name of the EntityType to create a
-	// Feature. Format:
-	// `projects/{project}/locations/{location}/featurestores/{featurestore}/
-	// entityTypes/{entity_type}`
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Feature") to
@@ -11240,7 +11237,8 @@ func (s *GoogleCloudAiplatformV1ListExecutionsResponse) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudAiplatformV1ListFeaturesResponse: Response message for
-// FeaturestoreService.ListFeatures.
+// FeaturestoreService.ListFeatures. Response message for
+// FeatureRegistryService.ListFeatures.
 type GoogleCloudAiplatformV1ListFeaturesResponse struct {
 	// Features: The Features matching the request.
 	Features []*GoogleCloudAiplatformV1Feature `json:"features,omitempty"`
@@ -21353,6 +21351,73 @@ func (s *GoogleCloudAiplatformV1SchemaPredictInstanceVideoObjectTrackingPredicti
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig: The
+// configuration for grounding checking.
+type GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig struct {
+	// Sources: The sources for the grounding checking.
+	Sources []*GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sources") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry:
+// Single source entry for the grounding checking.
+type GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry struct {
+	// EnterpriseDatastore: The uri of the Enterprise Search data source.
+	EnterpriseDatastore string `json:"enterpriseDatastore,omitempty"`
+
+	// Type: The type of the grounding checking source.
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "WEB" - Uses Web Search to check the grounding.
+	//   "ENTERPRISE" - Uses Enterprise Search to check the grounding.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnterpriseDatastore")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnterpriseDatastore") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfigSourceEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictio
 // nParams: Prediction model parameters for Image Classification.
 type GoogleCloudAiplatformV1SchemaPredictParamsImageClassificationPredictionParams struct {
@@ -22900,8 +22965,14 @@ func (s *GoogleCloudAiplatformV1SchemaTextExtractionAnnotation) MarshalJSON() ([
 // GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata: The metadata
 // of Datasets that contain Text Prompt data.
 type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
+	// CandidateCount: Number of candidates.
+	CandidateCount int64 `json:"candidateCount,omitempty,string"`
+
 	// GcsUri: The Google Cloud Storage URI that stores the prompt data.
 	GcsUri string `json:"gcsUri,omitempty"`
+
+	// GroundingConfig: Grounding checking configuration.
+	GroundingConfig *GoogleCloudAiplatformV1SchemaPredictParamsGroundingConfig `json:"groundingConfig,omitempty"`
 
 	// MaxOutputTokens: Value of the maximum number of tokens generated set
 	// when the dataset was saved.
@@ -22909,6 +22980,9 @@ type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
 
 	// PromptType: Type of the prompt dataset.
 	PromptType string `json:"promptType,omitempty"`
+
+	// StopSequences: Customized stop sequences.
+	StopSequences []string `json:"stopSequences,omitempty"`
 
 	// Temperature: Temperature value used for sampling set when the dataset
 	// was saved. This value is used to tune the degree of randomness.
@@ -22927,7 +23001,7 @@ type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
 	// probabilities is topP.
 	TopP float64 `json:"topP,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// ForceSendFields is a list of field names (e.g. "CandidateCount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -22935,12 +23009,13 @@ type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CandidateCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -50455,10 +50530,7 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall struct {
 
 // Create: Creates a new Feature in a given EntityType.
 //
-//   - parent: The resource name of the EntityType to create a Feature.
-//     Format:
-//     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`.
+// - parent: .
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Create(parent string, googlecloudaiplatformv1feature *GoogleCloudAiplatformV1Feature) *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -50470,7 +50542,7 @@ func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Create(parent
 // to use for the Feature, which will become the final component of the
 // Feature's resource name. This value may be up to 128 characters, and
 // valid characters are `[a-z0-9_]`. The first character cannot be a
-// number. The value must be unique within an EntityType .
+// number. The value must be unique within an EntityType/FeatureGroup.
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall) FeatureId(featureId string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall {
 	c.urlParams_.Set("featureId", featureId)
 	return c
@@ -50576,12 +50648,11 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "featureId": {
-	//       "description": "Required. The ID to use for the Feature, which will become the final component of the Feature's resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within an EntityType .",
+	//       "description": "Required. The ID to use for the Feature, which will become the final component of the Feature's resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within an EntityType/FeatureGroup.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the EntityType to create a Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -50616,7 +50687,9 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall struct {
 //
 //   - name: The name of the Features to be deleted. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}/features/{feature}`.
+//     }/entityTypes/{entity_type}/features/{feature}`
+//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
+//     p}/features/{feature}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Delete(name string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -50718,7 +50791,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Features to be deleted. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}`",
+	//       "description": "Required. The name of the Features to be deleted. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -50751,7 +50824,9 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall struct {
 //
 //   - name: The name of the Feature resource. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`.
+//     }/entityTypes/{entity_type}`
+//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
+//     p}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Get(name string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -50866,7 +50941,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Feature resource. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`",
+	//       "description": "Required. The name of the Feature resource. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -50899,7 +50974,9 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall struct {
 //
 //   - parent: The resource name of the Location to list Features. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`.
+//     }/entityTypes/{entity_type}`
+//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
+//     p}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) List(parent string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -51108,7 +51185,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Location to list Features. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`",
+	//       "description": "Required. The resource name of the Location to list Features. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -74248,9 +74325,11 @@ func (r *ProjectsLocationsNotebookRuntimeTemplatesService) List(parent string) *
 // and != * `labels` supports general map functions that is: *
 // `labels.key=value` - key:value equality * `labels.key:* or labels:key
 // - key existence * A key including a space must be quoted. `labels."a
-// key". Some examples: *
+// key". * `notebookRuntimeType` supports = and !=. notebookRuntimeType
+// enum: [USER_DEFINED, ONE_CLICK]. Some examples: *
 // `notebookRuntimeTemplate=notebookRuntimeTemplate123` *
-// `displayName="myDisplayName" * `labels.myKey="myValue"
+// `displayName="myDisplayName" * `labels.myKey="myValue" *
+// `notebookRuntimeType=USER_DEFINED`
 func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Filter(filter string) *ProjectsLocationsNotebookRuntimeTemplatesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -74400,7 +74479,7 @@ func (c *ProjectsLocationsNotebookRuntimeTemplatesListCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `notebookRuntimeTemplate` supports = and !=. `notebookRuntimeTemplate` represents the NotebookRuntimeTemplate ID, i.e. the last segment of the NotebookRuntimeTemplate's resource name. * `display_name` supports = and != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. Some examples: * `notebookRuntimeTemplate=notebookRuntimeTemplate123` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"`",
+	//       "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `notebookRuntimeTemplate` supports = and !=. `notebookRuntimeTemplate` represents the NotebookRuntimeTemplate ID, i.e. the last segment of the NotebookRuntimeTemplate's resource name. * `display_name` supports = and != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. * `notebookRuntimeType` supports = and !=. notebookRuntimeType enum: [USER_DEFINED, ONE_CLICK]. Some examples: * `notebookRuntimeTemplate=notebookRuntimeTemplate123` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"` * `notebookRuntimeType=USER_DEFINED`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -75239,12 +75318,15 @@ func (r *ProjectsLocationsNotebookRuntimesService) List(parent string) *Projects
 // supports = and !=. uiState enum: [UI_RESOURCE_STATE_UNSPECIFIED,
 // UI_RESOURCE_STATE_BEING_CREATED, UI_RESOURCE_STATE_ACTIVE,
 // UI_RESOURCE_STATE_BEING_DELETED, UI_RESOURCE_STATE_CREATION_FAILED].
-// Some examples: * `notebookRuntime="notebookRuntime123" *
+// * `notebookRuntimeType` supports = and !=. notebookRuntimeType enum:
+// [USER_DEFINED, ONE_CLICK]. Some examples: *
+// `notebookRuntime="notebookRuntime123" *
 // `displayName="myDisplayName" and `displayName=~"myDisplayNameRegex"
 // * `notebookRuntimeTemplate="notebookRuntimeTemplate321" *
 // `healthState=HEALTHY` * `runtimeState=RUNNING` *
 // `runtimeUser="test@google.com" *
-// `uiState=UI_RESOURCE_STATE_BEING_DELETED`
+// `uiState=UI_RESOURCE_STATE_BEING_DELETED` *
+// `notebookRuntimeType=USER_DEFINED`
 func (c *ProjectsLocationsNotebookRuntimesListCall) Filter(filter string) *ProjectsLocationsNotebookRuntimesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -75393,7 +75475,7 @@ func (c *ProjectsLocationsNotebookRuntimesListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `notebookRuntime` supports = and !=. `notebookRuntime` represents the NotebookRuntime ID, i.e. the last segment of the NotebookRuntime's resource name. * `displayName` supports = and != and regex. * `notebookRuntimeTemplate` supports = and !=. `notebookRuntimeTemplate` represents the NotebookRuntimeTemplate ID, i.e. the last segment of the NotebookRuntimeTemplate's resource name. * `healthState` supports = and !=. healthState enum: [HEALTHY, UNHEALTHY, HEALTH_STATE_UNSPECIFIED]. * `runtimeState` supports = and !=. runtimeState enum: [RUNTIME_STATE_UNSPECIFIED, RUNNING, BEING_STARTED, BEING_STOPPED, STOPPED, BEING_UPGRADED]. * `runtimeUser` supports = and !=. * API version is UI only: `uiState` supports = and !=. uiState enum: [UI_RESOURCE_STATE_UNSPECIFIED, UI_RESOURCE_STATE_BEING_CREATED, UI_RESOURCE_STATE_ACTIVE, UI_RESOURCE_STATE_BEING_DELETED, UI_RESOURCE_STATE_CREATION_FAILED]. Some examples: * `notebookRuntime=\"notebookRuntime123\"` * `displayName=\"myDisplayName\"` and `displayName=~\"myDisplayNameRegex\"` * `notebookRuntimeTemplate=\"notebookRuntimeTemplate321\"` * `healthState=HEALTHY` * `runtimeState=RUNNING` * `runtimeUser=\"test@google.com\"` * `uiState=UI_RESOURCE_STATE_BEING_DELETED`",
+	//       "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `notebookRuntime` supports = and !=. `notebookRuntime` represents the NotebookRuntime ID, i.e. the last segment of the NotebookRuntime's resource name. * `displayName` supports = and != and regex. * `notebookRuntimeTemplate` supports = and !=. `notebookRuntimeTemplate` represents the NotebookRuntimeTemplate ID, i.e. the last segment of the NotebookRuntimeTemplate's resource name. * `healthState` supports = and !=. healthState enum: [HEALTHY, UNHEALTHY, HEALTH_STATE_UNSPECIFIED]. * `runtimeState` supports = and !=. runtimeState enum: [RUNTIME_STATE_UNSPECIFIED, RUNNING, BEING_STARTED, BEING_STOPPED, STOPPED, BEING_UPGRADED]. * `runtimeUser` supports = and !=. * API version is UI only: `uiState` supports = and !=. uiState enum: [UI_RESOURCE_STATE_UNSPECIFIED, UI_RESOURCE_STATE_BEING_CREATED, UI_RESOURCE_STATE_ACTIVE, UI_RESOURCE_STATE_BEING_DELETED, UI_RESOURCE_STATE_CREATION_FAILED]. * `notebookRuntimeType` supports = and !=. notebookRuntimeType enum: [USER_DEFINED, ONE_CLICK]. Some examples: * `notebookRuntime=\"notebookRuntime123\"` * `displayName=\"myDisplayName\"` and `displayName=~\"myDisplayNameRegex\"` * `notebookRuntimeTemplate=\"notebookRuntimeTemplate321\"` * `healthState=HEALTHY` * `runtimeState=RUNNING` * `runtimeUser=\"test@google.com\"` * `uiState=UI_RESOURCE_STATE_BEING_DELETED` * `notebookRuntimeType=USER_DEFINED`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

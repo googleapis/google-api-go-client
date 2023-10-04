@@ -1509,6 +1509,11 @@ type DocumentStyle struct {
 	// If not set, there's no first page header. This property is read-only.
 	FirstPageHeaderId string `json:"firstPageHeaderId,omitempty"`
 
+	// FlipPageOrientation: Optional. Indicates whether to flip the
+	// dimensions of the page_size, which allows changing the page
+	// orientation between portrait and landscape.
+	FlipPageOrientation bool `json:"flipPageOrientation,omitempty"`
+
 	// MarginBottom: The bottom page margin. Updating the bottom page margin
 	// on the document style clears the bottom page margin on all section
 	// styles.
@@ -1612,6 +1617,10 @@ type DocumentStyleSuggestionState struct {
 	// FirstPageHeaderIdSuggested: Indicates if there was a suggested change
 	// to first_page_header_id.
 	FirstPageHeaderIdSuggested bool `json:"firstPageHeaderIdSuggested,omitempty"`
+
+	// FlipPageOrientationSuggested: Optional. Indicates if there was a
+	// suggested change to flip_page_orientation.
+	FlipPageOrientationSuggested bool `json:"flipPageOrientationSuggested,omitempty"`
 
 	// MarginBottomSuggested: Indicates if there was a suggested change to
 	// margin_bottom.
@@ -5153,6 +5162,15 @@ type SectionStyle struct {
 	// SectionBreak, it inherits from DocumentStyle's first_page_header_id.
 	// This property is read-only.
 	FirstPageHeaderId string `json:"firstPageHeaderId,omitempty"`
+
+	// FlipPageOrientation: Optional. Indicates whether to flip the
+	// dimensions of DocumentStyle's page_size for this section, which
+	// allows changing the page orientation between portrait and landscape.
+	// If unset, the value inherits from DocumentStyle's
+	// flip_page_orientation. When updating this property, setting a
+	// concrete value is required. Unsetting this property results in a 400
+	// bad request error.
+	FlipPageOrientation bool `json:"flipPageOrientation,omitempty"`
 
 	// MarginBottom: The bottom page margin of the section. If unset, the
 	// value defaults to margin_bottom from DocumentStyle. When updating

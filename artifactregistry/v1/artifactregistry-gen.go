@@ -4669,8 +4669,8 @@ func (r *ProjectsLocationsRepositoriesService) Create(parent string, repository 
 	return c
 }
 
-// RepositoryId sets the optional parameter "repositoryId": The
-// repository id to use for this repository.
+// RepositoryId sets the optional parameter "repositoryId": Required.
+// The repository id to use for this repository.
 func (c *ProjectsLocationsRepositoriesCreateCall) RepositoryId(repositoryId string) *ProjectsLocationsRepositoriesCreateCall {
 	c.urlParams_.Set("repositoryId", repositoryId)
 	return c
@@ -4783,7 +4783,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "repositoryId": {
-	//       "description": "The repository id to use for this repository.",
+	//       "description": "Required. The repository id to use for this repository.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

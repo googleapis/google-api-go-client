@@ -1194,17 +1194,11 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Represents the metadata of the long-running
-// operation.
+// OperationMetadata: Represents the metadata of a long-running
+// operation in Analytics Hub.
 type OperationMetadata struct {
 	// ApiVersion: Output only. API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// CancelRequested: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have been
-	// cancelled successfully have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
-	CancelRequested bool `json:"cancelRequested,omitempty"`
 
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1212,9 +1206,15 @@ type OperationMetadata struct {
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StatusDetail: Output only. Human-readable status of the operation, if
-	// any.
-	StatusDetail string `json:"statusDetail,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
 
 	// Target: Output only. Server-defined resource path for the target of
 	// the operation.

@@ -372,7 +372,7 @@ type Argument struct {
 	// ArgumentKind: Optional. Defaults to FIXED_TYPE.
 	//
 	// Possible values:
-	//   "ARGUMENT_KIND_UNSPECIFIED"
+	//   "ARGUMENT_KIND_UNSPECIFIED" - Default value.
 	//   "FIXED_TYPE" - The argument is a variable with fully specified
 	// type, which can be a struct or an array, but not a table.
 	//   "ANY_TYPE" - The argument is any type, including struct or array,
@@ -382,11 +382,18 @@ type Argument struct {
 	// DataType: Required unless argument_kind = ANY_TYPE.
 	DataType *StandardSqlDataType `json:"dataType,omitempty"`
 
+	// IsAggregate: Optional. Whether the argument is an aggregate function
+	// parameter. Must be Unset for routine types other than
+	// AGGREGATE_FUNCTION. For AGGREGATE_FUNCTION, if set to false, it is
+	// equivalent to adding "NOT AGGREGATE" clause in DDL; Otherwise, it is
+	// equivalent to omitting "NOT AGGREGATE" clause in DDL.
+	IsAggregate bool `json:"isAggregate,omitempty"`
+
 	// Mode: Optional. Specifies whether the argument is input or output.
 	// Can be set for procedures only.
 	//
 	// Possible values:
-	//   "MODE_UNSPECIFIED"
+	//   "MODE_UNSPECIFIED" - Default value.
 	//   "IN" - The argument is input-only.
 	//   "OUT" - The argument is output-only.
 	//   "INOUT" - The argument is both an input and an output.
@@ -2029,7 +2036,7 @@ type CsvOptions struct {
 
 	// NullMarker: [Optional] An custom string that will represent a NULL
 	// value in CSV import data.
-	NullMarker string `json:"null_marker,omitempty"`
+	NullMarker string `json:"nullMarker,omitempty"`
 
 	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
 	// ASCII control characters (the first 32 characters in the ASCII-table,
@@ -3978,7 +3985,7 @@ type HparamTuningTrial struct {
 	// Status: The status of the trial.
 	//
 	// Possible values:
-	//   "TRIAL_STATUS_UNSPECIFIED"
+	//   "TRIAL_STATUS_UNSPECIFIED" - Default value.
 	//   "NOT_STARTED" - Scheduled but not started.
 	//   "RUNNING" - Running state.
 	//   "SUCCEEDED" - The trial succeeded.
@@ -4285,6 +4292,12 @@ type Job struct {
 
 	// Id: [Output-only] Opaque ID field of the job
 	Id string `json:"id,omitempty"`
+
+	// JobCreationReason: [Output-only] If set, it provides the reason why a
+	// Job was created. If not set, it should be treated as the default:
+	// REQUESTED. This feature is not yet available. Jobs will always be
+	// created.
+	JobCreationReason interface{} `json:"jobCreationReason,omitempty"`
 
 	// JobReference: [Optional] Reference describing the unique-per-user
 	// name of the job.
@@ -5327,7 +5340,7 @@ type JobStatistics2 struct {
 	DdlOperationPerformed string `json:"ddlOperationPerformed,omitempty"`
 
 	// DdlTargetDataset: [Output only] The DDL target dataset. Present only
-	// for CREATE/ALTER/DROP SCHEMA queries.
+	// for CREATE/ALTER/DROP/UNDROP SCHEMA queries.
 	DdlTargetDataset *DatasetReference `json:"ddlTargetDataset,omitempty"`
 
 	// DdlTargetRoutine: The DDL target routine. Present only for
@@ -5693,6 +5706,8 @@ func (s *JsonOptions) MarshalJSON() ([]byte, error) {
 
 type JsonValue interface{}
 
+// ListModelsResponse: Response format for a single page when listing
+// BigQuery ML models.
 type ListModelsResponse struct {
 	// Models: Models in the requested dataset. Only the following fields
 	// are populated: model_reference, model_type, creation_time,
@@ -5729,6 +5744,8 @@ func (s *ListModelsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListRoutinesResponse: Describes the format of a single result page
+// when listing routines.
 type ListRoutinesResponse struct {
 	// NextPageToken: A token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -6003,7 +6020,7 @@ type Model struct {
 	// ModelType: Output only. Type of the model resource.
 	//
 	// Possible values:
-	//   "MODEL_TYPE_UNSPECIFIED"
+	//   "MODEL_TYPE_UNSPECIFIED" - Default value.
 	//   "LINEAR_REGRESSION" - Linear regression model.
 	//   "LOGISTIC_REGRESSION" - Logistic regression based classification
 	// model.
@@ -6697,6 +6714,12 @@ type QueryRequest struct {
 	// invalid, an error returns. The default value is false.
 	DryRun bool `json:"dryRun,omitempty"`
 
+	// JobCreationMode: Optional. If not set, jobs are always required. If
+	// set, the query request will follow the behavior described
+	// JobCreationMode. This feature is not yet available. Jobs will always
+	// be created.
+	JobCreationMode string `json:"jobCreationMode,omitempty"`
+
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 
@@ -6835,6 +6858,15 @@ type QueryResponse struct {
 	// totalRows are present, this will always be true. If this is false,
 	// totalRows will not be available.
 	JobComplete bool `json:"jobComplete,omitempty"`
+
+	// JobCreationReason: Optional. Only relevant when a job_reference is
+	// present in the response. If job_reference is not present it will
+	// always be unset. When job_reference is present, this field should be
+	// interpreted as follows: If set, it will provide the reason of why a
+	// Job was created. If not set, it should be treated as the default:
+	// REQUESTED. This feature is not yet available. Jobs will always be
+	// created.
+	JobCreationReason interface{} `json:"jobCreationReason,omitempty"`
 
 	// JobReference: Reference to the Job that was created to run the query.
 	// This field will be present even if the original request timed out, in
@@ -7272,13 +7304,14 @@ type Routine struct {
 	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DataGovernanceType: Optional. Data governance specific option, if the
-	// value is DATA_MASKING, the function will be validated as masking
-	// functions.
+	// DataGovernanceType: Optional. If set to `DATA_MASKING`, the function
+	// is validated and made available as a masking function. For more
+	// information, see Create custom masking routines
+	// (https://cloud.google.com/bigquery/docs/user-defined-functions#custom-mask).
 	//
 	// Possible values:
-	//   "DATA_GOVERNANCE_TYPE_UNSPECIFIED" - Unspecified data governance
-	// type.
+	//   "DATA_GOVERNANCE_TYPE_UNSPECIFIED" - The data governance type is
+	// unspecified.
 	//   "DATA_MASKING" - The data governance type is data masking.
 	DataGovernanceType string `json:"dataGovernanceType,omitempty"`
 
@@ -7321,7 +7354,7 @@ type Routine struct {
 	// field is absent, not set otherwise.
 	//
 	// Possible values:
-	//   "LANGUAGE_UNSPECIFIED"
+	//   "LANGUAGE_UNSPECIFIED" - Default value.
 	//   "SQL" - SQL language.
 	//   "JAVASCRIPT" - JavaScript language.
 	//   "PYTHON" - Python language.
@@ -7368,7 +7401,7 @@ type Routine struct {
 	// RoutineType: Required. The type of routine.
 	//
 	// Possible values:
-	//   "ROUTINE_TYPE_UNSPECIFIED"
+	//   "ROUTINE_TYPE_UNSPECIFIED" - Default value.
 	//   "SCALAR_FUNCTION" - Non-built-in persistent scalar function.
 	//   "PROCEDURE" - Stored procedure.
 	//   "TABLE_VALUED_FUNCTION" - Non-built-in persistent TVF.
@@ -8066,7 +8099,9 @@ func (s *StandardSqlField) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StandardSqlStructType: The representation of a SQL STRUCT type.
 type StandardSqlStructType struct {
+	// Fields: Fields within the struct.
 	Fields []*StandardSqlField `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -8342,6 +8377,15 @@ type Table struct {
 	// table require a partition filter that can be used for partition
 	// elimination to be specified.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
+
+	// ResourceTags: [Optional] The tags associated with this table. Tag
+	// keys are globally unique. See additional information on tags
+	// (https://cloud.google.com/iam/docs/tags-access-control#definitions).
+	// An object containing a list of "key": value pairs. The key is the
+	// namespaced friendly name of the tag key, e.g. "12345/environment"
+	// where 12345 is parent id. The value is the friendly short name of the
+	// tag value, e.g. "production".
+	ResourceTags map[string]string `json:"resourceTags,omitempty"`
 
 	// Schema: [Optional] Describes the schema of this table.
 	Schema *TableSchema `json:"schema,omitempty"`
@@ -9417,7 +9461,7 @@ type TrainingOptions struct {
 	// DataFrequency: The data frequency of a time series.
 	//
 	// Possible values:
-	//   "DATA_FREQUENCY_UNSPECIFIED"
+	//   "DATA_FREQUENCY_UNSPECIFIED" - Default value.
 	//   "AUTO_FREQUENCY" - Automatically inferred from timestamps.
 	//   "YEARLY" - Yearly data.
 	//   "QUARTERLY" - Quarterly data.
@@ -9449,7 +9493,7 @@ type TrainingOptions struct {
 	// e.g. RANDOM.
 	//
 	// Possible values:
-	//   "DATA_SPLIT_METHOD_UNSPECIFIED"
+	//   "DATA_SPLIT_METHOD_UNSPECIFIED" - Default value.
 	//   "RANDOM" - Splits data randomly.
 	//   "CUSTOM" - Splits data with the user provided tags.
 	//   "SEQUENTIAL" - Splits data sequentially.
@@ -9465,7 +9509,7 @@ type TrainingOptions struct {
 	// DistanceType: Distance type for clustering models.
 	//
 	// Possible values:
-	//   "DISTANCE_TYPE_UNSPECIFIED"
+	//   "DISTANCE_TYPE_UNSPECIFIED" - Default value.
 	//   "EUCLIDEAN" - Eculidean distance.
 	//   "COSINE" - Cosine distance.
 	DistanceType string `json:"distanceType,omitempty"`
@@ -9486,7 +9530,7 @@ type TrainingOptions struct {
 	// matrix factorization.
 	//
 	// Possible values:
-	//   "FEEDBACK_TYPE_UNSPECIFIED"
+	//   "FEEDBACK_TYPE_UNSPECIFIED" - Default value.
 	//   "IMPLICIT" - Use weighted-als for implicit feedback problems.
 	//   "EXPLICIT" - Use nonweighted-als for explicit feedback problems.
 	FeedbackType string `json:"feedbackType,omitempty"`
@@ -9757,7 +9801,7 @@ type TrainingOptions struct {
 	// current iteration.
 	//
 	// Possible values:
-	//   "LEARN_RATE_STRATEGY_UNSPECIFIED"
+	//   "LEARN_RATE_STRATEGY_UNSPECIFIED" - Default value.
 	//   "LINE_SEARCH" - Use line search to determine learning rate.
 	//   "CONSTANT" - Use a constant learning rate.
 	LearnRateStrategy string `json:"learnRateStrategy,omitempty"`
@@ -9765,7 +9809,7 @@ type TrainingOptions struct {
 	// LossType: Type of loss function used during training run.
 	//
 	// Possible values:
-	//   "LOSS_TYPE_UNSPECIFIED"
+	//   "LOSS_TYPE_UNSPECIFIED" - Default value.
 	//   "MEAN_SQUARED_LOSS" - Mean squared loss, used for linear
 	// regression.
 	//   "MEAN_LOG_LOSS" - Mean log loss, used for logistic regression.
@@ -9814,7 +9858,7 @@ type TrainingOptions struct {
 	// ModelRegistry: The model registry.
 	//
 	// Possible values:
-	//   "MODEL_REGISTRY_UNSPECIFIED"
+	//   "MODEL_REGISTRY_UNSPECIFIED" - Default value.
 	//   "VERTEX_AI" - Vertex AI.
 	ModelRegistry string `json:"modelRegistry,omitempty"`
 
@@ -9848,7 +9892,7 @@ type TrainingOptions struct {
 	// regression models.
 	//
 	// Possible values:
-	//   "OPTIMIZATION_STRATEGY_UNSPECIFIED"
+	//   "OPTIMIZATION_STRATEGY_UNSPECIFIED" - Default value.
 	//   "BATCH_GRADIENT_DESCENT" - Uses an iterative batch gradient descent
 	// algorithm.
 	//   "NORMAL_EQUATION" - Uses a normal equation to solve linear
@@ -9865,7 +9909,7 @@ type TrainingOptions struct {
 	// PcaSolver: The solver for PCA.
 	//
 	// Possible values:
-	//   "UNSPECIFIED"
+	//   "UNSPECIFIED" - Default value.
 	//   "FULL" - Full eigen-decoposition.
 	//   "RANDOMIZED" - Randomized SVD.
 	//   "AUTO" - Auto.
@@ -10395,6 +10439,15 @@ func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCa
 	return c
 }
 
+// DatasetView sets the optional parameter "datasetView": Specifies the
+// view that determines which dataset information is returned. By
+// default, metadata and ACL information are returned. Allowed values:
+// METADATA, ACL, FULL.
+func (c *DatasetsGetCall) DatasetView(datasetView string) *DatasetsGetCall {
+	c.urlParams_.Set("datasetView", datasetView)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10507,6 +10560,11 @@ func (c *DatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
 	//       "description": "Dataset ID of the requested dataset",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "datasetView": {
+	//       "description": "Specifies the view that determines which dataset information is returned. By default, metadata and ACL information are returned. Allowed values: METADATA, ACL, FULL.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {

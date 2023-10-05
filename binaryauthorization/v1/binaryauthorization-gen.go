@@ -1151,6 +1151,20 @@ func (s *ListPlatformPoliciesResponse) MarshalJSON() ([]byte, error) {
 // (https://tools.ietf.org/html/rfc5280#section-4.1.2.7). Public keys of
 // this type are typically textually encoded using the PEM format.
 type PkixPublicKey struct {
+	// KeyId: Optional. The ID of this public key. Signatures verified by
+	// Binary Authorization must include the ID of the public key that can
+	// be used to verify them, and that ID must match the contents of this
+	// field exactly. This may be explicitly provided by the caller, but it
+	// MUST be a valid RFC3986 URI. If `key_id` is left blank and this
+	// `PkixPublicKey` is not used in the context of a wrapper (see next
+	// paragraph), a default key ID will be computed based on the digest of
+	// the DER encoding of the public key. If this `PkixPublicKey` is used
+	// in the context of a wrapper that has its own notion of key ID (e.g.
+	// `AttestorPublicKey`), then this field can either: * Match that value
+	// exactly. * Or be left blank, in which case it behaves exactly as
+	// though it is equal to that wrapper value.
+	KeyId string `json:"keyId,omitempty"`
+
 	// PublicKeyPem: A PEM-encoded public key, as described in
 	// https://tools.ietf.org/html/rfc7468#section-13
 	PublicKeyPem string `json:"publicKeyPem,omitempty"`
@@ -1201,7 +1215,7 @@ type PkixPublicKey struct {
 	// digest.
 	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
+	// ForceSendFields is a list of field names (e.g. "KeyId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1209,10 +1223,10 @@ type PkixPublicKey struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicKeyPem") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "KeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

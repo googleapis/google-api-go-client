@@ -1313,6 +1313,21 @@ type ResetIdentityAwareProxyClientSecretRequest struct {
 }
 
 type Resource struct {
+	// ExpectedNextState: The proto or JSON formatted expected next state of
+	// the resource, wrapped in a google.protobuf.Any proto, against which
+	// the policy rules are evaluated. Services not integrated with custom
+	// org policy can omit this field. Services integrated with custom org
+	// policy must populate this field for all requests where the API call
+	// changes the state of the resource. Custom org policy backend uses
+	// these attributes to enforce custom org policies. When a proto is
+	// wrapped, it is generally the One Platform API proto. When a JSON
+	// string is wrapped, use `google.protobuf.StringValue` for the inner
+	// value. It is sufficient to pass just the max set of attributes that
+	// are allowed for use in custom constraints; other attributes can be
+	// omitted. See go/custom-constraints-org-policy-integration-guide for
+	// additional details.
+	ExpectedNextState googleapi.RawMessage `json:"expectedNextState,omitempty"`
+
 	// Labels: The service defined labels of the resource on which the
 	// conditions will be evaluated. The semantics - including the key names
 	// - are vague to IAM. If the effective condition has a reference to a
@@ -1356,20 +1371,21 @@ type Resource struct {
 	// For details see go/iam-conditions-integration-guide.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Labels") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ExpectedNextState")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExpectedNextState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

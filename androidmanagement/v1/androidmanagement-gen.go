@@ -2445,6 +2445,34 @@ type DeviceRadioState struct {
 	// API_LEVEL is reported if the Android version is less than 9.
 	AirplaneModeState string `json:"airplaneModeState,omitempty"`
 
+	// CellularTwoGState: Controls whether cellular 2G setting can be
+	// toggled by the user or not.
+	//
+	// Possible values:
+	//   "CELLULAR_TWO_G_STATE_UNSPECIFIED" - Unspecified. Defaults to
+	// CELLULAR_TWO_G_USER_CHOICE.
+	//   "CELLULAR_TWO_G_USER_CHOICE" - The user is allowed to toggle
+	// cellular 2G on or off.
+	//   "CELLULAR_TWO_G_DISABLED" - Cellular 2G is disabled. The user is
+	// not allowed to toggle cellular 2G on via settings. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 14.
+	CellularTwoGState string `json:"cellularTwoGState,omitempty"`
+
+	// UltraWidebandState: Controls the state of the ultra wideband setting
+	// and whether the user can toggle it on or off.
+	//
+	// Possible values:
+	//   "ULTRA_WIDEBAND_STATE_UNSPECIFIED" - Unspecified. Defaults to
+	// ULTRA_WIDEBAND_USER_CHOICE.
+	//   "ULTRA_WIDEBAND_USER_CHOICE" - The user is allowed to toggle ultra
+	// wideband on or off.
+	//   "ULTRA_WIDEBAND_DISABLED" - Ultra wideband is disabled. The user is
+	// not allowed to toggle ultra wideband on via settings. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 14.
+	UltraWidebandState string `json:"ultraWidebandState,omitempty"`
+
 	// WifiState: Controls current state of Wi-Fi and if user can change its
 	// state.
 	//

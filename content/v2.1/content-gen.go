@@ -31256,7 +31256,8 @@ type FreelistingsprogramRequestreviewCall struct {
 }
 
 // Requestreview: Requests a review of free listings in a specific
-// region.
+// region. This method deprecated. Use the `MerchantSupportService` to
+// view product and account issues and request a review.
 //
 // - merchantId: The ID of the account.
 func (r *FreelistingsprogramService) Requestreview(merchantId int64, requestreviewfreelistingsrequest *RequestReviewFreeListingsRequest) *FreelistingsprogramRequestreviewCall {
@@ -31332,7 +31333,7 @@ func (c *FreelistingsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Requests a review of free listings in a specific region.",
+	//   "description": "Requests a review of free listings in a specific region. This method deprecated. Use the `MerchantSupportService` to view product and account issues and request a review.",
 	//   "flatPath": "{merchantId}/freelistingsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.freelistingsprogram.requestreview",
@@ -50698,7 +50699,8 @@ type ShoppingadsprogramRequestreviewCall struct {
 }
 
 // Requestreview: Requests a review of Shopping ads in a specific
-// region.
+// region. This method deprecated. Use the `MerchantSupportService` to
+// view product and account issues and request a review.
 //
 // - merchantId: The ID of the account.
 func (r *ShoppingadsprogramService) Requestreview(merchantId int64, requestreviewshoppingadsrequest *RequestReviewShoppingAdsRequest) *ShoppingadsprogramRequestreviewCall {
@@ -50774,7 +50776,7 @@ func (c *ShoppingadsprogramRequestreviewCall) Do(opts ...googleapi.CallOption) e
 	}
 	return nil
 	// {
-	//   "description": "Requests a review of Shopping ads in a specific region.",
+	//   "description": "Requests a review of Shopping ads in a specific region. This method deprecated. Use the `MerchantSupportService` to view product and account issues and request a review.",
 	//   "flatPath": "{merchantId}/shoppingadsprogram/requestreview",
 	//   "httpMethod": "POST",
 	//   "id": "content.shoppingadsprogram.requestreview",

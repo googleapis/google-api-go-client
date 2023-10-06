@@ -2598,8 +2598,8 @@ type ImportJob struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DisplayName: User-friendly display name. Maximum length is 63
-	// characters.
+	// DisplayName: Optional. User-friendly display name. Maximum length is
+	// 256 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ExecutionReport: Output only. The report with the results of running

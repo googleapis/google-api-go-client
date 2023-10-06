@@ -1319,8 +1319,7 @@ func (s *EnvFromSource) MarshalJSON() ([]byte, error) {
 // EnvVar: EnvVar represents an environment variable present in a
 // Container.
 type EnvVar struct {
-	// Name: Required. Name of the environment variable. Must be a
-	// C_IDENTIFIER.
+	// Name: Required. Name of the environment variable.
 	Name string `json:"name,omitempty"`
 
 	// Value: Value of the environment variable. Defaults to "". Variable

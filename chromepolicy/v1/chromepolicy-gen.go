@@ -1027,6 +1027,13 @@ type GoogleChromePolicyVersionsV1PolicyApiLifecycle struct {
 	// policy was introduced to replace this one.
 	PolicyApiLifecycleStage string `json:"policyApiLifecycleStage,omitempty"`
 
+	// ScheduledToDeprecatePolicies: Corresponding to
+	// deprecated_in_favor_of, the fully qualified namespace(s) of the old
+	// policies that will be deprecated because of introduction of this
+	// policy. This field should not be manually set but will be set and
+	// exposed through PolicyAPI automatically.
+	ScheduledToDeprecatePolicies []string `json:"scheduledToDeprecatePolicies,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DeprecatedInFavorOf")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

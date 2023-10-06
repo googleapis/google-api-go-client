@@ -697,8 +697,8 @@ func (s *GoogleCloudRunV2EmptyDirVolumeSource) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2EnvVar: EnvVar represents an environment variable
 // present in a Container.
 type GoogleCloudRunV2EnvVar struct {
-	// Name: Required. Name of the environment variable. Must be a
-	// C_IDENTIFIER, and must not exceed 32768 characters.
+	// Name: Required. Name of the environment variable. Must not exceed
+	// 32768 characters.
 	Name string `json:"name,omitempty"`
 
 	// Value: Variable references $(VAR_NAME) are expanded using the
@@ -2428,12 +2428,6 @@ type GoogleCloudRunV2Service struct {
 	// corresponding traffic targets. See comments in `reconciling` for
 	// additional information on reconciliation process in Cloud Run.
 	TrafficStatuses []*GoogleCloudRunV2TrafficTargetStatus `json:"trafficStatuses,omitempty"`
-
-	// TrafficTagsCleanupThreshold: Optional. Override the traffic tag
-	// threshold limit. Garbage collection will start cleaning up
-	// non-serving tagged traffic targets based on creation item. The
-	// default value is 2000.
-	TrafficTagsCleanupThreshold int64 `json:"trafficTagsCleanupThreshold,omitempty,string"`
 
 	// Uid: Output only. Server assigned unique identifier for the trigger.
 	// The value is a UUID4 string and guaranteed to remain unchanged until

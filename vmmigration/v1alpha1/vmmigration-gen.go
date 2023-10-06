@@ -2999,23 +2999,24 @@ type MigrationError struct {
 	//
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - Default value. This value is not used.
-	//   "UNKNOWN_ERROR" - Migrate for Compute encountered an unknown error.
-	//   "SOURCE_VALIDATION_ERROR" - Migrate for Compute encountered an
-	// error while validating replication source health.
-	//   "SOURCE_REPLICATION_ERROR" - Migrate for Compute encountered an
-	// error during source data operation.
-	//   "TARGET_REPLICATION_ERROR" - Migrate for Compute encountered an
-	// error during target data operation.
-	//   "OS_ADAPTATION_ERROR" - Migrate for Compute encountered an error
-	// during OS adaptation.
-	//   "CLONE_ERROR" - Migrate for Compute encountered an error in clone
-	// operation.
-	//   "CUTOVER_ERROR" - Migrate for Compute encountered an error in
-	// cutover operation.
-	//   "UTILIZATION_REPORT_ERROR" - Migrate for Compute encountered an
-	// error during utilization report creation.
-	//   "APPLIANCE_UPGRADE_ERROR" - Migrate for Compute encountered an
-	// error during appliance upgrade.
+	//   "UNKNOWN_ERROR" - Migrate to Virtual Machines encountered an
+	// unknown error.
+	//   "SOURCE_VALIDATION_ERROR" - Migrate to Virtual Machines encountered
+	// an error while validating replication source health.
+	//   "SOURCE_REPLICATION_ERROR" - Migrate to Virtual Machines
+	// encountered an error during source data operation.
+	//   "TARGET_REPLICATION_ERROR" - Migrate to Virtual Machines
+	// encountered an error during target data operation.
+	//   "OS_ADAPTATION_ERROR" - Migrate to Virtual Machines encountered an
+	// error during OS adaptation.
+	//   "CLONE_ERROR" - Migrate to Virtual Machines encountered an error in
+	// clone operation.
+	//   "CUTOVER_ERROR" - Migrate to Virtual Machines encountered an error
+	// in cutover operation.
+	//   "UTILIZATION_REPORT_ERROR" - Migrate to Virtual Machines
+	// encountered an error during utilization report creation.
+	//   "APPLIANCE_UPGRADE_ERROR" - Migrate to Virtual Machines encountered
+	// an error during appliance upgrade.
 	Code string `json:"code,omitempty"`
 
 	// ErrorMessage: Output only. The localized error message.

@@ -3638,6 +3638,9 @@ type GooglePrivacyDlpV2DlpJob struct {
 	// trigger that instantiated the job.
 	JobTriggerName string `json:"jobTriggerName,omitempty"`
 
+	// LastModified: Time when the job was last modified by the system.
+	LastModified string `json:"lastModified,omitempty"`
+
 	// Name: The server-assigned name.
 	Name string `json:"name,omitempty"`
 
@@ -4864,9 +4867,9 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "JAPAN" - The infoType is typically used in Japan.
 	//   "KOREA" - The infoType is typically used in Korea.
 	//   "MEXICO" - The infoType is typically used in Mexico.
-	//   "NEW_ZEALAND" - The infoType is typically used in New Zealand.
 	//   "THE_NETHERLANDS" - The infoType is typically used in the
 	// Netherlands.
+	//   "NEW_ZEALAND" - The infoType is typically used in New Zealand.
 	//   "NORWAY" - The infoType is typically used in Norway.
 	//   "PARAGUAY" - The infoType is typically used in Paraguay.
 	//   "PERU" - The infoType is typically used in Peru.
@@ -4876,6 +4879,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "SOUTH_AFRICA" - The infoType is typically used in South Africa.
 	//   "SPAIN" - The infoType is typically used in Spain.
 	//   "SWEDEN" - The infoType is typically used in Sweden.
+	//   "SWITZERLAND" - The infoType is typically used in Switzerland.
 	//   "TAIWAN" - The infoType is typically used in Taiwan.
 	//   "THAILAND" - The infoType is typically used in Thailand.
 	//   "TURKEY" - The infoType is typically used in Turkey.

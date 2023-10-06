@@ -2688,6 +2688,20 @@ type GoogleAnalyticsAdminV1betaRunAccessReportRequest struct {
 	// Requests are allowed up to 9 dimensions.
 	Dimensions []*GoogleAnalyticsAdminV1betaAccessDimension `json:"dimensions,omitempty"`
 
+	// ExpandGroups: Optional. Decides whether to return the users within
+	// user groups. This field works only when include_all_users is set to
+	// true. If true, it will return all users with access to the specified
+	// property or account. If false, only the users with direct access will
+	// be returned.
+	ExpandGroups bool `json:"expandGroups,omitempty"`
+
+	// IncludeAllUsers: Optional. Determines whether to include users who
+	// have never made an API call in the response. If true, all users with
+	// access to the specified property or account are included in the
+	// response, regardless of whether they have made an API call or not. If
+	// false, only the users who have made an API call will be included.
+	IncludeAllUsers bool `json:"includeAllUsers,omitempty"`
+
 	// Limit: The number of rows to return. If unspecified, 10,000 rows are
 	// returned. The API returns a maximum of 100,000 rows per request, no
 	// matter how many you ask for. `limit` must be positive. The API may

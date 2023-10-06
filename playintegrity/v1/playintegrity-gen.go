@@ -395,10 +395,7 @@ type DeviceIntegrity struct {
 	// with Google Play services which meets core Android compatibility
 	// requirements.
 	//   "MEETS_WEAK_INTEGRITY" - App is running on a device that passes
-	// only weak integrity checks (is a physical device). See
-	// go/pcm-physical-device-detection for more details. Note that this
-	// label won't be served for PIA heavyweight and express for now, only
-	// for the crystal mode.
+	// only weak integrity checks (is a physical device).
 	DeviceRecognitionVerdict []string `json:"deviceRecognitionVerdict,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -582,13 +579,12 @@ func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 }
 
 // UserRemediationDetails: Contains details of remediation guidance that
-// the user can perform. See go/pia-interstitials-dd
+// the user can perform.
 type UserRemediationDetails struct {
 	// Remediation: Description of the user remediation action. Required.
 	//
 	// Possible values:
-	//   "UNKNOWN_USER_REMEDIATION" - Catch-all for unrecognized enum
-	// values. See go/protodosdonts.
+	//   "UNKNOWN_USER_REMEDIATION" - User remediation is unknown.
 	//   "RESTORE_FACTORY_ROM" - The user has installed a custom ROM, and
 	// should restore the device to a clean factory ROM.
 	//   "LOCK_BOOTLOADER" - The device bootloader has been unlocked, the

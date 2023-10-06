@@ -2597,8 +2597,8 @@ type ImportDataFile struct {
 	// CreateTime: Output only. The timestamp when the file was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DisplayName: User-friendly display name. Maximum length is 63
-	// characters.
+	// DisplayName: Optional. User-friendly display name. Maximum length is
+	// 256 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Format: Required. The payload format.
@@ -6129,7 +6129,7 @@ func (s *VirtualMachineNetworkDetails) MarshalJSON() ([]byte, error) {
 }
 
 // VirtualMachinePreferences: VirtualMachinePreferences enables you to
-// create sets of assumptions, for example, a geographical location and
+// create sets of preferences, for example, a geographical location and
 // pricing track, for your migrated virtual machines. The set of
 // preferences influence recommendations for migrating virtual machine
 // assets.

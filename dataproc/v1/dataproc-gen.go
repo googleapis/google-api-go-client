@@ -5191,6 +5191,10 @@ type ResizeNodeGroupRequest struct {
 	// supported on Dataproc image versions 1.2 and higher.
 	GracefulDecommissionTimeout string `json:"gracefulDecommissionTimeout,omitempty"`
 
+	// ParentOperationId: Optional. operation id of the parent operation
+	// sending the resize request
+	ParentOperationId string `json:"parentOperationId,omitempty"`
+
 	// RequestId: Optional. A unique ID used to identify the request. If the
 	// server receives two ResizeNodeGroupRequest
 	// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.ResizeNodeGroupRequests)
@@ -16579,6 +16583,13 @@ func (c *ProjectsRegionsClustersNodeGroupsCreateCall) NodeGroupId(nodeGroupId st
 	return c
 }
 
+// ParentOperationId sets the optional parameter "parentOperationId":
+// operation id of the parent operation sending the create request
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) ParentOperationId(parentOperationId string) *ProjectsRegionsClustersNodeGroupsCreateCall {
+	c.urlParams_.Set("parentOperationId", parentOperationId)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique ID used
 // to identify the request. If the server receives two
 // CreateNodeGroupRequest
@@ -16703,6 +16714,11 @@ func (c *ProjectsRegionsClustersNodeGroupsCreateCall) Do(opts ...googleapi.CallO
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parentOperationId": {
+	//       "description": "Optional. operation id of the parent operation sending the create request",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "requestId": {

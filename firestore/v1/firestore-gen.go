@@ -1897,10 +1897,12 @@ type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 
 	// SnapshotTime: The timestamp that corresponds to the version of the
 	// database to be exported. The timestamp must be rounded to the minute,
-	// in the past, and not older than 1 hour. If specified, then the
-	// exported documents will represent a consistent view of the database
-	// at the provided time. Otherwise, there are no guarantees about the
-	// consistency of the exported documents.
+	// in the past, and not older than 5 days. Please choose a reasonable
+	// timestamp based on prior knowledge on how long exports take as data
+	// at provided snapshot timestamp can expire during export. If
+	// specified, then the exported documents will represent a consistent
+	// view of the database at the provided time. Otherwise, there are no
+	// guarantees about the consistency of the exported documents.
 	SnapshotTime string `json:"snapshotTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
@@ -2090,6 +2092,11 @@ func (s *GoogleFirestoreAdminV1FieldOperationMetadata) MarshalJSON() ([]byte, er
 	type NoMethod GoogleFirestoreAdminV1FieldOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1FlatIndex: An index that stores vectors in a
+// flat data structure, and supports exhaustive search.
+type GoogleFirestoreAdminV1FlatIndex struct {
 }
 
 // GoogleFirestoreAdminV1ImportDocumentsMetadata: Metadata for
@@ -2414,6 +2421,10 @@ type GoogleFirestoreAdminV1IndexField struct {
 	//   "ASCENDING" - The field is ordered by ascending field value.
 	//   "DESCENDING" - The field is ordered by descending field value.
 	Order string `json:"order,omitempty"`
+
+	// VectorConfig: Indicates that this field supports nearest neighbors
+	// and distance operations on vector.
+	VectorConfig *GoogleFirestoreAdminV1VectorConfig `json:"vectorConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayConfig") to
 	// unconditionally include in API requests. By default, fields with
@@ -2784,8 +2795,8 @@ func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, e
 // GoogleFirestoreAdminV1RestoreDatabaseRequest: The request message for
 // FirestoreAdmin.RestoreDatabase.
 type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
-	// Backup: Required. Backup to restore from. Must be from the same
-	// project as the parent. Format is:
+	// Backup: Backup to restore from. Must be from the same project as the
+	// parent. Format is:
 	// `projects/{project_id}/locations/{location}/backups/{backup}`
 	Backup string `json:"backup,omitempty"`
 
@@ -2943,6 +2954,40 @@ func (s *GoogleFirestoreAdminV1TtlConfigDelta) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
 // update database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
+}
+
+// GoogleFirestoreAdminV1VectorConfig: The index configuration to
+// support vector search operations
+type GoogleFirestoreAdminV1VectorConfig struct {
+	// Dimension: Required. The vector dimension this configuration applies
+	// to. The resulting index will only include vectors of this dimension,
+	// and can be used for vector search with the same dimension.
+	Dimension int64 `json:"dimension,omitempty"`
+
+	// Flat: Indicates the vector index is a flat index.
+	Flat *GoogleFirestoreAdminV1FlatIndex `json:"flat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimension") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimension") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1VectorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1VectorConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1WeeklyRecurrence: Represents a recurring
@@ -3571,7 +3616,7 @@ type PartitionQueryResponse struct {
 	// queries will return the entire result set of the original query: *
 	// query, end_at A * query, start_at A, end_at B * query, start_at B An
 	// empty result may indicate that the query has too few results to be
-	// partitioned.
+	// partitioned, or that the query is not yet supported for partitioning.
 	Partitions []*Cursor `json:"partitions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

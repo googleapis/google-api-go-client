@@ -1396,28 +1396,31 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata about the service in a location.
 type LocationMetadata struct {
+	// MultiRegionMetadata: The multi-region metadata if the current region
+	// is a multi-region.
+	MultiRegionMetadata *MultiRegionMetadata `json:"multiRegionMetadata,omitempty"`
+
 	// SupportedHiveMetastoreVersions: The versions of Hive Metastore that
 	// can be used when creating a new metastore service in this location.
 	// The server guarantees that exactly one HiveMetastoreVersion in the
 	// list will set is_default.
 	SupportedHiveMetastoreVersions []*HiveMetastoreVersion `json:"supportedHiveMetastoreVersions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "SupportedHiveMetastoreVersions") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MultiRegionMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "SupportedHiveMetastoreVersions") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MultiRegionMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1661,6 +1664,37 @@ func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 // MoveTableToDatabaseResponse: Response message for
 // DataprocMetastore.MoveTableToDatabase.
 type MoveTableToDatabaseResponse struct {
+}
+
+// MultiRegionMetadata: The metadata for the multi-region that includes
+// the constituent regions. The metadata is only populated if the region
+// is multi-region. For single region, it will be empty.
+type MultiRegionMetadata struct {
+	// ConstituentRegions: The regions constituting the multi-region.
+	ConstituentRegions []string `json:"constituentRegions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConstituentRegions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConstituentRegions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiRegionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiRegionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore

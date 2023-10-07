@@ -2337,6 +2337,13 @@ type Runnable struct {
 	// Container: Container runnable.
 	Container *Container `json:"container,omitempty"`
 
+	// DisplayName: Optional. DisplayName is an optional field that can be
+	// provided by the caller. If provided, it will be used in logs and
+	// other outputs to identify the script, making it easier for users to
+	// understand the logs. If not provided the index of the runnable will
+	// be used for outputs.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// Environment: Environment variables for this Runnable (overrides
 	// variables set for the whole Task or TaskGroup).
 	Environment *Environment `json:"environment,omitempty"`

@@ -159,30 +159,23 @@ type V1Service struct {
 	s *Service
 }
 
-// AccountActivity: Contains a signal helping apps differentiating
-// between likely genuine users and likely non-genuine traffic (such as
-// accounts being used for fraud, accounts used by automated traffic, or
-// accounts used in device farms) based on the presence and volume of
-// Play store activity.
+// AccountActivity: (Restricted Access) Contains a signal helping apps
+// differentiating between likely genuine and likely non-genuine user
+// traffic.
 type AccountActivity struct {
 	// ActivityLevel: Required. Indicates the activity level of the account.
 	//
 	// Possible values:
 	//   "ACTIVITY_LEVEL_UNSPECIFIED" - Activity level has not been set.
-	//   "UNEVALUATED" - Account activity level is not evaluated because one
-	// of the prerequisite conditions is not met (e.g., device is not
-	// trusted, the user does not have Play app license)
-	//   "UNUSUAL" - Google Play store activity is unusual for at least one
-	// of the user accounts on the device. Google Play recommends checking
-	// that this is a real user.
-	//   "UNKNOWN" - Google Play does not have sufficient activity for the
-	// user account on the device. The account may be new, or it may lack
-	// activity on Google Play.
-	//   "TYPICAL_BASIC" - Google Play store activity is typical for the
-	// user account or accounts on the device.
-	//   "TYPICAL_STRONG" - Google Play store activity is typical for the
-	// user account or accounts on the device, with harder to replicate
-	// signals.
+	//   "UNEVALUATED" - Account activity level is not evaluated.
+	//   "UNUSUAL" - Unusual activity for at least one of the user accounts
+	// on the device.
+	//   "UNKNOWN" - Insufficient activity to verify the user account on the
+	// device.
+	//   "TYPICAL_BASIC" - Typical activity for the user account or accounts
+	// on the device.
+	//   "TYPICAL_STRONG" - Typical for the user account or accounts on the
+	// device, with harder to replicate signals.
 	ActivityLevel string `json:"activityLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityLevel") to
@@ -211,8 +204,8 @@ func (s *AccountActivity) MarshalJSON() ([]byte, error) {
 // AccountDetails: Contains the account information such as the
 // licensing status for the user in the scope.
 type AccountDetails struct {
-	// AccountActivity: Details about the account activity for the user in
-	// the scope.
+	// AccountActivity: (Restricted Access) Details about the account
+	// activity for the user in the scope.
 	AccountActivity *AccountActivity `json:"accountActivity,omitempty"`
 
 	// AppLicensingVerdict: Required. Details about the licensing status of

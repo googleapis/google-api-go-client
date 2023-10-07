@@ -2469,7 +2469,7 @@ type PartitionQueryResponse struct {
 	// queries will return the entire result set of the original query: *
 	// query, end_at A * query, start_at A, end_at B * query, start_at B An
 	// empty result may indicate that the query has too few results to be
-	// partitioned.
+	// partitioned, or that the query is not yet supported for partitioning.
 	Partitions []*Cursor `json:"partitions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

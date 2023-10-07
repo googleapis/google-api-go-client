@@ -2697,6 +2697,9 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 	// Name: Output only. ProxyConfig resource name.
 	Name string `json:"name,omitempty"`
 
+	// ProxyProtocolConfig: Optional. Protocol config data for the Proxy.
+	ProxyProtocolConfig *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig `json:"proxyProtocolConfig,omitempty"`
+
 	// ProxyUri: Required. The URI of the proxy server.
 	ProxyUri string `json:"proxyUri,omitempty"`
 
@@ -2735,6 +2738,36 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 
 func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig: The
+// protocol data that specifies how to communicate with Partner's Proxy.
+type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig struct {
+	// Metadata: Optional. Untyped property bag to be sent back to the proxy
+	// using client specific mechanism.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

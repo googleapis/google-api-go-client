@@ -418,6 +418,14 @@ type DatabaseConfig struct {
 	// environments in versions composer-1.*.*-airflow-*.*.*.
 	MachineType string `json:"machineType,omitempty"`
 
+	// Zone: Optional. The Compute Engine zone where the Airflow database is
+	// created. If zone is provided, it must be in the region selected for
+	// the environment. If zone is not provided, a zone is automatically
+	// selected. The zone can only be set during environment creation.
+	// Supported for Cloud Composer environments in versions
+	// composer-2.*.*-airflow-*.*.*.
+	Zone string `json:"zone,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2250,6 +2258,31 @@ func (s *StopAirflowCommandResponse) MarshalJSON() ([]byte, error) {
 
 // StorageConfig: The configuration for data storage in the environment.
 type StorageConfig struct {
+	// Bucket: Optional. The name of the Cloud Storage bucket used by the
+	// environment. No `gs://` prefix.
+	Bucket string `json:"bucket,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TriggererResource: Configuration for resources used by Airflow

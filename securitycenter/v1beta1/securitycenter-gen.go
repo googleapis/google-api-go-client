@@ -2494,8 +2494,8 @@ func (s *GoogleCloudSecuritycenterV1ResourceSelector) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudSecuritycenterV1ResourceValueConfig: A resource value
-// config is a mapping configuration of user's tag values to resource
-// values. Used by the attack path simulation.
+// config (RVC) is a mapping configuration of user's resources to
+// resource values. Used in Attack path simulations.
 type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// CreateTime: Output only. Timestamp this resource value config was
 	// created.

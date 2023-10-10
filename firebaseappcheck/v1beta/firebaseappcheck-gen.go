@@ -877,9 +877,10 @@ type GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest struct {
 	// prior call to GenerateAppAttestChallenge.
 	Challenge string `json:"challenge,omitempty"`
 
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Artifact") to
@@ -921,9 +922,10 @@ type GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest struct {
 	// app.
 	KeyId string `json:"keyId,omitempty"`
 
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -998,9 +1000,10 @@ type GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest struct {
 	// Admin SDK service account credentials.
 	CustomToken string `json:"customToken,omitempty"`
 
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomToken") to
@@ -1033,9 +1036,10 @@ type GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest struct {
 	// debug token secret previously created using CreateDebugToken.
 	DebugToken string `json:"debugToken,omitempty"`
 
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DebugToken") to
@@ -1070,9 +1074,10 @@ type GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest struct {
 	// This is the base64 encoded `Data` (Swift) or `NSData` (ObjC) object.
 	DeviceToken string `json:"deviceToken,omitempty"`
 
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceToken") to
@@ -1101,9 +1106,10 @@ func (s *GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest) MarshalJSO
 // GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest:
 // Request message for the ExchangePlayIntegrityToken method.
 type GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest struct {
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// PlayIntegrityToken: Required. The integrity verdict response token
@@ -1138,9 +1144,10 @@ func (s *GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest) MarshalJ
 // GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest:
 // Request message for the ExchangeRecaptchaEnterpriseToken method.
 type GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest struct {
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// RecaptchaEnterpriseToken: Required. The reCAPTCHA token as returned
@@ -1206,9 +1213,10 @@ func (s *GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest) MarshalJSON(
 // GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest: Request
 // message for the ExchangeRecaptchaV3Token method.
 type GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest struct {
-	// LimitedUse: Forces a short-lived token with a 5 minute TTL. Useful
-	// when the client wishes to impose stricter TTL requirements for this
-	// exchange. Default: false.
+	// LimitedUse: Specifies whether this attestation is for use in a
+	// *limited use* (`true`) or *session based* (`false`) context. To
+	// enable this attestation to be used with the *replay protection*
+	// feature, set this to `true`. The default value is `false`.
 	LimitedUse bool `json:"limitedUse,omitempty"`
 
 	// RecaptchaV3Token: Required. The reCAPTCHA token as returned by the

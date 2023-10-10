@@ -13007,6 +13007,13 @@ func (c *ChannelsListCall) CategoryId(categoryId string) *ChannelsListCall {
 	return c
 }
 
+// ForHandle sets the optional parameter "forHandle": Return the channel
+// associated with a YouTube handle. UNIMPLEMENTED.
+func (c *ChannelsListCall) ForHandle(forHandle string) *ChannelsListCall {
+	c.urlParams_.Set("forHandle", forHandle)
+	return c
+}
+
 // ForUsername sets the optional parameter "forUsername": Return the
 // channel associated with a YouTube username.
 func (c *ChannelsListCall) ForUsername(forUsername string) *ChannelsListCall {
@@ -13193,6 +13200,11 @@ func (c *ChannelsListCall) Do(opts ...googleapi.CallOption) (*ChannelListRespons
 	//   "parameters": {
 	//     "categoryId": {
 	//       "description": "Return the channels within the specified guide category ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "forHandle": {
+	//       "description": "Return the channel associated with a YouTube handle. UNIMPLEMENTED.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

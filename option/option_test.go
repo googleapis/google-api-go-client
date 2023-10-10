@@ -92,8 +92,8 @@ func TestApply(t *testing.T) {
 		RequestReason:     "Request Reason",
 		TelemetryDisabled: true,
 	}
-	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{})) {
-		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{})))
+	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")) {
+		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")))
 	}
 }
 

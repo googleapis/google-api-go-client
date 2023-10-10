@@ -270,6 +270,7 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsService struct {
 
 func NewProjectsLocationsDatasetsDicomStoresService(s *Service) *ProjectsLocationsDatasetsDicomStoresService {
 	rs := &ProjectsLocationsDatasetsDicomStoresService{s: s}
+	rs.DicomWeb = NewProjectsLocationsDatasetsDicomStoresDicomWebService(s)
 	rs.Studies = NewProjectsLocationsDatasetsDicomStoresStudiesService(s)
 	return rs
 }
@@ -277,7 +278,42 @@ func NewProjectsLocationsDatasetsDicomStoresService(s *Service) *ProjectsLocatio
 type ProjectsLocationsDatasetsDicomStoresService struct {
 	s *Service
 
+	DicomWeb *ProjectsLocationsDatasetsDicomStoresDicomWebService
+
 	Studies *ProjectsLocationsDatasetsDicomStoresStudiesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresDicomWebService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebService {
+	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebService{s: s}
+	rs.Studies = NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesService(s)
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebService struct {
+	s *Service
+
+	Studies *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService {
+	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService{s: s}
+	rs.Series = NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService(s)
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService struct {
+	s *Service
+
+	Series *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService {
+	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDatasetsDicomStoresStudiesService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesService {
@@ -1813,6 +1849,60 @@ type DicomStore struct {
 
 func (s *DicomStore) MarshalJSON() ([]byte, error) {
 	type NoMethod DicomStore
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DicomStoreMetrics: DicomStoreMetrics contains metrics describing a
+// DICOM store.
+type DicomStoreMetrics struct {
+	// BlobStorageSizeBytes: Total blob storage bytes for all instances in
+	// the store.
+	BlobStorageSizeBytes int64 `json:"blobStorageSizeBytes,omitempty,string"`
+
+	// InstanceCount: Number of instances in the store.
+	InstanceCount int64 `json:"instanceCount,omitempty,string"`
+
+	// Name: Resource name of the DICOM store, of the form
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
+	// icomStores/{dicom_store_id}`.
+	Name string `json:"name,omitempty"`
+
+	// SeriesCount: Number of series in the store.
+	SeriesCount int64 `json:"seriesCount,omitempty,string"`
+
+	// StructuredStorageSizeBytes: Total structured storage bytes for all
+	// instances in the store.
+	StructuredStorageSizeBytes int64 `json:"structuredStorageSizeBytes,omitempty,string"`
+
+	// StudyCount: Number of studies in the store.
+	StudyCount int64 `json:"studyCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BlobStorageSizeBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlobStorageSizeBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DicomStoreMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod DicomStoreMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3642,6 +3732,82 @@ type Hl7V2Store struct {
 
 func (s *Hl7V2Store) MarshalJSON() ([]byte, error) {
 	type NoMethod Hl7V2Store
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Hl7V2StoreMetric: Count of messages and total storage size by type
+// for a given HL7 store.
+type Hl7V2StoreMetric struct {
+	// Count: The total count of HL7v2 messages in the store for the given
+	// message type.
+	Count int64 `json:"count,omitempty,string"`
+
+	// MessageType: The Hl7v2 message type this metric applies to, such as
+	// `ADT` or `ORU`.
+	MessageType string `json:"messageType,omitempty"`
+
+	// StructuredStorageSizeBytes: The total amount of structured storage
+	// used by HL7v2 messages of this message type in the store.
+	StructuredStorageSizeBytes int64 `json:"structuredStorageSizeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Hl7V2StoreMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod Hl7V2StoreMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Hl7V2StoreMetrics: List of metrics for a given HL7v2 store.
+type Hl7V2StoreMetrics struct {
+	// Metrics: List of HL7v2 store metrics by message type.
+	Metrics []*Hl7V2StoreMetric `json:"metrics,omitempty"`
+
+	// Name: The resource name of the HL7v2 store to get metrics for, in the
+	// format
+	// `projects/{project_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_
+	// id}`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metrics") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Hl7V2StoreMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod Hl7V2StoreMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5733,6 +5899,55 @@ func (s *Segment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SeriesMetrics: SeriesMetrics contains metrics describing a DICOM
+// series.
+type SeriesMetrics struct {
+	// BlobStorageSizeBytes: Total blob storage bytes for all instances in
+	// the series.
+	BlobStorageSizeBytes int64 `json:"blobStorageSizeBytes,omitempty,string"`
+
+	// InstanceCount: Number of instances in the series.
+	InstanceCount int64 `json:"instanceCount,omitempty,string"`
+
+	// Series: The series resource path. For example,
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
+	// icomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{serie
+	// s_uid}`.
+	Series string `json:"series,omitempty"`
+
+	// StructuredStorageSizeBytes: Total structured storage bytes for all
+	// instances in the series.
+	StructuredStorageSizeBytes int64 `json:"structuredStorageSizeBytes,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BlobStorageSizeBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlobStorageSizeBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SeriesMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod SeriesMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -5935,6 +6150,56 @@ type StreamConfig struct {
 
 func (s *StreamConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StudyMetrics: StudyMetrics contains metrics describing a DICOM study.
+type StudyMetrics struct {
+	// BlobStorageSizeBytes: Total blob storage bytes for all instances in
+	// the study.
+	BlobStorageSizeBytes int64 `json:"blobStorageSizeBytes,omitempty,string"`
+
+	// InstanceCount: Number of instances in the study.
+	InstanceCount int64 `json:"instanceCount,omitempty,string"`
+
+	// SeriesCount: Number of series in the study.
+	SeriesCount int64 `json:"seriesCount,omitempty,string"`
+
+	// StructuredStorageSizeBytes: Total structured storage bytes for all
+	// instances in the study.
+	StructuredStorageSizeBytes int64 `json:"structuredStorageSizeBytes,omitempty,string"`
+
+	// Study: The study resource path. For example,
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
+	// icomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.
+	Study string `json:"study,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BlobStorageSizeBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlobStorageSizeBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StudyMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod StudyMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14770,6 +15035,153 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "healthcare.projects.locations.datasets.dicomStores.getDICOMStoreMetrics":
+
+type ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDICOMStoreMetrics: Gets metrics associated with the DICOM store.
+//
+// - name: The resource name of the DICOM store to get metrics for.
+func (r *ProjectsLocationsDatasetsDicomStoresService) GetDICOMStoreMetrics(name string) *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getDICOMStoreMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.getDICOMStoreMetrics" call.
+// Exactly one of *DicomStoreMetrics or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DicomStoreMetrics.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) Do(opts ...googleapi.CallOption) (*DicomStoreMetrics, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DicomStoreMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets metrics associated with the DICOM store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:getDICOMStoreMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.getDICOMStoreMetrics",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the DICOM store to get metrics for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:getDICOMStoreMetrics",
+	//   "response": {
+	//     "$ref": "DicomStoreMetrics"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.dicomStores.getIamPolicy":
 
 type ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall struct {
@@ -16323,6 +16735,305 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Do(opts ...
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.getStudyMetrics":
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall struct {
+	s            *Service
+	study        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetStudyMetrics: GetStudyMetrics returns metrics for a study.
+//
+//   - study: The study resource path. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.
+func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService) GetStudyMetrics(study string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.study = study
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+study}:getStudyMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"study": c.study,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.getStudyMetrics" call.
+// Exactly one of *StudyMetrics or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StudyMetrics.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall) Do(opts ...googleapi.CallOption) (*StudyMetrics, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StudyMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetStudyMetrics returns metrics for a study.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}:getStudyMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.getStudyMetrics",
+	//   "parameterOrder": [
+	//     "study"
+	//   ],
+	//   "parameters": {
+	//     "study": {
+	//       "description": "The study resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+study}:getStudyMetrics",
+	//   "response": {
+	//     "$ref": "StudyMetrics"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.getSeriesMetrics":
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall struct {
+	s            *Service
+	series       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSeriesMetrics: GetSeriesMetrics returns metrics for a series.
+//
+//   - series: The series resource path. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{s
+//     eries_uid}`.
+func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService) GetSeriesMetrics(series string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.series = series
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+series}:getSeriesMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"series": c.series,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.getSeriesMetrics" call.
+// Exactly one of *SeriesMetrics or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SeriesMetrics.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall) Do(opts ...googleapi.CallOption) (*SeriesMetrics, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SeriesMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetSeriesMetrics returns metrics for a series.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}:getSeriesMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.getSeriesMetrics",
+	//   "parameterOrder": [
+	//     "series"
+	//   ],
+	//   "parameters": {
+	//     "series": {
+	//       "description": "The series resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{series_uid}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+/series/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+series}:getSeriesMetrics",
+	//   "response": {
+	//     "$ref": "SeriesMetrics"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-healthcare",
@@ -23709,6 +24420,156 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Do(opts ...googleapi.CallO
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Hl7V2Store"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics":
+
+type ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetHL7v2StoreMetrics: Gets metrics asssociated with the HL7v2 store.
+//
+//   - name: The resource name of the HL7v2 store to get metrics for, in
+//     the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /hl7V2Stores/{hl7v2_store_id}`.
+func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetHL7v2StoreMetrics(name string) *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall {
+	c := &ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getHL7v2StoreMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics" call.
+// Exactly one of *Hl7V2StoreMetrics or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *Hl7V2StoreMetrics.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Do(opts ...googleapi.CallOption) (*Hl7V2StoreMetrics, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Hl7V2StoreMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets metrics asssociated with the HL7v2 store.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:getHL7v2StoreMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the HL7v2 store to get metrics for, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:getHL7v2StoreMetrics",
+	//   "response": {
+	//     "$ref": "Hl7V2StoreMetrics"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-healthcare",

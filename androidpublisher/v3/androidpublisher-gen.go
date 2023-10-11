@@ -2829,6 +2829,7 @@ type Grant struct {
 	//   "CAN_VIEW_NON_FINANCIAL_DATA" - View app information (read-only).
 	//   "CAN_VIEW_APP_QUALITY" - View app quality data such as Vitals,
 	// Crashes etc.
+	//   "CAN_MANAGE_DEEPLINKS" - Manage the deep links setup of an app.
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
@@ -5457,7 +5458,8 @@ type SubscriptionItemPriceChangeDetails struct {
 	// ExpectedNewPriceChargeTime: The renewal time at which the price
 	// change will become effective for the user. This is subject to
 	// change(to a future time) due to cases where the renewal time shifts
-	// like pause.
+	// like pause. This field is only populated if the price change has not
+	// taken effect.
 	ExpectedNewPriceChargeTime string `json:"expectedNewPriceChargeTime,omitempty"`
 
 	// NewPrice: New recurring price for the subscription item.
@@ -6952,6 +6954,8 @@ type User struct {
 	// download bulk reports (read-only).
 	//   "CAN_VIEW_APP_QUALITY_GLOBAL" - View app quality information for
 	// all apps for the developer.
+	//   "CAN_MANAGE_DEEPLINKS_GLOBAL" - Manage the deep links setup for all
+	// apps for the developer.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 
 	// Email: Immutable. The user's email address.

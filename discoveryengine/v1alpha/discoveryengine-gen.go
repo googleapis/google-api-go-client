@@ -406,6 +406,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
 func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
 	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
 	rs.Operations = NewProjectsLocationsCollectionsEnginesOperationsService(s)
+	rs.ServingConfigs = NewProjectsLocationsCollectionsEnginesServingConfigsService(s)
 	return rs
 }
 
@@ -413,6 +414,8 @@ type ProjectsLocationsCollectionsEnginesService struct {
 	s *Service
 
 	Operations *ProjectsLocationsCollectionsEnginesOperationsService
+
+	ServingConfigs *ProjectsLocationsCollectionsEnginesServingConfigsService
 }
 
 func NewProjectsLocationsCollectionsEnginesOperationsService(s *Service) *ProjectsLocationsCollectionsEnginesOperationsService {
@@ -421,6 +424,15 @@ func NewProjectsLocationsCollectionsEnginesOperationsService(s *Service) *Projec
 }
 
 type ProjectsLocationsCollectionsEnginesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsEnginesServingConfigsService(s *Service) *ProjectsLocationsCollectionsEnginesServingConfigsService {
+	rs := &ProjectsLocationsCollectionsEnginesServingConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesServingConfigsService struct {
 	s *Service
 }
 
@@ -5907,6 +5919,10 @@ type GoogleCloudDiscoveryengineV1alphaWidgetConfig struct {
 	// LlmEnabled: Output only. Whether LLM is enabled in the corresponding
 	// data store.
 	LlmEnabled bool `json:"llmEnabled,omitempty"`
+
+	// MinimumDataTermAccepted: Output only. Whether the customer accepted
+	// data use terms.
+	MinimumDataTermAccepted bool `json:"minimumDataTermAccepted,omitempty"`
 
 	// Name: Immutable. The full resource name of the widget config. Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/d
@@ -14108,6 +14124,326 @@ func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) Pages(ctx contex
 			return nil
 		}
 		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.servingConfigs.recommend":
+
+type ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall struct {
+	s                                                 *Service
+	servingConfig                                     string
+	googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Recommend: Makes a recommendation, which requires a contextual user
+// event.
+//
+//   - servingConfig: Full resource name of the format:
+//     `projects/*/locations/global/collections/*/dataStores/*/servingConfi
+//     gs/*` Before you can request recommendations from your model, you
+//     must create at least one serving config for it.
+func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) Recommend(servingConfig string, googleclouddiscoveryenginev1alpharecommendrequest *GoogleCloudDiscoveryengineV1alphaRecommendRequest) *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall {
+	c := &ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.servingConfig = servingConfig
+	c.googleclouddiscoveryenginev1alpharecommendrequest = googleclouddiscoveryenginev1alpharecommendrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alpharecommendrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+servingConfig}:recommend")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"servingConfig": c.servingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.recommend" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaRecommendResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaRecommendResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaRecommendResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaRecommendResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Makes a recommendation, which requires a contextual user event.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs/{servingConfigsId}:recommend",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.engines.servingConfigs.recommend",
+	//   "parameterOrder": [
+	//     "servingConfig"
+	//   ],
+	//   "parameters": {
+	//     "servingConfig": {
+	//       "description": "Required. Full resource name of the format: `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*` Before you can request recommendations from your model, you must create at least one serving config for it.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+servingConfig}:recommend",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecommendRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecommendResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.servingConfigs.search":
+
+type ProjectsLocationsCollectionsEnginesServingConfigsSearchCall struct {
+	s                                              *Service
+	servingConfig                                  string
+	googleclouddiscoveryenginev1alphasearchrequest *GoogleCloudDiscoveryengineV1alphaSearchRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Search: Performs a search.
+//
+//   - servingConfig: The resource name of the Search serving config, such
+//     as
+//     `projects/*/locations/global/collections/default_collection/dataStor
+//     es/default_data_store/servingConfigs/default_serving_config`. This
+//     field is used to identify the serving configuration name, set of
+//     models used to make the search.
+func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) Search(servingConfig string, googleclouddiscoveryenginev1alphasearchrequest *GoogleCloudDiscoveryengineV1alphaSearchRequest) *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall {
+	c := &ProjectsLocationsCollectionsEnginesServingConfigsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.servingConfig = servingConfig
+	c.googleclouddiscoveryenginev1alphasearchrequest = googleclouddiscoveryenginev1alphasearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphasearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+servingConfig}:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"servingConfig": c.servingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.search" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaSearchResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaSearchResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Performs a search.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs/{servingConfigsId}:search",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.engines.servingConfigs.search",
+	//   "parameterOrder": [
+	//     "servingConfig"
+	//   ],
+	//   "parameters": {
+	//     "servingConfig": {
+	//       "description": "Required. The resource name of the Search serving config, such as `projects/*/locations/global/collections/default_collection/dataStores/default_data_store/servingConfigs/default_serving_config`. This field is used to identify the serving configuration name, set of models used to make the search.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/servingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+servingConfig}:search",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaSearchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaSearchResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleclouddiscoveryenginev1alphasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1alphasearchrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleclouddiscoveryenginev1alphasearchrequest.PageToken = x.NextPageToken
 	}
 }
 

@@ -1564,6 +1564,66 @@
                           ]
                         }
                       }
+                    },
+                    "servingConfigs": {
+                      "methods": {
+                        "recommend": {
+                          "description": "Makes a recommendation, which requires a contextual user event.",
+                          "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs/{servingConfigsId}:recommend",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.engines.servingConfigs.recommend",
+                          "parameterOrder": [
+                            "servingConfig"
+                          ],
+                          "parameters": {
+                            "servingConfig": {
+                              "description": "Required. Full resource name of the format: `projects/*/locations/global/collections/*/dataStores/*/servingConfigs/*` Before you can request recommendations from your model, you must create at least one serving config for it.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/servingConfigs/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha/{+servingConfig}:recommend",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaRecommendRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaRecommendResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "search": {
+                          "description": "Performs a search.",
+                          "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/servingConfigs/{servingConfigsId}:search",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.engines.servingConfigs.search",
+                          "parameterOrder": [
+                            "servingConfig"
+                          ],
+                          "parameters": {
+                            "servingConfig": {
+                              "description": "Required. The resource name of the Search serving config, such as `projects/*/locations/global/collections/default_collection/dataStores/default_data_store/servingConfigs/default_serving_config`. This field is used to identify the serving configuration name, set of models used to make the search.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/servingConfigs/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha/{+servingConfig}:search",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaSearchRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaSearchResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
                     }
                   }
                 },
@@ -2832,7 +2892,7 @@
       }
     }
   },
-  "revision": "20230928",
+  "revision": "20231003",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5699,6 +5759,11 @@
         },
         "llmEnabled": {
           "description": "Output only. Whether LLM is enabled in the corresponding data store.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "minimumDataTermAccepted": {
+          "description": "Output only. Whether the customer accepted data use terms.",
           "readOnly": true,
           "type": "boolean"
         },

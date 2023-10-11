@@ -7561,9 +7561,6 @@ type GoogleCloudAiplatformV1ExportDataConfig struct {
 	// ListAnnotations.
 	AnnotationsFilter string `json:"annotationsFilter,omitempty"`
 
-	// FilterSplit: Split based on the provided filters for each set.
-	FilterSplit *GoogleCloudAiplatformV1ExportFilterSplit `json:"filterSplit,omitempty"`
-
 	// FractionSplit: Split based on fractions defining the size of each
 	// set.
 	FractionSplit *GoogleCloudAiplatformV1ExportFractionSplit `json:"fractionSplit,omitempty"`
@@ -7849,62 +7846,6 @@ func (s *GoogleCloudAiplatformV1ExportFeatureValuesRequestSnapshotExport) Marsha
 // GoogleCloudAiplatformV1ExportFeatureValuesResponse: Response message
 // for FeaturestoreService.ExportFeatureValues.
 type GoogleCloudAiplatformV1ExportFeatureValuesResponse struct {
-}
-
-// GoogleCloudAiplatformV1ExportFilterSplit: Assigns input data to
-// training, validation, and test sets based on the given filters, data
-// pieces not matched by any filter are ignored. Currently only
-// supported for Datasets containing DataItems. If any of the filters in
-// this message are to match nothing, then they can be set as '-' (the
-// minus sign). Supported only for unstructured Datasets.
-type GoogleCloudAiplatformV1ExportFilterSplit struct {
-	// TestFilter: Required. A filter on DataItems of the Dataset. DataItems
-	// that match this filter are used to test the Model. A filter with same
-	// syntax as the one used in DatasetService.ListDataItems may be used.
-	// If a single DataItem is matched by more than one of the FilterSplit
-	// filters, then it is assigned to the first set that applies to it in
-	// the training, validation, test order.
-	TestFilter string `json:"testFilter,omitempty"`
-
-	// TrainingFilter: Required. A filter on DataItems of the Dataset.
-	// DataItems that match this filter are used to train the Model. A
-	// filter with same syntax as the one used in
-	// DatasetService.ListDataItems may be used. If a single DataItem is
-	// matched by more than one of the FilterSplit filters, then it is
-	// assigned to the first set that applies to it in the training,
-	// validation, test order.
-	TrainingFilter string `json:"trainingFilter,omitempty"`
-
-	// ValidationFilter: Required. A filter on DataItems of the Dataset.
-	// DataItems that match this filter are used to validate the Model. A
-	// filter with same syntax as the one used in
-	// DatasetService.ListDataItems may be used. If a single DataItem is
-	// matched by more than one of the FilterSplit filters, then it is
-	// assigned to the first set that applies to it in the training,
-	// validation, test order.
-	ValidationFilter string `json:"validationFilter,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TestFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TestFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudAiplatformV1ExportFilterSplit) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudAiplatformV1ExportFilterSplit
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1ExportFractionSplit: Assigns the input data to
@@ -12372,6 +12313,10 @@ type GoogleCloudAiplatformV1MachineSpec struct {
 	// `n1-standard-2`. For BatchPredictionJob or as part of WorkerPoolSpec
 	// this field is required.
 	MachineType string `json:"machineType,omitempty"`
+
+	// TpuTopology: Immutable. The topology of the TPUs. Corresponds to the
+	// TPU topologies available from GKE. (Example: tpu_topology: "2x2x1").
+	TpuTopology string `json:"tpuTopology,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
 	// unconditionally include in API requests. By default, fields with

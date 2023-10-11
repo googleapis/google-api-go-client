@@ -1199,12 +1199,12 @@ func (s *AdvertiserTargetingConfig) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_AGE_RANGE`.
 type AgeRangeAssignedTargetingOptionDetails struct {
-	// AgeRange: The age range of an audience. We only support targeting a
-	// continuous age range of an audience. Thus, the age range represented
-	// in this field can be 1) targeted solely, or, 2) part of a larger
-	// continuous age range. The reach of a continuous age range targeting
-	// can be expanded by also targeting an audience of an unknown age.
-	// Output only in v1. Required in v2.
+	// AgeRange: Required. The age range of an audience. We only support
+	// targeting a continuous age range of an audience. Thus, the age range
+	// represented in this field can be 1) targeted solely, or, 2) part of a
+	// larger continuous age range. The reach of a continuous age range
+	// targeting can be expanded by also targeting an audience of an unknown
+	// age.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
@@ -1606,8 +1606,7 @@ func (s *AssignedInventorySource) MarshalJSON() ([]byte, error) {
 }
 
 // AssignedLocation: An assignment between a location list and a
-// relevant targeting option. Currently, geo region targeting options
-// are the only supported option for assignment.
+// relevant targeting option.
 type AssignedLocation struct {
 	// AssignedLocationId: Output only. The unique ID of the assigned
 	// location. The ID is only unique within a location list. It may be
@@ -1618,10 +1617,7 @@ type AssignedLocation struct {
 	Name string `json:"name,omitempty"`
 
 	// TargetingOptionId: Required. The ID of the targeting option assigned
-	// to the location list. Assigned locations can only be modified in
-	// TARGETING_LOCATION_TYPE_REGIONAL location lists. When creating or
-	// deleting assigned locations, this value must be of type
-	// TARGETING_TYPE_GEO_REGION.
+	// to the location list.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2202,8 +2198,7 @@ func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 // is not supported. Remove all audio content type targeting options to
 // achieve this effect.
 type AudioContentTypeAssignedTargetingOptionDetails struct {
-	// AudioContentType: The audio content type. Output only in v1. Required
-	// in v2.
+	// AudioContentType: Required. The audio content type.
 	//
 	// Possible values:
 	//   "AUDIO_CONTENT_TYPE_UNSPECIFIED" - Audio content type is not
@@ -2841,11 +2836,11 @@ func (s *BulkEditAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error)
 // AssignedLocationService.BulkEditAssignedLocations.
 type BulkEditAssignedLocationsRequest struct {
 	// CreatedAssignedLocations: The assigned locations to create in bulk,
-	// specified as a list of AssignedLocations.
+	// specified as a list of AssignedLocation resources.
 	CreatedAssignedLocations []*AssignedLocation `json:"createdAssignedLocations,omitempty"`
 
 	// DeletedAssignedLocations: The IDs of the assigned locations to delete
-	// in bulk, specified as a list of assigned_location_ids.
+	// in bulk, specified as a list of assignedLocationId values.
 	DeletedAssignedLocations googleapi.Int64s `json:"deletedAssignedLocations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2873,8 +2868,6 @@ func (s *BulkEditAssignedLocationsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BulkEditAssignedLocationsResponse: Response message for
-// AssignedLocationService.BulkEditAssignedLocations.
 type BulkEditAssignedLocationsResponse struct {
 	// AssignedLocations: The list of assigned locations that have been
 	// successfully created. This list will be absent if empty.
@@ -4597,8 +4590,8 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	// audio content.
 	AdType string `json:"adType,omitempty"`
 
-	// ContentInstreamPosition: The content instream position for video or
-	// audio ads. Output only in v1. Required in v2.
+	// ContentInstreamPosition: Required. The content instream position for
+	// video or audio ads.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
@@ -4711,8 +4704,7 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	// audio content.
 	AdType string `json:"adType,omitempty"`
 
-	// ContentOutstreamPosition: The content outstream position. Output only
-	// in v1. Required in v2.
+	// ContentOutstreamPosition: Required. The content outstream position.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
@@ -5949,8 +5941,7 @@ type CustomBiddingScript struct {
 	CustomBiddingScriptId int64 `json:"customBiddingScriptId,omitempty,string"`
 
 	// Errors: Output only. Error details of a rejected custom bidding
-	// script. This field will only be populated when Script.state is
-	// REJECTED.
+	// script. This field will only be populated when state is REJECTED.
 	Errors []*ScriptError `json:"errors,omitempty"`
 
 	// Name: Output only. The resource name of the custom bidding script.
@@ -6494,17 +6485,16 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
-	// DeviceType: The display name of the device type. Output only in v1.
-	// Required in v2.
+	// DeviceType: Required. The display name of the device type.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
 	// specified in this version. This enum is a placeholder for default
 	// value and does not represent a real device type option.
-	//   "DEVICE_TYPE_COMPUTER" - The device type is computer.
-	//   "DEVICE_TYPE_CONNECTED_TV" - The device type is connected TV.
-	//   "DEVICE_TYPE_SMART_PHONE" - The device type is smart phone..
-	//   "DEVICE_TYPE_TABLET" - The device type is tablet.
+	//   "DEVICE_TYPE_COMPUTER" - Computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
+	//   "DEVICE_TYPE_TABLET" - Tablet.
 	DeviceType string `json:"deviceType,omitempty"`
 
 	// TargetingOptionId: Required. ID of the device type.
@@ -6543,10 +6533,10 @@ type DeviceTypeTargetingOptionDetails struct {
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
 	// specified in this version. This enum is a placeholder for default
 	// value and does not represent a real device type option.
-	//   "DEVICE_TYPE_COMPUTER" - The device type is computer.
-	//   "DEVICE_TYPE_CONNECTED_TV" - The device type is connected TV.
-	//   "DEVICE_TYPE_SMART_PHONE" - The device type is smart phone..
-	//   "DEVICE_TYPE_TABLET" - The device type is tablet.
+	//   "DEVICE_TYPE_COMPUTER" - Computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
+	//   "DEVICE_TYPE_TABLET" - Tablet.
 	DeviceType string `json:"deviceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceType") to
@@ -7338,8 +7328,7 @@ type Empty struct {
 // of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
-	// Environment: The serving environment. Output only in v1. Required in
-	// v2.
+	// Environment: Required. The serving environment.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
@@ -8349,8 +8338,7 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
-	// Gender: The gender of the audience. Output only in v1. Required in
-	// v2.
+	// Gender: Required. The gender of the audience.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
@@ -8462,12 +8450,12 @@ type GenerateDefaultLineItemRequest struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
 	// OTT insertion orders. This type is only applicable to line items with
 	// an insertion order of insertion_order_type `OVER_THE_TOP`.
-	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
-	// Line items of this type and their targeting cannot be created or
-	// updated using the API.
-	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Digital video out of home.
-	// Line items of this type and their targeting cannot be created or
-	// updated using the API.
+	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Display ads served on
+	// digital-out-of-home inventory. Line items of this type and their
+	// targeting cannot be created or updated using the API.
+	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
+	// digital-out-of-home inventory. Line items of this type and their
+	// targeting cannot be created or updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -9094,8 +9082,7 @@ func (s *GuaranteedOrderStatus) MarshalJSON() ([]byte, error) {
 // details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 type HouseholdIncomeAssignedTargetingOptionDetails struct {
-	// HouseholdIncome: The household income of the audience. Output only in
-	// v1. Required in v2.
+	// HouseholdIncome: Required. The household income of the audience.
 	//
 	// Possible values:
 	//   "HOUSEHOLD_INCOME_UNSPECIFIED" - Default value when household
@@ -9405,14 +9392,14 @@ type InsertionOrderBudget struct {
 	// automation option is not specified or is unknown in this version.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_BUDGET" - Automatic budget
 	// allocation. Allow the system to automatically shift budget to owning
-	// line items to optimize performance defined by performance_goal. No
-	// automation on bid settings.
+	// line items to optimize performance defined by kpi. No automation on
+	// bid settings.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_NONE" - No automation of bid or
 	// budget on insertion order level. Bid and budget must be manually
 	// configured at the line item level.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET" - Allow the system to
 	// automatically adjust bids and shift budget to owning line items to
-	// optimize performance defined by performance_goal.
+	// optimize performance defined by kpi.
 	AutomationType string `json:"automationType,omitempty"`
 
 	// BudgetSegments: Required. The list of budget segments. Use a budget
@@ -10672,12 +10659,12 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
 	// OTT insertion orders. This type is only applicable to line items with
 	// an insertion order of insertion_order_type `OVER_THE_TOP`.
-	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Digital display out of home.
-	// Line items of this type and their targeting cannot be created or
-	// updated using the API.
-	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Digital video out of home.
-	// Line items of this type and their targeting cannot be created or
-	// updated using the API.
+	//   "LINE_ITEM_TYPE_DISPLAY_OUT_OF_HOME" - Display ads served on
+	// digital-out-of-home inventory. Line items of this type and their
+	// targeting cannot be created or updated using the API.
+	//   "LINE_ITEM_TYPE_VIDEO_OUT_OF_HOME" - Video ads served on
+	// digital-out-of-home inventory. Line items of this type and their
+	// targeting cannot be created or updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -12564,8 +12551,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // Explicitly targeting all options is not supported. Remove all native
 // content position targeting options to achieve this effect.
 type NativeContentPositionAssignedTargetingOptionDetails struct {
-	// ContentPosition: The content position. Output only in v1. Required in
-	// v2.
+	// ContentPosition: Required. The content position.
 	//
 	// Possible values:
 	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
@@ -12863,8 +12849,7 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 // details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_OMID`.
 type OmidAssignedTargetingOptionDetails struct {
-	// Omid: The type of Open Measurement enabled inventory. Output only in
-	// v1. Required in v2.
+	// Omid: Required. The type of Open Measurement enabled inventory.
 	//
 	// Possible values:
 	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
@@ -13197,8 +13182,8 @@ type Pacing struct {
 
 	// PacingPeriod: Required. The time period in which the pacing budget
 	// will be spent. When automatic budget allocation is enabled at the
-	// insertion order via auto_budget_allocation, this field is output only
-	// and defaults to `PACING_PERIOD_FLIGHT`.
+	// insertion order via automationType, this field is output only and
+	// defaults to `PACING_PERIOD_FLIGHT`.
 	//
 	// Possible values:
 	//   "PACING_PERIOD_UNSPECIFIED" - Period value is not specified or is
@@ -13327,8 +13312,7 @@ func (s *ParentEntityFilter) MarshalJSON() ([]byte, error) {
 // details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_PARENTAL_STATUS`.
 type ParentalStatusAssignedTargetingOptionDetails struct {
-	// ParentalStatus: The parental status of the audience. Output only in
-	// v1. Required in v2.
+	// ParentalStatus: Required. The parental status of the audience.
 	//
 	// Possible values:
 	//   "PARENTAL_STATUS_UNSPECIFIED" - Default value when parental status
@@ -13776,7 +13760,7 @@ func (s *PartnerRevenueModel) MarshalJSON() ([]byte, error) {
 }
 
 // PerformanceGoal: Settings that control the performance goal of a
-// campaign or insertion order.
+// campaign.
 type PerformanceGoal struct {
 	// PerformanceGoalAmountMicros: The goal amount, in micros of the
 	// advertiser's currency. Applicable when performance_goal_type is one
@@ -16041,8 +16025,7 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// VideoPlayerSize: The video player size. Output only in v1. Required
-	// in v2.
+	// VideoPlayerSize: Required. The video player size.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
@@ -16142,8 +16125,7 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	// for targeting the `VIEWABILITY_10_PERCENT_OR_MORE` option).
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// Viewability: The predicted viewability percentage. Output only in v1.
-	// Required in v2.
+	// Viewability: Required. The predicted viewability percentage.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
@@ -27982,10 +27964,8 @@ type AdvertisersLocationListsAssignedLocationsBulkEditCall struct {
 
 // BulkEdit: Bulk edits multiple assignments between locations and a
 // single location list. The operation will delete the assigned
-// locations provided in
-// BulkEditAssignedLocationsRequest.deleted_assigned_locations and then
-// create the assigned locations provided in
-// BulkEditAssignedLocationsRequest.created_assigned_locations.
+// locations provided in deletedAssignedLocations and then create the
+// assigned locations provided in createdAssignedLocations.
 //
 //   - advertiserId: The ID of the DV360 advertiser to which the location
 //     list belongs.
@@ -28092,7 +28072,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits multiple assignments between locations and a single location list. The operation will delete the assigned locations provided in BulkEditAssignedLocationsRequest.deleted_assigned_locations and then create the assigned locations provided in BulkEditAssignedLocationsRequest.created_assigned_locations.",
+	//   "description": "Bulk edits multiple assignments between locations and a single location list. The operation will delete the assigned locations provided in deletedAssignedLocations and then create the assigned locations provided in createdAssignedLocations.",
 	//   "flatPath": "v1/advertisers/{advertiserId}/locationLists/{locationListsId}/assignedLocations:bulkEdit",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.locationLists.assignedLocations.bulkEdit",

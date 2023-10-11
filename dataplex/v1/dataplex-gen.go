@@ -4553,6 +4553,97 @@ func (s *GoogleCloudDataplexV1EnvironmentSessionStatus) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1GovernanceEvent: Payload associated with
+// Governance related log events.
+type GoogleCloudDataplexV1GovernanceEvent struct {
+	// Entity: Entity resource information if the log event is associated
+	// with a specific entity.
+	Entity *GoogleCloudDataplexV1GovernanceEventEntity `json:"entity,omitempty"`
+
+	// EventType: The type of the event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - An unspecified event type.
+	//   "RESOURCE_IAM_POLICY_UPDATE" - Resource IAM policy update event.
+	//   "BIGQUERY_TABLE_CREATE" - BigQuery table create event.
+	//   "BIGQUERY_TABLE_UPDATE" - BigQuery table update event.
+	//   "BIGQUERY_TABLE_DELETE" - BigQuery table delete event.
+	//   "BIGQUERY_CONNECTION_CREATE" - BigQuery connection create event.
+	//   "BIGQUERY_CONNECTION_UPDATE" - BigQuery connection update event.
+	//   "BIGQUERY_CONNECTION_DELETE" - BigQuery connection delete event.
+	//   "BIGQUERY_TAXONOMY_CREATE" - BigQuery taxonomy created.
+	//   "BIGQUERY_POLICY_TAG_CREATE" - BigQuery policy tag created.
+	//   "BIGQUERY_POLICY_TAG_DELETE" - BigQuery policy tag deleted.
+	//   "BIGQUERY_POLICY_TAG_SET_IAM_POLICY" - BigQuery set iam policy for
+	// policy tag.
+	//   "ACCESS_POLICY_UPDATE" - Access policy update event.
+	EventType string `json:"eventType,omitempty"`
+
+	// Message: The log message.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entity") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1GovernanceEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GovernanceEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1GovernanceEventEntity: Information about Entity
+// resource that the log event is associated with.
+type GoogleCloudDataplexV1GovernanceEventEntity struct {
+	// Entity: The Entity resource the log event is associated with. Format:
+	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zone
+	// s/{zone_id}/entities/{entity_id}
+	Entity string `json:"entity,omitempty"`
+
+	// EntityType: Type of entity.
+	//
+	// Possible values:
+	//   "ENTITY_TYPE_UNSPECIFIED" - An unspecified Entity type.
+	//   "TABLE" - Table entity type.
+	//   "FILESET" - Fileset entity type.
+	EntityType string `json:"entityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entity") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1GovernanceEventEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1GovernanceEventEntity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1Job: A job represents an instance of a task.
 type GoogleCloudDataplexV1Job struct {
 	// EndTime: Output only. The time when the job ended.

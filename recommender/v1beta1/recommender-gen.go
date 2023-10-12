@@ -470,6 +470,10 @@ type GoogleCloudRecommenderV1beta1CostProjection struct {
 	// cost is computed using list prices or custom contract prices.
 	Cost *GoogleTypeMoney `json:"cost,omitempty"`
 
+	// CostInLocalCurrency: The approximate cost savings in the billing
+	// account's local currency.
+	CostInLocalCurrency *GoogleTypeMoney `json:"costInLocalCurrency,omitempty"`
+
 	// Duration: Duration for which this cost applies.
 	Duration string `json:"duration,omitempty"`
 
@@ -1353,6 +1357,10 @@ type GoogleCloudRecommenderV1beta1Recommendation struct {
 
 	// StateInfo: Information for state. Contains state and metadata.
 	StateInfo *GoogleCloudRecommenderV1beta1RecommendationStateInfo `json:"stateInfo,omitempty"`
+
+	// TargetResources: Fully qualified resource names that this
+	// recommendation is targeting.
+	TargetResources []string `json:"targetResources,omitempty"`
 
 	// XorGroupId: Corresponds to a mutually exclusive group ID within a
 	// recommender. A non-empty ID indicates that the recommendation belongs

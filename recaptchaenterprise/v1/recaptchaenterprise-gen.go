@@ -235,7 +235,7 @@ type ProjectsRelatedaccountgroupsMembershipsService struct {
 // GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment: Account
 // defender risk assessment.
 type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
-	// Labels: Labels for this request.
+	// Labels: Output only. Labels for this request.
 	//
 	// Possible values:
 	//   "ACCOUNT_DEFENDER_LABEL_UNSPECIFIED" - Default unspecified type.
@@ -278,11 +278,12 @@ func (s *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON(
 // GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo: Information
 // about account verification, used for identity verification.
 type GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo struct {
-	// Endpoints: Endpoints that can be used for identity verification.
+	// Endpoints: Optional. Endpoints that can be used for identity
+	// verification.
 	Endpoints []*GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo `json:"endpoints,omitempty"`
 
-	// LanguageCode: Language code preference for the verification message,
-	// set as a IETF BCP 47 language code.
+	// LanguageCode: Optional. Language code preference for the verification
+	// message, set as a IETF BCP 47 language code.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// LatestVerificationResult: Output only. Result of the latest account
@@ -344,17 +345,17 @@ func (s *GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo) MarshalJSON() 
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific
 // to keys that can be used by Android apps.
 type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
-	// AllowAllPackageNames: If set to true, allowed_package_names are not
-	// enforced.
+	// AllowAllPackageNames: Optional. If set to true, allowed_package_names
+	// are not enforced.
 	AllowAllPackageNames bool `json:"allowAllPackageNames,omitempty"`
 
-	// AllowedPackageNames: Android package names of apps allowed to use the
-	// key. Example: 'com.companyname.appname'
+	// AllowedPackageNames: Optional. Android package names of apps allowed
+	// to use the key. Example: 'com.companyname.appname'
 	AllowedPackageNames []string `json:"allowedPackageNames,omitempty"`
 
-	// SupportNonGoogleAppStoreDistribution: Set to true for keys that are
-	// used in an Android application that is available for download in app
-	// stores in addition to the Google Play Store.
+	// SupportNonGoogleAppStoreDistribution: Optional. Set to true for keys
+	// that are used in an Android application that is available for
+	// download in app stores in addition to the Google Play Store.
 	SupportNonGoogleAppStoreDistribution bool `json:"supportNonGoogleAppStoreDistribution,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -538,25 +539,25 @@ func (s *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId) MarshalJSON() ([]byte
 // GoogleCloudRecaptchaenterpriseV1Assessment: A reCAPTCHA Enterprise
 // assessment resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
-	// AccountDefenderAssessment: Assessment returned by account defender
-	// when a hashed_account_id is provided.
+	// AccountDefenderAssessment: Output only. Assessment returned by
+	// account defender when a hashed_account_id is provided.
 	AccountDefenderAssessment *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment `json:"accountDefenderAssessment,omitempty"`
 
-	// AccountVerification: Account verification information for identity
-	// verification. The assessment event must include a token and site key
-	// to use this feature.
+	// AccountVerification: Optional. Account verification information for
+	// identity verification. The assessment event must include a token and
+	// site key to use this feature.
 	AccountVerification *GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo `json:"accountVerification,omitempty"`
 
-	// Event: The event being assessed.
+	// Event: Optional. The event being assessed.
 	Event *GoogleCloudRecaptchaenterpriseV1Event `json:"event,omitempty"`
 
-	// FirewallPolicyAssessment: Assessment returned when firewall policies
-	// belonging to the project are evaluated using the field
-	// firewall_policy_evaluation.
+	// FirewallPolicyAssessment: Output only. Assessment returned when
+	// firewall policies belonging to the project are evaluated using the
+	// field firewall_policy_evaluation.
 	FirewallPolicyAssessment *GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment `json:"firewallPolicyAssessment,omitempty"`
 
-	// FraudPreventionAssessment: Assessment returned by Fraud Prevention
-	// when TransactionData is provided.
+	// FraudPreventionAssessment: Output only. Assessment returned by Fraud
+	// Prevention when TransactionData is provided.
 	FraudPreventionAssessment *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment `json:"fraudPreventionAssessment,omitempty"`
 
 	// FraudSignals: Output only. Fraud Signals specific to the users
@@ -564,10 +565,10 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	FraudSignals *GoogleCloudRecaptchaenterpriseV1FraudSignals `json:"fraudSignals,omitempty"`
 
 	// Name: Output only. The resource name for the Assessment in the format
-	// "projects/{project}/assessments/{assessment}".
+	// `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
 
-	// PrivatePasswordLeakVerification: The private password leak
+	// PrivatePasswordLeakVerification: Optional. The private password leak
 	// verification field contains the parameters that are used to to check
 	// for leaks privately without sharing user credentials.
 	PrivatePasswordLeakVerification *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification `json:"privatePasswordLeakVerification,omitempty"`
@@ -721,7 +722,7 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// Headers: Optional. HTTP header information about the request.
 	Headers []string `json:"headers,omitempty"`
 
-	// Ja3: Optional. Optional JA3 fingerprint for SSL clients.
+	// Ja3: Optional. JA3 fingerprint for SSL clients.
 	Ja3 string `json:"ja3,omitempty"`
 
 	// RequestedUri: Optional. The URI resource the user requested that
@@ -847,10 +848,12 @@ type GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction struct {
 // This can be used to trigger custom protection implemented on the
 // backend.
 type GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction struct {
-	// Key: The header key to set in the request to the backend server.
+	// Key: Optional. The header key to set in the request to the backend
+	// server.
 	Key string `json:"key,omitempty"`
 
-	// Value: The header value to set in the request to the backend server.
+	// Value: Optional. The header value to set in the request to the
+	// backend server.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -880,8 +883,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction) MarshalJ
 // substitute action transparently serves a different page than the one
 // requested.
 type GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction struct {
-	// Path: The address to redirect to. The target is a relative path in
-	// the current host. Example: "/blog/404.html".
+	// Path: Optional. The address to redirect to. The target is a relative
+	// path in the current host. Example: "/blog/404.html".
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
@@ -910,36 +913,36 @@ func (s *GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction) Marshal
 // GoogleCloudRecaptchaenterpriseV1FirewallPolicy: A FirewallPolicy
 // represents a single matching pattern and resulting actions to take.
 type GoogleCloudRecaptchaenterpriseV1FirewallPolicy struct {
-	// Actions: The actions that the caller should take regarding user
-	// access. There should be at most one terminal action. A terminal
-	// action is any action that forces a response, such as AllowAction,
-	// BlockAction or SubstituteAction. Zero or more non-terminal actions
-	// such as SetHeader might be specified. A single policy can contain up
-	// to 16 actions.
+	// Actions: Optional. The actions that the caller should take regarding
+	// user access. There should be at most one terminal action. A terminal
+	// action is any action that forces a response, such as `AllowAction`,
+	// `BlockAction` or `SubstituteAction`. Zero or more non-terminal
+	// actions such as `SetHeader` might be specified. A single policy can
+	// contain up to 16 actions.
 	Actions []*GoogleCloudRecaptchaenterpriseV1FirewallAction `json:"actions,omitempty"`
 
-	// Condition: A CEL (Common Expression Language) conditional expression
-	// that specifies if this policy applies to an incoming user request. If
-	// this condition evaluates to true and the requested path matched the
-	// path pattern, the associated actions should be executed by the
-	// caller. The condition string is checked for CEL syntax correctness on
-	// creation. For more information, see the CEL spec
+	// Condition: Optional. A CEL (Common Expression Language) conditional
+	// expression that specifies if this policy applies to an incoming user
+	// request. If this condition evaluates to true and the requested path
+	// matched the path pattern, the associated actions should be executed
+	// by the caller. The condition string is checked for CEL syntax
+	// correctness on creation. For more information, see the CEL spec
 	// (https://github.com/google/cel-spec) and its language definition
 	// (https://github.com/google/cel-spec/blob/master/doc/langdef.md). A
 	// condition has a max length of 500 characters.
 	Condition string `json:"condition,omitempty"`
 
-	// Description: A description of what this policy aims to achieve, for
-	// convenience purposes. The description can at most include 256 UTF-8
-	// characters.
+	// Description: Optional. A description of what this policy aims to
+	// achieve, for convenience purposes. The description can at most
+	// include 256 UTF-8 characters.
 	Description string `json:"description,omitempty"`
 
 	// Name: The resource name for the FirewallPolicy in the format
-	// "projects/{project}/firewallpolicies/{firewallpolicy}".
+	// `projects/{project}/firewallpolicies/{firewallpolicy}`.
 	Name string `json:"name,omitempty"`
 
-	// Path: The path for which this policy applies, specified as a glob
-	// pattern. For more information on glob, see the manual page
+	// Path: Optional. The path for which this policy applies, specified as
+	// a glob pattern. For more information on glob, see the manual page
 	// (https://man7.org/linux/man-pages/man7/glob.7.html). A path has a max
 	// length of 200 characters.
 	Path string `json:"path,omitempty"`
@@ -974,8 +977,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) MarshalJSON() ([]byte, 
 // GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment: Policy
 // config assessment.
 type GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment struct {
-	// Error: If the processing of a policy config fails, an error will be
-	// populated and the firewall_policy will be left empty.
+	// Error: Output only. If the processing of a policy config fails, an
+	// error will be populated and the firewall_policy will be left empty.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
 	// FirewallPolicy: Output only. The policy that matched the request. If
@@ -1009,21 +1012,21 @@ func (s *GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment) MarshalJSON()
 // GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment: Assessment
 // for Fraud Prevention.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment struct {
-	// BehavioralTrustVerdict: Assessment of this transaction for behavioral
-	// trust.
+	// BehavioralTrustVerdict: Output only. Assessment of this transaction
+	// for behavioral trust.
 	BehavioralTrustVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict `json:"behavioralTrustVerdict,omitempty"`
 
-	// CardTestingVerdict: Assessment of this transaction for risk of being
-	// part of a card testing attack.
+	// CardTestingVerdict: Output only. Assessment of this transaction for
+	// risk of being part of a card testing attack.
 	CardTestingVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict `json:"cardTestingVerdict,omitempty"`
 
-	// StolenInstrumentVerdict: Assessment of this transaction for risk of a
-	// stolen instrument.
+	// StolenInstrumentVerdict: Output only. Assessment of this transaction
+	// for risk of a stolen instrument.
 	StolenInstrumentVerdict *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict `json:"stolenInstrumentVerdict,omitempty"`
 
-	// TransactionRisk: Probability of this transaction being fraudulent.
-	// Summarizes the combined risk of attack vectors below. Values are from
-	// 0.0 (lowest) to 1.0 (highest).
+	// TransactionRisk: Output only. Probability of this transaction being
+	// fraudulent. Summarizes the combined risk of attack vectors below.
+	// Values are from 0.0 (lowest) to 1.0 (highest).
 	TransactionRisk float64 `json:"transactionRisk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1068,9 +1071,9 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessment) UnmarshalJSO
 // GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTru
 // stVerdict: Information about behavioral trust of the transaction.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrustVerdict struct {
-	// Trust: Probability of this transaction attempt being executed in a
-	// behaviorally trustworthy way. Values are from 0.0 (lowest) to 1.0
-	// (highest).
+	// Trust: Output only. Probability of this transaction attempt being
+	// executed in a behaviorally trustworthy way. Values are from 0.0
+	// (lowest) to 1.0 (highest).
 	Trust float64 `json:"trust,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Trust") to
@@ -1114,8 +1117,9 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentBehavioralTrus
 // rdict: Information about card testing fraud, where an adversary is
 // testing fraudulently obtained cards or brute forcing their details.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVerdict struct {
-	// Risk: Probability of this transaction attempt being part of a card
-	// testing attack. Values are from 0.0 (lowest) to 1.0 (highest).
+	// Risk: Output only. Probability of this transaction attempt being part
+	// of a card testing attack. Values are from 0.0 (lowest) to 1.0
+	// (highest).
 	Risk float64 `json:"risk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Risk") to
@@ -1160,8 +1164,9 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentCardTestingVer
 // is not the legitimate owner of the instrument being used for the
 // purchase.
 type GoogleCloudRecaptchaenterpriseV1FraudPreventionAssessmentStolenInstrumentVerdict struct {
-	// Risk: Probability of this transaction being executed with a stolen
-	// instrument. Values are from 0.0 (lowest) to 1.0 (highest).
+	// Risk: Output only. Probability of this transaction being executed
+	// with a stolen instrument. Values are from 0.0 (lowest) to 1.0
+	// (highest).
 	Risk float64 `json:"risk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Risk") to
@@ -1329,20 +1334,20 @@ func (s *GoogleCloudRecaptchaenterpriseV1FraudSignalsUserSignals) UnmarshalJSON(
 // GoogleCloudRecaptchaenterpriseV1IOSKeySettings: Settings specific to
 // keys that can be used by iOS apps.
 type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
-	// AllowAllBundleIds: If set to true, allowed_bundle_ids are not
-	// enforced.
+	// AllowAllBundleIds: Optional. If set to true, allowed_bundle_ids are
+	// not enforced.
 	AllowAllBundleIds bool `json:"allowAllBundleIds,omitempty"`
 
-	// AllowedBundleIds: iOS bundle ids of apps allowed to use the key.
-	// Example: 'com.companyname.productname.appname'
+	// AllowedBundleIds: Optional. iOS bundle ids of apps allowed to use the
+	// key. Example: 'com.companyname.productname.appname'
 	AllowedBundleIds []string `json:"allowedBundleIds,omitempty"`
 
-	// AppleDeveloperId: Apple Developer account details for the app that is
-	// protected by the reCAPTCHA Key. reCAPTCHA Enterprise leverages
-	// platform-specific checks like Apple App Attest and Apple DeviceCheck
-	// to protect your app from abuse. Providing these fields allows
-	// reCAPTCHA Enterprise to get a better assessment of the integrity of
-	// your app.
+	// AppleDeveloperId: Optional. Apple Developer account details for the
+	// app that is protected by the reCAPTCHA Key. reCAPTCHA Enterprise
+	// leverages platform-specific checks like Apple App Attest and Apple
+	// DeviceCheck to protect your app from abuse. Providing these fields
+	// allows reCAPTCHA Enterprise to get a better assessment of the
+	// integrity of your app.
 	AppleDeveloperId *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId `json:"appleDeveloperId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowAllBundleIds")
@@ -1380,24 +1385,25 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	// of this key.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DisplayName: Human-readable display name of this key. Modifiable by
-	// user.
+	// DisplayName: Required. Human-readable display name of this key.
+	// Modifiable by user.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// IosSettings: Settings for keys that can be used by iOS apps.
 	IosSettings *GoogleCloudRecaptchaenterpriseV1IOSKeySettings `json:"iosSettings,omitempty"`
 
-	// Labels: See Creating and managing labels.
+	// Labels: Optional. See [Creating and managing labels]
+	// (https://cloud.google.com/recaptcha-enterprise/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name for the Key in the format
-	// "projects/{project}/keys/{key}".
+	// `projects/{project}/keys/{key}`.
 	Name string `json:"name,omitempty"`
 
-	// TestingOptions: Options for user acceptance testing.
+	// TestingOptions: Optional. Options for user acceptance testing.
 	TestingOptions *GoogleCloudRecaptchaenterpriseV1TestingOptions `json:"testingOptions,omitempty"`
 
-	// WafSettings: Settings for WAF
+	// WafSettings: Optional. Settings for WAF
 	WafSettings *GoogleCloudRecaptchaenterpriseV1WafSettings `json:"wafSettings,omitempty"`
 
 	// WebSettings: Settings for keys that can be used by websites.
@@ -1591,7 +1597,7 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	ChallengeMetrics []*GoogleCloudRecaptchaenterpriseV1ChallengeMetrics `json:"challengeMetrics,omitempty"`
 
 	// Name: Output only. The name of the metrics, in the format
-	// "projects/{project}/keys/{key}/metrics".
+	// `projects/{project}/keys/{key}/metrics`.
 	Name string `json:"name,omitempty"`
 
 	// ScoreMetrics: Metrics will be continuous and in order by dates, and
@@ -1682,7 +1688,7 @@ type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
 	// returned through `reencrypted_user_credentials_hash`.
 	EncryptedUserCredentialsHash string `json:"encryptedUserCredentialsHash,omitempty"`
 
-	// LookupHashPrefix: Optional. Exactly 26-bit prefix of the SHA-256 hash
+	// LookupHashPrefix: Required. Exactly 26-bit prefix of the SHA-256 hash
 	// of the canonicalized username. It is used to look up password leaks
 	// associated with that hash prefix.
 	LookupHashPrefix string `json:"lookupHashPrefix,omitempty"`
@@ -1827,12 +1833,13 @@ func (s *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) Marsha
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result
 // for an event.
 type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
-	// ExtendedVerdictReasons: Extended verdict reasons to be used for
-	// experimentation only. The set of possible reasons is subject to
-	// change.
+	// ExtendedVerdictReasons: Output only. Extended verdict reasons to be
+	// used for experimentation only. The set of possible reasons is subject
+	// to change.
 	ExtendedVerdictReasons []string `json:"extendedVerdictReasons,omitempty"`
 
-	// Reasons: Reasons contributing to the risk analysis verdict.
+	// Reasons: Output only. Reasons contributing to the risk analysis
+	// verdict.
 	//
 	// Possible values:
 	//   "CLASSIFICATION_REASON_UNSPECIFIED" - Default unspecified type.
@@ -1852,9 +1859,9 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// characteristics of chargebacks for fraud.
 	Reasons []string `json:"reasons,omitempty"`
 
-	// Score: Legitimate event score from 0.0 to 1.0. (1.0 means very likely
-	// legitimate traffic while 0.0 means very likely non-legitimate
-	// traffic).
+	// Score: Output only. Legitimate event score from 0.0 to 1.0. (1.0
+	// means very likely legitimate traffic while 0.0 means very likely
+	// non-legitimate traffic).
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2050,7 +2057,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRes
 // GoogleCloudRecaptchaenterpriseV1TestingOptions: Options for user
 // acceptance testing.
 type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
-	// TestingChallenge: For challenge-based keys only (CHECKBOX,
+	// TestingChallenge: Optional. For challenge-based keys only (CHECKBOX,
 	// INVISIBLE), all challenge requests for this site will return
 	// nocaptcha if NOCAPTCHA, or an unsolvable challenge if CHALLENGE.
 	//
@@ -2064,9 +2071,9 @@ type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 	// return an unsolvable challenge.
 	TestingChallenge string `json:"testingChallenge,omitempty"`
 
-	// TestingScore: All assessments for this Key will return this score.
-	// Must be between 0 (likely not legitimate) and 1 (likely legitimate)
-	// inclusive.
+	// TestingScore: Optional. All assessments for this Key will return this
+	// score. Must be between 0 (likely not legitimate) and 1 (likely
+	// legitimate) inclusive.
 	TestingScore float64 `json:"testingScore,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestingChallenge") to
@@ -2110,23 +2117,23 @@ func (s *GoogleCloudRecaptchaenterpriseV1TestingOptions) UnmarshalJSON(data []by
 // GoogleCloudRecaptchaenterpriseV1TokenProperties: Properties of the
 // provided event token.
 type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
-	// Action: Action name provided at token generation.
+	// Action: Output only. Action name provided at token generation.
 	Action string `json:"action,omitempty"`
 
-	// AndroidPackageName: The name of the Android package with which the
-	// token was generated (Android keys only).
+	// AndroidPackageName: Output only. The name of the Android package with
+	// which the token was generated (Android keys only).
 	AndroidPackageName string `json:"androidPackageName,omitempty"`
 
-	// CreateTime: The timestamp corresponding to the generation of the
-	// token.
+	// CreateTime: Output only. The timestamp corresponding to the
+	// generation of the token.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Hostname: The hostname of the page on which the token was generated
-	// (Web keys only).
+	// Hostname: Output only. The hostname of the page on which the token
+	// was generated (Web keys only).
 	Hostname string `json:"hostname,omitempty"`
 
-	// InvalidReason: Reason associated with the response when valid =
-	// false.
+	// InvalidReason: Output only. Reason associated with the response when
+	// valid = false.
 	//
 	// Possible values:
 	//   "INVALID_REASON_UNSPECIFIED" - Default unspecified type.
@@ -2140,15 +2147,15 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// occurred on the browser. Could easily be simulated by an attacker.
 	InvalidReason string `json:"invalidReason,omitempty"`
 
-	// IosBundleId: The ID of the iOS bundle with which the token was
-	// generated (iOS keys only).
+	// IosBundleId: Output only. The ID of the iOS bundle with which the
+	// token was generated (iOS keys only).
 	IosBundleId string `json:"iosBundleId,omitempty"`
 
-	// Valid: Whether the provided user response token is valid. When valid
-	// = false, the reason could be specified in invalid_reason or it could
-	// also be due to a user failing to solve a challenge or a sitekey
-	// mismatch (i.e the sitekey used to generate the token was different
-	// than the one specified in the assessment).
+	// Valid: Output only. Whether the provided user response token is
+	// valid. When valid = false, the reason could be specified in
+	// invalid_reason or it could also be due to a user failing to solve a
+	// challenge or a sitekey mismatch (i.e the sitekey used to generate the
+	// token was different than the one specified in the assessment).
 	Valid bool `json:"valid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -2175,47 +2182,46 @@ func (s *GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudRecaptchaenterpriseV1TransactionData: Transaction data
-// associated with a payment protected by reCAPTCHA Enterprise. All
-// fields are optional.
+// associated with a payment protected by reCAPTCHA Enterprise.
 type GoogleCloudRecaptchaenterpriseV1TransactionData struct {
-	// BillingAddress: Address associated with the payment method when
-	// applicable.
+	// BillingAddress: Optional. Address associated with the payment method
+	// when applicable.
 	BillingAddress *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress `json:"billingAddress,omitempty"`
 
-	// CardBin: The Bank Identification Number - generally the first 6 or 8
-	// digits of the card.
+	// CardBin: Optional. The Bank Identification Number - generally the
+	// first 6 or 8 digits of the card.
 	CardBin string `json:"cardBin,omitempty"`
 
-	// CardLastFour: The last four digits of the card.
+	// CardLastFour: Optional. The last four digits of the card.
 	CardLastFour string `json:"cardLastFour,omitempty"`
 
-	// CurrencyCode: The currency code in ISO-4217 format.
+	// CurrencyCode: Optional. The currency code in ISO-4217 format.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// GatewayInfo: Information about the payment gateway's response to the
-	// transaction.
+	// GatewayInfo: Optional. Information about the payment gateway's
+	// response to the transaction.
 	GatewayInfo *GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo `json:"gatewayInfo,omitempty"`
 
-	// Items: Items purchased in this transaction.
+	// Items: Optional. Items purchased in this transaction.
 	Items []*GoogleCloudRecaptchaenterpriseV1TransactionDataItem `json:"items,omitempty"`
 
-	// Merchants: Information about the user or users fulfilling the
-	// transaction.
+	// Merchants: Optional. Information about the user or users fulfilling
+	// the transaction.
 	Merchants []*GoogleCloudRecaptchaenterpriseV1TransactionDataUser `json:"merchants,omitempty"`
 
-	// PaymentMethod: The payment method for the transaction. The allowed
-	// values are: * credit-card * debit-card * gift-card * processor-{name}
-	// (If a third-party is used, for example, processor-paypal) *
-	// custom-{name} (If an alternative method is used, for example,
-	// custom-crypto)
+	// PaymentMethod: Optional. The payment method for the transaction. The
+	// allowed values are: * credit-card * debit-card * gift-card *
+	// processor-{name} (If a third-party is used, for example,
+	// processor-paypal) * custom-{name} (If an alternative method is used,
+	// for example, custom-crypto)
 	PaymentMethod string `json:"paymentMethod,omitempty"`
 
-	// ShippingAddress: Destination address if this transaction involves
-	// shipping a physical item.
+	// ShippingAddress: Optional. Destination address if this transaction
+	// involves shipping a physical item.
 	ShippingAddress *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress `json:"shippingAddress,omitempty"`
 
-	// ShippingValue: The value of shipping in the specified currency. 0 for
-	// free or no shipping.
+	// ShippingValue: Optional. The value of shipping in the specified
+	// currency. 0 for free or no shipping.
 	ShippingValue float64 `json:"shippingValue,omitempty"`
 
 	// TransactionId: Unique identifier for the transaction. This custom
@@ -2224,11 +2230,12 @@ type GoogleCloudRecaptchaenterpriseV1TransactionData struct {
 	// the same transaction should use the same transaction id.
 	TransactionId string `json:"transactionId,omitempty"`
 
-	// User: Information about the user paying/initiating the transaction.
+	// User: Optional. Information about the user paying/initiating the
+	// transaction.
 	User *GoogleCloudRecaptchaenterpriseV1TransactionDataUser `json:"user,omitempty"`
 
-	// Value: The decimal value of the transaction in the specified
-	// currency.
+	// Value: Optional. The decimal value of the transaction in the
+	// specified currency.
 	Value float64 `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingAddress") to
@@ -2274,26 +2281,26 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionData) UnmarshalJSON(data []b
 // GoogleCloudRecaptchaenterpriseV1TransactionDataAddress: Structured
 // address format for billing and shipping addresses.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataAddress struct {
-	// Address: The first lines of the address. The first line generally
-	// contains the street name and number, and further lines may include
-	// information such as an apartment number.
+	// Address: Optional. The first lines of the address. The first line
+	// generally contains the street name and number, and further lines may
+	// include information such as an apartment number.
 	Address []string `json:"address,omitempty"`
 
-	// AdministrativeArea: The state, province, or otherwise administrative
-	// area of the address.
+	// AdministrativeArea: Optional. The state, province, or otherwise
+	// administrative area of the address.
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
 
-	// Locality: The town/city of the address.
+	// Locality: Optional. The town/city of the address.
 	Locality string `json:"locality,omitempty"`
 
-	// PostalCode: The postal or ZIP code of the address.
+	// PostalCode: Optional. The postal or ZIP code of the address.
 	PostalCode string `json:"postalCode,omitempty"`
 
-	// Recipient: The recipient name, potentially including information such
-	// as "care of".
+	// Recipient: Optional. The recipient name, potentially including
+	// information such as "care of".
 	Recipient string `json:"recipient,omitempty"`
 
-	// RegionCode: The CLDR country/region of the address.
+	// RegionCode: Optional. The CLDR country/region of the address.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
@@ -2322,20 +2329,22 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataAddress) MarshalJSON() (
 // GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo: Details
 // about the transaction from the gateway.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo struct {
-	// AvsResponseCode: AVS response code from the gateway (available only
-	// when reCAPTCHA Enterprise is called after authorization).
+	// AvsResponseCode: Optional. AVS response code from the gateway
+	// (available only when reCAPTCHA Enterprise is called after
+	// authorization).
 	AvsResponseCode string `json:"avsResponseCode,omitempty"`
 
-	// CvvResponseCode: CVV response code from the gateway (available only
-	// when reCAPTCHA Enterprise is called after authorization).
+	// CvvResponseCode: Optional. CVV response code from the gateway
+	// (available only when reCAPTCHA Enterprise is called after
+	// authorization).
 	CvvResponseCode string `json:"cvvResponseCode,omitempty"`
 
-	// GatewayResponseCode: Gateway response code describing the state of
-	// the transaction.
+	// GatewayResponseCode: Optional. Gateway response code describing the
+	// state of the transaction.
 	GatewayResponseCode string `json:"gatewayResponseCode,omitempty"`
 
-	// Name: Name of the gateway service (for example, stripe, square,
-	// paypal).
+	// Name: Optional. Name of the gateway service (for example, stripe,
+	// square, paypal).
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AvsResponseCode") to
@@ -2365,18 +2374,20 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataGatewayInfo) MarshalJSON
 // GoogleCloudRecaptchaenterpriseV1TransactionDataItem: Line items being
 // purchased in this transaction.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataItem struct {
-	// MerchantAccountId: When a merchant is specified, its corresponding
-	// account_id. Necessary to populate marketplace-style transactions.
+	// MerchantAccountId: Optional. When a merchant is specified, its
+	// corresponding account_id. Necessary to populate marketplace-style
+	// transactions.
 	MerchantAccountId string `json:"merchantAccountId,omitempty"`
 
-	// Name: The full name of the item.
+	// Name: Optional. The full name of the item.
 	Name string `json:"name,omitempty"`
 
-	// Quantity: The quantity of this item that is being purchased.
+	// Quantity: Optional. The quantity of this item that is being
+	// purchased.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
-	// Value: The value per item that the user is paying, in the transaction
-	// currency, after discounts.
+	// Value: Optional. The value per item that the user is paying, in the
+	// transaction currency, after discounts.
 	Value float64 `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MerchantAccountId")
@@ -2420,26 +2431,29 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) UnmarshalJSON(data
 // GoogleCloudRecaptchaenterpriseV1TransactionDataUser: Details about a
 // user's account involved in the transaction.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataUser struct {
-	// AccountId: Unique account identifier for this user. If using account
-	// defender, this should match the hashed_account_id field. Otherwise, a
-	// unique and persistent identifier for this account.
+	// AccountId: Optional. Unique account identifier for this user. If
+	// using account defender, this should match the hashed_account_id
+	// field. Otherwise, a unique and persistent identifier for this
+	// account.
 	AccountId string `json:"accountId,omitempty"`
 
-	// CreationMs: The epoch milliseconds of the user's account creation.
+	// CreationMs: Optional. The epoch milliseconds of the user's account
+	// creation.
 	CreationMs int64 `json:"creationMs,omitempty,string"`
 
-	// Email: The email address of the user.
+	// Email: Optional. The email address of the user.
 	Email string `json:"email,omitempty"`
 
-	// EmailVerified: Whether the email has been verified to be accessible
-	// by the user (OTP or similar).
+	// EmailVerified: Optional. Whether the email has been verified to be
+	// accessible by the user (OTP or similar).
 	EmailVerified bool `json:"emailVerified,omitempty"`
 
-	// PhoneNumber: The phone number of the user, with country code.
+	// PhoneNumber: Optional. The phone number of the user, with country
+	// code.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
-	// PhoneVerified: Whether the phone number has been verified to be
-	// accessible by the user (OTP or similar).
+	// PhoneVerified: Optional. Whether the phone number has been verified
+	// to be accessible by the user (OTP or similar).
 	PhoneVerified bool `json:"phoneVerified,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -2643,22 +2657,23 @@ func (s *GoogleCloudRecaptchaenterpriseV1WafSettings) MarshalJSON() ([]byte, err
 // GoogleCloudRecaptchaenterpriseV1WebKeySettings: Settings specific to
 // keys that can be used by websites.
 type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
-	// AllowAllDomains: If set to true, it means allowed_domains will not be
-	// enforced.
+	// AllowAllDomains: Optional. If set to true, it means allowed_domains
+	// will not be enforced.
 	AllowAllDomains bool `json:"allowAllDomains,omitempty"`
 
-	// AllowAmpTraffic: If set to true, the key can be used on AMP
+	// AllowAmpTraffic: Optional. If set to true, the key can be used on AMP
 	// (Accelerated Mobile Pages) websites. This is supported only for the
 	// SCORE integration type.
 	AllowAmpTraffic bool `json:"allowAmpTraffic,omitempty"`
 
-	// AllowedDomains: Domains or subdomains of websites allowed to use the
-	// key. All subdomains of an allowed domain are automatically allowed. A
-	// valid domain requires a host and must not include any path, port,
-	// query or fragment. Examples: 'example.com' or 'subdomain.example.com'
+	// AllowedDomains: Optional. Domains or subdomains of websites allowed
+	// to use the key. All subdomains of an allowed domain are automatically
+	// allowed. A valid domain requires a host and must not include any
+	// path, port, query or fragment. Examples: 'example.com' or
+	// 'subdomain.example.com'
 	AllowedDomains []string `json:"allowedDomains,omitempty"`
 
-	// ChallengeSecurityPreference: Settings for the frequency and
+	// ChallengeSecurityPreference: Optional. Settings for the frequency and
 	// difficulty at which this key triggers captcha challenges. This should
 	// only be specified for IntegrationTypes CHECKBOX and INVISIBLE.
 	//
@@ -2781,7 +2796,7 @@ type ProjectsAssessmentsAnnotateCall struct {
 // authentic or fraudulent.
 //
 //   - name: The resource name of the Assessment, in the format
-//     "projects/{project}/assessments/{assessment}".
+//     `projects/{project}/assessments/{assessment}`.
 func (r *ProjectsAssessmentsService) Annotate(name string, googlecloudrecaptchaenterprisev1annotateassessmentrequest *GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest) *ProjectsAssessmentsAnnotateCall {
 	c := &ProjectsAssessmentsAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2892,7 +2907,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Assessment, in the format \"projects/{project}/assessments/{assessment}\".",
+	//       "description": "Required. The resource name of the Assessment, in the format `projects/{project}/assessments/{assessment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/assessments/[^/]+$",
 	//       "required": true,
@@ -2928,7 +2943,7 @@ type ProjectsAssessmentsCreateCall struct {
 // legitimate.
 //
 //   - parent: The name of the project in which the assessment will be
-//     created, in the format "projects/{project}".
+//     created, in the format `projects/{project}`.
 func (r *ProjectsAssessmentsService) Create(parent string, googlecloudrecaptchaenterprisev1assessment *GoogleCloudRecaptchaenterpriseV1Assessment) *ProjectsAssessmentsCreateCall {
 	c := &ProjectsAssessmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3038,7 +3053,7 @@ func (c *ProjectsAssessmentsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project in which the assessment will be created, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project in which the assessment will be created, in the format `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3075,7 +3090,7 @@ type ProjectsFirewallpoliciesCreateCall struct {
 // maximum of 1000 policies.
 //
 //   - parent: The name of the project this policy will apply to, in the
-//     format "projects/{project}".
+//     format `projects/{project}`.
 func (r *ProjectsFirewallpoliciesService) Create(parent string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesCreateCall {
 	c := &ProjectsFirewallpoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3185,7 +3200,7 @@ func (c *ProjectsFirewallpoliciesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project this policy will apply to, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project this policy will apply to, in the format `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3219,7 +3234,7 @@ type ProjectsFirewallpoliciesDeleteCall struct {
 // Delete: Deletes the specified firewall policy.
 //
 //   - name: The name of the policy to be deleted, in the format
-//     "projects/{project}/firewallpolicies/{firewallpolicy}".
+//     `projects/{project}/firewallpolicies/{firewallpolicy}`.
 func (r *ProjectsFirewallpoliciesService) Delete(name string) *ProjectsFirewallpoliciesDeleteCall {
 	c := &ProjectsFirewallpoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3321,7 +3336,7 @@ func (c *ProjectsFirewallpoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the policy to be deleted, in the format \"projects/{project}/firewallpolicies/{firewallpolicy}\".",
+	//       "description": "Required. The name of the policy to be deleted, in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
 	//       "required": true,
@@ -3353,7 +3368,7 @@ type ProjectsFirewallpoliciesGetCall struct {
 // Get: Returns the specified firewall policy.
 //
 //   - name: The name of the requested policy, in the format
-//     "projects/{project}/firewallpolicies/{firewallpolicy}".
+//     `projects/{project}/firewallpolicies/{firewallpolicy}`.
 func (r *ProjectsFirewallpoliciesService) Get(name string) *ProjectsFirewallpoliciesGetCall {
 	c := &ProjectsFirewallpoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3470,7 +3485,7 @@ func (c *ProjectsFirewallpoliciesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the requested policy, in the format \"projects/{project}/firewallpolicies/{firewallpolicy}\".",
+	//       "description": "Required. The name of the requested policy, in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
 	//       "required": true,
@@ -3503,7 +3518,7 @@ type ProjectsFirewallpoliciesListCall struct {
 // project.
 //
 //   - parent: The name of the project to list the policies for, in the
-//     format "projects/{project}".
+//     format `projects/{project}`.
 func (r *ProjectsFirewallpoliciesService) List(parent string) *ProjectsFirewallpoliciesListCall {
 	c := &ProjectsFirewallpoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3647,7 +3662,7 @@ func (c *ProjectsFirewallpoliciesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project to list the policies for, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project to list the policies for, in the format `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3700,7 +3715,7 @@ type ProjectsFirewallpoliciesPatchCall struct {
 // Patch: Updates the specified firewall policy.
 //
 //   - name: The resource name for the FirewallPolicy in the format
-//     "projects/{project}/firewallpolicies/{firewallpolicy}".
+//     `projects/{project}/firewallpolicies/{firewallpolicy}`.
 func (r *ProjectsFirewallpoliciesService) Patch(name string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesPatchCall {
 	c := &ProjectsFirewallpoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3818,7 +3833,7 @@ func (c *ProjectsFirewallpoliciesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the FirewallPolicy in the format \"projects/{project}/firewallpolicies/{firewallpolicy}\".",
+	//       "description": "The resource name for the FirewallPolicy in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
 	//       "required": true,
@@ -3859,7 +3874,7 @@ type ProjectsKeysCreateCall struct {
 // Create: Creates a new reCAPTCHA Enterprise key.
 //
 //   - parent: The name of the project in which the key will be created,
-//     in the format "projects/{project}".
+//     in the format `projects/{project}`.
 func (r *ProjectsKeysService) Create(parent string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysCreateCall {
 	c := &ProjectsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3968,7 +3983,7 @@ func (c *ProjectsKeysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudR
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project in which the key will be created, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project in which the key will be created, in the format `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4002,7 +4017,7 @@ type ProjectsKeysDeleteCall struct {
 // Delete: Deletes the specified key.
 //
 //   - name: The name of the key to be deleted, in the format
-//     "projects/{project}/keys/{key}".
+//     `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) Delete(name string) *ProjectsKeysDeleteCall {
 	c := &ProjectsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4104,7 +4119,7 @@ func (c *ProjectsKeysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtob
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the key to be deleted, in the format \"projects/{project}/keys/{key}\".",
+	//       "description": "Required. The name of the key to be deleted, in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -4136,7 +4151,7 @@ type ProjectsKeysGetCall struct {
 // Get: Returns the specified key.
 //
 //   - name: The name of the requested key, in the format
-//     "projects/{project}/keys/{key}".
+//     `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) Get(name string) *ProjectsKeysGetCall {
 	c := &ProjectsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4252,7 +4267,7 @@ func (c *ProjectsKeysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudReca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the requested key, in the format \"projects/{project}/keys/{key}\".",
+	//       "description": "Required. The name of the requested key, in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -4285,7 +4300,7 @@ type ProjectsKeysGetMetricsCall struct {
 // used to build dashboards.
 //
 //   - name: The name of the requested metrics, in the format
-//     "projects/{project}/keys/{key}/metrics".
+//     `projects/{project}/keys/{key}/metrics`.
 func (r *ProjectsKeysService) GetMetrics(name string) *ProjectsKeysGetMetricsCall {
 	c := &ProjectsKeysGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4401,7 +4416,7 @@ func (c *ProjectsKeysGetMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the requested metrics, in the format \"projects/{project}/keys/{key}/metrics\".",
+	//       "description": "Required. The name of the requested metrics, in the format `projects/{project}/keys/{key}/metrics`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+/metrics$",
 	//       "required": true,
@@ -4433,7 +4448,7 @@ type ProjectsKeysListCall struct {
 // List: Returns the list of all keys that belong to a project.
 //
 //   - parent: The name of the project that contains the keys that will be
-//     listed, in the format "projects/{project}".
+//     listed, in the format `projects/{project}`.
 func (r *ProjectsKeysService) List(parent string) *ProjectsKeysListCall {
 	c := &ProjectsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4576,7 +4591,7 @@ func (c *ProjectsKeysListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRec
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project that contains the keys that will be listed, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project that contains the keys that will be listed, in the format `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4634,7 +4649,7 @@ type ProjectsKeysMigrateCall struct {
 // IAM role in the destination project.
 //
 //   - name: The name of the key to be migrated, in the format
-//     "projects/{project}/keys/{key}".
+//     `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) Migrate(name string, googlecloudrecaptchaenterprisev1migratekeyrequest *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) *ProjectsKeysMigrateCall {
 	c := &ProjectsKeysMigrateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4743,7 +4758,7 @@ func (c *ProjectsKeysMigrateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the key to be migrated, in the format \"projects/{project}/keys/{key}\".",
+	//       "description": "Required. The name of the key to be migrated, in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -4778,7 +4793,7 @@ type ProjectsKeysPatchCall struct {
 // Patch: Updates the specified key.
 //
 //   - name: The resource name for the Key in the format
-//     "projects/{project}/keys/{key}".
+//     `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysPatchCall {
 	c := &ProjectsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4895,7 +4910,7 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the Key in the format \"projects/{project}/keys/{key}\".",
+	//       "description": "The resource name for the Key in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -4938,7 +4953,7 @@ type ProjectsKeysRetrieveLegacySecretKeyCall struct {
 // 3rd party integration with legacy reCAPTCHA.
 //
 //   - key: The public key name linked to the requested secret key in the
-//     format "projects/{project}/keys/{key}".
+//     format `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) RetrieveLegacySecretKey(key string) *ProjectsKeysRetrieveLegacySecretKeyCall {
 	c := &ProjectsKeysRetrieveLegacySecretKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.key = key
@@ -5056,7 +5071,7 @@ func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "key": {
-	//       "description": "Required. The public key name linked to the requested secret key in the format \"projects/{project}/keys/{key}\".",
+	//       "description": "Required. The public key name linked to the requested secret key in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -5089,7 +5104,7 @@ type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
 //
 //   - project: The name of the project to search related account group
 //     memberships from. Specify the project name in the following format:
-//     "projects/{project}".
+//     `projects/{project}`.
 func (r *ProjectsRelatedaccountgroupmembershipsService) Search(project string, googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) *ProjectsRelatedaccountgroupmembershipsSearchCall {
 	c := &ProjectsRelatedaccountgroupmembershipsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5200,7 +5215,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Required. The name of the project to search related account group memberships from. Specify the project name in the following format: \"projects/{project}\".",
+	//       "description": "Required. The name of the project to search related account group memberships from. Specify the project name in the following format: `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5258,7 +5273,7 @@ type ProjectsRelatedaccountgroupsListCall struct {
 // List: List groups of related accounts.
 //
 //   - parent: The name of the project to list related account groups
-//     from, in the format "projects/{project}".
+//     from, in the format `projects/{project}`.
 func (r *ProjectsRelatedaccountgroupsService) List(parent string) *ProjectsRelatedaccountgroupsListCall {
 	c := &ProjectsRelatedaccountgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5406,7 +5421,7 @@ func (c *ProjectsRelatedaccountgroupsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project to list related account groups from, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project to list related account groups from, in the format `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

@@ -3012,13 +3012,12 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 // method id "cloudtasks.projects.locations.updateCmekConfig":
 
 type ProjectsLocationsUpdateCmekConfigCall struct {
-	s           *Service
-	projectsId  string
-	locationsId string
-	cmekconfig  *CmekConfig
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
+	s          *Service
+	name       string
+	cmekconfig *CmekConfig
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // UpdateCmekConfig: Creates or Updates a CMEK config. Updates the
@@ -3027,12 +3026,12 @@ type ProjectsLocationsUpdateCmekConfigCall struct {
 // created in the location will be encrypted at-rest with the KMS-key
 // provided in the config.
 //
-// - locationsId: .
-// - projectsId: .
-func (r *ProjectsLocationsService) UpdateCmekConfig(projectsId string, locationsId string, cmekconfig *CmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
+//   - name: Output only. The config resource name which includes the
+//     project and location and must end in 'cmekConfig', in the format
+//     projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`.
+func (r *ProjectsLocationsService) UpdateCmekConfig(name string, cmekconfig *CmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
 	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectsId = projectsId
-	c.locationsId = locationsId
+	c.name = name
 	c.cmekconfig = cmekconfig
 	return c
 }
@@ -3084,7 +3083,7 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) doRequest(alt string) (*http.Res
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/projects/{projectsId}/locations/{locationsId}/cmekConfig")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -3092,8 +3091,7 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) doRequest(alt string) (*http.Res
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"projectsId":  c.projectsId,
-		"locationsId": c.locationsId,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -3141,17 +3139,13 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption)
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtasks.projects.locations.updateCmekConfig",
 	//   "parameterOrder": [
-	//     "projectsId",
-	//     "locationsId"
+	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "locationsId": {
+	//     "name": {
+	//       "description": "Output only. The config resource name which includes the project and location and must end in 'cmekConfig', in the format projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`",
 	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectsId": {
-	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/cmekConfig$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -3162,7 +3156,7 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta3/projects/{projectsId}/locations/{locationsId}/cmekConfig",
+	//   "path": "v2beta3/{+name}",
 	//   "request": {
 	//     "$ref": "CmekConfig"
 	//   },

@@ -4255,6 +4255,156 @@ func (s *GoogleCloudRetailV2alphaLocalInventory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaLoggingConfig: Project level logging config
+// to control what level of log will be generated and written to Cloud
+// Logging.
+type GoogleCloudRetailV2alphaLoggingConfig struct {
+	// DefaultLogGenerationRule: The log generation rule that applies by
+	// default to all services supporting log generation. It can be
+	// overridden by ServiceLogGenerationRule for service level control.
+	DefaultLogGenerationRule *GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule `json:"defaultLogGenerationRule,omitempty"`
+
+	// Name: Required. Immutable. The name of the LoggingConfig singleton
+	// resource. Format: projects/*/loggingConfig
+	Name string `json:"name,omitempty"`
+
+	// ServiceLogGenerationRules: Controls logging configurations more
+	// granularly for each supported service. This overrides the
+	// default_log_generation_rule for the services specified. For those not
+	// mentioned, they will fallback to the default log generation rule.
+	ServiceLogGenerationRules []*GoogleCloudRetailV2alphaLoggingConfigServiceLogGenerationRule `json:"serviceLogGenerationRules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultLogGenerationRule") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultLogGenerationRule")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaLoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule: The logging
+// configurations for services supporting log generation.
+type GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule struct {
+	// InfoLogSampleRate: The log sample rate for INFO level log entries.
+	// You can use this to reduce the number of entries generated for INFO
+	// level logs. DO NOT set this field if the logging_level is not
+	// LoggingLevel.LOG_ALL. Otherwise, an INVALID_ARGUMENT error is
+	// returned. Sample rate for INFO logs defaults to 1 when unset
+	// (generate and send all INFO logs to Cloud Logging). Its value must be
+	// greater than 0 and less than or equal to 1.
+	InfoLogSampleRate float64 `json:"infoLogSampleRate,omitempty"`
+
+	// LoggingLevel: The logging level. By default it is set to
+	// `LOG_WARNINGS_AND_ABOVE`.
+	//
+	// Possible values:
+	//   "LOGGING_LEVEL_UNSPECIFIED" - Default value. Defaults to
+	// `LOG_FOR_WARNINGS_AND_ABOVE` if unset.
+	//   "LOGGING_DISABLED" - No log will be generated and sent to Cloud
+	// Logging.
+	//   "LOG_ERRORS_AND_ABOVE" - Log for operations resulted in fatal
+	// error.
+	//   "LOG_WARNINGS_AND_ABOVE" - In addition to `LOG_ERRORS_AND_ABOVE`,
+	// also log for operations that have soft errors, quality suggestions.
+	//   "LOG_ALL" - Log all operations, including successful ones.
+	LoggingLevel string `json:"loggingLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoLogSampleRate")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoLogSampleRate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule
+	var s1 struct {
+		InfoLogSampleRate gensupport.JSONFloat64 `json:"infoLogSampleRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.InfoLogSampleRate = float64(s1.InfoLogSampleRate)
+	return nil
+}
+
+// GoogleCloudRetailV2alphaLoggingConfigServiceLogGenerationRule: The
+// granular logging configurations for supported services.
+type GoogleCloudRetailV2alphaLoggingConfigServiceLogGenerationRule struct {
+	// LogGenerationRule: The log generation rule that applies to this
+	// service.
+	LogGenerationRule *GoogleCloudRetailV2alphaLoggingConfigLogGenerationRule `json:"logGenerationRule,omitempty"`
+
+	// ServiceName: Required. Supported service names: "CatalogService",
+	// "CompletionService", "ControlService", "MerchantCenterStreaming",
+	// "ModelService", "PredictionService", "ProductService",
+	// "ServingConfigService", "UserEventService",
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogGenerationRule")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogGenerationRule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaLoggingConfigServiceLogGenerationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaLoggingConfigServiceLogGenerationRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link
 // between a Merchant Center account and a branch. After a link is
 // established, products from the linked Merchant Center account are
@@ -10379,6 +10529,154 @@ func (c *ProjectsEnrollSolutionCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 
 }
 
+// method id "retail.projects.getLoggingConfig":
+
+type ProjectsGetLoggingConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetLoggingConfig: Gets the LoggingConfig of the requested project.
+//
+//   - name: Full LoggingConfig resource name. Format:
+//     projects/{project_number}/loggingConfig.
+func (r *ProjectsService) GetLoggingConfig(name string) *ProjectsGetLoggingConfigCall {
+	c := &ProjectsGetLoggingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetLoggingConfigCall) Fields(s ...googleapi.Field) *ProjectsGetLoggingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetLoggingConfigCall) IfNoneMatch(entityTag string) *ProjectsGetLoggingConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetLoggingConfigCall) Context(ctx context.Context) *ProjectsGetLoggingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetLoggingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetLoggingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.getLoggingConfig" call.
+// Exactly one of *GoogleCloudRetailV2alphaLoggingConfig or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudRetailV2alphaLoggingConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetLoggingConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaLoggingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaLoggingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the LoggingConfig of the requested project.",
+	//   "flatPath": "v2alpha/projects/{projectsId}/loggingConfig",
+	//   "httpMethod": "GET",
+	//   "id": "retail.projects.getLoggingConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full LoggingConfig resource name. Format: projects/{project_number}/loggingConfig",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/loggingConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2alphaLoggingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "retail.projects.getRetailProject":
 
 type ProjectsGetRetailProjectCall struct {
@@ -10669,6 +10967,167 @@ func (c *ProjectsListEnrolledSolutionsCall) Do(opts ...googleapi.CallOption) (*G
 	//   "path": "v2alpha/{+parent}:enrolledSolutions",
 	//   "response": {
 	//     "$ref": "GoogleCloudRetailV2alphaListEnrolledSolutionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.updateLoggingConfig":
+
+type ProjectsUpdateLoggingConfigCall struct {
+	s                                     *Service
+	name                                  string
+	googlecloudretailv2alphaloggingconfig *GoogleCloudRetailV2alphaLoggingConfig
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// UpdateLoggingConfig: Updates the LoggingConfig of the requested
+// project.
+//
+//   - name: Immutable. The name of the LoggingConfig singleton resource.
+//     Format: projects/*/loggingConfig.
+func (r *ProjectsService) UpdateLoggingConfig(name string, googlecloudretailv2alphaloggingconfig *GoogleCloudRetailV2alphaLoggingConfig) *ProjectsUpdateLoggingConfigCall {
+	c := &ProjectsUpdateLoggingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudretailv2alphaloggingconfig = googlecloudretailv2alphaloggingconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which
+// fields in the provided LoggingConfig to update. The following are the
+// only supported fields: * default_log_generation_rule *
+// per_service_log_generation_rules If not set, all supported fields are
+// updated.
+func (c *ProjectsUpdateLoggingConfigCall) UpdateMask(updateMask string) *ProjectsUpdateLoggingConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdateLoggingConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdateLoggingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdateLoggingConfigCall) Context(ctx context.Context) *ProjectsUpdateLoggingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdateLoggingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateLoggingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphaloggingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.updateLoggingConfig" call.
+// Exactly one of *GoogleCloudRetailV2alphaLoggingConfig or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudRetailV2alphaLoggingConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsUpdateLoggingConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaLoggingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaLoggingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the LoggingConfig of the requested project.",
+	//   "flatPath": "v2alpha/projects/{projectsId}/loggingConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "retail.projects.updateLoggingConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Immutable. The name of the LoggingConfig singleton resource. Format: projects/*/loggingConfig",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/loggingConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Indicates which fields in the provided LoggingConfig to update. The following are the only supported fields: * default_log_generation_rule * per_service_log_generation_rules If not set, all supported fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2alphaLoggingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRetailV2alphaLoggingConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -3046,6 +3046,16 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource struct {
 	// source to build.
 	Object string `json:"object,omitempty"`
 
+	// SourceFetcher: Optional. Option to specify the tool to fetch the
+	// source file for the build.
+	//
+	// Possible values:
+	//   "SOURCE_FETCHER_UNSPECIFIED" - Unspecified defaults to GSUTIL.
+	//   "GSUTIL" - Use the "gsutil" tool to download the source file.
+	//   "GCS_FETCHER" - Use the Cloud Storage Fetcher tool to download the
+	// source file.
+	SourceFetcher string `json:"sourceFetcher,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

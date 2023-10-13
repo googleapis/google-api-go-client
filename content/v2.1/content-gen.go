@@ -17516,8 +17516,9 @@ func (s *RepricingProductReportBuyboxWinningProductStats) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RepricingRule: Represents a repricing rule. A repricing rule is used
-// by shopping serving to adjust transactable offer prices if conditions
+// RepricingRule: *Deprecated*: New merchants can't start using this
+// resource. Represents a repricing rule. A repricing rule is used by
+// shopping serving to adjust transactable offer prices if conditions
 // are met.
 type RepricingRule struct {
 	// CogsBasedRule: The rule definition for TYPE_COGS_BASED. Required when
@@ -17526,7 +17527,7 @@ type RepricingRule struct {
 
 	// CountryCode: Required. Immutable. CLDR country code
 	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
-	// (e.g. "US").
+	// (for example, "US").
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// EffectiveTimePeriod: Required. Time period when the rule should take
@@ -17619,8 +17620,8 @@ type RepricingRuleCostOfGoodsSaleRule struct {
 	// mean to set the adjusted price 1.2X of the COGS data.
 	PercentageDelta int64 `json:"percentageDelta,omitempty"`
 
-	// PriceDelta: The price delta against the COGS. E.g. 2 means $2 more of
-	// the COGS.
+	// PriceDelta: The price delta against the COGS. For example, 2 means $2
+	// more of the COGS.
 	PriceDelta string `json:"priceDelta,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PercentageDelta") to
@@ -17776,7 +17777,7 @@ type RepricingRuleEligibleOfferMatcherStringMatcher struct {
 	// offer is one of the string attribute values, the offer is considered
 	// as passing the matcher. The string matcher checks an offer for
 	// inclusivity in the string attributes, not equality. Only literal
-	// string matching is supported, no regex.
+	// string matching is supported, no regular expressions.
 	StrAttributes []string `json:"strAttributes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StrAttributes") to
@@ -19481,7 +19482,7 @@ type Service struct {
 
 	// ShipmentType: Type of locations this service ships orders to.
 	// Acceptable values are: - "delivery" - "pickup" -
-	// "local_delivery"
+	// "local_delivery" - "collection_point"
 	ShipmentType string `json:"shipmentType,omitempty"`
 
 	// StoreConfig: A list of stores your products are delivered from. This
@@ -46095,7 +46096,7 @@ func (r *RepricingrulesService) List(merchantId int64) *RepricingrulesListCall {
 // CountryCode sets the optional parameter "countryCode": CLDR country
 // code
 // (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
-// (e.g. "US"), used as a filter on repricing rules.
+// (for example, "US"), used as a filter on repricing rules.
 func (c *RepricingrulesListCall) CountryCode(countryCode string) *RepricingrulesListCall {
 	c.urlParams_.Set("countryCode", countryCode)
 	return c
@@ -46236,7 +46237,7 @@ func (c *RepricingrulesListCall) Do(opts ...googleapi.CallOption) (*ListRepricin
 	//   ],
 	//   "parameters": {
 	//     "countryCode": {
-	//       "description": "[CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (e.g. \"US\"), used as a filter on repricing rules.",
+	//       "description": "[CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (for example, \"US\"), used as a filter on repricing rules.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -46466,7 +46467,8 @@ type RepricingrulesRepricingreportsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the metrics report for a given Repricing rule.
+// List: *Deprecated*: New merchants can't start using this service.
+// Lists the metrics report for a given Repricing rule.
 //
 // - merchantId: Id of the merchant who owns the Repricing rule.
 // - ruleId: Id of the Repricing rule.
@@ -46614,7 +46616,7 @@ func (c *RepricingrulesRepricingreportsListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the metrics report for a given Repricing rule.",
+	//   "description": "*Deprecated*: New merchants can't start using this service. Lists the metrics report for a given Repricing rule.",
 	//   "flatPath": "{merchantId}/repricingrules/{ruleId}/repricingreports",
 	//   "httpMethod": "GET",
 	//   "id": "content.repricingrules.repricingreports.list",

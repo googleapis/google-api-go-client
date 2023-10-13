@@ -2060,8 +2060,8 @@ type AlgorithmRulesSignal struct {
 	// stored in the int64Value field of the comparison value.
 	//   "MOBILE_MODEL_ID" - The mobile model identifier. Value is stored in
 	// the int64Value field of the comparison value.
-	//   "EXCHANGE_ID" - The exchange identifier. Value is stored in the
-	// int64Value field of the comparison value.
+	//   "EXCHANGE" - Exchange. Value is stored in the exchangeValue field
+	// of the comparison value.
 	//   "ENVIRONMENT" - Serving environment. Value is stored in the
 	// environmentValue field of the comparison value.
 	//   "COUNTRY_ID" - The country or region identifier. Value is stored in

@@ -4595,12 +4595,13 @@ func (s *RegionalBasePlanConfig) MarshalJSON() ([]byte, error) {
 // RegionalPriceMigrationConfig: Configuration for a price migration.
 type RegionalPriceMigrationConfig struct {
 	// OldestAllowedPriceVersionTime: Required. The cutoff time for
-	// historical prices that subscribers can remain paying. Subscribers who
-	// are on a price that was created before this cutoff time will be
-	// migrated to the currently-offered price. These subscribers will
-	// receive a notification that they will be paying a different price.
-	// Subscribers who do not agree to the new price will have their
-	// subscription ended at the next renewal.
+	// historical prices that subscribers can remain paying. Subscribers on
+	// prices which were available at this cutoff time or later will stay on
+	// their existing price. Subscribers on older prices will be migrated to
+	// the currently-offered price. The migrated subscribers will receive a
+	// notification that they will be paying a different price. Subscribers
+	// who do not agree to the new price will have their subscription ended
+	// at the next renewal.
 	OldestAllowedPriceVersionTime string `json:"oldestAllowedPriceVersionTime,omitempty"`
 
 	// PriceIncreaseType: Optional. The behavior the caller wants users to
@@ -19846,7 +19847,7 @@ type OrdersRefundCall struct {
 }
 
 // Refund: Refunds a user's subscription or in-app purchase order.
-// Orders older than 1 year cannot be refunded.
+// Orders older than 3 years cannot be refunded.
 //
 //   - orderId: The order ID provided to the user when the subscription or
 //     in-app order was purchased.
@@ -19932,7 +19933,7 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Refunds a user's subscription or in-app purchase order. Orders older than 1 year cannot be refunded.",
+	//   "description": "Refunds a user's subscription or in-app purchase order. Orders older than 3 years cannot be refunded.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/orders/{orderId}:refund",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.orders.refund",

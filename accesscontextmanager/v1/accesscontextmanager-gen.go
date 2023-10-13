@@ -1291,10 +1291,8 @@ func (s *GcpUserAccessBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GcpUserAccessBindingOperationMetadata: Currently, a completed
-// operation means nothing. In the future, this metadata and a completed
-// operation may indicate that the binding has taken effect and is
-// affecting access decisions for all users.
+// GcpUserAccessBindingOperationMetadata: Metadata of GCP Access Binding
+// Long Running Operations.
 type GcpUserAccessBindingOperationMetadata struct {
 }
 

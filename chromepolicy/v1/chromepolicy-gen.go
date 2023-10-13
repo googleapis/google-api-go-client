@@ -2080,8 +2080,10 @@ type Proto2FieldDescriptorProto struct {
 
 	// Possible values:
 	//   "LABEL_OPTIONAL" - 0 is reserved for errors
-	//   "LABEL_REQUIRED"
 	//   "LABEL_REPEATED"
+	//   "LABEL_REQUIRED" - The required label is only allowed in proto2. In
+	// proto3 and Editions it's explicitly prohibited. In Editions, the
+	// `field_presence` feature can be used to get this behavior.
 	Label string `json:"label,omitempty"`
 
 	Name string `json:"name,omitempty"`
@@ -2130,9 +2132,10 @@ type Proto2FieldDescriptorProto struct {
 	//   "TYPE_BOOL"
 	//   "TYPE_STRING"
 	//   "TYPE_GROUP" - Tag-delimited aggregate. Group type is deprecated
-	// and not supported in proto3. However, Proto3 implementations should
-	// still be able to parse the group wire format and treat group fields
-	// as unknown fields.
+	// and not supported after proto2. However, Proto3 implementations
+	// should still be able to parse the group wire format and treat group
+	// fields as unknown fields. In Editions, the group wire format can be
+	// enabled via the `message_encoding` feature.
 	//   "TYPE_MESSAGE" - Length-delimited aggregate.
 	//   "TYPE_BYTES" - New in version 2.
 	//   "TYPE_UINT32"

@@ -763,7 +763,7 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// ExcludedFields: References to fields excluded from scanning. This
 	// allows you to skip inspection of entire columns which you know have
 	// no findings. When inspecting a table, we recommend that you inspect
-	// all columns. Otherwise, findings might be impacted because hints from
+	// all columns. Otherwise, findings might be affected because hints from
 	// excluded columns will not be used.
 	ExcludedFields []*GooglePrivacyDlpV2FieldId `json:"excludedFields,omitempty"`
 
@@ -777,7 +777,7 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 
 	// IncludedFields: Limit scanning only to these fields. When inspecting
 	// a table, we recommend that you inspect all columns. Otherwise,
-	// findings might be impacted because hints from excluded columns will
+	// findings might be affected because hints from excluded columns will
 	// not be used.
 	IncludedFields []*GooglePrivacyDlpV2FieldId `json:"includedFields,omitempty"`
 
@@ -3774,7 +3774,7 @@ type GooglePrivacyDlpV2Error struct {
 	Details *GoogleRpcStatus `json:"details,omitempty"`
 
 	// Timestamps: The times the error occurred. List includes the oldest
-	// timestamp, and the last 9 ones.
+	// timestamp and the last 9 timestamps.
 	Timestamps []string `json:"timestamps,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -4989,11 +4989,11 @@ func (s *GooglePrivacyDlpV2InfoTypeDescription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2InfoTypeLikelihood: Configuration to control custom
-// minimum likelihoods per infotype. Used when certain infotypes need to
-// return with higher or lower precision than the baseline, i.e. when
-// wanting PERSON_NAME to return all possible names without lowering the
-// precision of other infotypes.
+// GooglePrivacyDlpV2InfoTypeLikelihood: Configuration for setting a
+// minimum likelihood per infotype. Used to customize the minimum
+// likelihood level for specific infotypes in the request. For example,
+// use this if you want to lower the precision for PERSON_NAME without
+// lowering the precision for the other infotypes in the request.
 type GooglePrivacyDlpV2InfoTypeLikelihood struct {
 	// InfoType: Type of information the likelihood threshold applies to.
 	// Only one likelihood per info_type should be provided. If
@@ -5001,8 +5001,8 @@ type GooglePrivacyDlpV2InfoTypeLikelihood struct {
 	// fails.
 	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
 
-	// MinLikelihood: Only returns findings equal or above this threshold.
-	// This field is required or else the configuration fails.
+	// MinLikelihood: Only returns findings equal to or above this
+	// threshold. This field is required or else the configuration fails.
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
@@ -5257,9 +5257,11 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	// these maximum values.
 	Limits *GooglePrivacyDlpV2FindingLimits `json:"limits,omitempty"`
 
-	// MinLikelihood: Only returns findings equal or above this threshold.
-	// The default is POSSIBLE. See
-	// https://cloud.google.com/dlp/docs/likelihood to learn more.
+	// MinLikelihood: Only returns findings equal to or above this
+	// threshold. The default is POSSIBLE. In general, the highest
+	// likelihood setting yields the fewest findings in results and the
+	// lowest chance of a false positive. For more information, see Match
+	// likelihood (https://cloud.google.com/dlp/docs/likelihood).
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
@@ -5271,10 +5273,10 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	// positive.
 	MinLikelihood string `json:"minLikelihood,omitempty"`
 
-	// MinLikelihoodPerInfoType: Per infotype likelihoods. For each
-	// infotype, a user can specify a minimum likelihood, and only return
-	// that infotype if it is above that threshold. If an infotype is not
-	// included, it uses the InspectConfig min_likelihood.
+	// MinLikelihoodPerInfoType: Minimum likelihood per infotype. For each
+	// infotype, a user can specify a minimum likelihood. The system only
+	// returns a finding if its likelihood is above this threshold. If this
+	// field is not set, the system uses the InspectConfig min_likelihood.
 	MinLikelihoodPerInfoType []*GooglePrivacyDlpV2InfoTypeLikelihood `json:"minLikelihoodPerInfoType,omitempty"`
 
 	// RuleSet: Set of rules to apply to the findings for this

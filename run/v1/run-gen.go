@@ -3256,6 +3256,12 @@ type RevisionStatus struct {
 	// receive traffic.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
 
+	// DesiredReplicas: Output only. The desired number of instances running
+	// this revision. For Cloud Run, this only includes instances
+	// provisioned using the minScale annotation. It does not include
+	// instances created by autoscaling.
+	DesiredReplicas int64 `json:"desiredReplicas,omitempty"`
+
 	// ImageDigest: ImageDigest holds the resolved digest for the image
 	// specified within .Spec.Container.Image. The digest is resolved during
 	// the creation of Revision. This field holds the digest value

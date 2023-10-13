@@ -176,7 +176,6 @@ func NewAppsService(s *APIService) *AppsService {
 	rs.Firewall = NewAppsFirewallService(s)
 	rs.Locations = NewAppsLocationsService(s)
 	rs.Operations = NewAppsOperationsService(s)
-	rs.Runtimes = NewAppsRuntimesService(s)
 	rs.Services = NewAppsServicesService(s)
 	return rs
 }
@@ -195,8 +194,6 @@ type AppsService struct {
 	Locations *AppsLocationsService
 
 	Operations *AppsOperationsService
-
-	Runtimes *AppsRuntimesService
 
 	Services *AppsServicesService
 }
@@ -264,15 +261,6 @@ func NewAppsOperationsService(s *APIService) *AppsOperationsService {
 }
 
 type AppsOperationsService struct {
-	s *APIService
-}
-
-func NewAppsRuntimesService(s *APIService) *AppsRuntimesService {
-	rs := &AppsRuntimesService{s: s}
-	return rs
-}
-
-type AppsRuntimesService struct {
 	s *APIService
 }
 
@@ -1004,6 +992,81 @@ type ContainerInfo struct {
 
 func (s *ContainerInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContainerState: ContainerState contains the externally-visible
+// container state that is used to communicate the state and reasoning
+// for that state to the CLH. This data is not persisted by CCFE, but is
+// instead derived from CCFE's internal representation of the container
+// state.
+type ContainerState struct {
+	CurrentReasons *Reasons `json:"currentReasons,omitempty"`
+
+	// PreviousReasons: The previous and current reasons for a container
+	// state will be sent for a container event. CLHs that need to know the
+	// signal that caused the container event to trigger (edges) as opposed
+	// to just knowing the state can act upon differences in the previous
+	// and current reasons.Reasons will be provided for every system:
+	// service management, data governance, abuse, and billing.If this is a
+	// CCFE-triggered event used for reconciliation then the current reasons
+	// will be set to their *_CONTROL_PLANE_SYNC state. The previous reasons
+	// will contain the last known set of non-unknown non-control_plane_sync
+	// reasons for the state.Reasons fields are deprecated. New tenants
+	// should only use the state field. If you must know the reason(s)
+	// behind a specific state, please consult with CCFE team first
+	// (cloud-ccfe-discuss@google.com).
+	PreviousReasons *Reasons `json:"previousReasons,omitempty"`
+
+	// State: The current state of the container. This state is the
+	// culmination of all of the opinions from external systems that CCFE
+	// knows about of the container.
+	//
+	// Possible values:
+	//   "UNKNOWN_STATE" - A container should never be in an unknown state.
+	// Receipt of a container with this state is an error.
+	//   "ON" - CCFE considers the container to be serving or transitioning
+	// into serving.
+	//   "OFF" - CCFE considers the container to be in an OFF state. This
+	// could occur due to various factors. The state could be triggered by
+	// Google-internal audits (ex. abuse suspension, billing closed) or
+	// cleanups trigged by compliance systems (ex. data governance hide).
+	// User-initiated events such as service management deactivation trigger
+	// a container to an OFF state.CLHs might choose to do nothing in this
+	// case or to turn off costly resources. CLHs need to consider the
+	// customer experience if an ON/OFF/ON sequence of state transitions
+	// occurs vs. the cost of deleting resources, keeping metadata about
+	// resources, or even keeping resources live for a period of time.CCFE
+	// will not send any new customer requests to the CLH when the container
+	// is in an OFF state. However, CCFE will allow all previous customer
+	// requests relayed to CLH to complete.
+	//   "DELETED" - This state indicates that the container has been (or is
+	// being) completely removed. This is often due to a data governance
+	// purge request and therefore resources should be deleted when this
+	// state is reached.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentReasons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentReasons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContainerState) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3054,7 +3117,7 @@ type ProjectEvent struct {
 	ProjectMetadata *ProjectsMetadata `json:"projectMetadata,omitempty"`
 
 	// State: The state of the project that led to this event.
-	State *ProjectState `json:"state,omitempty"`
+	State *ContainerState `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventId") to
 	// unconditionally include in API requests. By default, fields with
@@ -3079,80 +3142,6 @@ func (s *ProjectEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProjectState: ProjectState contains the externally-visible project
-// state that is used to communicate the state and reasoning for that
-// state to the CLH. This data is not persisted by CCFE, but is instead
-// derived from CCFE's internal representation of the project state.
-type ProjectState struct {
-	CurrentReasons *Reasons `json:"currentReasons,omitempty"`
-
-	// PreviousReasons: The previous and current reasons for a project state
-	// will be sent for a project event. CLHs that need to know the signal
-	// that caused the project event to trigger (edges) as opposed to just
-	// knowing the state can act upon differences in the previous and
-	// current reasons.Reasons will be provided for every system: service
-	// management, data governance, abuse, and billing.If this is a
-	// CCFE-triggered event used for reconciliation then the current reasons
-	// will be set to their *_CONTROL_PLANE_SYNC state. The previous reasons
-	// will contain the last known set of non-unknown non-control_plane_sync
-	// reasons for the state.Reasons fields are deprecated. New tenants
-	// should only use the state field. If you must know the reason(s)
-	// behind a specific state, please consult with CCFE team first
-	// (cloud-ccfe-discuss@google.com).
-	PreviousReasons *Reasons `json:"previousReasons,omitempty"`
-
-	// State: The current state of the project. This state is the
-	// culmination of all of the opinions from external systems that CCFE
-	// knows about of the project.
-	//
-	// Possible values:
-	//   "UNKNOWN_STATE" - A project should never be in an unknown state.
-	// Receipt of a project with this state is an error.
-	//   "ON" - CCFE considers the project to be serving or transitioning
-	// into serving.
-	//   "OFF" - CCFE considers the project to be in an OFF state. This
-	// could occur due to various factors. The state could be triggered by
-	// Google-internal audits (ex. abuse suspension, billing closed) or
-	// cleanups trigged by compliance systems (ex. data governance hide).
-	// User-initiated events such as service management deactivation trigger
-	// a project to an OFF state.CLHs might choose to do nothing in this
-	// case or to turn off costly resources. CLHs need to consider the
-	// customer experience if an ON/OFF/ON sequence of state transitions
-	// occurs vs. the cost of deleting resources, keeping metadata about
-	// resources, or even keeping resources live for a period of time.CCFE
-	// will not send any new customer requests to the CLH when the project
-	// is in an OFF state. However, CCFE will allow all previous customer
-	// requests relayed to CLH to complete.
-	//   "DELETED" - This state indicates that the project has been (or is
-	// being) completely removed. This is often due to a data governance
-	// purge request and therefore resources should be deleted when this
-	// state is reached.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CurrentReasons") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrentReasons") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ProjectState) MarshalJSON() ([]byte, error) {
-	type NoMethod ProjectState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ProjectsMetadata: ProjectsMetadata is the metadata CCFE stores about
 // the all the relevant projects (tenant, consumer, producer).
 type ProjectsMetadata struct {
@@ -3168,24 +3157,24 @@ type ProjectsMetadata struct {
 	// proto when communicated to CLH in the side channel.
 	//
 	// Possible values:
-	//   "UNKNOWN_STATE" - A project should never be in an unknown state.
-	// Receipt of a project with this state is an error.
-	//   "ON" - CCFE considers the project to be serving or transitioning
+	//   "UNKNOWN_STATE" - A container should never be in an unknown state.
+	// Receipt of a container with this state is an error.
+	//   "ON" - CCFE considers the container to be serving or transitioning
 	// into serving.
-	//   "OFF" - CCFE considers the project to be in an OFF state. This
+	//   "OFF" - CCFE considers the container to be in an OFF state. This
 	// could occur due to various factors. The state could be triggered by
 	// Google-internal audits (ex. abuse suspension, billing closed) or
 	// cleanups trigged by compliance systems (ex. data governance hide).
 	// User-initiated events such as service management deactivation trigger
-	// a project to an OFF state.CLHs might choose to do nothing in this
+	// a container to an OFF state.CLHs might choose to do nothing in this
 	// case or to turn off costly resources. CLHs need to consider the
 	// customer experience if an ON/OFF/ON sequence of state transitions
 	// occurs vs. the cost of deleting resources, keeping metadata about
 	// resources, or even keeping resources live for a period of time.CCFE
-	// will not send any new customer requests to the CLH when the project
+	// will not send any new customer requests to the CLH when the container
 	// is in an OFF state. However, CCFE will allow all previous customer
 	// requests relayed to CLH to complete.
-	//   "DELETED" - This state indicates that the project has been (or is
+	//   "DELETED" - This state indicates that the container has been (or is
 	// being) completely removed. This is often due to a data governance
 	// purge request and therefore resources should be deleted when this
 	// state is reached.
@@ -3285,7 +3274,7 @@ func (s *ReadinessCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Reasons: Projects transition between and within states based on
+// Reasons: Containers transition between and within states based on
 // reasons sent from various systems. CCFE will provide the CLH with
 // reasons for the current state per system.The current systems that
 // CCFE supports are: Service Management (Inception) Data Governance
@@ -3293,57 +3282,58 @@ func (s *ReadinessCheck) MarshalJSON() ([]byte, error) {
 type Reasons struct {
 	// Possible values:
 	//   "ABUSE_UNKNOWN_REASON" - An unknown reason indicates that the abuse
-	// system has not sent a signal for this project.
+	// system has not sent a signal for this container.
 	//   "ABUSE_CONTROL_PLANE_SYNC" - Due to various reasons CCFE might
-	// proactively restate a project state to a CLH to ensure that the CLH
-	// and CCFE are both aware of the project state. This reason can be tied
-	// to any of the states.
-	//   "SUSPEND" - If a project is deemed abusive we receive a suspend
-	// signal. Suspend is a reason to put the project into an INTERNAL_OFF
+	// proactively restate a container state to a CLH to ensure that the CLH
+	// and CCFE are both aware of the container state. This reason can be
+	// tied to any of the states.
+	//   "SUSPEND" - If a container is deemed abusive we receive a suspend
+	// signal. Suspend is a reason to put the container into an INTERNAL_OFF
 	// state.
-	//   "REINSTATE" - Projects that were once considered abusive can later
-	// be deemed non-abusive. When this happens we must reinstate the
-	// project. Reinstate is a reason to put the project into an ON state.
+	//   "REINSTATE" - Containers that were once considered abusive can
+	// later be deemed non-abusive. When this happens we must reinstate the
+	// container. Reinstate is a reason to put the container into an ON
+	// state.
 	Abuse string `json:"abuse,omitempty"`
 
 	// Possible values:
 	//   "BILLING_UNKNOWN_REASON" - An unknown reason indicates that the
-	// billing system has not sent a signal for this project.
+	// billing system has not sent a signal for this container.
 	//   "BILLING_CONTROL_PLANE_SYNC" - Due to various reasons CCFE might
-	// proactively restate a project state to a CLH to ensure that the CLH
-	// and CCFE are both aware of the project state. This reason can be tied
-	// to any of the states.
+	// proactively restate a container state to a CLH to ensure that the CLH
+	// and CCFE are both aware of the container state. This reason can be
+	// tied to any of the states.
 	//   "PROBATION" - Minor infractions cause a probation signal to be
-	// sent. Probation is a reason to put the project into a ON state even
+	// sent. Probation is a reason to put the container into a ON state even
 	// though it is a negative signal. CCFE will block mutations for this
-	// project while it is on billing probation, but the CLH is expected to
-	// serve non-mutation requests.
+	// container while it is on billing probation, but the CLH is expected
+	// to serve non-mutation requests.
 	//   "CLOSE" - When a billing account is closed, it is a stronger signal
-	// about non-payment. Close is a reason to put the project into an
+	// about non-payment. Close is a reason to put the container into an
 	// INTERNAL_OFF state.
 	//   "OPEN" - Consumers can re-open billing accounts and update accounts
 	// to pull them out of probation. When this happens, we get a signal
-	// that the account is open. Open is a reason to put the project into an
-	// ON state.
+	// that the account is open. Open is a reason to put the container into
+	// an ON state.
 	Billing string `json:"billing,omitempty"`
 
 	// Possible values:
 	//   "DATA_GOVERNANCE_UNKNOWN_REASON" - An unknown reason indicates that
-	// data governance has not sent a signal for this project.
+	// data governance has not sent a signal for this container.
 	//   "DATA_GOVERNANCE_CONTROL_PLANE_SYNC" - Due to various reasons CCFE
-	// might proactively restate a project state to a CLH to ensure that the
-	// CLH and CCFE are both aware of the project state. This reason can be
-	// tied to any of the states.
-	//   "HIDE" - When a project is deleted we retain some data for a period
-	// of time to allow the consumer to change their mind. Data governance
-	// sends a signal to hide the data when this occurs. Hide is a reason to
-	// put the project in an INTERNAL_OFF state.
-	//   "UNHIDE" - The decision to un-delete a project can be made. When
+	// might proactively restate a container state to a CLH to ensure that
+	// the CLH and CCFE are both aware of the container state. This reason
+	// can be tied to any of the states.
+	//   "HIDE" - When a container is deleted we retain some data for a
+	// period of time to allow the consumer to change their mind. Data
+	// governance sends a signal to hide the data when this occurs. Hide is
+	// a reason to put the container in an INTERNAL_OFF state.
+	//   "UNHIDE" - The decision to un-delete a container can be made. When
 	// this happens data governance tells us to unhide any hidden data.
-	// Unhide is a reason to put the project in an ON state.
+	// Unhide is a reason to put the container in an ON state.
 	//   "PURGE" - After a period of time data must be completely removed
 	// from our systems. When data governance sends a purge signal we need
-	// to remove data. Purge is a reason to put the project in a DELETED
+	// to remove data. Purge is a reason to put the container in a DELETED
 	// state. Purge is the only event that triggers a delete mutation. All
 	// other events have update semantics.
 	DataGovernance string `json:"dataGovernance,omitempty"`
@@ -3351,24 +3341,24 @@ type Reasons struct {
 	// Possible values:
 	//   "SERVICE_MANAGEMENT_UNKNOWN_REASON" - An unknown reason indicates
 	// that we have not received a signal from service management about this
-	// project. Since projects are created by request of service management,
-	// this reason should never be set.
+	// container. Since containers are created by request of service
+	// management, this reason should never be set.
 	//   "SERVICE_MANAGEMENT_CONTROL_PLANE_SYNC" - Due to various reasons
-	// CCFE might proactively restate a project state to a CLH to ensure
-	// that the CLH and CCFE are both aware of the project state. This
+	// CCFE might proactively restate a container state to a CLH to ensure
+	// that the CLH and CCFE are both aware of the container state. This
 	// reason can be tied to any of the states.
 	//   "ACTIVATION" - When a customer activates an API CCFE notifies the
-	// CLH and sets the project to the ON state.
+	// CLH and sets the container to the ON state.
 	//   "PREPARE_DEACTIVATION" - When a customer deactivates and API
 	// service management starts a two-step process to perform the
 	// deactivation. The first step is to prepare. Prepare is a reason to
-	// put the project in a EXTERNAL_OFF state.
+	// put the container in a EXTERNAL_OFF state.
 	//   "ABORT_DEACTIVATION" - If the deactivation is cancelled, service
 	// managed needs to abort the deactivation. Abort is a reason to put the
-	// project in an ON state.
+	// container in an ON state.
 	//   "COMMIT_DEACTIVATION" - If the deactivation is followed through
 	// with, service management needs to finish deactivation. Commit is a
-	// reason to put the project in a DELETED state.
+	// reason to put the container in a DELETED state.
 	ServiceManagement string `json:"serviceManagement,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Abuse") to
@@ -4795,6 +4785,182 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	//   "path": "v1beta/apps/{appsId}",
 	//   "response": {
 	//     "$ref": "Application"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.listRuntimes":
+
+type AppsListRuntimesCall struct {
+	s            *APIService
+	appsId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListRuntimes: Lists all the available runtimes for the application.
+//
+//   - appsId: Part of `parent`.  Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *AppsService) ListRuntimes(appsId string) *AppsListRuntimesCall {
+	c := &AppsListRuntimesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	return c
+}
+
+// Environment sets the optional parameter "environment": The
+// environment of the Application.
+//
+// Possible values:
+//
+//	"ENVIRONMENT_UNSPECIFIED" - Default value.
+//	"STANDARD" - App Engine Standard.
+//	"FLEXIBLE" - App Engine Flexible
+func (c *AppsListRuntimesCall) Environment(environment string) *AppsListRuntimesCall {
+	c.urlParams_.Set("environment", environment)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsListRuntimesCall) Fields(s ...googleapi.Field) *AppsListRuntimesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsListRuntimesCall) IfNoneMatch(entityTag string) *AppsListRuntimesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsListRuntimesCall) Context(ctx context.Context) *AppsListRuntimesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsListRuntimesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsListRuntimesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/apps/{appsId}:listRuntimes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId": c.appsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.apps.listRuntimes" call.
+// Exactly one of *ListRuntimesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListRuntimesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsListRuntimesCall) Do(opts ...googleapi.CallOption) (*ListRuntimesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRuntimesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the available runtimes for the application.",
+	//   "flatPath": "v1beta/apps/{appsId}:listRuntimes",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.listRuntimes",
+	//   "parameterOrder": [
+	//     "appsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Required. Name of the parent Application resource. Example: apps/myapp.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environment": {
+	//       "description": "Optional. The environment of the Application.",
+	//       "enum": [
+	//         "ENVIRONMENT_UNSPECIFIED",
+	//         "STANDARD",
+	//         "FLEXIBLE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "App Engine Standard.",
+	//         "App Engine Flexible"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/apps/{appsId}:listRuntimes",
+	//   "response": {
+	//     "$ref": "ListRuntimesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/appengine.admin",
@@ -8738,182 +8904,6 @@ func (c *AppsOperationsListCall) Pages(ctx context.Context, f func(*ListOperatio
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "appengine.apps.runtimes.list":
-
-type AppsRuntimesListCall struct {
-	s            *APIService
-	appsId       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all the available runtimes for the application.
-//
-//   - appsId: Part of `parent`.  Name of the parent Application resource.
-//     Example: apps/myapp.
-func (r *AppsRuntimesService) List(appsId string) *AppsRuntimesListCall {
-	c := &AppsRuntimesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.appsId = appsId
-	return c
-}
-
-// Environment sets the optional parameter "environment": The
-// environment of the Application.
-//
-// Possible values:
-//
-//	"ENVIRONMENT_UNSPECIFIED" - Default value.
-//	"STANDARD" - App Engine Standard.
-//	"FLEXIBLE" - App Engine Flexible
-func (c *AppsRuntimesListCall) Environment(environment string) *AppsRuntimesListCall {
-	c.urlParams_.Set("environment", environment)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AppsRuntimesListCall) Fields(s ...googleapi.Field) *AppsRuntimesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AppsRuntimesListCall) IfNoneMatch(entityTag string) *AppsRuntimesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AppsRuntimesListCall) Context(ctx context.Context) *AppsRuntimesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AppsRuntimesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AppsRuntimesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/apps/{appsId}/runtimes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"appsId": c.appsId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "appengine.apps.runtimes.list" call.
-// Exactly one of *ListRuntimesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListRuntimesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AppsRuntimesListCall) Do(opts ...googleapi.CallOption) (*ListRuntimesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListRuntimesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists all the available runtimes for the application.",
-	//   "flatPath": "v1beta/apps/{appsId}/runtimes",
-	//   "httpMethod": "GET",
-	//   "id": "appengine.apps.runtimes.list",
-	//   "parameterOrder": [
-	//     "appsId"
-	//   ],
-	//   "parameters": {
-	//     "appsId": {
-	//       "description": "Part of `parent`. Required. Name of the parent Application resource. Example: apps/myapp.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "environment": {
-	//       "description": "Optional. The environment of the Application.",
-	//       "enum": [
-	//         "ENVIRONMENT_UNSPECIFIED",
-	//         "STANDARD",
-	//         "FLEXIBLE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Default value.",
-	//         "App Engine Standard.",
-	//         "App Engine Flexible"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/apps/{appsId}/runtimes",
-	//   "response": {
-	//     "$ref": "ListRuntimesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/appengine.admin",
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
-	//   ]
-	// }
-
 }
 
 // method id "appengine.apps.services.delete":

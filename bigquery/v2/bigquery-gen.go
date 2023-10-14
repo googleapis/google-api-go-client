@@ -367,6 +367,45 @@ func (s *AggregateClassificationMetrics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// AggregationThresholdPolicy: Represents privacy policy associated with
+// "aggregation threshold" method.
+type AggregationThresholdPolicy struct {
+	// PrivacyUnitColumns: Optional. The privacy unit column(s) associated
+	// with this policy. For now, only one column per data source object
+	// (table, view) is allowed as a privacy unit column. Representing as a
+	// repeated field in metadata for extensibility to multiple columns in
+	// future. Duplicates and Repeated struct fields are not allowed. For
+	// nested fields, use dot notation ("outer.inner")
+	PrivacyUnitColumns []string `json:"privacyUnitColumns,omitempty"`
+
+	// Threshold: Optional. The threshold for the "aggregation threshold"
+	// policy.
+	Threshold int64 `json:"threshold,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "PrivacyUnitColumns")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrivacyUnitColumns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AggregationThresholdPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregationThresholdPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Argument: Input/output argument of a function or a stored procedure.
 type Argument struct {
 	// ArgumentKind: Optional. Defaults to FIXED_TYPE.
@@ -5025,6 +5064,55 @@ func (s *JobConfigurationTableCopy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobCreationReason: Reason about why a Job was created from a
+// `jobs.query`
+// (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query)
+// method when used with `JOB_CREATION_OPTIONAL` Job creation mode. For
+// `jobs.insert`
+// (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/insert)
+// method calls it will always be `REQUESTED`. This feature is not yet
+// available. Jobs will always be created.
+type JobCreationReason struct {
+	// Code: Output only. Specifies the high level reason why a Job was
+	// created.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Reason is not specified.
+	//   "REQUESTED" - Job creation was requested.
+	//   "LONG_RUNNING" - The query request ran beyond a system defined
+	// timeout specified by the [timeoutMs field in the
+	// QueryRequest](https://cloud.google.com/bigquery/docs/reference/rest/v2
+	// /jobs/query#queryrequest). As a result it was considered a long
+	// running operation for which a job was created.
+	//   "LARGE_RESULTS" - The results from the query cannot fit in the
+	// response.
+	//   "OTHER" - BigQuery has determined that the query needs to be
+	// executed as a Job.
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobCreationReason) MarshalJSON() ([]byte, error) {
+	type NoMethod JobCreationReason
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type JobList struct {
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
@@ -6442,6 +6530,39 @@ func (s *PrincipalComponentInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// PrivacyPolicy: Represents privacy policy that contains the privacy
+// requirements specified by the data owner. Currently, this is only
+// supported on views.
+type PrivacyPolicy struct {
+	// AggregationThresholdPolicy: Optional. Policy used for aggregation
+	// thresholds.
+	AggregationThresholdPolicy *AggregationThresholdPolicy `json:"aggregationThresholdPolicy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AggregationThresholdPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AggregationThresholdPolicy") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivacyPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivacyPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ProjectList struct {
 	// Etag: A hash of the page of results
 	Etag string `json:"etag,omitempty"`
@@ -6886,6 +7007,11 @@ type QueryResponse struct {
 
 	// PageToken: A token used for paging results.
 	PageToken string `json:"pageToken,omitempty"`
+
+	// QueryId: Query ID for the completed query. This ID will be
+	// auto-generated. This field is not yet available and it is currently
+	// not guaranteed to be populated.
+	QueryId string `json:"queryId,omitempty"`
 
 	// Rows: An object with as many results as can be contained within the
 	// maximum permitted reply size. To get any additional rows, you can
@@ -7408,6 +7534,19 @@ type Routine struct {
 	//   "AGGREGATE_FUNCTION" - Non-built-in persistent aggregate function.
 	RoutineType string `json:"routineType,omitempty"`
 
+	// SecurityMode: Optional. The security mode of the routine, if defined.
+	// If not defined, the security mode is automatically determined from
+	// the routine's configuration.
+	//
+	// Possible values:
+	//   "SECURITY_MODE_UNSPECIFIED" - The security mode of the routine is
+	// unspecified.
+	//   "DEFINER" - The routine is to be executed with the privileges of
+	// the user who defines it.
+	//   "INVOKER" - The routine is to be executed with the privileges of
+	// the user who invokes it.
+	SecurityMode string `json:"securityMode,omitempty"`
+
 	// SparkOptions: Optional. Spark specific options.
 	SparkOptions *SparkOptions `json:"sparkOptions,omitempty"`
 
@@ -7845,10 +7984,10 @@ func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
 
 type SparkLoggingInfo struct {
 	// ProjectId: [Output-only] Project ID used for logging
-	ProjectId string `json:"project_id,omitempty"`
+	ProjectId string `json:"projectId,omitempty"`
 
 	// ResourceType: [Output-only] Resource type used for logging
-	ResourceType string `json:"resource_type,omitempty"`
+	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
 	// unconditionally include in API requests. By default, fields with

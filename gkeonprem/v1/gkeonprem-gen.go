@@ -398,8 +398,8 @@ func (s *BareMetalAdminApiServerArgument) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BareMetalAdminCluster: ## Resource that represents a bare metal admin
-// cluster.
+// BareMetalAdminCluster: Resource that represents a bare metal admin
+// cluster. LINT.IfChange
 type BareMetalAdminCluster struct {
 	// Annotations: Annotations on the bare metal admin cluster. This field
 	// has the same restrictions as Kubernetes annotations. The total size
@@ -1354,6 +1354,7 @@ func (s *BareMetalBgpPeerConfig) MarshalJSON() ([]byte, error) {
 }
 
 // BareMetalCluster: Resource that represents a bare metal user cluster.
+// LINT.IfChange
 type BareMetalCluster struct {
 	// AdminClusterMembership: Required. The admin cluster this bare metal
 	// user cluster belongs to. This is the full resource name of the admin
@@ -4834,6 +4835,10 @@ type VmwareAdminCluster struct {
 	// PlatformConfig: The VMware platform configuration.
 	PlatformConfig *VmwarePlatformConfig `json:"platformConfig,omitempty"`
 
+	// PreparedSecrets: The VMware admin cluster prepared secrets
+	// configuration.
+	PreparedSecrets *VmwareAdminPreparedSecretsConfig `json:"preparedSecrets,omitempty"`
+
 	// Reconciling: Output only. If set, there are currently changes in
 	// flight to the VMware admin cluster.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -5148,6 +5153,35 @@ type VmwareAdminNetworkConfig struct {
 
 func (s *VmwareAdminNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VmwareAdminNetworkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmwareAdminPreparedSecretsConfig: VmwareAdminPreparedSecretsConfig
+// represents configuration for admin cluster prepared secrets.
+type VmwareAdminPreparedSecretsConfig struct {
+	// Enabled: Whether prepared secrets is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareAdminPreparedSecretsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminPreparedSecretsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

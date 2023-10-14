@@ -10542,10 +10542,10 @@ func (r *BillingAccountsSinksService) Patch(sinkNameid string, logsink *LogSink)
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -10682,7 +10682,7 @@ func (c *BillingAccountsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSi
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10752,10 +10752,10 @@ func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -10892,7 +10892,7 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18597,10 +18597,10 @@ func (r *FoldersSinksService) Patch(sinkNameid string, logsink *LogSink) *Folder
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -18737,7 +18737,7 @@ func (c *FoldersSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, erro
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18807,10 +18807,10 @@ func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *Folde
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -18947,7 +18947,7 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29722,10 +29722,10 @@ func (r *OrganizationsSinksService) Patch(sinkNameid string, logsink *LogSink) *
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -29862,7 +29862,7 @@ func (c *OrganizationsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29932,10 +29932,10 @@ func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) 
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -30072,7 +30072,7 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -37031,10 +37031,10 @@ func (r *ProjectsSinksService) Patch(sinkNameid string, logsink *LogSink) *Proje
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -37171,7 +37171,7 @@ func (c *ProjectsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -37241,10 +37241,10 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -37381,7 +37381,7 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -38135,10 +38135,10 @@ func (r *SinksService) Update(sinkNameid string, logsink *LogSink) *SinksUpdateC
 
 // CustomWriterIdentity sets the optional parameter
 // "customWriterIdentity": A service account provided by the caller that
-// will be used to write the log entries. Must be of format
-// serviceAccount:some@email. This can only be specified if writing to a
-// destination outside the sink's project. If not specified, a p4
-// service account will automatically be generated.
+// will be used to write the log entries. The format must be
+// serviceAccount:some@email. This field can only be specified if you
+// are routing logs to a destination outside this sink's project. If not
+// specified, a Logging service account will automatically be generated.
 func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *SinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -38275,7 +38275,7 @@ func (c *SinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//   ],
 	//   "parameters": {
 	//     "customWriterIdentity": {
-	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. Must be of format serviceAccount:some@email. This can only be specified if writing to a destination outside the sink's project. If not specified, a p4 service account will automatically be generated.",
+	//       "description": "Optional. A service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

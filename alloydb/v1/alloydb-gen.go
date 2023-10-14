@@ -1431,7 +1431,8 @@ type Instance struct {
 	// QueryInsightsConfig: Configuration for query insights.
 	QueryInsightsConfig *QueryInsightsInstanceConfig `json:"queryInsightsConfig,omitempty"`
 
-	// ReadPoolConfig: Read pool specific config.
+	// ReadPoolConfig: Read pool instance configuration. This is required if
+	// the value of instanceType is READ_POOL.
 	ReadPoolConfig *ReadPoolConfig `json:"readPoolConfig,omitempty"`
 
 	// Reconciling: Output only. Reconciling
@@ -1841,8 +1842,8 @@ type NetworkConfig struct {
 	// "google-managed-services-default". If set, the instance IPs for this
 	// cluster will be created in the allocated range. The range name must
 	// comply with RFC 1035. Specifically, the name must be 1-63 characters
-	// long and match the regular expression a-z ([-a-z0-9]*[a-z0-9])?.
-	// Field name is intended to be consistent with CloudSQL.
+	// long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`.
+	// Field name is intended to be consistent with Cloud SQL.
 	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
 
 	// Network: Required. The resource link for the VPC network in which
@@ -2724,8 +2725,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// Description: Description associated with signal
 	Description string `json:"description,omitempty"`
 
-	// EventTime: The last time at which the event described by this signal
-	// took place
+	// EventTime: Required. The last time at which the event described by
+	// this signal took place
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The external-uri of the signal, using which more
@@ -2733,7 +2734,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// user to SCC page to get more details about signals.
 	ExternalUri string `json:"externalUri,omitempty"`
 
-	// Name: The name of the signal, ex: PUBLIC_SQL_INSTANCE,
+	// Name: Required. The name of the signal, ex: PUBLIC_SQL_INSTANCE,
 	// SQL_LOG_ERROR_VERBOSITY etc.
 	Name string `json:"name,omitempty"`
 
@@ -2760,13 +2761,13 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// "provider//", such as "gcp/projects/123".
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
-	// ResourceName: Database resource name associated with the signal.
-	// Resource name to follow CAIS resource_name format as noted here
-	// go/condor-common-datamodel
+	// ResourceName: Required. Database resource name associated with the
+	// signal. Resource name to follow CAIS resource_name format as noted
+	// here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
 
-	// SignalClass: The class of the signal, such as if it's a THREAT or
-	// VULNERABILITY.
+	// SignalClass: Required. The class of the signal, such as if it's a
+	// THREAT or VULNERABILITY.
 	//
 	// Possible values:
 	//   "CLASS_UNSPECIFIED" - Unspecified signal class.
@@ -2780,9 +2781,137 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "ERROR" - Describes an error that prevents some SCC functionality.
 	SignalClass string `json:"signalClass,omitempty"`
 
-	// SignalId: Unique identifier for the signal. This is an unique id
-	// which would be mainatined by partner to identify a signal.
+	// SignalId: Required. Unique identifier for the signal. This is an
+	// unique id which would be mainatined by partner to identify a signal.
 	SignalId string `json:"signalId,omitempty"`
+
+	// SignalType: Required. Type of signal, for example,
+	// `AVAILABLE_IN_MULTIPLE_ZONES`, `LOGGING_MOST_ERRORS`, etc.
+	//
+	// Possible values:
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_ZONES" - Represents if the
+	// resource is available in multiple zones or not.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_REGIONS" - Represents if a
+	// resource is available in multiple regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Represents if a resource has
+	// a promotable replica.
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource
+	// has an automated backup policy.
+	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources
+	// has a short backup retention period.
+	//   "SIGNAL_TYPE_LAST_BACKUP_FAILED" - Represents if the last backup of
+	// a resource failed.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than some threshold value.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_2_0" - Represents if a
+	// resource violates CIS GCP Foundation 2.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_3" - Represents if a
+	// resource violates CIS GCP Foundation 1.3.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_2" - Represents if a
+	// resource violates CIS GCP Foundation 1.2.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_1" - Represents if a
+	// resource violates CIS GCP Foundation 1.1.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a
+	// resource violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource
+	// violates NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource
+	// violates ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource
+	// violates PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" -
+	// LINT.IfChange(scc_signals) Represents if log_checkpoints database
+	// flag for a Cloud SQL for PostgreSQL instance is not set to on.
+	//   "SIGNAL_TYPE_QUERY_DURATIONS_NOT_LOGGED" - Represents if the
+	// log_duration database flag for a Cloud SQL for PostgreSQL instance is
+	// not set to on.
+	//   "SIGNAL_TYPE_VERBOSE_ERROR_LOGGING" - Represents if the
+	// log_error_verbosity database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to default or stricter (default or terse).
+	//   "SIGNAL_TYPE_QUERY_LOCK_WAITS_NOT_LOGGED" - Represents if the
+	// log_lock_waits database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_MOST_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance is not set appropriately.
+	//   "SIGNAL_TYPE_LOGGING_ONLY_CRITICAL_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance does not have an appropriate severity level.
+	//   "SIGNAL_TYPE_MINIMAL_ERROR_LOGGING" - Represents if the
+	// log_min_messages database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to warning or another recommended value.
+	//   "SIGNAL_TYPE_QUERY_STATISTICS_LOGGED" - Represents if the
+	// databaseFlags property of instance metadata for the
+	// log_executor_status field is set to on.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_CLIENT_HOSTNAME" - Represents if
+	// the log_hostname database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PARSER_STATISTICS" - Represents
+	// if the log_parser_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PLANNER_STATISTICS" - Represents
+	// if the log_planner_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_ONLY_DDL_STATEMENTS" - Represents if the
+	// log_statement database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to DDL (all data definition statements).
+	//   "SIGNAL_TYPE_LOGGING_QUERY_STATISTICS" - Represents if the
+	// log_statement_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_TEMPORARY_FILES" - Represents if the
+	// log_temp_files database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to "0". (NOTE: 0 = ON)
+	//   "SIGNAL_TYPE_CONNECTION_MAX_NOT_CONFIGURED" - Represents if the
+	// user connections database flag for a Cloud SQL for SQL Server
+	// instance is configured.
+	//   "SIGNAL_TYPE_USER_OPTIONS_CONFIGURED" - Represents if the user
+	// options database flag for Cloud SQL SQL Server instance is configured
+	// or not.
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource
+	// is exposed to public access.
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources
+	// requires all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a Cloud SQL database
+	// has a password configured for the root account or not.
+	//   "SIGNAL_TYPE_WEAK_ROOT_PASSWORD" - Represents if a Cloud SQL
+	// database has a weak password configured for the root account.
+	//   "SIGNAL_TYPE_ENCRYPTION_KEY_NOT_CUSTOMER_MANAGED" - Represents if a
+	// SQL database instance is not encrypted with customer-managed
+	// encryption keys (CMEK).
+	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if
+	// The contained database authentication database flag for a Cloud SQL
+	// for SQL Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Represents if the
+	// cross_db_ownership_chaining database flag for a Cloud SQL for SQL
+	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he
+	// external scripts enabled database flag for a Cloud SQL for SQL Server
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_LOCAL_DATA_LOADS" - Represents if the
+	// local_infile database flag for a Cloud SQL for MySQL instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_CONNECTION_ATTEMPTS_NOT_LOGGED" - Represents if the
+	// log_connections database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_DISCONNECTIONS_NOT_LOGGED" - Represents if the
+	// log_disconnections database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_EXCESSIVE_STATEMENT_INFO" - Represents if the
+	// log_min_duration_statement database flag for a Cloud SQL for
+	// PostgreSQL instance is not set to -1.
+	//   "SIGNAL_TYPE_EXPOSED_TO_REMOTE_ACCESS" - Represents if the remote
+	// access database flag for a Cloud SQL for SQL Server instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_DATABASE_NAMES_EXPOSED" - Represents if the
+	// skip_show_database database flag for a Cloud SQL for MySQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_SENSITIVE_TRACE_INFO_NOT_MASKED" - Represents if the
+	// 3625 (trace flag) database flag for a Cloud SQL for SQL Server
+	// instance is not set to on.
+	// LINT.ThenChange(//depot/google3/storage/databasecenter/ingestion/borgj
+	// ob/message_adapter/health_signal_feed/health_signal_mapping.h)
+	SignalType string `json:"signalType,omitempty"`
 
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -2931,6 +3060,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// Possible values:
 	//   "INSTANCE_TYPE_UNSPECIFIED"
 	//   "PRIMARY" - A regular primary database instance.
+	//   "SECONDARY" - A cluster or an instance acting as a secondary.
 	//   "READ_REPLICA" - An instance acting as a read-replica.
 	//   "OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`

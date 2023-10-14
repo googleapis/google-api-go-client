@@ -1133,7 +1133,8 @@ type GroupKind struct {
 	// string for core API group
 	ResourceGroup string `json:"resourceGroup,omitempty"`
 
-	// ResourceKind: Optional. Kind of a Kubernetes resource, e.g.
+	// ResourceKind: Optional. Kind of a Kubernetes resource, must be in
+	// UpperCamelCase (PascalCase) and singular form. E.g.
 	// "CustomResourceDefinition", "StorageClass", etc.
 	ResourceKind string `json:"resourceKind,omitempty"`
 
@@ -1786,7 +1787,7 @@ func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
 
 // Restore: Represents both a request to Restore some portion of a
 // Backup into a target GKE cluster and a record of the restore
-// operation itself. Next id: 18
+// operation itself. Next id: 19
 type Restore struct {
 	// Backup: Required. Immutable. A reference to the Backup used as the
 	// source from which this Restore will restore. Note that this Backup

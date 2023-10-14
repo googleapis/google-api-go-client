@@ -1686,7 +1686,7 @@
       }
     }
   },
-  "revision": "20230925",
+  "revision": "20231008",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1727,6 +1727,25 @@
           "description": "Threshold at which the metrics are computed. For binary classification models this is the positive class threshold. For multi-class classfication models this is the confidence threshold.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "AggregationThresholdPolicy": {
+      "description": "Represents privacy policy associated with \"aggregation threshold\" method.",
+      "id": "AggregationThresholdPolicy",
+      "properties": {
+        "privacyUnitColumns": {
+          "description": "Optional. The privacy unit column(s) associated with this policy. For now, only one column per data source object (table, view) is allowed as a privacy unit column. Representing as a repeated field in metadata for extensibility to multiple columns in future. Duplicates and Repeated struct fields are not allowed. For nested fields, use dot notation (\"outer.inner\")",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "threshold": {
+          "description": "Optional. The threshold for the \"aggregation threshold\" policy.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4478,6 +4497,32 @@
       },
       "type": "object"
     },
+    "JobCreationReason": {
+      "description": "Reason about why a Job was created from a [`jobs.query`](https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query) method when used with `JOB_CREATION_OPTIONAL` Job creation mode. For [`jobs.insert`](https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/insert) method calls it will always be `REQUESTED`. This feature is not yet available. Jobs will always be created.",
+      "id": "JobCreationReason",
+      "properties": {
+        "code": {
+          "description": "Output only. Specifies the high level reason why a Job was created.",
+          "enum": [
+            "CODE_UNSPECIFIED",
+            "REQUESTED",
+            "LONG_RUNNING",
+            "LARGE_RESULTS",
+            "OTHER"
+          ],
+          "enumDescriptions": [
+            "Reason is not specified.",
+            "Job creation was requested.",
+            "The query request ran beyond a system defined timeout specified by the [timeoutMs field in the QueryRequest](https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#queryrequest). As a result it was considered a long running operation for which a job was created.",
+            "The results from the query cannot fit in the response.",
+            "BigQuery has determined that the query needs to be executed as a Job."
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "JobList": {
       "id": "JobList",
       "properties": {
@@ -5406,6 +5451,17 @@
       },
       "type": "object"
     },
+    "PrivacyPolicy": {
+      "description": "Represents privacy policy that contains the privacy requirements specified by the data owner. Currently, this is only supported on views.",
+      "id": "PrivacyPolicy",
+      "properties": {
+        "aggregationThresholdPolicy": {
+          "$ref": "AggregationThresholdPolicy",
+          "description": "Optional. Policy used for aggregation thresholds."
+        }
+      },
+      "type": "object"
+    },
     "ProjectList": {
       "id": "ProjectList",
       "properties": {
@@ -5692,6 +5748,10 @@
         },
         "pageToken": {
           "description": "A token used for paging results.",
+          "type": "string"
+        },
+        "queryId": {
+          "description": "Query ID for the completed query. This ID will be auto-generated. This field is not yet available and it is currently not guaranteed to be populated.",
           "type": "string"
         },
         "rows": {
@@ -6043,6 +6103,20 @@
           ],
           "type": "string"
         },
+        "securityMode": {
+          "description": "Optional. The security mode of the routine, if defined. If not defined, the security mode is automatically determined from the routine's configuration.",
+          "enum": [
+            "SECURITY_MODE_UNSPECIFIED",
+            "DEFINER",
+            "INVOKER"
+          ],
+          "enumDescriptions": [
+            "The security mode of the routine is unspecified.",
+            "The routine is to be executed with the privileges of the user who defines it.",
+            "The routine is to be executed with the privileges of the user who invokes it."
+          ],
+          "type": "string"
+        },
         "sparkOptions": {
           "$ref": "SparkOptions",
           "description": "Optional. Spark specific options."
@@ -6266,11 +6340,11 @@
     "SparkLoggingInfo": {
       "id": "SparkLoggingInfo",
       "properties": {
-        "project_id": {
+        "projectId": {
           "description": "[Output-only] Project ID used for logging",
           "type": "string"
         },
-        "resource_type": {
+        "resourceType": {
           "description": "[Output-only] Resource type used for logging",
           "type": "string"
         }

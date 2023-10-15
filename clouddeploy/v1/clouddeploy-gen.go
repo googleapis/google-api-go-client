@@ -517,6 +517,7 @@ type AutomationEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -579,6 +580,7 @@ type AutomationRunEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1282,6 +1284,7 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1975,6 +1978,7 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3321,6 +3325,7 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3794,6 +3799,7 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4377,6 +4383,7 @@ type TargetNotificationEvent struct {
 	//   "TYPE_PROCESS_ABORTED" - A process aborted.
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4420,6 +4427,9 @@ type TargetRender struct {
 	// successfully; check Cloud Build logs.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
+	//   "VERIFICATION_CONFIG_NOT_FOUND" - The render operation did not
+	// complete successfully because the verification stanza required for
+	// verify was not found on the skaffold configuration.
 	//   "CUSTOM_ACTION_NOT_FOUND" - The render operation did not complete
 	// successfully because the custom action required for predeploy or
 	// postdeploy was not found in the skaffold configuration. See

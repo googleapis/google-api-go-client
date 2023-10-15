@@ -1270,8 +1270,8 @@ type DatabaseInstance struct {
 	// proactive database wellness job
 	OutOfDiskReport *SqlOutOfDiskReport `json:"outOfDiskReport,omitempty"`
 
-	// PrimaryDnsName: Output only. The dns name of the primary instance in
-	// a replication group.
+	// PrimaryDnsName: Output only. DEPRECATED: please use write_endpoint
+	// instead.
 	PrimaryDnsName string `json:"primaryDnsName,omitempty"`
 
 	// Project: The project ID of the project containing the Cloud SQL
@@ -1359,6 +1359,10 @@ type DatabaseInstance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either
 	// revoked or denied access to
 	SuspensionReason []string `json:"suspensionReason,omitempty"`
+
+	// WriteEndpoint: Output only. The dns name of the primary instance in a
+	// replication group.
+	WriteEndpoint string `json:"writeEndpoint,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2919,8 +2923,50 @@ type IpConfiguration struct {
 	// PscConfig: PSC settings for this instance.
 	PscConfig *PscConfig `json:"pscConfig,omitempty"`
 
-	// RequireSsl: Whether SSL connections over IP are enforced or not.
+	// RequireSsl: LINT.IfChange(require_ssl_deprecate) Whether SSL/TLS
+	// connections over IP are enforced or not. If set to false, allow both
+	// non-SSL/non-TLS and SSL/TLS connections. For SSL/TLS connections, the
+	// client certificate will not be verified. If set to true, only allow
+	// connections encrypted with SSL/TLS and with valid client
+	// certificates. If you want to enforce SSL/TLS without enforcing the
+	// requirement for valid client certificates, use the `ssl_mode` flag
+	// instead of the legacy `require_ssl` flag.
+	// LINT.ThenChange(//depot/google3/java/com/google/storage/speckle/boss/a
+	// dmin/actions/InstanceUpdateAction.java:update_api_temp_fix)
 	RequireSsl bool `json:"requireSsl,omitempty"`
+
+	// SslMode: Specify how SSL/TLS will be enforced in database
+	// connections. This flag is only supported for PostgreSQL. Use the
+	// legacy `require_ssl` flag for enforcing SSL/TLS in MySQL and SQL
+	// Server. But, for PostgreSQL, it is recommended to use the `ssl_mode`
+	// flag instead of the legacy `require_ssl` flag. To avoid the conflict
+	// between those flags in PostgreSQL, only the following value pairs are
+	// valid: ssl_mode=ALLOW_UNENCRYPTED_AND_ENCRYPTED, require_ssl=false;
+	// ssl_mode=ENCRYPTED_ONLY, require_ssl=false;
+	// ssl_mode=TRUSTED_CLIENT_CERTIFICATE_REQUIRED, require_ssl=true; Note
+	// that the value of `ssl_mode` gets priority over the value of the
+	// legacy `require_ssl`. For example, for the pair
+	// `ssl_mode=ENCRYPTED_ONLY, require_ssl=false`, the
+	// `ssl_mode=ENCRYPTED_ONLY` means "only accepts SSL connection", while
+	// the `require_ssl=false` means "both non-SSL and SSL connections are
+	// allowed". The database will respect `ssl_mode` in this case and only
+	// accept SSL connections.
+	//
+	// Possible values:
+	//   "SSL_MODE_UNSPECIFIED" - SSL mode is unknown.
+	//   "ALLOW_UNENCRYPTED_AND_ENCRYPTED" - Allow non-SSL/non-TLS and
+	// SSL/TLS connections. For SSL/TLS connections, the client certificate
+	// will not be verified. When this value is used, legacy `require_ssl`
+	// flag must be false or unset to avoid the conflict between values of
+	// two flags.
+	//   "ENCRYPTED_ONLY" - Only allow connections encrypted with SSL/TLS.
+	// When this value is used, legacy `require_ssl` flag must be false or
+	// unset to avoid the conflict between values of two flags.
+	//   "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" - Only allow connections
+	// encrypted with SSL/TLS and with valid client certificates. When this
+	// value is used, legacy `require_ssl` flag must be true or unset to
+	// avoid the conflict between values of two flags.
+	SslMode string `json:"sslMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
 	// unconditionally include in API requests. By default, fields with
@@ -2946,7 +2992,7 @@ func (s *IpConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IpMapping: Database instance IP Mapping.
+// IpMapping: Database instance IP mapping
 type IpMapping struct {
 	// IpAddress: The IP address assigned.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -3607,6 +3653,10 @@ type PasswordValidationPolicy struct {
 	// numeric, and non-alphanumeric characters.
 	Complexity string `json:"complexity,omitempty"`
 
+	// DisallowCompromisedCredentials: Disallow credentials that have been
+	// previously compromised by a public data breach.
+	DisallowCompromisedCredentials bool `json:"disallowCompromisedCredentials,omitempty"`
+
 	// DisallowUsernameSubstring: Disallow username as a part of the
 	// password.
 	DisallowUsernameSubstring bool `json:"disallowUsernameSubstring,omitempty"`
@@ -3677,9 +3727,9 @@ func (s *PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 
 // PscConfig: PSC settings for a Cloud SQL instance.
 type PscConfig struct {
-	// AllowedConsumerProjects: List of consumer projects that are
-	// allow-listed for PSC connections to this instance. This instance can
-	// be connected to with PSC from any network in these projects. Each
+	// AllowedConsumerProjects: Optional. The list of consumer projects that
+	// are allow-listed for PSC connections to this instance. This instance
+	// can be connected to with PSC from any network in these projects. Each
 	// consumer project in this list may be represented by a project number
 	// (numeric) or by a project id (alphanumeric).
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
@@ -3715,6 +3765,11 @@ func (s *PscConfig) MarshalJSON() ([]byte, error) {
 // ReplicaConfiguration: Read-replica configuration for connecting to
 // the primary instance.
 type ReplicaConfiguration struct {
+	// CascadableReplica: Optional. Specifies if a SQL Server replica is a
+	// cascadable replica. A cascadable replica is a SQL Server cross region
+	// replica that supports replica(s) under it.
+	CascadableReplica bool `json:"cascadableReplica,omitempty"`
+
 	// FailoverTarget: Specifies if the replica is the failover target. If
 	// the field is set to `true` the replica will be designated as a
 	// failover replica. In case the primary instance fails, the replica
@@ -3735,15 +3790,15 @@ type ReplicaConfiguration struct {
 	// the data directory.
 	MysqlReplicaConfiguration *MySqlReplicaConfiguration `json:"mysqlReplicaConfiguration,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FailoverTarget") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CascadableReplica")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FailoverTarget") to
+	// NullFields is a list of field names (e.g. "CascadableReplica") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -7966,8 +8021,8 @@ type InstancesExportCall struct {
 // Export: Exports data from a Cloud SQL instance to a Cloud Storage
 // bucket as a SQL dump or CSV file.
 //
-//   - instance: Cloud SQL instance ID. This does not include the project
-//     ID.
+//   - instance: The Cloud SQL instance ID. This doesn't include the
+//     project ID.
 //   - project: Project ID of the project that contains the instance to be
 //     exported.
 func (r *InstancesService) Export(project string, instance string, instancesexportrequest *InstancesExportRequest) *InstancesExportCall {
@@ -8080,7 +8135,7 @@ func (c *InstancesExportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "description": "The Cloud SQL instance ID. This doesn't include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9279,6 +9334,15 @@ func (r *InstancesService) PromoteReplica(project string, instance string) *Inst
 	return c
 }
 
+// Failover sets the optional parameter "failover": Set to true if the
+// promote operation should attempt to re-add the original primary as a
+// replica when it comes back online. Otherwise, if this value is false
+// or not set, the original primary will be a standalone instance.
+func (c *InstancesPromoteReplicaCall) Failover(failover bool) *InstancesPromoteReplicaCall {
+	c.urlParams_.Set("failover", fmt.Sprint(failover))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9375,6 +9439,11 @@ func (c *InstancesPromoteReplicaCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "instance"
 	//   ],
 	//   "parameters": {
+	//     "failover": {
+	//       "description": "Set to true if the promote operation should attempt to re-add the original primary as a replica when it comes back online. Otherwise, if this value is false or not set, the original primary will be a standalone instance.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "instance": {
 	//       "description": "Cloud SQL read replica instance name.",
 	//       "location": "path",
@@ -10430,6 +10499,165 @@ func (c *InstancesStopReplicaCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/stopReplica",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.instances.switchover":
+
+type InstancesSwitchoverCall struct {
+	s          *Service
+	project    string
+	instance   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Switchover: Switches over from the primary instance to a replica
+// instance.
+//
+// - instance: Cloud SQL read replica instance name.
+// - project: ID of the project that contains the replica.
+func (r *InstancesService) Switchover(project string, instance string) *InstancesSwitchoverCall {
+	c := &InstancesSwitchoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	return c
+}
+
+// DbTimeout sets the optional parameter "dbTimeout": (MySQL only) Cloud
+// SQL instance operations timeout, which is a sum of all database
+// operations. Default value is 10 minutes and can be modified to a
+// maximum value of 24 hours.
+func (c *InstancesSwitchoverCall) DbTimeout(dbTimeout string) *InstancesSwitchoverCall {
+	c.urlParams_.Set("dbTimeout", dbTimeout)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSwitchoverCall) Fields(s ...googleapi.Field) *InstancesSwitchoverCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSwitchoverCall) Context(ctx context.Context) *InstancesSwitchoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSwitchoverCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSwitchoverCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/switchover")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.switchover" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSwitchoverCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Switches over from the primary instance to a replica instance.",
+	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/switchover",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.switchover",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "dbTimeout": {
+	//       "description": "Optional. (MySQL only) Cloud SQL instance operations timeout, which is a sum of all database operations. Default value is 10 minutes and can be modified to a maximum value of 24 hours.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "instance": {
+	//       "description": "Cloud SQL read replica instance name.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "ID of the project that contains the replica.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/switchover",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

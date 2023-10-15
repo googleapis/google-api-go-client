@@ -624,7 +624,7 @@ type CancelOperationRequest struct {
 }
 
 // Consumer: Contains information of the customer's network
-// configurations.Next available ID: 5
+// configurations.
 type Consumer struct {
 	// EndpointLocation: Output only. The location of the endpoint URI.
 	// Format: projects/{project}/locations/{location}.
@@ -1848,7 +1848,7 @@ func (s *MultiRegionMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore
-// service.Next available ID: 4
+// service.
 type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.

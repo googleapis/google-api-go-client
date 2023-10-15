@@ -4175,7 +4175,7 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instanc
 
 // UpdateMask sets the optional parameter "updateMask": The list of
 // fields to update. The currently supported fields are: `labels`
-// `hyperthreading_enabled` `os_image` `ssh_keys`
+// `hyperthreading_enabled` `os_image` `ssh_keys` `kms_key_version`
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4288,7 +4288,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update. The currently supported fields are: `labels` `hyperthreading_enabled` `os_image` `ssh_keys`",
+	//       "description": "The list of fields to update. The currently supported fields are: `labels` `hyperthreading_enabled` `os_image` `ssh_keys` `kms_key_version`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

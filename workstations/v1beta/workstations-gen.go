@@ -807,9 +807,10 @@ type GcePersistentDisk struct {
 	SourceImage string `json:"sourceImage,omitempty"`
 
 	// SourceSnapshot: Optional. Name of the snapshot to use as the source
-	// for the disk. Must be empty if source_image is set. Updating
-	// source_snapshot will update content in the ephemeral directory after
-	// the workstation is restarted. This field is mutable.
+	// for the disk. Must be empty if source_image is set. Must be empty if
+	// read_only is false. Updating source_snapshot will update content in
+	// the ephemeral directory after the workstation is restarted. This
+	// field is mutable.
 	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskType") to
@@ -1877,7 +1878,7 @@ type Workstation struct {
 	// underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Full name of this workstation.
+	// Name: Identifier. Full name of this workstation.
 	Name string `json:"name,omitempty"`
 
 	// Reconciling: Output only. Indicates whether this workstation is
@@ -1981,7 +1982,7 @@ type WorkstationCluster struct {
 	// the underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Full name of this workstation cluster.
+	// Name: Identifier. Full name of this workstation cluster.
 	Name string `json:"name,omitempty"`
 
 	// Network: Immutable. Name of the Compute Engine network in which
@@ -2124,7 +2125,7 @@ type WorkstationConfig struct {
 	// to the underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Full name of this workstation configuration.
+	// Name: Identifier. Full name of this workstation configuration.
 	Name string `json:"name,omitempty"`
 
 	// PersistentDirectories: Optional. Directories to persist across
@@ -3531,7 +3532,7 @@ type ProjectsLocationsWorkstationClustersPatchCall struct {
 
 // Patch: Updates an existing workstation cluster.
 //
-// - name: Full name of this workstation cluster.
+// - name: Identifier. Full name of this workstation cluster.
 func (r *ProjectsLocationsWorkstationClustersService) Patch(name string, workstationcluster *WorkstationCluster) *ProjectsLocationsWorkstationClustersPatchCall {
 	c := &ProjectsLocationsWorkstationClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3668,7 +3669,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) Do(opts ...googleapi.Cal
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Full name of this workstation cluster.",
+	//       "description": "Identifier. Full name of this workstation cluster.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+$",
 	//       "required": true,
@@ -4762,7 +4763,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall struct {
 
 // Patch: Updates an existing workstation configuration.
 //
-// - name: Full name of this workstation configuration.
+// - name: Identifier. Full name of this workstation configuration.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Patch(name string, workstationconfig *WorkstationConfig) *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4900,7 +4901,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Do(opt
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Full name of this workstation configuration.",
+	//       "description": "Identifier. Full name of this workstation configuration.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+/workstationConfigs/[^/]+$",
 	//       "required": true,
@@ -6419,7 +6420,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall
 
 // Patch: Updates an existing workstation.
 //
-// - name: Full name of this workstation.
+// - name: Identifier. Full name of this workstation.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) Patch(name string, workstation *Workstation) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
 	c := &ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6556,7 +6557,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Full name of this workstation.",
+	//       "description": "Identifier. Full name of this workstation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workstationClusters/[^/]+/workstationConfigs/[^/]+/workstations/[^/]+$",
 	//       "required": true,

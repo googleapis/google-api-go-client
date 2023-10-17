@@ -1738,8 +1738,8 @@ type GoogleTypeLocalizedText struct {
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Text: Localized string in the language corresponding to
-	// `language_code' below.
+	// Text: Localized string in the language corresponding to language_code
+	// below.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to

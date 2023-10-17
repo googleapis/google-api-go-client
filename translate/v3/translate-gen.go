@@ -2860,8 +2860,7 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 	//     "$ref": "DetectLanguageResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -3196,8 +3195,7 @@ func (c *ProjectsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTe
 	//     "$ref": "RomanizeTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -3347,8 +3345,7 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 	//     "$ref": "TranslateTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -3803,8 +3800,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "DetectLanguageResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4496,8 +4492,7 @@ func (c *ProjectsLocationsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*R
 	//     "$ref": "RomanizeTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4798,8 +4793,7 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "TranslateTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -4941,8 +4935,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -5366,8 +5359,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -5686,8 +5678,7 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "$ref": "ListDatasetsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -8101,8 +8092,7 @@ func (c *ProjectsLocationsModelsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "$ref": "ListModelsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

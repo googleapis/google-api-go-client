@@ -1449,6 +1449,8 @@ type Creative struct {
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
 	//   "OMSDK_1_0" - The open measurement SDK is supported.
+	//   "RENDERING_PLAYABLE" - The creative is considered a playable
+	// display creative.
 	Attributes []string `json:"attributes,omitempty"`
 
 	// ClickThroughUrls: The set of destination URLs for the creative.

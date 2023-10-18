@@ -308,23 +308,35 @@ func (s *GoogleMapsPlacesV1Circle) UnmarshalJSON(data []byte) error {
 
 // GoogleMapsPlacesV1Place: All the information representing a Place.
 type GoogleMapsPlacesV1Place struct {
-	// AccessibilityOptions: Output only. Information about the
-	// accessibility options a place offers.
+	// AccessibilityOptions: Information about the accessibility options a
+	// place offers.
 	AccessibilityOptions *GoogleMapsPlacesV1PlaceAccessibilityOptions `json:"accessibilityOptions,omitempty"`
 
-	// AddressComponents: Output only. Repeated components for each locality
-	// level.
+	// AddressComponents: Repeated components for each locality level. Note
+	// the following facts about the address_components[] array: - The array
+	// of address components may contain more components than the
+	// formatted_address. - The array does not necessarily include all the
+	// political entities that contain an address, apart from those included
+	// in the formatted_address. To retrieve all the political entities that
+	// contain a specific address, you should use reverse geocoding, passing
+	// the latitude/longitude of the address as a parameter to the request.
+	// - The format of the response is not guaranteed to remain the same
+	// between requests. In particular, the number of address_components
+	// varies based on the address requested and can change over time for
+	// the same address. A component can change position in the array. The
+	// type of the component can change. A particular component may be
+	// missing in a later response.
 	AddressComponents []*GoogleMapsPlacesV1PlaceAddressComponent `json:"addressComponents,omitempty"`
 
-	// AdrFormatAddress: Output only. The place's address in adr
-	// microformat: http://microformats.org/wiki/adr.
+	// AdrFormatAddress: The place's address in adr microformat:
+	// http://microformats.org/wiki/adr.
 	AdrFormatAddress string `json:"adrFormatAddress,omitempty"`
 
-	// Attributions: Output only. A set of data provider that must be shown
-	// with this result.
+	// Attributions: A set of data provider that must be shown with this
+	// result.
 	Attributions []*GoogleMapsPlacesV1PlaceAttribution `json:"attributions,omitempty"`
 
-	// BusinessStatus: Output only. The business status for the place.
+	// BusinessStatus: The business status for the place.
 	//
 	// Possible values:
 	//   "BUSINESS_STATUS_UNSPECIFIED" - Default value. This value is
@@ -335,85 +347,82 @@ type GoogleMapsPlacesV1Place struct {
 	//   "CLOSED_PERMANENTLY" - The establishment is permanently closed.
 	BusinessStatus string `json:"businessStatus,omitempty"`
 
-	// CurbsidePickup: Output only. Specifies if the business supports
-	// curbside pickup.
+	// CurbsidePickup: Specifies if the business supports curbside pickup.
 	CurbsidePickup bool `json:"curbsidePickup,omitempty"`
 
-	// CurrentOpeningHours: Output only. The hours of operation for the next
-	// seven days (including today). The time period starts at midnight on
-	// the date of the request and ends at 11:59 pm six days later. This
-	// field includes the special_days subfield of all hours, set for dates
-	// that have exceptional hours.
+	// CurrentOpeningHours: The hours of operation for the next seven days
+	// (including today). The time period starts at midnight on the date of
+	// the request and ends at 11:59 pm six days later. This field includes
+	// the special_days subfield of all hours, set for dates that have
+	// exceptional hours.
 	CurrentOpeningHours *GoogleMapsPlacesV1PlaceOpeningHours `json:"currentOpeningHours,omitempty"`
 
-	// CurrentSecondaryOpeningHours: Output only. Contains an array of
-	// entries for the next seven days including information about secondary
-	// hours of a business. Secondary hours are different from a business's
-	// main hours. For example, a restaurant can specify drive through hours
-	// or delivery hours as its secondary hours. This field populates the
-	// type subfield, which draws from a predefined list of opening hours
-	// types (such as DRIVE_THROUGH, PICKUP, or TAKEOUT) based on the types
-	// of the place. This field includes the special_days subfield of all
-	// hours, set for dates that have exceptional hours.
+	// CurrentSecondaryOpeningHours: Contains an array of entries for the
+	// next seven days including information about secondary hours of a
+	// business. Secondary hours are different from a business's main hours.
+	// For example, a restaurant can specify drive through hours or delivery
+	// hours as its secondary hours. This field populates the type subfield,
+	// which draws from a predefined list of opening hours types (such as
+	// DRIVE_THROUGH, PICKUP, or TAKEOUT) based on the types of the place.
+	// This field includes the special_days subfield of all hours, set for
+	// dates that have exceptional hours.
 	CurrentSecondaryOpeningHours []*GoogleMapsPlacesV1PlaceOpeningHours `json:"currentSecondaryOpeningHours,omitempty"`
 
-	// Delivery: Output only. Specifies if the business supports delivery.
+	// Delivery: Specifies if the business supports delivery.
 	Delivery bool `json:"delivery,omitempty"`
 
-	// DineIn: Output only. Specifies if the business supports indoor or
-	// outdoor seating options.
+	// DineIn: Specifies if the business supports indoor or outdoor seating
+	// options.
 	DineIn bool `json:"dineIn,omitempty"`
 
-	// DisplayName: Output only. The localized name of the place, suitable
-	// as a short human-readable description. For example, "Google Sydney",
+	// DisplayName: The localized name of the place, suitable as a short
+	// human-readable description. For example, "Google Sydney",
 	// "Starbucks", "Pyrmont", etc.
 	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
 
-	// EditorialSummary: Output only. Contains a summary of the place. A
-	// summary is comprised of a textual overview, and also includes the
-	// language code for these if applicable. Summary text must be presented
-	// as-is and can not be modified or altered.
+	// EditorialSummary: Contains a summary of the place. A summary is
+	// comprised of a textual overview, and also includes the language code
+	// for these if applicable. Summary text must be presented as-is and can
+	// not be modified or altered.
 	EditorialSummary *GoogleTypeLocalizedText `json:"editorialSummary,omitempty"`
 
-	// FormattedAddress: Output only. A full, human-readable address for
-	// this place.
+	// FormattedAddress: A full, human-readable address for this place.
 	FormattedAddress string `json:"formattedAddress,omitempty"`
 
-	// GoogleMapsUri: Output only. A URL providing more information about
-	// this place.
+	// GoogleMapsUri: A URL providing more information about this place.
 	GoogleMapsUri string `json:"googleMapsUri,omitempty"`
 
-	// IconBackgroundColor: Output only. Background color for icon_mask in
-	// hex format, e.g. #909CE1.
+	// IconBackgroundColor: Background color for icon_mask in hex format,
+	// e.g. #909CE1.
 	IconBackgroundColor string `json:"iconBackgroundColor,omitempty"`
 
-	// IconMaskBaseUri: Output only. A truncated URL to an v2 icon mask.
-	// User can access different icon type by appending type suffix to the
-	// end (eg, ".svg" or ".png").
+	// IconMaskBaseUri: A truncated URL to an v2 icon mask. User can access
+	// different icon type by appending type suffix to the end (eg, ".svg"
+	// or ".png").
 	IconMaskBaseUri string `json:"iconMaskBaseUri,omitempty"`
 
-	// Id: Output only. The unique identifier of a place.
+	// Id: The unique identifier of a place.
 	Id string `json:"id,omitempty"`
 
-	// InternationalPhoneNumber: Output only. A human-readable phone number
-	// for the place, in international format.
+	// InternationalPhoneNumber: A human-readable phone number for the
+	// place, in international format.
 	InternationalPhoneNumber string `json:"internationalPhoneNumber,omitempty"`
 
-	// Location: Output only. The position of this place.
+	// Location: The position of this place.
 	Location *GoogleTypeLatLng `json:"location,omitempty"`
 
-	// Name: Output only. An ID representing this place which may be used to
-	// look up this place again (a.k.a. the API "resource" name: places/).
+	// Name: An ID representing this place which may be used to look up this
+	// place again (a.k.a. the API "resource" name: places/place_id).
 	Name string `json:"name,omitempty"`
 
-	// NationalPhoneNumber: Output only. A human-readable phone number for
-	// the place, in national format.
+	// NationalPhoneNumber: A human-readable phone number for the place, in
+	// national format.
 	NationalPhoneNumber string `json:"nationalPhoneNumber,omitempty"`
 
-	// PlusCode: Output only. Plus code of the place location lat/long.
+	// PlusCode: Plus code of the place location lat/long.
 	PlusCode *GoogleMapsPlacesV1PlacePlusCode `json:"plusCode,omitempty"`
 
-	// PriceLevel: Output only. Price level of the place.
+	// PriceLevel: Price level of the place.
 	//
 	// Possible values:
 	//   "PRICE_LEVEL_UNSPECIFIED" - Place price level is unspecified or
@@ -426,76 +435,74 @@ type GoogleMapsPlacesV1Place struct {
 	// service s.
 	PriceLevel string `json:"priceLevel,omitempty"`
 
-	// Rating: Output only. A rating between 1.0 and 5.0, based on user
-	// reviews of this place.
+	// Rating: A rating between 1.0 and 5.0, based on user reviews of this
+	// place.
 	Rating float64 `json:"rating,omitempty"`
 
-	// RegularOpeningHours: Output only. The regular hours of operation.
+	// RegularOpeningHours: The regular hours of operation.
 	RegularOpeningHours *GoogleMapsPlacesV1PlaceOpeningHours `json:"regularOpeningHours,omitempty"`
 
-	// RegularSecondaryOpeningHours: Output only. Contains an array of
-	// entries for information about regular secondary hours of a business.
-	// Secondary hours are different from a business's main hours. For
-	// example, a restaurant can specify drive through hours or delivery
-	// hours as its secondary hours. This field populates the type subfield,
-	// which draws from a predefined list of opening hours types (such as
-	// DRIVE_THROUGH, PICKUP, or TAKEOUT) based on the types of the place.
+	// RegularSecondaryOpeningHours: Contains an array of entries for
+	// information about regular secondary hours of a business. Secondary
+	// hours are different from a business's main hours. For example, a
+	// restaurant can specify drive through hours or delivery hours as its
+	// secondary hours. This field populates the type subfield, which draws
+	// from a predefined list of opening hours types (such as DRIVE_THROUGH,
+	// PICKUP, or TAKEOUT) based on the types of the place.
 	RegularSecondaryOpeningHours []*GoogleMapsPlacesV1PlaceOpeningHours `json:"regularSecondaryOpeningHours,omitempty"`
 
-	// Reservable: Output only. Specifies if the place supports
-	// reservations.
+	// Reservable: Specifies if the place supports reservations.
 	Reservable bool `json:"reservable,omitempty"`
 
-	// Reviews: Output only. List of reviews about this place.
+	// Reviews: List of reviews about this place.
 	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
 
-	// ServesBeer: Output only. Specifies if the place serves beer.
+	// ServesBeer: Specifies if the place serves beer.
 	ServesBeer bool `json:"servesBeer,omitempty"`
 
-	// ServesBreakfast: Output only. Specifies if the place serves
-	// breakfast.
+	// ServesBreakfast: Specifies if the place serves breakfast.
 	ServesBreakfast bool `json:"servesBreakfast,omitempty"`
 
-	// ServesBrunch: Output only. Specifies if the place serves brunch.
+	// ServesBrunch: Specifies if the place serves brunch.
 	ServesBrunch bool `json:"servesBrunch,omitempty"`
 
-	// ServesDinner: Output only. Specifies if the place serves dinner.
+	// ServesDinner: Specifies if the place serves dinner.
 	ServesDinner bool `json:"servesDinner,omitempty"`
 
-	// ServesLunch: Output only. Specifies if the place serves lunch.
+	// ServesLunch: Specifies if the place serves lunch.
 	ServesLunch bool `json:"servesLunch,omitempty"`
 
-	// ServesVegetarianFood: Output only. Specifies if the place serves
-	// vegetarian food.
+	// ServesVegetarianFood: Specifies if the place serves vegetarian food.
 	ServesVegetarianFood bool `json:"servesVegetarianFood,omitempty"`
 
-	// ServesWine: Output only. Specifies if the place serves wine.
+	// ServesWine: Specifies if the place serves wine.
 	ServesWine bool `json:"servesWine,omitempty"`
 
-	// Takeout: Output only. Specifies if the business supports takeout.
+	// Takeout: Specifies if the business supports takeout.
 	Takeout bool `json:"takeout,omitempty"`
 
-	// Types: Output only. A set of type tags for this result. For example,
-	// "political" and "locality".
+	// Types: A set of type tags for this result. For example, "political"
+	// and "locality". See:
+	// https://developers.google.com/maps/documentation/places/web-service/place-types
 	Types []string `json:"types,omitempty"`
 
-	// UserRatingCount: Output only. The total number of reviews (with or
-	// without text) for this place.
+	// UserRatingCount: The total number of reviews (with or without text)
+	// for this place.
 	UserRatingCount int64 `json:"userRatingCount,omitempty"`
 
-	// UtcOffsetMinutes: Output only. Number of minutes this place's
-	// timezone is currently offset from UTC. This is expressed in minutes
-	// to support timezones that are offset by fractions of an hour, e.g. X
-	// hours and 15 minutes.
+	// UtcOffsetMinutes: Number of minutes this place's timezone is
+	// currently offset from UTC. This is expressed in minutes to support
+	// timezones that are offset by fractions of an hour, e.g. X hours and
+	// 15 minutes.
 	UtcOffsetMinutes int64 `json:"utcOffsetMinutes,omitempty"`
 
-	// Viewport: Output only. A viewport suitable for displaying the place
-	// on an average-sized map.
+	// Viewport: A viewport suitable for displaying the place on an
+	// average-sized map.
 	Viewport *GoogleGeoTypeViewport `json:"viewport,omitempty"`
 
-	// WebsiteUri: Output only. The authoritative website for this place,
-	// e.g. a business' homepage. Note that for places that are part of a
-	// chain (e.g. an IKEA store), this will usually be the website for the
+	// WebsiteUri: The authoritative website for this place, e.g. a
+	// business' homepage. Note that for places that are part of a chain
+	// (e.g. an IKEA store), this will usually be the website for the
 	// individual store, not the overall chain.
 	WebsiteUri string `json:"websiteUri,omitempty"`
 
@@ -573,22 +580,21 @@ func (s *GoogleMapsPlacesV1PlaceAccessibilityOptions) MarshalJSON() ([]byte, err
 // GoogleMapsPlacesV1PlaceAddressComponent: The structured components
 // that form the formatted address, if this information is available.
 type GoogleMapsPlacesV1PlaceAddressComponent struct {
-	// LanguageCode: Output only. The language used to format this
-	// components, in CLDR notation.
+	// LanguageCode: The language used to format this components, in CLDR
+	// notation.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// LongText: Output only. The full text description or name of the
-	// address component. For example, an address component for the country
-	// Australia may have a long_name of "Australia".
+	// LongText: The full text description or name of the address component.
+	// For example, an address component for the country Australia may have
+	// a long_name of "Australia".
 	LongText string `json:"longText,omitempty"`
 
-	// ShortText: Output only. An abbreviated textual name for the address
-	// component, if available. For example, an address component for the
-	// country of Australia may have a short_name of "AU".
+	// ShortText: An abbreviated textual name for the address component, if
+	// available. For example, an address component for the country of
+	// Australia may have a short_name of "AU".
 	ShortText string `json:"shortText,omitempty"`
 
-	// Types: Output only. An array indicating the type(s) of the address
-	// component.
+	// Types: An array indicating the type(s) of the address component.
 	Types []string `json:"types,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -617,10 +623,10 @@ func (s *GoogleMapsPlacesV1PlaceAddressComponent) MarshalJSON() ([]byte, error) 
 // GoogleMapsPlacesV1PlaceAttribution: Information about data providers
 // of this place.
 type GoogleMapsPlacesV1PlaceAttribution struct {
-	// Provider: Output only. Name of the Place's data provider.
+	// Provider: Name of the Place's data provider.
 	Provider string `json:"provider,omitempty"`
 
-	// ProviderUri: Output only. URI to the Place's data provider.
+	// ProviderUri: URI to the Place's data provider.
 	ProviderUri string `json:"providerUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Provider") to
@@ -649,19 +655,19 @@ func (s *GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1PlaceOpeningHours: Information about business hour
 // of the place.
 type GoogleMapsPlacesV1PlaceOpeningHours struct {
-	// OpenNow: Output only. Is this place open right now? Always present
-	// unless we lack time-of-day or timezone data for these opening hours.
+	// OpenNow: Is this place open right now? Always present unless we lack
+	// time-of-day or timezone data for these opening hours.
 	OpenNow bool `json:"openNow,omitempty"`
 
-	// Periods: Output only. The periods that this place is open during the
-	// week. The periods are in chronological order, starting with Sunday in
-	// the place-local timezone. An empty (but not absent) value indicates a
+	// Periods: The periods that this place is open during the week. The
+	// periods are in chronological order, starting with Sunday in the
+	// place-local timezone. An empty (but not absent) value indicates a
 	// place that is never open, e.g. because it is closed temporarily for
 	// renovations.
 	Periods []*GoogleMapsPlacesV1PlaceOpeningHoursPeriod `json:"periods,omitempty"`
 
-	// SecondaryHoursType: Output only. A type string used to identify the
-	// type of secondary hours.
+	// SecondaryHoursType: A type string used to identify the type of
+	// secondary hours.
 	//
 	// Possible values:
 	//   "SECONDARY_HOURS_TYPE_UNSPECIFIED" - Default value when secondary
@@ -682,17 +688,17 @@ type GoogleMapsPlacesV1PlaceOpeningHours struct {
 	//   "ONLINE_SERVICE_HOURS" - The online service hours.
 	SecondaryHoursType string `json:"secondaryHoursType,omitempty"`
 
-	// SpecialDays: Output only. Structured information for special days
-	// that fall within the period that the returned opening hours cover.
-	// Special days are days that could impact the business hours of a
-	// place, e.g. Christmas day. Set for current_opening_hours and
+	// SpecialDays: Structured information for special days that fall within
+	// the period that the returned opening hours cover. Special days are
+	// days that could impact the business hours of a place, e.g. Christmas
+	// day. Set for current_opening_hours and
 	// current_secondary_opening_hours if there are exceptional hours.
 	SpecialDays []*GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay `json:"specialDays,omitempty"`
 
-	// WeekdayDescriptions: Output only. Localized strings describing the
-	// opening hours of this place, one string for each day of the week.
-	// Will be empty if the hours are unknown or could not be converted to
-	// localized text. Example: "Sun: 18:00–06:00"
+	// WeekdayDescriptions: Localized strings describing the opening hours
+	// of this place, one string for each day of the week. Will be empty if
+	// the hours are unknown or could not be converted to localized text.
+	// Example: "Sun: 18:00–06:00"
 	WeekdayDescriptions []string `json:"weekdayDescriptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OpenNow") to
@@ -721,10 +727,10 @@ func (s *GoogleMapsPlacesV1PlaceOpeningHours) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1PlaceOpeningHoursPeriod: A period the place remains
 // in open_now status.
 type GoogleMapsPlacesV1PlaceOpeningHoursPeriod struct {
-	// Close: Output only. The time that the place starts to be closed.
+	// Close: The time that the place starts to be closed.
 	Close *GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint `json:"close,omitempty"`
 
-	// Open: Output only. The time that the place starts to be open.
+	// Open: The time that the place starts to be open.
 	Open *GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint `json:"open,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Close") to
@@ -753,24 +759,24 @@ func (s *GoogleMapsPlacesV1PlaceOpeningHoursPeriod) MarshalJSON() ([]byte, error
 // GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint: Status changing
 // points.
 type GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint struct {
-	// Date: Output only. Date in the local timezone for the place.
+	// Date: Date in the local timezone for the place.
 	Date *GoogleTypeDate `json:"date,omitempty"`
 
-	// Day: Output only. A day of the week, as an integer in the range 0-6.
-	// 0 is Sunday, 1 is Monday, etc.
+	// Day: A day of the week, as an integer in the range 0-6. 0 is Sunday,
+	// 1 is Monday, etc.
 	Day int64 `json:"day,omitempty"`
 
-	// Hour: Output only. The hour in 2 digits. Ranges from 00 to 23.
+	// Hour: The hour in 2 digits. Ranges from 00 to 23.
 	Hour int64 `json:"hour,omitempty"`
 
-	// Minute: Output only. The minute in 2 digits. Ranges from 00 to 59.
+	// Minute: The minute in 2 digits. Ranges from 00 to 59.
 	Minute int64 `json:"minute,omitempty"`
 
-	// Truncated: Output only. Whether or not this endpoint was truncated.
-	// Truncation occurs when the real hours are outside the times we are
-	// willing to return hours between, so we truncate the hours back to
-	// these boundaries. This ensures that at most 24 * 7 hours from
-	// midnight of the day of the request are returned.
+	// Truncated: Whether or not this endpoint was truncated. Truncation
+	// occurs when the real hours are outside the times we are willing to
+	// return hours between, so we truncate the hours back to these
+	// boundaries. This ensures that at most 24 * 7 hours from midnight of
+	// the day of the request are returned.
 	Truncated bool `json:"truncated,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -801,7 +807,7 @@ func (s *GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint) MarshalJSON() ([]byte, 
 // opening hours cover. Special days are days that could impact the
 // business hours of a place, e.g. Christmas day.
 type GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay struct {
-	// Date: Output only. The date of this special day.
+	// Date: The date of this special day.
 	Date *GoogleTypeDate `json:"date,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -832,14 +838,13 @@ func (s *GoogleMapsPlacesV1PlaceOpeningHoursSpecialDay) MarshalJSON() ([]byte, e
 // (1/8000th of a degree) or smaller rectangle, and compound code,
 // replacing the prefix with a reference location.
 type GoogleMapsPlacesV1PlacePlusCode struct {
-	// CompoundCode: Output only. Place's compound code, such as "33GV+HQ,
-	// Ramberg, Norway", containing the suffix of the global code and
-	// replacing the prefix with a formatted name of a reference entity.
+	// CompoundCode: Place's compound code, such as "33GV+HQ, Ramberg,
+	// Norway", containing the suffix of the global code and replacing the
+	// prefix with a formatted name of a reference entity.
 	CompoundCode string `json:"compoundCode,omitempty"`
 
-	// GlobalCode: Output only. Place's global (full) code, such as
-	// "9FWM33GV+HQ", representing an 1/8000 by 1/8000 degree area (~14 by
-	// 14 meters).
+	// GlobalCode: Place's global (full) code, such as "9FWM33GV+HQ",
+	// representing an 1/8000 by 1/8000 degree area (~14 by 14 meters).
 	GlobalCode string `json:"globalCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompoundCode") to
@@ -929,8 +934,8 @@ func (s *GoogleMapsPlacesV1Review) UnmarshalJSON(data []byte) error {
 // GoogleMapsPlacesV1SearchTextRequest: Request proto for SearchText.
 type GoogleMapsPlacesV1SearchTextRequest struct {
 	// IncludedType: The requested place type. Full list of types supported:
-	// https://developers.google.com/places/supported_types. Only support
-	// one included type.
+	// https://developers.google.com/maps/documentation/places/web-service/place-types.
+	// Only support one included type.
 	IncludedType string `json:"includedType,omitempty"`
 
 	// LanguageCode: Place details will be displayed with the preferred
@@ -966,8 +971,8 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// 1.0 rating.
 	MinRating float64 `json:"minRating,omitempty"`
 
-	// OpenNow: Used to restrict the search to places that are open at a
-	// specific time. open_now marks if a business is currently open.
+	// OpenNow: Used to restrict the search to places that are currently
+	// open.
 	OpenNow bool `json:"openNow,omitempty"`
 
 	// PriceLevels: Used to restrict the search to places that are marked as
@@ -1252,8 +1257,8 @@ type GoogleTypeLocalizedText struct {
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Text: Localized string in the language corresponding to
-	// `language_code' below.
+	// Text: Localized string in the language corresponding to language_code
+	// below.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to

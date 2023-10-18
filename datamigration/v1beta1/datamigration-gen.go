@@ -1213,6 +1213,10 @@ type MigrationJobVerificationError struct {
 	// existing databases that are conflicting with those in the source DB.
 	//   "PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE" - Insufficient privilege
 	// to enable the parallelism configuration.
+	//   "EXISTING_DATA" - The destination instance contains existing data
+	// or user defined entities (for example databases, tables, or
+	// functions). You can only migrate to empty instances. Clear your
+	// destination instance and retry the migration job.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

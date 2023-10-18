@@ -6,7 +6,7 @@
 
 // Package backupdr provides access to the Backup and DR Service API.
 //
-// For product documentation, see: https://cloud.google.com/
+// For product documentation, see: https://cloud.google.com/backup-disaster-recovery
 //
 // # Library status
 //

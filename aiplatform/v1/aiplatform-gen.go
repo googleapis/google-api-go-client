@@ -3827,6 +3827,12 @@ type GoogleCloudAiplatformV1CreateFeatureRequest struct {
 	// EntityType/FeatureGroup.
 	FeatureId string `json:"featureId,omitempty"`
 
+	// Parent: Required. The resource name of the EntityType or FeatureGroup
+	// to create a Feature. Format for entity_type as parent:
+	// `projects/{project}/locations/{location}/featurestores/{featurestore}/
+	// entityTypes/{entity_type}` Format for feature_group as parent:
+	// `projects/{project}/locations/{location}/featureGroups/{feature_group}
+	// `
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Feature") to
@@ -4415,6 +4421,13 @@ type GoogleCloudAiplatformV1CustomJobSpec struct {
 	// this field is left unspecified, the job is not peered with any
 	// network.
 	Network string `json:"network,omitempty"`
+
+	// ProtectedArtifactLocationId: The ID of the location to store
+	// protected artifacts. e.g. us-central1. Populate only when the
+	// location is different than CustomJob location. For unprotected
+	// artifacts, the value of this field is ignored. List of supported
+	// locations: https://cloud.google.com/vertex-ai/docs/general/locations
+	ProtectedArtifactLocationId string `json:"protectedArtifactLocationId,omitempty"`
 
 	// ReservedIpRanges: Optional. A list of names for the reserved ip
 	// ranges under the VPC network that can be used for this job. If set,
@@ -8152,21 +8165,22 @@ func (s *GoogleCloudAiplatformV1ExportTensorboardTimeSeriesDataResponse) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1Feature: Feature Metadata information that
-// describes an attribute of an entity type. For example, apple is an
-// entity type, and color is a feature that describes apple.
+// GoogleCloudAiplatformV1Feature: Feature Metadata information. For
+// example, color is a feature that describes an apple.
 type GoogleCloudAiplatformV1Feature struct {
-	// CreateTime: Output only. Timestamp when this EntityType was created.
+	// CreateTime: Output only. Only applicable for Vertex AI Feature Store
+	// (Legacy). Timestamp when this EntityType was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Description of the Feature.
 	Description string `json:"description,omitempty"`
 
-	// DisableMonitoring: Optional. If not set, use the monitoring_config
-	// defined for the EntityType this Feature belongs to. Only Features
-	// with type (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can
-	// enable monitoring. If set to true, all types of data monitoring are
-	// disabled despite the config on EntityType.
+	// DisableMonitoring: Optional. Only applicable for Vertex AI Feature
+	// Store (Legacy). If not set, use the monitoring_config defined for the
+	// EntityType this Feature belongs to. Only Features with type
+	// (Feature.ValueType) BOOL, STRING, DOUBLE or INT64 can enable
+	// monitoring. If set to true, all types of data monitoring are disabled
+	// despite the config on EntityType.
 	DisableMonitoring bool `json:"disableMonitoring,omitempty"`
 
 	// Etag: Used to perform a consistent read-modify-write updates. If not
@@ -8184,24 +8198,28 @@ type GoogleCloudAiplatformV1Feature struct {
 	// immutable.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MonitoringStatsAnomalies: Output only. The list of historical stats
-	// and anomalies with specified objectives.
+	// MonitoringStatsAnomalies: Output only. Only applicable for Vertex AI
+	// Feature Store (Legacy). The list of historical stats and anomalies
+	// with specified objectives.
 	MonitoringStatsAnomalies []*GoogleCloudAiplatformV1FeatureMonitoringStatsAnomaly `json:"monitoringStatsAnomalies,omitempty"`
 
 	// Name: Immutable. Name of the Feature. Format:
 	// `projects/{project}/locations/{location}/featurestores/{featurestore}/
-	// entityTypes/{entity_type}/features/{feature}` The last part feature
-	// is assigned by the client. The feature can be up to 64 characters
-	// long and can consist only of ASCII Latin letters A-Z and a-z,
-	// underscore(_), and ASCII digits 0-9 starting with a letter. The value
-	// will be unique given an entity type.
+	// entityTypes/{entity_type}/features/{feature}`
+	// `projects/{project}/locations/{location}/featureGroups/{feature_group}
+	// /features/{feature}` The last part feature is assigned by the client.
+	// The feature can be up to 64 characters long and can consist only of
+	// ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9
+	// starting with a letter. The value will be unique given an entity
+	// type.
 	Name string `json:"name,omitempty"`
 
-	// UpdateTime: Output only. Timestamp when this EntityType was most
-	// recently updated.
+	// UpdateTime: Output only. Only applicable for Vertex AI Feature Store
+	// (Legacy). Timestamp when this EntityType was most recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ValueType: Immutable. Type of Feature value.
+	// ValueType: Immutable. Only applicable for Vertex AI Feature Store
+	// (Legacy). Type of Feature value.
 	//
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - The value type is unspecified.
@@ -50475,7 +50493,12 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall struct {
 
 // Create: Creates a new Feature in a given EntityType.
 //
-// - parent: .
+//   - parent: The resource name of the EntityType or FeatureGroup to
+//     create a Feature. Format for entity_type as parent:
+//     `projects/{project}/locations/{location}/featurestores/{featurestore
+//     }/entityTypes/{entity_type}` Format for feature_group as parent:
+//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
+//     p}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Create(parent string, googlecloudaiplatformv1feature *GoogleCloudAiplatformV1Feature) *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -50598,6 +50621,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesCreateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "parent": {
+	//       "description": "Required. The resource name of the EntityType or FeatureGroup to create a Feature. Format for entity_type as parent: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` Format for feature_group as parent: `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -50767,9 +50791,10 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall struct {
 
 // Get: Gets details of a single Feature.
 //
-//   - name: The name of the Feature resource. Format:
+//   - name: The name of the Feature resource. Format for entity_type as
+//     parent:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`
+//     }/entityTypes/{entity_type}` Format for feature_group as parent:
 //     `projects/{project}/locations/{location}/featureGroups/{feature_grou
 //     p}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Get(name string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall {
@@ -50886,7 +50911,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesGetCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Feature resource. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
+	//       "description": "Required. The name of the Feature resource. Format for entity_type as parent: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` Format for feature_group as parent: `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+/features/[^/]+$",
 	//       "required": true,
@@ -50917,9 +50942,10 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall struct {
 
 // List: Lists Features in a given EntityType.
 //
-//   - parent: The resource name of the Location to list Features. Format:
+//   - parent: The resource name of the Location to list Features. Format
+//     for entity_type as parent:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}`
+//     }/entityTypes/{entity_type}` Format for feature_group as parent:
 //     `projects/{project}/locations/{location}/featureGroups/{feature_grou
 //     p}`.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) List(parent string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall {
@@ -50947,11 +50973,12 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) Filter(filte
 	return c
 }
 
-// LatestStatsCount sets the optional parameter "latestStatsCount": If
-// set, return the most recent ListFeaturesRequest.latest_stats_count of
-// stats for each Feature in response. Valid value is [0, 10]. If number
-// of stats exists < ListFeaturesRequest.latest_stats_count, return all
-// existing stats.
+// LatestStatsCount sets the optional parameter "latestStatsCount": Only
+// applicable for Vertex AI Feature Store (Legacy). If set, return the
+// most recent ListFeaturesRequest.latest_stats_count of stats for each
+// Feature in response. Valid value is [0, 10]. If number of stats
+// exists < ListFeaturesRequest.latest_stats_count, return all existing
+// stats.
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) LatestStatsCount(latestStatsCount int64) *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall {
 	c.urlParams_.Set("latestStatsCount", fmt.Sprint(latestStatsCount))
 	return c
@@ -50977,10 +51004,12 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) PageSize(pag
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous FeaturestoreService.ListFeatures call.
-// Provide this to retrieve the subsequent page. When paginating, all
-// other parameters provided to FeaturestoreService.ListFeatures must
-// match the call that provided the page token.
+// received from a previous FeaturestoreService.ListFeatures call or
+// FeatureRegistryService.ListFeatures call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to FeaturestoreService.ListFeatures or or
+// FeatureRegistryService.ListFeatures must match the call that provided
+// the page token.
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) PageToken(pageToken string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -51108,7 +51137,7 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "latestStatsCount": {
-	//       "description": "If set, return the most recent ListFeaturesRequest.latest_stats_count of stats for each Feature in response. Valid value is [0, 10]. If number of stats exists \u003c ListFeaturesRequest.latest_stats_count, return all existing stats.",
+	//       "description": "Only applicable for Vertex AI Feature Store (Legacy). If set, return the most recent ListFeaturesRequest.latest_stats_count of stats for each Feature in response. Valid value is [0, 10]. If number of stats exists \u003c ListFeaturesRequest.latest_stats_count, return all existing stats.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -51125,12 +51154,12 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesListCall) Do(opts ...g
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous FeaturestoreService.ListFeatures call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to FeaturestoreService.ListFeatures must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous FeaturestoreService.ListFeatures call or FeatureRegistryService.ListFeatures call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to FeaturestoreService.ListFeatures or or FeatureRegistryService.ListFeatures must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Location to list Features. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
+	//       "description": "Required. The resource name of the Location to list Features. Format for entity_type as parent: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}` Format for feature_group as parent: `projects/{project}/locations/{location}/featureGroups/{feature_group}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -51190,11 +51219,13 @@ type ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall struct {
 //
 //   - name: Immutable. Name of the Feature. Format:
 //     `projects/{project}/locations/{location}/featurestores/{featurestore
-//     }/entityTypes/{entity_type}/features/{feature}` The last part
-//     feature is assigned by the client. The feature can be up to 64
-//     characters long and can consist only of ASCII Latin letters A-Z and
-//     a-z, underscore(_), and ASCII digits 0-9 starting with a letter.
-//     The value will be unique given an entity type.
+//     }/entityTypes/{entity_type}/features/{feature}`
+//     `projects/{project}/locations/{location}/featureGroups/{feature_grou
+//     p}/features/{feature}` The last part feature is assigned by the
+//     client. The feature can be up to 64 characters long and can consist
+//     only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII
+//     digits 0-9 starting with a letter. The value will be unique given
+//     an entity type.
 func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Patch(name string, googlecloudaiplatformv1feature *GoogleCloudAiplatformV1Feature) *ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall {
 	c := &ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -51209,7 +51240,8 @@ func (r *ProjectsLocationsFeaturestoresEntityTypesFeaturesService) Patch(name st
 // it is in the mask. If the user does not provide a mask then only the
 // non-empty fields present in the request will be overwritten. Set the
 // update_mask to `*` to override all fields. Updatable fields: *
-// `description` * `labels` * `disable_monitoring`
+// `description` * `labels` * `disable_monitoring` (Not supported for
+// FeatureRegistry Feature)
 func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -51315,14 +51347,14 @@ func (c *ProjectsLocationsFeaturestoresEntityTypesFeaturesPatchCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.",
+	//       "description": "Immutable. Name of the Feature. Format: `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}/features/{feature}` `projects/{project}/locations/{location}/featureGroups/{feature_group}/features/{feature}` The last part feature is assigned by the client. The feature can be up to 64 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscore(_), and ASCII digits 0-9 starting with a letter. The value will be unique given an entity type.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/featurestores/[^/]+/entityTypes/[^/]+/features/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Field mask is used to specify the fields to be overwritten in the Features resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `description` * `labels` * `disable_monitoring`",
+	//       "description": "Field mask is used to specify the fields to be overwritten in the Features resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `description` * `labels` * `disable_monitoring` (Not supported for FeatureRegistry Feature)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

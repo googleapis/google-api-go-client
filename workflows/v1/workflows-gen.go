@@ -2047,7 +2047,9 @@ func (r *ProjectsLocationsWorkflowsService) List(parent string) *ProjectsLocatio
 }
 
 // Filter sets the optional parameter "filter": Filter to restrict
-// results to specific workflows.
+// results to specific workflows. For details, see AIP-160. For example,
+// if you are using the Google APIs Explorer: `state="SUCCEEDED" or
+// `createTime>"2023-08-01" AND state="FAILED"
 func (c *ProjectsLocationsWorkflowsListCall) Filter(filter string) *ProjectsLocationsWorkflowsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2191,7 +2193,7 @@ func (c *ProjectsLocationsWorkflowsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter to restrict results to specific workflows.",
+	//       "description": "Filter to restrict results to specific workflows. For details, see AIP-160. For example, if you are using the Google APIs Explorer: `state=\"SUCCEEDED\"` or `createTime\u003e\"2023-08-01\" AND state=\"FAILED\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

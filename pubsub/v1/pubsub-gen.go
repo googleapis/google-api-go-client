@@ -336,6 +336,9 @@ type BigQueryConfig struct {
 	// not exist.
 	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a
 	// schema mismatch.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination
+	// locations are not in the allowed regions.
 	State string `json:"state,omitempty"`
 
 	// Table: Optional. The name of the table to which to write data, of the
@@ -502,6 +505,9 @@ type CloudStorageConfig struct {
 	// because of permission denied errors.
 	//   "NOT_FOUND" - Cannot write to the Cloud Storage bucket because it
 	// does not exist.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination
+	// locations are not in the allowed regions.
 	State string `json:"state,omitempty"`
 
 	// TextConfig: Optional. If set, message data will be written to Cloud

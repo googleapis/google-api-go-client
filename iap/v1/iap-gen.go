@@ -1273,7 +1273,7 @@ type ReauthSettings struct {
 	Method string `json:"method,omitempty"`
 
 	// PolicyType: How IAP determines the effective policy in cases of
-	// hierarchial policies. Policies are merged from higher in the
+	// hierarchical policies. Policies are merged from higher in the
 	// hierarchy to lower in the hierarchy.
 	//
 	// Possible values:

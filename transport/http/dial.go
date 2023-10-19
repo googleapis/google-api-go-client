@@ -15,6 +15,10 @@ import (
 	"net/http"
 	"time"
 
+	"cloud.google.com/go/auth"
+	"cloud.google.com/go/auth/detect"
+	"cloud.google.com/go/auth/httptransport"
+	"cloud.google.com/go/auth/oauth2adapt"
 	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/net/http2"
 	"golang.org/x/oauth2"
@@ -42,11 +46,74 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 		return settings.HTTPClient, endpoint, nil
 	}
 
+	if settings.IsNewAuthLibraryEnabled() {
+		client, err := newClientNewAuth(ctx, settings)
+		if err != nil {
+			return nil, "", err
+		}
+		return client, endpoint, nil
+	}
 	trans, err := newTransport(ctx, defaultBaseTransport(ctx, clientCertSource, dialTLSContext), settings)
 	if err != nil {
 		return nil, "", err
 	}
 	return &http.Client{Transport: trans}, endpoint, nil
+}
+
+func newClientNewAuth(ctx context.Context, settings *internal.DialSettings) (*http.Client, error) {
+	var ts oauth2.TokenSource
+	if settings.InternalCredentials != nil {
+		ts = settings.InternalCredentials.TokenSource
+	} else if settings.Credentials != nil {
+		ts = settings.Credentials.TokenSource
+	} else if settings.TokenProvider != nil {
+		ts = settings.TokenSource
+	}
+	var tp auth.TokenProvider
+	if settings.TokenProvider != nil {
+		tp = settings.TokenProvider
+	} else if ts != nil {
+		tp = oauth2adapt.TokenProviderFromTokenSource(ts)
+	}
+
+	var aud string
+	if len(settings.Audiences) > 0 {
+		aud = settings.Audiences[0]
+	}
+	headers := http.Header{}
+	if settings.QuotaProject != "" {
+		headers.Set("X-goog-user-project", settings.QuotaProject)
+	}
+	if settings.RequestReason != "" {
+		headers.Set("X-goog-request-reason", settings.RequestReason)
+	}
+	client, err := httptransport.NewClient(&httptransport.Options{
+		DisableTelemetry:      settings.TelemetryDisabled,
+		DisableAuthentication: settings.NoAuth,
+		Headers:               headers,
+		Endpoint:              settings.Endpoint,
+		APIKey:                settings.APIKey,
+		TokenProvider:         tp,
+		ClientCertProvider:    settings.ClientCertSource,
+		DetectOpts: &detect.Options{
+			Scopes:          settings.Scopes,
+			Audience:        aud,
+			CredentialsFile: settings.CredentialsFile,
+			CredentialsJSON: settings.CredentialsJSON,
+			Client:          oauth2.NewClient(ctx, nil),
+		},
+		InternalOptions: &httptransport.InternalOptions{
+			EnableJWTWithScope:  settings.EnableJwtWithScope,
+			DefaultAudience:     settings.DefaultAudience,
+			DefaultEndpoint:     settings.DefaultEndpoint,
+			DefaultMTLSEndpoint: settings.DefaultMTLSEndpoint,
+			DefaultScopes:       settings.DefaultScopes,
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
 }
 
 // NewTransport creates an http.RoundTripper for use communicating with a Google
@@ -58,6 +125,14 @@ func NewTransport(ctx context.Context, base http.RoundTripper, opts ...option.Cl
 	}
 	if settings.HTTPClient != nil {
 		return nil, errors.New("transport/http: WithHTTPClient passed to NewTransport")
+	}
+	if settings.IsNewAuthLibraryEnabled() {
+		// TODO, this is not wrapping the base, find a way...
+		client, err := newClientNewAuth(ctx, settings)
+		if err != nil {
+			return nil, err
+		}
+		return client.Transport, nil
 	}
 	return newTransport(ctx, base, settings)
 }

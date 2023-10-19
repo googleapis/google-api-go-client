@@ -15,6 +15,8 @@ import (
 	"os"
 	"time"
 
+	"cloud.google.com/go/auth/detect"
+	"cloud.google.com/go/auth/oauth2adapt"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/internal/impersonate"
 
@@ -26,6 +28,9 @@ const quotaProjectEnvVar = "GOOGLE_CLOUD_QUOTA_PROJECT"
 // Creds returns credential information obtained from DialSettings, or if none, then
 // it returns default credential information.
 func Creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
+	if ds.IsNewAuthLibraryEnabled() {
+		return credsNewAuth(ctx, ds)
+	}
 	creds, err := baseCreds(ctx, ds)
 	if err != nil {
 		return nil, err
@@ -34,6 +39,56 @@ func Creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
 		return impersonateCredentials(ctx, creds, ds)
 	}
 	return creds, nil
+}
+
+func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credentials, error) {
+	// Preserve old options behavior
+	if settings.InternalCredentials != nil {
+		return settings.InternalCredentials, nil
+	} else if settings.Credentials != nil {
+		return settings.Credentials, nil
+	} else if settings.TokenProvider != nil {
+		return &google.Credentials{TokenSource: settings.TokenSource}, nil
+	}
+
+	var useSelfSignedJWT bool
+	var aud string
+	var scopes []string
+	// If scoped JWTs are enabled user provided an aud, allow self-signed JWT.
+	if settings.EnableJwtWithScope || len(settings.Audiences) > 0 {
+		useSelfSignedJWT = true
+	}
+
+	if len(settings.Audiences) > 0 {
+		aud = settings.Audiences[0]
+	}
+	// Only default scopes if user did not also set an audience.
+	if len(settings.Scopes) == 0 && aud == "" && len(settings.DefaultScopes) > 0 {
+		scopes = make([]string, len(scopes))
+		copy(scopes, settings.DefaultScopes)
+	}
+	if len(scopes) == 0 && aud == "" {
+		aud = settings.DefaultAudience
+	}
+
+	creds, err := detect.DefaultCredentials(&detect.Options{
+		Scopes:           scopes,
+		Audience:         aud,
+		CredentialsFile:  settings.CredentialsFile,
+		CredentialsJSON:  settings.CredentialsJSON,
+		UseSelfSignedJWT: useSelfSignedJWT,
+		Client:           oauth2.NewClient(ctx, nil),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	ts := oauth2adapt.TokenSourceFromTokenProvider(creds)
+	return &google.Credentials{
+		ProjectID:   creds.ProjectID(),
+		TokenSource: ts,
+		JSON:        creds.JSON(),
+	}, nil
 }
 
 func baseCreds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {

@@ -15,6 +15,10 @@ import (
 	"os"
 	"strings"
 
+	"cloud.google.com/go/auth"
+	"cloud.google.com/go/auth/detect"
+	"cloud.google.com/go/auth/grpctransport"
+	"cloud.google.com/go/auth/oauth2adapt"
 	"cloud.google.com/go/compute/metadata"
 	"go.opencensus.io/plugin/ocgrpc"
 	"golang.org/x/oauth2"
@@ -48,6 +52,13 @@ func Dial(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, e
 	if o.GRPCConnPool != nil {
 		return o.GRPCConnPool.Conn(), nil
 	}
+	if o.IsNewAuthLibraryEnabled() {
+		pool, err := dialPoolNewAuth(ctx, true, 1, o)
+		if err != nil {
+			return nil, err
+		}
+		return pool.Connection(), nil
+	}
 	// NOTE(cbro): We removed support for option.WithGRPCConnPool (GRPCConnPoolSize)
 	// on 2020-02-12 because RoundRobin and WithBalancer are deprecated and we need to remove usages of it.
 	//
@@ -62,6 +73,13 @@ func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.Clien
 	o, err := processAndValidateOpts(opts)
 	if err != nil {
 		return nil, err
+	}
+	if o.IsNewAuthLibraryEnabled() {
+		pool, err := dialPoolNewAuth(ctx, false, 1, o)
+		if err != nil {
+			return nil, err
+		}
+		return pool.Connection(), nil
 	}
 	return dial(ctx, true, o)
 }
@@ -81,6 +99,18 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 	if o.GRPCConnPool != nil {
 		return o.GRPCConnPool, nil
 	}
+
+	if o.IsNewAuthLibraryEnabled() {
+		if o.GRPCConn != nil {
+			return &singleConnPool{o.GRPCConn}, nil
+		}
+		pool, err := dialPoolNewAuth(ctx, true, o.GRPCConnPoolSize, o)
+		if err != nil {
+			return nil, err
+		}
+		return &poolAdapter{pool}, nil
+	}
+
 	poolSize := o.GRPCConnPoolSize
 	if o.GRPCConn != nil {
 		// WithGRPCConn is technically incompatible with WithGRPCConnectionPool.
@@ -108,6 +138,62 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 		pool.conns = append(pool.conns, conn)
 	}
 	return pool, nil
+}
+
+func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *internal.DialSettings) (grpctransport.GRPCClientConnPool, error) {
+	var ts oauth2.TokenSource
+	if ds.InternalCredentials != nil {
+		ts = ds.InternalCredentials.TokenSource
+	} else if ds.Credentials != nil {
+		ts = ds.Credentials.TokenSource
+	} else if ds.TokenProvider != nil {
+		ts = ds.TokenSource
+	}
+	var tp auth.TokenProvider
+	if ds.TokenProvider != nil {
+		tp = ds.TokenProvider
+	} else if ts != nil {
+		tp = oauth2adapt.TokenProviderFromTokenSource(ts)
+	}
+	
+	var aud string
+	if len(ds.Audiences) > 0 {
+		aud = ds.Audiences[0]
+	}
+	metadata := map[string]string{}
+	if ds.QuotaProject != "" {
+		metadata["X-goog-user-project"] = ds.QuotaProject
+	}
+	if ds.RequestReason != "" {
+		metadata["X-goog-request-reason"] = ds.RequestReason
+	}
+	pool, err := grpctransport.Dial(ctx, secure, &grpctransport.Options{
+		DisableTelemetry:      ds.TelemetryDisabled,
+		DisableAuthentication: ds.NoAuth,
+		Endpoint:              ds.Endpoint,
+		Metadata:              metadata,
+		GRPCDialOpts:          ds.GRPCDialOpts,
+		PoolSize:              poolSize,
+		TokenProvider:         tp,
+		DetectOpts: &detect.Options{
+			Scopes:          ds.Scopes,
+			Audience:        aud,
+			CredentialsFile: ds.CredentialsFile,
+			CredentialsJSON: ds.CredentialsJSON,
+			Client:          oauth2.NewClient(ctx, nil),
+		},
+		InternalOptions: &grpctransport.InternalOptions{
+			EnableNonDefaultSAForDirectPath: ds.AllowNonDefaultServiceAccount,
+			EnableDirectPath:                ds.EnableDirectPath,
+			EnableDirectPathXds:             ds.EnableDirectPathXds,
+			EnableJWTWithScope:              ds.EnableJwtWithScope,
+			DefaultAudience:                 ds.DefaultAudience,
+			DefaultEndpoint:                 ds.DefaultEndpoint,
+			DefaultMTLSEndpoint:             ds.DefaultMTLSEndpoint,
+			DefaultScopes:                   ds.DefaultScopes,
+		},
+	})
+	return pool, err
 }
 
 func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.ClientConn, error) {

@@ -9,6 +9,7 @@ import (
 	"crypto/tls"
 	"net/http"
 
+	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
@@ -342,4 +343,17 @@ func (w *withCreds) Apply(o *internal.DialSettings) {
 // WithCredentials returns a ClientOption that authenticates API calls.
 func WithCredentials(creds *google.Credentials) ClientOption {
 	return (*withCreds)(creds)
+}
+
+// WithTokenProvider returns a ClientOption that specifies an
+// [cloud.google.com/go/auth.TokenProvider] to be used as the basis for
+// authentication.
+func WithTokenProvider(tp auth.TokenProvider) ClientOption {
+	return withTokenProvider{tp}
+}
+
+type withTokenProvider struct{ tp auth.TokenProvider }
+
+func (w withTokenProvider) Apply(o *internal.DialSettings) {
+	o.TokenProvider = w.tp
 }

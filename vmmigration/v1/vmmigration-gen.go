@@ -2983,6 +2983,8 @@ type MigrationError struct {
 	// encountered an error during utilization report creation.
 	//   "APPLIANCE_UPGRADE_ERROR" - Migrate to Virtual Machines encountered
 	// an error during appliance upgrade.
+	//   "IMAGE_IMPORT_ERROR" - Migrate to Virtual Machines encountered an
+	// error in image import operation.
 	Code string `json:"code,omitempty"`
 
 	// ErrorMessage: Output only. The localized error message.
@@ -3795,7 +3797,7 @@ type TargetProject struct {
 	// Name: Output only. The name of the target project.
 	Name string `json:"name,omitempty"`
 
-	// Project: The target project ID (number) or project name.
+	// Project: Required. The target project ID (number) or project name.
 	Project string `json:"project,omitempty"`
 
 	// UpdateTime: Output only. The last time the target project resource

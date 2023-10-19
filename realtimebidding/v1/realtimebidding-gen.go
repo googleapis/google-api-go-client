@@ -931,6 +931,8 @@ type Creative struct {
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
 	//   "OMSDK_1_0" - The open measurement SDK is supported.
+	//   "RENDERING_PLAYABLE" - The creative is considered a playable
+	// display creative.
 	DeclaredAttributes []string `json:"declaredAttributes,omitempty"`
 
 	// DeclaredClickThroughUrls: The set of declared destination URLs for
@@ -1143,6 +1145,8 @@ type CreativeServingDecision struct {
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
 	//   "OMSDK_1_0" - The open measurement SDK is supported.
+	//   "RENDERING_PLAYABLE" - The creative is considered a playable
+	// display creative.
 	DetectedAttributes []string `json:"detectedAttributes,omitempty"`
 
 	// DetectedClickThroughUrls: The set of detected destination URLs for

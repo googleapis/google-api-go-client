@@ -412,7 +412,7 @@ type EthereumDetails struct {
 	//   "TESTNET_GOERLI_PRATER" - The Ethereum Testnet based on Goerli
 	// protocol.
 	//   "TESTNET_SEPOLIA" - The Ethereum Testnet based on Sepolia/Bepolia
-	// protocol.
+	// protocol. See https://github.com/eth-clients/sepolia.
 	Network string `json:"network,omitempty"`
 
 	// NodeType: Immutable. The type of Ethereum node.

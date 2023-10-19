@@ -1344,36 +1344,6 @@ func (s *GoogleCloudDiscoveryengineV1alphaAdditionalParams) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse:
-// Response message for SiteSearchEngineService.BatchCreateTargetSites
-// method.
-type GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse struct {
-	// TargetSites: TargetSites created.
-	TargetSites []*GoogleCloudDiscoveryengineV1alphaTargetSite `json:"targetSites,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TargetSites") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TargetSites") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1alphaBigQuerySource: BigQuery source
 // import data from.
 type GoogleCloudDiscoveryengineV1alphaBigQuerySource struct {
@@ -3415,9 +3385,14 @@ type GoogleCloudDiscoveryengineV1alphaRecommendRequest struct {
 	// `filter_tags` attribute is supported. Examples: * `(filter_tags:
 	// ANY("Red", "Blue") OR filter_tags: ANY("Hot", "Cold"))` *
 	// `(filter_tags: ANY("Red", "Blue")) AND NOT (filter_tags:
-	// ANY("Green"))` If your filter blocks all results, the API will return
-	// generic (unfiltered) popular Documents. If you only want results
-	// strictly matching the filters, set `strictFiltering` to True in
+	// ANY("Green"))` If `attributeFilteringSyntax` is set to true under the
+	// `params` field, then attribute-based expressions are expected instead
+	// of the above described tag-based syntax. Examples: * (launguage:
+	// ANY("en", "es")) AND NOT (categories: ANY("Movie")) * (available:
+	// true) AND (launguage: ANY("en", "es")) OR (categories: ANY("Movie"))
+	// If your filter blocks all results, the API will return generic
+	// (unfiltered) popular Documents. If you only want results strictly
+	// matching the filters, set `strictFiltering` to True in
 	// RecommendRequest.params to receive empty results instead. Note that
 	// the API will never return Documents with `storageStatus` of `EXPIRED`
 	// or `DELETED` regardless of filter choices.
@@ -3444,7 +3419,10 @@ type GoogleCloudDiscoveryengineV1alphaRecommendRequest struct {
 	// non-empty, then it needs to be one of: * `no-diversity` *
 	// `low-diversity` * `medium-diversity` * `high-diversity` *
 	// `auto-diversity` This gives request-level control and adjusts
-	// recommendation results based on Document category.
+	// recommendation results based on Document category. *
+	// `attributeFilteringSyntax`: Boolean. False by default. If set to
+	// true, the `filter` field is interpreted according to the new,
+	// attribute-based syntax.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// UserEvent: Required. Context about the user, what they are looking at
@@ -3955,7 +3933,9 @@ func (s *GoogleCloudDiscoveryengineV1alphaSearchInfo) MarshalJSON() ([]byte, err
 // GoogleCloudDiscoveryengineV1alphaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
-	// BoostSpec: Boost specification to boost certain documents.
+	// BoostSpec: Boost specification to boost certain documents. For more
+	// information on boosting, see Boosting
+	// (https://cloud.google.com/retail/docs/boosting#boost)
 	BoostSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
 
 	// Branch: The branch resource name, such as
@@ -3986,7 +3966,15 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents
 	// being filtered. Filter expression is case-sensitive. If this field is
-	// unrecognizable, an `INVALID_ARGUMENT` is returned.
+	// unrecognizable, an `INVALID_ARGUMENT` is returned. Filtering in
+	// Vertex AI Search is done by mapping the LHS filter key to a key
+	// property defined in the Vertex AI Search backend -- this mapping is
+	// defined by the customer in their schema. For example a media customer
+	// might have a field 'name' in their schema. In this case the filter
+	// would look like this: filter --> name:'ANY("king kong")' For more
+	// information about filtering including syntax and filter operators,
+	// see Filter
+	// (https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)
 	Filter string `json:"filter,omitempty"`
 
 	// ImageQuery: Raw image query.
@@ -4001,8 +3989,10 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 
 	// OrderBy: The order in which documents are returned. Documents can be
 	// ordered by a field in an Document object. Leave it unset if ordered
-	// by relevance. `order_by` expression is case-sensitive. If this field
-	// is unrecognizable, an `INVALID_ARGUMENT` is returned.
+	// by relevance. `order_by` expression is case-sensitive. For more
+	// information on ordering, see Ordering
+	// (https://cloud.google.com/retail/docs/filter-and-order#order) If this
+	// field is unrecognizable, an `INVALID_ARGUMENT` is returned.
 	OrderBy string `json:"orderBy,omitempty"`
 
 	// PageSize: Maximum number of Documents to return. If unspecified,

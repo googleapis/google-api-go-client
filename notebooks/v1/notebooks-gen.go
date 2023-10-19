@@ -1471,7 +1471,7 @@ type InstanceMigrationEligibility struct {
 	//   "WARNING_UNSPECIFIED" - Default type.
 	//   "UNSUPPORTED_MACHINE_TYPE" - The UmN uses an machine type that's
 	// unsupported in WbI. It will be migrated with the default machine type
-	// n2-standard-4. Users can change the machine type after the migration.
+	// e2-standard-4. Users can change the machine type after the migration.
 	//   "UNSUPPORTED_ACCELERATOR_TYPE" - The UmN uses an accelerator type
 	// that's unsupported in WbI. It will be migrated without an
 	// accelerator. User can attach an accelerator after the migration.
@@ -2036,6 +2036,110 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MigrateInstanceRequest: Request for migrating a User-Managed Notebook
+// to Workbench Instances.
+type MigrateInstanceRequest struct {
+	// PostStartupScriptOption: Optional. Specifies the behavior of post
+	// startup script during migration.
+	//
+	// Possible values:
+	//   "POST_STARTUP_SCRIPT_OPTION_UNSPECIFIED" - Post startup script
+	// option is not specified. Default is POST_STARTUP_SCRIPT_OPTION_SKIP.
+	//   "POST_STARTUP_SCRIPT_OPTION_SKIP" - Not migrate the post startup
+	// script to the new Workbench Instance.
+	//   "POST_STARTUP_SCRIPT_OPTION_RERUN" - Redownload and rerun the same
+	// post startup script as the User-Managed Notebook.
+	PostStartupScriptOption string `json:"postStartupScriptOption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PostStartupScriptOption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostStartupScriptOption")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MigrateInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrateInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MigrateRuntimeRequest: Request for migrating a Runtime to a Workbench
+// Instance.
+type MigrateRuntimeRequest struct {
+	// Network: Optional. Name of the VPC that the new Instance is in. This
+	// is required if the Runtime uses google-managed network. If the
+	// Runtime uses customer-owned network, it will reuse the same VPC, and
+	// this field must be empty. Format:
+	// `projects/{project_id}/global/networks/{network_id}`
+	Network string `json:"network,omitempty"`
+
+	// PostStartupScriptOption: Optional. Specifies the behavior of post
+	// startup script during migration.
+	//
+	// Possible values:
+	//   "POST_STARTUP_SCRIPT_OPTION_UNSPECIFIED" - Post startup script
+	// option is not specified. Default is POST_STARTUP_SCRIPT_OPTION_SKIP.
+	//   "POST_STARTUP_SCRIPT_OPTION_SKIP" - Not migrate the post startup
+	// script to the new Workbench Instance.
+	//   "POST_STARTUP_SCRIPT_OPTION_RERUN" - Redownload and rerun the same
+	// post startup script as the Google-Managed Notebook.
+	PostStartupScriptOption string `json:"postStartupScriptOption,omitempty"`
+
+	// RequestId: Optional. Idempotent request UUID.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ServiceAccount: Optional. The service account to be included in the
+	// Compute Engine instance of the new Workbench Instance when the
+	// Runtime uses "single user only" mode for permission. If not
+	// specified, the Compute Engine default service account
+	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
+	// is used. When the Runtime uses service account mode for permission,
+	// it will reuse the same service account, and this field must be empty.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// Subnet: Optional. Name of the subnet that the new Instance is in.
+	// This is required if the Runtime uses google-managed network. If the
+	// Runtime uses customer-owned network, it will reuse the same subnet,
+	// and this field must be empty. Format:
+	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
+	Subnet string `json:"subnet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MigrateRuntimeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrateRuntimeRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7058,6 +7162,150 @@ func (c *ProjectsLocationsInstancesListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
+// method id "notebooks.projects.locations.instances.migrate":
+
+type ProjectsLocationsInstancesMigrateCall struct {
+	s                      *Service
+	name                   string
+	migrateinstancerequest *MigrateInstanceRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Migrate: Migrates an existing User-Managed Notebook to Workbench
+// Instances.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) Migrate(name string, migrateinstancerequest *MigrateInstanceRequest) *ProjectsLocationsInstancesMigrateCall {
+	c := &ProjectsLocationsInstancesMigrateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.migrateinstancerequest = migrateinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesMigrateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesMigrateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesMigrateCall) Context(ctx context.Context) *ProjectsLocationsInstancesMigrateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesMigrateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesMigrateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.migrateinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:migrate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.migrate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesMigrateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Migrates an existing User-Managed Notebook to Workbench Instances.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:migrate",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.instances.migrate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:migrate",
+	//   "request": {
+	//     "$ref": "MigrateInstanceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "notebooks.projects.locations.instances.register":
 
 type ProjectsLocationsInstancesRegisterCall struct {
@@ -11141,6 +11389,149 @@ func (c *ProjectsLocationsRuntimesListCall) Pages(ctx context.Context, f func(*L
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "notebooks.projects.locations.runtimes.migrate":
+
+type ProjectsLocationsRuntimesMigrateCall struct {
+	s                     *Service
+	name                  string
+	migrateruntimerequest *MigrateRuntimeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Migrate: Migrate an existing Runtime to a new Workbench Instance.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`.
+func (r *ProjectsLocationsRuntimesService) Migrate(name string, migrateruntimerequest *MigrateRuntimeRequest) *ProjectsLocationsRuntimesMigrateCall {
+	c := &ProjectsLocationsRuntimesMigrateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.migrateruntimerequest = migrateruntimerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRuntimesMigrateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRuntimesMigrateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRuntimesMigrateCall) Context(ctx context.Context) *ProjectsLocationsRuntimesMigrateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRuntimesMigrateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRuntimesMigrateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.migrateruntimerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:migrate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.runtimes.migrate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRuntimesMigrateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Migrate an existing Runtime to a new Workbench Instance.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtimes/{runtimesId}:migrate",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.runtimes.migrate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/runtimes/{runtime_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/runtimes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:migrate",
+	//   "request": {
+	//     "$ref": "MigrateRuntimeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "notebooks.projects.locations.runtimes.patch":

@@ -3671,6 +3671,19 @@ func (r *ProjectsLocationsFunctionsService) Get(name string) *ProjectsLocationsF
 	return c
 }
 
+// VersionId sets the optional parameter "versionId": The optional
+// version of the function whose details should be obtained. The version
+// of a 1st Gen function is an integer that starts from 1 and gets
+// incremented on redeployments. Each deployment creates a config
+// version of the underlying function. GCF may keep historical configs
+// for old versions. This field can be specified to fetch the historical
+// configs. Leave it blank or set to 0 to get the latest version of the
+// function.
+func (c *ProjectsLocationsFunctionsGetCall) VersionId(versionId int64) *ProjectsLocationsFunctionsGetCall {
+	c.urlParams_.Set("versionId", fmt.Sprint(versionId))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3783,6 +3796,12 @@ func (c *ProjectsLocationsFunctionsGetCall) Do(opts ...googleapi.CallOption) (*C
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionId": {
+	//       "description": "Optional. The optional version of the function whose details should be obtained. The version of a 1st Gen function is an integer that starts from 1 and gets incremented on redeployments. Each deployment creates a config version of the underlying function. GCF may keep historical configs for old versions. This field can be specified to fetch the historical configs. Leave it blank or set to 0 to get the latest version of the function.",
+	//       "format": "int64",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

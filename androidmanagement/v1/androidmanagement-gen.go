@@ -1915,14 +1915,13 @@ type CrossProfilePolicies struct {
 	// ExemptionsToShowWorkContactsInPersonalProfile: List of apps which are
 	// excluded from the ShowWorkContactsInPersonalProfile setting. For this
 	// to be set, ShowWorkContactsInPersonalProfile must be set to one of
-	// the following values: *
-	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. In this case, these
-	// exemptions act as a blocklist. *
+	// the following values: SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED.
+	// In this case, these exemptions act as a blocklist.
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED. In this case,
-	// these exemptions act as an allowlist. *
+	// these exemptions act as an allowlist.
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM. In
 	// this case, these exemptions act as an allowlist, in addition to the
-	// already allowlisted system apps. Supported on Android 14 and above. A
+	// already allowlisted system apps.Supported on Android 14 and above. A
 	// nonComplianceDetail with API_LEVEL is reported if the Android version
 	// is less than 14.
 	ExemptionsToShowWorkContactsInPersonalProfile *PackageNameList `json:"exemptionsToShowWorkContactsInPersonalProfile,omitempty"`
@@ -1933,22 +1932,22 @@ type CrossProfilePolicies struct {
 	//
 	// Possible values:
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_UNSPECIFIED" - Unspecified.
-	// Defaults to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. When this
+	// Defaults to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED.When this
 	// is set, exemptions_to_show_work_contacts_in_personal_profile must not
 	// be set.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED" - Prevents
 	// personal apps from accessing work profile contacts and looking up
-	// work contacts. When this is set, personal apps specified in
+	// work contacts.When this is set, personal apps specified in
 	// exemptions_to_show_work_contacts_in_personal_profile are allowlisted
-	// and can access work profile contacts directly. Supported on Android
+	// and can access work profile contacts directly.Supported on Android
 	// 7.0 and above. A nonComplianceDetail with API_LEVEL is reported if
 	// the Android version is less than 7.0.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED" - Default. Allows
 	// apps in the personal profile to access work profile contacts
-	// including contact searches and incoming calls. When this is set,
+	// including contact searches and incoming calls.When this is set,
 	// personal apps specified in
 	// exemptions_to_show_work_contacts_in_personal_profile are blocklisted
-	// and can not access work profile contacts directly. Supported on
+	// and can not access work profile contacts directly.Supported on
 	// Android 7.0 and above. A nonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 7.0.
 	//   "SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM" -
@@ -1956,10 +1955,10 @@ type CrossProfilePolicies struct {
 	// including contact searches and incoming calls, except for the OEM
 	// default Dialer, Messages, and Contacts apps. Neither user-configured
 	// Dialer, Messages, and Contacts apps, nor any other system or play
-	// installed apps, will be able to query work contacts directly. When
+	// installed apps, will be able to query work contacts directly.When
 	// this is set, personal apps specified in
 	// exemptions_to_show_work_contacts_in_personal_profile are allowlisted
-	// and can access work profile contacts. Supported on Android 14 and
+	// and can access work profile contacts.Supported on Android 14 and
 	// above. If this is set on a device with Android version less than 14,
 	// the behaviour falls back to
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED and a
@@ -5127,7 +5126,8 @@ type PersonalApplicationPolicy struct {
 	// Possible values:
 	//   "INSTALL_TYPE_UNSPECIFIED" - Unspecified. Defaults to AVAILABLE.
 	//   "BLOCKED" - The app is blocked and can't be installed in the
-	// personal profile.
+	// personal profile. If the app was previously installed in the device,
+	// it will be uninstalled.
 	//   "AVAILABLE" - The app is available to install in the personal
 	// profile.
 	InstallType string `json:"installType,omitempty"`
@@ -5170,7 +5170,12 @@ type PersonalUsagePolicies struct {
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off.
-	// The duration must be at least 3 days.
+	// The minimum duration must be at least 3 days. Other details are as
+	// follows: - If the duration is set to 0, the feature is turned off. -
+	// If the duration is set to any value between 1-2 days, the feature is
+	// automatically set to 3 days. *Note:* If you want to avoid personal
+	// profiles being suspended during long periods of off-time, you can
+	// temporarily set a large value for this parameter.
 	MaxDaysWithWorkOff int64 `json:"maxDaysWithWorkOff,omitempty"`
 
 	// PersonalApplications: Policy applied to applications in the personal
@@ -6207,23 +6212,23 @@ func (s *SetupAction) MarshalJSON() ([]byte, error) {
 
 // SigninDetail: A resource containing sign in details for an
 // enterprise. Use enterprises to manage SigninDetails for a given
-// enterprise. For an enterprise, we can have any number of
-// SigninDetails that is uniquely identified by combination of the
-// following three fields (signin_url, allow_personal_usage, token_tag).
-// One cannot create two SigninDetails with the same (signin_url,
-// allow_personal_usage, token_tag). (token_tag is an optional field)
-// Patch: The operation updates the current list of SigninDetails with
-// the new list of SigninDetails. If the stored SigninDetail
+// enterprise.For an enterprise, we can have any number of SigninDetails
+// that is uniquely identified by combination of the following three
+// fields (signin_url, allow_personal_usage, token_tag). One cannot
+// create two SigninDetails with the same (signin_url,
+// allow_personal_usage, token_tag). (token_tag is an optional
+// field).Patch: The operation updates the current list of SigninDetails
+// with the new list of SigninDetails. If the stored SigninDetail
 // configuration is passed, it returns the same signin_enrollment_token
 // and qr_code. If we pass multiple identical SigninDetail
 // configurations that are not stored, it will store the first one
-// amongst those SigninDetail configurations and if the configuration
+// amongst those SigninDetail configurations. if the configuration
 // already exists we cannot request it more than once in a particular
 // patch API call, otherwise it will give a duplicate key error and the
 // whole operation will fail. If we remove certain SigninDetail
 // configuration from the request then it will get removed from the
-// storage. And then we can request for another signin_enrollment_token
-// and qr_code for the same SigninDetail configuration.
+// storage. We can then request another signin_enrollment_token and
+// qr_code for the same SigninDetail configuration.
 type SigninDetail struct {
 	// AllowPersonalUsage: Controls whether personal usage is allowed on a
 	// device provisioned with this enrollment token.For company-owned
@@ -6262,8 +6267,8 @@ type SigninDetail struct {
 	// failed login.
 	SigninUrl string `json:"signinUrl,omitempty"`
 
-	// TokenTag: An EMM-specified tag to distinguish between instances of
-	// SigninDetail.
+	// TokenTag: An EMM-specified metadata to distinguish between instances
+	// of SigninDetail.
 	TokenTag string `json:"tokenTag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowPersonalUsage")

@@ -1731,20 +1731,19 @@ func (s *GoogleCloudApigeeV1AnalyticsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ApiCategory: the Api category resource wrapped
-// with response status, error_code etc.
+// GoogleCloudApigeeV1ApiCategory: The API category resource wrapped
+// with response status, error_code, etc.
 type GoogleCloudApigeeV1ApiCategory struct {
-	// Data: Details of category.
+	// Data: Details of the category.
 	Data *GoogleCloudApigeeV1ApiCategoryData `json:"data,omitempty"`
 
-	// ErrorCode: ID that can be used to find errors in the log files.
+	// ErrorCode: Unique error code for the request, if any.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// Message: Description of the operation.
 	Message string `json:"message,omitempty"`
 
-	// RequestId: ID that can be used to find request details in the log
-	// files.
+	// RequestId: Unique ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// Status: Status of the operation.
@@ -1777,11 +1776,11 @@ func (s *GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ApiCategoryData: the Api category resource.
+// GoogleCloudApigeeV1ApiCategoryData: `ApiCategoryData` represents an
+// API category. Catalog items can be tagged with API categories; users
+// viewing the API catalog in the portal will have the option to browse
+// the catalog by category.
 type GoogleCloudApigeeV1ApiCategoryData struct {
-	// GcpResource: GCP name of api category resource.
-	GcpResource string `json:"gcpResource,omitempty"`
-
 	// Id: ID of the category (a UUID).
 	Id string `json:"id,omitempty"`
 
@@ -1795,7 +1794,7 @@ type GoogleCloudApigeeV1ApiCategoryData struct {
 	// epoch.
 	UpdateTime int64 `json:"updateTime,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "GcpResource") to
+	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1803,10 +1802,10 @@ type GoogleCloudApigeeV1ApiCategoryData struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcpResource") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3974,17 +3973,16 @@ func (s *GoogleCloudApigeeV1DeleteCustomReportResponse) MarshalJSON() ([]byte, e
 // GoogleCloudApigeeV1DeleteResponse: Response for certain delete
 // operations.
 type GoogleCloudApigeeV1DeleteResponse struct {
-	// ErrorCode: ID that can be used to find errors in the log files.
+	// ErrorCode: Unique error code for the request, if any.
 	ErrorCode string `json:"errorCode,omitempty"`
 
-	// GcpResource: GCP name of deleted resource.
+	// GcpResource: Google Cloud name of deleted resource.
 	GcpResource string `json:"gcpResource,omitempty"`
 
 	// Message: Description of the operation.
 	Message string `json:"message,omitempty"`
 
-	// RequestId: ID that can be used to find request details in the log
-	// files.
+	// RequestId: Unique ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// Status: Status of the operation.
@@ -6514,20 +6512,19 @@ func (s *GoogleCloudApigeeV1KeystoreConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ListApiCategoriesResponse: the response for
-// ListApiCategoriesRequest.
+// GoogleCloudApigeeV1ListApiCategoriesResponse: The response for
+// `ListApiCategoriesRequest`.
 type GoogleCloudApigeeV1ListApiCategoriesResponse struct {
-	// Data: Details of categories.
+	// Data: Details of the categories.
 	Data []*GoogleCloudApigeeV1ApiCategoryData `json:"data,omitempty"`
 
-	// ErrorCode: ID that can be used to find errors in the log files.
+	// ErrorCode: Unique error code for the request, if any.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// Message: Description of the operation.
 	Message string `json:"message,omitempty"`
 
-	// RequestId: ID that can be used to find request details in the log
-	// files.
+	// RequestId: Unique ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// Status: Status of the operation.
@@ -21767,17 +21764,11 @@ type OrganizationsAppgroupsUpdateCall struct {
 	header_                     http.Header
 }
 
-// Update: Updates an appGroup. This API replaces the existing appGroup
+// Update: Updates an AppGroup. This API replaces the existing AppGroup
 // details with those specified in the request. Include or exclude any
 // existing details that you want to retain or delete, respectively.
 // Note that the state of the AppGroup should be updated using `action`,
-// and not via AppGroup. **Note**: OAuth access tokens and Key
-// Management Service (KMS) entities (apps, developers, and API
-// products) are cached for 180 seconds (current default). Any custom
-// attributes associated with these entities are cached for at least 180
-// seconds after the entity is accessed at runtime. Therefore, an
-// `ExpiresIn` element on the OAuthV2 policy won't be able to expire an
-// access token in less than 180 seconds.
+// and not via AppGroup.
 //
 //   - name: Name of the AppGroup. Use the following structure in your
 //     request: `organizations/{org}/appgroups/{app_group_name}`.
@@ -21789,7 +21780,7 @@ func (r *OrganizationsAppgroupsService) Update(name string, googlecloudapigeev1a
 }
 
 // Action sets the optional parameter "action": Activate or de-activate
-// the appGroup by setting the action as `active` or `inactive`. The
+// the AppGroup by setting the action as `active` or `inactive`. The
 // `Content-Type` header must be set to `application/octet-stream`, with
 // empty body.
 func (c *OrganizationsAppgroupsUpdateCall) Action(action string) *OrganizationsAppgroupsUpdateCall {
@@ -21888,7 +21879,7 @@ func (c *OrganizationsAppgroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an appGroup. This API replaces the existing appGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup. **Note**: OAuth access tokens and Key Management Service (KMS) entities (apps, developers, and API products) are cached for 180 seconds (current default). Any custom attributes associated with these entities are cached for at least 180 seconds after the entity is accessed at runtime. Therefore, an `ExpiresIn` element on the OAuthV2 policy won't be able to expire an access token in less than 180 seconds.",
+	//   "description": "Updates an AppGroup. This API replaces the existing AppGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup.",
 	//   "flatPath": "v1/organizations/{organizationsId}/appgroups/{appgroupsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.appgroups.update",
@@ -21897,7 +21888,7 @@ func (c *OrganizationsAppgroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "action": {
-	//       "description": "Activate or de-activate the appGroup by setting the action as `active` or `inactive`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.",
+	//       "description": "Activate or de-activate the AppGroup by setting the action as `active` or `inactive`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -60418,7 +60409,7 @@ type OrganizationsSitesApicategoriesCreateCall struct {
 	header_                            http.Header
 }
 
-// Create: Creates a new category on the portal.
+// Create: Creates a new API category.
 //
 //   - parent: Name of the portal. Use the following structure in your
 //     request: `organizations/{org}/sites/{site}`.
@@ -60520,7 +60511,7 @@ func (c *OrganizationsSitesApicategoriesCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new category on the portal.",
+	//   "description": "Creates a new API category.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apicategories",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.sites.apicategories.create",
@@ -60560,7 +60551,7 @@ type OrganizationsSitesApicategoriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a category from the portal.
+// Delete: Deletes an API category.
 //
 //   - name: Name of the category. Use the following structure in your
 //     request:
@@ -60658,7 +60649,7 @@ func (c *OrganizationsSitesApicategoriesDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a category from the portal.",
+	//   "description": "Deletes an API category.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apicategories/{apicategoriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.sites.apicategories.delete",
@@ -60696,7 +60687,7 @@ type OrganizationsSitesApicategoriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a category on the portal.
+// Get: Gets an API category.
 //
 //   - name: Name of the category. Use the following structure in your
 //     request:
@@ -60806,7 +60797,7 @@ func (c *OrganizationsSitesApicategoriesGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a category on the portal.",
+	//   "description": "Gets an API category.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apicategories/{apicategoriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.sites.apicategories.get",
@@ -60844,7 +60835,7 @@ type OrganizationsSitesApicategoriesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the categories on the portal.
+// List: Returns the API categories associated with a portal.
 //
 //   - parent: Name of the portal. Use the following structure in your
 //     request: `organizations/{org}/sites/{site}`.
@@ -60955,7 +60946,7 @@ func (c *OrganizationsSitesApicategoriesListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the categories on the portal.",
+	//   "description": "Returns the API categories associated with a portal.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apicategories",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.sites.apicategories.list",
@@ -60993,7 +60984,7 @@ type OrganizationsSitesApicategoriesPatchCall struct {
 	header_                            http.Header
 }
 
-// Patch: Updates a category on the portal.
+// Patch: Updates an API category.
 //
 //   - name: Name of the category. Use the following structure in your
 //     request:
@@ -61096,7 +61087,7 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a category on the portal.",
+	//   "description": "Updates an API category.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apicategories/{apicategoriesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "apigee.organizations.sites.apicategories.patch",

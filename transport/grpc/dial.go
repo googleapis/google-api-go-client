@@ -153,6 +153,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 		)
 
 		// Attempt Direct Path:
+		logDirectPathMisconfig(endpoint, creds.TokenSource, o)
 		if isDirectPathEnabled(endpoint, o) && isTokenSourceDirectPathCompatible(creds.TokenSource, o) && metadata.OnGCE() {
 			// Overwrite all of the previously specific DialOptions, DirectPath uses its own set of credentials and certificates.
 			grpcOpts = []grpc.DialOption{
@@ -181,7 +182,6 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			}
 			// TODO(cbro): add support for system parameters (quota project, request reason) via chained interceptor.
 		}
-		logDirectPathMisconfig(creds.TokenSource, o)
 	}
 
 	// Add tracing, but before the other options, so that clients can override the
@@ -297,18 +297,15 @@ func checkDirectPathEndPoint(endpoint string) bool {
 	return true
 }
 
-func logDirectPathMisconfig(ts oauth2.TokenSource, o *internal.DialSettings) {
-	isDirectPathOptionSet := o.EnableDirectPath
-	isDirectPathXdsEnvSet := strings.EqualFold(os.Getenv(enableDirectPathXds), "true")
-	isDirectPathXdsOptionSet := o.EnableDirectPathXds
-	if isDirectPathXdsEnvSet || isDirectPathXdsOptionSet {
+func logDirectPathMisconfig(endpoint string, ts oauth2.TokenSource, o *internal.DialSettings) {
+	if isDirectPathXdsUsed(o) {
 		// Case 1: does not enable DirectPath
-		if !isDirectPathOptionSet {
+		if !isDirectPathEnabled(endpoint, o) {
 			log.Print("WARNING: DirectPath is misconfigured. Please set the attemptDirectPath option along with the attemptDirectPathXds option.")
 		} else {
 			// Case 2: credential is not correctly set
 			if !isTokenSourceDirectPathCompatible(ts, o) {
-				log.Print("WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used")
+				log.Print("WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used.")
 			}
 			// Case 3: not running on GCE
 			if !metadata.OnGCE() {

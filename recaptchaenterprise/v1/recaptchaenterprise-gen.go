@@ -414,8 +414,8 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// that the identifier is hashed using hmac-sha256 with stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
-	// Reasons: Optional. Optional reasons for the annotation that will be
-	// assigned to the Event.
+	// Reasons: Optional. Reasons for the annotation that are assigned to
+	// the event.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Default unspecified reason.

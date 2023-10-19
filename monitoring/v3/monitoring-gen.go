@@ -17672,7 +17672,7 @@ func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelev
 // ServiceLevelObjectiveId sets the optional parameter
 // "serviceLevelObjectiveId": The ServiceLevelObjective id to use for
 // this ServiceLevelObjective. If omitted, an id will be generated
-// instead. Must match the pattern [a-z0-9\-]+
+// instead. Must match the pattern ^[a-zA-Z0-9-_:.]+$
 func (c *ServicesServiceLevelObjectivesCreateCall) ServiceLevelObjectiveId(serviceLevelObjectiveId string) *ServicesServiceLevelObjectivesCreateCall {
 	c.urlParams_.Set("serviceLevelObjectiveId", serviceLevelObjectiveId)
 	return c
@@ -17785,7 +17785,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "serviceLevelObjectiveId": {
-	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern [a-z0-9\\-]+",
+	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern ^[a-zA-Z0-9-_:.]+$",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

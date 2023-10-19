@@ -1269,6 +1269,53 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ErrorReportingPanel: A widget that displays a list of error groups.
+type ErrorReportingPanel struct {
+	// ProjectNames: The resource name of the Google Cloud Platform project.
+	// Written as projects/{projectID} or projects/{projectNumber}, where
+	// {projectID} and {projectNumber} can be found in the Google Cloud
+	// console (https://support.google.com/cloud/answer/6158840).Examples:
+	// projects/my-project-123, projects/5551234.
+	ProjectNames []string `json:"projectNames,omitempty"`
+
+	// Services: An identifier of the service, such as the name of the
+	// executable, job, or Google App Engine service name. This field is
+	// expected to have a low number of values that are relatively stable
+	// over time, as opposed to version, which can be changed whenever new
+	// code is deployed.Contains the service name for error reports
+	// extracted from Google App Engine logs or default if the App Engine
+	// default service is used.
+	Services []string `json:"services,omitempty"`
+
+	// Versions: Represents the source code version that the developer
+	// provided, which could represent a version label or a Git SHA-1 hash,
+	// for example. For App Engine standard environment, the version is set
+	// to the version of the app.
+	Versions []string `json:"versions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ErrorReportingPanel) MarshalJSON() ([]byte, error) {
+	type NoMethod ErrorReportingPanel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Field: A single field of a message type.
 type Field struct {
 	// Cardinality: The field cardinality.
@@ -2160,14 +2207,6 @@ type PieChart struct {
 	// show slices' labels
 	ShowLabels bool `json:"showLabels,omitempty"`
 
-	// ShowTotal: Optional. Indicates whether or not donut chart should show
-	// the total in the middle
-	ShowTotal bool `json:"showTotal,omitempty"`
-
-	// SliceAggregatedThreshold: Optional. If slices's values are smaller
-	// than this value, they will be combined into other category
-	SliceAggregatedThreshold float64 `json:"sliceAggregatedThreshold,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ChartType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2189,20 +2228,6 @@ func (s *PieChart) MarshalJSON() ([]byte, error) {
 	type NoMethod PieChart
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *PieChart) UnmarshalJSON(data []byte) error {
-	type NoMethod PieChart
-	var s1 struct {
-		SliceAggregatedThreshold gensupport.JSONFloat64 `json:"sliceAggregatedThreshold"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.SliceAggregatedThreshold = float64(s1.SliceAggregatedThreshold)
-	return nil
 }
 
 // PieChartDataSet: Groups a time series query definition.
@@ -3422,6 +3447,13 @@ type Widget struct {
 	// that are within the area spanned by the grouping widget are
 	// considered member widgets.
 	CollapsibleGroup *CollapsibleGroup `json:"collapsibleGroup,omitempty"`
+
+	// ErrorReportingPanel: A widget that displays a list of error groups.
+	ErrorReportingPanel *ErrorReportingPanel `json:"errorReportingPanel,omitempty"`
+
+	// Id: Optional. The widget id. Ids may be made up of alphanumerics,
+	// dashes and underscores. Widget ids are optional.
+	Id string `json:"id,omitempty"`
 
 	// IncidentList: A widget that shows list of incidents.
 	IncidentList *IncidentList `json:"incidentList,omitempty"`

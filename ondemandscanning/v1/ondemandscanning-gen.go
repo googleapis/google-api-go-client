@@ -2588,6 +2588,14 @@ type PackageData struct {
 	// Maven packages.
 	HashDigest string `json:"hashDigest,omitempty"`
 
+	// Licenses: The list of licenses found that are related to a given
+	// package. Note that licenses may also be stored on the
+	// BinarySourceInfo. If there is no BinarySourceInfo (because there's no
+	// concept of source vs binary), then it will be stored here, while if
+	// there are BinarySourceInfos, it will be stored there, as one source
+	// can have multiple binaries with different licenses.
+	Licenses []string `json:"licenses,omitempty"`
+
 	// Maintainer: The maintainer of the package.
 	Maintainer *Maintainer `json:"maintainer,omitempty"`
 
@@ -2787,11 +2795,18 @@ func (s *PackageOccurrence) MarshalJSON() ([]byte, error) {
 }
 
 type PackageVersion struct {
+	// Licenses: The licenses associated with this package. Note that this
+	// has to go on the PackageVersion level, because we can have cases with
+	// images with the same source having different licences. E.g. in
+	// Alpine, musl and musl-utils both have the same origin musl, but have
+	// different sets of licenses.
+	Licenses []string `json:"licenses,omitempty"`
+
 	Name string `json:"name,omitempty"`
 
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Licenses") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2799,8 +2814,8 @@ type PackageVersion struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Licenses") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

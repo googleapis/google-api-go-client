@@ -574,7 +574,7 @@ func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 // UserRemediationDetails: Contains details of remediation guidance that
 // the user can perform.
 type UserRemediationDetails struct {
-	// Remediation: Description of the user remediation action. Required.
+	// Remediation: Description of the user remediation action.
 	//
 	// Possible values:
 	//   "UNKNOWN_USER_REMEDIATION" - User remediation is unknown.

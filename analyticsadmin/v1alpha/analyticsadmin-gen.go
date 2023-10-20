@@ -2814,8 +2814,9 @@ type GoogleAnalyticsAdminV1alphaChannelGroup struct {
 	// Format: properties/{property}/channelGroups/{channel_group}
 	Name string `json:"name,omitempty"`
 
-	// SystemDefined: Output only. Default Channel Group defined by Google,
-	// which cannot be updated.
+	// SystemDefined: Output only. If true, then this channel group is the
+	// Default Channel Group predefined by Google Analytics. Display name
+	// and grouping rules cannot be updated for this channel group.
 	SystemDefined bool `json:"systemDefined,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

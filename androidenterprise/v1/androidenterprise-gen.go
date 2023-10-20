@@ -2725,10 +2725,10 @@ func (s *PageInfo) MarshalJSON() ([]byte, error) {
 // enterprise.
 type Permission struct {
 	// Description: A longer description of the Permissions resource, giving
-	// more details of what it affects.
+	// more details of what it affects. This field may be absent.
 	Description string `json:"description,omitempty"`
 
-	// Name: The name of the permission.
+	// Name: The name of the permission. This field may be absent.
 	Name string `json:"name,omitempty"`
 
 	// PermissionId: An opaque string uniquely identifying the permission.

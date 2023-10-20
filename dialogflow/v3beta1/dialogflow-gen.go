@@ -10237,6 +10237,15 @@ type GoogleCloudDialogflowCxV3beta1QueryParameters struct {
 	// DisableWebhook: Whether to disable webhook calls for this request.
 	DisableWebhook bool `json:"disableWebhook,omitempty"`
 
+	// EndUserMetadata: Optional. Information about the end-user to improve
+	// the relevance and accuracy of generative answers. This will be
+	// interpreted and used by a language model, so, for good results, the
+	// data should be self-descriptive, and in a simple structure. Example:
+	// ```json { "subscription plan": "Business Premium Plus", "devices
+	// owned": [ {"model": "Google Pixel 7"}, {"model": "Google Pixel
+	// Tablet"} ] } ```
+	EndUserMetadata googleapi.RawMessage `json:"endUserMetadata,omitempty"`
+
 	// FlowVersions: A list of flow versions to override for the request.
 	// Format: `projects//locations//agents//flows//versions/`. If version 1
 	// of flow X is included in this list, the traffic of flow X will go

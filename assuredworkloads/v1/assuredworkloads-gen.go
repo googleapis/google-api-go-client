@@ -1097,6 +1097,12 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// Format: folders/{folder_id}
 	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
 
+	// ResourceMonitoringEnabled: Output only. Indicates whether resource
+	// monitoring is enabled for workload or not. It is true when Resource
+	// feed is subscribed to AWM topic and AWM Service Agent Role is binded
+	// to AW Service Account for resource Assured workload.
+	ResourceMonitoringEnabled bool `json:"resourceMonitoringEnabled,omitempty"`
+
 	// ResourceSettings: Input only. Resource properties that are used to
 	// customize workload resources. These properties (such as custom
 	// project id) will be used to create workload resources if possible.

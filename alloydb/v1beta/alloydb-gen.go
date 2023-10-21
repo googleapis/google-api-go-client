@@ -2699,7 +2699,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// CLs
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 
-	// ResourceId: Required. Primary key associated with the Resource
+	// ResourceId: Primary key associated with the Resource. resource_id is
+	// available in individual feed level as well.
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
@@ -2779,7 +2780,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// ResourceContainer: Closest parent container of this resource. In GCP,
 	// 'container' refers to a Cloud Resource Manager project. It must be
 	// resource name of a Cloud Resource Manager project with the format of
-	// "provider//", such as "gcp/projects/123".
+	// "provider//", such as "gcp/projects/123". For GCP provided resources,
+	// number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceName: Required. Database resource name associated with the
@@ -3102,6 +3104,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// ResourceContainer: Closest parent Cloud Resource Manager container of
 	// this resource. It must be resource name of a Cloud Resource Manager
 	// project with the format of "provider//", such as "gcp/projects/123".
+	// For GCP provided resources, number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceName: Required. Different from DatabaseResourceId.unique_id,

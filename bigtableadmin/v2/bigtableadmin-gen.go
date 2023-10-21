@@ -341,8 +341,25 @@ type AppProfile struct {
 	// `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 	Name string `json:"name,omitempty"`
 
+	// Priority: This field has been deprecated in favor of
+	// `standard_isolation.priority`. If you set this field,
+	// `standard_isolation.priority` will be set instead. The priority of
+	// requests sent using this app profile.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Default value. Mapped to PRIORITY_HIGH
+	// (the legacy behavior) on creation.
+	//   "PRIORITY_LOW"
+	//   "PRIORITY_MEDIUM"
+	//   "PRIORITY_HIGH"
+	Priority string `json:"priority,omitempty"`
+
 	// SingleClusterRouting: Use a single-cluster routing policy.
 	SingleClusterRouting *SingleClusterRouting `json:"singleClusterRouting,omitempty"`
+
+	// StandardIsolation: The standard options used for isolating this app
+	// profile's traffic from other use cases.
+	StandardIsolation *StandardIsolation `json:"standardIsolation,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2462,17 +2479,13 @@ func (s *Modification) MarshalJSON() ([]byte, error) {
 // ModifyColumnFamiliesRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies
 type ModifyColumnFamiliesRequest struct {
-	// IgnoreWarnings: If true, ignore safety checks when modifying the
-	// column families.
-	IgnoreWarnings bool `json:"ignoreWarnings,omitempty"`
-
 	// Modifications: Required. Modifications to be atomically applied to
 	// the specified table's families. Entries are applied in order, meaning
 	// that earlier modifications can be masked by later ones (in the case
 	// of repeated updates to the same family, for example).
 	Modifications []*Modification `json:"modifications,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IgnoreWarnings") to
+	// ForceSendFields is a list of field names (e.g. "Modifications") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2480,13 +2493,12 @@ type ModifyColumnFamiliesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IgnoreWarnings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Modifications") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3099,6 +3111,42 @@ type Split struct {
 
 func (s *Split) MarshalJSON() ([]byte, error) {
 	type NoMethod Split
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StandardIsolation: Standard options for isolating this app profile's
+// traffic from other use cases.
+type StandardIsolation struct {
+	// Priority: The priority of requests sent using this app profile.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Default value. Mapped to PRIORITY_HIGH
+	// (the legacy behavior) on creation.
+	//   "PRIORITY_LOW"
+	//   "PRIORITY_MEDIUM"
+	//   "PRIORITY_HIGH"
+	Priority string `json:"priority,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Priority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StandardIsolation) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardIsolation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

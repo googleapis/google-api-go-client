@@ -766,6 +766,9 @@ type Instance struct {
 	// project.
 	P4ServiceAccount string `json:"p4ServiceAccount,omitempty"`
 
+	// PatchRevision: Optional. Current patch revision of the Data Fusion.
+	PatchRevision string `json:"patchRevision,omitempty"`
+
 	// PrivateInstance: Specifies whether the Data Fusion instance should be
 	// private. If set to true, all Data Fusion nodes will have private IP
 	// addresses and will not be able to access the public internet.
@@ -828,6 +831,10 @@ type Instance struct {
 
 	// Version: Current version of Data Fusion.
 	Version string `json:"version,omitempty"`
+
+	// WorkforceIdentityServiceEndpoint: Output only. Endpoint on which the
+	// Data Fusion UI is accessible to third-party users.
+	WorkforceIdentityServiceEndpoint string `json:"workforceIdentityServiceEndpoint,omitempty"`
 
 	// Zone: Name of the zone in which the Data Fusion instance will be
 	// created. Only DEVELOPER instances use this field.
@@ -1174,19 +1181,44 @@ func (s *Namespace) MarshalJSON() ([]byte, error) {
 // customer resources from managed Data Fusion instance nodes, as well
 // as access to the customer on-prem resources.
 type NetworkConfig struct {
-	// IpAllocation: The IP range in CIDR notation to use for the managed
-	// Data Fusion instance nodes. This range must not overlap with any
-	// other ranges used in the Data Fusion instance network.
+	// ConnectionType: Optional. Type of connection for establishing private
+	// IP connectivity between the Data Fusion customer project VPC and the
+	// corresponding tenant project from a predefined list of available
+	// connection modes. If this field is unspecified for a private
+	// instance, VPC peering is used.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - No specific connection type was
+	// requested, the default value of VPC_PEERING is chosen.
+	//   "VPC_PEERING" - Requests the use of VPC peerings for connecting the
+	// consumer and tenant projects.
+	//   "PRIVATE_SERVICE_CONNECT_INTERFACES" - Requests the use of Private
+	// Service Connect Interfaces for connecting the consumer and tenant
+	// projects.
+	ConnectionType string `json:"connectionType,omitempty"`
+
+	// IpAllocation: Optional. The IP range in CIDR notation to use for the
+	// managed Data Fusion instance nodes. This range must not overlap with
+	// any other ranges used in the Data Fusion instance network. This is
+	// required only when using connection type VPC_PEERING. Format:
+	// a.b.c.d/22 Example: 192.168.0.0/22
 	IpAllocation string `json:"ipAllocation,omitempty"`
 
-	// Network: Name of the network in the customer project with which the
-	// Tenant Project will be peered for executing pipelines. In case of
+	// Network: Optional. Name of the network in the customer project with
+	// which the Tenant Project will be peered for executing pipelines. This
+	// is required only when using connection type VPC peering. In case of
 	// shared VPC where the network resides in another host project the
 	// network should specified in the form of
-	// projects/{host-project-id}/global/networks/{network}
+	// projects/{project-id}/global/networks/{network}. This is only
+	// required for connectivity type VPC_PEERING.
 	Network string `json:"network,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IpAllocation") to
+	// PrivateServiceConnectConfig: Optional. Configuration for Private
+	// Service Connect. This is required only when using connection type
+	// PRIVATE_SERVICE_CONNECT_INTERFACES.
+	PrivateServiceConnectConfig *PrivateServiceConnectConfig `json:"privateServiceConnectConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1194,12 +1226,13 @@ type NetworkConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IpAllocation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConnectionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1234,8 +1267,8 @@ type Operation struct {
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
 	// response is `google.protobuf.Empty`. If the original method is
 	// standard `Get`/`Create`/`Update`, the response should be the
 	// resource. For other methods, the response should have the type
@@ -1342,7 +1375,7 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // both. To learn which resources support conditions in their IAM
 // policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** { "bindings": [ { "role":
+// **JSON example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1351,17 +1384,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
 // "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
+// bindings: - members: - user:mike@example.com -
+// group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
 // roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// ``` For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1434,6 +1467,58 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateServiceConnectConfig: Configuration for using Private Service
+// Connect to establish connectivity between the Data Fusion consumer
+// project and the corresponding tenant project.
+type PrivateServiceConnectConfig struct {
+	// EffectiveUnreachableCidrBlock: Output only. The CIDR block to which
+	// the CDF instance can't route traffic to in the consumer project VPC.
+	// The size of this block is /25. The format of this field is governed
+	// by RFC 4632. Example: 240.0.0.0/25
+	EffectiveUnreachableCidrBlock string `json:"effectiveUnreachableCidrBlock,omitempty"`
+
+	// NetworkAttachment: Required. The reference to the network attachment
+	// used to establish private connectivity. It will be of the form
+	// projects/{project-id}/regions/{region}/networkAttachments/{network-att
+	// achment-id}.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+
+	// UnreachableCidrBlock: Optional. Input only. The CIDR block to which
+	// the CDF instance can't route traffic to in the consumer project VPC.
+	// The size of this block should be at least /25. This range should not
+	// overlap with the primary address range of any subnetwork used by the
+	// network attachment. This range can be used for other purposes in the
+	// consumer VPC as long as there is no requirement for CDF to reach
+	// destinations using these addresses. If this value is not provided,
+	// the server chooses a non RFC 1918 address range. The format of this
+	// field is governed by RFC 4632. Example: 192.168.0.0/25
+	UnreachableCidrBlock string `json:"unreachableCidrBlock,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveUnreachableCidrBlock") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EffectiveUnreachableCidrBlock") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateServiceConnectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateServiceConnectConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

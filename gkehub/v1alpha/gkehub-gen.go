@@ -1428,6 +1428,9 @@ type CommonFleetDefaultMemberConfigSpec struct {
 	// Identityservice: Identity Service-specific spec.
 	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
 
+	// Policycontroller: Policy Controller spec.
+	Policycontroller *PolicyControllerMembershipSpec `json:"policycontroller,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

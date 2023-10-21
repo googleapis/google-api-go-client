@@ -534,6 +534,34 @@ func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DomainConfig: Configuration options for a custom domain.
+type DomainConfig struct {
+	// Domain: Immutable. Domain used by Workstations for HTTP ingress.
+	Domain string `json:"domain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EphemeralDirectory: An ephemeral directory which won't persist across
 // workstation sessions. It is freshly created on every workstation
 // start operation.
@@ -1970,6 +1998,9 @@ type WorkstationCluster struct {
 	// DisplayName: Optional. Human-readable name for this workstation
 	// cluster.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// DomainConfig: Optional. Configuration options for a custom domain.
+	DomainConfig *DomainConfig `json:"domainConfig,omitempty"`
 
 	// Etag: Optional. Checksum computed by the server. May be sent on
 	// update and delete requests to make sure that the client has an

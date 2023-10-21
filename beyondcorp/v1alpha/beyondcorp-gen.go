@@ -2681,7 +2681,7 @@ func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant) MarshalJSON()
 }
 
 // GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig: Proxy
-// Configuration of a Tenant.
+// Configuration of a PartnerTenant.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2696,9 +2696,6 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 
 	// Name: Output only. ProxyConfig resource name.
 	Name string `json:"name,omitempty"`
-
-	// ProxyProtocolConfig: Optional. Protocol config data for the Proxy.
-	ProxyProtocolConfig *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig `json:"proxyProtocolConfig,omitempty"`
 
 	// ProxyUri: Required. The URI of the proxy server.
 	ProxyUri string `json:"proxyUri,omitempty"`
@@ -2738,36 +2735,6 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 
 func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig: The
-// protocol data that specifies how to communicate with Partner's Proxy.
-type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig struct {
-	// Metadata: Optional. Untyped property bag to be sent back to the proxy
-	// using client specific mechanism.
-	Metadata map[string]string `json:"metadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5473,7 +5440,8 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) RequestId(requestI
 // PartnerTenant resource by the update. The fields specified in the
 // update_mask are relative to the resource, not the full request. A
 // field will be overwritten if it is in the mask. If the user does not
-// provide a mask then all fields will be overwritten.
+// provide a mask then all fields will be overwritten. Mutable fields:
+// display_name, partner_metadata, group_information.
 func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5591,7 +5559,7 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) Do(opts ...googlea
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the PartnerTenant resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. ",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the PartnerTenant resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. Mutable fields: display_name, partner_metadata, group_information.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7207,9 +7175,10 @@ type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall struct {
 // organization and PartnerTenant. Can only be called by on onboarded
 // Beyondcorp Enterprise partner.
 //
-//   - parent: The resource name of the Tenant using the form:
-//     `organizations/{organization_id}/locations/global/tenants/{tenant_id
-//     }`.
+//   - parent: The resource name of the parent PartnerTenant using the
+//     form:
+//     `organizations/{organization_id}/locations/global/partnerTenants/{pa
+//     rtner_tenant_id}`.
 func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) Create(parent string, googlecloudbeyondcorppartnerservicesv1alphaproxyconfig *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall {
 	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7335,7 +7304,7 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the Tenant using the form: `organizations/{organization_id}/locations/global/tenants/{tenant_id}`",
+	//       "description": "Required. The resource name of the parent PartnerTenant using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
 	//       "required": true,
@@ -7530,8 +7499,8 @@ type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall struct {
 // Get: Gets details of a single ProxyConfig.
 //
 //   - name: The resource name of the ProxyConfig using the form:
-//     `organizations/{organization_id}/locations/global/tenants/{tenant_id
-//     }/proxyConfigs/{proxy_config_id}`.
+//     `organizations/{organization_id}/locations/global/partnerTenants/{pa
+//     rtner_tenant_id}/proxyConfigs/{proxy_config_id}`.
 func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) Get(name string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall {
 	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7649,7 +7618,7 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ProxyConfig using the form: `organizations/{organization_id}/locations/global/tenants/{tenant_id}/proxyConfigs/{proxy_config_id}`",
+	//       "description": "Required. The resource name of the ProxyConfig using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}/proxyConfigs/{proxy_config_id}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
 	//       "required": true,

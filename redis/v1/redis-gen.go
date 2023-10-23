@@ -242,6 +242,12 @@ func (s *CertChain) MarshalJSON() ([]byte, error) {
 type CertificateAuthority struct {
 	ManagedServerCa *ManagedCertificateAuthority `json:"managedServerCa,omitempty"`
 
+	// Name: Identifier. Unique name of the resource in this scope including
+	// project, location and cluster using the form:
+	// `projects/{project}/locations/{location}/clusters/{cluster}/certificat
+	// eAuthority`
+	Name string `json:"name,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

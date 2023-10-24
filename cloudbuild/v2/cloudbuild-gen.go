@@ -492,7 +492,7 @@ func (s *ChildStatusReference) MarshalJSON() ([]byte, error) {
 }
 
 // Connection: A connection to a SCM like GitHub, GitHub Enterprise,
-// Bitbucket Server or GitLab.
+// Bitbucket Data Center or GitLab.
 type Connection struct {
 	// Annotations: Allows clients to store small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1813,7 +1813,8 @@ type PipelineRun struct {
 	// PipelineRef: PipelineRef refer to a specific instance of a Pipeline.
 	PipelineRef *PipelineRef `json:"pipelineRef,omitempty"`
 
-	// PipelineRunStatus: Status of the PipelineRun.
+	// PipelineRunStatus: Pipelinerun status the user can provide. Used for
+	// cancellation.
 	//
 	// Possible values:
 	//   "PIPELINE_RUN_STATUS_UNSPECIFIED" - Default enum type; should not

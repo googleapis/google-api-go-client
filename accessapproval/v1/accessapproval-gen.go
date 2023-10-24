@@ -474,9 +474,12 @@ type ApprovalRequest struct {
 	// RequestTime: The time at which approval was requested.
 	RequestTime string `json:"requestTime,omitempty"`
 
-	// RequestedExpiration: The requested expiration for the approval. If
-	// the request is approved, access will be granted from the time of
-	// approval until the expiration time.
+	// RequestedDuration: The requested access duration.
+	RequestedDuration string `json:"requestedDuration,omitempty"`
+
+	// RequestedExpiration: The original requested expiration for the
+	// approval. Calculated by adding the requested_duration to the
+	// request_time.
 	RequestedExpiration string `json:"requestedExpiration,omitempty"`
 
 	// RequestedLocations: The locations for which approval is being

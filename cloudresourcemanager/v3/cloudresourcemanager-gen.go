@@ -5539,7 +5539,8 @@ type OrganizationsSearchCall struct {
 // in an unspecified order. New organizations do not necessarily appear
 // at the end of the results, and may take a small amount of time to
 // appear. Search will only return organizations on which the user has
-// the permission `resourcemanager.organizations.get`
+// the permission `resourcemanager.organizations.get` or has super admin
+// privileges.
 func (r *OrganizationsService) Search() *OrganizationsSearchCall {
 	c := &OrganizationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5675,7 +5676,7 @@ func (c *OrganizationsSearchCall) Do(opts ...googleapi.CallOption) (*SearchOrgan
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches organization resources that are visible to the user and satisfy the specified filter. This method returns organizations in an unspecified order. New organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get`",
+	//   "description": "Searches organization resources that are visible to the user and satisfy the specified filter. This method returns organizations in an unspecified order. New organizations do not necessarily appear at the end of the results, and may take a small amount of time to appear. Search will only return organizations on which the user has the permission `resourcemanager.organizations.get` or has super admin privileges.",
 	//   "flatPath": "v3/organizations:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.organizations.search",
@@ -7138,7 +7139,7 @@ type ProjectsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search for projects that the caller has both
+// Search: Search for projects that the caller has the
 // `resourcemanager.projects.get` permission on, and also satisfy the
 // specified query. This method returns projects in an unspecified
 // order. This method is eventually consistent with project mutations;
@@ -7294,7 +7295,7 @@ func (c *ProjectsSearchCall) Do(opts ...googleapi.CallOption) (*SearchProjectsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Search for projects that the caller has both `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.",
+	//   "description": "Search for projects that the caller has the `resourcemanager.projects.get` permission on, and also satisfy the specified query. This method returns projects in an unspecified order. This method is eventually consistent with project mutations; this means that a newly created project may not appear in the results or recent updates to an existing project may not be reflected in the results. To retrieve the latest state of a project, use the GetProject method.",
 	//   "flatPath": "v3/projects:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.projects.search",

@@ -1005,8 +1005,8 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// the place details, like region-specific place name, if available. The
 	// parameter can affect results based on applicable law. For more
 	// information, see
-	// http://www.unicode.org/reports/tr35/#unicode_region_subtag. Note that
-	// 3-digit region codes are not currently supported.
+	// https://www.unicode.org/cldr/charts/latest/supplemental/territory_language_information.html.
+	// Note that 3-digit region codes are not currently supported.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// StrictTypeFiltering: Used to set strict type filtering for

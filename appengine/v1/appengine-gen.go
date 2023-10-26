@@ -3913,6 +3913,11 @@ type Version struct {
 	// FlexibleRuntimeSettings: Settings for App Engine flexible runtimes.
 	FlexibleRuntimeSettings *FlexibleRuntimeSettings `json:"flexibleRuntimeSettings,omitempty"`
 
+	// GeneratedCustomerMetadata: Additional Google Generated Customer
+	// Metadata, this field won't be provided by default and can be
+	// requested by setting the IncludeExtraData field in GetVersionRequest
+	GeneratedCustomerMetadata googleapi.RawMessage `json:"generatedCustomerMetadata,omitempty"`
+
 	// Handlers: An ordered list of URL-matching patterns that should be
 	// applied to incoming requests. The first matching URL handles the
 	// request and other request handlers are not attempted.Only returned in

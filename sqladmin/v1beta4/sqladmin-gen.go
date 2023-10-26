@@ -2335,12 +2335,16 @@ type ImportContextBakImportOptions struct {
 	// return. Applies only to Cloud SQL for SQL Server.
 	RecoveryOnly bool `json:"recoveryOnly,omitempty"`
 
-	// StopAt: Optional. StopAt keyword for transaction log import, Applies
-	// to Cloud SQL for SQL Server only
+	// StopAt: Optional. The timestamp when the import should stop. This
+	// timestamp is in the RFC 3339 (https://tools.ietf.org/html/rfc3339)
+	// format (for example, `2023-10-01T16:19:00.094`). This field is
+	// equivalent to the STOPAT keyword and applies to Cloud SQL for SQL
+	// Server only.
 	StopAt string `json:"stopAt,omitempty"`
 
-	// StopAtMark: Optional. StopAtMark keyword for transaction log import,
-	// Applies to Cloud SQL for SQL Server only
+	// StopAtMark: Optional. The marked transaction where the import should
+	// stop. This field is equivalent to the STOPATMARK keyword and applies
+	// to Cloud SQL for SQL Server only.
 	StopAtMark string `json:"stopAtMark,omitempty"`
 
 	// Striped: Whether or not the backup set being restored is striped.
@@ -2923,49 +2927,46 @@ type IpConfiguration struct {
 	// PscConfig: PSC settings for this instance.
 	PscConfig *PscConfig `json:"pscConfig,omitempty"`
 
-	// RequireSsl: LINT.IfChange(require_ssl_deprecate) Whether SSL/TLS
-	// connections over IP are enforced or not. If set to false, allow both
-	// non-SSL/non-TLS and SSL/TLS connections. For SSL/TLS connections, the
-	// client certificate will not be verified. If set to true, only allow
-	// connections encrypted with SSL/TLS and with valid client
-	// certificates. If you want to enforce SSL/TLS without enforcing the
-	// requirement for valid client certificates, use the `ssl_mode` flag
-	// instead of the legacy `require_ssl` flag.
-	// LINT.ThenChange(//depot/google3/java/com/google/storage/speckle/boss/a
-	// dmin/actions/InstanceUpdateAction.java:update_api_temp_fix)
+	// RequireSsl: Whether SSL/TLS connections over IP are enforced. If set
+	// to false, then allow both non-SSL/non-TLS and SSL/TLS connections.
+	// For SSL/TLS connections, the client certificate won't be verified. If
+	// set to true, then only allow connections encrypted with SSL/TLS and
+	// with valid client certificates. If you want to enforce SSL/TLS
+	// without enforcing the requirement for valid client certificates, then
+	// use the `ssl_mode` flag instead of the legacy `require_ssl` flag.
 	RequireSsl bool `json:"requireSsl,omitempty"`
 
-	// SslMode: Specify how SSL/TLS will be enforced in database
-	// connections. This flag is only supported for PostgreSQL. Use the
-	// legacy `require_ssl` flag for enforcing SSL/TLS in MySQL and SQL
-	// Server. But, for PostgreSQL, it is recommended to use the `ssl_mode`
-	// flag instead of the legacy `require_ssl` flag. To avoid the conflict
-	// between those flags in PostgreSQL, only the following value pairs are
-	// valid: ssl_mode=ALLOW_UNENCRYPTED_AND_ENCRYPTED, require_ssl=false;
-	// ssl_mode=ENCRYPTED_ONLY, require_ssl=false;
-	// ssl_mode=TRUSTED_CLIENT_CERTIFICATE_REQUIRED, require_ssl=true; Note
-	// that the value of `ssl_mode` gets priority over the value of the
+	// SslMode: Specify how SSL/TLS is enforced in database connections.
+	// This flag is supported only for PostgreSQL. Use the legacy
+	// `require_ssl` flag for enforcing SSL/TLS in MySQL and SQL Server.
+	// But, for PostgreSQL, use the `ssl_mode` flag instead of the legacy
+	// `require_ssl` flag. To avoid the conflict between those flags in
+	// PostgreSQL, only the following value pairs are valid: *
+	// `ssl_mode=ALLOW_UNENCRYPTED_AND_ENCRYPTED` and `require_ssl=false` *
+	// `ssl_mode=ENCRYPTED_ONLY` and `require_ssl=false` *
+	// `ssl_mode=TRUSTED_CLIENT_CERTIFICATE_REQUIRED` and `require_ssl=true`
+	// Note that the value of `ssl_mode` gets priority over the value of the
 	// legacy `require_ssl`. For example, for the pair
 	// `ssl_mode=ENCRYPTED_ONLY, require_ssl=false`, the
 	// `ssl_mode=ENCRYPTED_ONLY` means "only accepts SSL connection", while
 	// the `require_ssl=false` means "both non-SSL and SSL connections are
-	// allowed". The database will respect `ssl_mode` in this case and only
-	// accept SSL connections.
+	// allowed". The database respects `ssl_mode` in this case and only
+	// accepts SSL connections.
 	//
 	// Possible values:
-	//   "SSL_MODE_UNSPECIFIED" - SSL mode is unknown.
+	//   "SSL_MODE_UNSPECIFIED" - The SSL mode is unknown.
 	//   "ALLOW_UNENCRYPTED_AND_ENCRYPTED" - Allow non-SSL/non-TLS and
 	// SSL/TLS connections. For SSL/TLS connections, the client certificate
-	// will not be verified. When this value is used, legacy `require_ssl`
-	// flag must be false or unset to avoid the conflict between values of
+	// won't be verified. When this value is used, the legacy `require_ssl`
+	// flag must be false or cleared to avoid the conflict between values of
 	// two flags.
 	//   "ENCRYPTED_ONLY" - Only allow connections encrypted with SSL/TLS.
-	// When this value is used, legacy `require_ssl` flag must be false or
-	// unset to avoid the conflict between values of two flags.
+	// When this value is used, the legacy `require_ssl` flag must be false
+	// or cleared to avoid the conflict between values of two flags.
 	//   "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" - Only allow connections
 	// encrypted with SSL/TLS and with valid client certificates. When this
-	// value is used, legacy `require_ssl` flag must be true or unset to
-	// avoid the conflict between values of two flags.
+	// value is used, the legacy `require_ssl` flag must be true or cleared
+	// to avoid the conflict between values of two flags.
 	SslMode string `json:"sslMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
@@ -3652,10 +3653,6 @@ type PasswordValidationPolicy struct {
 	//   "COMPLEXITY_DEFAULT" - A combination of lowercase, uppercase,
 	// numeric, and non-alphanumeric characters.
 	Complexity string `json:"complexity,omitempty"`
-
-	// DisallowCompromisedCredentials: Disallow credentials that have been
-	// previously compromised by a public data breach.
-	DisallowCompromisedCredentials bool `json:"disallowCompromisedCredentials,omitempty"`
 
 	// DisallowUsernameSubstring: Disallow username as a part of the
 	// password.
@@ -5154,6 +5151,10 @@ type User struct {
 	//   "BUILT_IN" - The database's built-in user type.
 	//   "CLOUD_IAM_USER" - Cloud IAM user.
 	//   "CLOUD_IAM_SERVICE_ACCOUNT" - Cloud IAM service account.
+	//   "CLOUD_IAM_GROUP" - Cloud IAM Group non-login user.
+	//   "CLOUD_IAM_GROUP_USER" - Cloud IAM Group login user.
+	//   "CLOUD_IAM_GROUP_SERVICE_ACCOUNT" - Cloud IAM Group service
+	// account.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

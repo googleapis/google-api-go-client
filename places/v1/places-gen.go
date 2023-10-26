@@ -247,14 +247,13 @@ func (s *GoogleGeoTypeViewport) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1AuthorAttribution: Information about the author of
 // the UGC data. Used in Photo, and Review.
 type GoogleMapsPlacesV1AuthorAttribution struct {
-	// DisplayName: Output only. Name of the author of the Photo or Review.
+	// DisplayName: Name of the author of the Photo or Review.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// PhotoUri: Output only. Profile photo URI of the author of the Photo
-	// or Review.
+	// PhotoUri: Profile photo URI of the author of the Photo or Review.
 	PhotoUri string `json:"photoUri,omitempty"`
 
-	// Uri: Output only. URI of the author of the Photo or Review.
+	// Uri: URI of the author of the Photo or Review.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -547,18 +546,18 @@ func (s *GoogleMapsPlacesV1FuelOptionsFuelPrice) MarshalJSON() ([]byte, error) {
 
 // GoogleMapsPlacesV1Photo: Information about a photo of a place.
 type GoogleMapsPlacesV1Photo struct {
-	// AuthorAttributions: Output only. This photo's authors.
+	// AuthorAttributions: This photo's authors.
 	AuthorAttributions []*GoogleMapsPlacesV1AuthorAttribution `json:"authorAttributions,omitempty"`
 
-	// HeightPx: Output only. The maximum available height, in pixels.
+	// HeightPx: The maximum available height, in pixels.
 	HeightPx int64 `json:"heightPx,omitempty"`
 
-	// Name: Output only. A reference representing this place photo which
-	// may be used to look up this place photo again (a.k.a. the API
-	// "resource" name: places/{place_id}/photos/{photo}).
+	// Name: Identifier. A reference representing this place photo which may
+	// be used to look up this place photo again (a.k.a. the API "resource"
+	// name: places/{place_id}/photos/{photo}).
 	Name string `json:"name,omitempty"`
 
-	// WidthPx: Output only. The maximum available width, in pixels.
+	// WidthPx: The maximum available width, in pixels.
 	WidthPx int64 `json:"widthPx,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthorAttributions")
@@ -791,11 +790,15 @@ type GoogleMapsPlacesV1Place struct {
 
 	// PrimaryType: The primary type of the given result. This type must one
 	// of the Places API supported types. For example, "restaurant", "cafe",
-	// "airport", etc. A place can only have a single primary type.
+	// "airport", etc. A place can only have a single primary type. For the
+	// complete list of possible values, see Table A and Table B at
+	// https://developers.google.com/maps/documentation/places/web-service/place-types
 	PrimaryType string `json:"primaryType,omitempty"`
 
 	// PrimaryTypeDisplayName: The display name of the primary type,
-	// localized to the request language if applicable.
+	// localized to the request language if applicable. For the complete
+	// list of possible values, see Table A and Table B at
+	// https://developers.google.com/maps/documentation/places/web-service/place-types
 	PrimaryTypeDisplayName *GoogleTypeLocalizedText `json:"primaryTypeDisplayName,omitempty"`
 
 	// Rating: A rating between 1.0 and 5.0, based on user reviews of this
@@ -820,7 +823,7 @@ type GoogleMapsPlacesV1Place struct {
 	// Restroom: Place has restroom.
 	Restroom bool `json:"restroom,omitempty"`
 
-	// Reviews: List of reviews about this place.
+	// Reviews: List of reviews about this place, sorted by relevance.
 	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
 
 	// ServesBeer: Specifies if the place serves beer.
@@ -864,7 +867,8 @@ type GoogleMapsPlacesV1Place struct {
 	Takeout bool `json:"takeout,omitempty"`
 
 	// Types: A set of type tags for this result. For example, "political"
-	// and "locality". See:
+	// and "locality". For the complete list of possible values, see Table A
+	// and Table B at
 	// https://developers.google.com/maps/documentation/places/web-service/place-types
 	Types []string `json:"types,omitempty"`
 
@@ -1391,30 +1395,30 @@ func (s *GoogleMapsPlacesV1PlaceSubDestination) MarshalJSON() ([]byte, error) {
 
 // GoogleMapsPlacesV1Review: Information about a review of a place.
 type GoogleMapsPlacesV1Review struct {
-	// AuthorAttribution: Output only. This review's author.
+	// AuthorAttribution: This review's author.
 	AuthorAttribution *GoogleMapsPlacesV1AuthorAttribution `json:"authorAttribution,omitempty"`
 
-	// Name: Output only. A reference representing this place review which
-	// may be used to look up this place review again (a.k.a. the API
-	// "resource" name: places/{place_id}/reviews/{review}).
+	// Name: A reference representing this place review which may be used to
+	// look up this place review again (also called the API "resource" name:
+	// places/place_id/reviews/review).
 	Name string `json:"name,omitempty"`
 
-	// OriginalText: Output only. The review text in its original language.
+	// OriginalText: The review text in its original language.
 	OriginalText *GoogleTypeLocalizedText `json:"originalText,omitempty"`
 
-	// PublishTime: Output only. Timestamp for the review.
+	// PublishTime: Timestamp for the review.
 	PublishTime string `json:"publishTime,omitempty"`
 
-	// Rating: Output only. A number between 1.0 and 5.0, a.k.a. the number
-	// of stars.
+	// Rating: A number between 1.0 and 5.0, also called the number of
+	// stars.
 	Rating float64 `json:"rating,omitempty"`
 
-	// RelativePublishTimeDescription: Output only. A string of formatted
-	// recent time, expressing the review time relative to the current time
-	// in a form appropriate for the language and country.
+	// RelativePublishTimeDescription: A string of formatted recent time,
+	// expressing the review time relative to the current time in a form
+	// appropriate for the language and country.
 	RelativePublishTimeDescription string `json:"relativePublishTimeDescription,omitempty"`
 
-	// Text: Output only. The localized text of the review.
+	// Text: The localized text of the review.
 	Text *GoogleTypeLocalizedText `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthorAttribution")

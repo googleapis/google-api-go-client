@@ -2032,6 +2032,11 @@ type ClusterUpdate struct {
 	// node auto-provisioning enabled clusters.
 	DesiredNodePoolAutoConfigNetworkTags *NetworkTags `json:"desiredNodePoolAutoConfigNetworkTags,omitempty"`
 
+	// DesiredNodePoolAutoConfigResourceManagerTags: The desired resource
+	// manager tags that apply to all auto-provisioned node pools in
+	// autopilot clusters and node auto-provisioning enabled clusters.
+	DesiredNodePoolAutoConfigResourceManagerTags *ResourceManagerTags `json:"desiredNodePoolAutoConfigResourceManagerTags,omitempty"`
+
 	// DesiredNodePoolAutoscaling: Autoscaler configuration for the node
 	// pool specified in desired_node_pool_id. If there is only one pool in
 	// the cluster and desired_node_pool_id is not provided then the change
@@ -2967,6 +2972,8 @@ type GatewayAPIConfig struct {
 	// Possible values:
 	//   "CHANNEL_UNSPECIFIED" - Default value.
 	//   "CHANNEL_DISABLED" - Gateway API support is disabled
+	//   "CHANNEL_EXPERIMENTAL" - Gateway API support is enabled,
+	// experimental CRDs are installed
 	//   "CHANNEL_STANDARD" - Gateway API support is enabled, standard CRDs
 	// are installed
 	Channel string `json:"channel,omitempty"`
@@ -3290,6 +3297,10 @@ type HostMaintenancePolicy struct {
 	// configured for AS_NEEDED. Security updates will still be applied as
 	// soon as they are available.
 	MaintenanceInterval string `json:"maintenanceInterval,omitempty"`
+
+	// OpportunisticMaintenanceStrategy: Strategy that will trigger
+	// maintenance on behalf of the customer.
+	OpportunisticMaintenanceStrategy *OpportunisticMaintenanceStrategy `json:"opportunisticMaintenanceStrategy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaintenanceInterval")
 	// to unconditionally include in API requests. By default, fields with
@@ -5224,6 +5235,10 @@ type NodeConfig struct {
 	// annotate any related Google Compute Engine resources.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
+	// ResourceManagerTags: A map of resource manager tag keys and values to
+	// be attached to the nodes.
+	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
+
 	// SandboxConfig: Sandbox configuration for this node.
 	SandboxConfig *SandboxConfig `json:"sandboxConfig,omitempty"`
 
@@ -5714,6 +5729,11 @@ type NodePoolAutoConfig struct {
 	// the list must comply with RFC1035.
 	NetworkTags *NetworkTags `json:"networkTags,omitempty"`
 
+	// ResourceManagerTags: Resource manager tag keys and values to be
+	// attached to the nodes for managing Compute Engine firewalls using
+	// Network Firewall Policies.
+	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "NetworkTags") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6077,6 +6097,9 @@ type Operation struct {
 	// For more details, see [documentation on
 	// resizes](https://cloud.google.com/kubernetes-engine/docs/concepts/main
 	// tenance-windows-and-exclusions#repairs).
+	//   "FLEET_FEATURE_UPGRADE" - Fleet features of GKE Enterprise are
+	// being upgraded. The cluster should be assumed to be blocked for other
+	// upgrades until the operation finishes.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Progress: Output only. [Output only] Progress information for an
@@ -6199,6 +6222,52 @@ type OperationProgress struct {
 
 func (s *OperationProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OpportunisticMaintenanceStrategy: Strategy that will trigger
+// maintenance on behalf of the customer.
+type OpportunisticMaintenanceStrategy struct {
+	// MaintenanceAvailabilityWindow: The window of time that opportunistic
+	// maintenance can run. Example: A setting of 14 days implies that
+	// opportunistic maintenance can only be ran in the 2 weeks leading up
+	// to the scheduled maintenance date. Setting 28 days allows
+	// opportunistic maintenance to run at any time in the scheduled
+	// maintenance window (all `PERIODIC` maintenance is set 28 days in
+	// advance).
+	MaintenanceAvailabilityWindow string `json:"maintenanceAvailabilityWindow,omitempty"`
+
+	// MinNodesPerPool: The minimum nodes required to be available in a
+	// pool. Blocks maintenance if it would cause the number of running
+	// nodes to dip below this value.
+	MinNodesPerPool int64 `json:"minNodesPerPool,omitempty,string"`
+
+	// NodeIdleTimeWindow: The amount of time that a node can remain idle
+	// (no customer owned workloads running), before triggering maintenance.
+	NodeIdleTimeWindow string `json:"nodeIdleTimeWindow,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaintenanceAvailabilityWindow") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MaintenanceAvailabilityWindow") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OpportunisticMaintenanceStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod OpportunisticMaintenanceStrategy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6848,6 +6917,43 @@ type ResourceLimit struct {
 
 func (s *ResourceLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceLimit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceManagerTags: A map of resource manager tag keys and values to
+// be attached to the nodes for managing Compute Engine firewalls using
+// Network Firewall Policies. Tags must be according to specifications
+// in
+// https://cloud.google.com/vpc/docs/tags-firewalls-overview#specifications.
+// A maximum of 5 tag key-value pairs can be specified. Existing tags
+// will be replaced with new values.
+type ResourceManagerTags struct {
+	// Tags: Tags must be in one of the following formats ([KEY]=[VALUE]) 1.
+	// `tagKeys/{tag_key_id}=tagValues/{tag_value_id}` 2.
+	// `{org_id}/{tag_key_name}={tag_value_name}` 3.
+	// `{project_id}/{tag_key_name}={tag_value_name}`
+	Tags map[string]string `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceManagerTags) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceManagerTags
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8536,6 +8642,12 @@ type UpdateNodePoolRequest struct {
 	// ResourceLabels: The resource labels for the node pool to use to
 	// annotate any related Google Compute Engine resources.
 	ResourceLabels *ResourceLabels `json:"resourceLabels,omitempty"`
+
+	// ResourceManagerTags: Desired resource manager tag keys and values to
+	// be attached to the nodes for managing Compute Engine firewalls using
+	// Network Firewall Policies. Existing tags will be replaced with new
+	// values.
+	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
 
 	// Tags: The desired network tags to be applied to all nodes in the node
 	// pool. If this field is not present, the tags will not be changed.

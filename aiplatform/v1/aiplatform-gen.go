@@ -4424,8 +4424,7 @@ type GoogleCloudAiplatformV1CustomJobSpec struct {
 
 	// ProtectedArtifactLocationId: The ID of the location to store
 	// protected artifacts. e.g. us-central1. Populate only when the
-	// location is different than CustomJob location. For unprotected
-	// artifacts, the value of this field is ignored. List of supported
+	// location is different than CustomJob location. List of supported
 	// locations: https://cloud.google.com/vertex-ai/docs/general/locations
 	ProtectedArtifactLocationId string `json:"protectedArtifactLocationId,omitempty"`
 
@@ -27498,7 +27497,8 @@ func (s *GoogleCloudAiplatformV1StringArray) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1Study: A message representing a Study.
+// GoogleCloudAiplatformV1Study: A message representing a Study. Next
+// id: 12
 type GoogleCloudAiplatformV1Study struct {
 	// CreateTime: Output only. Time at which the study was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -27614,6 +27614,10 @@ type GoogleCloudAiplatformV1StudySpec struct {
 
 	// Parameters: Required. The set of parameters to tune.
 	Parameters []*GoogleCloudAiplatformV1StudySpecParameterSpec `json:"parameters,omitempty"`
+
+	// StudyStoppingConfig: Conditions for automated stopping of a Study.
+	// Enable automated stopping by configuring at least one condition.
+	StudyStoppingConfig *GoogleCloudAiplatformV1StudySpecStudyStoppingConfig `json:"studyStoppingConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with
@@ -28307,6 +28311,121 @@ type GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec struct {
 
 func (s *GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1StudySpecParameterSpecIntegerValueSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1StudySpecStudyStoppingConfig: The
+// configuration (stopping conditions) for automated stopping of a
+// Study. Conditions include trial budgets, time budgets, and
+// convergence detection.
+type GoogleCloudAiplatformV1StudySpecStudyStoppingConfig struct {
+	// MaxDurationNoProgress: If the objective value has not improved for
+	// this much time, stop the study. WARNING: Effective only for
+	// single-objective studies.
+	MaxDurationNoProgress string `json:"maxDurationNoProgress,omitempty"`
+
+	// MaxNumTrials: If there are more than this many trials, stop the
+	// study.
+	MaxNumTrials int64 `json:"maxNumTrials,omitempty"`
+
+	// MaxNumTrialsNoProgress: If the objective value has not improved for
+	// this many consecutive trials, stop the study. WARNING: Effective only
+	// for single-objective studies.
+	MaxNumTrialsNoProgress int64 `json:"maxNumTrialsNoProgress,omitempty"`
+
+	// MaximumRuntimeConstraint: If the specified time or duration has
+	// passed, stop the study.
+	MaximumRuntimeConstraint *GoogleCloudAiplatformV1StudyTimeConstraint `json:"maximumRuntimeConstraint,omitempty"`
+
+	// MinNumTrials: If there are fewer than this many COMPLETED trials, do
+	// not stop the study.
+	MinNumTrials int64 `json:"minNumTrials,omitempty"`
+
+	// MinimumRuntimeConstraint: Each "stopping rule" in this proto
+	// specifies an "if" condition. Before Vizier would generate a new
+	// suggestion, it first checks each specified stopping rule, from top to
+	// bottom in this list. Note that the first few rules (e.g.
+	// minimum_runtime_constraint, min_num_trials) will prevent other
+	// stopping rules from being evaluated until they are met. For example,
+	// setting `min_num_trials=5` and `always_stop_after= 1 hour` means that
+	// the Study will ONLY stop after it has 5 COMPLETED trials, even if
+	// more than an hour has passed since its creation. It follows the first
+	// applicable rule (whose "if" condition is satisfied) to make a
+	// stopping decision. If none of the specified rules are applicable,
+	// then Vizier decides that the study should not stop. If Vizier decides
+	// that the study should stop, the study enters STOPPING state (or
+	// STOPPING_ASAP if should_stop_asap = true). IMPORTANT: The automatic
+	// study state transition happens precisely as described above; that is,
+	// deleting trials or updating StudyConfig NEVER automatically moves the
+	// study state back to ACTIVE. If you want to _resume_ a Study that was
+	// stopped, 1) change the stopping conditions if necessary, 2) activate
+	// the study, and then 3) ask for suggestions. If the specified time or
+	// duration has not passed, do not stop the study.
+	MinimumRuntimeConstraint *GoogleCloudAiplatformV1StudyTimeConstraint `json:"minimumRuntimeConstraint,omitempty"`
+
+	// ShouldStopAsap: If true, a Study enters STOPPING_ASAP whenever it
+	// would normally enters STOPPING state. The bottom line is: set to true
+	// if you want to interrupt on-going evaluations of Trials as soon as
+	// the study stopping condition is met. (Please see Study.State
+	// documentation for the source of truth).
+	ShouldStopAsap bool `json:"shouldStopAsap,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxDurationNoProgress") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxDurationNoProgress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1StudySpecStudyStoppingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1StudySpecStudyStoppingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1StudyTimeConstraint: Time-based Constraint for
+// Study
+type GoogleCloudAiplatformV1StudyTimeConstraint struct {
+	// EndTime: Compares the wallclock time to this time. Must use UTC
+	// timezone.
+	EndTime string `json:"endTime,omitempty"`
+
+	// MaxDuration: Counts the wallclock time passed since the creation of
+	// this Study.
+	MaxDuration string `json:"maxDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1StudyTimeConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1StudyTimeConstraint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -2445,6 +2445,9 @@ type GoogleCloudRunV2Service struct {
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
+	// Scaling: Optional. Specifies service-level scaling settings
+	Scaling *GoogleCloudRunV2ServiceScaling `json:"scaling,omitempty"`
+
 	// Template: Required. The template used to create revisions for this
 	// Service.
 	Template *GoogleCloudRunV2RevisionTemplate `json:"template,omitempty"`
@@ -2500,6 +2503,38 @@ type GoogleCloudRunV2Service struct {
 
 func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ServiceScaling: Scaling settings that apply to the
+// service as a whole rather than the individual revision.
+type GoogleCloudRunV2ServiceScaling struct {
+	// MinInstanceCount: total min instances for the service. This number of
+	// instances will be divide among all revisions with specified traffic
+	// based on the percent of traffic they are receiving. (ALPHA)
+	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinInstanceCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinInstanceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ServiceScaling) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ServiceScaling
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -397,6 +397,15 @@ type Finding struct {
 	// name.
 	//   "MISMATCHING_SECURITY_HEADER_VALUES" - Mismatching values in a
 	// duplicate security header.
+	//   "ACCESSIBLE_GIT_REPOSITORY" - A world-readable git repository that
+	// potentially leaks source code, commit history or sensitive
+	// information such as credentials.
+	//   "ACCESSIBLE_SVN_REPOSITORY" - A world-readable subversion
+	// repository that potentially leaks source code, commit history or
+	// sensitive information such as credentials.
+	//   "ACCESSIBLE_ENV_FILE" - A world-readable env file that potentially
+	// leaks source code, commit history or sensitive information such as
+	// credentials.
 	FindingType string `json:"findingType,omitempty"`
 
 	// FrameUrl: If the vulnerability was originated from nested IFrame, the
@@ -524,6 +533,15 @@ type FindingTypeStats struct {
 	// name.
 	//   "MISMATCHING_SECURITY_HEADER_VALUES" - Mismatching values in a
 	// duplicate security header.
+	//   "ACCESSIBLE_GIT_REPOSITORY" - A world-readable git repository that
+	// potentially leaks source code, commit history or sensitive
+	// information such as credentials.
+	//   "ACCESSIBLE_SVN_REPOSITORY" - A world-readable subversion
+	// repository that potentially leaks source code, commit history or
+	// sensitive information such as credentials.
+	//   "ACCESSIBLE_ENV_FILE" - A world-readable env file that potentially
+	// leaks source code, commit history or sensitive information such as
+	// credentials.
 	FindingType string `json:"findingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FindingCount") to

@@ -1071,6 +1071,8 @@ type ScanConfigError struct {
 	// finding type.
 	//   "UNSUPPORTED_URL_SCHEME" - The URL scheme of one or more of the
 	// supplied URLs is not supported.
+	//   "CLOUD_ASSET_INVENTORY_ASSET_NOT_FOUND" - CAI is not able to list
+	// assets.
 	Code string `json:"code,omitempty"`
 
 	// FieldName: Indicates the full name of the ScanConfig field that

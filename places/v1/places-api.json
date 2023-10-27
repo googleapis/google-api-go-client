@@ -120,7 +120,7 @@
     "places": {
       "methods": {
         "get": {
-          "description": "Get a Place with a place id (in a name) string.",
+          "description": "Get place details with a place id (in a name) string.",
           "flatPath": "v1/places/{placesId}",
           "httpMethod": "GET",
           "id": "places.places.get",
@@ -134,7 +134,7 @@
               "type": "string"
             },
             "name": {
-              "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: places/place_id.",
+              "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: places/*place_id*.",
               "location": "path",
               "pattern": "^places/[^/]+$",
               "required": true,
@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20231024",
+  "revision": "20231025",
   "rootUrl": "https://places.googleapis.com/",
   "schemas": {
     "GoogleGeoTypeViewport": {
@@ -294,7 +294,7 @@
           "description": "Required. Center latitude and longitude. The range of latitude must be within [-90.0, 90.0]. The range of the longitude must be within [-180.0, 180.0]."
         },
         "radius": {
-          "description": "Required. Radius measured in meters. The radius must be within [0.0, 50000.0].",
+          "description": "Required. Radius measured in meters. The radius must be within [0.0, 50000.0]. The default radius is 0.0.",
           "format": "double",
           "type": "number"
         }
@@ -609,7 +609,7 @@
           "type": "string"
         },
         "iconMaskBaseUri": {
-          "description": "A truncated URL to an v2 icon mask. User can access different icon type by appending type suffix to the end (eg, \".svg\" or \".png\").",
+          "description": "A truncated URL to an icon mask. User can access different icon type by appending type suffix to the end (eg, \".svg\" or \".png\").",
           "type": "string"
         },
         "id": {
@@ -1230,7 +1230,7 @@
           "description": "The region to search. This location serves as a restriction which means results outside given location will not be returned. Cannot be set along with location_bias."
         },
         "maxResultCount": {
-          "description": "Maximum number of results to return. It must be between 1 and 20, inclusively. If the number is unset, it falls back to the upper limit. If the number is set to negative or exceeds the upper limit, an INVALID_ARGUMENT error is returned.",
+          "description": "Maximum number of results to return. It must be between 1 and 20, inclusively. The default is 20. If the number is unset, it falls back to the upper limit. If the number is set to negative or exceeds the upper limit, an INVALID_ARGUMENT error is returned.",
           "format": "int32",
           "type": "integer"
         },
@@ -1240,7 +1240,7 @@
           "type": "number"
         },
         "openNow": {
-          "description": "Used to restrict the search to places that are currently open.",
+          "description": "Used to restrict the search to places that are currently open. The default is false.",
           "type": "boolean"
         },
         "priceLevels": {

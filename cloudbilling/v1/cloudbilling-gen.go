@@ -146,6 +146,7 @@ func New(client *http.Client) (*APIService, error) {
 	}
 	s := &APIService{client: client, BasePath: basePath}
 	s.BillingAccounts = NewBillingAccountsService(s)
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	s.Services = NewServicesService(s)
 	return s, nil
@@ -157,6 +158,8 @@ type APIService struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	BillingAccounts *BillingAccountsService
+
+	Organizations *OrganizationsService
 
 	Projects *ProjectsService
 
@@ -173,6 +176,7 @@ func (s *APIService) userAgent() string {
 func NewBillingAccountsService(s *APIService) *BillingAccountsService {
 	rs := &BillingAccountsService{s: s}
 	rs.Projects = NewBillingAccountsProjectsService(s)
+	rs.SubAccounts = NewBillingAccountsSubAccountsService(s)
 	return rs
 }
 
@@ -180,6 +184,8 @@ type BillingAccountsService struct {
 	s *APIService
 
 	Projects *BillingAccountsProjectsService
+
+	SubAccounts *BillingAccountsSubAccountsService
 }
 
 func NewBillingAccountsProjectsService(s *APIService) *BillingAccountsProjectsService {
@@ -188,6 +194,36 @@ func NewBillingAccountsProjectsService(s *APIService) *BillingAccountsProjectsSe
 }
 
 type BillingAccountsProjectsService struct {
+	s *APIService
+}
+
+func NewBillingAccountsSubAccountsService(s *APIService) *BillingAccountsSubAccountsService {
+	rs := &BillingAccountsSubAccountsService{s: s}
+	return rs
+}
+
+type BillingAccountsSubAccountsService struct {
+	s *APIService
+}
+
+func NewOrganizationsService(s *APIService) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.BillingAccounts = NewOrganizationsBillingAccountsService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *APIService
+
+	BillingAccounts *OrganizationsBillingAccountsService
+}
+
+func NewOrganizationsBillingAccountsService(s *APIService) *OrganizationsBillingAccountsService {
+	rs := &OrganizationsBillingAccountsService{s: s}
+	return rs
+}
+
+type OrganizationsBillingAccountsService struct {
 	s *APIService
 }
 
@@ -833,6 +869,38 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MoveBillingAccountRequest: Request message for `MoveBillingAccount`
+// RPC.
+type MoveBillingAccountRequest struct {
+	// DestinationParent: Required. The resource name of the Organization to
+	// reparent the billing account under. Must be of the form
+	// `organizations/{organization_id}`.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationParent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveBillingAccountRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveBillingAccountRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
 // collection of `bindings`. A `binding` binds one or more `members`, or
@@ -1430,6 +1498,15 @@ func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *Billing
 	return c
 }
 
+// Parent sets the optional parameter "parent": The parent to create a
+// billing account from. Format: - organizations/{organization_id} eg
+// organizations/12345678 - billingAccounts/{billing_account_id} eg
+// `billingAccounts/012345-567890-ABCDEF`
+func (c *BillingAccountsCreateCall) Parent(parent string) *BillingAccountsCreateCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1523,7 +1600,13 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	//   "httpMethod": "POST",
 	//   "id": "cloudbilling.billingAccounts.create",
 	//   "parameterOrder": [],
-	//   "parameters": {},
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. The parent to create a billing account from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "v1/billingAccounts",
 	//   "request": {
 	//     "$ref": "BillingAccount"
@@ -1914,6 +1997,15 @@ func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsLi
 	return c
 }
 
+// Parent sets the optional parameter "parent": The parent resource to
+// list billing accounts from. Format: - organizations/{organization_id}
+// eg organizations/12345678 - billingAccounts/{billing_account_id} eg
+// `billingAccounts/012345-567890-ABCDEF`
+func (c *BillingAccountsListCall) Parent(parent string) *BillingAccountsListCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2031,6 +2123,11 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Optional. The parent resource to list billing accounts from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/billingAccounts",
@@ -2065,6 +2162,152 @@ func (c *BillingAccountsListCall) Pages(ctx context.Context, f func(*ListBilling
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudbilling.billingAccounts.move":
+
+type BillingAccountsMoveCall struct {
+	s                         *APIService
+	name                      string
+	movebillingaccountrequest *MoveBillingAccountRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Move: Changes which parent organization a billing account belongs to.
+//
+//   - name: The resource name of the billing account to move. Must be of
+//     the form `billingAccounts/{billing_account_id}`. The specified
+//     billing account cannot be a subaccount, since a subaccount always
+//     belongs to the same organization as its parent account.
+func (r *BillingAccountsService) Move(name string, movebillingaccountrequest *MoveBillingAccountRequest) *BillingAccountsMoveCall {
+	c := &BillingAccountsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.movebillingaccountrequest = movebillingaccountrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsMoveCall) Fields(s ...googleapi.Field) *BillingAccountsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsMoveCall) Context(ctx context.Context) *BillingAccountsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.movebillingaccountrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.billingAccounts.move" call.
+// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsMoveCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BillingAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes which parent organization a billing account belongs to.",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:move",
+	//   "httpMethod": "POST",
+	//   "id": "cloudbilling.billingAccounts.move",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the billing account to move. Must be of the form `billingAccounts/{billing_account_id}`. The specified billing account cannot be a subaccount, since a subaccount always belongs to the same organization as its parent account.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:move",
+	//   "request": {
+	//     "$ref": "MoveBillingAccountRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BillingAccount"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudbilling.billingAccounts.patch":
@@ -2729,6 +2972,922 @@ func (c *BillingAccountsProjectsListCall) Pages(ctx context.Context, f func(*Lis
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudbilling.billingAccounts.subAccounts.create":
+
+type BillingAccountsSubAccountsCreateCall struct {
+	s              *APIService
+	parent         string
+	billingaccount *BillingAccount
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: This method creates billing subaccounts
+// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google
+// Cloud resellers should use the Channel Services APIs,
+// accounts.customers.create
+// (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
+// and accounts.customers.entitlements.create
+// (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
+// When creating a subaccount, the current authenticated user must have
+// the `billing.accounts.update` IAM permission on the parent account,
+// which is typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This
+// method will return an error if the parent account has not been
+// provisioned for subaccounts.
+//
+//   - parent: Optional. The parent to create a billing account from.
+//     Format: - organizations/{organization_id} eg organizations/12345678
+//   - billingAccounts/{billing_account_id} eg
+//     `billingAccounts/012345-567890-ABCDEF`.
+func (r *BillingAccountsSubAccountsService) Create(parent string, billingaccount *BillingAccount) *BillingAccountsSubAccountsCreateCall {
+	c := &BillingAccountsSubAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.billingaccount = billingaccount
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSubAccountsCreateCall) Fields(s ...googleapi.Field) *BillingAccountsSubAccountsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSubAccountsCreateCall) Context(ctx context.Context) *BillingAccountsSubAccountsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSubAccountsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSubAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingaccount)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subAccounts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.billingAccounts.subAccounts.create" call.
+// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsSubAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BillingAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/subAccounts",
+	//   "httpMethod": "POST",
+	//   "id": "cloudbilling.billingAccounts.subAccounts.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. The parent to create a billing account from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/subAccounts",
+	//   "request": {
+	//     "$ref": "BillingAccount"
+	//   },
+	//   "response": {
+	//     "$ref": "BillingAccount"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudbilling.billingAccounts.subAccounts.list":
+
+type BillingAccountsSubAccountsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the billing accounts that the current authenticated user
+// has permission to view
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+//   - parent: Optional. The parent resource to list billing accounts
+//     from. Format: - organizations/{organization_id} eg
+//     organizations/12345678 - billingAccounts/{billing_account_id} eg
+//     `billingAccounts/012345-567890-ABCDEF`.
+func (r *BillingAccountsSubAccountsService) List(parent string) *BillingAccountsSubAccountsListCall {
+	c := &BillingAccountsSubAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Options for how to
+// filter the returned billing accounts. This only supports filtering
+// for subaccounts (https://cloud.google.com/billing/docs/concepts)
+// under a single provided parent billing account. (e.g.
+// "master_billing_account=billingAccounts/012345-678901-ABCDEF").
+// Boolean algebra and other fields are not currently supported.
+func (c *BillingAccountsSubAccountsListCall) Filter(filter string) *BillingAccountsSubAccountsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The maximum page size is 100; this is also the default.
+func (c *BillingAccountsSubAccountsListCall) PageSize(pageSize int64) *BillingAccountsSubAccountsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results to return. This should be a
+// `next_page_token` value returned from a previous
+// `ListBillingAccounts` call. If unspecified, the first page of results
+// is returned.
+func (c *BillingAccountsSubAccountsListCall) PageToken(pageToken string) *BillingAccountsSubAccountsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSubAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsSubAccountsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsSubAccountsListCall) IfNoneMatch(entityTag string) *BillingAccountsSubAccountsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSubAccountsListCall) Context(ctx context.Context) *BillingAccountsSubAccountsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSubAccountsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSubAccountsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subAccounts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.billingAccounts.subAccounts.list" call.
+// Exactly one of *ListBillingAccountsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBillingAccountsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsSubAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBillingAccountsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBillingAccountsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the billing accounts that the current authenticated user has permission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/subAccounts",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.billingAccounts.subAccounts.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Optional. The parent resource to list billing accounts from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/subAccounts",
+	//   "response": {
+	//     "$ref": "ListBillingAccountsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsSubAccountsListCall) Pages(ctx context.Context, f func(*ListBillingAccountsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudbilling.organizations.billingAccounts.create":
+
+type OrganizationsBillingAccountsCreateCall struct {
+	s              *APIService
+	parent         string
+	billingaccount *BillingAccount
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: This method creates billing subaccounts
+// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google
+// Cloud resellers should use the Channel Services APIs,
+// accounts.customers.create
+// (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
+// and accounts.customers.entitlements.create
+// (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
+// When creating a subaccount, the current authenticated user must have
+// the `billing.accounts.update` IAM permission on the parent account,
+// which is typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This
+// method will return an error if the parent account has not been
+// provisioned for subaccounts.
+//
+//   - parent: Optional. The parent to create a billing account from.
+//     Format: - organizations/{organization_id} eg organizations/12345678
+//   - billingAccounts/{billing_account_id} eg
+//     `billingAccounts/012345-567890-ABCDEF`.
+func (r *OrganizationsBillingAccountsService) Create(parent string, billingaccount *BillingAccount) *OrganizationsBillingAccountsCreateCall {
+	c := &OrganizationsBillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.billingaccount = billingaccount
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsBillingAccountsCreateCall) Fields(s ...googleapi.Field) *OrganizationsBillingAccountsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsBillingAccountsCreateCall) Context(ctx context.Context) *OrganizationsBillingAccountsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsBillingAccountsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingaccount)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/billingAccounts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.organizations.billingAccounts.create" call.
+// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsBillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BillingAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
+	//   "flatPath": "v1/organizations/{organizationsId}/billingAccounts",
+	//   "httpMethod": "POST",
+	//   "id": "cloudbilling.organizations.billingAccounts.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. The parent to create a billing account from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/billingAccounts",
+	//   "request": {
+	//     "$ref": "BillingAccount"
+	//   },
+	//   "response": {
+	//     "$ref": "BillingAccount"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudbilling.organizations.billingAccounts.list":
+
+type OrganizationsBillingAccountsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the billing accounts that the current authenticated user
+// has permission to view
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
+//
+//   - parent: Optional. The parent resource to list billing accounts
+//     from. Format: - organizations/{organization_id} eg
+//     organizations/12345678 - billingAccounts/{billing_account_id} eg
+//     `billingAccounts/012345-567890-ABCDEF`.
+func (r *OrganizationsBillingAccountsService) List(parent string) *OrganizationsBillingAccountsListCall {
+	c := &OrganizationsBillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Options for how to
+// filter the returned billing accounts. This only supports filtering
+// for subaccounts (https://cloud.google.com/billing/docs/concepts)
+// under a single provided parent billing account. (e.g.
+// "master_billing_account=billingAccounts/012345-678901-ABCDEF").
+// Boolean algebra and other fields are not currently supported.
+func (c *OrganizationsBillingAccountsListCall) Filter(filter string) *OrganizationsBillingAccountsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The maximum page size is 100; this is also the default.
+func (c *OrganizationsBillingAccountsListCall) PageSize(pageSize int64) *OrganizationsBillingAccountsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results to return. This should be a
+// `next_page_token` value returned from a previous
+// `ListBillingAccounts` call. If unspecified, the first page of results
+// is returned.
+func (c *OrganizationsBillingAccountsListCall) PageToken(pageToken string) *OrganizationsBillingAccountsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsBillingAccountsListCall) Fields(s ...googleapi.Field) *OrganizationsBillingAccountsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsBillingAccountsListCall) IfNoneMatch(entityTag string) *OrganizationsBillingAccountsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsBillingAccountsListCall) Context(ctx context.Context) *OrganizationsBillingAccountsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsBillingAccountsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/billingAccounts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.organizations.billingAccounts.list" call.
+// Exactly one of *ListBillingAccountsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBillingAccountsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsBillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBillingAccountsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBillingAccountsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the billing accounts that the current authenticated user has permission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "flatPath": "v1/organizations/{organizationsId}/billingAccounts",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.organizations.billingAccounts.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Optional. The parent resource to list billing accounts from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/billingAccounts",
+	//   "response": {
+	//     "$ref": "ListBillingAccountsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsBillingAccountsListCall) Pages(ctx context.Context, f func(*ListBillingAccountsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudbilling.organizations.billingAccounts.move":
+
+type OrganizationsBillingAccountsMoveCall struct {
+	s                 *APIService
+	destinationParent string
+	name              string
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Move: Changes which parent organization a billing account belongs to.
+//
+//   - destinationParent: The resource name of the Organization to
+//     reparent the billing account under. Must be of the form
+//     `organizations/{organization_id}`.
+//   - name: The resource name of the billing account to move. Must be of
+//     the form `billingAccounts/{billing_account_id}`. The specified
+//     billing account cannot be a subaccount, since a subaccount always
+//     belongs to the same organization as its parent account.
+func (r *OrganizationsBillingAccountsService) Move(destinationParent string, name string) *OrganizationsBillingAccountsMoveCall {
+	c := &OrganizationsBillingAccountsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.destinationParent = destinationParent
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsBillingAccountsMoveCall) Fields(s ...googleapi.Field) *OrganizationsBillingAccountsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsBillingAccountsMoveCall) IfNoneMatch(entityTag string) *OrganizationsBillingAccountsMoveCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsBillingAccountsMoveCall) Context(ctx context.Context) *OrganizationsBillingAccountsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsBillingAccountsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBillingAccountsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+destinationParent}/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"destinationParent": c.destinationParent,
+		"name":              c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.organizations.billingAccounts.move" call.
+// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsBillingAccountsMoveCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BillingAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes which parent organization a billing account belongs to.",
+	//   "flatPath": "v1/organizations/{organizationsId}/billingAccounts/{billingAccountsId}:move",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.organizations.billingAccounts.move",
+	//   "parameterOrder": [
+	//     "destinationParent",
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "destinationParent": {
+	//       "description": "Required. The resource name of the Organization to reparent the billing account under. Must be of the form `organizations/{organization_id}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The resource name of the billing account to move. Must be of the form `billingAccounts/{billing_account_id}`. The specified billing account cannot be a subaccount, since a subaccount always belongs to the same organization as its parent account.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+destinationParent}/{+name}:move",
+	//   "response": {
+	//     "$ref": "BillingAccount"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudbilling.projects.getBillingInfo":

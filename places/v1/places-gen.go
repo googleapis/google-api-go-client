@@ -287,7 +287,7 @@ type GoogleMapsPlacesV1Circle struct {
 	Center *GoogleTypeLatLng `json:"center,omitempty"`
 
 	// Radius: Required. Radius measured in meters. The radius must be
-	// within [0.0, 50000.0].
+	// within [0.0, 50000.0]. The default radius is 0.0.
 	Radius float64 `json:"radius,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Center") to
@@ -729,7 +729,7 @@ type GoogleMapsPlacesV1Place struct {
 	// e.g. #909CE1.
 	IconBackgroundColor string `json:"iconBackgroundColor,omitempty"`
 
-	// IconMaskBaseUri: A truncated URL to an v2 icon mask. User can access
+	// IconMaskBaseUri: A truncated URL to an icon mask. User can access
 	// different icon type by appending type suffix to the end (eg, ".svg"
 	// or ".png").
 	IconMaskBaseUri string `json:"iconMaskBaseUri,omitempty"`
@@ -1668,9 +1668,10 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	LocationRestriction *GoogleMapsPlacesV1SearchTextRequestLocationRestriction `json:"locationRestriction,omitempty"`
 
 	// MaxResultCount: Maximum number of results to return. It must be
-	// between 1 and 20, inclusively. If the number is unset, it falls back
-	// to the upper limit. If the number is set to negative or exceeds the
-	// upper limit, an INVALID_ARGUMENT error is returned.
+	// between 1 and 20, inclusively. The default is 20. If the number is
+	// unset, it falls back to the upper limit. If the number is set to
+	// negative or exceeds the upper limit, an INVALID_ARGUMENT error is
+	// returned.
 	MaxResultCount int64 `json:"maxResultCount,omitempty"`
 
 	// MinRating: Filter out results whose average user rating is strictly
@@ -1683,7 +1684,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	MinRating float64 `json:"minRating,omitempty"`
 
 	// OpenNow: Used to restrict the search to places that are currently
-	// open.
+	// open. The default is false.
 	OpenNow bool `json:"openNow,omitempty"`
 
 	// PriceLevels: Used to restrict the search to places that are marked as
@@ -2047,10 +2048,10 @@ type PlacesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a Place with a place id (in a name) string.
+// Get: Get place details with a place id (in a name) string.
 //
 //   - name: A place ID returned in a Place (with "places/" prefix), or
-//     equivalently the name in the same Place. Format: places/place_id.
+//     equivalently the name in the same Place. Format: places/*place_id*.
 func (r *PlacesService) Get(name string) *PlacesGetCall {
 	c := &PlacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2177,7 +2178,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a Place with a place id (in a name) string.",
+	//   "description": "Get place details with a place id (in a name) string.",
 	//   "flatPath": "v1/places/{placesId}",
 	//   "httpMethod": "GET",
 	//   "id": "places.places.get",
@@ -2191,7 +2192,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: places/place_id.",
+	//       "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: places/*place_id*.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+$",
 	//       "required": true,

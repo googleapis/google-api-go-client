@@ -856,8 +856,7 @@ type AdGroup struct {
 	//   "AD_GROUP_FORMAT_NON_SKIPPABLE_IN_STREAM" - Non-skippable in-stream
 	// ads.
 	//   "AD_GROUP_FORMAT_AUDIO" - Non-skippable in-stream audio ads.
-	//   "AD_GROUP_FORMAT_ACTION" - [Responsive ads for video action
-	// campaigns] (https://support.google.com/displayvideo/answer/9065351).
+	//   "AD_GROUP_FORMAT_RESPONSIVE" - Responsive ads.
 	//   "AD_GROUP_FORMAT_REACH" - [Effective reach ad groups]
 	// (https://support.google.com/displayvideo/answer/9173684), including
 	// in-stream and bumper ads.
@@ -6470,6 +6469,10 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
+	//   "SDF_VERSION_7" - SDF version 7 Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide)
+	// before migrating to this version. Currently in beta. Only available
+	// for use by a subset of users.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -16835,6 +16838,10 @@ type SdfConfig struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
+	//   "SDF_VERSION_7" - SDF version 7 Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide)
+	// before migrating to this version. Currently in beta. Only available
+	// for use by a subset of users.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
@@ -16918,6 +16925,10 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
+	//   "SDF_VERSION_7" - SDF version 7 Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide)
+	// before migrating to this version. Currently in beta. Only available
+	// for use by a subset of users.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to

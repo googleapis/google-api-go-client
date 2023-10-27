@@ -336,6 +336,9 @@ type BigQueryConfig struct {
 	// not exist.
 	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a
 	// schema mismatch.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination
+	// locations are not in the allowed regions.
 	State string `json:"state,omitempty"`
 
 	// Table: Optional. The name of the table to which to write data, of the
@@ -502,6 +505,9 @@ type CloudStorageConfig struct {
 	// because of permission denied errors.
 	//   "NOT_FOUND" - Cannot write to the Cloud Storage bucket because it
 	// does not exist.
+	//   "IN_TRANSIT_LOCATION_RESTRICTION" - Cannot write to the destination
+	// because enforce_in_transit is set to true and the destination
+	// locations are not in the allowed regions.
 	State string `json:"state,omitempty"`
 
 	// TextConfig: Optional. If set, message data will be written to Cloud
@@ -1029,12 +1035,13 @@ func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 // MessageStoragePolicy: A policy constraining the storage of messages
 // published to the topic.
 type MessageStoragePolicy struct {
-	// AllowedPersistenceRegions: Optional. A list of IDs of GCP regions
-	// where messages that are published to the topic may be persisted in
-	// storage. Messages published by publishers running in non-allowed GCP
-	// regions (or running outside of GCP altogether) will be routed for
-	// storage in one of the allowed regions. An empty list means that no
-	// regions are allowed, and is not a valid configuration.
+	// AllowedPersistenceRegions: Optional. A list of IDs of Google Cloud
+	// regions where messages that are published to the topic may be
+	// persisted in storage. Messages published by publishers running in
+	// non-allowed Google Cloud regions (or running outside of Google Cloud
+	// altogether) are routed for storage in one of the allowed regions. An
+	// empty list means that no regions are allowed, and is not a valid
+	// configuration.
 	AllowedPersistenceRegions []string `json:"allowedPersistenceRegions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2624,7 +2631,7 @@ func (r *ProjectsSchemasService) Create(parent string, schema *Schema) *Projects
 // SchemaId sets the optional parameter "schemaId": The ID to use for
 // the schema, which will become the final component of the schema's
 // resource name. See
-// https://cloud.google.com/pubsub/docs/admin#resource_names for
+// https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names for
 // resource name constraints.
 func (c *ProjectsSchemasCreateCall) SchemaId(schemaId string) *ProjectsSchemasCreateCall {
 	c.urlParams_.Set("schemaId", schemaId)
@@ -2738,7 +2745,7 @@ func (c *ProjectsSchemasCreateCall) Do(opts ...googleapi.CallOption) (*Schema, e
 	//       "type": "string"
 	//     },
 	//     "schemaId": {
-	//       "description": "The ID to use for the schema, which will become the final component of the schema's resource name. See https://cloud.google.com/pubsub/docs/admin#resource_names for resource name constraints.",
+	//       "description": "The ID to use for the schema, which will become the final component of the schema's resource name. See https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names for resource name constraints.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4616,8 +4623,8 @@ type ProjectsSnapshotsCreateCall struct {
 // provided in the request, the server will assign a random name for
 // this snapshot on the same project as the subscription, conforming to
 // the [resource name format]
-// (https://cloud.google.com/pubsub/docs/admin#resource_names). The
-// generated name is populated in the returned Snapshot object. Note
+// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+// The generated name is populated in the returned Snapshot object. Note
 // that for REST API requests, you must specify a name in the request.
 //
 //   - name: User-provided name for this snapshot. If the name is not
@@ -4625,8 +4632,8 @@ type ProjectsSnapshotsCreateCall struct {
 //     this snapshot on the same project as the subscription. Note that
 //     for REST API requests, you must specify a name. See the resource
 //     name rules
-//     (https://cloud.google.com/pubsub/docs/admin#resource_names). Format
-//     is `projects/{project}/snapshots/{snap}`.
+//     (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+//     Format is `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Create(name string, createsnapshotrequest *CreateSnapshotRequest) *ProjectsSnapshotsCreateCall {
 	c := &ProjectsSnapshotsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4725,7 +4732,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. If the snapshot already exists, returns `ALREADY_EXISTS`. If the requested subscription doesn't exist, returns `NOT_FOUND`. If the backlog in the subscription is too old -- and the resulting snapshot would expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time` field. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated name is populated in the returned Snapshot object. Note that for REST API requests, you must specify a name in the request.",
+	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. If the snapshot already exists, returns `ALREADY_EXISTS`. If the requested subscription doesn't exist, returns `NOT_FOUND`. If the backlog in the subscription is too old -- and the resulting snapshot would expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time` field. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The generated name is populated in the returned Snapshot object. Note that for REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.snapshots.create",
@@ -4734,7 +4741,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. User-provided name for this snapshot. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription. Note that for REST API requests, you must specify a name. See the [resource name rules](https://cloud.google.com/pubsub/docs/admin#resource_names). Format is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. User-provided name for this snapshot. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription. Note that for REST API requests, you must specify a name. See the [resource name rules](https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). Format is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -6035,15 +6042,16 @@ type ProjectsSubscriptionsCreateCall struct {
 
 // Create: Creates a subscription to a given topic. See the [resource
 // name rules]
-// (https://cloud.google.com/pubsub/docs/admin#resource_names). If the
-// subscription already exists, returns `ALREADY_EXISTS`. If the
+// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+// If the subscription already exists, returns `ALREADY_EXISTS`. If the
 // corresponding topic doesn't exist, returns `NOT_FOUND`. If the name
 // is not provided in the request, the server will assign a random name
 // for this subscription on the same project as the topic, conforming to
 // the [resource name format]
-// (https://cloud.google.com/pubsub/docs/admin#resource_names). The
-// generated name is populated in the returned Subscription object. Note
-// that for REST API requests, you must specify a name in the request.
+// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+// The generated name is populated in the returned Subscription object.
+// Note that for REST API requests, you must specify a name in the
+// request.
 //
 //   - name: The name of the subscription. It must have the format
 //     "projects/{project}/subscriptions/{subscription}".
@@ -6150,7 +6158,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic. See the [resource name rules] (https://cloud.google.com/pubsub/docs/admin#resource_names). If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated name is populated in the returned Subscription object. Note that for REST API requests, you must specify a name in the request.",
+	//   "description": "Creates a subscription to a given topic. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The generated name is populated in the returned Subscription object. Note that for REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
@@ -8031,7 +8039,7 @@ type ProjectsTopicsCreateCall struct {
 
 // Create: Creates the given topic with the given name. See the
 // [resource name rules]
-// (https://cloud.google.com/pubsub/docs/admin#resource_names).
+// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
 //
 //   - name: The name of the topic. It must have the format
 //     "projects/{project}/topics/{topic}". `{topic}` must start with a
@@ -8137,7 +8145,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/admin#resource_names).",
+	//   "description": "Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.topics.create",

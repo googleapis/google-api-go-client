@@ -1254,10 +1254,6 @@ type DeviceSession struct {
 	// AndroidDevice: Required. The requested device
 	AndroidDevice *AndroidDevice `json:"androidDevice,omitempty"`
 
-	// AndroidDeviceList: Optional. The list of requested devices. At most
-	// two devices may be simultaneously requested.
-	AndroidDeviceList *AndroidDeviceList `json:"androidDeviceList,omitempty"`
-
 	// CreateTime: Output only. The time that the Session was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1308,7 +1304,7 @@ type DeviceSession struct {
 
 	// Ttl: Optional. The amount of time that a device will be initially
 	// allocated for. This can eventually be extended with the
-	// ExtendDeviceSession RPC. Default: 30 minutes.
+	// UpdateDeviceSession RPC. Default: 30 minutes.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2250,7 +2246,7 @@ type ManualSharding struct {
 	// specify at least one shard if this field is present. When you select
 	// one or more physical devices, the number of repeated
 	// test_targets_for_shard must be <= 50. When you select one or more ARM
-	// virtual devices, it must be <= 100. When you select only x86 virtual
+	// virtual devices, it must be <= 200. When you select only x86 virtual
 	// devices, it must be <= 500.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
@@ -2982,7 +2978,7 @@ type SmartSharding struct {
 	// avoids cancelling the shard before all tests can finish. Note that
 	// there is a limit for maximum number of shards. When you select one or
 	// more physical devices, the number of shards must be <= 50. When you
-	// select one or more ARM virtual devices, it must be <= 100. When you
+	// select one or more ARM virtual devices, it must be <= 200. When you
 	// select only x86 virtual devices, it must be <= 500. To guarantee at
 	// least one test case for per shard, the number of shards will not
 	// exceed the number of test cases. Each shard created counts toward
@@ -3810,7 +3806,7 @@ type UniformSharding struct {
 	// always be a positive number that is no greater than the total number
 	// of test cases. When you select one or more physical devices, the
 	// number of shards must be <= 50. When you select one or more ARM
-	// virtual devices, it must be <= 100. When you select only x86 virtual
+	// virtual devices, it must be <= 200. When you select only x86 virtual
 	// devices, it must be <= 500.
 	NumShards int64 `json:"numShards,omitempty"`
 

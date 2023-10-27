@@ -1022,7 +1022,7 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// are compliant for this Assured Workload, but which are currently
 	// disallowed by the ResourceUsageRestriction org policy. Invoke
 	// RestrictAllowedResources endpoint to allow your project developers to
-	// use these services in their environment."
+	// use these services in their environment.
 	CompliantButDisallowedServices []string `json:"compliantButDisallowedServices,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -1034,7 +1034,7 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// spaces. Example: My Workload
 	DisplayName string `json:"displayName,omitempty"`
 
-	// EkmProvisioningResponse: Optional. Represents the Ekm Provisioning
+	// EkmProvisioningResponse: Output only. Represents the Ekm Provisioning
 	// State of the given workload.
 	EkmProvisioningResponse *GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse `json:"ekmProvisioningResponse,omitempty"`
 
@@ -1096,6 +1096,12 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// specified all resources are created under the parent organization.
 	// Format: folders/{folder_id}
 	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
+
+	// ResourceMonitoringEnabled: Output only. Indicates whether resource
+	// monitoring is enabled for workload or not. It is true when Resource
+	// feed is subscribed to AWM topic and AWM Service Agent Role is binded
+	// to AW Service Account for resource Assured workload.
+	ResourceMonitoringEnabled bool `json:"resourceMonitoringEnabled,omitempty"`
 
 	// ResourceSettings: Input only. Resource properties that are used to
 	// customize workload resources. These properties (such as custom

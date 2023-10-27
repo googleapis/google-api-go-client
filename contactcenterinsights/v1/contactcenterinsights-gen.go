@@ -674,6 +674,10 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
 	// failed so far.
 	FailedAnalysesCount int64 `json:"failedAnalysesCount,omitempty"`
 
+	// PartialErrors: Output only. Partial errors during ingest operation
+	// that might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
 
@@ -1178,7 +1182,8 @@ func (s *GoogleCloudContactcenterinsightsV1ConversationCallMetadata) MarshalJSON
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationDataSource: The
-// conversation source, which is a combination of transcript and audio.
+// conversation source, which is a combination of transcript, audio, and
+// metadata.
 type GoogleCloudContactcenterinsightsV1ConversationDataSource struct {
 	// DialogflowSource: The source when the conversation comes from
 	// Dialogflow.
@@ -4501,6 +4506,10 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata st
 	// failed so far.
 	FailedAnalysesCount int64 `json:"failedAnalysesCount,omitempty"`
 
+	// PartialErrors: Output only. Partial errors during ingest operation
+	// that might cause the operation output to be incomplete.
+	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
+
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
 
@@ -4829,7 +4838,8 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata) Marsh
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource: The
-// conversation source, which is a combination of transcript and audio.
+// conversation source, which is a combination of transcript, audio, and
+// metadata.
 type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource struct {
 	// DialogflowSource: The source when the conversation comes from
 	// Dialogflow.

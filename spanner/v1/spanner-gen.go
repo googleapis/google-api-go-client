@@ -2356,6 +2356,55 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IndexAdvice: Recommendation to add new indexes to run queries more
+// efficiently.
+type IndexAdvice struct {
+	// Ddl: Optional. DDL statements to add new indexes that will improve
+	// the query.
+	Ddl []string `json:"ddl,omitempty"`
+
+	// ImprovementFactor: Optional. Estimated latency improvement factor.
+	// For example if the query currently takes 500 ms to run and the
+	// estimated latency with new indexes is 100 ms this field will be 5.
+	ImprovementFactor float64 `json:"improvementFactor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ddl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ddl") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexAdvice) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexAdvice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *IndexAdvice) UnmarshalJSON(data []byte) error {
+	type NoMethod IndexAdvice
+	var s1 struct {
+		ImprovementFactor gensupport.JSONFloat64 `json:"improvementFactor"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ImprovementFactor = float64(s1.ImprovementFactor)
+	return nil
+}
+
 // IndexedHotKey: A message representing a (sparse) collection of hot
 // keys for specific key buckets.
 type IndexedHotKey struct {
@@ -4337,6 +4386,37 @@ func (s *PrefixNode) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryAdvisorResult: Output of query advisor analysis.
+type QueryAdvisorResult struct {
+	// IndexAdvice: Optional. Index Recommendation for a query. This is an
+	// optional field and the recommendation will only be available when the
+	// recommendation guarantees significant improvement in query
+	// performance.
+	IndexAdvice []*IndexAdvice `json:"indexAdvice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexAdvice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexAdvice") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAdvisorResult) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAdvisorResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryOptions: Query optimizer configuration.
 type QueryOptions struct {
 	// OptimizerStatisticsPackage: An option to control the selection of
@@ -4404,6 +4484,11 @@ type QueryPlan struct {
 	// pre-order starting with the plan root. Each PlanNode's `id`
 	// corresponds to its index in `plan_nodes`.
 	PlanNodes []*PlanNode `json:"planNodes,omitempty"`
+
+	// QueryAdvice: Optional. The advices/recommendations for a query.
+	// Currently this field will be serving index recommendations for a
+	// query.
+	QueryAdvice *QueryAdvisorResult `json:"queryAdvice,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlanNodes") to
 	// unconditionally include in API requests. By default, fields with

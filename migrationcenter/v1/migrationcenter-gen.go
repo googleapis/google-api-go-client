@@ -2167,10 +2167,10 @@ type Group struct {
 	// CreateTime: Output only. The timestamp when the group was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: The description of the resource.
+	// Description: Optional. The description of the group.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: User-friendly display name.
+	// DisplayName: Optional. User-friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Labels as key value pairs.
@@ -5422,6 +5422,10 @@ func (s *RuntimeNetworkInfo) MarshalJSON() ([]byte, error) {
 // Settings: Describes the Migration Center settings related to the
 // project.
 type Settings struct {
+	// DisableCloudLogging: Disable Cloud Logging for the Migration Center
+	// API. Users are billed for the logs.
+	DisableCloudLogging bool `json:"disableCloudLogging,omitempty"`
+
 	// Name: Output only. The name of the resource.
 	Name string `json:"name,omitempty"`
 
@@ -5432,20 +5436,21 @@ type Settings struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DisableCloudLogging")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisableCloudLogging") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

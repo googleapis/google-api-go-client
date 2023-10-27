@@ -244,6 +244,14 @@ type Conversion struct {
 	// AdId: DS ad ID.
 	AdId int64 `json:"adId,omitempty,string"`
 
+	// AdUserDataConsent: Ad user data consent for this conversion.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Not specified.
+	//   "GRANTED" - Granted.
+	//   "DENIED" - Denied.
+	AdUserDataConsent string `json:"adUserDataConsent,omitempty"`
+
 	// AdvertiserId: DS advertiser ID.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 

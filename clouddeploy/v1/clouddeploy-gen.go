@@ -920,6 +920,11 @@ func (s *CloudRunLocation) MarshalJSON() ([]byte, error) {
 // CloudRunMetadata: CloudRunMetadata contains information from a Cloud
 // Run deployment.
 type CloudRunMetadata struct {
+	// Job: Output only. The name of the Cloud Run job that is associated
+	// with a `Rollout`. Format is
+	// projects/{project}/locations/{location}/jobs/{job_name}.
+	Job string `json:"job,omitempty"`
+
 	// Revision: Output only. The Cloud Run Revision id associated with a
 	// `Rollout`.
 	Revision string `json:"revision,omitempty"`
@@ -933,7 +938,7 @@ type CloudRunMetadata struct {
 	// associated with a `Rollout`.
 	ServiceUrls []string `json:"serviceUrls,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Revision") to
+	// ForceSendFields is a list of field names (e.g. "Job") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -941,8 +946,8 @@ type CloudRunMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Revision") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Job") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

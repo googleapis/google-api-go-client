@@ -2258,7 +2258,8 @@ type ForecastOptions struct {
 	// forecast whether a time series will violate the threshold. If the
 	// predicted value is found to violate the threshold, and the violation
 	// is observed in all forecasts made for the configured duration, then
-	// the time series is considered to be failing.
+	// the time series is considered to be failing. The forecast horizon can
+	// range from 1 hour to 60 hours.
 	ForecastHorizon string `json:"forecastHorizon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ForecastHorizon") to
@@ -14450,7 +14451,9 @@ type ProjectsTimeSeriesCreateCall struct {
 // Create: Creates or adds data to one or more time series. The response
 // is empty if all time series in the request were written. If any time
 // series could not be written, a corresponding failure message is
-// included in the error response.
+// included in the error response. This method does not support resource
+// locations constraint of an organization policy
+// (https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations#setting_the_organization_policy).
 //
 //   - name: The project
 //     (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -14554,7 +14557,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates or adds data to one or more time series. The response is empty if all time series in the request were written. If any time series could not be written, a corresponding failure message is included in the error response.",
+	//   "description": "Creates or adds data to one or more time series. The response is empty if all time series in the request were written. If any time series could not be written, a corresponding failure message is included in the error response. This method does not support resource locations constraint of an organization policy (https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations#setting_the_organization_policy).",
 	//   "flatPath": "v3/projects/{projectsId}/timeSeries",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.timeSeries.create",
@@ -17672,7 +17675,7 @@ func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelev
 // ServiceLevelObjectiveId sets the optional parameter
 // "serviceLevelObjectiveId": The ServiceLevelObjective id to use for
 // this ServiceLevelObjective. If omitted, an id will be generated
-// instead. Must match the pattern [a-z0-9\-]+
+// instead. Must match the pattern ^[a-zA-Z0-9-_:.]+$
 func (c *ServicesServiceLevelObjectivesCreateCall) ServiceLevelObjectiveId(serviceLevelObjectiveId string) *ServicesServiceLevelObjectivesCreateCall {
 	c.urlParams_.Set("serviceLevelObjectiveId", serviceLevelObjectiveId)
 	return c
@@ -17785,7 +17788,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "serviceLevelObjectiveId": {
-	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern [a-z0-9\\-]+",
+	//       "description": "Optional. The ServiceLevelObjective id to use for this ServiceLevelObjective. If omitted, an id will be generated instead. Must match the pattern ^[a-zA-Z0-9-_:.]+$",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

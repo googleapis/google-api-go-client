@@ -4891,6 +4891,39 @@ func (s *UsageRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VpcServiceControls: Response for the get VPC Service Controls
+// request.
+type VpcServiceControls struct {
+	// Enabled: Output only. Indicates whether the VPC Service Controls are
+	// enabled or disabled for the connection. If the consumer called the
+	// EnableVpcServiceControls method, then this is true. If the consumer
+	// called DisableVpcServiceControls, then this is false. The default is
+	// false.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VpcServiceControls) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcServiceControls
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "servicenetworking.operations.get":
 
 type OperationsGetCall struct {

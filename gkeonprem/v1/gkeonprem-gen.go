@@ -4835,8 +4835,9 @@ type VmwareAdminCluster struct {
 	// PlatformConfig: The VMware platform configuration.
 	PlatformConfig *VmwarePlatformConfig `json:"platformConfig,omitempty"`
 
-	// PreparedSecrets: The VMware admin cluster prepared secrets
-	// configuration.
+	// PreparedSecrets: Output only. The VMware admin cluster prepared
+	// secrets configuration. It should always be enabled by the Central
+	// API, instead of letting users set it.
 	PreparedSecrets *VmwareAdminPreparedSecretsConfig `json:"preparedSecrets,omitempty"`
 
 	// Reconciling: Output only. If set, there are currently changes in

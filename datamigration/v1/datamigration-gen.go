@@ -844,10 +844,10 @@ type CloudSqlSettings struct {
 	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - Unspecified version.
 	//   "MYSQL_5_6" - MySQL 5.6.
 	//   "MYSQL_5_7" - MySQL 5.7.
+	//   "MYSQL_8_0" - MySQL 8.0.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.
-	//   "MYSQL_8_0" - MySQL 8.0.
 	//   "POSTGRES_12" - PostgreSQL 12.
 	//   "POSTGRES_13" - PostgreSQL 13.
 	//   "POSTGRES_14" - PostgreSQL 14.
@@ -1500,7 +1500,7 @@ type DatabaseEngineInfo struct {
 	//   "ORACLE" - The source engine is Oracle.
 	Engine string `json:"engine,omitempty"`
 
-	// Version: Required. Engine named version, for example 12.c.1.
+	// Version: Required. Engine version, for example "12.c.1".
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Engine") to
@@ -3565,6 +3565,10 @@ type MigrationJobVerificationError struct {
 	// existing databases that are conflicting with those in the source DB.
 	//   "PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE" - Insufficient privilege
 	// to enable the parallelism configuration.
+	//   "EXISTING_DATA" - The destination instance contains existing data
+	// or user defined entities (for example databases, tables, or
+	// functions). You can only migrate to empty instances. Clear your
+	// destination instance and retry the migration job.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

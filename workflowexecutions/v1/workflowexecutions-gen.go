@@ -1612,19 +1612,23 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 }
 
 // Filter sets the optional parameter "filter": Filters applied to the
-// [Executions.ListExecutions] results. The following fields are
-// supported for filtering: executionID, state, startTime, endTime,
-// duration, workflowRevisionID, stepName, and label.
+// `[Executions.ListExecutions]` results. The following fields are
+// supported for filtering: `executionId`, `state`, `startTime`,
+// `endTime`, `duration`, `workflowRevisionId`, `stepName`, and `label`.
+// For details, see AIP-160. For example, if you are using the Google
+// APIs Explorer: `state="SUCCEEDED" or `startTime>"2023-08-01" AND
+// state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The ordering applied
-// to the [Executions.ListExecutions] results. By default the ordering
-// is based on descending start time. The following fields are supported
-// for order by: executionID, startTime, endTime, duration, state, and
-// workflowRevisionID.
+// OrderBy sets the optional parameter "orderBy": Comma-separated list
+// of fields that specify the ordering applied to the
+// `[Executions.ListExecutions]` results. By default the ordering is
+// based on descending `startTime`. The following fields are supported
+// for ordering: `executionId`, `state`, `startTime`, `endTime`,
+// `duration`, and `workflowRevisionId`. For details, see AIP-132.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) OrderBy(orderBy string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -1778,12 +1782,12 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filters applied to the [Executions.ListExecutions] results. The following fields are supported for filtering: executionID, state, startTime, endTime, duration, workflowRevisionID, stepName, and label.",
+	//       "description": "Optional. Filters applied to the `[Executions.ListExecutions]` results. The following fields are supported for filtering: `executionId`, `state`, `startTime`, `endTime`, `duration`, `workflowRevisionId`, `stepName`, and `label`. For details, see AIP-160. For example, if you are using the Google APIs Explorer: `state=\"SUCCEEDED\"` or `startTime\u003e\"2023-08-01\" AND state=\"FAILED\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The ordering applied to the [Executions.ListExecutions] results. By default the ordering is based on descending start time. The following fields are supported for order by: executionID, startTime, endTime, duration, state, and workflowRevisionID.",
+	//       "description": "Optional. Comma-separated list of fields that specify the ordering applied to the `[Executions.ListExecutions]` results. By default the ordering is based on descending `startTime`. The following fields are supported for ordering: `executionId`, `state`, `startTime`, `endTime`, `duration`, and `workflowRevisionId`. For details, see AIP-132.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

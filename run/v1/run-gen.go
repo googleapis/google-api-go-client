@@ -2698,6 +2698,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
 	// `run.googleapis.com/ingress`: Service. *
 	// `run.googleapis.com/launch-stage`: Service, Job. *
+	// `run.googleapis.com/minScale`: Service (ALPHA) *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision. *
 	// `run.googleapis.com/secrets`: Revision, Execution. *

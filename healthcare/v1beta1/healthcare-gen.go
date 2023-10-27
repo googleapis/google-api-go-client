@@ -3370,29 +3370,29 @@ type ExportMessagesRequest struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Filter: Restricts messages exported to those matching a filter, only
-	// applicable to PubsubDestination and GcsDestination. The following
-	// syntax is available: * A string field value can be written as text
-	// inside quotation marks, for example "query text". The only valid
-	// relational operation for text fields is equality (`=`), where text is
-	// searched within the field, rather than having the field be equal to
-	// the text. For example, "Comment = great" returns messages with
-	// `great` in the comment field. * A number field value can be written
-	// as an integer, a decimal, or an exponential. The valid relational
-	// operators for number fields are the equality operator (`=`), along
-	// with the less than/greater than operators (`<`, `<=`, `>`, `>=`).
-	// Note that there is no inequality (`!=`) operator. You can prepend the
-	// `NOT` operator to an expression to negate it. * A date field value
-	// must be written in the `yyyy-mm-dd` format. Fields with date and time
-	// use the RFC3339 time format. Leading zeros are required for one-digit
-	// months and days. The valid relational operators for date fields are
-	// the equality operator (`=`) , along with the less than/greater than
-	// operators (`<`, `<=`, `>`, `>=`). Note that there is no inequality
-	// (`!=`) operator. You can prepend the `NOT` operator to an expression
-	// to negate it. * Multiple field query expressions can be combined in
-	// one query by adding `AND` or `OR` operators between the expressions.
-	// If a boolean operator appears within a quoted string, it is not
-	// treated as special, and is just another part of the character string
-	// to be matched. You can prepend the `NOT` operator to an expression to
+	// applicable to PubsubDestination. The following syntax is available: *
+	// A string field value can be written as text inside quotation marks,
+	// for example "query text". The only valid relational operation for
+	// text fields is equality (`=`), where text is searched within the
+	// field, rather than having the field be equal to the text. For
+	// example, "Comment = great" returns messages with `great` in the
+	// comment field. * A number field value can be written as an integer, a
+	// decimal, or an exponential. The valid relational operators for number
+	// fields are the equality operator (`=`), along with the less
+	// than/greater than operators (`<`, `<=`, `>`, `>=`). Note that there
+	// is no inequality (`!=`) operator. You can prepend the `NOT` operator
+	// to an expression to negate it. * A date field value must be written
+	// in the `yyyy-mm-dd` format. Fields with date and time use the RFC3339
+	// time format. Leading zeros are required for one-digit months and
+	// days. The valid relational operators for date fields are the equality
+	// operator (`=`) , along with the less than/greater than operators
+	// (`<`, `<=`, `>`, `>=`). Note that there is no inequality (`!=`)
+	// operator. You can prepend the `NOT` operator to an expression to
+	// negate it. * Multiple field query expressions can be combined in one
+	// query by adding `AND` or `OR` operators between the expressions. If a
+	// boolean operator appears within a quoted string, it is not treated as
+	// special, and is just another part of the character string to be
+	// matched. You can prepend the `NOT` operator to an expression to
 	// negate it. The following fields and functions are available for
 	// filtering: * `message_type`, from the MSH-9.1 field. For example,
 	// `NOT message_type = "ADT". * `send_date` or `sendDate`, the
@@ -7503,6 +7503,141 @@ type RevokeConsentRequest struct {
 
 func (s *RevokeConsentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RevokeConsentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackFhirResourceFilteringFields: Filters to select resources that
+// need to be rolled back.
+type RollbackFhirResourceFilteringFields struct {
+	// MetadataFilter: Optional. A string to use for filtering resource
+	// metadata. Complies with AIP-160 except without the has operator.
+	// Additionally, supports 2 functions: hastag("system") = "code" for tag
+	// filtering and extension_ts_value("uri") = timestamp for filtering
+	// extensions with timestamp, which is given as a unix timestamp.
+	// extension_ts_url can be used with >, <, <=, >=, != comparisons as
+	// well.
+	MetadataFilter string `json:"metadataFilter,omitempty"`
+
+	// OperationIds: Optional. A list of operation IDs to roll back. Only
+	// changes made by these operations will be rolled back.
+	OperationIds googleapi.Uint64s `json:"operationIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetadataFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetadataFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RollbackFhirResourceFilteringFields) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackFhirResourceFilteringFields
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackFhirResourcesRequest: Request to roll back resources.
+type RollbackFhirResourcesRequest struct {
+	// ChangeType: Optional. CREATE/UPDATE/DELETE/ALL for reverting all txns
+	// of a certain type.
+	//
+	// Possible values:
+	//   "CHANGE_TYPE_UNSPECIFIED" - When unspecified, revert all
+	// transactions
+	//   "ALL" - All transactions
+	//   "CREATE" - Revert only CREATE transactions
+	//   "UPDATE" - Revert only Update transactions
+	//   "DELETE" - Revert only Delete transactions
+	ChangeType string `json:"changeType,omitempty"`
+
+	// ExcludeRollbacks: Optional. Specifies whether to exclude earlier
+	// rollbacks.
+	ExcludeRollbacks bool `json:"excludeRollbacks,omitempty"`
+
+	// FilteringFields: Optional. Tag represents fields that HDE needs to
+	// identify resources that will be reverted. Parameters for filtering
+	// resources
+	FilteringFields *RollbackFhirResourceFilteringFields `json:"filteringFields,omitempty"`
+
+	// Force: Optional. When enabled, changes will be reverted without
+	// explicit confirmation
+	Force bool `json:"force,omitempty"`
+
+	// InputGcsObject: Optional. Cloud Storage object containing list of
+	// {resourceType}/{resourceId} lines, identifying resources to be
+	// reverted
+	InputGcsObject string `json:"inputGcsObject,omitempty"`
+
+	// ResultGcsBucket: Required. Bucket to deposit result
+	ResultGcsBucket string `json:"resultGcsBucket,omitempty"`
+
+	// RollbackTime: Required. Time point to rollback to.
+	RollbackTime string `json:"rollbackTime,omitempty"`
+
+	// Type: Optional. If specified, revert only resources of these types
+	Type []string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangeType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChangeType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RollbackFhirResourcesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackFhirResourcesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackFhirResourcesResponse: Final response of rollback FIHR
+// resources request.
+type RollbackFhirResourcesResponse struct {
+	// FhirStore: The name of the FHIR store to rollback, in the format of
+	// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+	// /fhirStores/{fhir_store_id}".
+	FhirStore string `json:"fhirStore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FhirStore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FhirStore") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RollbackFhirResourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackFhirResourcesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -26222,6 +26357,159 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Do(opts ...googleapi.Call
 
 }
 
+// method id "healthcare.projects.locations.datasets.fhirStores.rollback":
+
+type ProjectsLocationsDatasetsFhirStoresRollbackCall struct {
+	s                            *Service
+	name                         string
+	rollbackfhirresourcesrequest *RollbackFhirResourcesRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Rollback: Rolls back resources from the FHIR store to the specified
+// time. This method returns an Operation that can be used to track the
+// status of the rollback by calling GetOperation. Immediate fatal
+// errors appear in the error field, errors are also logged to Cloud
+// Logging (see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+// Otherwise, when the operation finishes, a detailed response of type
+// RollbackFhirResourcesResponse is returned in the response field. The
+// metadata field type for this operation is OperationMetadata.
+//
+//   - name: The name of the FHIR store to rollback, in the format of
+//     "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}".
+func (r *ProjectsLocationsDatasetsFhirStoresService) Rollback(name string, rollbackfhirresourcesrequest *RollbackFhirResourcesRequest) *ProjectsLocationsDatasetsFhirStoresRollbackCall {
+	c := &ProjectsLocationsDatasetsFhirStoresRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rollbackfhirresourcesrequest = rollbackfhirresourcesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresRollbackCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresRollbackCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackfhirresourcesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:rollback")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.rollback" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresRollbackCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Rolls back resources from the FHIR store to the specified time. This method returns an Operation that can be used to track the status of the rollback by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type RollbackFhirResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:rollback",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.rollback",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the FHIR store to rollback, in the format of \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id} /fhirStores/{fhir_store_id}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:rollback",
+	//   "request": {
+	//     "$ref": "RollbackFhirResourcesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.fhirStores.setIamPolicy":
 
 type ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall struct {
@@ -29546,8 +29834,26 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // searchable as the server might trim its generated search index in
 // those cases. Note: FHIR resources are indexed asynchronously, so
 // there might be a slight delay between the time a resource is created
-// or changes and when the change is reflected in search results. For
-// samples and detailed information, see Searching for FHIR resources
+// or changed, and the time when the change reflects in search results.
+// The only exception is resource identifier data, which is indexed
+// synchronously as a special index. As a result, searching using
+// resource identifier is not subject to indexing delay. To use the
+// special synchronous index, the search term for identifier should be
+// in the pattern `identifier=[system]|[value]` or `identifier=[value]`,
+// and any of the following search result parameters can be used: *
+// `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If
+// your query contains any other search parameters, the standard
+// asynchronous index will be used instead. Note that searching against
+// the special index is optimized for resolving a small number of
+// matches. The search isn't optimized if your identifier search
+// criteria matches a large number (i.e. more than 2,000) of resources.
+// For a search query that will match a large number of resources, you
+// can avoiding using the special synchronous index by including an
+// additional `_sort` parameter in your query. Use `_sort=-_lastUpdated`
+// if you want to keep the default sorting order. Note: The special
+// synchronous identifier index are currently disabled for
+// DocumentReference and DocumentManifest searches. For samples and
+// detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -29618,7 +29924,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changed, and the time when the change reflects in search results. The only exception is resource identifier data, which is indexed synchronously as a special index. As a result, searching using resource identifier is not subject to indexing delay. To use the special synchronous index, the search term for identifier should be in the pattern `identifier=[system]|[value]` or `identifier=[value]`, and any of the following search result parameters can be used: * `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If your query contains any other search parameters, the standard asynchronous index will be used instead. Note that searching against the special index is optimized for resolving a small number of matches. The search isn't optimized if your identifier search criteria matches a large number (i.e. more than 2,000) of resources. For a search query that will match a large number of resources, you can avoiding using the special synchronous index by including an additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you want to keep the default sorting order. Note: The special synchronous identifier index are currently disabled for DocumentReference and DocumentManifest searches. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -29711,8 +30017,26 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // searchable as the server might trim its generated search index in
 // those cases. Note: FHIR resources are indexed asynchronously, so
 // there might be a slight delay between the time a resource is created
-// or changes and when the change is reflected in search results. For
-// samples and detailed information, see Searching for FHIR resources
+// or changed, and the time when the change reflects in search results.
+// The only exception is resource identifier data, which is indexed
+// synchronously as a special index. As a result, searching using
+// resource identifier is not subject to indexing delay. To use the
+// special synchronous index, the search term for identifier should be
+// in the pattern `identifier=[system]|[value]` or `identifier=[value]`,
+// and any of the following search result parameters can be used: *
+// `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If
+// your query contains any other search parameters, the standard
+// asynchronous index will be used instead. Note that searching against
+// the special index is optimized for resolving a small number of
+// matches. The search isn't optimized if your identifier search
+// criteria matches a large number (i.e. more than 2,000) of resources.
+// For a search query that will match a large number of resources, you
+// can avoiding using the special synchronous index by including an
+// additional `_sort` parameter in your query. Use `_sort=-_lastUpdated`
+// if you want to keep the default sorting order. Note: The special
+// synchronous identifier index are currently disabled for
+// DocumentReference and DocumentManifest searches. For samples and
+// detailed information, see Searching for FHIR resources
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and
 // Advanced FHIR search features
 // (https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).
@@ -29793,7 +30117,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/search.html), [R4](https://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](https://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](https://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2 and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. The server might return fewer resources than requested to prevent excessively large responses. If there are additional results, the returned `Bundle` contains a link of `relation` \"next\", which has a `_page_token` parameter for an opaque pagination token that can be used to retrieve the next page. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changed, and the time when the change reflects in search results. The only exception is resource identifier data, which is indexed synchronously as a special index. As a result, searching using resource identifier is not subject to indexing delay. To use the special synchronous index, the search term for identifier should be in the pattern `identifier=[system]|[value]` or `identifier=[value]`, and any of the following search result parameters can be used: * `_count` * `_include` * `_revinclude` * `_summary` * `_elements` If your query contains any other search parameters, the standard asynchronous index will be used instead. Note that searching against the special index is optimized for resolving a small number of matches. The search isn't optimized if your identifier search criteria matches a large number (i.e. more than 2,000) of resources. For a search query that will match a large number of resources, you can avoiding using the special synchronous index by including an additional `_sort` parameter in your query. Use `_sort=-_lastUpdated` if you want to keep the default sorting order. Note: The special synchronous identifier index are currently disabled for DocumentReference and DocumentManifest searches. For samples and detailed information, see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.com/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{resourceType}/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search-type",

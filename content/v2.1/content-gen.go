@@ -714,6 +714,11 @@ type Account struct {
 	// to the account by CSS Center.
 	AutomaticLabelIds googleapi.Uint64s `json:"automaticLabelIds,omitempty"`
 
+	// BusinessIdentity: The business identity attributes can be used to
+	// self-declare attributes that let customers know more about your
+	// business.
+	BusinessIdentity *AccountBusinessIdentity `json:"businessIdentity,omitempty"`
+
 	// BusinessInformation: The business information of the account.
 	BusinessInformation *AccountBusinessInformation `json:"businessInformation,omitempty"`
 
@@ -929,6 +934,72 @@ type AccountAutomaticImprovements struct {
 
 func (s *AccountAutomaticImprovements) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountAutomaticImprovements
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountBusinessIdentity: The business identity attributes
+// (https://support.google.com/merchants/answer/10342414) can be used to
+// self-declare attributes that let customers know more about your
+// business. NEXT ID: 7.
+type AccountBusinessIdentity struct {
+	// BlackOwned: Specifies whether the business identifies itself as being
+	// black-owned. This optional field is only available for merchants with
+	// a business country set to "US". This field is not allowed for
+	// marketplaces or marketplace sellers.
+	BlackOwned *AccountIdentityType `json:"blackOwned,omitempty"`
+
+	// IncludeForPromotions: Required. By setting this field, your business
+	// may be included in promotions for all the selected attributes. If you
+	// clear this option, it won't affect your identification with any of
+	// the attributes. For this field to be set, the merchant must self
+	// identify with at least one of the `AccountIdentityType`. If none are
+	// included, the request will be considered invalid.
+	IncludeForPromotions bool `json:"includeForPromotions,omitempty"`
+
+	// LatinoOwned: Specifies whether the business identifies itself as
+	// being latino-owned. This optional field is only available for
+	// merchants with a business country set to "US". This field is not
+	// allowed for marketplaces or marketplace sellers.
+	LatinoOwned *AccountIdentityType `json:"latinoOwned,omitempty"`
+
+	// SmallBusiness: Specifies whether the business identifies itself as a
+	// small business. This optional field is only available for merchants
+	// with a business country set to "US". This field is not allowed for
+	// marketplaces or marketplace sellers.
+	SmallBusiness *AccountIdentityType `json:"smallBusiness,omitempty"`
+
+	// VeteranOwned: Specifies whether the business identifies itself as
+	// being veteran-owned. This optional field is only available for
+	// merchants with a business country set to "US". This field is not
+	// allowed for marketplaces or marketplace sellers.
+	VeteranOwned *AccountIdentityType `json:"veteranOwned,omitempty"`
+
+	// WomenOwned: Specifies whether the business identifies itself as being
+	// women-owned. This optional field is only available for merchants with
+	// a business country set to "US". This field is not allowed for
+	// marketplaces or marketplace sellers.
+	WomenOwned *AccountIdentityType `json:"womenOwned,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BlackOwned") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlackOwned") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountBusinessIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountBusinessIdentity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1168,6 +1239,11 @@ func (s *AccountIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountIdentifier
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountIdentityType: The account identity type used to specify
+// attributes.
+type AccountIdentityType struct {
 }
 
 // AccountImageImprovements: This improvement will attempt to
@@ -7851,7 +7927,7 @@ func (s *ListReturnPolicyOnlineResponse) MarshalJSON() ([]byte, error) {
 // LocalInventory: Local inventory resource. For accepted attribute
 // values, see the local product inventory feed specification.
 type LocalInventory struct {
-	// Availability: Availability of the product. For accepted attribute
+	// Availability: The availability of the product. For accepted attribute
 	// values, see the local product inventory feed specification.
 	Availability string `json:"availability,omitempty"`
 
@@ -7861,32 +7937,32 @@ type LocalInventory struct {
 	// "regular" }`.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 
-	// InstoreProductLocation: In-store product location.
+	// InstoreProductLocation: The in-store product location.
 	InstoreProductLocation string `json:"instoreProductLocation,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#localInventory"
 	Kind string `json:"kind,omitempty"`
 
-	// PickupMethod: Supported pickup method for this offer. Unless the
+	// PickupMethod: The supported pickup method for this offer. Unless the
 	// value is "not supported", this field must be submitted together with
 	// `pickupSla`. For accepted attribute values, see the local product
 	// inventory feed specification.
 	PickupMethod string `json:"pickupMethod,omitempty"`
 
-	// PickupSla: Expected date that an order will be ready for pickup
+	// PickupSla: The expected date that an order will be ready for pickup
 	// relative to the order date. Must be submitted together with
 	// `pickupMethod`. For accepted attribute values, see the local product
 	// inventory feed specification.
 	PickupSla string `json:"pickupSla,omitempty"`
 
-	// Price: Price of the product.
+	// Price: The price of the product.
 	Price *Price `json:"price,omitempty"`
 
-	// Quantity: Quantity of the product. Must be nonnegative.
+	// Quantity: The quantity of the product. Must be nonnegative.
 	Quantity int64 `json:"quantity,omitempty"`
 
-	// SalePrice: Sale price of the product. Mandatory if
+	// SalePrice: The sale price of the product. Mandatory if
 	// `sale_price_effective_date` is defined.
 	SalePrice *Price `json:"salePrice,omitempty"`
 
@@ -7895,7 +7971,7 @@ type LocalInventory struct {
 	// specified as 'null' if undecided.
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
-	// StoreCode: Required. Store code of this local inventory resource.
+	// StoreCode: Required. The store code of this local inventory resource.
 	StoreCode string `json:"storeCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

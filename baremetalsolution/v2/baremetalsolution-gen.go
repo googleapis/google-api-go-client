@@ -1503,8 +1503,13 @@ type Network struct {
 	// VlanId: The vlan id of the Network.
 	VlanId string `json:"vlanId,omitempty"`
 
-	// Vrf: The vrf for the Network.
+	// Vrf: The Vrf for the Network. Use this only if a new Vrf needs to be
+	// created.
 	Vrf *VRF `json:"vrf,omitempty"`
+
+	// VrfAttachment: Optional. The name of a pre-existing Vrf that the
+	// network should be attached to. Format is `vrfs/{vrf}`.
+	VrfAttachment string `json:"vrfAttachment,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

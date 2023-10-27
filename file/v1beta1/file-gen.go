@@ -293,6 +293,8 @@ type Backup struct {
 	// availability needed for mission-critical workloads.
 	//   "ZONAL" - ZONAL instances offer expanded capacity and performance
 	// scaling capabilities.
+	//   "REGIONAL" - REGIONAL instances offer the features and availability
+	// needed for mission-critical workloads.
 	SourceInstanceTier string `json:"sourceInstanceTier,omitempty"`
 
 	// State: Output only. The backup state.
@@ -1164,6 +1166,8 @@ type Instance struct {
 	// availability needed for mission-critical workloads.
 	//   "ZONAL" - ZONAL instances offer expanded capacity and performance
 	// scaling capabilities.
+	//   "REGIONAL" - REGIONAL instances offer the features and availability
+	// needed for mission-critical workloads.
 	Tier string `json:"tier,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

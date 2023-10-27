@@ -301,15 +301,15 @@ func logDirectPathMisconfig(endpoint string, ts oauth2.TokenSource, o *internal.
 	if isDirectPathXdsUsed(o) {
 		// Case 1: does not enable DirectPath
 		if !isDirectPathEnabled(endpoint, o) {
-			log.Print("WARNING: DirectPath is misconfigured. Please set the attemptDirectPath option along with the attemptDirectPathXds option.")
+			log.Println("WARNING: DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option.")
 		} else {
 			// Case 2: credential is not correctly set
 			if !isTokenSourceDirectPathCompatible(ts, o) {
-				log.Print("WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used.")
+				log.Println("WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used.")
 			}
 			// Case 3: not running on GCE
 			if !metadata.OnGCE() {
-				log.Print("WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment.")
+				log.Println("WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment.")
 			}
 		}
 	}

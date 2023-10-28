@@ -190,6 +190,7 @@ type ProjectsLocationsWorkflowsService struct {
 func NewProjectsLocationsWorkflowsExecutionsService(s *Service) *ProjectsLocationsWorkflowsExecutionsService {
 	rs := &ProjectsLocationsWorkflowsExecutionsService{s: s}
 	rs.Callbacks = NewProjectsLocationsWorkflowsExecutionsCallbacksService(s)
+	rs.StepEntries = NewProjectsLocationsWorkflowsExecutionsStepEntriesService(s)
 	return rs
 }
 
@@ -197,6 +198,8 @@ type ProjectsLocationsWorkflowsExecutionsService struct {
 	s *Service
 
 	Callbacks *ProjectsLocationsWorkflowsExecutionsCallbacksService
+
+	StepEntries *ProjectsLocationsWorkflowsExecutionsStepEntriesService
 }
 
 func NewProjectsLocationsWorkflowsExecutionsCallbacksService(s *Service) *ProjectsLocationsWorkflowsExecutionsCallbacksService {
@@ -205,6 +208,15 @@ func NewProjectsLocationsWorkflowsExecutionsCallbacksService(s *Service) *Projec
 }
 
 type ProjectsLocationsWorkflowsExecutionsCallbacksService struct {
+	s *Service
+}
+
+func NewProjectsLocationsWorkflowsExecutionsStepEntriesService(s *Service) *ProjectsLocationsWorkflowsExecutionsStepEntriesService {
+	rs := &ProjectsLocationsWorkflowsExecutionsStepEntriesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsWorkflowsExecutionsStepEntriesService struct {
 	s *Service
 }
 
@@ -287,6 +299,34 @@ type Error struct {
 
 func (s *Error) MarshalJSON() ([]byte, error) {
 	type NoMethod Error
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Exception: Exception describes why the step entry failed.
+type Exception struct {
+	// Payload: Error message represented as a JSON string.
+	Payload string `json:"payload,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Payload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Payload") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Exception) MarshalJSON() ([]byte, error) {
+	type NoMethod Exception
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -503,6 +543,92 @@ type ListExecutionsResponse struct {
 
 func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExecutionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListStepEntriesResponse: Response message for
+// ExecutionHistory.ListStepEntries.
+type ListStepEntriesResponse struct {
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in the ListStepEntriesRequest.page_token field in the
+	// subsequent call to `ListStepEntries` method to retrieve the next page
+	// of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// StepEntries: The list of entries.
+	StepEntries []*StepEntry `json:"stepEntries,omitempty"`
+
+	// TotalSize: Indicates the total number of StepEntries that matched the
+	// request filter. For running executions, this number shows the number
+	// of StepEntries that are executed thus far.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListStepEntriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListStepEntriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NavigationInfo: NavigationInfo describes what steps if any come
+// before or after this step, or what steps are parents or children of
+// this step.
+type NavigationInfo struct {
+	// Children: Step entries that can be reached by "stepping into" e.g. a
+	// subworkflow call.
+	Children googleapi.Int64s `json:"children,omitempty"`
+
+	// Next: The index of the next step in the current workflow, if any.
+	Next int64 `json:"next,omitempty,string"`
+
+	// Parent: The step entry, if any, that can be reached by "stepping out"
+	// of the current workflow being executed.
+	Parent int64 `json:"parent,omitempty,string"`
+
+	// Previous: The index of the previous step in the current workflow, if
+	// any.
+	Previous int64 `json:"previous,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Children") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Children") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NavigationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod NavigationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -771,6 +897,169 @@ type Step struct {
 
 func (s *Step) MarshalJSON() ([]byte, error) {
 	type NoMethod Step
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StepEntry: An StepEntry contains debugging information for a step
+// transition in a workflow execution.
+type StepEntry struct {
+	// CreateTime: Output only. The creation time of the step entry.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EntryId: Output only. The numeric ID of this step entry, used for
+	// navigation.
+	EntryId int64 `json:"entryId,omitempty,string"`
+
+	// Exception: Output only. The exception thrown by the step entry.
+	Exception *Exception `json:"exception,omitempty"`
+
+	// Name: Output only. The full resource name of the step entry. Each
+	// step entry has a unique entry ID, which is a monotonically increasing
+	// counter. Step entry names have the format:
+	// `projects/{project}/locations/{location}/workflows/{workflow}/executio
+	// ns/{execution}/stepEntries/{step_entry}`.
+	Name string `json:"name,omitempty"`
+
+	// NavigationInfo: Output only. The NavigationInfo associated to this
+	// step.
+	NavigationInfo *NavigationInfo `json:"navigationInfo,omitempty"`
+
+	// Routine: Output only. The name of the routine this step entry belongs
+	// to. A routine name is the subworkflow name defined in the YAML source
+	// code. The top level routine name is `main`.
+	Routine string `json:"routine,omitempty"`
+
+	// State: Output only. The state of the step entry.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Invalid state.
+	//   "STATE_IN_PROGRESS" - The step entry is in progress.
+	//   "STATE_SUCCEEDED" - The step entry finished successfully.
+	//   "STATE_FAILED" - The step entry failed with an error.
+	State string `json:"state,omitempty"`
+
+	// Step: Output only. The name of the step this step entry belongs to.
+	Step string `json:"step,omitempty"`
+
+	// StepEntryMetadata: Output only. The StepEntryMetadata associated to
+	// this step.
+	StepEntryMetadata *StepEntryMetadata `json:"stepEntryMetadata,omitempty"`
+
+	// StepType: Output only. The type of the step this step entry belongs
+	// to.
+	//
+	// Possible values:
+	//   "STEP_TYPE_UNSPECIFIED" - Invalid step type.
+	//   "STEP_ASSIGN" - The step entry assigns new variable(s).
+	//   "STEP_STD_LIB_CALL" - The step entry calls a standard library
+	// routine.
+	//   "STEP_CONNECTOR_CALL" - The step entry calls a connector.
+	//   "STEP_SUBWORKFLOW_CALL" - The step entry calls a subworklfow.
+	//   "STEP_CALL" - The step entry calls a subworkflow/stdlib.
+	//   "STEP_SWITCH" - The step entry executes a switch-case block.
+	//   "STEP_CONDITION" - The step entry executes a condition inside a
+	// switch.
+	//   "STEP_FOR" - The step entry executes a for loop.
+	//   "STEP_FOR_ITERATION" - The step entry executes a iteration of a for
+	// loop.
+	//   "STEP_PARALLEL_FOR" - The step entry executes a parallel for loop.
+	//   "STEP_PARALLEL_BRANCH" - The step entry executes a series of
+	// parallel branch(es).
+	//   "STEP_PARALLEL_BRANCH_ENTRY" - The step entry executes a branch of
+	// a parallel branch.
+	//   "STEP_TRY_RETRY_EXCEPT" - The step entry executes a
+	// try/retry/except block.
+	//   "STEP_TRY" - The step entry executes the try part of a
+	// try/retry/except block.
+	//   "STEP_RETRY" - The step entry executes the retry part of a
+	// try/retry/except block.
+	//   "STEP_EXCEPT" - The step entry executes the except part of a
+	// try/retry/except block.
+	//   "STEP_RETURN" - The step entry returns.
+	//   "STEP_RAISE" - The step entry raises an error.
+	//   "STEP_GOTO" - The step entry jumps to another step.
+	StepType string `json:"stepType,omitempty"`
+
+	// UpdateTime: Output only. The most recently updated time of the step
+	// entry.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StepEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod StepEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StepEntryMetadata: StepEntryMetadata contains metadata information
+// about this step.
+type StepEntryMetadata struct {
+	// ProgressNumber: Progress number represents the current state of the
+	// current progress. eg: A step entry represents the 4th iteration in a
+	// progress of PROGRESS_TYPE_FOR.
+	ProgressNumber int64 `json:"progressNumber,omitempty,string"`
+
+	// ProgressType: Progress type of this step entry.
+	//
+	// Possible values:
+	//   "PROGRESS_TYPE_UNSPECIFIED" - Current step entry does not have any
+	// progress data.
+	//   "PROGRESS_TYPE_FOR" - Current step entry is in progress of a FOR
+	// step.
+	//   "PROGRESS_TYPE_SWITCH" - Current step entry is in progress of a
+	// SWITCH step.
+	//   "PROGRESS_TYPE_RETRY" - Current step entry is in progress of a
+	// RETRY step.
+	//   "PROGRESS_TYPE_PARALLEL_FOR" - Current step entry is in progress of
+	// a PARALLEL FOR step.
+	//   "PROGRESS_TYPE_PARALLEL_BRANCH" - Current step entry is in progress
+	// of a PARALLEL BRANCH step.
+	ProgressType string `json:"progressType,omitempty"`
+
+	// ThreadId: Child thread id that this step entry belongs to.
+	ThreadId string `json:"threadId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProgressNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProgressNumber") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StepEntryMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StepEntryMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2041,6 +2330,399 @@ func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Do(opts ...googl
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsWorkflowsExecutionsCallbacksListCall) Pages(ctx context.Context, f func(*ListCallbacksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "workflowexecutions.projects.locations.workflows.executions.stepEntries.get":
+
+type ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a step entry.
+//
+//   - name: The name of the step entry to retrieve. Format:
+//     projects/{project}/locations/{location}/workflows/{workflow}/executi
+//     ons/{execution}/stepEntries/{step_entry}.
+func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) Get(name string) *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall {
+	c := &ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.executions.stepEntries.get" call.
+// Exactly one of *StepEntry or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StepEntry.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) Do(opts ...googleapi.CallOption) (*StepEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StepEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a step entry.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions/{executionsId}/stepEntries/{stepEntriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "workflowexecutions.projects.locations.workflows.executions.stepEntries.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the step entry to retrieve. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}/stepEntries/{step_entry}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+/executions/[^/]+/stepEntries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "StepEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "workflowexecutions.projects.locations.workflows.executions.stepEntries.list":
+
+type ProjectsLocationsWorkflowsExecutionsStepEntriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists step entries for the corresponding workflow execution.
+// Returned entries are ordered by their create_time.
+//
+//   - parent: Name of the workflow execution to list entries for. Format:
+//     projects/{project}/locations/{location}/workflows/{workflow}/executi
+//     ons/{execution}/stepEntries/.
+func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) List(parent string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c := &ProjectsLocationsWorkflowsExecutionsStepEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters applied to the
+// `[StepEntries.ListStepEntries]` results. The following fields are
+// supported for filtering: `entryId`, `createTime`, `updateTime`,
+// `routine`, `step`, `stepType`, `state`. For details, see AIP-160. For
+// example, if you are using the Google APIs Explorer:
+// `state="SUCCEEDED" or `createTime>"2023-08-01" AND state="FAILED"
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma-separated list
+// of fields that specify the ordering applied to the
+// `[StepEntries.ListStepEntries]` results. By default the ordering is
+// based on ascending `entryId`. The following fields are supported for
+// ordering: `entryId`, `createTime`, `updateTime`, `routine`, `step`,
+// `stepType`, `state`. For details, see AIP-132.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) OrderBy(orderBy string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of step
+// entries to return per call. The default max is 1000.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) PageSize(pageSize int64) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListStepEntries` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListStepEntries` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) PageToken(pageToken string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Skip sets the optional parameter "skip": The number of step entries
+// to skip. It can be used with or without a pageToken. If used with a
+// pageToken, then it indicates the number of step entries to skip
+// starting from the requested page.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Skip(skip int64) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("skip", fmt.Sprint(skip))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/stepEntries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.executions.stepEntries.list" call.
+// Exactly one of *ListStepEntriesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListStepEntriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Do(opts ...googleapi.CallOption) (*ListStepEntriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListStepEntriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists step entries for the corresponding workflow execution. Returned entries are ordered by their create_time.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions/{executionsId}/stepEntries",
+	//   "httpMethod": "GET",
+	//   "id": "workflowexecutions.projects.locations.workflows.executions.stepEntries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the `[StepEntries.ListStepEntries]` results. The following fields are supported for filtering: `entryId`, `createTime`, `updateTime`, `routine`, `step`, `stepType`, `state`. For details, see AIP-160. For example, if you are using the Google APIs Explorer: `state=\"SUCCEEDED\"` or `createTime\u003e\"2023-08-01\" AND state=\"FAILED\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Comma-separated list of fields that specify the ordering applied to the `[StepEntries.ListStepEntries]` results. By default the ordering is based on ascending `entryId`. The following fields are supported for ordering: `entryId`, `createTime`, `updateTime`, `routine`, `step`, `stepType`, `state`. For details, see AIP-132.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Number of step entries to return per call. The default max is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListStepEntries` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListStepEntries` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the workflow execution to list entries for. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}/stepEntries/",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "skip": {
+	//       "description": "Optional. The number of step entries to skip. It can be used with or without a pageToken. If used with a pageToken, then it indicates the number of step entries to skip starting from the requested page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/stepEntries",
+	//   "response": {
+	//     "$ref": "ListStepEntriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Pages(ctx context.Context, f func(*ListStepEntriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

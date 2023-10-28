@@ -2375,7 +2375,9 @@ func (s *GoogleCloudDataplexV1DataQualityDimensionResult) MarshalJSON() ([]byte,
 // GoogleCloudDataplexV1DataQualityResult: The output of a
 // DataQualityScan.
 type GoogleCloudDataplexV1DataQualityResult struct {
-	// Dimensions: A list of results at the dimension level.
+	// Dimensions: A list of results at the dimension level.A dimension will
+	// have a corresponding DataQualityDimensionResult if and only if there
+	// is at least one rule with the 'dimension' field set to it.
 	Dimensions []*GoogleCloudDataplexV1DataQualityDimensionResult `json:"dimensions,omitempty"`
 
 	// Passed: Overall data quality result -- true if all rules passed.

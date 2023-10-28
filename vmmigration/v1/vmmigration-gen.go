@@ -1072,6 +1072,9 @@ type BootDiskDefaults struct {
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
 
+	// Encryption: Optional. The encryption to apply to the boot disk.
+	Encryption *Encryption `json:"encryption,omitempty"`
+
 	// Image: The image to use when creating the disk.
 	Image *DiskImageDefaults `json:"image,omitempty"`
 
@@ -1385,6 +1388,10 @@ type ComputeEngineTargetDefaults struct {
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
 
+	// Encryption: Optional. Immutable. The encryption to apply to the VM
+	// disks.
+	Encryption *Encryption `json:"encryption,omitempty"`
+
 	// Hostname: The hostname to assign to the VM.
 	Hostname string `json:"hostname,omitempty"`
 
@@ -1493,6 +1500,9 @@ type ComputeEngineTargetDetails struct {
 	//   "COMPUTE_ENGINE_DISK_TYPE_BALANCED" - An alternative to SSD
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
+
+	// Encryption: Optional. The encryption to apply to the VM disks.
+	Encryption *Encryption `json:"encryption,omitempty"`
 
 	// Hostname: The hostname to assign to the VM.
 	Hostname string `json:"hostname,omitempty"`
@@ -2025,6 +2035,9 @@ type DisksMigrationVmTargetDefaults struct {
 	// (if empty default is used).
 	ComputeScheduling *ComputeScheduling `json:"computeScheduling,omitempty"`
 
+	// Encryption: Optional. The encryption to apply to the VM.
+	Encryption *Encryption `json:"encryption,omitempty"`
+
 	// Hostname: Optional. The hostname to assign to the VM.
 	Hostname string `json:"hostname,omitempty"`
 
@@ -2121,6 +2134,36 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Encryption: Encryption message describes the details of the applied
+// encryption.
+type Encryption struct {
+	// KmsKey: Required. The name of the encryption key that is stored in
+	// Google Cloud KMS.
+	KmsKey string `json:"kmsKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Encryption) MarshalJSON() ([]byte, error) {
+	type NoMethod Encryption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FetchInventoryResponse: Response message for fetchInventory.
@@ -2983,8 +3026,6 @@ type MigrationError struct {
 	// encountered an error during utilization report creation.
 	//   "APPLIANCE_UPGRADE_ERROR" - Migrate to Virtual Machines encountered
 	// an error during appliance upgrade.
-	//   "IMAGE_IMPORT_ERROR" - Migrate to Virtual Machines encountered an
-	// error in image import operation.
 	Code string `json:"code,omitempty"`
 
 	// ErrorMessage: Output only. The localized error message.
@@ -3348,6 +3389,9 @@ type PersistentDiskDefaults struct {
 	// persistent disks that balance performance and cost.
 	DiskType string `json:"diskType,omitempty"`
 
+	// Encryption: Optional. The encryption to apply to the disk.
+	Encryption *Encryption `json:"encryption,omitempty"`
+
 	// SourceDiskNumber: Required. The ordinal number of the source VM disk.
 	SourceDiskNumber int64 `json:"sourceDiskNumber,omitempty"`
 
@@ -3663,6 +3707,10 @@ type Source struct {
 
 	// Description: User-provided description of the source.
 	Description string `json:"description,omitempty"`
+
+	// Encryption: Optional. Immutable. The encryption details of the source
+	// data stored by the service.
+	Encryption *Encryption `json:"encryption,omitempty"`
 
 	// Labels: The labels of the source.
 	Labels map[string]string `json:"labels,omitempty"`

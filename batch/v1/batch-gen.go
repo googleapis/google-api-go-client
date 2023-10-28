@@ -2284,6 +2284,11 @@ type ReportAgentStateResponse struct {
 	// Tasks: Tasks assigned to the agent
 	Tasks []*AgentTask `json:"tasks,omitempty"`
 
+	// UseBatchMonitoredResource: If true, the cloud logging for batch agent
+	// will use batch.googleapis.com/Job as monitored resource for Batch job
+	// related logging.
+	UseBatchMonitoredResource bool `json:"useBatchMonitoredResource,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

@@ -2414,6 +2414,36 @@ func (s *GkeNodePoolTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig: Encryption
+// settings for the encrypting customer core content. NEXT ID: 2
+type GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig struct {
+	// KmsKey: Optional. The Cloud KMS key name to use for encrypting
+	// customer core content.
+	KmsKey string `json:"kmsKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HadoopJob: A Dataproc job for running Apache Hadoop MapReduce
 // (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
 // jobs on Apache Hadoop YARN
@@ -3901,6 +3931,11 @@ type ListWorkflowTemplatesResponse struct {
 	// Templates: Output only. WorkflowTemplates list.
 	Templates []*WorkflowTemplate `json:"templates,omitempty"`
 
+	// Unreachable: Output only. List of workflow templates that could not
+	// be included in the response. Attempting to get one of these resources
+	// may indicate why it was not included in the list response.
+	Unreachable []string `json:"unreachable,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -4293,6 +4328,7 @@ type NodeGroupOperationMetadata struct {
 	//   "UPDATE" - Update node group operation type.
 	//   "DELETE" - Delete node group operation type.
 	//   "RESIZE" - Resize node group operation type.
+	//   "REPAIR" - Repair node group operation type.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Status: Output only. Current operation status.
@@ -6697,6 +6733,14 @@ func (s *TrinoJob) MarshalJSON() ([]byte, error) {
 // UsageMetrics: Usage metrics represent approximate total resources
 // consumed by a workload.
 type UsageMetrics struct {
+	// AcceleratorType: Optional. Accelerator type being used, if any
+	AcceleratorType string `json:"acceleratorType,omitempty"`
+
+	// MilliAcceleratorSeconds: Optional. Accelerator usage in
+	// (milliAccelerator x seconds) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
+	MilliAcceleratorSeconds int64 `json:"milliAcceleratorSeconds,omitempty,string"`
+
 	// MilliDcuSeconds: Optional. DCU (Dataproc Compute Units) usage in
 	// (milliDCU x seconds) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
@@ -6707,7 +6751,7 @@ type UsageMetrics struct {
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	ShuffleStorageGbSeconds int64 `json:"shuffleStorageGbSeconds,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "MilliDcuSeconds") to
+	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6715,7 +6759,7 @@ type UsageMetrics struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MilliDcuSeconds") to
+	// NullFields is a list of field names (e.g. "AcceleratorType") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -6734,6 +6778,14 @@ func (s *UsageMetrics) MarshalJSON() ([]byte, error) {
 // UsageSnapshot: The usage snapshot represents the resources consumed
 // by a workload at a specified time.
 type UsageSnapshot struct {
+	// AcceleratorType: Optional. Accelerator type being used, if any
+	AcceleratorType string `json:"acceleratorType,omitempty"`
+
+	// MilliAccelerator: Optional. Milli (one-thousandth) accelerator. (see
+	// Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing))
+	MilliAccelerator int64 `json:"milliAccelerator,omitempty,string"`
+
 	// MilliDcu: Optional. Milli (one-thousandth) Dataproc Compute Units
 	// (DCUs) (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
@@ -6757,7 +6809,7 @@ type UsageSnapshot struct {
 	// SnapshotTime: Optional. The timestamp of the usage snapshot.
 	SnapshotTime string `json:"snapshotTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MilliDcu") to
+	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6765,12 +6817,13 @@ type UsageSnapshot struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MilliDcu") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AcceleratorType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7037,6 +7090,10 @@ type WorkflowTemplate struct {
 	// jobs are cancelled, the workflow is ended, and if the workflow was
 	// running on a managed cluster, the cluster is deleted.
 	DagTimeout string `json:"dagTimeout,omitempty"`
+
+	// EncryptionConfig: Optional. Encryption settings for the encrypting
+	// customer core content.
+	EncryptionConfig *GoogleCloudDataprocV1WorkflowTemplateEncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	Id string `json:"id,omitempty"`
 

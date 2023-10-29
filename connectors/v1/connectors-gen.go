@@ -970,6 +970,13 @@ type ConnectionSchemaMetadata struct {
 	//   "STATE_UNSPECIFIED" - Default state.
 	//   "REFRESHING" - Schema refresh is in progress.
 	//   "UPDATED" - Schema has been updated.
+	//   "REFRESHING_SCHEMA_METADATA" - Schema refresh for metadata is in
+	// progress.
+	//   "UPDATED_SCHEMA_METADATA" - Schema metadata has been updated.
+	//   "REFRESH_SCHEMA_METADATA_FAILED" - Failed to refresh schema
+	// metadata
+	//   "REFRESHING_FULL_SCHEMA" - Triggered full schema refresh
+	//   "UPDATED_FULL_SCHEMA" - Updated full schema
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. Timestamp when the connection runtime schema
@@ -1725,6 +1732,9 @@ type EventSubscription struct {
 	// EventSubscription.
 	EventTypeId string `json:"eventTypeId,omitempty"`
 
+	// Jms: Optional. JMS is the source for the event listener.
+	Jms *JMS `json:"jms,omitempty"`
+
 	// Name: Required. Resource name of the EventSubscription. Format:
 	// projects/{project}/locations/{location}/connections/{connection}/event
 	// Subscriptions/{event_subscription}
@@ -1985,6 +1995,16 @@ type EventingConfigTemplate struct {
 
 	// EnrichmentSupported: Enrichment Supported.
 	EnrichmentSupported bool `json:"enrichmentSupported,omitempty"`
+
+	// EventListenerType: The type of the event listener for a specific
+	// connector.
+	//
+	// Possible values:
+	//   "EVENT_LISTENER_TYPE_UNSPECIFIED" - Default value.
+	//   "WEBHOOK_LISTENER" - Webhook listener. e.g. Jira, Zendesk,
+	// Servicenow etc.,
+	//   "JMS_LISTENER" - JMS Listener. e.g. IBM MQ, Rabbit MQ etc.,
+	EventListenerType string `json:"eventListenerType,omitempty"`
 
 	// IsEventingSupported: Is Eventing Supported.
 	IsEventingSupported bool `json:"isEventingSupported,omitempty"`
@@ -2586,6 +2606,42 @@ type InputParameter struct {
 
 func (s *InputParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod InputParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JMS: JMS message denotes the source of the event
+type JMS struct {
+	// Name: Optional. Name of the JMS source. i.e. queueName or topicName
+	Name string `json:"name,omitempty"`
+
+	// Type: Optional. Type of the JMS Source. i.e. Queue or Topic
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default state.
+	//   "QUEUE" - JMS Queue.
+	//   "TOPIC" - JMS Topic.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JMS) MarshalJSON() ([]byte, error) {
+	type NoMethod JMS
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

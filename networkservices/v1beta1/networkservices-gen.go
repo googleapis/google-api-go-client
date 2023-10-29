@@ -2399,7 +2399,7 @@ type LbRouteExtension struct {
 	ExtensionChains []*ExtensionChain `json:"extensionChains,omitempty"`
 
 	// ForwardingRules: Required. A list of references to the forwarding
-	// rules to which this service extension is attach to. At least one
+	// rules to which this service extension is attached to. At least one
 	// forwarding rule is required. There can be only one `LbRouteExtension`
 	// resource per forwarding rule.
 	ForwardingRules []string `json:"forwardingRules,omitempty"`
@@ -2412,7 +2412,9 @@ type LbRouteExtension struct {
 
 	// LoadBalancingScheme: Required. All backend services and forwarding
 	// rules referenced by this extension must share the same load balancing
-	// scheme. Supported values: `INTERNAL_MANAGED`, `EXTERNAL_MANAGED`.
+	// scheme. Supported values: `INTERNAL_MANAGED`, `EXTERNAL_MANAGED`. For
+	// more information, refer to Choosing a load balancer
+	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
 	//   "LOAD_BALANCING_SCHEME_UNSPECIFIED" - Default value. Do not use.
@@ -2478,7 +2480,7 @@ type LbTrafficExtension struct {
 	ExtensionChains []*ExtensionChain `json:"extensionChains,omitempty"`
 
 	// ForwardingRules: Required. A list of references to the forwarding
-	// rules to which this service extension is attach to. At least one
+	// rules to which this service extension is attached to. At least one
 	// forwarding rule is required. There can be only one
 	// `LBTrafficExtension` resource per forwarding rule.
 	ForwardingRules []string `json:"forwardingRules,omitempty"`

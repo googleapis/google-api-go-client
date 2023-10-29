@@ -367,6 +367,125 @@ type ScansService struct {
 	s *Service
 }
 
+// AutoscalingConfig: Autoscaling config for an instance.
+type AutoscalingConfig struct {
+	// AutoscalingLimits: Required. Autoscaling limits for an instance.
+	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
+
+	// AutoscalingTargets: Required. The autoscaling targets for an
+	// instance.
+	AutoscalingTargets *AutoscalingTargets `json:"autoscalingTargets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoscalingLimits")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoscalingLimits") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingLimits: The autoscaling limits for the instance. Users can
+// define the minimum and maximum compute capacity allocated to the
+// instance, and the autoscaler will only scale within that range. Users
+// can either use nodes or processing units to specify the limits, but
+// should use the same unit to set both the min_limit and max_limit.
+type AutoscalingLimits struct {
+	// MaxNodes: Maximum number of nodes allocated to the instance. If set,
+	// this number should be greater than or equal to min_nodes.
+	MaxNodes int64 `json:"maxNodes,omitempty"`
+
+	// MaxProcessingUnits: Maximum number of processing units allocated to
+	// the instance. If set, this number should be multiples of 1000 and be
+	// greater than or equal to min_processing_units.
+	MaxProcessingUnits int64 `json:"maxProcessingUnits,omitempty"`
+
+	// MinNodes: Minimum number of nodes allocated to the instance. If set,
+	// this number should be greater than or equal to 1.
+	MinNodes int64 `json:"minNodes,omitempty"`
+
+	// MinProcessingUnits: Minimum number of processing units allocated to
+	// the instance. If set, this number should be multiples of 1000.
+	MinProcessingUnits int64 `json:"minProcessingUnits,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxNodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxNodes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingLimits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingTargets: The autoscaling targets for an instance.
+type AutoscalingTargets struct {
+	// HighPriorityCpuUtilizationPercent: Required. The target high priority
+	// cpu utilization percentage that the autoscaler should be trying to
+	// achieve for the instance. This number is on a scale from 0 (no
+	// utilization) to 100 (full utilization). The valid range is [10, 90]
+	// inclusive.
+	HighPriorityCpuUtilizationPercent int64 `json:"highPriorityCpuUtilizationPercent,omitempty"`
+
+	// StorageUtilizationPercent: Required. The target storage utilization
+	// percentage that the autoscaler should be trying to achieve for the
+	// instance. This number is on a scale from 0 (no utilization) to 100
+	// (full utilization). The valid range is [10, 100] inclusive.
+	StorageUtilizationPercent int64 `json:"storageUtilizationPercent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HighPriorityCpuUtilizationPercent") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "HighPriorityCpuUtilizationPercent") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingTargets) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingTargets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Backup: A backup of a Cloud Spanner database.
 type Backup struct {
 	// CreateTime: Output only. The time the CreateBackup request is
@@ -2470,6 +2589,13 @@ func (s *IndexedKeyRangeInfos) MarshalJSON() ([]byte, error) {
 // Instance: An isolated set of Cloud Spanner resources on which
 // databases can be hosted.
 type Instance struct {
+	// AutoscalingConfig: Optional. The autoscaling configuration.
+	// Autoscaling is enabled if this field is set. When autoscaling is
+	// enabled, node_count and processing_units are treated as OUTPUT_ONLY
+	// fields and reflect the current compute capacity allocated to the
+	// instance.
+	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
+
 	// Config: Required. The name of the instance's configuration. Values
 	// are of the form `projects//instanceConfigs/`. See also InstanceConfig
 	// and ListInstanceConfigs.
@@ -2568,20 +2694,21 @@ type Instance struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutoscalingConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -643,6 +643,37 @@ func (s *Consumer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataCatalogConfig: Specifies how metastore metadata should be
+// integrated with the Data Catalog service.
+type DataCatalogConfig struct {
+	// Enabled: Optional. Defines whether the metastore metadata should be
+	// synced to Data Catalog. The default value is to disable syncing
+	// metastore metadata to Data Catalog.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataCatalogConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataCatalogConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseDump: A specification of the location of and metadata about a
 // database dump from a relational database management system.
 type DatabaseDump struct {
@@ -1591,6 +1622,37 @@ func (s *MetadataImport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MetadataIntegration: Specifies how metastore metadata should be
+// integrated with external services.
+type MetadataIntegration struct {
+	// DataCatalogConfig: Optional. The integration config for the Data
+	// Catalog service.
+	DataCatalogConfig *DataCatalogConfig `json:"dataCatalogConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataCatalogConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataCatalogConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetadataIntegration) MarshalJSON() ([]byte, error) {
+	type NoMethod MetadataIntegration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MetadataManagementActivity: The metadata management activities of the
 // metastore service.
 type MetadataManagementActivity struct {
@@ -2254,6 +2316,10 @@ type Service struct {
 	// maintenance purposes in UTC time. Maintenance window is not needed
 	// for services with the SPANNER database type.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+
+	// MetadataIntegration: Optional. The setting that defines how metastore
+	// metadata should be integrated with external services and systems.
+	MetadataIntegration *MetadataIntegration `json:"metadataIntegration,omitempty"`
 
 	// MetadataManagementActivity: Output only. The metadata management
 	// activities of the metastore service.

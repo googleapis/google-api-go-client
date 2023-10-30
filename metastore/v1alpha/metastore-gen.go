@@ -671,9 +671,9 @@ func (s *Consumer) MarshalJSON() ([]byte, error) {
 // DataCatalogConfig: Specifies how metastore metadata should be
 // integrated with the Data Catalog service.
 type DataCatalogConfig struct {
-	// Enabled: Defines whether the metastore metadata should be synced to
-	// Data Catalog. The default value is to disable syncing metastore
-	// metadata to Data Catalog.
+	// Enabled: Optional. Defines whether the metastore metadata should be
+	// synced to Data Catalog. The default value is to disable syncing
+	// metastore metadata to Data Catalog.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
@@ -1710,8 +1710,8 @@ func (s *MetadataImport) MarshalJSON() ([]byte, error) {
 // MetadataIntegration: Specifies how metastore metadata should be
 // integrated with external services.
 type MetadataIntegration struct {
-	// DataCatalogConfig: The integration config for the Data Catalog
-	// service.
+	// DataCatalogConfig: Optional. The integration config for the Data
+	// Catalog service.
 	DataCatalogConfig *DataCatalogConfig `json:"dataCatalogConfig,omitempty"`
 
 	// DataplexConfig: The integration config for the Dataplex service.
@@ -2472,8 +2472,8 @@ type Service struct {
 	// for services with the SPANNER database type.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
-	// MetadataIntegration: The setting that defines how metastore metadata
-	// should be integrated with external services and systems.
+	// MetadataIntegration: Optional. The setting that defines how metastore
+	// metadata should be integrated with external services and systems.
 	MetadataIntegration *MetadataIntegration `json:"metadataIntegration,omitempty"`
 
 	// MetadataManagementActivity: Output only. The metadata management

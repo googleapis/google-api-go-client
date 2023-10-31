@@ -287,7 +287,7 @@ type GoogleMapsPlacesV1Circle struct {
 	Center *GoogleTypeLatLng `json:"center,omitempty"`
 
 	// Radius: Required. Radius measured in meters. The radius must be
-	// within [0.0, 50000.0]. The default radius is 0.0.
+	// within [0.0, 50000.0].
 	Radius float64 `json:"radius,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Center") to
@@ -586,8 +586,8 @@ func (s *GoogleMapsPlacesV1Photo) MarshalJSON() ([]byte, error) {
 
 // GoogleMapsPlacesV1PhotoMedia: A photo media from Places API.
 type GoogleMapsPlacesV1PhotoMedia struct {
-	// Name: The resource name of a photo in the format:
-	// places/place_id/photos/photo_reference.
+	// Name: The resource name of a photo media in the format:
+	// `places/place_id/photos/photo_reference/media`.
 	Name string `json:"name,omitempty"`
 
 	// PhotoUri: A short-lived uri that can be used to render the photo.
@@ -2486,8 +2486,12 @@ type PlacesPhotosGetMediaCall struct {
 
 // GetMedia: Get a photo media with a photo reference string.
 //
-//   - name: The resource name of a photo as returned in a Place object's
-//     photos.name field. Format: places/place_id/photos/photo_reference.
+//   - name: The resource name of a photo media in the format:
+//     `places/place_id/photos/photo_reference/media`. The resource name
+//     of a photo as returned in a Place object's photos.name field comes
+//     with the format `places/place_id/photos/photo_reference`. You need
+//     to append `/media` at the end of the photo resource to get the
+//     photo media resource name.
 func (r *PlacesPhotosService) GetMedia(name string) *PlacesPhotosGetMediaCall {
 	c := &PlacesPhotosGetMediaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2656,7 +2660,7 @@ func (c *PlacesPhotosGetMediaCall) Do(opts ...googleapi.CallOption) (*GoogleMaps
 	//       "type": "integer"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of a photo as returned in a Place object's photos.name field. Format: places/place_id/photos/photo_reference.",
+	//       "description": "Required. The resource name of a photo media in the format: `places/place_id/photos/photo_reference/media`. The resource name of a photo as returned in a Place object's photos.name field comes with the format `places/place_id/photos/photo_reference`. You need to append `/media` at the end of the photo resource to get the photo media resource name.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+/photos/[^/]+/media$",
 	//       "required": true,

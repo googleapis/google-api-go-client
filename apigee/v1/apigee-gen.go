@@ -1731,11 +1731,53 @@ func (s *GoogleCloudApigeeV1AnalyticsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ApiCategory: The API category resource wrapped
-// with response status, error_code, etc.
+// GoogleCloudApigeeV1ApiCategory: `ApiCategory` represents an API
+// category. Catalog items
+// (/apigee/docs/reference/apis/apigee/rest/v1/organizations.sites.apidoc
+// s) can be tagged with API categories; users viewing the API catalog
+// in the portal will have the option to browse the catalog by category.
 type GoogleCloudApigeeV1ApiCategory struct {
-	// Data: Details of the category.
-	Data *GoogleCloudApigeeV1ApiCategoryData `json:"data,omitempty"`
+	// Id: ID of the category (a UUID).
+	Id string `json:"id,omitempty"`
+
+	// Name: Name of the category.
+	Name string `json:"name,omitempty"`
+
+	// SiteId: Name of the portal.
+	SiteId string `json:"siteId,omitempty"`
+
+	// UpdateTime: Time the category was last modified in milliseconds since
+	// epoch.
+	UpdateTime int64 `json:"updateTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApiCategoryResponse: The API category resource
+// wrapped with response status, error_code, etc.
+type GoogleCloudApigeeV1ApiCategoryResponse struct {
+	// Data: The API category resource.
+	Data *GoogleCloudApigeeV1ApiCategory `json:"data,omitempty"`
 
 	// ErrorCode: Unique error code for the request, if any.
 	ErrorCode string `json:"errorCode,omitempty"`
@@ -1770,49 +1812,8 @@ type GoogleCloudApigeeV1ApiCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1ApiCategory) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ApiCategory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudApigeeV1ApiCategoryData: `ApiCategoryData` represents an
-// API category. Catalog items can be tagged with API categories; users
-// viewing the API catalog in the portal will have the option to browse
-// the catalog by category.
-type GoogleCloudApigeeV1ApiCategoryData struct {
-	// Id: ID of the category (a UUID).
-	Id string `json:"id,omitempty"`
-
-	// Name: Name of the category.
-	Name string `json:"name,omitempty"`
-
-	// SiteId: Name of the portal.
-	SiteId string `json:"siteId,omitempty"`
-
-	// UpdateTime: Time the category was last modified in milliseconds since
-	// epoch.
-	UpdateTime int64 `json:"updateTime,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ApiCategoryData) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ApiCategoryData
+func (s *GoogleCloudApigeeV1ApiCategoryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiCategoryResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6515,8 +6516,8 @@ func (s *GoogleCloudApigeeV1KeystoreConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudApigeeV1ListApiCategoriesResponse: The response for
 // `ListApiCategoriesRequest`.
 type GoogleCloudApigeeV1ListApiCategoriesResponse struct {
-	// Data: Details of the categories.
-	Data []*GoogleCloudApigeeV1ApiCategoryData `json:"data,omitempty"`
+	// Data: The API category resources.
+	Data []*GoogleCloudApigeeV1ApiCategory `json:"data,omitempty"`
 
 	// ErrorCode: Unique error code for the request, if any.
 	ErrorCode string `json:"errorCode,omitempty"`
@@ -60401,22 +60402,22 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) Do(opts ...google
 // method id "apigee.organizations.sites.apicategories.create":
 
 type OrganizationsSitesApicategoriesCreateCall struct {
-	s                                  *Service
-	parent                             string
-	googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData
-	urlParams_                         gensupport.URLParams
-	ctx_                               context.Context
-	header_                            http.Header
+	s                              *Service
+	parent                         string
+	googlecloudapigeev1apicategory *GoogleCloudApigeeV1ApiCategory
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
 }
 
 // Create: Creates a new API category.
 //
 //   - parent: Name of the portal. Use the following structure in your
 //     request: `organizations/{org}/sites/{site}`.
-func (r *OrganizationsSitesApicategoriesService) Create(parent string, googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData) *OrganizationsSitesApicategoriesCreateCall {
+func (r *OrganizationsSitesApicategoriesService) Create(parent string, googlecloudapigeev1apicategory *GoogleCloudApigeeV1ApiCategory) *OrganizationsSitesApicategoriesCreateCall {
 	c := &OrganizationsSitesApicategoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudapigeev1apicategorydata = googlecloudapigeev1apicategorydata
+	c.googlecloudapigeev1apicategory = googlecloudapigeev1apicategory
 	return c
 }
 
@@ -60453,7 +60454,7 @@ func (c *OrganizationsSitesApicategoriesCreateCall) doRequest(alt string) (*http
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apicategorydata)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apicategory)
 	if err != nil {
 		return nil, err
 	}
@@ -60474,13 +60475,14 @@ func (c *OrganizationsSitesApicategoriesCreateCall) doRequest(alt string) (*http
 }
 
 // Do executes the "apigee.organizations.sites.apicategories.create" call.
-// Exactly one of *GoogleCloudApigeeV1ApiCategory or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1ApiCategory.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
+// Exactly one of *GoogleCloudApigeeV1ApiCategoryResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudApigeeV1ApiCategoryResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsSitesApicategoriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiCategory, error) {
+func (c *OrganizationsSitesApicategoriesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiCategoryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -60499,7 +60501,7 @@ func (c *OrganizationsSitesApicategoriesCreateCall) Do(opts ...googleapi.CallOpt
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudApigeeV1ApiCategory{
+	ret := &GoogleCloudApigeeV1ApiCategoryResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -60529,10 +60531,10 @@ func (c *OrganizationsSitesApicategoriesCreateCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "path": "v1/{+parent}/apicategories",
 	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1ApiCategoryData"
+	//     "$ref": "GoogleCloudApigeeV1ApiCategory"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ApiCategory"
+	//     "$ref": "GoogleCloudApigeeV1ApiCategoryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -60760,13 +60762,14 @@ func (c *OrganizationsSitesApicategoriesGetCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "apigee.organizations.sites.apicategories.get" call.
-// Exactly one of *GoogleCloudApigeeV1ApiCategory or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1ApiCategory.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
+// Exactly one of *GoogleCloudApigeeV1ApiCategoryResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudApigeeV1ApiCategoryResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsSitesApicategoriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiCategory, error) {
+func (c *OrganizationsSitesApicategoriesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiCategoryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -60785,7 +60788,7 @@ func (c *OrganizationsSitesApicategoriesGetCall) Do(opts ...googleapi.CallOption
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudApigeeV1ApiCategory{
+	ret := &GoogleCloudApigeeV1ApiCategoryResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -60815,7 +60818,7 @@ func (c *OrganizationsSitesApicategoriesGetCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "path": "v1/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ApiCategory"
+	//     "$ref": "GoogleCloudApigeeV1ApiCategoryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -60976,12 +60979,12 @@ func (c *OrganizationsSitesApicategoriesListCall) Do(opts ...googleapi.CallOptio
 // method id "apigee.organizations.sites.apicategories.patch":
 
 type OrganizationsSitesApicategoriesPatchCall struct {
-	s                                  *Service
-	name                               string
-	googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData
-	urlParams_                         gensupport.URLParams
-	ctx_                               context.Context
-	header_                            http.Header
+	s                              *Service
+	name                           string
+	googlecloudapigeev1apicategory *GoogleCloudApigeeV1ApiCategory
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
 }
 
 // Patch: Updates an API category.
@@ -60989,10 +60992,10 @@ type OrganizationsSitesApicategoriesPatchCall struct {
 //   - name: Name of the category. Use the following structure in your
 //     request:
 //     `organizations/{org}/sites/{site}/apicategories/{apicategory}`.
-func (r *OrganizationsSitesApicategoriesService) Patch(name string, googlecloudapigeev1apicategorydata *GoogleCloudApigeeV1ApiCategoryData) *OrganizationsSitesApicategoriesPatchCall {
+func (r *OrganizationsSitesApicategoriesService) Patch(name string, googlecloudapigeev1apicategory *GoogleCloudApigeeV1ApiCategory) *OrganizationsSitesApicategoriesPatchCall {
 	c := &OrganizationsSitesApicategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudapigeev1apicategorydata = googlecloudapigeev1apicategorydata
+	c.googlecloudapigeev1apicategory = googlecloudapigeev1apicategory
 	return c
 }
 
@@ -61029,7 +61032,7 @@ func (c *OrganizationsSitesApicategoriesPatchCall) doRequest(alt string) (*http.
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apicategorydata)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apicategory)
 	if err != nil {
 		return nil, err
 	}
@@ -61050,13 +61053,14 @@ func (c *OrganizationsSitesApicategoriesPatchCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "apigee.organizations.sites.apicategories.patch" call.
-// Exactly one of *GoogleCloudApigeeV1ApiCategory or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1ApiCategory.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
+// Exactly one of *GoogleCloudApigeeV1ApiCategoryResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudApigeeV1ApiCategoryResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiCategory, error) {
+func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiCategoryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -61075,7 +61079,7 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOpti
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudApigeeV1ApiCategory{
+	ret := &GoogleCloudApigeeV1ApiCategoryResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -61105,10 +61109,10 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOpti
 	//   },
 	//   "path": "v1/{+name}",
 	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1ApiCategoryData"
+	//     "$ref": "GoogleCloudApigeeV1ApiCategory"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ApiCategory"
+	//     "$ref": "GoogleCloudApigeeV1ApiCategoryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

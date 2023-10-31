@@ -3093,6 +3093,10 @@ type GoogleAnalyticsAdminV1alphaConversionEvent struct {
 	// created per property.
 	Custom bool `json:"custom,omitempty"`
 
+	// DefaultConversionValue: Optional. Defines a default value/currency
+	// for a conversion event.
+	DefaultConversionValue *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue `json:"defaultConversionValue,omitempty"`
+
 	// Deletable: Output only. If set, this event can currently be deleted
 	// with DeleteConversionEvent.
 	Deletable bool `json:"deletable,omitempty"`
@@ -3131,6 +3135,58 @@ func (s *GoogleAnalyticsAdminV1alphaConversionEvent) MarshalJSON() ([]byte, erro
 	type NoMethod GoogleAnalyticsAdminV1alphaConversionEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue:
+// Defines a default value/currency for a conversion event. Both value
+// and currency must be provided.
+type GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue struct {
+	// CurrencyCode: When a conversion event for this event_name has no set
+	// currency, this currency will be applied as the default. Must be in
+	// ISO 4217 currency code format. See
+	// https://en.wikipedia.org/wiki/ISO_4217 for more.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// Value: This value will be used to populate the value for all
+	// conversions of the specified event_name where the event "value"
+	// parameter is unset.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // GoogleAnalyticsAdminV1alphaConversionValues: Conversion value

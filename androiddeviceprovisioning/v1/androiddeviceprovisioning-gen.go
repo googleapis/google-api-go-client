@@ -259,6 +259,10 @@ type PartnersVendorsCustomersService struct {
 // ClaimDeviceRequest: Request message to claim a device on behalf of a
 // customer.
 type ClaimDeviceRequest struct {
+	// ConfigurationId: Optional. The unique identifier of the configuration
+	// (internally known as profile) to set for the section.
+	ConfigurationId int64 `json:"configurationId,omitempty,string"`
+
 	// CustomerId: The ID of the customer for whom the device is being
 	// claimed.
 	CustomerId int64 `json:"customerId,omitempty,string"`
@@ -286,12 +290,10 @@ type ClaimDeviceRequest struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
-	// SimlockProfileId: Optional. Must and can only be set when
-	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
-	// identifier of the SimLock profile.
+	// SimlockProfileId: Optional.
 	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomerId") to
+	// ForceSendFields is a list of field names (e.g. "ConfigurationId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -299,12 +301,13 @@ type ClaimDeviceRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConfigurationId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1739,6 +1742,10 @@ func (s *OperationPerDevice) MarshalJSON() ([]byte, error) {
 
 // PartnerClaim: Identifies one claim request.
 type PartnerClaim struct {
+	// ConfigurationId: Optional. The unique identifier of the configuration
+	// (internally known as profile) to set for the section.
+	ConfigurationId int64 `json:"configurationId,omitempty,string"`
+
 	// CustomerId: The ID of the customer for whom the device is being
 	// claimed.
 	CustomerId int64 `json:"customerId,omitempty,string"`
@@ -1767,12 +1774,10 @@ type PartnerClaim struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
-	// SimlockProfileId: Optional. Must and can only be set when
-	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
-	// identifier of the SimLock profile.
+	// SimlockProfileId: Optional.
 	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomerId") to
+	// ForceSendFields is a list of field names (e.g. "ConfigurationId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1780,12 +1785,13 @@ type PartnerClaim struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConfigurationId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

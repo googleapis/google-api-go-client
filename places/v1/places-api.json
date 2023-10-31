@@ -222,7 +222,7 @@
                   "type": "integer"
                 },
                 "name": {
-                  "description": "Required. The resource name of a photo as returned in a Place object's photos.name field. Format: places/place_id/photos/photo_reference.",
+                  "description": "Required. The resource name of a photo media in the format: `places/place_id/photos/photo_reference/media`. The resource name of a photo as returned in a Place object's photos.name field comes with the format `places/place_id/photos/photo_reference`. You need to append `/media` at the end of the photo resource to get the photo media resource name.",
                   "location": "path",
                   "pattern": "^places/[^/]+/photos/[^/]+/media$",
                   "required": true,
@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20231025",
+  "revision": "20231029",
   "rootUrl": "https://places.googleapis.com/",
   "schemas": {
     "GoogleGeoTypeViewport": {
@@ -294,7 +294,7 @@
           "description": "Required. Center latitude and longitude. The range of latitude must be within [-90.0, 90.0]. The range of the longitude must be within [-180.0, 180.0]."
         },
         "radius": {
-          "description": "Required. Radius measured in meters. The radius must be within [0.0, 50000.0]. The default radius is 0.0.",
+          "description": "Required. Radius measured in meters. The radius must be within [0.0, 50000.0].",
           "format": "double",
           "type": "number"
         }
@@ -489,7 +489,7 @@
       "id": "GoogleMapsPlacesV1PhotoMedia",
       "properties": {
         "name": {
-          "description": "The resource name of a photo in the format: places/place_id/photos/photo_reference.",
+          "description": "The resource name of a photo media in the format: `places/place_id/photos/photo_reference/media`.",
           "type": "string"
         },
         "photoUri": {

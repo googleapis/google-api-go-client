@@ -6488,7 +6488,7 @@
       }
     }
   },
-  "revision": "20231030",
+  "revision": "20231031",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6808,7 +6808,12 @@
     "AccountIdentityType": {
       "description": "The account identity type used to specify attributes.",
       "id": "AccountIdentityType",
-      "properties": {},
+      "properties": {
+        "selfIdentified": {
+          "description": "Optional. Indicates that the business identifies itself with a given identity type. Setting this field does not automatically mean eligibility for promotions.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "AccountImageImprovements": {

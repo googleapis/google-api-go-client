@@ -3496,6 +3496,10 @@ type TestSetup struct {
 	// test.
 	FilesToPush []*DeviceFile `json:"filesToPush,omitempty"`
 
+	// InitialSetupApks: Optional. Initial setup APKs to install before the
+	// app under test is installed. Currently capped at 100.
+	InitialSetupApks []*Apk `json:"initialSetupApks,omitempty"`
+
 	// NetworkProfile: The network traffic profile used for running the
 	// test. Available network profiles can be queried by using the
 	// NETWORK_CONFIGURATION environment type when calling

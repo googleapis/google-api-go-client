@@ -6928,7 +6928,7 @@ type User struct {
 	//   "DEVELOPER_LEVEL_PERMISSION_UNSPECIFIED" - Unknown or unspecified
 	// permission.
 	//   "CAN_SEE_ALL_APPS" - View app information and download bulk reports
-	// (read-only).
+	// (read-only). Deprecated: Check CAN_VIEW_NON_FINANCIAL_DATA_GLOBAL.
 	//   "CAN_VIEW_FINANCIAL_DATA_GLOBAL" - View financial data, orders, and
 	// cancellation survey responses.
 	//   "CAN_MANAGE_PERMISSIONS_GLOBAL" - Admin (all permissions).

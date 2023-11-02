@@ -565,7 +565,9 @@ type GoogleCloudIdentitytoolkitV1CreateAuthUriResponse struct {
 	// SigninMethods: The list of sign-in methods that the user has
 	// previously used. Each element is one of `password`, `emailLink`, or
 	// the provider ID of an IdP. Present only when a registered email
-	// identifier is set in the request.
+	// identifier is set in the request. If email enumeration protection
+	// (https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection)
+	// is enabled, this method returns an empty list.
 	SigninMethods []string `json:"signinMethods,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2187,7 +2189,10 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 	// attributes. The length of email should be less than 256 characters
 	// and in the format of `name@domain.tld`. The email should also match
 	// the RFC 822 (https://tools.ietf.org/html/rfc822) addr-spec
-	// production.
+	// production. If email enumeration protection
+	// (https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection)
+	// is enabled, the email cannot be changed by the user without verifying
+	// the email first, but it can be changed by an administrator.
 	Email string `json:"email,omitempty"`
 
 	// EmailVerified: Whether the user's email has been verified. Specifying

@@ -801,6 +801,8 @@ func (s *Connectivity) MarshalJSON() ([]byte, error) {
 }
 
 // EcoCertification: An eco certificate awarded to the hotel.
+// Deprecated: this message is no longer populated. All certification
+// data is now provided by BeCause.
 type EcoCertification struct {
 	// Awarded: Whether the eco certificate was awarded or not.
 	Awarded bool `json:"awarded,omitempty"`
@@ -999,8 +1001,8 @@ type EnergyEfficiency struct {
 	// depends on the day of the week.
 	EnergySavingThermostatsException string `json:"energySavingThermostatsException,omitempty"`
 
-	// GreenBuildingDesign: Output only. Green building design. True if
-	// BREEAM-* or LEED-* certified.
+	// GreenBuildingDesign: Output only. Green building design. True if the
+	// property has been awarded a relevant certification.
 	GreenBuildingDesign bool `json:"greenBuildingDesign,omitempty"`
 
 	// GreenBuildingDesignException: Output only. Green building design
@@ -5158,7 +5160,8 @@ type Sustainability struct {
 	EnergyEfficiency *EnergyEfficiency `json:"energyEfficiency,omitempty"`
 
 	// SustainabilityCertifications: Sustainability certifications the hotel
-	// has been awarded.
+	// has been awarded. Deprecated: this field is no longer populated. All
+	// certification data is now provided by BeCause.
 	SustainabilityCertifications *SustainabilityCertifications `json:"sustainabilityCertifications,omitempty"`
 
 	// SustainableSourcing: Sustainable sourcing practices implemented at
@@ -5197,7 +5200,8 @@ func (s *Sustainability) MarshalJSON() ([]byte, error) {
 }
 
 // SustainabilityCertifications: Sustainability certifications the hotel
-// has been awarded.
+// has been awarded. Deprecated: this message is no longer populated.
+// All certification data is now provided by BeCause.
 type SustainabilityCertifications struct {
 	// BreeamCertification: BREEAM certification.
 	//
@@ -5228,9 +5232,7 @@ type SustainabilityCertifications struct {
 	// EcoCertifications: The eco certificates awarded to the hotel.
 	EcoCertifications []*EcoCertification `json:"ecoCertifications,omitempty"`
 
-	// LeedCertification: LEED certification. Deprecated: this field is no
-	// longer populated. LEED certification status is now provided directly
-	// by USGBC.
+	// LeedCertification: LEED certification.
 	//
 	// Possible values:
 	//   "LEED_CERTIFICATION_UNSPECIFIED" - Default LeedCertification. Do
@@ -5242,9 +5244,7 @@ type SustainabilityCertifications struct {
 	//   "LEED_PLATINUM" - LEED Platinum.
 	LeedCertification string `json:"leedCertification,omitempty"`
 
-	// LeedCertificationException: LEED certification exception. Deprecated:
-	// this field is no longer populated. LEED certification status is now
-	// provided directly by USGBC.
+	// LeedCertificationException: LEED certification exception.
 	//
 	// Possible values:
 	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this

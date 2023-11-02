@@ -450,6 +450,10 @@ func (s *Key) MarshalJSON() ([]byte, error) {
 // performance metric, like "first contentful paint". It contains a
 // summary histogram of real world Chrome usage as a series of `bins`.
 type Metric struct {
+	// Fractions: For enum metrics, provides fractions which add up to
+	// approximately 1.0.
+	Fractions map[string]float64 `json:"fractions,omitempty"`
+
 	// Histogram: The histogram of user experiences for a metric. The
 	// histogram will have at least one bin and the densities of all bins
 	// will add up to ~1.
@@ -460,7 +464,7 @@ type Metric struct {
 	// for the Histogram bins.
 	Percentiles *Percentiles `json:"percentiles,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Histogram") to
+	// ForceSendFields is a list of field names (e.g. "Fractions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -468,7 +472,7 @@ type Metric struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Histogram") to include in
+	// NullFields is a list of field names (e.g. "Fractions") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

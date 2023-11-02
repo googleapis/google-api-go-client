@@ -452,7 +452,10 @@ type Container struct {
 	// but you can create your own custom container images
 	// (https://cloud.google.com/workstations/docs/custom-container-images).
 	// If using a private image, the `host.gceInstance.serviceAccount` field
-	// must be specified in the workstation configuration and must have
+	// must be specified in the workstation configuration. If using a custom
+	// container image, the service account must have Artifact Registry
+	// Reader
+	// (https://cloud.google.com/artifact-registry/docs/access-control#roles)
 	// permission to pull the specified image. Otherwise, the image must be
 	// publicly accessible.
 	Image string `json:"image,omitempty"`
@@ -765,14 +768,16 @@ type GceInstance struct {
 	// specified, be sure that the service account has
 	// `logginglogEntries.create` permission on the project so it can write
 	// logs out to Cloud Logging. If using a custom container image, the
-	// service account must have permissions to pull the specified image. If
-	// you as the administrator want to be able to `ssh` into the underlying
-	// VM, you need to set this value to a service account for which you
-	// have the `iam.serviceAccounts.actAs` permission. Conversely, if you
-	// don't want anyone to be able to `ssh` into the underlying VM, use a
-	// service account where no one has that permission. If not set, VMs run
-	// with a service account provided by the Cloud Workstations service,
-	// and the image must be publicly accessible.
+	// service account must have Artifact Registry Reader
+	// (https://cloud.google.com/artifact-registry/docs/access-control#roles)
+	// permission to pull the specified image. If you as the administrator
+	// want to be able to `ssh` into the underlying VM, you need to set this
+	// value to a service account for which you have the
+	// `iam.serviceAccounts.actAs` permission. Conversely, if you don't want
+	// anyone to be able to `ssh` into the underlying VM, use a service
+	// account where no one has that permission. If not set, VMs run with a
+	// service account provided by the Cloud Workstations service, and the
+	// image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ServiceAccountScopes: Optional. Scopes to grant to the

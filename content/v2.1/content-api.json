@@ -6488,7 +6488,7 @@
       }
     }
   },
-  "revision": "20231017",
+  "revision": "20231031",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6668,7 +6668,7 @@
         },
         "smallBusiness": {
           "$ref": "AccountIdentityType",
-          "description": "Specifies whether the business identifies itself as a small business. This optional field is only available for merchants with a business country set to \"US\". This field is not allowed for marketplaces or marketplace sellers."
+          "description": "Specifies whether the business identifies itself as a small business. This optional field is only available for merchants with a business country set to \"US\". It is also not allowed for marketplaces, but it is allowed to marketplace sellers."
         },
         "veteranOwned": {
           "$ref": "AccountIdentityType",
@@ -6808,7 +6808,12 @@
     "AccountIdentityType": {
       "description": "The account identity type used to specify attributes.",
       "id": "AccountIdentityType",
-      "properties": {},
+      "properties": {
+        "selfIdentified": {
+          "description": "Optional. Indicates that the business identifies itself with a given identity type. Setting this field does not automatically mean eligibility for promotions.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "AccountImageImprovements": {
@@ -14061,7 +14066,7 @@
           "type": "number"
         },
         "predictedGrossProfitChangeFraction": {
-          "description": "The predicted change in gross profit as a fraction after introducing the suggested price compared to current active price. For example, 0.05 is a 5% predicted increase in gross profit.",
+          "description": "*Deprecated*: This field is no longer supported and will start returning 0. The predicted change in gross profit as a fraction after introducing the suggested price compared to current active price. For example, 0.05 is a 5% predicted increase in gross profit.",
           "format": "double",
           "type": "number"
         },
@@ -14071,11 +14076,11 @@
           "type": "number"
         },
         "predictedMonthlyGrossProfitChangeCurrencyCode": {
-          "description": "The predicted monthly gross profit change currency (ISO 4217 code).",
+          "description": "*Deprecated*: This field is no longer supported and will start returning USD for all requests. The predicted monthly gross profit change currency (ISO 4217 code).",
           "type": "string"
         },
         "predictedMonthlyGrossProfitChangeMicros": {
-          "description": "The predicted change in gross profit in micros (1 millionth of a standard unit, 1 USD = 1000000 micros) after introducing the suggested price for a month compared to current active price.",
+          "description": "*Deprecated*: This field is no longer supported and will start returning 0. The predicted change in gross profit in micros (1 millionth of a standard unit, 1 USD = 1000000 micros) after introducing the suggested price for a month compared to current active price.",
           "format": "int64",
           "type": "string"
         },

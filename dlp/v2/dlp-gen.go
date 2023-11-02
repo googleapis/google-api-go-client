@@ -721,7 +721,7 @@ func (s *GooglePrivacyDlpV2AuxiliaryTable) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2BigQueryDiscoveryTarget: Target used to match
-// against for Discovery with BigQuery tables
+// against for discovery with BigQuery tables
 type GooglePrivacyDlpV2BigQueryDiscoveryTarget struct {
 	// Cadence: How often and when to update profiles. New tables that match
 	// both the filter and conditions are scanned as quickly as possible
@@ -736,7 +736,7 @@ type GooglePrivacyDlpV2BigQueryDiscoveryTarget struct {
 	// created.
 	Disabled *GooglePrivacyDlpV2Disabled `json:"disabled,omitempty"`
 
-	// Filter: Required. The tables the Discovery cadence applies to. The
+	// Filter: Required. The tables the discovery cadence applies to. The
 	// first target with a matching filter will be the one to apply to a
 	// table.
 	Filter *GooglePrivacyDlpV2DiscoveryBigQueryFilter `json:"filter,omitempty"`
@@ -1047,10 +1047,10 @@ func (s *GooglePrivacyDlpV2BigQueryTableCollection) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2BigQueryTableTypes: The types of bigquery tables
+// GooglePrivacyDlpV2BigQueryTableTypes: The types of BigQuery tables
 // supported by Cloud DLP.
 type GooglePrivacyDlpV2BigQueryTableTypes struct {
-	// Types: A set of bigquery table types.
+	// Types: A set of BigQuery table types.
 	//
 	// Possible values:
 	//   "BIG_QUERY_TABLE_TYPE_UNSPECIFIED" - Unused.
@@ -2211,7 +2211,7 @@ func (s *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) MarshalJSON() ([]byt
 // GooglePrivacyDlpV2CreateDiscoveryConfigRequest: Request message for
 // CreateDiscoveryConfig.
 type GooglePrivacyDlpV2CreateDiscoveryConfigRequest struct {
-	// ConfigId: The config id can contain uppercase and lowercase letters,
+	// ConfigId: The config ID can contain uppercase and lowercase letters,
 	// numbers, and hyphens; that is, it must match the regular expression:
 	// `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty
 	// to allow the system to generate one.
@@ -2860,7 +2860,7 @@ type GooglePrivacyDlpV2DataProfileJobConfig struct {
 	// specified, it will be copied to that region and used instead. If no
 	// global or region-specific template is provided for a region with
 	// data, that region's data will not be scanned. For more information,
-	// see https://cloud.google.com/dlp/docs/data-profiles#data_residency.
+	// see https://cloud.google.com/dlp/docs/data-profiles#data-residency.
 	InspectTemplates []string `json:"inspectTemplates,omitempty"`
 
 	// Location: The data to scan.
@@ -3864,13 +3864,16 @@ func (s *GooglePrivacyDlpV2Dictionary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2Disabled: Do nothing.
+// GooglePrivacyDlpV2Disabled: Do not profile the tables.
 type GooglePrivacyDlpV2Disabled struct {
 }
 
 // GooglePrivacyDlpV2DiscoveryBigQueryConditions: Requirements that must
-// be true before a table is scanned in Discovery for the first time.
+// be true before a table is scanned in discovery for the first time.
 // There is an AND relationship between the top-level attributes.
+// Additionally, minimum conditions with an OR relationship that must be
+// met before Cloud DLP scans a table can be set (like a minimum row
+// count or a minimum table age).
 type GooglePrivacyDlpV2DiscoveryBigQueryConditions struct {
 	// CreatedAfter: BigQuery table must have been created after this date.
 	// Used to avoid backfilling.
@@ -3880,22 +3883,23 @@ type GooglePrivacyDlpV2DiscoveryBigQueryConditions struct {
 	// to be scanned.
 	OrConditions *GooglePrivacyDlpV2OrConditions `json:"orConditions,omitempty"`
 
-	// TypeCollection: Restrict Discovery to categories of table types.
+	// TypeCollection: Restrict discovery to categories of table types.
 	//
 	// Possible values:
 	//   "BIG_QUERY_COLLECTION_UNSPECIFIED" - Unused.
 	//   "BIG_QUERY_COLLECTION_ALL_TYPES" - Automatically generate profiles
 	// for all tables, even if the table type is not yet fully supported for
-	// analysis. These unsupported profiles will be generated with errors to
-	// indicate their partial support. When support is added, they will
-	// automatically be profiled during the next scheduled run.
+	// analysis. Profiles for unsupported tables will be generated with
+	// errors to indicate their partial support. When full support is added,
+	// the tables will automatically be profiled during the next scheduled
+	// run.
 	//   "BIG_QUERY_COLLECTION_ONLY_SUPPORTED_TYPES" - Only those types
-	// fully supported will be profiled. Will expand automatically as new
-	// support is added. Unsupported table types will not have a profile
-	// generated.
+	// fully supported will be profiled. Will expand automatically as Cloud
+	// DLP adds support for new table types. Unsupported table types will
+	// not have partial profiles generated.
 	TypeCollection string `json:"typeCollection,omitempty"`
 
-	// Types: Restrict Discovery to specific table types.
+	// Types: Restrict discovery to specific table types.
 	Types *GooglePrivacyDlpV2BigQueryTableTypes `json:"types,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreatedAfter") to
@@ -3924,9 +3928,7 @@ func (s *GooglePrivacyDlpV2DiscoveryBigQueryConditions) MarshalJSON() ([]byte, e
 // GooglePrivacyDlpV2DiscoveryBigQueryFilter: Determines what tables
 // will have profiles generated within an organization or project.
 // Includes the ability to filter by regular expression patterns on
-// project ID, dataset ID, and table ID. Also lets you set minimum
-// conditions that must be met before Cloud DLP scans a table (like a
-// minimum row count or a minimum table age).
+// project ID, dataset ID, and table ID.
 type GooglePrivacyDlpV2DiscoveryBigQueryFilter struct {
 	// OtherTables: Catch-all. This should always be the last filter in the
 	// list because anything above it will apply first. Should only appear
@@ -3963,8 +3965,8 @@ func (s *GooglePrivacyDlpV2DiscoveryBigQueryFilter) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2DiscoveryConfig: Configuration for Discovery to
-// scan resources for profile generation. Only one Discovery
+// GooglePrivacyDlpV2DiscoveryConfig: Configuration for discovery to
+// scan resources for profile generation. Only one discovery
 // configuration may exist per organization, folder, or project. The
 // generated data profiles are retained according to the [data retention
 // policy] (https://cloud.google.com/dlp/docs/data-profiles#retention).
@@ -3994,7 +3996,7 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	// specified, it will be copied to that region and used instead. If no
 	// global or region-specific template is provided for a region with
 	// data, that region's data will not be scanned. For more information,
-	// see https://cloud.google.com/dlp/docs/data-profiles#data_residency.
+	// see https://cloud.google.com/dlp/docs/data-profiles#data-residency.
 	InspectTemplates []string `json:"inspectTemplates,omitempty"`
 
 	// LastRunTime: Output only. The timestamp of the last time this config
@@ -4014,8 +4016,8 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unused
-	//   "RUNNING" - The Discovery config is currently active.
-	//   "PAUSED" - The Discovery config is paused temporarily.
+	//   "RUNNING" - The discovery config is currently active.
+	//   "PAUSED" - The discovery config is paused temporarily.
 	Status string `json:"status,omitempty"`
 
 	// Targets: Target to match against for determining what to scan and how
@@ -4143,7 +4145,7 @@ func (s *GooglePrivacyDlpV2DiscoverySchemaModifiedCadence) MarshalJSON() ([]byte
 }
 
 // GooglePrivacyDlpV2DiscoveryStartingLocation: The location to begin a
-// Discovery scan. Denotes an organization ID or folder ID within an
+// discovery scan. Denotes an organization ID or folder ID within an
 // organization.
 type GooglePrivacyDlpV2DiscoveryStartingLocation struct {
 	// FolderId: The ID of the Folder within an organization to scan.
@@ -7074,7 +7076,7 @@ type GooglePrivacyDlpV2ListDeidentifyTemplatesResponse struct {
 	DeidentifyTemplates []*GooglePrivacyDlpV2DeidentifyTemplate `json:"deidentifyTemplates,omitempty"`
 
 	// NextPageToken: If the next page is available then the next page token
-	// to be used in following ListDeidentifyTemplates request.
+	// to be used in the following ListDeidentifyTemplates request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7113,7 +7115,7 @@ type GooglePrivacyDlpV2ListDiscoveryConfigsResponse struct {
 	DiscoveryConfigs []*GooglePrivacyDlpV2DiscoveryConfig `json:"discoveryConfigs,omitempty"`
 
 	// NextPageToken: If the next page is available then the next page token
-	// to be used in following ListDiscoveryConfigs request.
+	// to be used in the following ListDiscoveryConfigs request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7222,7 +7224,7 @@ type GooglePrivacyDlpV2ListInspectTemplatesResponse struct {
 	InspectTemplates []*GooglePrivacyDlpV2InspectTemplate `json:"inspectTemplates,omitempty"`
 
 	// NextPageToken: If the next page is available then the next page token
-	// to be used in following ListInspectTemplates request.
+	// to be used in the following ListInspectTemplates request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7261,7 +7263,7 @@ type GooglePrivacyDlpV2ListJobTriggersResponse struct {
 	JobTriggers []*GooglePrivacyDlpV2JobTrigger `json:"jobTriggers,omitempty"`
 
 	// NextPageToken: If the next page is available then the next page token
-	// to be used in following ListJobTriggers request.
+	// to be used in the following ListJobTriggers request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7295,7 +7297,7 @@ func (s *GooglePrivacyDlpV2ListJobTriggersResponse) MarshalJSON() ([]byte, error
 // ListStoredInfoTypes.
 type GooglePrivacyDlpV2ListStoredInfoTypesResponse struct {
 	// NextPageToken: If the next page is available then the next page token
-	// to be used in following ListStoredInfoTypes request.
+	// to be used in the following ListStoredInfoTypes request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// StoredInfoTypes: List of storedInfoTypes, up to page_size in
@@ -10506,7 +10508,7 @@ func (s *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) MarshalJSON() ([]byt
 // GooglePrivacyDlpV2UpdateDiscoveryConfigRequest: Request message for
 // UpdateDiscoveryConfig.
 type GooglePrivacyDlpV2UpdateDiscoveryConfigRequest struct {
-	// DiscoveryConfig: New DiscoveryConfig value.
+	// DiscoveryConfig: Required. New DiscoveryConfig value.
 	DiscoveryConfig *GooglePrivacyDlpV2DiscoveryConfig `json:"discoveryConfig,omitempty"`
 
 	// UpdateMask: Mask to control which fields get updated.
@@ -11819,28 +11821,28 @@ func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string)
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *OrganizationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *OrganizationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListDeidentifyTemplates`.
 func (c *OrganizationsDeidentifyTemplatesListCall) PageToken(pageToken string) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -11962,18 +11964,18 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12653,28 +12655,28 @@ func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *O
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *OrganizationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *OrganizationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListInspectTemplates`.
 func (c *OrganizationsInspectTemplatesListCall) PageToken(pageToken string) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -12796,18 +12798,18 @@ func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13490,28 +13492,28 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) LocationId(locationI
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListDeidentifyTemplates`.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageToken(pageToken string) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -13633,18 +13635,18 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13847,7 +13849,7 @@ type OrganizationsLocationsDiscoveryConfigsCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates a config for Discovery to scan and profile storage.
+// Create: Creates a config for discovery to scan and profile storage.
 //
 //   - parent: Parent resource name. The format of this value is as
 //     follows: `projects/`PROJECT_ID`/locations/`LOCATION_ID The
@@ -13954,7 +13956,7 @@ func (c *OrganizationsLocationsDiscoveryConfigsCreateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a config for Discovery to scan and profile storage.",
+	//   "description": "Creates a config for discovery to scan and profile storage.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/discoveryConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.locations.discoveryConfigs.create",
@@ -13994,7 +13996,7 @@ type OrganizationsLocationsDiscoveryConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Discovery configuration.
+// Delete: Deletes a discovery configuration.
 //
 //   - name: Resource name of the project and the config, for example
 //     `projects/dlp-test-project/discoveryConfigs/53234423`.
@@ -14090,7 +14092,7 @@ func (c *OrganizationsLocationsDiscoveryConfigsDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Discovery configuration.",
+	//   "description": "Deletes a discovery configuration.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/discoveryConfigs/{discoveryConfigsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.organizations.locations.discoveryConfigs.delete",
@@ -14128,7 +14130,7 @@ type OrganizationsLocationsDiscoveryConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Discovery configuration.
+// Get: Gets a discovery configuration.
 //
 //   - name: Resource name of the project and the configuration, for
 //     example `projects/dlp-test-project/discoveryConfigs/53234423`.
@@ -14238,7 +14240,7 @@ func (c *OrganizationsLocationsDiscoveryConfigsGetCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a Discovery configuration.",
+	//   "description": "Gets a discovery configuration.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/discoveryConfigs/{discoveryConfigsId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.locations.discoveryConfigs.get",
@@ -14276,7 +14278,7 @@ type OrganizationsLocationsDiscoveryConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Discovery configurations.
+// List: Lists discovery configurations.
 //
 //   - parent: Parent resource name. The format of this value is as
 //     follows: `projects/`PROJECT_ID`/locations/`LOCATION_ID The
@@ -14292,9 +14294,9 @@ func (r *OrganizationsLocationsDiscoveryConfigsService) List(parentid string) *O
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of config fields to order by, followed by `asc` or `desc` postfix.
-// This list is case-insensitive, default sorting order is ascending,
-// redundant space characters are insignificant. Example: `name
-// asc,update_time, create_time desc` Supported fields are: -
+// This list is case insensitive. The default sorting order is
+// ascending. Redundant space characters are insignificant. Example:
+// `name asc,update_time, create_time desc` Supported fields are: -
 // `last_run_time`: corresponds to the last time the DiscoveryConfig
 // ran. - `name`: corresponds to the DiscoveryConfig's name. - `status`:
 // corresponds to DiscoveryConfig's status.
@@ -14303,16 +14305,17 @@ func (c *OrganizationsLocationsDiscoveryConfigsListCall) OrderBy(orderBy string)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by a server.
 func (c *OrganizationsLocationsDiscoveryConfigsListCall) PageSize(pageSize int64) *OrganizationsLocationsDiscoveryConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to ListDiscoveryConfigs.
-// `order_by` field must not change for subsequent calls.
+// continue retrieval. Comes from the previous call to
+// ListDiscoveryConfigs. `order_by` field must not change for subsequent
+// calls.
 func (c *OrganizationsLocationsDiscoveryConfigsListCall) PageToken(pageToken string) *OrganizationsLocationsDiscoveryConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -14419,7 +14422,7 @@ func (c *OrganizationsLocationsDiscoveryConfigsListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Discovery configurations.",
+	//   "description": "Lists discovery configurations.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/discoveryConfigs",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.locations.discoveryConfigs.list",
@@ -14428,18 +14431,18 @@ func (c *OrganizationsLocationsDiscoveryConfigsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Comma separated list of config fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `last_run_time`: corresponds to the last time the DiscoveryConfig ran. - `name`: corresponds to the DiscoveryConfig's name. - `status`: corresponds to DiscoveryConfig's status.",
+	//       "description": "Comma separated list of config fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `last_run_time`: corresponds to the last time the DiscoveryConfig ran. - `name`: corresponds to the DiscoveryConfig's name. - `status`: corresponds to DiscoveryConfig's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Size of the page. This value can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to ListDiscoveryConfigs. `order_by` field must not change for subsequent calls.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to ListDiscoveryConfigs. `order_by` field must not change for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14494,7 +14497,7 @@ type OrganizationsLocationsDiscoveryConfigsPatchCall struct {
 	header_                                        http.Header
 }
 
-// Patch: Updates a Discovery configuration.
+// Patch: Updates a discovery configuration.
 //
 //   - name: Resource name of the project and the configuration, for
 //     example `projects/dlp-test-project/discoveryConfigs/53234423`.
@@ -14597,7 +14600,7 @@ func (c *OrganizationsLocationsDiscoveryConfigsPatchCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Discovery configuration.",
+	//   "description": "Updates a discovery configuration.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/discoveryConfigs/{discoveryConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.organizations.locations.discoveryConfigs.patch",
@@ -14692,12 +14695,12 @@ func (c *OrganizationsLocationsDlpJobsListCall) LocationId(locationId string) *O
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, end_time asc,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the job was created. - `end_time`: corresponds to the
-// time the job ended. - `name`: corresponds to the job's name. -
-// `state`: corresponds to `state`
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// end_time asc, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the job was created. -
+// `end_time`: corresponds to the time the job ended. - `name`:
+// corresponds to the job's name. - `state`: corresponds to `state`
 func (c *OrganizationsLocationsDlpJobsListCall) OrderBy(orderBy string) *OrganizationsLocationsDlpJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -14849,7 +14852,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15407,28 +15410,28 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) LocationId(locationId s
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *OrganizationsLocationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *OrganizationsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListInspectTemplates`.
 func (c *OrganizationsLocationsInspectTemplatesListCall) PageToken(pageToken string) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -15550,18 +15553,18 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16252,8 +16255,8 @@ func (c *OrganizationsLocationsJobTriggersListCall) LocationId(locationId string
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of triggeredJob fields to order by, followed by `asc` or `desc`
-// postfix. This list is case-insensitive, default sorting order is
-// ascending, redundant space characters are insignificant. Example:
+// postfix. This list is case insensitive. The default sorting order is
+// ascending. Redundant space characters are insignificant. Example:
 // `name asc,update_time, create_time desc` Supported fields are: -
 // `create_time`: corresponds to the time the JobTrigger was created. -
 // `update_time`: corresponds to the time the JobTrigger was last
@@ -16266,15 +16269,15 @@ func (c *OrganizationsLocationsJobTriggersListCall) OrderBy(orderBy string) *Org
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by a server.
 func (c *OrganizationsLocationsJobTriggersListCall) PageSize(pageSize int64) *OrganizationsLocationsJobTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to ListJobTriggers.
+// continue retrieval. Comes from the previous call to ListJobTriggers.
 // `order_by` field must not change for subsequent calls.
 func (c *OrganizationsLocationsJobTriggersListCall) PageToken(pageToken string) *OrganizationsLocationsJobTriggersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -16414,18 +16417,18 @@ func (c *OrganizationsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Size of the page. This value can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17116,28 +17119,28 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) LocationId(locationId st
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, display_name,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the most recent version of the resource was created. -
-// `state`: corresponds to the state of the resource. - `name`:
-// corresponds to resource name. - `display_name`: corresponds to info
-// type's display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// display_name, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the most recent version of the
+// resource was created. - `state`: corresponds to the state of the
+// resource. - `name`: corresponds to resource name. - `display_name`:
+// corresponds to info type's display name.
 func (c *OrganizationsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *OrganizationsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListStoredInfoTypes`.
 func (c *OrganizationsLocationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -17259,18 +17262,18 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17950,28 +17953,28 @@ func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *Or
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, display_name,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the most recent version of the resource was created. -
-// `state`: corresponds to the state of the resource. - `name`:
-// corresponds to resource name. - `display_name`: corresponds to info
-// type's display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// display_name, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the most recent version of the
+// resource was created. - `state`: corresponds to the state of the
+// resource. - `name`: corresponds to resource name. - `display_name`:
+// corresponds to info type's display name.
 func (c *OrganizationsStoredInfoTypesListCall) OrderBy(orderBy string) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *OrganizationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListStoredInfoTypes`.
 func (c *OrganizationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -18093,18 +18096,18 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19263,28 +19266,28 @@ func (c *ProjectsDeidentifyTemplatesListCall) LocationId(locationId string) *Pro
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *ProjectsDeidentifyTemplatesListCall) OrderBy(orderBy string) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *ProjectsDeidentifyTemplatesListCall) PageSize(pageSize int64) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListDeidentifyTemplates`.
 func (c *ProjectsDeidentifyTemplatesListCall) PageToken(pageToken string) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -19406,18 +19409,18 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20264,12 +20267,12 @@ func (c *ProjectsDlpJobsListCall) LocationId(locationId string) *ProjectsDlpJobs
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, end_time asc,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the job was created. - `end_time`: corresponds to the
-// time the job ended. - `name`: corresponds to the job's name. -
-// `state`: corresponds to `state`
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// end_time asc, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the job was created. -
+// `end_time`: corresponds to the time the job ended. - `name`:
+// corresponds to the job's name. - `state`: corresponds to `state`
 func (c *ProjectsDlpJobsListCall) OrderBy(orderBy string) *ProjectsDlpJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -20421,7 +20424,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21137,28 +21140,28 @@ func (c *ProjectsInspectTemplatesListCall) LocationId(locationId string) *Projec
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *ProjectsInspectTemplatesListCall) OrderBy(orderBy string) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *ProjectsInspectTemplatesListCall) PageSize(pageSize int64) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListInspectTemplates`.
 func (c *ProjectsInspectTemplatesListCall) PageToken(pageToken string) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -21280,18 +21283,18 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22126,8 +22129,8 @@ func (c *ProjectsJobTriggersListCall) LocationId(locationId string) *ProjectsJob
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of triggeredJob fields to order by, followed by `asc` or `desc`
-// postfix. This list is case-insensitive, default sorting order is
-// ascending, redundant space characters are insignificant. Example:
+// postfix. This list is case insensitive. The default sorting order is
+// ascending. Redundant space characters are insignificant. Example:
 // `name asc,update_time, create_time desc` Supported fields are: -
 // `create_time`: corresponds to the time the JobTrigger was created. -
 // `update_time`: corresponds to the time the JobTrigger was last
@@ -22140,15 +22143,15 @@ func (c *ProjectsJobTriggersListCall) OrderBy(orderBy string) *ProjectsJobTrigge
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by a server.
 func (c *ProjectsJobTriggersListCall) PageSize(pageSize int64) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to ListJobTriggers.
+// continue retrieval. Comes from the previous call to ListJobTriggers.
 // `order_by` field must not change for subsequent calls.
 func (c *ProjectsJobTriggersListCall) PageToken(pageToken string) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -22288,18 +22291,18 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Size of the page. This value can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23469,28 +23472,28 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) LocationId(locationId str
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListDeidentifyTemplates`.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -23612,18 +23615,18 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListDeidentifyTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23826,7 +23829,7 @@ type ProjectsLocationsDiscoveryConfigsCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates a config for Discovery to scan and profile storage.
+// Create: Creates a config for discovery to scan and profile storage.
 //
 //   - parent: Parent resource name. The format of this value is as
 //     follows: `projects/`PROJECT_ID`/locations/`LOCATION_ID The
@@ -23933,7 +23936,7 @@ func (c *ProjectsLocationsDiscoveryConfigsCreateCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a config for Discovery to scan and profile storage.",
+	//   "description": "Creates a config for discovery to scan and profile storage.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/discoveryConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.discoveryConfigs.create",
@@ -23973,7 +23976,7 @@ type ProjectsLocationsDiscoveryConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Discovery configuration.
+// Delete: Deletes a discovery configuration.
 //
 //   - name: Resource name of the project and the config, for example
 //     `projects/dlp-test-project/discoveryConfigs/53234423`.
@@ -24069,7 +24072,7 @@ func (c *ProjectsLocationsDiscoveryConfigsDeleteCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Discovery configuration.",
+	//   "description": "Deletes a discovery configuration.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/discoveryConfigs/{discoveryConfigsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.projects.locations.discoveryConfigs.delete",
@@ -24107,7 +24110,7 @@ type ProjectsLocationsDiscoveryConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Discovery configuration.
+// Get: Gets a discovery configuration.
 //
 //   - name: Resource name of the project and the configuration, for
 //     example `projects/dlp-test-project/discoveryConfigs/53234423`.
@@ -24217,7 +24220,7 @@ func (c *ProjectsLocationsDiscoveryConfigsGetCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a Discovery configuration.",
+	//   "description": "Gets a discovery configuration.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/discoveryConfigs/{discoveryConfigsId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.discoveryConfigs.get",
@@ -24255,7 +24258,7 @@ type ProjectsLocationsDiscoveryConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Discovery configurations.
+// List: Lists discovery configurations.
 //
 //   - parent: Parent resource name. The format of this value is as
 //     follows: `projects/`PROJECT_ID`/locations/`LOCATION_ID The
@@ -24271,9 +24274,9 @@ func (r *ProjectsLocationsDiscoveryConfigsService) List(parentid string) *Projec
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of config fields to order by, followed by `asc` or `desc` postfix.
-// This list is case-insensitive, default sorting order is ascending,
-// redundant space characters are insignificant. Example: `name
-// asc,update_time, create_time desc` Supported fields are: -
+// This list is case insensitive. The default sorting order is
+// ascending. Redundant space characters are insignificant. Example:
+// `name asc,update_time, create_time desc` Supported fields are: -
 // `last_run_time`: corresponds to the last time the DiscoveryConfig
 // ran. - `name`: corresponds to the DiscoveryConfig's name. - `status`:
 // corresponds to DiscoveryConfig's status.
@@ -24282,16 +24285,17 @@ func (c *ProjectsLocationsDiscoveryConfigsListCall) OrderBy(orderBy string) *Pro
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by a server.
 func (c *ProjectsLocationsDiscoveryConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsDiscoveryConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to ListDiscoveryConfigs.
-// `order_by` field must not change for subsequent calls.
+// continue retrieval. Comes from the previous call to
+// ListDiscoveryConfigs. `order_by` field must not change for subsequent
+// calls.
 func (c *ProjectsLocationsDiscoveryConfigsListCall) PageToken(pageToken string) *ProjectsLocationsDiscoveryConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -24398,7 +24402,7 @@ func (c *ProjectsLocationsDiscoveryConfigsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Discovery configurations.",
+	//   "description": "Lists discovery configurations.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/discoveryConfigs",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.discoveryConfigs.list",
@@ -24407,18 +24411,18 @@ func (c *ProjectsLocationsDiscoveryConfigsListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Comma separated list of config fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `last_run_time`: corresponds to the last time the DiscoveryConfig ran. - `name`: corresponds to the DiscoveryConfig's name. - `status`: corresponds to DiscoveryConfig's status.",
+	//       "description": "Comma separated list of config fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `last_run_time`: corresponds to the last time the DiscoveryConfig ran. - `name`: corresponds to the DiscoveryConfig's name. - `status`: corresponds to DiscoveryConfig's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Size of the page. This value can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to ListDiscoveryConfigs. `order_by` field must not change for subsequent calls.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to ListDiscoveryConfigs. `order_by` field must not change for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24473,7 +24477,7 @@ type ProjectsLocationsDiscoveryConfigsPatchCall struct {
 	header_                                        http.Header
 }
 
-// Patch: Updates a Discovery configuration.
+// Patch: Updates a discovery configuration.
 //
 //   - name: Resource name of the project and the configuration, for
 //     example `projects/dlp-test-project/discoveryConfigs/53234423`.
@@ -24576,7 +24580,7 @@ func (c *ProjectsLocationsDiscoveryConfigsPatchCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Discovery configuration.",
+	//   "description": "Updates a discovery configuration.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/discoveryConfigs/{discoveryConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.projects.locations.discoveryConfigs.patch",
@@ -25550,12 +25554,12 @@ func (c *ProjectsLocationsDlpJobsListCall) LocationId(locationId string) *Projec
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, end_time asc,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the job was created. - `end_time`: corresponds to the
-// time the job ended. - `name`: corresponds to the job's name. -
-// `state`: corresponds to `state`
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// end_time asc, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the job was created. -
+// `end_time`: corresponds to the time the job ended. - `name`:
+// corresponds to the job's name. - `state`: corresponds to `state`
 func (c *ProjectsLocationsDlpJobsListCall) OrderBy(orderBy string) *ProjectsLocationsDlpJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -25707,7 +25711,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26423,28 +26427,28 @@ func (c *ProjectsLocationsInspectTemplatesListCall) LocationId(locationId string
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the template was created. - `update_time`: corresponds to
-// the time the template was last updated. - `name`: corresponds to the
-// template's name. - `display_name`: corresponds to the template's
-// display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name
+// asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the template was created. -
+// `update_time`: corresponds to the time the template was last updated.
+// - `name`: corresponds to the template's name. - `display_name`:
+// corresponds to the template's display name.
 func (c *ProjectsLocationsInspectTemplatesListCall) OrderBy(orderBy string) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *ProjectsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListInspectTemplates`.
 func (c *ProjectsLocationsInspectTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -26566,18 +26570,18 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListInspectTemplates`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27558,8 +27562,8 @@ func (c *ProjectsLocationsJobTriggersListCall) LocationId(locationId string) *Pr
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of triggeredJob fields to order by, followed by `asc` or `desc`
-// postfix. This list is case-insensitive, default sorting order is
-// ascending, redundant space characters are insignificant. Example:
+// postfix. This list is case insensitive. The default sorting order is
+// ascending. Redundant space characters are insignificant. Example:
 // `name asc,update_time, create_time desc` Supported fields are: -
 // `create_time`: corresponds to the time the JobTrigger was created. -
 // `update_time`: corresponds to the time the JobTrigger was last
@@ -27572,15 +27576,15 @@ func (c *ProjectsLocationsJobTriggersListCall) OrderBy(orderBy string) *Projects
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by a server.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by a server.
 func (c *ProjectsLocationsJobTriggersListCall) PageSize(pageSize int64) *ProjectsLocationsJobTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to ListJobTriggers.
+// continue retrieval. Comes from the previous call to ListJobTriggers.
 // `order_by` field must not change for subsequent calls.
 func (c *ProjectsLocationsJobTriggersListCall) PageToken(pageToken string) *ProjectsLocationsJobTriggersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -27720,18 +27724,18 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by a server.",
+	//       "description": "Size of the page. This value can be limited by a server.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -28422,28 +28426,28 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) LocationId(locationId string)
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, display_name,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the most recent version of the resource was created. -
-// `state`: corresponds to the state of the resource. - `name`:
-// corresponds to resource name. - `display_name`: corresponds to info
-// type's display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// display_name, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the most recent version of the
+// resource was created. - `state`: corresponds to the state of the
+// resource. - `name`: corresponds to resource name. - `display_name`:
+// corresponds to info type's display name.
 func (c *ProjectsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) *ProjectsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *ProjectsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListStoredInfoTypes`.
 func (c *ProjectsLocationsStoredInfoTypesListCall) PageToken(pageToken string) *ProjectsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -28565,18 +28569,18 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29256,28 +29260,28 @@ func (c *ProjectsStoredInfoTypesListCall) LocationId(locationId string) *Project
 
 // OrderBy sets the optional parameter "orderBy": Comma separated list
 // of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, display_name,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to the time the most recent version of the resource was created. -
-// `state`: corresponds to the state of the resource. - `name`:
-// corresponds to resource name. - `display_name`: corresponds to info
-// type's display name.
+// is case insensitive. The default sorting order is ascending.
+// Redundant space characters are insignificant. Example: `name asc,
+// display_name, create_time desc` Supported fields are: -
+// `create_time`: corresponds to the time the most recent version of the
+// resource was created. - `state`: corresponds to the state of the
+// resource. - `name`: corresponds to resource name. - `display_name`:
+// corresponds to info type's display name.
 func (c *ProjectsStoredInfoTypesListCall) OrderBy(orderBy string) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by the server. If zero server returns a page of max
-// size 100.
+// PageSize sets the optional parameter "pageSize": Size of the page.
+// This value can be limited by the server. If zero server returns a
+// page of max size 100.
 func (c *ProjectsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
+// continue retrieval. Comes from the previous call to
 // `ListStoredInfoTypes`.
 func (c *ProjectsStoredInfoTypesListCall) PageToken(pageToken string) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -29399,18 +29403,18 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page. This value can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
+	//       "description": "Page token to continue retrieval. Comes from the previous call to `ListStoredInfoTypes`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

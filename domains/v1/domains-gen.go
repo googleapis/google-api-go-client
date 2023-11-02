@@ -1888,6 +1888,7 @@ type Registration struct {
 	// longer update it with this API, and information shown about it may be
 	// stale. Domains in this state are not automatically renewed by Cloud
 	// Domains.
+	//   "EXPIRED" - The domain is expired.
 	State string `json:"state,omitempty"`
 
 	// SupportedPrivacy: Output only. Set of options for the

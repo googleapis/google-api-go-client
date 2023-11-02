@@ -878,13 +878,14 @@ type ApplicationPolicy struct {
 	// Possible values:
 	//   "AUTO_UPDATE_MODE_UNSPECIFIED" - Unspecified. Defaults to
 	// AUTO_UPDATE_DEFAULT.
-	//   "AUTO_UPDATE_DEFAULT" - The app is automatically updated with low
-	// priority to minimize the impact on the user.The app is updated when
-	// all of the following constraints are met: The device is not actively
-	// used. The device is connected to an unmetered network. The device is
-	// charging.The device is notified about a new update within 24 hours
-	// after it is published by the developer, after which the app is
-	// updated the next time the constraints above are met.
+	//   "AUTO_UPDATE_DEFAULT" - The default update mode.The app is
+	// automatically updated with low priority to minimize the impact on the
+	// user.The app is updated when all of the following constraints are
+	// met: The device is not actively used. The device is connected to an
+	// unmetered network. The device is charging. The app to be updated is
+	// not running in the foreground.The device is notified about a new
+	// update within 24 hours after it is published by the developer, after
+	// which the app is updated the next time the constraints above are met.
 	//   "AUTO_UPDATE_POSTPONED" - The app is not automatically updated for
 	// a maximum of 90 days after the app becomes out of date.90 days after
 	// the app becomes out of date, the latest available version is
@@ -993,8 +994,8 @@ type ApplicationPolicy struct {
 	//   "INSTALL_TYPE_UNSPECIFIED" - Unspecified. Defaults to AVAILABLE.
 	//   "PREINSTALLED" - The app is automatically installed and can be
 	// removed by the user.
-	//   "FORCE_INSTALLED" - The app is automatically installed and can't be
-	// removed by the user.
+	//   "FORCE_INSTALLED" - The app is automatically installed regardless
+	// of a set maintenance window and can't be removed by the user.
 	//   "BLOCKED" - The app is blocked and can't be installed. If the app
 	// was installed under a previous policy, it will be uninstalled. This
 	// also blocks its instant app functionality.
@@ -1562,7 +1563,9 @@ type Command struct {
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// NewPassword: For commands of type RESET_PASSWORD, optionally
-	// specifies the new password.
+	// specifies the new password. Note: The new password must be at least 6
+	// characters long if it is numeric in case of Android 14 devices. Else
+	// the command will fail with INVALID_VALUE.
 	NewPassword string `json:"newPassword,omitempty"`
 
 	// ResetPasswordFlags: For commands of type RESET_PASSWORD, optionally
@@ -4397,6 +4400,18 @@ type NonComplianceDetail struct {
 	// Play Terms of Service.
 	//   "USER_INVALID" - The user is no longer valid. The user may have
 	// been deleted or disabled.
+	//   "NETWORK_ERROR_UNRELIABLE_CONNECTION" - A network error on the
+	// user's device has prevented the install from succeeding. This usually
+	// happens when the device's internet connectivity is degraded,
+	// unavailable or there's a network configuration issue. Please ensure
+	// the device has access to full internet connectivity on a network that
+	// meets Android Enterprise Network Requirements
+	// (https://support.google.com/work/android/answer/10513641). App
+	// install or update will automatically resume once this is the case.
+	//   "INSUFFICIENT_STORAGE" - The user's device does not have sufficient
+	// storage space to install the app. This can be resolved by clearing up
+	// storage space on the device. App install or update will automatically
+	// resume once the device has sufficient storage.
 	InstallationFailureReason string `json:"installationFailureReason,omitempty"`
 
 	// NonComplianceReason: The reason the device is not in compliance with
@@ -6756,6 +6771,8 @@ type SystemUpdate struct {
 	// it is updated as soon as possible even outside of the maintenance
 	// window.
 	//   "POSTPONE" - Postpone automatic install up to a maximum of 30 days.
+	// This policy does not affect security updates (e.g. monthly security
+	// patches).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndMinutes") to

@@ -530,9 +530,8 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CmekConfig: CMEK, or Customer Managed Encryption Keys, enables GCP
-// products to put control over encryption and key management in their
-// customer’s hands.
+// CmekConfig: Describes the customer-managed encryption key (CMEK)
+// configuration associated with a project and location.
 type CmekConfig struct {
 	// KmsKey: Resource name of the Cloud KMS key, of the form
 	// `projects/PROJECT_ID/locations/LOCATION_ID/keyRings/KEY_RING_ID/crypto
@@ -2740,11 +2739,18 @@ type ProjectsLocationsQueuesDeleteCall struct {
 }
 
 // Delete: Deletes a queue. This command will delete the queue even if
-// it has tasks in it. Note: If you delete a queue, a queue with the
-// same name can't be created for 7 days. WARNING: Using this method may
-// have unintended side effects if you are using an App Engine
-// `queue.yaml` or `queue.xml` file to manage your queues. Read Overview
-// of Queue Management and queue.yaml
+// it has tasks in it. Note: If you delete a queue, you may be prevented
+// from creating a new queue with the same name as the deleted queue for
+// a tombstone window of up to 3 days. During this window, the
+// CreateQueue operation may appear to recreate the queue, but this can
+// be misleading. If you attempt to create a queue with the same name as
+// one that is in the tombstone window, run GetQueue to confirm that the
+// queue creation was successful. If GetQueue returns 200 response code,
+// your queue was successfully created with the name of the previously
+// deleted queue. Otherwise, your queue did not successfully recreate.
+// WARNING: Using this method may have unintended side effects if you
+// are using an App Engine `queue.yaml` or `queue.xml` file to manage
+// your queues. Read Overview of Queue Management and queue.yaml
 // (https://cloud.google.com/tasks/docs/queue-yaml) before using this
 // method.
 //
@@ -2842,7 +2848,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a queue. This command will delete the queue even if it has tasks in it. Note: If you delete a queue, a queue with the same name can't be created for 7 days. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
+	//   "description": "Deletes a queue. This command will delete the queue even if it has tasks in it. Note: If you delete a queue, you may be prevented from creating a new queue with the same name as the deleted queue for a tombstone window of up to 3 days. During this window, the CreateQueue operation may appear to recreate the queue, but this can be misleading. If you attempt to create a queue with the same name as one that is in the tombstone window, run GetQueue to confirm that the queue creation was successful. If GetQueue returns 200 response code, your queue was successfully created with the name of the previously deleted queue. Otherwise, your queue did not successfully recreate. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudtasks.projects.locations.queues.delete",

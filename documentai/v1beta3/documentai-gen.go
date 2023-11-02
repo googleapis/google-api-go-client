@@ -1376,13 +1376,13 @@ func (s *GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse) MarshalJS
 }
 
 // GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata: The metadata
-// proto of ResyncDataset method.
+// proto of `ResyncDataset` method.
 type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata struct {
 	// CommonMetadata: The basic metadata of the long-running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
 	// DatasetResyncStatuses: The list of dataset resync statuses. Not
-	// checked when `dataset_documents` is specified in ResyncRequest.
+	// checked when ResyncDatasetRequest.dataset_documents is specified.
 	DatasetResyncStatuses []*GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus `json:"datasetResyncStatuses,omitempty"`
 
 	// IndividualDocumentResyncStatuses: The list of document resync
@@ -1428,8 +1428,8 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus stru
 	DatasetInconsistencyType string `json:"datasetInconsistencyType,omitempty"`
 
 	// Status: The status of resyncing the dataset with regards to the
-	// detected inconsistency. Empty if `validate_only` is true in the
-	// request.
+	// detected inconsistency. Empty if ResyncDatasetRequest.validate_only
+	// is `true`.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1476,8 +1476,8 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResync
 	DocumentInconsistencyType string `json:"documentInconsistencyType,omitempty"`
 
 	// Status: The status of resyncing the document with regards to the
-	// detected inconsistency. Empty if `validate_only` is true in the
-	// request.
+	// detected inconsistency. Empty if ResyncDatasetRequest.validate_only
+	// is `true`.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DocumentId") to
@@ -7677,8 +7677,8 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
 // Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
-	// DocumentWarehouseConfig: Optional. Document AI Warehouse-based
-	// dataset configuration.
+	// DocumentWarehouseConfig: Optional. Derepcated. Warehouse-based
+	// dataset configuration is not supported today.
 	DocumentWarehouseConfig *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig `json:"documentWarehouseConfig,omitempty"`
 
 	// GcsManagedConfig: Optional. User-managed Cloud Storage dataset
@@ -8384,14 +8384,14 @@ type GoogleCloudDocumentaiV1beta3DocumentMetadata struct {
 	// DocumentId: Document identifier.
 	DocumentId *GoogleCloudDocumentaiV1beta3DocumentId `json:"documentId,omitempty"`
 
-	// LabelingState: Labelling state of the document.
+	// LabelingState: Labeling state of the document.
 	//
 	// Possible values:
 	//   "DOCUMENT_LABELING_STATE_UNSPECIFIED" - Default value if the enum
 	// is not set.
-	//   "DOCUMENT_LABELED" - Document has been labelled.
-	//   "DOCUMENT_UNLABELED" - Document has not been labelled.
-	//   "DOCUMENT_AUTO_LABELED" - Document has been auto-labelled.
+	//   "DOCUMENT_LABELED" - Document has been labeled.
+	//   "DOCUMENT_UNLABELED" - Document has not been labeled.
+	//   "DOCUMENT_AUTO_LABELED" - Document has been auto-labeled.
 	LabelingState string `json:"labelingState,omitempty"`
 
 	// PageCount: Number of pages in the document.
@@ -11435,20 +11435,20 @@ type GoogleCloudDocumentaiV1beta3ListDocumentsRequest struct {
 	// that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ReturnTotalSize: Optional. Controls if the ListDocuments request
-	// requires a total size of matched documents. See
-	// ListDocumentsResponse.total_size. Enabling this flag may adversely
-	// impact performance. Defaults to false.
+	// ReturnTotalSize: Optional. Controls if the request requires a total
+	// size of matched documents. See ListDocumentsResponse.total_size.
+	// Enabling this flag may adversely impact performance. Defaults to
+	// false.
 	ReturnTotalSize bool `json:"returnTotalSize,omitempty"`
 
 	// Skip: Optional. Number of results to skip beginning from the
 	// `page_token` if provided.
 	// https://google.aip.dev/158#skipping-results. It must be a
-	// non-negative integer. Negative values wil be rejected. Note that this
-	// is not the number of pages to skip. If this value causes the cursor
-	// to move past the end of results,
-	// `ListDocumentsResponse.document_metadata` and
-	// `ListDocumentsResponse.next_page_token` will be empty.
+	// non-negative integer. Negative values will be rejected. Note that
+	// this is not the number of pages to skip. If this value causes the
+	// cursor to move past the end of results,
+	// ListDocumentsResponse.document_metadata and
+	// ListDocumentsResponse.next_page_token will be empty.
 	Skip int64 `json:"skip,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -11479,9 +11479,9 @@ type GoogleCloudDocumentaiV1beta3ListDocumentsResponse struct {
 	// documents.
 	DocumentMetadata []*GoogleCloudDocumentaiV1beta3DocumentMetadata `json:"documentMetadata,omitempty"`
 
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as
+	// ListDocumentsRequest.page_token to retrieve the next page. If this
+	// field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: Total count of documents queried.

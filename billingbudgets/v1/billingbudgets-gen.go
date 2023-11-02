@@ -215,6 +215,17 @@ type GoogleCloudBillingBudgetsV1Budget struct {
 	// based on budget spend and thresholds.
 	NotificationsRule *GoogleCloudBillingBudgetsV1NotificationsRule `json:"notificationsRule,omitempty"`
 
+	// Possible values:
+	//   "OWNERSHIP_SCOPE_UNSPECIFIED" - Unspecified ownership scope, same
+	// as ALL_USERS.
+	//   "ALL_USERS" - Both billing account-level users and project-level
+	// users have full access to the budget, if the users have the required
+	// IAM permissions.
+	//   "BILLING_ACCOUNT" - Only billing account-level users have full
+	// access to the budget. Project-level users have read-only access, even
+	// if they have the required IAM permissions.
+	OwnershipScope string `json:"ownershipScope,omitempty"`
+
 	// ThresholdRules: Optional. Rules that trigger alerts (notifications of
 	// thresholds being crossed) when spend exceeds the specified
 	// percentages of the budget. Optional for `pubsubTopic` notifications.

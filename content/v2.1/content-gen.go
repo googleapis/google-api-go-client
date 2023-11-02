@@ -965,8 +965,8 @@ type AccountBusinessIdentity struct {
 
 	// SmallBusiness: Specifies whether the business identifies itself as a
 	// small business. This optional field is only available for merchants
-	// with a business country set to "US". This field is not allowed for
-	// marketplaces or marketplace sellers.
+	// with a business country set to "US". It is also not allowed for
+	// marketplaces, but it is allowed to marketplace sellers.
 	SmallBusiness *AccountIdentityType `json:"smallBusiness,omitempty"`
 
 	// VeteranOwned: Specifies whether the business identifies itself as
@@ -1244,6 +1244,33 @@ func (s *AccountIdentifier) MarshalJSON() ([]byte, error) {
 // AccountIdentityType: The account identity type used to specify
 // attributes.
 type AccountIdentityType struct {
+	// SelfIdentified: Optional. Indicates that the business identifies
+	// itself with a given identity type. Setting this field does not
+	// automatically mean eligibility for promotions.
+	SelfIdentified bool `json:"selfIdentified,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SelfIdentified") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SelfIdentified") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountIdentityType) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountIdentityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AccountImageImprovements: This improvement will attempt to
@@ -13805,10 +13832,11 @@ type PriceInsights struct {
 	// increase in conversions).
 	PredictedConversionsChangeFraction float64 `json:"predictedConversionsChangeFraction,omitempty"`
 
-	// PredictedGrossProfitChangeFraction: The predicted change in gross
-	// profit as a fraction after introducing the suggested price compared
-	// to current active price. For example, 0.05 is a 5% predicted increase
-	// in gross profit.
+	// PredictedGrossProfitChangeFraction: *Deprecated*: This field is no
+	// longer supported and will start returning 0. The predicted change in
+	// gross profit as a fraction after introducing the suggested price
+	// compared to current active price. For example, 0.05 is a 5% predicted
+	// increase in gross profit.
 	PredictedGrossProfitChangeFraction float64 `json:"predictedGrossProfitChangeFraction,omitempty"`
 
 	// PredictedImpressionsChangeFraction: The predicted change in
@@ -13817,12 +13845,15 @@ type PriceInsights struct {
 	// increase in impressions.
 	PredictedImpressionsChangeFraction float64 `json:"predictedImpressionsChangeFraction,omitempty"`
 
-	// PredictedMonthlyGrossProfitChangeCurrencyCode: The predicted monthly
-	// gross profit change currency (ISO 4217 code).
+	// PredictedMonthlyGrossProfitChangeCurrencyCode: *Deprecated*: This
+	// field is no longer supported and will start returning USD for all
+	// requests. The predicted monthly gross profit change currency (ISO
+	// 4217 code).
 	PredictedMonthlyGrossProfitChangeCurrencyCode string `json:"predictedMonthlyGrossProfitChangeCurrencyCode,omitempty"`
 
-	// PredictedMonthlyGrossProfitChangeMicros: The predicted change in
-	// gross profit in micros (1 millionth of a standard unit, 1 USD =
+	// PredictedMonthlyGrossProfitChangeMicros: *Deprecated*: This field is
+	// no longer supported and will start returning 0. The predicted change
+	// in gross profit in micros (1 millionth of a standard unit, 1 USD =
 	// 1000000 micros) after introducing the suggested price for a month
 	// compared to current active price.
 	PredictedMonthlyGrossProfitChangeMicros int64 `json:"predictedMonthlyGrossProfitChangeMicros,omitempty,string"`

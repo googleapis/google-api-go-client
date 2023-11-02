@@ -2829,7 +2829,6 @@ type Grant struct {
 	//   "CAN_VIEW_NON_FINANCIAL_DATA" - View app information (read-only).
 	//   "CAN_VIEW_APP_QUALITY" - View app quality data such as Vitals,
 	// Crashes etc.
-	//   "CAN_MANAGE_DEEPLINKS" - Manage the deep links setup of an app.
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
@@ -6929,7 +6928,7 @@ type User struct {
 	//   "DEVELOPER_LEVEL_PERMISSION_UNSPECIFIED" - Unknown or unspecified
 	// permission.
 	//   "CAN_SEE_ALL_APPS" - View app information and download bulk reports
-	// (read-only).
+	// (read-only). Deprecated: Check CAN_VIEW_NON_FINANCIAL_DATA_GLOBAL.
 	//   "CAN_VIEW_FINANCIAL_DATA_GLOBAL" - View financial data, orders, and
 	// cancellation survey responses.
 	//   "CAN_MANAGE_PERMISSIONS_GLOBAL" - Admin (all permissions).
@@ -6955,8 +6954,6 @@ type User struct {
 	// download bulk reports (read-only).
 	//   "CAN_VIEW_APP_QUALITY_GLOBAL" - View app quality information for
 	// all apps for the developer.
-	//   "CAN_MANAGE_DEEPLINKS_GLOBAL" - Manage the deep links setup for all
-	// apps for the developer.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 
 	// Email: Immutable. The user's email address.

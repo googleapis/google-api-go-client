@@ -15917,9 +15917,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForInstances, see Searching for studies,
-// series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForInstances, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
 //     request. For example, `instances`, `series/{series_uid}/instances`,
@@ -16002,7 +16001,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Do(opts ...
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/instances",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.searchForInstances",
@@ -16057,9 +16056,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForSeries, see Searching for studies, series,
-// instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForSeries, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
 //     example, `series` or `studies/{study_uid}/series`.
@@ -16141,7 +16139,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Do(opts ...goo
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForSeries returns a list of matching series. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForSeries returns a list of matching series. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/series",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.searchForSeries",
@@ -16196,9 +16194,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForStudies, see Searching for studies, series,
-// instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForStudies, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForStudies DICOMweb request.
 //     For example, `studies`.
@@ -16280,7 +16277,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForStudies returns a list of matching studies. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForStudies returns a list of matching studies. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.searchForStudies",
@@ -16483,8 +16480,8 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in
 // the Cloud Healthcare API conformance statement. For samples that show
-// how to call StoreInstances, see Storing DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
+// how to call StoreInstances, see Store DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
 //
 //   - dicomWebPath: The path of the StoreInstances DICOMweb request. For
 //     example, `studies/[{study_uid}]`. Note that the `study_uid` is
@@ -16554,7 +16551,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Do(opts ...goog
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Storing DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).",
+	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.storeInstances",
@@ -17060,8 +17057,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
 // marked successful when the deletion is complete. Warning: Instances
 // cannot be inserted into a study that is being deleted by an operation
 // until the operation completes. For samples that show how to call
-// DeleteStudy, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+// DeleteStudy, see Delete a study, series, or instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).
 //
 //   - dicomWebPath: The path of the DeleteStudy request. For example,
 //     `studies/{study_uid}`.
@@ -17160,7 +17157,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "DeleteStudy deletes all instances within the given study. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a study that is being deleted by an operation until the operation completes. For samples that show how to call DeleteStudy, see [Deleting a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).",
+	//   "description": "DeleteStudy deletes all instances within the given study. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a study that is being deleted by an operation until the operation completes. For samples that show how to call DeleteStudy, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.delete",
@@ -17215,8 +17212,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 // Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveStudyMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+// show how to call RetrieveStudyMetadata, see Retrieve metadata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).
 //
 //   - dicomWebPath: The path of the RetrieveStudyMetadata DICOMweb
 //     request. For example, `studies/{study_uid}/metadata`.
@@ -17298,7 +17295,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Do(opt
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveStudyMetadata returns instance associated with the given study presented as metadata with the bulk data removed. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudyMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudyMetadata, see [Retrieving metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).",
+	//   "description": "RetrieveStudyMetadata returns instance associated with the given study presented as metadata with the bulk data removed. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudyMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudyMetadata, see [Retrieve metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.retrieveMetadata",
@@ -17353,8 +17350,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveStudy, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+// show how to call RetrieveStudy, see Retrieve DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 //
 //   - dicomWebPath: The path of the RetrieveStudy DICOMweb request. For
 //     example, `studies/{study_uid}`.
@@ -17436,7 +17433,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveStudy returns all instances within the given study. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudy, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudy, see [Retrieving DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).",
+	//   "description": "RetrieveStudy returns all instances within the given study. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudy, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudy, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.retrieveStudy",
@@ -17491,9 +17488,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForInstances, see Searching for studies,
-// series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForInstances, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
 //     request. For example, `instances`, `series/{series_uid}/instances`,
@@ -17576,7 +17572,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Do(o
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/instances",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.searchForInstances",
@@ -17631,9 +17627,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForSeries, see Searching for studies, series,
-// instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForSeries, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
 //     example, `series` or `studies/{study_uid}/series`.
@@ -17715,7 +17710,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Do(opts
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForSeries returns a list of matching series. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForSeries returns a list of matching series. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.searchForSeries",
@@ -17770,8 +17765,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in
 // the Cloud Healthcare API conformance statement. For samples that show
-// how to call StoreInstances, see Storing DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
+// how to call StoreInstances, see Store DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
 //
 //   - dicomWebPath: The path of the StoreInstances DICOMweb request. For
 //     example, `studies/[{study_uid}]`. Note that the `study_uid` is
@@ -17841,7 +17836,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Storing DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).",
+	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.storeInstances",
@@ -17897,8 +17892,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 // will be marked successful when the deletion is complete. Warning:
 // Instances cannot be inserted into a series that is being deleted by
 // an operation until the operation completes. For samples that show how
-// to call DeleteSeries, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+// to call DeleteSeries, see Delete a study, series, or instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).
 //
 //   - dicomWebPath: The path of the DeleteSeries request. For example,
 //     `studies/{study_uid}/series/{series_uid}`.
@@ -18000,7 +17995,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "DeleteSeries deletes all instances within the given study and series. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a series that is being deleted by an operation until the operation completes. For samples that show how to call DeleteSeries, see [Deleting a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).",
+	//   "description": "DeleteSeries deletes all instances within the given study and series. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a series that is being deleted by an operation until the operation completes. For samples that show how to call DeleteSeries, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.delete",
@@ -18056,8 +18051,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 // Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveSeriesMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+// show how to call RetrieveSeriesMetadata, see Retrieve metadata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).
 //
 //   - dicomWebPath: The path of the RetrieveSeriesMetadata DICOMweb
 //     request. For example,
@@ -18140,7 +18135,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveSeriesMetadata returns instance associated with the given study and series, presented as metadata with the bulk data removed. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeriesMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeriesMetadata, see [Retrieving metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).",
+	//   "description": "RetrieveSeriesMetadata returns instance associated with the given study and series, presented as metadata with the bulk data removed. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeriesMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeriesMetadata, see [Retrieve metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveMetadata",
@@ -18195,8 +18190,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveSeries, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+// show how to call RetrieveSeries, see Retrieve DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 //
 //   - dicomWebPath: The path of the RetrieveSeries DICOMweb request. For
 //     example, `studies/{study_uid}/series/{series_uid}`.
@@ -18278,7 +18273,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) Do
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveSeries returns all instances within the given study and series. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeries, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeries, see [Retrieving DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).",
+	//   "description": "RetrieveSeries returns all instances within the given study and series. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeries, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeries, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveSeries",
@@ -18333,9 +18328,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForInstances, see Searching for studies,
-// series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForInstances, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
 //     request. For example, `instances`, `series/{series_uid}/instances`,
@@ -18418,7 +18412,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForInstances returns a list of matching instances. See [Search Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.searchForInstances",
@@ -18470,8 +18464,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall struct
 // to the GET requests specified in the Retrieve transaction. Study and
 // series search results can take a few seconds to be updated after an
 // instance is deleted using DeleteInstance. For samples that show how
-// to call DeleteInstance, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+// to call DeleteInstance, see Delete a study, series, or instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).
 //
 //   - dicomWebPath: The path of the DeleteInstance request. For example,
 //     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
@@ -18573,7 +18567,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "DeleteInstance deletes an instance associated with the given study, series, and SOP Instance UID. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. Study and series search results can take a few seconds to be updated after an instance is deleted using DeleteInstance. For samples that show how to call DeleteInstance, see [Deleting a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).",
+	//   "description": "DeleteInstance deletes an instance associated with the given study, series, and SOP Instance UID. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. Study and series search results can take a few seconds to be updated after an instance is deleted using DeleteInstance. For samples that show how to call DeleteInstance, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.delete",
@@ -18631,8 +18625,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 // and DICOM instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in
 // the Cloud Healthcare API conformance statement. For samples that show
-// how to call RetrieveInstance, see Retrieving an instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).
+// how to call RetrieveInstance, see Retrieve an instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-instance).
 //
 //   - dicomWebPath: The path of the RetrieveInstance DICOMweb request.
 //     For example,
@@ -18715,7 +18709,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveInstance returns instance associated with the given study, series, and SOP Instance UID. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstance, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) and [DICOM instances](https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstance, see [Retrieving an instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).",
+	//   "description": "RetrieveInstance returns instance associated with the given study, series, and SOP Instance UID. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstance, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) and [DICOM instances](https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstance, see [Retrieve an instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-instance).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveInstance",
@@ -18772,8 +18766,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveInstanceMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+// show how to call RetrieveInstanceMetadata, see Retrieve metadata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).
 //
 //   - dicomWebPath: The path of the RetrieveInstanceMetadata DICOMweb
 //     request. For example,
@@ -18857,7 +18851,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveInstanceMetadata returns instance associated with the given study, series, and SOP Instance UID presented as metadata with the bulk data removed. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstanceMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstanceMetadata, see [Retrieving metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).",
+	//   "description": "RetrieveInstanceMetadata returns instance associated with the given study, series, and SOP Instance UID presented as metadata with the bulk data removed. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstanceMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstanceMetadata, see [Retrieve metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveMetadata",
@@ -18913,9 +18907,9 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // Rendered resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveRenderedInstance, see Retrieving consumer
+// show how to call RetrieveRenderedInstance, see Retrieve consumer
 // image formats
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).
 //
 //   - dicomWebPath: The path of the RetrieveRenderedInstance DICOMweb
 //     request. For example,
@@ -18999,7 +18993,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveRenderedInstance returns instance associated with the given study, series, and SOP Instance UID in an acceptable Rendered Media Type. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedInstance, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedInstance, see [Retrieving consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).",
+	//   "description": "RetrieveRenderedInstance returns instance associated with the given study, series, and SOP Instance UID in an acceptable Rendered Media Type. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedInstance, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedInstance, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/rendered",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveRendered",
@@ -19054,8 +19048,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 // For details on the implementation of RetrieveFrames, see DICOM frames
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the
 // Cloud Healthcare API conformance statement. For samples that show how
-// to call RetrieveFrames, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+// to call RetrieveFrames, see Retrieve DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 //
 //   - dicomWebPath: The path of the RetrieveFrames DICOMweb request. For
 //     example,
@@ -19139,7 +19133,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4}. For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieving DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).",
+	//   "description": "RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4}. For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/frames/{framesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveFrames",
@@ -19195,9 +19189,9 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // Rendered resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveRenderedFrames, see Retrieving consumer
-// image formats
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
+// show how to call RetrieveRenderedFrames, see Retrieve consumer image
+// formats
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).
 //
 //   - dicomWebPath: The path of the RetrieveRenderedFrames DICOMweb
 //     request. For example,
@@ -19281,7 +19275,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieving consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).",
+	//   "description": "RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/frames/{framesId}/rendered",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveRendered",
@@ -24476,7 +24470,7 @@ type ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall struct {
 	header_      http.Header
 }
 
-// GetHL7v2StoreMetrics: Gets metrics asssociated with the HL7v2 store.
+// GetHL7v2StoreMetrics: Gets metrics associated with the HL7v2 store.
 //
 //   - name: The resource name of the HL7v2 store to get metrics for, in
 //     the format
@@ -24587,7 +24581,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets metrics asssociated with the HL7v2 store.",
+	//   "description": "Gets metrics associated with the HL7v2 store.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:getHL7v2StoreMetrics",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics",

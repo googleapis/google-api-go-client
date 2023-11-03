@@ -350,6 +350,112 @@ func (s *GoogleAdsSearchads360V0Common__AssetInteractionTarget) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Common__AssetUsage: Contains the usage
+// information of the asset.
+type GoogleAdsSearchads360V0Common__AssetUsage struct {
+	// Asset: Resource name of the asset.
+	Asset string `json:"asset,omitempty"`
+
+	// ServedAssetFieldType: The served field type of the asset.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - No value has been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This
+	// is a response-only value.
+	//   "HEADLINE_1" - The asset is used in headline 1.
+	//   "HEADLINE_2" - The asset is used in headline 2.
+	//   "HEADLINE_3" - The asset is used in headline 3.
+	//   "DESCRIPTION_1" - The asset is used in description 1.
+	//   "DESCRIPTION_2" - The asset is used in description 2.
+	//   "HEADLINE" - The asset was used in a headline. Use this only if
+	// there is only one headline in the ad. Otherwise, use the HEADLINE_1,
+	// HEADLINE_2 or HEADLINE_3 enums
+	//   "HEADLINE_IN_PORTRAIT" - The asset was used as a headline in
+	// portrait image.
+	//   "LONG_HEADLINE" - The asset was used in a long headline (used in
+	// MultiAssetResponsiveAd).
+	//   "DESCRIPTION" - The asset was used in a description. Use this only
+	// if there is only one description in the ad. Otherwise, use the
+	// DESCRIPTION_1 or DESCRIPTION_@ enums
+	//   "DESCRIPTION_IN_PORTRAIT" - The asset was used as description in
+	// portrait image.
+	//   "BUSINESS_NAME_IN_PORTRAIT" - The asset was used as business name
+	// in portrait image.
+	//   "BUSINESS_NAME" - The asset was used as business name.
+	//   "MARKETING_IMAGE" - The asset was used as a marketing image.
+	//   "MARKETING_IMAGE_IN_PORTRAIT" - The asset was used as a marketing
+	// image in portrait image.
+	//   "SQUARE_MARKETING_IMAGE" - The asset was used as a square marketing
+	// image.
+	//   "PORTRAIT_MARKETING_IMAGE" - The asset was used as a portrait
+	// marketing image.
+	//   "LOGO" - The asset was used as a logo.
+	//   "LANDSCAPE_LOGO" - The asset was used as a landscape logo.
+	//   "CALL_TO_ACTION" - The asset was used as a call-to-action.
+	//   "YOU_TUBE_VIDEO" - The asset was used as a YouTube video.
+	//   "SITELINK" - This asset is used as a sitelink.
+	//   "CALL" - This asset is used as a call.
+	//   "MOBILE_APP" - This asset is used as a mobile app.
+	//   "CALLOUT" - This asset is used as a callout.
+	//   "STRUCTURED_SNIPPET" - This asset is used as a structured snippet.
+	//   "PRICE" - This asset is used as a price.
+	//   "PROMOTION" - This asset is used as a promotion.
+	//   "AD_IMAGE" - This asset is used as an image.
+	//   "LEAD_FORM" - The asset is used as a lead form.
+	//   "BUSINESS_LOGO" - The asset is used as a business logo.
+	ServedAssetFieldType string `json:"servedAssetFieldType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__AssetUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__AssetUsage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__AudienceInfo: An audience criterion.
+type GoogleAdsSearchads360V0Common__AudienceInfo struct {
+	// Audience: The Audience resource name.
+	Audience string `json:"audience,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audience") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__AudienceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__AudienceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Common__BusinessProfileLocation: Business
 // Profile location data synced from the linked Business Profile
 // account.
@@ -385,6 +491,57 @@ type GoogleAdsSearchads360V0Common__BusinessProfileLocation struct {
 
 func (s *GoogleAdsSearchads360V0Common__BusinessProfileLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__BusinessProfileLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__CallToActionAsset: A call to action
+// asset.
+type GoogleAdsSearchads360V0Common__CallToActionAsset struct {
+	// CallToAction: Call to action.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "LEARN_MORE" - The call to action type is learn more.
+	//   "GET_QUOTE" - The call to action type is get quote.
+	//   "APPLY_NOW" - The call to action type is apply now.
+	//   "SIGN_UP" - The call to action type is sign up.
+	//   "CONTACT_US" - The call to action type is contact us.
+	//   "SUBSCRIBE" - The call to action type is subscribe.
+	//   "DOWNLOAD" - The call to action type is download.
+	//   "BOOK_NOW" - The call to action type is book now.
+	//   "SHOP_NOW" - The call to action type is shop now.
+	//   "BUY_NOW" - The call to action type is buy now.
+	//   "DONATE_NOW" - The call to action type is donate now.
+	//   "ORDER_NOW" - The call to action type is order now.
+	//   "PLAY_NOW" - The call to action type is play now.
+	//   "SEE_MORE" - The call to action type is see more.
+	//   "START_NOW" - The call to action type is start now.
+	//   "VISIT_SITE" - The call to action type is visit site.
+	//   "WATCH_NOW" - The call to action type is watch now.
+	CallToAction string `json:"callToAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CallToAction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallToAction") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__CallToActionAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__CallToActionAsset
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -506,6 +663,92 @@ type GoogleAdsSearchads360V0Common__GenderInfo struct {
 
 func (s *GoogleAdsSearchads360V0Common__GenderInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__GenderInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__ImageAsset: An Image asset.
+type GoogleAdsSearchads360V0Common__ImageAsset struct {
+	// FileSize: File size of the image asset in bytes.
+	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// FullSize: Metadata for this image at its original size.
+	FullSize *GoogleAdsSearchads360V0Common__ImageDimension `json:"fullSize,omitempty"`
+
+	// MimeType: MIME type of the image asset.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - The mime type has not been specified.
+	//   "UNKNOWN" - The received value is not known in this version. This
+	// is a response-only value.
+	//   "IMAGE_JPEG" - MIME type of image/jpeg.
+	//   "IMAGE_GIF" - MIME type of image/gif.
+	//   "IMAGE_PNG" - MIME type of image/png.
+	//   "FLASH" - MIME type of application/x-shockwave-flash.
+	//   "TEXT_HTML" - MIME type of text/html.
+	//   "PDF" - MIME type of application/pdf.
+	//   "MSWORD" - MIME type of application/msword.
+	//   "MSEXCEL" - MIME type of application/vnd.ms-excel.
+	//   "RTF" - MIME type of application/rtf.
+	//   "AUDIO_WAV" - MIME type of audio/wav.
+	//   "AUDIO_MP3" - MIME type of audio/mp3.
+	//   "HTML5_AD_ZIP" - MIME type of application/x-html5-ad-zip.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__ImageAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__ImageAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__ImageDimension: Metadata for an image
+// at a certain size, either original or resized.
+type GoogleAdsSearchads360V0Common__ImageDimension struct {
+	// HeightPixels: Height of the image.
+	HeightPixels int64 `json:"heightPixels,omitempty,string"`
+
+	// Url: A URL that returns the image with this height and width.
+	Url string `json:"url,omitempty"`
+
+	// WidthPixels: Width of the image.
+	WidthPixels int64 `json:"widthPixels,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "HeightPixels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HeightPixels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__ImageDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__ImageDimension
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -994,6 +1237,149 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// optimize for these conversions.
 	ClientAccountConversionsValue float64 `json:"clientAccountConversionsValue,omitempty"`
 
+	// ClientAccountCrossSellCostOfGoodsSoldMicros: Client account
+	// cross-sell cost of goods sold (COGS) is the total cost of products
+	// sold as a result of advertising a different product. How it works:
+	// You report conversions with cart data for completed purchases on your
+	// website. If the ad that was interacted with before the purchase has
+	// an associated product (see Shopping Ads) then this product is
+	// considered the advertised product. Any product included in the order
+	// the customer places is a sold product. If these products don't match
+	// then this is considered cross-sell. Cross-sell cost of goods sold is
+	// the total cost of the products sold that weren't advertised. Example:
+	// Someone clicked on a Shopping ad for a hat then bought the same hat
+	// and a shirt. The hat has a cost of goods sold value of $3, the shirt
+	// has a cost of goods sold value of $5. The cross-sell cost of goods
+	// sold for this order is $5. This metric is only available if you
+	// report conversions with cart data. This metric is a monetary value
+	// and returned in the customer's currency by default. See the
+	// metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	ClientAccountCrossSellCostOfGoodsSoldMicros int64 `json:"clientAccountCrossSellCostOfGoodsSoldMicros,omitempty,string"`
+
+	// ClientAccountCrossSellGrossProfitMicros: Client account cross-sell
+	// gross profit is the profit you made from products sold as a result of
+	// advertising a different product, minus cost of goods sold (COGS). How
+	// it works: You report conversions with cart data for completed
+	// purchases on your website. If the ad that was interacted with before
+	// the purchase has an associated product (see Shopping Ads) then this
+	// product is considered the advertised product. Any product included in
+	// the purchase is a sold product. If these products don't match then
+	// this is considered cross-sell. Cross-sell gross profit is the revenue
+	// you made from cross-sell attributed to your ads minus the cost of the
+	// goods sold. Example: Someone clicked on a Shopping ad for a hat then
+	// bought the same hat and a shirt. The shirt is priced $20 and has a
+	// cost of goods sold value of $5. The cross-sell gross profit of this
+	// order is $15 = $20 - $5. This metric is only available if you report
+	// conversions with cart data. This metric is a monetary value and
+	// returned in the customer's currency by default. See the
+	// metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	ClientAccountCrossSellGrossProfitMicros int64 `json:"clientAccountCrossSellGrossProfitMicros,omitempty,string"`
+
+	// ClientAccountCrossSellRevenueMicros: Client account cross-sell
+	// revenue is the total amount you made from products sold as a result
+	// of advertising a different product. How it works: You report
+	// conversions with cart data for completed purchases on your website.
+	// If the ad that was interacted with before the purchase has an
+	// associated product (see Shopping Ads) then this product is considered
+	// the advertised product. Any product included in the order the
+	// customer places is a sold product. If these products don't match then
+	// this is considered cross-sell. Cross-sell revenue is the total value
+	// you made from cross-sell attributed to your ads. Example: Someone
+	// clicked on a Shopping ad for a hat then bought the same hat and a
+	// shirt. The hat is priced $10 and the shirt is priced $20. The
+	// cross-sell revenue of this order is $20. This metric is only
+	// available if you report conversions with cart data. This metric is a
+	// monetary value and returned in the customer's currency by default.
+	// See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	ClientAccountCrossSellRevenueMicros int64 `json:"clientAccountCrossSellRevenueMicros,omitempty,string"`
+
+	// ClientAccountCrossSellUnitsSold: Client account cross-sell units sold
+	// is the total number of products sold as a result of advertising a
+	// different product. How it works: You report conversions with cart
+	// data for completed purchases on your website. If the ad that was
+	// interacted with before the purchase has an associated product (see
+	// Shopping Ads) then this product is considered the advertised product.
+	// Any product included in the order the customer places is a sold
+	// product. If these products don't match then this is considered
+	// cross-sell. Cross-sell units sold is the total number of cross-sold
+	// products from all orders attributed to your ads. Example: Someone
+	// clicked on a Shopping ad for a hat then bought the same hat, a shirt
+	// and a jacket. The cross-sell units sold in this order is 2. This
+	// metric is only available if you report conversions with cart data.
+	ClientAccountCrossSellUnitsSold float64 `json:"clientAccountCrossSellUnitsSold,omitempty"`
+
+	// ClientAccountLeadCostOfGoodsSoldMicros: Client account lead cost of
+	// goods sold (COGS) is the total cost of products sold as a result of
+	// advertising the same product. How it works: You report conversions
+	// with cart data for completed purchases on your website. If the ad
+	// that was interacted with has an associated product (see Shopping Ads)
+	// then this product is considered the advertised product. Any product
+	// included in the order the customer places is a sold product. If the
+	// advertised and sold products match, then the cost of these goods is
+	// counted under lead cost of goods sold. Example: Someone clicked on a
+	// Shopping ad for a hat then bought the same hat and a shirt. The hat
+	// has a cost of goods sold value of $3, the shirt has a cost of goods
+	// sold value of $5. The lead cost of goods sold for this order is $3.
+	// This metric is only available if you report conversions with cart
+	// data. This metric is a monetary value and returned in the customer's
+	// currency by default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	ClientAccountLeadCostOfGoodsSoldMicros int64 `json:"clientAccountLeadCostOfGoodsSoldMicros,omitempty,string"`
+
+	// ClientAccountLeadGrossProfitMicros: Client account lead gross profit
+	// is the profit you made from products sold as a result of advertising
+	// the same product, minus cost of goods sold (COGS). How it works: You
+	// report conversions with cart data for completed purchases on your
+	// website. If the ad that was interacted with before the purchase has
+	// an associated product (see Shopping Ads) then this product is
+	// considered the advertised product. Any product included in the order
+	// the customer places is a sold product. If the advertised and sold
+	// products match, then the revenue you made from these sales minus the
+	// cost of goods sold is your lead gross profit. Example: Someone
+	// clicked on a Shopping ad for a hat then bought the same hat and a
+	// shirt. The hat is priced $10 and has a cost of goods sold value of
+	// $3. The lead gross profit of this order is $7 = $10 - $3. This metric
+	// is only available if you report conversions with cart data. This
+	// metric is a monetary value and returned in the customer's currency by
+	// default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	ClientAccountLeadGrossProfitMicros int64 `json:"clientAccountLeadGrossProfitMicros,omitempty,string"`
+
+	// ClientAccountLeadRevenueMicros: Client account lead revenue is the
+	// total amount you made from products sold as a result of advertising
+	// the same product. How it works: You report conversions with cart data
+	// for completed purchases on your website. If the ad that was
+	// interacted with before the purchase has an associated product (see
+	// Shopping Ads) then this product is considered the advertised product.
+	// Any product included in the order the customer places is a sold
+	// product. If the advertised and sold products match, then the total
+	// value you made from the sales of these products is shown under lead
+	// revenue. Example: Someone clicked on a Shopping ad for a hat then
+	// bought the same hat and a shirt. The hat is priced $10 and the shirt
+	// is priced $20. The lead revenue of this order is $10. This metric is
+	// only available if you report conversions with cart data. This metric
+	// is a monetary value and returned in the customer's currency by
+	// default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	ClientAccountLeadRevenueMicros int64 `json:"clientAccountLeadRevenueMicros,omitempty,string"`
+
+	// ClientAccountLeadUnitsSold: Client account lead units sold is the
+	// total number of products sold as a result of advertising the same
+	// product. How it works: You report conversions with cart data for
+	// completed purchases on your website. If the ad that was interacted
+	// with before the purchase has an associated product (see Shopping Ads)
+	// then this product is considered the advertised product. Any product
+	// included in the order the customer places is a sold product. If the
+	// advertised and sold products match, then the total number of these
+	// products sold is shown under lead units sold. Example: Someone
+	// clicked on a Shopping ad for a hat then bought the same hat, a shirt
+	// and a jacket. The lead units sold in this order is 1. This metric is
+	// only available if you report conversions with cart data.
+	ClientAccountLeadUnitsSold float64 `json:"clientAccountLeadUnitsSold,omitempty"`
+
 	// ClientAccountViewThroughConversions: The total number of view-through
 	// conversions. These happen when a customer sees an image or rich media
 	// ad, then later completes a conversion on your site without
@@ -1089,6 +1475,77 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// conversions.
 	CrossDeviceConversionsValue float64 `json:"crossDeviceConversionsValue,omitempty"`
 
+	// CrossSellCostOfGoodsSoldMicros: Cross-sell cost of goods sold (COGS)
+	// is the total cost of products sold as a result of advertising a
+	// different product. How it works: You report conversions with cart
+	// data for completed purchases on your website. If the ad that was
+	// interacted with before the purchase has an associated product (see
+	// Shopping Ads) then this product is considered the advertised product.
+	// Any product included in the order the customer places is a sold
+	// product. If these products don't match then this is considered
+	// cross-sell. Cross-sell cost of goods sold is the total cost of the
+	// products sold that weren't advertised. Example: Someone clicked on a
+	// Shopping ad for a hat then bought the same hat and a shirt. The hat
+	// has a cost of goods sold value of $3, the shirt has a cost of goods
+	// sold value of $5. The cross-sell cost of goods sold for this order is
+	// $5. This metric is only available if you report conversions with cart
+	// data. This metric is a monetary value and returned in the customer's
+	// currency by default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	CrossSellCostOfGoodsSoldMicros int64 `json:"crossSellCostOfGoodsSoldMicros,omitempty,string"`
+
+	// CrossSellGrossProfitMicros: Cross-sell gross profit is the profit you
+	// made from products sold as a result of advertising a different
+	// product, minus cost of goods sold (COGS). How it works: You report
+	// conversions with cart data for completed purchases on your website.
+	// If the ad that was interacted with before the purchase has an
+	// associated product (see Shopping Ads) then this product is considered
+	// the advertised product. Any product included in the purchase is a
+	// sold product. If these products don't match then this is considered
+	// cross-sell. Cross-sell gross profit is the revenue you made from
+	// cross-sell attributed to your ads minus the cost of the goods sold.
+	// Example: Someone clicked on a Shopping ad for a hat then bought the
+	// same hat and a shirt. The shirt is priced $20 and has a cost of goods
+	// sold value of $5. The cross-sell gross profit of this order is $15 =
+	// $20 - $5. This metric is only available if you report conversions
+	// with cart data. This metric is a monetary value and returned in the
+	// customer's currency by default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	CrossSellGrossProfitMicros int64 `json:"crossSellGrossProfitMicros,omitempty,string"`
+
+	// CrossSellRevenueMicros: Cross-sell revenue is the total amount you
+	// made from products sold as a result of advertising a different
+	// product. How it works: You report conversions with cart data for
+	// completed purchases on your website. If the ad that was interacted
+	// with before the purchase has an associated product (see Shopping Ads)
+	// then this product is considered the advertised product. Any product
+	// included in the order the customer places is a sold product. If these
+	// products don't match then this is considered cross-sell. Cross-sell
+	// revenue is the total value you made from cross-sell attributed to
+	// your ads. Example: Someone clicked on a Shopping ad for a hat then
+	// bought the same hat and a shirt. The hat is priced $10 and the shirt
+	// is priced $20. The cross-sell revenue of this order is $20. This
+	// metric is only available if you report conversions with cart data.
+	// This metric is a monetary value and returned in the customer's
+	// currency by default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	CrossSellRevenueMicros int64 `json:"crossSellRevenueMicros,omitempty,string"`
+
+	// CrossSellUnitsSold: Cross-sell units sold is the total number of
+	// products sold as a result of advertising a different product. How it
+	// works: You report conversions with cart data for completed purchases
+	// on your website. If the ad that was interacted with before the
+	// purchase has an associated product (see Shopping Ads) then this
+	// product is considered the advertised product. Any product included in
+	// the order the customer places is a sold product. If these products
+	// don't match then this is considered cross-sell. Cross-sell units sold
+	// is the total number of cross-sold products from all orders attributed
+	// to your ads. Example: Someone clicked on a Shopping ad for a hat then
+	// bought the same hat, a shirt and a jacket. The cross-sell units sold
+	// in this order is 2. This metric is only available if you report
+	// conversions with cart data.
+	CrossSellUnitsSold float64 `json:"crossSellUnitsSold,omitempty"`
+
 	// Ctr: The number of clicks your ad receives (Clicks) divided by the
 	// number of times your ad is shown (Impressions).
 	Ctr float64 `json:"ctr,omitempty"`
@@ -1173,6 +1630,75 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// InvalidClicks: Number of clicks Google considers illegitimate and
 	// doesn't charge you for.
 	InvalidClicks int64 `json:"invalidClicks,omitempty,string"`
+
+	// LeadCostOfGoodsSoldMicros: Lead cost of goods sold (COGS) is the
+	// total cost of products sold as a result of advertising the same
+	// product. How it works: You report conversions with cart data for
+	// completed purchases on your website. If the ad that was interacted
+	// with has an associated product (see Shopping Ads) then this product
+	// is considered the advertised product. Any product included in the
+	// order the customer places is a sold product. If the advertised and
+	// sold products match, then the cost of these goods is counted under
+	// lead cost of goods sold. Example: Someone clicked on a Shopping ad
+	// for a hat then bought the same hat and a shirt. The hat has a cost of
+	// goods sold value of $3, the shirt has a cost of goods sold value of
+	// $5. The lead cost of goods sold for this order is $3. This metric is
+	// only available if you report conversions with cart data. This metric
+	// is a monetary value and returned in the customer's currency by
+	// default. See the metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	LeadCostOfGoodsSoldMicros int64 `json:"leadCostOfGoodsSoldMicros,omitempty,string"`
+
+	// LeadGrossProfitMicros: Lead gross profit is the profit you made from
+	// products sold as a result of advertising the same product, minus cost
+	// of goods sold (COGS). How it works: You report conversions with cart
+	// data for completed purchases on your website. If the ad that was
+	// interacted with before the purchase has an associated product (see
+	// Shopping Ads) then this product is considered the advertised product.
+	// Any product included in the order the customer places is a sold
+	// product. If the advertised and sold products match, then the revenue
+	// you made from these sales minus the cost of goods sold is your lead
+	// gross profit. Example: Someone clicked on a Shopping ad for a hat
+	// then bought the same hat and a shirt. The hat is priced $10 and has a
+	// cost of goods sold value of $3. The lead gross profit of this order
+	// is $7 = $10 - $3. This metric is only available if you report
+	// conversions with cart data. This metric is a monetary value and
+	// returned in the customer's currency by default. See the
+	// metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	LeadGrossProfitMicros int64 `json:"leadGrossProfitMicros,omitempty,string"`
+
+	// LeadRevenueMicros: Lead revenue is the total amount you made from
+	// products sold as a result of advertising the same product. How it
+	// works: You report conversions with cart data for completed purchases
+	// on your website. If the ad that was interacted with before the
+	// purchase has an associated product (see Shopping Ads) then this
+	// product is considered the advertised product. Any product included in
+	// the order the customer places is a sold product. If the advertised
+	// and sold products match, then the total value you made from the sales
+	// of these products is shown under lead revenue. Example: Someone
+	// clicked on a Shopping ad for a hat then bought the same hat and a
+	// shirt. The hat is priced $10 and the shirt is priced $20. The lead
+	// revenue of this order is $10. This metric is only available if you
+	// report conversions with cart data. This metric is a monetary value
+	// and returned in the customer's currency by default. See the
+	// metrics_currency parameter at
+	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	LeadRevenueMicros int64 `json:"leadRevenueMicros,omitempty,string"`
+
+	// LeadUnitsSold: Lead units sold is the total number of products sold
+	// as a result of advertising the same product. How it works: You report
+	// conversions with cart data for completed purchases on your website.
+	// If the ad that was interacted with before the purchase has an
+	// associated product (see Shopping Ads) then this product is considered
+	// the advertised product. Any product included in the order the
+	// customer places is a sold product. If the advertised and sold
+	// products match, then the total number of these products sold is shown
+	// under lead units sold. Example: Someone clicked on a Shopping ad for
+	// a hat then bought the same hat, a shirt and a jacket. The lead units
+	// sold in this order is 1. This metric is only available if you report
+	// conversions with cart data.
+	LeadUnitsSold float64 `json:"leadUnitsSold,omitempty"`
 
 	// MobileFriendlyClicksPercentage: The percentage of mobile clicks that
 	// go to a mobile-friendly page.
@@ -1332,6 +1858,8 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		AverageCpm                                        gensupport.JSONFloat64 `json:"averageCpm"`
 		ClientAccountConversions                          gensupport.JSONFloat64 `json:"clientAccountConversions"`
 		ClientAccountConversionsValue                     gensupport.JSONFloat64 `json:"clientAccountConversionsValue"`
+		ClientAccountCrossSellUnitsSold                   gensupport.JSONFloat64 `json:"clientAccountCrossSellUnitsSold"`
+		ClientAccountLeadUnitsSold                        gensupport.JSONFloat64 `json:"clientAccountLeadUnitsSold"`
 		ContentBudgetLostImpressionShare                  gensupport.JSONFloat64 `json:"contentBudgetLostImpressionShare"`
 		ContentImpressionShare                            gensupport.JSONFloat64 `json:"contentImpressionShare"`
 		ContentRankLostImpressionShare                    gensupport.JSONFloat64 `json:"contentRankLostImpressionShare"`
@@ -1347,9 +1875,11 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		CostPerCurrentModelAttributedConversion           gensupport.JSONFloat64 `json:"costPerCurrentModelAttributedConversion"`
 		CrossDeviceConversions                            gensupport.JSONFloat64 `json:"crossDeviceConversions"`
 		CrossDeviceConversionsValue                       gensupport.JSONFloat64 `json:"crossDeviceConversionsValue"`
+		CrossSellUnitsSold                                gensupport.JSONFloat64 `json:"crossSellUnitsSold"`
 		Ctr                                               gensupport.JSONFloat64 `json:"ctr"`
 		InteractionRate                                   gensupport.JSONFloat64 `json:"interactionRate"`
 		InvalidClickRate                                  gensupport.JSONFloat64 `json:"invalidClickRate"`
+		LeadUnitsSold                                     gensupport.JSONFloat64 `json:"leadUnitsSold"`
 		MobileFriendlyClicksPercentage                    gensupport.JSONFloat64 `json:"mobileFriendlyClicksPercentage"`
 		SearchAbsoluteTopImpressionShare                  gensupport.JSONFloat64 `json:"searchAbsoluteTopImpressionShare"`
 		SearchBudgetLostAbsoluteTopImpressionShare        gensupport.JSONFloat64 `json:"searchBudgetLostAbsoluteTopImpressionShare"`
@@ -1394,6 +1924,8 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.AverageCpm = float64(s1.AverageCpm)
 	s.ClientAccountConversions = float64(s1.ClientAccountConversions)
 	s.ClientAccountConversionsValue = float64(s1.ClientAccountConversionsValue)
+	s.ClientAccountCrossSellUnitsSold = float64(s1.ClientAccountCrossSellUnitsSold)
+	s.ClientAccountLeadUnitsSold = float64(s1.ClientAccountLeadUnitsSold)
 	s.ContentBudgetLostImpressionShare = float64(s1.ContentBudgetLostImpressionShare)
 	s.ContentImpressionShare = float64(s1.ContentImpressionShare)
 	s.ContentRankLostImpressionShare = float64(s1.ContentRankLostImpressionShare)
@@ -1409,9 +1941,11 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.CostPerCurrentModelAttributedConversion = float64(s1.CostPerCurrentModelAttributedConversion)
 	s.CrossDeviceConversions = float64(s1.CrossDeviceConversions)
 	s.CrossDeviceConversionsValue = float64(s1.CrossDeviceConversionsValue)
+	s.CrossSellUnitsSold = float64(s1.CrossSellUnitsSold)
 	s.Ctr = float64(s1.Ctr)
 	s.InteractionRate = float64(s1.InteractionRate)
 	s.InvalidClickRate = float64(s1.InvalidClickRate)
+	s.LeadUnitsSold = float64(s1.LeadUnitsSold)
 	s.MobileFriendlyClicksPercentage = float64(s1.MobileFriendlyClicksPercentage)
 	s.SearchAbsoluteTopImpressionShare = float64(s1.SearchAbsoluteTopImpressionShare)
 	s.SearchBudgetLostAbsoluteTopImpressionShare = float64(s1.SearchBudgetLostAbsoluteTopImpressionShare)
@@ -1833,6 +2367,182 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	// Formatted as yyyy-MM-dd.
 	Month string `json:"month,omitempty"`
 
+	// ProductBiddingCategoryLevel1: Bidding category (level 1) of the
+	// product.
+	ProductBiddingCategoryLevel1 string `json:"productBiddingCategoryLevel1,omitempty"`
+
+	// ProductBiddingCategoryLevel2: Bidding category (level 2) of the
+	// product.
+	ProductBiddingCategoryLevel2 string `json:"productBiddingCategoryLevel2,omitempty"`
+
+	// ProductBiddingCategoryLevel3: Bidding category (level 3) of the
+	// product.
+	ProductBiddingCategoryLevel3 string `json:"productBiddingCategoryLevel3,omitempty"`
+
+	// ProductBiddingCategoryLevel4: Bidding category (level 4) of the
+	// product.
+	ProductBiddingCategoryLevel4 string `json:"productBiddingCategoryLevel4,omitempty"`
+
+	// ProductBiddingCategoryLevel5: Bidding category (level 5) of the
+	// product.
+	ProductBiddingCategoryLevel5 string `json:"productBiddingCategoryLevel5,omitempty"`
+
+	// ProductBrand: Brand of the product.
+	ProductBrand string `json:"productBrand,omitempty"`
+
+	// ProductChannel: Channel of the product.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ONLINE" - The item is sold online.
+	//   "LOCAL" - The item is sold in local stores.
+	ProductChannel string `json:"productChannel,omitempty"`
+
+	// ProductChannelExclusivity: Channel exclusivity of the product.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "SINGLE_CHANNEL" - The item is sold through one channel only,
+	// either local stores or online as indicated by its ProductChannel.
+	//   "MULTI_CHANNEL" - The item is matched to its online or local stores
+	// counterpart, indicating it is available for purchase in both
+	// ShoppingProductChannels.
+	ProductChannelExclusivity string `json:"productChannelExclusivity,omitempty"`
+
+	// ProductCondition: Condition of the product.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "OLD" - The product condition is old.
+	//   "NEW" - The product condition is new.
+	//   "REFURBISHED" - The product condition is refurbished.
+	//   "USED" - The product condition is used.
+	ProductCondition string `json:"productCondition,omitempty"`
+
+	// ProductCountry: Resource name of the geo target constant for the
+	// country of sale of the product.
+	ProductCountry string `json:"productCountry,omitempty"`
+
+	// ProductCustomAttribute0: Custom attribute 0 of the product.
+	ProductCustomAttribute0 string `json:"productCustomAttribute0,omitempty"`
+
+	// ProductCustomAttribute1: Custom attribute 1 of the product.
+	ProductCustomAttribute1 string `json:"productCustomAttribute1,omitempty"`
+
+	// ProductCustomAttribute2: Custom attribute 2 of the product.
+	ProductCustomAttribute2 string `json:"productCustomAttribute2,omitempty"`
+
+	// ProductCustomAttribute3: Custom attribute 3 of the product.
+	ProductCustomAttribute3 string `json:"productCustomAttribute3,omitempty"`
+
+	// ProductCustomAttribute4: Custom attribute 4 of the product.
+	ProductCustomAttribute4 string `json:"productCustomAttribute4,omitempty"`
+
+	// ProductItemId: Item ID of the product.
+	ProductItemId string `json:"productItemId,omitempty"`
+
+	// ProductLanguage: Resource name of the language constant for the
+	// language of the product.
+	ProductLanguage string `json:"productLanguage,omitempty"`
+
+	// ProductSoldBiddingCategoryLevel1: Bidding category (level 1) of the
+	// product sold.
+	ProductSoldBiddingCategoryLevel1 string `json:"productSoldBiddingCategoryLevel1,omitempty"`
+
+	// ProductSoldBiddingCategoryLevel2: Bidding category (level 2) of the
+	// product sold.
+	ProductSoldBiddingCategoryLevel2 string `json:"productSoldBiddingCategoryLevel2,omitempty"`
+
+	// ProductSoldBiddingCategoryLevel3: Bidding category (level 3) of the
+	// product sold.
+	ProductSoldBiddingCategoryLevel3 string `json:"productSoldBiddingCategoryLevel3,omitempty"`
+
+	// ProductSoldBiddingCategoryLevel4: Bidding category (level 4) of the
+	// product sold.
+	ProductSoldBiddingCategoryLevel4 string `json:"productSoldBiddingCategoryLevel4,omitempty"`
+
+	// ProductSoldBiddingCategoryLevel5: Bidding category (level 5) of the
+	// product sold.
+	ProductSoldBiddingCategoryLevel5 string `json:"productSoldBiddingCategoryLevel5,omitempty"`
+
+	// ProductSoldBrand: Brand of the product sold.
+	ProductSoldBrand string `json:"productSoldBrand,omitempty"`
+
+	// ProductSoldCondition: Condition of the product sold.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "OLD" - The product condition is old.
+	//   "NEW" - The product condition is new.
+	//   "REFURBISHED" - The product condition is refurbished.
+	//   "USED" - The product condition is used.
+	ProductSoldCondition string `json:"productSoldCondition,omitempty"`
+
+	// ProductSoldCustomAttribute0: Custom attribute 0 of the product sold.
+	ProductSoldCustomAttribute0 string `json:"productSoldCustomAttribute0,omitempty"`
+
+	// ProductSoldCustomAttribute1: Custom attribute 1 of the product sold.
+	ProductSoldCustomAttribute1 string `json:"productSoldCustomAttribute1,omitempty"`
+
+	// ProductSoldCustomAttribute2: Custom attribute 2 of the product sold.
+	ProductSoldCustomAttribute2 string `json:"productSoldCustomAttribute2,omitempty"`
+
+	// ProductSoldCustomAttribute3: Custom attribute 3 of the product sold.
+	ProductSoldCustomAttribute3 string `json:"productSoldCustomAttribute3,omitempty"`
+
+	// ProductSoldCustomAttribute4: Custom attribute 4 of the product sold.
+	ProductSoldCustomAttribute4 string `json:"productSoldCustomAttribute4,omitempty"`
+
+	// ProductSoldItemId: Item ID of the product sold.
+	ProductSoldItemId string `json:"productSoldItemId,omitempty"`
+
+	// ProductSoldTitle: Title of the product sold.
+	ProductSoldTitle string `json:"productSoldTitle,omitempty"`
+
+	// ProductSoldTypeL1: Type (level 1) of the product sold.
+	ProductSoldTypeL1 string `json:"productSoldTypeL1,omitempty"`
+
+	// ProductSoldTypeL2: Type (level 2) of the product sold.
+	ProductSoldTypeL2 string `json:"productSoldTypeL2,omitempty"`
+
+	// ProductSoldTypeL3: Type (level 3) of the product sold.
+	ProductSoldTypeL3 string `json:"productSoldTypeL3,omitempty"`
+
+	// ProductSoldTypeL4: Type (level 4) of the product sold.
+	ProductSoldTypeL4 string `json:"productSoldTypeL4,omitempty"`
+
+	// ProductSoldTypeL5: Type (level 5) of the product sold.
+	ProductSoldTypeL5 string `json:"productSoldTypeL5,omitempty"`
+
+	// ProductStoreId: Store ID of the product.
+	ProductStoreId string `json:"productStoreId,omitempty"`
+
+	// ProductTitle: Title of the product.
+	ProductTitle string `json:"productTitle,omitempty"`
+
+	// ProductTypeL1: Type (level 1) of the product.
+	ProductTypeL1 string `json:"productTypeL1,omitempty"`
+
+	// ProductTypeL2: Type (level 2) of the product.
+	ProductTypeL2 string `json:"productTypeL2,omitempty"`
+
+	// ProductTypeL3: Type (level 3) of the product.
+	ProductTypeL3 string `json:"productTypeL3,omitempty"`
+
+	// ProductTypeL4: Type (level 4) of the product.
+	ProductTypeL4 string `json:"productTypeL4,omitempty"`
+
+	// ProductTypeL5: Type (level 5) of the product.
+	ProductTypeL5 string `json:"productTypeL5,omitempty"`
+
 	// Quarter: Quarter as represented by the date of the first day of a
 	// quarter. Uses the calendar year for quarters, for example, the second
 	// quarter of 2018 starts on 2018-04-01. Formatted as yyyy-MM-dd.
@@ -2185,6 +2895,34 @@ type GoogleAdsSearchads360V0Common__TargetingSetting struct {
 
 func (s *GoogleAdsSearchads360V0Common__TargetingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__TextAsset: A Text asset.
+type GoogleAdsSearchads360V0Common__TextAsset struct {
+	// Text: Text content of the text asset.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__TextAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__TextAsset
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2716,6 +3454,39 @@ func (s *GoogleAdsSearchads360V0Common__WebpageInfo) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+// GoogleAdsSearchads360V0Common__YoutubeVideoAsset: A YouTube asset.
+type GoogleAdsSearchads360V0Common__YoutubeVideoAsset struct {
+	// YoutubeVideoId: YouTube video id. This is the 11 character string
+	// value used in the YouTube video URL.
+	YoutubeVideoId string `json:"youtubeVideoId,omitempty"`
+
+	// YoutubeVideoTitle: YouTube video title.
+	YoutubeVideoTitle string `json:"youtubeVideoTitle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "YoutubeVideoId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "YoutubeVideoId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Common__YoutubeVideoAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__YoutubeVideoAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement: A part of
 // a field path.
 type GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement struct {
@@ -3024,7 +3795,7 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	// (right-hand-side operands) in a filter exceeds the limit.
 	QueryError string `json:"queryError,omitempty"`
 
-	// QuotaError: An error with the amonut of quota remaining.
+	// QuotaError: An error with the amount of quota remaining.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Enum unspecified.
@@ -3858,6 +4629,270 @@ func (s *GoogleAdsSearchads360V0ResourcesConversionActionValueSettings) Unmarsha
 	}
 	s.DefaultValue = float64(s1.DefaultValue)
 	return nil
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBidd
+// ingCategory: One element of a bidding category at a certain level.
+// Top-level categories are at level 1, their children at level 2, and
+// so on. We currently support up to 5 levels. The user must specify a
+// dimension type that indicates the level of the category. All cases of
+// the same subdivision must have the same dimension type (category
+// level).
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory struct {
+	// Id: ID of the product bidding category. This ID is equivalent to the
+	// google_product_category ID as described in this article:
+	// https://support.google.com/merchants/answer/6324436
+	Id int64 `json:"id,omitempty,string"`
+
+	// Level: Indicates the level of the category in the taxonomy.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "LEVEL1" - Level 1.
+	//   "LEVEL2" - Level 2.
+	//   "LEVEL3" - Level 3.
+	//   "LEVEL4" - Level 4.
+	//   "LEVEL5" - Level 5.
+	Level string `json:"level,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBran
+// d: Brand of the product.
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand struct {
+	// Value: String value of the product brand.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChan
+// nel: Locality of a product offer.
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel struct {
+	// Channel: Value of the locality.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ONLINE" - The item is sold online.
+	//   "LOCAL" - The item is sold in local stores.
+	Channel string `json:"channel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCond
+// ition: Condition of a product offer.
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition struct {
+	// Condition: Value of the condition.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "NEW" - The product condition is new.
+	//   "REFURBISHED" - The product condition is refurbished.
+	//   "USED" - The product condition is used.
+	Condition string `json:"condition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Condition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCust
+// omAttribute: Custom attribute of a product offer.
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute struct {
+	// Index: Indicates the index of the custom attribute.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "INDEX0" - First listing group filter custom attribute.
+	//   "INDEX1" - Second listing group filter custom attribute.
+	//   "INDEX2" - Third listing group filter custom attribute.
+	//   "INDEX3" - Fourth listing group filter custom attribute.
+	//   "INDEX4" - Fifth listing group filter custom attribute.
+	Index string `json:"index,omitempty"`
+
+	// Value: String value of the product custom attribute.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Index") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Index") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItem
+// Id: Item id of a product offer.
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId struct {
+	// Value: Value of the id.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType
+// : Type of a product offer.
+type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType struct {
+	// Level: Level of the type.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "LEVEL1" - Level 1.
+	//   "LEVEL2" - Level 2.
+	//   "LEVEL3" - Level 3.
+	//   "LEVEL4" - Level 4.
+	//   "LEVEL5" - Level 5.
+	Level string `json:"level,omitempty"`
+
+	// Value: Value of the type.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Level") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Level") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Ad: An ad.
@@ -4819,6 +5854,9 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	// CallAsset: Output only. A unified call asset.
 	CallAsset *GoogleAdsSearchads360V0Common__UnifiedCallAsset `json:"callAsset,omitempty"`
 
+	// CallToActionAsset: Immutable. A call to action asset.
+	CallToActionAsset *GoogleAdsSearchads360V0Common__CallToActionAsset `json:"callToActionAsset,omitempty"`
+
 	// CalloutAsset: Output only. A unified callout asset.
 	CalloutAsset *GoogleAdsSearchads360V0Common__UnifiedCalloutAsset `json:"calloutAsset,omitempty"`
 
@@ -4847,6 +5885,9 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	// Id: Output only. The ID of the asset.
 	Id int64 `json:"id,omitempty,string"`
 
+	// ImageAsset: Output only. An image asset.
+	ImageAsset *GoogleAdsSearchads360V0Common__ImageAsset `json:"imageAsset,omitempty"`
+
 	// LastModifiedTime: Output only. The datetime when this asset was last
 	// modified. The datetime is in the customer's time zone and in
 	// "yyyy-MM-dd HH:mm:ss.ssssss" format.
@@ -4857,6 +5898,9 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 
 	// MobileAppAsset: A mobile app asset.
 	MobileAppAsset *GoogleAdsSearchads360V0Common__MobileAppAsset `json:"mobileAppAsset,omitempty"`
+
+	// Name: Optional name of the asset.
+	Name string `json:"name,omitempty"`
 
 	// PageFeedAsset: Output only. A unified page feed asset.
 	PageFeedAsset *GoogleAdsSearchads360V0Common__UnifiedPageFeedAsset `json:"pageFeedAsset,omitempty"`
@@ -4881,6 +5925,9 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	//   "PENDING_SYSTEM_GENERATED" - The asset is system generated pending
 	// user review.
 	Status string `json:"status,omitempty"`
+
+	// TextAsset: Output only. A text asset.
+	TextAsset *GoogleAdsSearchads360V0Common__TextAsset `json:"textAsset,omitempty"`
 
 	// TrackingUrlTemplate: URL template for constructing a tracking URL.
 	TrackingUrlTemplate string `json:"trackingUrlTemplate,omitempty"`
@@ -4920,6 +5967,9 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	//   "HOTEL_PROPERTY" - Hotel property asset.
 	Type string `json:"type,omitempty"`
 
+	// YoutubeVideoAsset: Immutable. A YouTube video asset.
+	YoutubeVideoAsset *GoogleAdsSearchads360V0Common__YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CallAsset") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4939,6 +5989,379 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 
 func (s *GoogleAdsSearchads360V0Resources__Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Asset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetGroup: An asset group.
+// AssetGroupAsset is used to link an asset to the asset group.
+// AssetGroupSignal is used to associate a signal to an asset group.
+type GoogleAdsSearchads360V0Resources__AssetGroup struct {
+	// AdStrength: Output only. Overall ad strength of this asset group.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "PENDING" - The ad strength is currently pending.
+	//   "NO_ADS" - No ads could be generated.
+	//   "POOR" - Poor strength.
+	//   "AVERAGE" - Average strength.
+	//   "GOOD" - Good strength.
+	//   "EXCELLENT" - Excellent strength.
+	AdStrength string `json:"adStrength,omitempty"`
+
+	// Campaign: Immutable. The campaign with which this asset group is
+	// associated. The asset which is linked to the asset group.
+	Campaign string `json:"campaign,omitempty"`
+
+	// FinalMobileUrls: A list of final mobile URLs after all cross domain
+	// redirects. In performance max, by default, the urls are eligible for
+	// expansion unless opted out.
+	FinalMobileUrls []string `json:"finalMobileUrls,omitempty"`
+
+	// FinalUrls: A list of final URLs after all cross domain redirects. In
+	// performance max, by default, the urls are eligible for expansion
+	// unless opted out.
+	FinalUrls []string `json:"finalUrls,omitempty"`
+
+	// Id: Output only. The ID of the asset group.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Required. Name of the asset group. Required. It must have a
+	// minimum length of 1 and maximum length of 128. It must be unique
+	// under a campaign.
+	Name string `json:"name,omitempty"`
+
+	// Path1: First part of text that may appear appended to the url
+	// displayed in the ad.
+	Path1 string `json:"path1,omitempty"`
+
+	// Path2: Second part of text that may appear appended to the url
+	// displayed in the ad. This field can only be set when path1 is set.
+	Path2 string `json:"path2,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the asset group. Asset
+	// group resource names have the form:
+	// `customers/{customer_id}/assetGroups/{asset_group_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: The status of the asset group.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - The status has not been specified.
+	//   "UNKNOWN" - The received value is not known in this version.
+	//   "ENABLED" - The asset group is enabled.
+	//   "PAUSED" - The asset group is paused.
+	//   "REMOVED" - The asset group is removed.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdStrength") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdStrength") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetGroupAsset: AssetGroupAsset is
+// the link between an asset and an asset group. Adding an
+// AssetGroupAsset links an asset with an asset group.
+type GoogleAdsSearchads360V0Resources__AssetGroupAsset struct {
+	// Asset: Immutable. The asset which this asset group asset is linking.
+	Asset string `json:"asset,omitempty"`
+
+	// AssetGroup: Immutable. The asset group which this asset group asset
+	// is linking.
+	AssetGroup string `json:"assetGroup,omitempty"`
+
+	// FieldType: The description of the placement of the asset within the
+	// asset group. For example: HEADLINE, YOUTUBE_VIDEO etc
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "HEADLINE" - The asset is linked for use as a headline.
+	//   "DESCRIPTION" - The asset is linked for use as a description.
+	//   "MANDATORY_AD_TEXT" - The asset is linked for use as mandatory ad
+	// text.
+	//   "MARKETING_IMAGE" - The asset is linked for use as a marketing
+	// image.
+	//   "MEDIA_BUNDLE" - The asset is linked for use as a media bundle.
+	//   "YOUTUBE_VIDEO" - The asset is linked for use as a YouTube video.
+	//   "BOOK_ON_GOOGLE" - The asset is linked to indicate that a hotels
+	// campaign is "Book on Google" enabled.
+	//   "LEAD_FORM" - The asset is linked for use as a Lead Form extension.
+	//   "PROMOTION" - The asset is linked for use as a Promotion extension.
+	//   "CALLOUT" - The asset is linked for use as a Callout extension.
+	//   "STRUCTURED_SNIPPET" - The asset is linked for use as a Structured
+	// Snippet extension.
+	//   "SITELINK" - The asset is linked for use as a Sitelink.
+	//   "MOBILE_APP" - The asset is linked for use as a Mobile App
+	// extension.
+	//   "HOTEL_CALLOUT" - The asset is linked for use as a Hotel Callout
+	// extension.
+	//   "CALL" - The asset is linked for use as a Call extension.
+	//   "PRICE" - The asset is linked for use as a Price extension.
+	//   "LONG_HEADLINE" - The asset is linked for use as a long headline.
+	//   "BUSINESS_NAME" - The asset is linked for use as a business name.
+	//   "SQUARE_MARKETING_IMAGE" - The asset is linked for use as a square
+	// marketing image.
+	//   "PORTRAIT_MARKETING_IMAGE" - The asset is linked for use as a
+	// portrait marketing image.
+	//   "LOGO" - The asset is linked for use as a logo.
+	//   "LANDSCAPE_LOGO" - The asset is linked for use as a landscape logo.
+	//   "VIDEO" - The asset is linked for use as a non YouTube logo.
+	//   "CALL_TO_ACTION_SELECTION" - The asset is linked for use to select
+	// a call-to-action.
+	//   "AD_IMAGE" - The asset is linked for use to select an ad image.
+	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
+	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
+	// in a Performance Max for travel goals campaign.
+	FieldType string `json:"fieldType,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the asset group asset.
+	// Asset group asset resource name have the form:
+	// `customers/{customer_id}/assetGroupAssets/{asset_group_id}~{asset_id}~
+	// {field_type}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: The status of the link between an asset and asset group.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ENABLED" - Asset link is enabled.
+	//   "REMOVED" - Asset link has been removed.
+	//   "PAUSED" - Asset link is paused.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetGroupAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData:
+// Asset group asset combination data
+type GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData struct {
+	// AssetCombinationServedAssets: Output only. Served assets.
+	AssetCombinationServedAssets []*GoogleAdsSearchads360V0Common__AssetUsage `json:"assetCombinationServedAssets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssetCombinationServedAssets") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssetCombinationServedAssets") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter:
+// AssetGroupListingGroupFilter represents a listing group filter tree
+// node in an asset group.
+type GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter struct {
+	// AssetGroup: Immutable. The asset group which this asset group listing
+	// group filter is part of.
+	AssetGroup string `json:"assetGroup,omitempty"`
+
+	// CaseValue: Dimension value with which this listing group is refining
+	// its parent. Undefined for the root group.
+	CaseValue *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension `json:"caseValue,omitempty"`
+
+	// Id: Output only. The ID of the ListingGroupFilter.
+	Id int64 `json:"id,omitempty,string"`
+
+	// ParentListingGroupFilter: Immutable. Resource name of the parent
+	// listing group subdivision. Null for the root listing group filter
+	// node.
+	ParentListingGroupFilter string `json:"parentListingGroupFilter,omitempty"`
+
+	// Path: Output only. The path of dimensions defining this listing group
+	// filter.
+	Path *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath `json:"path,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the asset group listing
+	// group filter. Asset group listing group filter resource name have the
+	// form:
+	// `customers/{customer_id}/assetGroupListingGroupFilters/{asset_group_id
+	// }~{listing_group_filter_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Type: Immutable. Type of a listing group filter node.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "SUBDIVISION" - Subdivision of products along some listing
+	// dimensions.
+	//   "UNIT_INCLUDED" - An included listing group filter leaf node.
+	//   "UNIT_EXCLUDED" - An excluded listing group filter leaf node.
+	Type string `json:"type,omitempty"`
+
+	// Vertical: Immutable. The vertical the current node tree represents.
+	// All nodes in the same tree must belong to the same vertical.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "SHOPPING" - Represents the shopping vertical.
+	Vertical string `json:"vertical,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetGroupSignal: AssetGroupSignal
+// represents a signal in an asset group. The existence of a signal
+// tells the performance max campaign who's most likely to convert.
+// Performance Max uses the signal to look for new people with similar
+// or stronger intent to find conversions across Search, Display, Video,
+// and more.
+type GoogleAdsSearchads360V0Resources__AssetGroupSignal struct {
+	// AssetGroup: Immutable. The asset group which this asset group signal
+	// belongs to.
+	AssetGroup string `json:"assetGroup,omitempty"`
+
+	// Audience: Immutable. The audience signal to be used by the
+	// performance max campaign.
+	Audience *GoogleAdsSearchads360V0Common__AudienceInfo `json:"audience,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the asset group signal.
+	// Asset group signal resource name have the form:
+	// `customers/{customer_id}/assetGroupSignals/{asset_group_id}~{signal_id
+	// }`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetGroupSignal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupSignal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView: A
+// view on the usage of ad group ad asset combination.
+type GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView struct {
+	// AssetGroupTopCombinations: Output only. The top combinations of
+	// assets that served together.
+	AssetGroupTopCombinations []*GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData `json:"assetGroupTopCombinations,omitempty"`
+
+	// ResourceName: Output only. The resource name of the asset group top
+	// combination view. AssetGroup Top Combination view resource names have
+	// the form:
+	// "customers/{customer_id}/assetGroupTopCombinationViews/{asset_group_i
+	// d}~{asset_combination_category}"
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssetGroupTopCombinations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssetGroupTopCombinations") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5023,6 +6446,50 @@ type GoogleAdsSearchads360V0Resources__AssetSetAsset struct {
 
 func (s *GoogleAdsSearchads360V0Resources__AssetSetAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetSetAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__Audience: Audience is an effective
+// targeting option that lets you intersect different segment
+// attributes, such as detailed demographics and affinities, to create
+// audiences that represent sections of your target segments.
+type GoogleAdsSearchads360V0Resources__Audience struct {
+	// Description: Description of this audience.
+	Description string `json:"description,omitempty"`
+
+	// Id: Output only. ID of the audience.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Required. Name of the audience. It should be unique across all
+	// audiences. It must have a minimum length of 1 and maximum length of
+	// 255.
+	Name string `json:"name,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the audience. Audience
+	// names have the form:
+	// `customers/{customer_id}/audiences/{audience_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__Audience) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__Audience
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5845,8 +7312,8 @@ type GoogleAdsSearchads360V0Resources__CampaignBudget struct {
 	// this version.
 	//   "DAILY" - Daily budget.
 	//   "FIXED_DAILY" - Fixed daily budget.
-	//   "CUSTOM_PERIOD" - Custom budget, added back in V5. Custom bugdet
-	// can be used with total_amount to specify lifetime budget limit.
+	//   "CUSTOM_PERIOD" - Custom budget can be used with total_amount to
+	// specify lifetime budget limit.
 	Period string `json:"period,omitempty"`
 
 	// ResourceName: Immutable. The resource name of the campaign budget.
@@ -6066,6 +7533,236 @@ type GoogleAdsSearchads360V0Resources__CampaignLabel struct {
 
 func (s *GoogleAdsSearchads360V0Resources__CampaignLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__CartDataSalesView: Cart data sales
+// view.
+type GoogleAdsSearchads360V0Resources__CartDataSalesView struct {
+	// ResourceName: Output only. The resource name of the Cart data sales
+	// view. Cart data sales view resource names have the form:
+	// `customers/{customer_id}/cartDataSalesView`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__CartDataSalesView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__CartDataSalesView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__Conversion: A conversion.
+type GoogleAdsSearchads360V0Resources__Conversion struct {
+	// AdId: Output only. Ad ID. A value of 0 indicates that the ad is
+	// unattributed.
+	AdId int64 `json:"adId,omitempty,string"`
+
+	// AdvertiserConversionId: Output only. For offline conversions, this is
+	// an ID provided by advertisers. If an advertiser doesn't specify such
+	// an ID, Search Ads 360 generates one. For online conversions, this is
+	// equal to the id column or the floodlight_order_id column depending on
+	// the advertiser's Floodlight instructions.
+	AdvertiserConversionId string `json:"advertiserConversionId,omitempty"`
+
+	// AssetFieldType: Output only. Asset field type of the conversion
+	// event.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "HEADLINE" - The asset is linked for use as a headline.
+	//   "DESCRIPTION" - The asset is linked for use as a description.
+	//   "MANDATORY_AD_TEXT" - The asset is linked for use as mandatory ad
+	// text.
+	//   "MARKETING_IMAGE" - The asset is linked for use as a marketing
+	// image.
+	//   "MEDIA_BUNDLE" - The asset is linked for use as a media bundle.
+	//   "YOUTUBE_VIDEO" - The asset is linked for use as a YouTube video.
+	//   "BOOK_ON_GOOGLE" - The asset is linked to indicate that a hotels
+	// campaign is "Book on Google" enabled.
+	//   "LEAD_FORM" - The asset is linked for use as a Lead Form extension.
+	//   "PROMOTION" - The asset is linked for use as a Promotion extension.
+	//   "CALLOUT" - The asset is linked for use as a Callout extension.
+	//   "STRUCTURED_SNIPPET" - The asset is linked for use as a Structured
+	// Snippet extension.
+	//   "SITELINK" - The asset is linked for use as a Sitelink.
+	//   "MOBILE_APP" - The asset is linked for use as a Mobile App
+	// extension.
+	//   "HOTEL_CALLOUT" - The asset is linked for use as a Hotel Callout
+	// extension.
+	//   "CALL" - The asset is linked for use as a Call extension.
+	//   "PRICE" - The asset is linked for use as a Price extension.
+	//   "LONG_HEADLINE" - The asset is linked for use as a long headline.
+	//   "BUSINESS_NAME" - The asset is linked for use as a business name.
+	//   "SQUARE_MARKETING_IMAGE" - The asset is linked for use as a square
+	// marketing image.
+	//   "PORTRAIT_MARKETING_IMAGE" - The asset is linked for use as a
+	// portrait marketing image.
+	//   "LOGO" - The asset is linked for use as a logo.
+	//   "LANDSCAPE_LOGO" - The asset is linked for use as a landscape logo.
+	//   "VIDEO" - The asset is linked for use as a non YouTube logo.
+	//   "CALL_TO_ACTION_SELECTION" - The asset is linked for use to select
+	// a call-to-action.
+	//   "AD_IMAGE" - The asset is linked for use to select an ad image.
+	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
+	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
+	// in a Performance Max for travel goals campaign.
+	AssetFieldType string `json:"assetFieldType,omitempty"`
+
+	// AssetId: Output only. ID of the asset which was interacted with
+	// during the conversion event.
+	AssetId int64 `json:"assetId,omitempty,string"`
+
+	// AttributionType: Output only. What the conversion is attributed to:
+	// Visit or Keyword+Ad.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "VISIT" - The conversion is attributed to a visit.
+	//   "CRITERION_AD" - The conversion is attributed to a criterion and ad
+	// pair.
+	AttributionType string `json:"attributionType,omitempty"`
+
+	// ClickId: Output only. A unique string, for the visit that the
+	// conversion is attributed to, that is passed to the landing page as
+	// the click id URL parameter.
+	ClickId string `json:"clickId,omitempty"`
+
+	// ConversionDateTime: Output only. The timestamp of the conversion
+	// event.
+	ConversionDateTime string `json:"conversionDateTime,omitempty"`
+
+	// ConversionLastModifiedDateTime: Output only. The timestamp of the
+	// last time the conversion was modified.
+	ConversionLastModifiedDateTime string `json:"conversionLastModifiedDateTime,omitempty"`
+
+	// ConversionQuantity: Output only. The quantity of items recorded by
+	// the conversion, as determined by the qty url parameter. The
+	// advertiser is responsible for dynamically populating the parameter
+	// (such as number of items sold in the conversion), otherwise it
+	// defaults to 1.
+	ConversionQuantity int64 `json:"conversionQuantity,omitempty,string"`
+
+	// ConversionRevenueMicros: Output only. The adjusted revenue in micros
+	// for the conversion event. This will always be in the currency of the
+	// serving account.
+	ConversionRevenueMicros int64 `json:"conversionRevenueMicros,omitempty,string"`
+
+	// ConversionVisitDateTime: Output only. The timestamp of the visit that
+	// the conversion is attributed to.
+	ConversionVisitDateTime string `json:"conversionVisitDateTime,omitempty"`
+
+	// CriterionId: Output only. Search Ads 360 criterion ID. A value of 0
+	// indicates that the criterion is unattributed.
+	CriterionId int64 `json:"criterionId,omitempty,string"`
+
+	// FloodlightOrderId: Output only. The Floodlight order ID provided by
+	// the advertiser for the conversion.
+	FloodlightOrderId string `json:"floodlightOrderId,omitempty"`
+
+	// FloodlightOriginalRevenue: Output only. The original, unchanged
+	// revenue associated with the Floodlight event (in the currency of the
+	// current report), before Floodlight currency instruction
+	// modifications.
+	FloodlightOriginalRevenue int64 `json:"floodlightOriginalRevenue,omitempty,string"`
+
+	// Id: Output only. The ID of the conversion
+	Id int64 `json:"id,omitempty,string"`
+
+	// MerchantId: Output only. The SearchAds360 inventory account ID
+	// containing the product that was clicked on. SearchAds360 generates
+	// this ID when you link an inventory account in SearchAds360.
+	MerchantId int64 `json:"merchantId,omitempty,string"`
+
+	// ProductChannel: Output only. The sales channel of the product that
+	// was clicked on: Online or Local.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ONLINE" - The item is sold online.
+	//   "LOCAL" - The item is sold in local stores.
+	ProductChannel string `json:"productChannel,omitempty"`
+
+	// ProductCountryCode: Output only. The country (ISO-3166-format)
+	// registered for the inventory feed that contains the product clicked
+	// on.
+	ProductCountryCode string `json:"productCountryCode,omitempty"`
+
+	// ProductId: Output only. The ID of the product clicked on.
+	ProductId string `json:"productId,omitempty"`
+
+	// ProductLanguageCode: Output only. The language (ISO-639-1) that has
+	// been set for the Merchant Center feed containing data about the
+	// product.
+	ProductLanguageCode string `json:"productLanguageCode,omitempty"`
+
+	// ProductStoreId: Output only. The store in the Local Inventory Ad that
+	// was clicked on. This should match the store IDs used in your local
+	// products feed.
+	ProductStoreId string `json:"productStoreId,omitempty"`
+
+	// ResourceName: Output only. The resource name of the conversion.
+	// Conversion resource names have the form:
+	// `customers/{customer_id}/conversions/{ad_group_id}~{criterion_id}~{ds_
+	// conversion_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: Output only. The status of the conversion, either ENABLED or
+	// REMOVED..
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ENABLED" - The conversion is enabled.
+	//   "REMOVED" - The conversion has been removed.
+	Status string `json:"status,omitempty"`
+
+	// VisitId: Output only. The SearchAds360 visit ID that the conversion
+	// is attributed to.
+	VisitId int64 `json:"visitId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AdId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__Conversion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__Conversion
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7105,6 +8802,130 @@ func (s *GoogleAdsSearchads360V0Resources__Label) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__LanguageConstant: A language.
+type GoogleAdsSearchads360V0Resources__LanguageConstant struct {
+	// Code: Output only. The language code, for example, "en_US", "en_AU",
+	// "es", "fr", etc.
+	Code string `json:"code,omitempty"`
+
+	// Id: Output only. The ID of the language constant.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Output only. The full name of the language in English, for
+	// example, "English (US)", "Spanish", etc.
+	Name string `json:"name,omitempty"`
+
+	// ResourceName: Output only. The resource name of the language
+	// constant. Language constant resource names have the form:
+	// `languageConstants/{criterion_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Targetable: Output only. Whether the language is targetable.
+	Targetable bool `json:"targetable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__LanguageConstant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__LanguageConstant
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension:
+// Listing dimensions for the asset group listing group filter.
+type GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension struct {
+	// ProductBiddingCategory: Bidding category of a product offer.
+	ProductBiddingCategory *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory `json:"productBiddingCategory,omitempty"`
+
+	// ProductBrand: Brand of a product offer.
+	ProductBrand *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand `json:"productBrand,omitempty"`
+
+	// ProductChannel: Locality of a product offer.
+	ProductChannel *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel `json:"productChannel,omitempty"`
+
+	// ProductCondition: Condition of a product offer.
+	ProductCondition *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition `json:"productCondition,omitempty"`
+
+	// ProductCustomAttribute: Custom attribute of a product offer.
+	ProductCustomAttribute *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute `json:"productCustomAttribute,omitempty"`
+
+	// ProductItemId: Item id of a product offer.
+	ProductItemId *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId `json:"productItemId,omitempty"`
+
+	// ProductType: Type of a product offer.
+	ProductType *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType `json:"productType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ProductBiddingCategory") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProductBiddingCategory")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath:
+// The path defining of dimensions defining a listing group filter.
+type GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath struct {
+	// Dimensions: Output only. The complete path of dimensions through the
+	// listing group filter hierarchy (excluding the root node) to this
+	// listing group filter.
+	Dimensions []*GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension `json:"dimensions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__LocationView: A location view
 // summarizes the performance of campaigns by Location criteria.
 type GoogleAdsSearchads360V0Resources__LocationView struct {
@@ -7132,6 +8953,82 @@ type GoogleAdsSearchads360V0Resources__LocationView struct {
 
 func (s *GoogleAdsSearchads360V0Resources__LocationView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__LocationView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant: A
+// Product Bidding Category.
+type GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant struct {
+	// CountryCode: Output only. Two-letter upper-case country code of the
+	// product bidding category.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// Id: Output only. ID of the product bidding category. This ID is
+	// equivalent to the google_product_category ID as described in this
+	// article: https://support.google.com/merchants/answer/6324436.
+	Id int64 `json:"id,omitempty,string"`
+
+	// LanguageCode: Output only. Language code of the product bidding
+	// category.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Level: Output only. Level of the product bidding category.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "LEVEL1" - Level 1.
+	//   "LEVEL2" - Level 2.
+	//   "LEVEL3" - Level 3.
+	//   "LEVEL4" - Level 4.
+	//   "LEVEL5" - Level 5.
+	Level string `json:"level,omitempty"`
+
+	// LocalizedName: Output only. Display value of the product bidding
+	// category localized according to language_code.
+	LocalizedName string `json:"localizedName,omitempty"`
+
+	// ProductBiddingCategoryConstantParent: Output only. Resource name of
+	// the parent product bidding category.
+	ProductBiddingCategoryConstantParent string `json:"productBiddingCategoryConstantParent,omitempty"`
+
+	// ResourceName: Output only. The resource name of the product bidding
+	// category. Product bidding category resource names have the form:
+	// `productBiddingCategoryConstants/{country_code}~{level}~{id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: Output only. Status of the product bidding category.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ACTIVE" - The category is active and can be used for bidding.
+	//   "OBSOLETE" - The category is obsolete. Used only for reporting
+	// purposes.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CountryCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CountryCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7301,6 +9198,41 @@ func (s *GoogleAdsSearchads360V0Resources__SearchAds360Field) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__ShoppingPerformanceView: Shopping
+// performance view. Provides Shopping campaign statistics aggregated at
+// several product dimension levels. Product dimension values from
+// Merchant Center such as brand, category, custom attributes, product
+// condition and product type will reflect the state of each dimension
+// as of the date and time when the corresponding event was recorded.
+type GoogleAdsSearchads360V0Resources__ShoppingPerformanceView struct {
+	// ResourceName: Output only. The resource name of the Shopping
+	// performance view. Shopping performance view resource names have the
+	// form: `customers/{customer_id}/shoppingPerformanceView`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__ShoppingPerformanceView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__ShoppingPerformanceView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__UserList: A user list. This is a
 // list of users a customer may target.
 type GoogleAdsSearchads360V0Resources__UserList struct {
@@ -7355,6 +9287,140 @@ type GoogleAdsSearchads360V0Resources__UserList struct {
 
 func (s *GoogleAdsSearchads360V0Resources__UserList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__UserList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__Visit: A visit.
+type GoogleAdsSearchads360V0Resources__Visit struct {
+	// AdId: Output only. Ad ID. A value of 0 indicates that the ad is
+	// unattributed.
+	AdId int64 `json:"adId,omitempty,string"`
+
+	// AssetFieldType: Output only. Asset field type of the visit event.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "HEADLINE" - The asset is linked for use as a headline.
+	//   "DESCRIPTION" - The asset is linked for use as a description.
+	//   "MANDATORY_AD_TEXT" - The asset is linked for use as mandatory ad
+	// text.
+	//   "MARKETING_IMAGE" - The asset is linked for use as a marketing
+	// image.
+	//   "MEDIA_BUNDLE" - The asset is linked for use as a media bundle.
+	//   "YOUTUBE_VIDEO" - The asset is linked for use as a YouTube video.
+	//   "BOOK_ON_GOOGLE" - The asset is linked to indicate that a hotels
+	// campaign is "Book on Google" enabled.
+	//   "LEAD_FORM" - The asset is linked for use as a Lead Form extension.
+	//   "PROMOTION" - The asset is linked for use as a Promotion extension.
+	//   "CALLOUT" - The asset is linked for use as a Callout extension.
+	//   "STRUCTURED_SNIPPET" - The asset is linked for use as a Structured
+	// Snippet extension.
+	//   "SITELINK" - The asset is linked for use as a Sitelink.
+	//   "MOBILE_APP" - The asset is linked for use as a Mobile App
+	// extension.
+	//   "HOTEL_CALLOUT" - The asset is linked for use as a Hotel Callout
+	// extension.
+	//   "CALL" - The asset is linked for use as a Call extension.
+	//   "PRICE" - The asset is linked for use as a Price extension.
+	//   "LONG_HEADLINE" - The asset is linked for use as a long headline.
+	//   "BUSINESS_NAME" - The asset is linked for use as a business name.
+	//   "SQUARE_MARKETING_IMAGE" - The asset is linked for use as a square
+	// marketing image.
+	//   "PORTRAIT_MARKETING_IMAGE" - The asset is linked for use as a
+	// portrait marketing image.
+	//   "LOGO" - The asset is linked for use as a logo.
+	//   "LANDSCAPE_LOGO" - The asset is linked for use as a landscape logo.
+	//   "VIDEO" - The asset is linked for use as a non YouTube logo.
+	//   "CALL_TO_ACTION_SELECTION" - The asset is linked for use to select
+	// a call-to-action.
+	//   "AD_IMAGE" - The asset is linked for use to select an ad image.
+	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
+	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
+	// in a Performance Max for travel goals campaign.
+	AssetFieldType string `json:"assetFieldType,omitempty"`
+
+	// AssetId: Output only. ID of the asset which was interacted with
+	// during the visit event.
+	AssetId int64 `json:"assetId,omitempty,string"`
+
+	// ClickId: Output only. A unique string for each visit that is passed
+	// to the landing page as the click id URL parameter.
+	ClickId string `json:"clickId,omitempty"`
+
+	// CriterionId: Output only. Search Ads 360 keyword ID. A value of 0
+	// indicates that the keyword is unattributed.
+	CriterionId int64 `json:"criterionId,omitempty,string"`
+
+	// Id: Output only. The ID of the visit.
+	Id int64 `json:"id,omitempty,string"`
+
+	// MerchantId: Output only. The Search Ads 360 inventory account ID
+	// containing the product that was clicked on. Search Ads 360 generates
+	// this ID when you link an inventory account in Search Ads 360.
+	MerchantId int64 `json:"merchantId,omitempty,string"`
+
+	// ProductChannel: Output only. The sales channel of the product that
+	// was clicked on: Online or Local.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ONLINE" - The item is sold online.
+	//   "LOCAL" - The item is sold in local stores.
+	ProductChannel string `json:"productChannel,omitempty"`
+
+	// ProductCountryCode: Output only. The country (ISO-3166 format)
+	// registered for the inventory feed that contains the product clicked
+	// on.
+	ProductCountryCode string `json:"productCountryCode,omitempty"`
+
+	// ProductId: Output only. The ID of the product clicked on.
+	ProductId string `json:"productId,omitempty"`
+
+	// ProductLanguageCode: Output only. The language (ISO-639-1) that has
+	// been set for the Merchant Center feed containing data about the
+	// product.
+	ProductLanguageCode string `json:"productLanguageCode,omitempty"`
+
+	// ProductStoreId: Output only. The store in the Local Inventory Ad that
+	// was clicked on. This should match the store IDs used in your local
+	// products feed.
+	ProductStoreId string `json:"productStoreId,omitempty"`
+
+	// ResourceName: Output only. The resource name of the visit. Visit
+	// resource names have the form:
+	// `customers/{customer_id}/visits/{ad_group_id}~{criterion_id}~{ds_visit
+	// _id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// VisitDateTime: Output only. The timestamp of the visit event. The
+	// timestamp is in the customer's time zone and in "yyyy-MM-dd HH:mm:ss"
+	// format.
+	VisitDateTime string `json:"visitDateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__Visit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__Visit
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7532,11 +9598,31 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// Asset: The asset referenced in the query.
 	Asset *GoogleAdsSearchads360V0Resources__Asset `json:"asset,omitempty"`
 
+	// AssetGroup: The asset group referenced in the query.
+	AssetGroup *GoogleAdsSearchads360V0Resources__AssetGroup `json:"assetGroup,omitempty"`
+
+	// AssetGroupAsset: The asset group asset referenced in the query.
+	AssetGroupAsset *GoogleAdsSearchads360V0Resources__AssetGroupAsset `json:"assetGroupAsset,omitempty"`
+
+	// AssetGroupListingGroupFilter: The asset group listing group filter
+	// referenced in the query.
+	AssetGroupListingGroupFilter *GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter `json:"assetGroupListingGroupFilter,omitempty"`
+
+	// AssetGroupSignal: The asset group signal referenced in the query.
+	AssetGroupSignal *GoogleAdsSearchads360V0Resources__AssetGroupSignal `json:"assetGroupSignal,omitempty"`
+
+	// AssetGroupTopCombinationView: The asset group top combination view
+	// referenced in the query.
+	AssetGroupTopCombinationView *GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView `json:"assetGroupTopCombinationView,omitempty"`
+
 	// AssetSet: The asset set referenced in the query.
 	AssetSet *GoogleAdsSearchads360V0Resources__AssetSet `json:"assetSet,omitempty"`
 
 	// AssetSetAsset: The asset set asset referenced in the query.
 	AssetSetAsset *GoogleAdsSearchads360V0Resources__AssetSetAsset `json:"assetSetAsset,omitempty"`
+
+	// Audience: The Audience referenced in the query.
+	Audience *GoogleAdsSearchads360V0Resources__Audience `json:"audience,omitempty"`
 
 	// BiddingStrategy: The bidding strategy referenced in the query.
 	BiddingStrategy *GoogleAdsSearchads360V0Resources__BiddingStrategy `json:"biddingStrategy,omitempty"`
@@ -7562,6 +9648,12 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 
 	// CampaignLabel: The campaign label referenced in the query.
 	CampaignLabel *GoogleAdsSearchads360V0Resources__CampaignLabel `json:"campaignLabel,omitempty"`
+
+	// CartDataSalesView: The cart data sales view referenced in the query.
+	CartDataSalesView *GoogleAdsSearchads360V0Resources__CartDataSalesView `json:"cartDataSalesView,omitempty"`
+
+	// Conversion: The event level conversion referenced in the query.
+	Conversion *GoogleAdsSearchads360V0Resources__Conversion `json:"conversion,omitempty"`
 
 	// ConversionAction: The conversion action referenced in the query.
 	ConversionAction *GoogleAdsSearchads360V0Resources__ConversionAction `json:"conversionAction,omitempty"`
@@ -7600,11 +9692,18 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// Label: The label referenced in the query.
 	Label *GoogleAdsSearchads360V0Resources__Label `json:"label,omitempty"`
 
+	// LanguageConstant: The language constant referenced in the query.
+	LanguageConstant *GoogleAdsSearchads360V0Resources__LanguageConstant `json:"languageConstant,omitempty"`
+
 	// LocationView: The location view referenced in the query.
 	LocationView *GoogleAdsSearchads360V0Resources__LocationView `json:"locationView,omitempty"`
 
 	// Metrics: The metrics.
 	Metrics *GoogleAdsSearchads360V0Common__Metrics `json:"metrics,omitempty"`
+
+	// ProductBiddingCategoryConstant: The Product Bidding Category
+	// referenced in the query.
+	ProductBiddingCategoryConstant *GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant `json:"productBiddingCategoryConstant,omitempty"`
 
 	// ProductGroupView: The product group view referenced in the query.
 	ProductGroupView *GoogleAdsSearchads360V0Resources__ProductGroupView `json:"productGroupView,omitempty"`
@@ -7612,8 +9711,15 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// Segments: The segments.
 	Segments *GoogleAdsSearchads360V0Common__Segments `json:"segments,omitempty"`
 
+	// ShoppingPerformanceView: The shopping performance view referenced in
+	// the query.
+	ShoppingPerformanceView *GoogleAdsSearchads360V0Resources__ShoppingPerformanceView `json:"shoppingPerformanceView,omitempty"`
+
 	// UserList: The user list referenced in the query.
 	UserList *GoogleAdsSearchads360V0Resources__UserList `json:"userList,omitempty"`
+
+	// Visit: The event level visit referenced in the query.
+	Visit *GoogleAdsSearchads360V0Resources__Visit `json:"visit,omitempty"`
 
 	// WebpageView: The webpage view referenced in the query.
 	WebpageView *GoogleAdsSearchads360V0Resources__WebpageView `json:"webpageView,omitempty"`

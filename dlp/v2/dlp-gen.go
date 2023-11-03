@@ -1843,7 +1843,7 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	Name string `json:"name,omitempty"`
 
 	// OtherMatches: Other types found within this column. List will be
-	// un-ordered.
+	// unordered.
 	OtherMatches []*GooglePrivacyDlpV2OtherInfoTypeSummary `json:"otherMatches,omitempty"`
 
 	// PolicyState: Indicates if a policy tag has been applied to the
@@ -1876,7 +1876,7 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	// failed.
 	State string `json:"state,omitempty"`
 
-	// TableDataProfile: The resource name to the table data profile.
+	// TableDataProfile: The resource name of the table data profile.
 	TableDataProfile string `json:"tableDataProfile,omitempty"`
 
 	// TableFullResource: The resource name of the table this column is
@@ -2704,7 +2704,7 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 
 	// SensitivityScore: Sensitivity for this CustomInfoType. If this
 	// CustomInfoType extends an existing InfoType, the sensitivity here
-	// will take precedent over that of the original InfoType. If unset for
+	// will take precedence over that of the original InfoType. If unset for
 	// a CustomInfoType, it will default to HIGH. This only applies to data
 	// profiling.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
@@ -2774,7 +2774,8 @@ func (s *GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2DataProfileBigQueryRowSchema: The schema of data to
-// be saved to the BigQuery when the `DataProfileAction` is enabled.
+// be saved to the BigQuery table when the `DataProfileAction` is
+// enabled.
 type GooglePrivacyDlpV2DataProfileBigQueryRowSchema struct {
 	// ColumnProfile: Column data profile column
 	ColumnProfile *GooglePrivacyDlpV2ColumnDataProfile `json:"columnProfile,omitempty"`
@@ -5879,11 +5880,11 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	// correspond to InfoType values returned by ListInfoTypes or listed at
 	// https://cloud.google.com/dlp/docs/infotypes-reference. When no
 	// InfoTypes or CustomInfoTypes are specified in a request, the system
-	// may automatically choose what detectors to run. By default this may
-	// be all types, but may change over time as detectors are updated. If
-	// you need precise control and predictability as to what detectors are
-	// run you should specify specific InfoTypes listed in the reference,
-	// otherwise a default list will be used, which may change over time.
+	// may automatically choose a default list of detectors to run, which
+	// may change over time. If you need precise control and predictability
+	// as to what detectors are run you should specify specific InfoTypes
+	// listed in the reference, otherwise a default list will be used, which
+	// may change over time.
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 
 	// Limits: Configuration to control the number of findings returned.
@@ -7114,8 +7115,9 @@ type GooglePrivacyDlpV2ListDiscoveryConfigsResponse struct {
 	// ListDiscoveryConfigsRequest.
 	DiscoveryConfigs []*GooglePrivacyDlpV2DiscoveryConfig `json:"discoveryConfigs,omitempty"`
 
-	// NextPageToken: If the next page is available then the next page token
-	// to be used in the following ListDiscoveryConfigs request.
+	// NextPageToken: If the next page is available then this value is the
+	// next page token to be used in the following ListDiscoveryConfigs
+	// request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7262,8 +7264,8 @@ type GooglePrivacyDlpV2ListJobTriggersResponse struct {
 	// ListJobTriggersRequest.
 	JobTriggers []*GooglePrivacyDlpV2JobTrigger `json:"jobTriggers,omitempty"`
 
-	// NextPageToken: If the next page is available then the next page token
-	// to be used in the following ListJobTriggers request.
+	// NextPageToken: If the next page is available then this value is the
+	// next page token to be used in the following ListJobTriggers request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8795,7 +8797,8 @@ func (s *GooglePrivacyDlpV2ReplaceValueConfig) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ReplaceWithInfoTypeConfig struct {
 }
 
-// GooglePrivacyDlpV2RequestedDeidentifyOptions: De-id options.
+// GooglePrivacyDlpV2RequestedDeidentifyOptions: De-identification
+// options.
 type GooglePrivacyDlpV2RequestedDeidentifyOptions struct {
 	// SnapshotDeidentifyTemplate: Snapshot of the state of the
 	// `DeidentifyTemplate` from the Deidentify action at the time this job

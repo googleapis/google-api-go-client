@@ -1627,6 +1627,11 @@ type EncryptionConfig struct {
 	// encryption for all instances in the cluster.
 	GcePdKmsKeyName string `json:"gcePdKmsKeyName,omitempty"`
 
+	// KmsKey: Optional. The Cloud KMS key name to use for encrypting
+	// customer core content in spanner and cluster PD disk for all
+	// instances in the cluster.
+	KmsKey string `json:"kmsKey,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GcePdKmsKeyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3780,6 +3785,11 @@ type ListJobsResponse struct {
 	// there are more results to fetch. To fetch additional results, provide
 	// this value as the page_token in a subsequent ListJobsRequest.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Output only. List of jobs that could not be included in
+	// the response. Attempting to get one of these resources may indicate
+	// why it was not included in the list response.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

@@ -2726,7 +2726,7 @@ type Repository struct {
 	Mode string `json:"mode,omitempty"`
 
 	// Name: The name of the repository, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1".
+	// `projects/p1/locations/us-central1/repositories/repo1`.
 	Name string `json:"name,omitempty"`
 
 	// RemoteRepositoryConfig: Configuration specific for a Remote
@@ -3328,7 +3328,7 @@ type UpstreamPolicy struct {
 	Priority int64 `json:"priority,omitempty"`
 
 	// Repository: A reference to the repository resource, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1".
+	// `projects/p1/locations/us-central1/repositories/repo1`.
 	Repository string `json:"repository,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -5536,7 +5536,7 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 // Patch: Updates a repository.
 //
 //   - name: The name of the repository, for example:
-//     "projects/p1/locations/us-central1/repositories/repo1".
+//     `projects/p1/locations/us-central1/repositories/repo1`.
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5652,7 +5652,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the repository, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+	//       "description": "The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,

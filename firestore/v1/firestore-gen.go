@@ -2593,6 +2593,16 @@ type GoogleFirestoreAdminV1ListDatabasesResponse struct {
 	// Databases: The databases in the project.
 	Databases []*GoogleFirestoreAdminV1Database `json:"databases,omitempty"`
 
+	// Unreachable: In the event that data about individual databases cannot
+	// be listed they will be recorded here. An example entry might be:
+	// projects/some_project/locations/some_location This can happen if the
+	// Cloud Region that the Database resides in is currently unavailable.
+	// In this case we can't fetch all the details about the database. You
+	// may be able to get a more detailed error message (or possibly fetch
+	// the resource) by sending a 'Get' request for the resource or a 'List'
+	// request for the specific location.
+	Unreachable []string `json:"unreachable,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

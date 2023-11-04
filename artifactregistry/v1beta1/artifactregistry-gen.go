@@ -1008,7 +1008,7 @@ type Repository struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the repository, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1".
+	// `projects/p1/locations/us-central1/repositories/repo1`.
 	Name string `json:"name,omitempty"`
 
 	// SatisfiesPzs: Output only. If set, the repository satisfies physical
@@ -2613,7 +2613,7 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 // Patch: Updates a repository.
 //
 //   - name: The name of the repository, for example:
-//     "projects/p1/locations/us-central1/repositories/repo1".
+//     `projects/p1/locations/us-central1/repositories/repo1`.
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2729,7 +2729,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the repository, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+	//       "description": "The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,

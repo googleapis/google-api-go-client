@@ -7523,24 +7523,6 @@ func (r *ProjectsLocationsStreamsService) Patch(name string, stream *Stream) *Pr
 	return c
 }
 
-// CdcStrategySpecificStartPositionMysqlLogPositionLogFile sets the
-// optional parameter
-// "cdcStrategy.specificStartPosition.mysqlLogPosition.logFile":
-// Required. The binary log file name.
-func (c *ProjectsLocationsStreamsPatchCall) CdcStrategySpecificStartPositionMysqlLogPositionLogFile(cdcStrategySpecificStartPositionMysqlLogPositionLogFile string) *ProjectsLocationsStreamsPatchCall {
-	c.urlParams_.Set("cdcStrategy.specificStartPosition.mysqlLogPosition.logFile", cdcStrategySpecificStartPositionMysqlLogPositionLogFile)
-	return c
-}
-
-// CdcStrategySpecificStartPositionMysqlLogPositionLogPosition sets the
-// optional parameter
-// "cdcStrategy.specificStartPosition.mysqlLogPosition.logPosition": The
-// position within the binary log file. Default is head of file.
-func (c *ProjectsLocationsStreamsPatchCall) CdcStrategySpecificStartPositionMysqlLogPositionLogPosition(cdcStrategySpecificStartPositionMysqlLogPositionLogPosition int64) *ProjectsLocationsStreamsPatchCall {
-	c.urlParams_.Set("cdcStrategy.specificStartPosition.mysqlLogPosition.logPosition", fmt.Sprint(cdcStrategySpecificStartPositionMysqlLogPositionLogPosition))
-	return c
-}
-
 // Force sets the optional parameter "force": Update the stream without
 // validating it.
 func (c *ProjectsLocationsStreamsPatchCall) Force(force bool) *ProjectsLocationsStreamsPatchCall {
@@ -7683,17 +7665,6 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "cdcStrategy.specificStartPosition.mysqlLogPosition.logFile": {
-	//       "description": "Required. The binary log file name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "cdcStrategy.specificStartPosition.mysqlLogPosition.logPosition": {
-	//       "description": "Optional. The position within the binary log file. Default is head of file.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
 	//     "force": {
 	//       "description": "Optional. Update the stream without validating it.",
 	//       "location": "query",

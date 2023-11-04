@@ -2827,6 +2827,14 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//
 	// Possible values:
 	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is protected by automatic failover. Checks for resources
+	// that are configured to have redundancy within a region that enables
+	// automatic failover.
+	//   "SIGNAL_TYPE_GROUP_NOT_REPLICATING_ACROSS_REGIONS" - Represents if
+	// a group is replicating across regions. Checks for resources that are
+	// configured to have redundancy, and ongoing replication, across
+	// regions.
 	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_ZONES" - Represents if the
 	// resource is available in multiple zones or not.
 	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_REGIONS" - Represents if a
@@ -2946,6 +2954,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_SENSITIVE_TRACE_INFO_NOT_MASKED" - Represents if the
 	// 3625 (trace flag) database flag for a Cloud SQL for SQL Server
 	// instance is not set to on.
+	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
+	// enabled.
 	// LINT.ThenChange(//depot/google3/storage/databasecenter/ingestion/borgj
 	// ob/message_adapter/health_signal_feed/health_signal_mapping.h)
 	SignalType string `json:"signalType,omitempty"`

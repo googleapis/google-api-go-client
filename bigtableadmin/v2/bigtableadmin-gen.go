@@ -809,6 +809,11 @@ type CheckConsistencyRequest struct {
 	// GenerateConsistencyToken for the Table.
 	ConsistencyToken string `json:"consistencyToken,omitempty"`
 
+	// StandardReadRemoteWrites: Checks that reads using an app profile with
+	// `StandardIsolation` can see all writes committed before the token was
+	// created, even if the read and write target different clusters.
+	StandardReadRemoteWrites *StandardReadRemoteWrites `json:"standardReadRemoteWrites,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1082,9 +1087,9 @@ type ColumnFamily struct {
 	// family.
 	GcRule *GcRule `json:"gcRule,omitempty"`
 
-	// Stats: Only available with STATS_VIEW, this includes summary
-	// statistics about column family contents. For statistics over an
-	// entire table, see TableStats above.
+	// Stats: Output only. Only available with STATS_VIEW, this includes
+	// summary statistics about column family contents. For statistics over
+	// an entire table, see TableStats above.
 	Stats *ColumnFamilyStats `json:"stats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcRule") to
@@ -3151,6 +3156,12 @@ func (s *StandardIsolation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StandardReadRemoteWrites: Checks that all writes before the
+// consistency token was generated is replicated in every cluster and
+// readable.
+type StandardReadRemoteWrites struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -3245,9 +3256,9 @@ type Table struct {
 	// information about the restore.
 	RestoreInfo *RestoreInfo `json:"restoreInfo,omitempty"`
 
-	// Stats: Only available with STATS_VIEW, this includes summary
-	// statistics about the entire table contents. For statistics about a
-	// specific column family, see ColumnFamilyStats in the mapped
+	// Stats: Output only. Only available with STATS_VIEW, this includes
+	// summary statistics about the entire table contents. For statistics
+	// about a specific column family, see ColumnFamilyStats in the mapped
 	// ColumnFamily collection above.
 	Stats *TableStats `json:"stats,omitempty"`
 

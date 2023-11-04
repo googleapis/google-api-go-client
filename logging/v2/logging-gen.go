@@ -2484,6 +2484,16 @@ func (s *LogBucket) MarshalJSON() ([]byte, error) {
 
 // LogEntry: An individual entry in a log.
 type LogEntry struct {
+	// ErrorGroups: Output only. The Error Reporting
+	// (https://cloud.google.com/error-reporting) error groups associated
+	// with this LogEntry. Error Reporting sets the values for this field
+	// during error group creation.For more information, see View error
+	// details(
+	// https://cloud.google.com/error-reporting/docs/viewing-errors#view_error_details)This
+	// field isn't available during log routing
+	// (https://cloud.google.com/logging/docs/routing/overview)
+	ErrorGroups []*LogErrorGroup `json:"errorGroups,omitempty"`
+
 	// HttpRequest: Optional. Information about the HTTP request associated
 	// with this log entry, if applicable.
 	HttpRequest *HttpRequest `json:"httpRequest,omitempty"`
@@ -2646,7 +2656,7 @@ type LogEntry struct {
 	// identifier. The default is False.
 	TraceSampled bool `json:"traceSampled,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
+	// ForceSendFields is a list of field names (e.g. "ErrorGroups") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2654,7 +2664,7 @@ type LogEntry struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HttpRequest") to include
+	// NullFields is a list of field names (e.g. "ErrorGroups") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -2750,6 +2760,40 @@ type LogEntrySourceLocation struct {
 
 func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntrySourceLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogErrorGroup: Contains metadata that associates the LogEntry to
+// Error Reporting error groups.
+type LogErrorGroup struct {
+	// Id: The id is a unique identifier for a particular error group; it is
+	// the last part of the error group resource name: /projects//errors/.
+	// Example: COShysOX0r_51QE The id is derived from key parts of the
+	// error-log content and is treated as Service Data. For information
+	// about how Service Data is handled, see Google Cloud Privacy Notice
+	// (https://cloud.google.com/terms/cloud-privacy-notice).
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogErrorGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod LogErrorGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

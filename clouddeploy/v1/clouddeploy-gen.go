@@ -183,6 +183,8 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsDeliveryPipelinesService(s *Service) *ProjectsLocationsDeliveryPipelinesService {
 	rs := &ProjectsLocationsDeliveryPipelinesService{s: s}
+	rs.AutomationRuns = NewProjectsLocationsDeliveryPipelinesAutomationRunsService(s)
+	rs.Automations = NewProjectsLocationsDeliveryPipelinesAutomationsService(s)
 	rs.Releases = NewProjectsLocationsDeliveryPipelinesReleasesService(s)
 	return rs
 }
@@ -190,7 +192,29 @@ func NewProjectsLocationsDeliveryPipelinesService(s *Service) *ProjectsLocations
 type ProjectsLocationsDeliveryPipelinesService struct {
 	s *Service
 
+	AutomationRuns *ProjectsLocationsDeliveryPipelinesAutomationRunsService
+
+	Automations *ProjectsLocationsDeliveryPipelinesAutomationsService
+
 	Releases *ProjectsLocationsDeliveryPipelinesReleasesService
+}
+
+func NewProjectsLocationsDeliveryPipelinesAutomationRunsService(s *Service) *ProjectsLocationsDeliveryPipelinesAutomationRunsService {
+	rs := &ProjectsLocationsDeliveryPipelinesAutomationRunsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDeliveryPipelinesAutomationRunsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDeliveryPipelinesAutomationsService(s *Service) *ProjectsLocationsDeliveryPipelinesAutomationsService {
+	rs := &ProjectsLocationsDeliveryPipelinesAutomationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDeliveryPipelinesAutomationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDeliveryPipelinesReleasesService(s *Service) *ProjectsLocationsDeliveryPipelinesReleasesService {
@@ -294,6 +318,48 @@ func (s *AdvanceChildRolloutJobRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdvanceRolloutOperation: Contains the information of an automated
+// advance-rollout operation.
+type AdvanceRolloutOperation struct {
+	// DestinationPhase: Output only. The phase to which the rollout will be
+	// advanced to.
+	DestinationPhase string `json:"destinationPhase,omitempty"`
+
+	// Rollout: Output only. The name of the rollout that initiates the
+	// `AutomationRun`.
+	Rollout string `json:"rollout,omitempty"`
+
+	// SourcePhase: Output only. The phase of a deployment that initiated
+	// the operation.
+	SourcePhase string `json:"sourcePhase,omitempty"`
+
+	// Wait: Output only. How long the operation will be paused.
+	Wait string `json:"wait,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationPhase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationPhase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvanceRolloutOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvanceRolloutOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdvanceRolloutRequest: The request object used by `AdvanceRollout`.
 type AdvanceRolloutRequest struct {
 	// PhaseId: Required. The phase ID to advance the `Rollout` to.
@@ -327,6 +393,51 @@ type AdvanceRolloutResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// AdvanceRolloutRule: The `AdvanceRollout` automation rule will
+// automatically advance a successful Rollout to the next phase.
+type AdvanceRolloutRule struct {
+	// Condition: Output only. Information around the state of the
+	// Automation rule.
+	Condition *AutomationRuleCondition `json:"condition,omitempty"`
+
+	// Id: Required. ID of the rule. This id must be unique in the
+	// `Automation` resource to which this rule belongs. The format is
+	// a-z{0,62}.
+	Id string `json:"id,omitempty"`
+
+	// SourcePhases: Optional. Proceeds only after phase name matched any
+	// one in the list. This value must consist of lower-case letters,
+	// numbers, and hyphens, start with a letter and end with a letter or a
+	// number, and have a max length of 63 characters. In other words, it
+	// must match the following regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
+	SourcePhases []string `json:"sourcePhases,omitempty"`
+
+	// Wait: Optional. How long to wait after a rollout is finished.
+	Wait string `json:"wait,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Condition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvanceRolloutRule) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvanceRolloutRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AnthosCluster: Information specifying an Anthos Cluster.
@@ -492,6 +603,108 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Automation: An `Automation` resource in the Cloud Deploy API. An
+// `Automation` enables the automation of manually driven actions for a
+// Delivery Pipeline, which includes Release promotion amongst Targets,
+// Rollout repair and Rollout deployment strategy advancement. The
+// intention of Automation is to reduce manual intervention in the
+// continuous delivery process.
+type Automation struct {
+	// Annotations: Optional. User annotations. These attributes can only be
+	// set and used by the user, and not by Cloud Deploy. Annotations must
+	// meet the following constraints: * Annotations are key/value pairs. *
+	// Valid annotation keys have two segments: an optional prefix and name,
+	// separated by a slash (/). * The name segment is required and must be
+	// 63 characters or less, beginning and ending with an alphanumeric
+	// character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.),
+	// and alphanumerics between. * The prefix is optional. If specified,
+	// the prefix must be a DNS subdomain: a series of DNS labels separated
+	// by dots(.), not longer than 253 characters in total, followed by a
+	// slash (/). See
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
+	// for more details.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. Time at which the automation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Description of the `Automation`. Max length is
+	// 255 characters.
+	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. The weak etag of the `Automation` resource. This
+	// checksum is computed by the server based on the value of other
+	// fields, and may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. Labels are attributes that can be set and used by
+	// both the user and by Cloud Deploy. Labels must meet the following
+	// constraints: * Keys and values can contain only lowercase letters,
+	// numeric characters, underscores, and dashes. * All characters must
+	// use UTF-8 encoding, and international characters are allowed. * Keys
+	// must start with a lowercase letter or international character. * Each
+	// resource is limited to a maximum of 64 labels. Both keys and values
+	// are additionally constrained to be <= 63 characters.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. Name of the `Automation`. Format is
+	// projects/{project}/locations/{location}/deliveryPipelines/{delivery_pi
+	// peline}/automations/{automation}.
+	Name string `json:"name,omitempty"`
+
+	// Rules: Required. List of Automation rules associated with the
+	// Automation resource. Must have at least one rule and limited to 250
+	// rules per Delivery Pipeline. Note: the order of the rules here is not
+	// the same as the order of execution.
+	Rules []*AutomationRule `json:"rules,omitempty"`
+
+	// Selector: Required. Selected resources to which the automation will
+	// be applied.
+	Selector *AutomationResourceSelector `json:"selector,omitempty"`
+
+	// ServiceAccount: Required. Email address of the user-managed IAM
+	// service account that creates Cloud Deploy release and rollout
+	// resources.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// Suspended: Optional. When Suspended, automation is deactivated from
+	// execution.
+	Suspended bool `json:"suspended,omitempty"`
+
+	// Uid: Output only. Unique identifier of the `Automation`.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Time at which the automation was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Automation) MarshalJSON() ([]byte, error) {
+	type NoMethod Automation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AutomationEvent: Payload proto for
 // "clouddeploy.googleapis.com/automation" Platform Log event that
 // describes the Automation related events.
@@ -541,6 +754,254 @@ type AutomationEvent struct {
 
 func (s *AutomationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod AutomationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomationResourceSelector: AutomationResourceSelector contains the
+// information to select the resources to which an Automation is going
+// to be applied.
+type AutomationResourceSelector struct {
+	// Targets: Contains attributes about a target.
+	Targets []*TargetAttribute `json:"targets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Targets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Targets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationResourceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomationRolloutMetadata: AutomationRolloutMetadata contains
+// Automation-related actions that were performed on a rollout.
+type AutomationRolloutMetadata struct {
+	// AdvanceAutomationRuns: Output only. The IDs of the AutomationRuns
+	// initiated by an advance rollout rule.
+	AdvanceAutomationRuns []string `json:"advanceAutomationRuns,omitempty"`
+
+	// PromoteAutomationRun: Output only. The ID of the AutomationRun
+	// initiated by a promote release rule.
+	PromoteAutomationRun string `json:"promoteAutomationRun,omitempty"`
+
+	// RepairAutomationRuns: Output only. The IDs of the AutomationRuns
+	// initiated by a repair rollout rule.
+	RepairAutomationRuns []string `json:"repairAutomationRuns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdvanceAutomationRuns") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvanceAutomationRuns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationRolloutMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationRolloutMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomationRule: `AutomationRule` defines the automation activities.
+type AutomationRule struct {
+	// AdvanceRolloutRule: Optional. The `AdvanceRolloutRule` will
+	// automatically advance a successful Rollout.
+	AdvanceRolloutRule *AdvanceRolloutRule `json:"advanceRolloutRule,omitempty"`
+
+	// PromoteReleaseRule: Optional. `PromoteReleaseRule` will automatically
+	// promote a release from the current target to a specified target.
+	PromoteReleaseRule *PromoteReleaseRule `json:"promoteReleaseRule,omitempty"`
+
+	// RepairRolloutRule: Optional. The `RepairRolloutRule` will
+	// automatically repair a failed rollout.
+	RepairRolloutRule *RepairRolloutRule `json:"repairRolloutRule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvanceRolloutRule")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvanceRolloutRule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationRule) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomationRuleCondition: `AutomationRuleCondition` contains
+// conditions relevant to an `Automation` rule.
+type AutomationRuleCondition struct {
+	// TargetsPresentCondition: Optional. Details around targets enumerated
+	// in the rule.
+	TargetsPresentCondition *TargetsPresentCondition `json:"targetsPresentCondition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TargetsPresentCondition") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetsPresentCondition")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationRuleCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationRuleCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomationRun: An `AutomationRun` resource in the Cloud Deploy API.
+// An `AutomationResource` represents an automation execution instance
+// of an automation rule.
+type AutomationRun struct {
+	// AdvanceRolloutOperation: Output only. Advances a rollout to the next
+	// phase.
+	AdvanceRolloutOperation *AdvanceRolloutOperation `json:"advanceRolloutOperation,omitempty"`
+
+	// AutomationId: Output only. The ID of the automation that initiated
+	// the operation.
+	AutomationId string `json:"automationId,omitempty"`
+
+	// AutomationSnapshot: Output only. Snapshot of the Automation taken at
+	// AutomationRun creation time.
+	AutomationSnapshot *Automation `json:"automationSnapshot,omitempty"`
+
+	// CreateTime: Output only. Time at which the `AutomationRun` was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Etag: Output only. The weak etag of the `AutomationRun` resource.
+	// This checksum is computed by the server based on the value of other
+	// fields, and may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// ExpireTime: Output only. Time the `AutomationRun` will expire. An
+	// `AutomationRun` will expire after 14 days from its creation date.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Name: Output only. Name of the `AutomationRun`. Format is
+	// projects/{project}/locations/{location}/deliveryPipelines/{delivery_pi
+	// peline}/automationRuns/{automation_run}.
+	Name string `json:"name,omitempty"`
+
+	// PromoteReleaseOperation: Output only. Promotes a release to a
+	// specified 'Target'.
+	PromoteReleaseOperation *PromoteReleaseOperation `json:"promoteReleaseOperation,omitempty"`
+
+	// RepairRolloutOperation: Output only. Repairs a failed 'Rollout'.
+	RepairRolloutOperation *RepairRolloutOperation `json:"repairRolloutOperation,omitempty"`
+
+	// RuleId: Output only. The ID of the automation rule that initiated the
+	// operation.
+	RuleId string `json:"ruleId,omitempty"`
+
+	// ServiceAccount: Output only. Email address of the user-managed IAM
+	// service account that performs the operations against Cloud Deploy
+	// resources.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// State: Output only. Current state of the `AutomationRun`.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The `AutomationRun` has an unspecified state.
+	//   "SUCCEEDED" - The `AutomationRun` has succeeded.
+	//   "CANCELLED" - The `AutomationRun` was cancelled.
+	//   "FAILED" - The `AutomationRun` has failed.
+	//   "IN_PROGRESS" - The `AutomationRun` is in progress.
+	//   "PENDING" - The `AutomationRun` is pending.
+	State string `json:"state,omitempty"`
+
+	// StateDescription: Output only. Explains the current state of the
+	// `AutomationRun`. Present only an explanation is needed.
+	StateDescription string `json:"stateDescription,omitempty"`
+
+	// TargetId: Output only. The ID of the target that represents the
+	// promotion stage that initiates the `AutomationRun`. The value of this
+	// field is the last segment of a target name.
+	TargetId string `json:"targetId,omitempty"`
+
+	// UpdateTime: Output only. Time at which the automationRun was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// WaitUntilTime: Output only. Earliest time the `AutomationRun` will
+	// attempt to resume. Wait-time is configured by `wait` in automation
+	// rule.
+	WaitUntilTime string `json:"waitUntilTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdvanceRolloutOperation") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvanceRolloutOperation")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomationRun) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomationRun
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -803,6 +1264,19 @@ func (s *CanaryDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod CanaryDeployment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CancelAutomationRunRequest: The request object used by
+// `CancelAutomationRun`.
+type CancelAutomationRunRequest struct {
+}
+
+// CancelAutomationRunResponse: The response object from
+// `CancelAutomationRun`.
+type CancelAutomationRunResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // CancelOperationRequest: The request message for
@@ -2045,6 +2519,88 @@ func (s *KubernetesConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListAutomationRunsResponse: The response object from
+// `ListAutomationRuns`.
+type ListAutomationRunsResponse struct {
+	// AutomationRuns: The `AutomationRuns` objects.
+	AutomationRuns []*AutomationRun `json:"automationRuns,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AutomationRuns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutomationRuns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAutomationRunsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAutomationRunsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAutomationsResponse: The response object from `ListAutomations`.
+type ListAutomationsResponse struct {
+	// Automations: The `Automations` objects.
+	Automations []*Automation `json:"automations,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Automations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Automations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAutomationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAutomationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDeliveryPipelinesResponse: The response object from
 // `ListDeliveryPipelines`.
 type ListDeliveryPipelinesResponse struct {
@@ -2375,11 +2931,16 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // Metadata: Metadata includes information associated with a `Rollout`.
 type Metadata struct {
+	// Automation: Output only. AutomationRolloutMetadata contains the
+	// information about the interactions between Automation service and
+	// this rollout.
+	Automation *AutomationRolloutMetadata `json:"automation,omitempty"`
+
 	// CloudRun: Output only. The name of the Cloud Run Service that is
 	// associated with a `Rollout`.
 	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudRun") to
+	// ForceSendFields is a list of field names (e.g. "Automation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2387,7 +2948,7 @@ type Metadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudRun") to include in
+	// NullFields is a list of field names (e.g. "Automation") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3146,6 +3707,100 @@ func (s *PrivatePool) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PromoteReleaseOperation: Contains the information of an automated
+// promote-release operation.
+type PromoteReleaseOperation struct {
+	// Phase: Output only. The starting phase of the rollout created by this
+	// operation.
+	Phase string `json:"phase,omitempty"`
+
+	// Rollout: Output only. The name of the rollout that initiates the
+	// `AutomationRun`.
+	Rollout string `json:"rollout,omitempty"`
+
+	// TargetId: Output only. The ID of the target that represents the
+	// promotion stage to which the release will be promoted. The value of
+	// this field is the last segment of a target name.
+	TargetId string `json:"targetId,omitempty"`
+
+	// Wait: Output only. How long the operation will be paused.
+	Wait string `json:"wait,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Phase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Phase") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PromoteReleaseOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod PromoteReleaseOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PromoteReleaseRule: `PromoteRelease` rule will automatically promote
+// a release from the current target to a specified target.
+type PromoteReleaseRule struct {
+	// Condition: Output only. Information around the state of the
+	// Automation rule.
+	Condition *AutomationRuleCondition `json:"condition,omitempty"`
+
+	// DestinationPhase: Optional. The starting phase of the rollout created
+	// by this operation. Default to the first phase.
+	DestinationPhase string `json:"destinationPhase,omitempty"`
+
+	// DestinationTargetId: Optional. The ID of the stage in the pipeline to
+	// which this `Release` is deploying. If unspecified, default it to the
+	// next stage in the promotion flow. The value of this field could be
+	// one of the following: * The last segment of a target name. It only
+	// needs the ID to determine if the target is one of the stages in the
+	// promotion sequence defined in the pipeline. * "@next", the next
+	// target in the promotion sequence.
+	DestinationTargetId string `json:"destinationTargetId,omitempty"`
+
+	// Id: Required. ID of the rule. This id must be unique in the
+	// `Automation` resource to which this rule belongs. The format is
+	// a-z{0,62}.
+	Id string `json:"id,omitempty"`
+
+	// Wait: Optional. How long the release need to be paused until being
+	// promoted to the next target.
+	Wait string `json:"wait,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Condition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PromoteReleaseRule) MarshalJSON() ([]byte, error) {
+	type NoMethod PromoteReleaseRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Release: A `Release` resource in the Cloud Deploy API. A `Release`
 // defines a specific Skaffold configuration instance that can be
 // deployed.
@@ -3455,6 +4110,258 @@ func (s *RenderMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RepairMode: Configuration of the repair action.
+type RepairMode struct {
+	// Retry: Optional. Retries a failed job.
+	Retry *Retry `json:"retry,omitempty"`
+
+	// Rollback: Optional. Rolls back a `Rollout`.
+	Rollback *Rollback `json:"rollback,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Retry") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Retry") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepairMode) MarshalJSON() ([]byte, error) {
+	type NoMethod RepairMode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepairPhase: RepairPhase tracks the repair attempts that have been
+// made for each `RepairMode` specified in the `Automation` resource.
+type RepairPhase struct {
+	// Retry: Output only. Records of the retry attempts for retry repair
+	// mode.
+	Retry *RetryPhase `json:"retry,omitempty"`
+
+	// Rollback: Output only. Rollback attempt for rollback repair mode .
+	Rollback *RollbackAttempt `json:"rollback,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Retry") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Retry") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepairPhase) MarshalJSON() ([]byte, error) {
+	type NoMethod RepairPhase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepairRolloutOperation: Contains the information for an automated
+// `repair rollout` operation.
+type RepairRolloutOperation struct {
+	// CurrentRepairModeIndex: Output only. The index of the current repair
+	// action in the repair sequence.
+	CurrentRepairModeIndex int64 `json:"currentRepairModeIndex,omitempty,string"`
+
+	// RepairPhases: Output only. Records of the repair attempts. Each
+	// repair phase may have multiple retry attempts or single rollback
+	// attempt.
+	RepairPhases []*RepairPhase `json:"repairPhases,omitempty"`
+
+	// Rollout: Output only. The name of the rollout that initiates the
+	// `AutomationRun`.
+	Rollout string `json:"rollout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrentRepairModeIndex") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentRepairModeIndex")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepairRolloutOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod RepairRolloutOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepairRolloutRule: The `RepairRolloutRule` automation rule will
+// automatically repair a failed `Rollout`.
+type RepairRolloutRule struct {
+	// Condition: Output only. Information around the state of the
+	// 'Automation' rule.
+	Condition *AutomationRuleCondition `json:"condition,omitempty"`
+
+	// Id: Required. ID of the rule. This id must be unique in the
+	// `Automation` resource to which this rule belongs. The format is
+	// a-z{0,62}.
+	Id string `json:"id,omitempty"`
+
+	// Jobs: Optional. Jobs to repair. Proceeds only after job name matched
+	// any one in the list, or for all jobs if unspecified or empty. The
+	// phase that includes the job must match the phase ID specified in
+	// `source_phase`. This value must consist of lower-case letters,
+	// numbers, and hyphens, start with a letter and end with a letter or a
+	// number, and have a max length of 63 characters. In other words, it
+	// must match the following regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
+	Jobs []string `json:"jobs,omitempty"`
+
+	// RepairModes: Required. Defines the types of automatic repair actions
+	// for failed jobs.
+	RepairModes []*RepairMode `json:"repairModes,omitempty"`
+
+	// SourcePhases: Optional. Phases within which jobs are subject to
+	// automatic repair actions on failure. Proceeds only after phase name
+	// matched any one in the list, or for all phases if unspecified. This
+	// value must consist of lower-case letters, numbers, and hyphens, start
+	// with a letter and end with a letter or a number, and have a max
+	// length of 63 characters. In other words, it must match the following
+	// regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
+	SourcePhases []string `json:"sourcePhases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Condition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepairRolloutRule) MarshalJSON() ([]byte, error) {
+	type NoMethod RepairRolloutRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Retry: Retries the failed job.
+type Retry struct {
+	// Attempts: Required. Total number of retries. Retry will skipped if
+	// set to 0; The minimum value is 1, and the maximum value is 10.
+	Attempts int64 `json:"attempts,omitempty,string"`
+
+	// BackoffMode: Optional. The pattern of how wait time will be
+	// increased. Default is linear. Backoff mode will be ignored if `wait`
+	// is 0.
+	//
+	// Possible values:
+	//   "BACKOFF_MODE_UNSPECIFIED" - No WaitMode is specified.
+	//   "BACKOFF_MODE_LINEAR" - Increases the wait time linearly.
+	//   "BACKOFF_MODE_EXPONENTIAL" - Increases the wait time exponentially.
+	BackoffMode string `json:"backoffMode,omitempty"`
+
+	// Wait: Optional. How long to wait for the first retry. Default is 0,
+	// and the maximum value is 14d.
+	Wait string `json:"wait,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attempts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attempts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Retry) MarshalJSON() ([]byte, error) {
+	type NoMethod Retry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RetryAttempt: RetryAttempt represents an action of retrying the
+// failed Cloud Deploy job.
+type RetryAttempt struct {
+	// Attempt: Output only. The index of this retry attempt.
+	Attempt int64 `json:"attempt,omitempty,string"`
+
+	// State: Output only. Valid state of this retry action.
+	//
+	// Possible values:
+	//   "REPAIR_STATE_UNSPECIFIED" - The `repair` has an unspecified state.
+	//   "REPAIR_STATE_SUCCEEDED" - The `repair` action has succeeded.
+	//   "REPAIR_STATE_CANCELLED" - The `repair` action was cancelled.
+	//   "REPAIR_STATE_FAILED" - The `repair` action has failed.
+	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
+	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
+	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
+	State string `json:"state,omitempty"`
+
+	// StateDesc: Output only. Description of the state of the Retry.
+	StateDesc string `json:"stateDesc,omitempty"`
+
+	// Wait: Output only. How long the operation will be paused.
+	Wait string `json:"wait,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attempt") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attempt") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetryAttempt) MarshalJSON() ([]byte, error) {
+	type NoMethod RetryAttempt
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RetryJobRequest: RetryJobRequest is the request object used by
 // `RetryJob`.
 type RetryJobRequest struct {
@@ -3492,6 +4399,134 @@ type RetryJobResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// RetryPhase: RetryPhase contains the retry attempts and the metadata
+// for initiating a new attempt.
+type RetryPhase struct {
+	// Attempts: Output only. Detail of a retry action.
+	Attempts []*RetryAttempt `json:"attempts,omitempty"`
+
+	// BackoffMode: Output only. The pattern of how the wait time of the
+	// retry attempt is calculated.
+	//
+	// Possible values:
+	//   "BACKOFF_MODE_UNSPECIFIED" - No WaitMode is specified.
+	//   "BACKOFF_MODE_LINEAR" - Increases the wait time linearly.
+	//   "BACKOFF_MODE_EXPONENTIAL" - Increases the wait time exponentially.
+	BackoffMode string `json:"backoffMode,omitempty"`
+
+	// JobId: Output only. The job ID for the Job to retry.
+	JobId string `json:"jobId,omitempty"`
+
+	// PhaseId: Output only. The phase ID of the phase that includes the job
+	// being retried.
+	PhaseId string `json:"phaseId,omitempty"`
+
+	// TotalAttempts: Output only. The number of attempts that have been
+	// made.
+	TotalAttempts int64 `json:"totalAttempts,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Attempts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attempts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetryPhase) MarshalJSON() ([]byte, error) {
+	type NoMethod RetryPhase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Rollback: Rolls back a `Rollout`.
+type Rollback struct {
+	// DestinationPhase: Optional. The starting phase ID for the `Rollout`.
+	// If unspecified, the `Rollout` will start in the stable phase.
+	DestinationPhase string `json:"destinationPhase,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationPhase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationPhase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Rollback) MarshalJSON() ([]byte, error) {
+	type NoMethod Rollback
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackAttempt: RollbackAttempt represents an action of rolling back
+// a Cloud Deploy 'Target'.
+type RollbackAttempt struct {
+	// DestinationPhase: Output only. The phase to which the rollout will be
+	// rolled back to.
+	DestinationPhase string `json:"destinationPhase,omitempty"`
+
+	// RolloutId: Output only. ID of the rollback `Rollout` to create.
+	RolloutId string `json:"rolloutId,omitempty"`
+
+	// State: Output only. Valid state of this rollback action.
+	//
+	// Possible values:
+	//   "REPAIR_STATE_UNSPECIFIED" - The `repair` has an unspecified state.
+	//   "REPAIR_STATE_SUCCEEDED" - The `repair` action has succeeded.
+	//   "REPAIR_STATE_CANCELLED" - The `repair` action was cancelled.
+	//   "REPAIR_STATE_FAILED" - The `repair` action has failed.
+	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
+	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
+	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
+	State string `json:"state,omitempty"`
+
+	// StateDesc: Output only. Description of the state of the Rollback.
+	StateDesc string `json:"stateDesc,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationPhase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationPhase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RollbackAttempt) MarshalJSON() ([]byte, error) {
+	type NoMethod RollbackAttempt
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // RollbackTargetConfig: Configs for the Rollback rollout.
@@ -3828,6 +4863,83 @@ type RolloutNotificationEvent struct {
 
 func (s *RolloutNotificationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod RolloutNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RolloutUpdateEvent: Payload proto for
+// "clouddeploy.googleapis.com/rollout_update" Platform Log event that
+// describes the rollout update event.
+type RolloutUpdateEvent struct {
+	// Message: Debug message for when a rollout update event occurs.
+	Message string `json:"message,omitempty"`
+
+	// PipelineUid: Unique identifier of the pipeline.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
+	// ReleaseUid: Unique identifier of the release.
+	ReleaseUid string `json:"releaseUid,omitempty"`
+
+	// Rollout: The name of the rollout.
+	Rollout string `json:"rollout,omitempty"`
+
+	// RolloutUpdateType: Output only. The type of the rollout update.
+	//
+	// Possible values:
+	//   "ROLLOUT_UPDATE_TYPE_UNSPECIFIED" - Rollout update type
+	// unspecified.
+	//   "PENDING" - rollout state updated to pending.
+	//   "PENDING_RELEASE" - Rollout state updated to pending release.
+	//   "IN_PROGRESS" - Rollout state updated to in progress.
+	//   "CANCELLING" - Rollout state updated to cancelling.
+	//   "CANCELLED" - Rollout state updated to cancelled.
+	//   "HALTED" - Rollout state updated to halted.
+	//   "SUCCEEDED" - Rollout state updated to succeeded.
+	//   "FAILED" - Rollout state updated to failed.
+	//   "APPROVAL_REQUIRED" - Rollout requires approval.
+	//   "APPROVED" - Rollout has been approved.
+	//   "REJECTED" - Rollout has been rejected.
+	//   "ADVANCE_REQUIRED" - Rollout requires advance to the next phase.
+	//   "ADVANCED" - Rollout has been advanced.
+	RolloutUpdateType string `json:"rolloutUpdateType,omitempty"`
+
+	// TargetId: ID of the target.
+	TargetId string `json:"targetId,omitempty"`
+
+	// Type: Type of this notification, e.g. for a rollout update event.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
+	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
+	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RolloutUpdateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod RolloutUpdateEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4363,6 +5475,44 @@ type TargetArtifact struct {
 
 func (s *TargetArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetAttribute: Contains criteria for selecting Targets. Attributes
+// provided must match the target resource in order for policy
+// restrictions to apply. E.g. if id "prod" and labels "foo: bar" are
+// given the target resource must match both that id and have that label
+// in order to be selected.
+type TargetAttribute struct {
+	// Id: ID of the `Target`. The value of this field could be one of the
+	// following: * The last segment of a target name. It only needs the ID
+	// to determine which target is being referred to * "*", all targets in
+	// a location.
+	Id string `json:"id,omitempty"`
+
+	// Labels: Target labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetAttribute
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6798,6 +7948,1491 @@ func (c *ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall) Do(opts ...go
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automationRuns.cancel":
+
+type ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall struct {
+	s                          *Service
+	name                       string
+	cancelautomationrunrequest *CancelAutomationRunRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Cancel: Cancels an AutomationRun. The `state` of the `AutomationRun`
+// after cancelling is `CANCELLED`. `CancelAutomationRun` can be called
+// on AutomationRun in the state `IN_PROGRESS` and `PENDING`;
+// AutomationRun in a different state returns an `FAILED_PRECONDITION`
+// error.
+//
+//   - name: Name of the `AutomationRun`. Format is
+//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
+//     pipeline}/automationRuns/{automation_run}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) Cancel(name string, cancelautomationrunrequest *CancelAutomationRunRequest) *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cancelautomationrunrequest = cancelautomationrunrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelautomationrunrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automationRuns.cancel" call.
+// Exactly one of *CancelAutomationRunResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelAutomationRunResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) Do(opts ...googleapi.CallOption) (*CancelAutomationRunResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelAutomationRunResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancels an AutomationRun. The `state` of the `AutomationRun` after cancelling is `CANCELLED`. `CancelAutomationRun` can be called on AutomationRun in the state `IN_PROGRESS` and `PENDING`; AutomationRun in a different state returns an `FAILED_PRECONDITION` error.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automationRuns/{automationRunsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automationRuns.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `AutomationRun`. Format is projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automationRuns/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelAutomationRunRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CancelAutomationRunResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automationRuns.get":
+
+type ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single AutomationRun.
+//
+//   - name: Name of the `AutomationRun`. Format must be
+//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
+//     pipeline}/automationRuns/{automation_run}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) Get(name string) *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automationRuns.get" call.
+// Exactly one of *AutomationRun or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AutomationRun.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) Do(opts ...googleapi.CallOption) (*AutomationRun, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutomationRun{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single AutomationRun.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automationRuns/{automationRunsId}",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automationRuns.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `AutomationRun`. Format must be projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automationRuns/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "AutomationRun"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automationRuns.list":
+
+type ProjectsLocationsDeliveryPipelinesAutomationRunsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AutomationRuns in a given project and location.
+//
+//   - parent: The parent, which owns this collection of automationRuns.
+//     Format must be
+//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
+//     pipeline}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter automationRuns to
+// be returned. All fields can be used in the filter.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) OrderBy(orderBy string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of automationRuns to return. The service may return fewer than this
+// value. If unspecified, at most 50 automationRuns will be returned.
+// The maximum value is 1000; values above 1000 will be set to 1000.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) PageSize(pageSize int64) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListAutomationRuns` call. Provide this to
+// retrieve the subsequent page. When paginating, all other provided
+// parameters match the call that provided the page token.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) PageToken(pageToken string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/automationRuns")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automationRuns.list" call.
+// Exactly one of *ListAutomationRunsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAutomationRunsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Do(opts ...googleapi.CallOption) (*ListAutomationRunsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAutomationRunsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists AutomationRuns in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automationRuns",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automationRuns.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter automationRuns to be returned. All fields can be used in the filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field to sort by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of automationRuns to return. The service may return fewer than this value. If unspecified, at most 50 automationRuns will be returned. The maximum value is 1000; values above 1000 will be set to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListAutomationRuns` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of automationRuns. Format must be projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/automationRuns",
+	//   "response": {
+	//     "$ref": "ListAutomationRunsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Pages(ctx context.Context, f func(*ListAutomationRunsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automations.create":
+
+type ProjectsLocationsDeliveryPipelinesAutomationsCreateCall struct {
+	s          *Service
+	parent     string
+	automation *Automation
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Automation in a given project and location.
+//
+//   - parent: The parent collection in which the `Automation` should be
+//     created. Format should be
+//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//     ipeline_name}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Create(parent string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.automation = automation
+	return c
+}
+
+// AutomationId sets the optional parameter "automationId": Required. ID
+// of the `Automation`.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) AutomationId(automationId string) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
+	c.urlParams_.Set("automationId", automationId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated and the user is provided with an
+// expected result, but no actual change is made.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.automation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/automations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Automation in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automations",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automations.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "automationId": {
+	//       "description": "Required. ID of the `Automation`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent collection in which the `Automation` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated and the user is provided with an expected result, but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/automations",
+	//   "request": {
+	//     "$ref": "Automation"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automations.delete":
+
+type ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Automation resource.
+//
+//   - name: The name of the `Automation` to delete. Format should be
+//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//     ipeline_name}/automations/{automation_name}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Delete(name string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, then deleting an already deleted or non-existing `Automation`
+// will succeed.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": The weak etag of the
+// request. This checksum is computed by the server based on the value
+// of other fields, and may be sent on update and delete requests to
+// ensure the client has an up-to-date value before proceeding.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Etag(etag string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and verify whether the resource exists, but do
+// not actually post it.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single Automation resource.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automations/{automationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, then deleting an already deleted or non-existing `Automation` will succeed.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "etag": {
+	//       "description": "Optional. The weak etag of the request. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the `Automation` to delete. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set, validate the request and verify whether the resource exists, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automations.get":
+
+type ProjectsLocationsDeliveryPipelinesAutomationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Automation.
+//
+//   - name: Name of the `Automation`. Format must be
+//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//     ipeline_name}/automations/{automation_name}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Get(name string) *ProjectsLocationsDeliveryPipelinesAutomationsGetCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeliveryPipelinesAutomationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.get" call.
+// Exactly one of *Automation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Automation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) Do(opts ...googleapi.CallOption) (*Automation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Automation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single Automation.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automations/{automationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `Automation`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Automation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automations.list":
+
+type ProjectsLocationsDeliveryPipelinesAutomationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Automations in a given project and location.
+//
+//   - parent: The parent, which owns this collection of automations.
+//     Format must be
+//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//     ipeline_name}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter automations to be
+// returned. All fields can be used in the filter.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) OrderBy(orderBy string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of automations to return. The service may return fewer than this
+// value. If unspecified, at most 50 automations will be returned. The
+// maximum value is 1000; values above 1000 will be set to 1000.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) PageSize(pageSize int64) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListAutomations` call. Provide this to
+// retrieve the subsequent page. When paginating, all other provided
+// parameters match the call that provided the page token.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) PageToken(pageToken string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/automations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.list" call.
+// Exactly one of *ListAutomationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAutomationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Do(opts ...googleapi.CallOption) (*ListAutomationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAutomationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Automations in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automations",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter automations to be returned. All fields can be used in the filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field to sort by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of automations to return. The service may return fewer than this value. If unspecified, at most 50 automations will be returned. The maximum value is 1000; values above 1000 will be set to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListAutomations` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of automations. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/automations",
+	//   "response": {
+	//     "$ref": "ListAutomationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Pages(ctx context.Context, f func(*ListAutomationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.automations.patch":
+
+type ProjectsLocationsDeliveryPipelinesAutomationsPatchCall struct {
+	s          *Service
+	name       string
+	automation *Automation
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the parameters of a single Automation resource.
+//
+//   - name: Output only. Name of the `Automation`. Format is
+//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
+//     pipeline}/automations/{automation}.
+func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Patch(name string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c := &ProjectsLocationsDeliveryPipelinesAutomationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.automation = automation
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, updating a `Automation` that does not exist will result in the
+// creation of a new `Automation`.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `Automation` resource by the update. The fields specified in the
+// update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated and the user is provided with an
+// expected result, but no actual change is made.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.automation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single Automation resource.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/automations/{automationsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.automations.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, updating a `Automation` that does not exist will result in the creation of a new `Automation`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Output only. Name of the `Automation`. Format is projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automations/{automation}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `Automation` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated and the user is provided with an expected result, but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Automation"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

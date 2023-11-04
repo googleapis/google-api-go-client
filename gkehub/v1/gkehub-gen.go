@@ -689,6 +689,12 @@ type CommonFleetDefaultMemberConfigSpec struct {
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
 
+	// Identityservice: Identity Service-specific spec.
+	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+
+	// Mesh: Anthos Service Mesh-specific spec
+	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
+
 	// Policycontroller: Policy Controller spec.
 	Policycontroller *PolicyControllerMembershipSpec `json:"policycontroller,omitempty"`
 

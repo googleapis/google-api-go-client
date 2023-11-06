@@ -5,7 +5,15 @@
 package grpc
 
 import (
+	"bytes"
+	"context"
+	"log"
+	"strings"
 	"testing"
+
+	"cloud.google.com/go/compute/metadata"
+	"golang.org/x/oauth2/google"
+	"google.golang.org/api/internal"
 )
 
 func TestCheckDirectPathEndPoint(t *testing.T) {
@@ -46,4 +54,74 @@ func TestCheckDirectPathEndPoint(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestLogDirectPathMisconfigAttrempDirectPathNotSet(t *testing.T) {
+	o := &internal.DialSettings{}
+	o.EnableDirectPathXds = true
+
+	endpoint := "abc.googleapis.com"
+
+	creds, err := internal.Creds(context.Context(context.Background()), o)
+	if err != nil {
+		t.Fatalf("failed to create creds")
+	}
+
+	buf := bytes.Buffer{}
+	log.SetOutput(&buf)
+
+	logDirectPathMisconfig(endpoint, creds.TokenSource, o)
+
+	wantedLog := "WARNING: DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option."
+	if !strings.Contains(buf.String(), wantedLog) {
+		t.Fatalf("got: %v, want: %v", buf.String(), wantedLog)
+	}
+
+}
+
+func TestLogDirectPathMisconfigWrongCredential(t *testing.T) {
+	o := &internal.DialSettings{}
+	o.EnableDirectPath = true
+	o.EnableDirectPathXds = true
+
+	endpoint := "abc.googleapis.com"
+
+	creds := &google.Credentials{}
+
+	buf := bytes.Buffer{}
+	log.SetOutput(&buf)
+
+	logDirectPathMisconfig(endpoint, creds.TokenSource, o)
+
+	wantedLog := "WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used."
+	if !strings.Contains(buf.String(), wantedLog) {
+		t.Fatalf("got: %v, want: %v", buf.String(), wantedLog)
+	}
+
+}
+
+func TestLogDirectPathMisconfigNotOnGCE(t *testing.T) {
+	o := &internal.DialSettings{}
+	o.EnableDirectPath = true
+	o.EnableDirectPathXds = true
+
+	endpoint := "abc.googleapis.com"
+
+	creds, err := internal.Creds(context.Context(context.Background()), o)
+	if err != nil {
+		t.Fatalf("failed to create creds")
+	}
+
+	buf := bytes.Buffer{}
+	log.SetOutput(&buf)
+
+	logDirectPathMisconfig(endpoint, creds.TokenSource, o)
+
+	if !metadata.OnGCE() {
+		wantedLog := "WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment.."
+		if !strings.Contains(buf.String(), wantedLog) {
+			t.Fatalf("got: %v, want: %v", buf.String(), wantedLog)
+		}
+	}
+
 }

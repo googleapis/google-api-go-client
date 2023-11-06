@@ -1,5 +1,18 @@
 # Changes
 
+## [0.150.0](https://github.com/googleapis/google-api-go-client/compare/v0.149.0...v0.150.0) (2023-11-06)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2243](https://github.com/googleapis/google-api-go-client/issues/2243)) ([2ce2d2d](https://github.com/googleapis/google-api-go-client/commit/2ce2d2d63343cae224e0f44f37d0426e9c7acbaa))
+* **all:** Auto-regenerate discovery clients ([#2245](https://github.com/googleapis/google-api-go-client/issues/2245)) ([5693997](https://github.com/googleapis/google-api-go-client/commit/56939974844fd102839077f56ca84454458749f2))
+* **all:** Auto-regenerate discovery clients ([#2246](https://github.com/googleapis/google-api-go-client/issues/2246)) ([8bfbeac](https://github.com/googleapis/google-api-go-client/commit/8bfbeaca4cb80ffe972d56762c832ed31785e8ca))
+* **all:** Auto-regenerate discovery clients ([#2249](https://github.com/googleapis/google-api-go-client/issues/2249)) ([b56da3d](https://github.com/googleapis/google-api-go-client/commit/b56da3d6d7c0ad083d8835dead8f681de263fa39))
+* **all:** Auto-regenerate discovery clients ([#2250](https://github.com/googleapis/google-api-go-client/issues/2250)) ([c08d405](https://github.com/googleapis/google-api-go-client/commit/c08d405c38ecd133175b932232211e046c4aa07c))
+* **all:** Auto-regenerate discovery clients ([#2252](https://github.com/googleapis/google-api-go-client/issues/2252)) ([7529003](https://github.com/googleapis/google-api-go-client/commit/752900316914347301220b5f5dc2eb5eea2a8325))
+* **transport:** Log DirectPath misconfiguration ([#2225](https://github.com/googleapis/google-api-go-client/issues/2225)) ([85e85ad](https://github.com/googleapis/google-api-go-client/commit/85e85ad04e28b434dd731c3b537d0fc35ff3639a))
+
 ## [0.149.0](https://github.com/googleapis/google-api-go-client/compare/v0.148.0...v0.149.0) (2023-10-31)
 
 

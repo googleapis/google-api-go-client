@@ -1560,6 +1560,46 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: Regional encryption config for CMEK details.
+type EncryptionConfig struct {
+	// EncryptionType: Optional. Encryption type for the region.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Egress mode unspecified.
+	//   "GMEK" - Network egress through auto assigned IPs.
+	//   "CMEK" - Network egress through static IPs.
+	EncryptionType string `json:"encryptionType,omitempty"`
+
+	// KmsKeyName: Optional. KMS crypto key. This field accepts identifiers
+	// of the form
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/ {crypto_key}`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EncryptionKey: Encryption Key value.
 type EncryptionKey struct {
 	// KmsKeyName: The [KMS key name] with which the content of the
@@ -2066,6 +2106,15 @@ type EventingDetails struct {
 
 	// SearchTags: Output only. Array of search keywords.
 	SearchTags []string `json:"searchTags,omitempty"`
+
+	// Type: Output only. The type of the event listener for a specific
+	// connector.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value.
+	//   "WEBHOOK" - Webhook listener. e.g. Jira, Zendesk, Servicenow etc.,
+	//   "JMS" - JMS Listener. e.g. IBM MQ, Rabbit MQ etc.,
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomEventTypes") to
 	// unconditionally include in API requests. By default, fields with
@@ -3919,6 +3968,10 @@ type RefreshConnectionSchemaMetadataRequest struct {
 
 // RegionalSettings: Regional Settings details.
 type RegionalSettings struct {
+	// EncryptionConfig: Optional. Regional encryption config to hold CMEK
+	// details.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
 	// Name: Output only. Resource name of the Connection. Format:
 	// projects/{project}/locations/{location}/regionalSettings
 	Name string `json:"name,omitempty"`
@@ -3930,7 +3983,7 @@ type RegionalSettings struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3938,12 +3991,13 @@ type RegionalSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncryptionConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

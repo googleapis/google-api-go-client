@@ -3541,7 +3541,10 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	// Google account login token does not match the user ID in the cookie.
 	//   "LOGIN_COOKIE_REQUIRED" - Login cookie is required for
 	// authentication.
-	//   "NOT_ADS_USER" - User in the cookie is not a valid Ads user.
+	//   "NOT_ADS_USER" - The Google account that generated the OAuth access
+	// token is not associated with a Search Ads 360 account. Create a new
+	// account, or add the Google account to an existing Search Ads 360
+	// account.
 	//   "OAUTH_TOKEN_INVALID" - OAuth token in the header is not valid.
 	//   "OAUTH_TOKEN_EXPIRED" - OAuth token in the header has expired.
 	//   "OAUTH_TOKEN_DISABLED" - OAuth token in the header has been

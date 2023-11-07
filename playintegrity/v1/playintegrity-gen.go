@@ -416,8 +416,51 @@ func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GuidanceDetails: Contains guidance details about the Integrity API
-// response, providing additional context to the integrity verdicts.
+// EnvironmentDetails: Contains information about the environment Play
+// Integrity API runs in, e.g. Play Protect verdict.
+type EnvironmentDetails struct {
+	// PlayProtectVerdict: The evaluation of Play Protect verdict.
+	//
+	// Possible values:
+	//   "PLAY_PROTECT_VERDICT_UNSPECIFIED" - Play Protect verdict has not
+	// been set.
+	//   "UNEVALUATED" - Play Protect state was not evaluated. Device may
+	// not be trusted.
+	//   "NO_ISSUES" - Play Protect is on and no issues found.
+	//   "NO_DATA" - Play Protect is on but no scan has been performed yet.
+	// The device or Play Store app may have been reset.
+	//   "MEDIUM_RISK" - Play Protect is on and warnings found.
+	//   "HIGH_RISK" - Play Protect is on and high severity issues found.
+	//   "POSSIBLE_RISK" - Play Protect is turned off. Turn on Play Protect.
+	PlayProtectVerdict string `json:"playProtectVerdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PlayProtectVerdict")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlayProtectVerdict") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvironmentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvironmentDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GuidanceDetails: Deprecated: this field is not used. Contains
+// guidance details about the Integrity API response, providing
+// additional context to the integrity verdicts.
 type GuidanceDetails struct {
 	// UserRemediationDetails: This shows when there is an issue with at
 	// least one of the integrity verdicts, which can be remedied by the
@@ -535,8 +578,12 @@ type TokenPayloadExternal struct {
 	// DeviceIntegrity: Required. Details about the device integrity.
 	DeviceIntegrity *DeviceIntegrity `json:"deviceIntegrity,omitempty"`
 
-	// GuidanceDetails: Additional guidance related to the integrity API
-	// response.
+	// EnvironmentDetails: Details of the environment Play Integrity API
+	// runs in.
+	EnvironmentDetails *EnvironmentDetails `json:"environmentDetails,omitempty"`
+
+	// GuidanceDetails: Deprecated: this field is not used. Additional
+	// guidance related to the integrity API response.
 	GuidanceDetails *GuidanceDetails `json:"guidanceDetails,omitempty"`
 
 	// RequestDetails: Required. Details about the integrity request.
@@ -571,8 +618,8 @@ func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UserRemediationDetails: Contains details of remediation guidance that
-// the user can perform.
+// UserRemediationDetails: Deprecated: this field is not used. Contains
+// details of remediation guidance that the user can perform.
 type UserRemediationDetails struct {
 	// Remediation: Description of the user remediation action.
 	//

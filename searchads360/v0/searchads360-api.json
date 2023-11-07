@@ -260,7 +260,7 @@
       }
     }
   },
-  "revision": "20231031",
+  "revision": "20231106",
   "rootUrl": "https://searchads360.googleapis.com/",
   "schemas": {
     "GoogleAdsSearchads360V0Common__AdScheduleInfo": {
@@ -2540,7 +2540,7 @@
             "A problem occurred during Google account authentication.",
             "The user in the Google account login token does not match the user ID in the cookie.",
             "Login cookie is required for authentication.",
-            "User in the cookie is not a valid Ads user.",
+            "The Google account that generated the OAuth access token is not associated with a Search Ads 360 account. Create a new account, or add the Google account to an existing Search Ads 360 account.",
             "OAuth token in the header is not valid.",
             "OAuth token in the header has expired.",
             "OAuth token in the header has been disabled.",

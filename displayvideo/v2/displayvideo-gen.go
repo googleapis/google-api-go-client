@@ -5737,7 +5737,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7 Read the [v7 migration
+	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
 	// before migrating to this version. Currently in beta. Only available
 	// for use by a subset of users.
@@ -15887,7 +15887,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7 Read the [v7 migration
+	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
 	// before migrating to this version. Currently in beta. Only available
 	// for use by a subset of users.
@@ -15974,7 +15974,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7 Read the [v7 migration
+	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
 	// before migrating to this version. Currently in beta. Only available
 	// for use by a subset of users.

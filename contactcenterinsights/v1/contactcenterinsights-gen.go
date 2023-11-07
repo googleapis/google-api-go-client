@@ -521,7 +521,7 @@ type GoogleCloudContactcenterinsightsV1AnnotatorSelectorSummarizationConfig stru
 	// Possible values:
 	//   "SUMMARIZATION_MODEL_UNSPECIFIED" - Unspecified summarization
 	// model.
-	//   "BASELINE_MODEL" - The Insights baseline model.
+	//   "BASELINE_MODEL" - The CCAI baseline model.
 	SummarizationModel string `json:"summarizationModel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -4471,7 +4471,7 @@ type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelectorSummarizationConfi
 	// Possible values:
 	//   "SUMMARIZATION_MODEL_UNSPECIFIED" - Unspecified summarization
 	// model.
-	//   "BASELINE_MODEL" - The Insights baseline model.
+	//   "BASELINE_MODEL" - The CCAI baseline model.
 	SummarizationModel string `json:"summarizationModel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")

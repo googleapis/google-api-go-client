@@ -2534,7 +2534,7 @@ func (c *PlacesPhotosGetMediaCall) MaxWidthPx(maxWidthPx int64) *PlacesPhotosGet
 // set, skip the default HTTP redirect behavior and render a text format
 // (for example, in JSON format for HTTP use case) response. If not set,
 // an HTTP redirect will be issued to redirect the call to the image
-// midea. This option is ignored for non-HTTP requests.
+// media. This option is ignored for non-HTTP requests.
 func (c *PlacesPhotosGetMediaCall) SkipHttpRedirect(skipHttpRedirect bool) *PlacesPhotosGetMediaCall {
 	c.urlParams_.Set("skipHttpRedirect", fmt.Sprint(skipHttpRedirect))
 	return c
@@ -2667,7 +2667,7 @@ func (c *PlacesPhotosGetMediaCall) Do(opts ...googleapi.CallOption) (*GoogleMaps
 	//       "type": "string"
 	//     },
 	//     "skipHttpRedirect": {
-	//       "description": "Optional. If set, skip the default HTTP redirect behavior and render a text format (for example, in JSON format for HTTP use case) response. If not set, an HTTP redirect will be issued to redirect the call to the image midea. This option is ignored for non-HTTP requests.",
+	//       "description": "Optional. If set, skip the default HTTP redirect behavior and render a text format (for example, in JSON format for HTTP use case) response. If not set, an HTTP redirect will be issued to redirect the call to the image media. This option is ignored for non-HTTP requests.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

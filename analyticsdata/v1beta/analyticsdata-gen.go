@@ -2083,6 +2083,15 @@ type ResponseMetaData struct {
 	// this reason.
 	EmptyReason string `json:"emptyReason,omitempty"`
 
+	// SamplingMetadatas: If this report results is sampled
+	// (https://support.google.com/analytics/answer/13331292), this
+	// describes the percentage of events used in this report. One
+	// `samplingMetadatas` is populated for each date range. Each
+	// `samplingMetadatas` corresponds to a date range in order that date
+	// ranges were specified in the request. However if the results are not
+	// sampled, this field will not be defined.
+	SamplingMetadatas []*SamplingMetadata `json:"samplingMetadatas,omitempty"`
+
 	// SchemaRestrictionResponse: Describes the schema restrictions actively
 	// enforced in creating this report. To learn more, see Access and
 	// data-restriction management
@@ -2095,9 +2104,7 @@ type ResponseMetaData struct {
 	// be subject to thresholding thresholding and no data is absent from
 	// the report, and this happens when all data is above the thresholds.
 	// To learn more, see Data thresholds
-	// (https://support.google.com/analytics/answer/9383630) and About
-	// Demographics and Interests
-	// (https://support.google.com/analytics/answer/2799357).
+	// (https://support.google.com/analytics/answer/9383630).
 	SubjectToThresholding bool `json:"subjectToThresholding,omitempty"`
 
 	// TimeZone: The property's current timezone. Intended to be used to
@@ -2673,6 +2680,49 @@ type RunReportResponse struct {
 
 func (s *RunReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunReportResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SamplingMetadata: If this report results is sampled
+// (https://support.google.com/analytics/answer/13331292), this
+// describes the percentage of events used in this report. Sampling is
+// the practice of analyzing a subset of all data in order to uncover
+// the meaningful information in the larger data set.
+type SamplingMetadata struct {
+	// SamplesReadCount: The total number of events read in this sampled
+	// report for a date range. This is the size of the subset this
+	// property's data that was analyzed in this report.
+	SamplesReadCount int64 `json:"samplesReadCount,omitempty,string"`
+
+	// SamplingSpaceSize: The total number of events present in this
+	// property's data that could have been analyzed in this report for a
+	// date range. Sampling uncovers the meaningful information about the
+	// larger data set, and this is the size of the larger data set. To
+	// calculate the percentage of available data that was used in this
+	// report, compute `samplesReadCount/samplingSpaceSize`.
+	SamplingSpaceSize int64 `json:"samplingSpaceSize,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "SamplesReadCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SamplesReadCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SamplingMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SamplingMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -941,7 +941,7 @@ func (s *AccountAutomaticImprovements) MarshalJSON() ([]byte, error) {
 // AccountBusinessIdentity: The business identity attributes
 // (https://support.google.com/merchants/answer/10342414) can be used to
 // self-declare attributes that let customers know more about your
-// business. NEXT ID: 7.
+// business.
 type AccountBusinessIdentity struct {
 	// BlackOwned: Specifies whether the business identifies itself as being
 	// black-owned. This optional field is only available for merchants with
@@ -19588,7 +19588,7 @@ type Service struct {
 	RateGroups []*RateGroup `json:"rateGroups,omitempty"`
 
 	// ShipmentType: Type of locations this service ships orders to.
-	// Acceptable values are: - "delivery" - "pickup" -
+	// Acceptable values are: - "delivery" - "pickup` (deprecated)" -
 	// "local_delivery" - "collection_point"
 	ShipmentType string `json:"shipmentType,omitempty"`
 

@@ -3781,7 +3781,8 @@ func (s *KeyValue) MarshalJSON() ([]byte, error) {
 }
 
 type ListMembershipsResponse struct {
-	// Memberships: List of memberships in the requested (or first) page.
+	// Memberships: Unordered list. List of memberships in the requested (or
+	// first) page.
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// NextPageToken: A token that you can send as `pageToken` to retrieve
@@ -4204,7 +4205,7 @@ type Message struct {
 
 	// Thread: The thread the message belongs to. For example usage, see
 	// Start or reply to a message thread
-	// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+	// (https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).
 	Thread *Thread `json:"thread,omitempty"`
 
 	// ThreadReply: Output only. When `true`, the message is a response in a
@@ -7571,7 +7572,11 @@ func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCr
 //
 // Possible values:
 //
-//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a new thread.
+//
+// Using this option ignores any thread ID or `thread_key` that's
+// included.
+//
 //	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
 //
 // reply to the thread specified by thread ID or `thread_key`. If it
@@ -7599,7 +7604,7 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 // characters. To start or add to a thread, create a message and specify
 // a `threadKey` or the thread.name. For example usage, see Start or
 // reply to a message thread
-// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+// (https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -7717,7 +7722,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//         "REPLY_MESSAGE_OR_FAIL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default. Starts a thread.",
+	//         "Default. Starts a new thread. Using this option ignores any thread ID or `thread_key` that's included.",
 	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If it fails, the message starts a new thread instead.",
 	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If it fails, a `NOT_FOUND` error is returned instead."
 	//       ],
@@ -7738,7 +7743,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     },
 	//     "threadKey": {
 	//       "deprecated": true,
-	//       "description": "Optional. Deprecated: Use thread.thread_key instead. ID for the thread. Supports up to 4000 characters. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. ID for the thread. Supports up to 4000 characters. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -4830,13 +4830,18 @@ func (s *RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
 }
 
 // RegionsVersion: The version of the available regions being used for
-// the specified resource. A string representing the version of
-// available regions being used for the specified resource. Regional
-// prices for the resource have to be specified according to the
-// information published in this article
-// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// the specified resource.
 type RegionsVersion struct {
-	// Version: Required. The latest version is 2022/02.
+	// Version: Required. A string representing the version of available
+	// regions being used for the specified resource. Regional prices for
+	// the resource have to be specified according to the information
+	// published in this article
+	// (https://support.google.com/googleplay/android-developer/answer/10532353).
+	// Each time the supported locations substantially change, the version
+	// will be incremented. Using this field will ensure that creating and
+	// updating the resource with an older region's version and set of
+	// regional prices and currencies will succeed even though a new version
+	// is available. The latest version is 2022/02.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Version") to
@@ -17110,7 +17115,16 @@ func (c *MonetizationSubscriptionsCreateCall) ProductId(productId string) *Monet
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -17227,7 +17241,7 @@ func (c *MonetizationSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -17758,7 +17772,16 @@ func (r *MonetizationSubscriptionsService) Patch(packageName string, productId s
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -17885,7 +17908,7 @@ func (c *MonetizationSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18762,7 +18785,16 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) OfferId(offerId str
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -18895,7 +18927,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -19664,7 +19696,16 @@ func (r *MonetizationSubscriptionsBasePlansOffersService) Patch(packageName stri
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -19807,7 +19848,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

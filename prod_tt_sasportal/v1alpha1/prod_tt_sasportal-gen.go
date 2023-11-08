@@ -1221,9 +1221,6 @@ type SasPortalInstallationParams struct {
 	// with a value between -127 and +128 (dBi) inclusive.
 	AntennaGain int64 `json:"antennaGain,omitempty"`
 
-	// AntennaGainNewField: As above, but as a DoubleValue.
-	AntennaGainNewField float64 `json:"antennaGainNewField,omitempty"`
-
 	// AntennaModel: If an external antenna is used, the antenna model is
 	// optionally provided in this field. The string has a maximum length of
 	// 128 octets.
@@ -1238,9 +1235,6 @@ type SasPortalInstallationParams struct {
 	// MHz) inclusive. If not included, SAS interprets it as maximum
 	// allowable EIRP in units of dBm/10MHz for device category.
 	EirpCapability int64 `json:"eirpCapability,omitempty"`
-
-	// EirpCapabilityNewField: As above, but as a DoubleValue.
-	EirpCapabilityNewField float64 `json:"eirpCapabilityNewField,omitempty"`
 
 	// Height: Device antenna height in meters. When the `heightType`
 	// parameter value is "AGL", the antenna height should be given relative
@@ -1313,21 +1307,17 @@ func (s *SasPortalInstallationParams) MarshalJSON() ([]byte, error) {
 func (s *SasPortalInstallationParams) UnmarshalJSON(data []byte) error {
 	type NoMethod SasPortalInstallationParams
 	var s1 struct {
-		AntennaGainNewField    gensupport.JSONFloat64 `json:"antennaGainNewField"`
-		EirpCapabilityNewField gensupport.JSONFloat64 `json:"eirpCapabilityNewField"`
-		Height                 gensupport.JSONFloat64 `json:"height"`
-		HorizontalAccuracy     gensupport.JSONFloat64 `json:"horizontalAccuracy"`
-		Latitude               gensupport.JSONFloat64 `json:"latitude"`
-		Longitude              gensupport.JSONFloat64 `json:"longitude"`
-		VerticalAccuracy       gensupport.JSONFloat64 `json:"verticalAccuracy"`
+		Height             gensupport.JSONFloat64 `json:"height"`
+		HorizontalAccuracy gensupport.JSONFloat64 `json:"horizontalAccuracy"`
+		Latitude           gensupport.JSONFloat64 `json:"latitude"`
+		Longitude          gensupport.JSONFloat64 `json:"longitude"`
+		VerticalAccuracy   gensupport.JSONFloat64 `json:"verticalAccuracy"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
-	s.AntennaGainNewField = float64(s1.AntennaGainNewField)
-	s.EirpCapabilityNewField = float64(s1.EirpCapabilityNewField)
 	s.Height = float64(s1.Height)
 	s.HorizontalAccuracy = float64(s1.HorizontalAccuracy)
 	s.Latitude = float64(s1.Latitude)

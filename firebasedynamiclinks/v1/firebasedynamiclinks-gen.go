@@ -843,7 +843,8 @@ func (s *GetIosPostInstallAttributionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GetIosPostInstallAttributionResponse: Response for iSDK to execute
-// strong match flow for post-install attribution.
+// strong match flow for post-install attribution. Information of the
+// resolved FDL link.
 type GetIosPostInstallAttributionResponse struct {
 	// AppMinimumVersion: The minimum version for app, specified by dev
 	// through ?imv= parameter. Return to iSDK to allow app to evaluate if

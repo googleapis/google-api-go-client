@@ -3476,11 +3476,23 @@ func (s *GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs) UnmarshalJ
 // GoogleCloudDataplexV1DataScanEventDataQualityResult: Data quality
 // result for data scan job.
 type GoogleCloudDataplexV1DataScanEventDataQualityResult struct {
+	// ColumnScore: The score of each column scanned in the data scan job.
+	// The key of the map is the name of the column. The value is the data
+	// quality score for the column.The score ranges between 0, 100 (up to
+	// two decimal points).
+	ColumnScore map[string]float64 `json:"columnScore,omitempty"`
+
 	// DimensionPassed: The result of each dimension for data quality
 	// result. The key of the map is the name of the dimension. The value is
 	// the bool value depicting whether the dimension result was pass or
 	// not.
 	DimensionPassed map[string]bool `json:"dimensionPassed,omitempty"`
+
+	// DimensionScore: The score of each dimension for data quality result.
+	// The key of the map is the name of the dimension. The value is the
+	// data quality score for the dimension.The score ranges between 0, 100
+	// (up to two decimal points).
+	DimensionScore map[string]float64 `json:"dimensionScore,omitempty"`
 
 	// Passed: Whether the data quality result was pass or not.
 	Passed bool `json:"passed,omitempty"`
@@ -3488,7 +3500,11 @@ type GoogleCloudDataplexV1DataScanEventDataQualityResult struct {
 	// RowCount: The count of rows processed in the data scan job.
 	RowCount int64 `json:"rowCount,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "DimensionPassed") to
+	// Score: The table-level data quality score for the data scan job.The
+	// data quality score ranges between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnScore") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3496,13 +3512,12 @@ type GoogleCloudDataplexV1DataScanEventDataQualityResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DimensionPassed") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ColumnScore") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3510,6 +3525,20 @@ func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) MarshalJSON() ([]b
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataQualityResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataScanEventDataQualityResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataScanEventPostScanActionsResult: Post scan
@@ -4579,6 +4608,11 @@ type GoogleCloudDataplexV1GovernanceEvent struct {
 	//   "BIGQUERY_POLICY_TAG_SET_IAM_POLICY" - BigQuery set iam policy for
 	// policy tag.
 	//   "ACCESS_POLICY_UPDATE" - Access policy update event.
+	//   "GOVERNANCE_RULE_MATCHED_RESOURCES" - Number of resources matched
+	// with particular Query.
+	//   "GOVERNANCE_RULE_SEARCH_LIMIT_EXCEEDS" - Rule processing exceeds
+	// the allowed limit.
+	//   "GOVERNANCE_RULE_ERRORS" - Rule processing errors.
 	EventType string `json:"eventType,omitempty"`
 
 	// Message: The log message.

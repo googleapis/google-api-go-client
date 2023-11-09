@@ -1077,8 +1077,9 @@ type AutoInstallPolicy struct {
 	// You can specify a maximum of one constraint.
 	AutoInstallConstraint []*AutoInstallConstraint `json:"autoInstallConstraint,omitempty"`
 
-	// AutoInstallMode: The auto-install mode. If unset defaults to
-	// "doNotAutoInstall".
+	// AutoInstallMode: The auto-install mode. If unset, defaults to
+	// "doNotAutoInstall". An app is automatically installed regardless of a
+	// set maintenance window.
 	//
 	// Possible values:
 	//   "autoInstallModeUnspecified"

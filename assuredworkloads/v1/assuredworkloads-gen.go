@@ -211,6 +211,15 @@ type OrganizationsLocationsWorkloadsViolationsService struct {
 // GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest: Request for
 // acknowledging the violation Next Id: 5
 type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
+	// AcknowledgeType: Optional. Acknowledge type of specified violation.
+	//
+	// Possible values:
+	//   "ACKNOWLEDGE_TYPE_UNSPECIFIED" - Acknowledge type unspecified.
+	//   "SINGLE_VIOLATION" - Acknowledge only the specific violation.
+	//   "EXISTING_CHILD_RESOURCE_VIOLATIONS" - Acknowledge specified
+	// orgPolicy violation and also associated resource violations.
+	AcknowledgeType string `json:"acknowledgeType,omitempty"`
+
 	// Comment: Required. Business justification explaining the need for
 	// violation acknowledgement
 	Comment string `json:"comment,omitempty"`
@@ -223,7 +232,7 @@ type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
 	// organizations/{organization_id}/policies/{constraint_name}
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Comment") to
+	// ForceSendFields is a list of field names (e.g. "AcknowledgeType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -231,12 +240,13 @@ type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Comment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AcknowledgeType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -679,6 +689,11 @@ type GoogleCloudAssuredworkloadsV1Violation struct {
 	// marked as false.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
 
+	// AssociatedOrgPolicyViolationId: Optional. Output only. Violation Id
+	// of the org-policy violation due to which the resource violation is
+	// caused. Empty for org-policy violations.
+	AssociatedOrgPolicyViolationId string `json:"associatedOrgPolicyViolationId,omitempty"`
+
 	// AuditLogLink: Output only. Immutable. Audit Log Link for violated
 	// resource Format:
 	// https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{timeRange}{folder}
@@ -723,12 +738,25 @@ type GoogleCloudAssuredworkloadsV1Violation struct {
 	// this violation.
 	OrgPolicyConstraint string `json:"orgPolicyConstraint,omitempty"`
 
+	// ParentProjectNumber: Optional. Output only. Parent project number
+	// where resource is present. Empty for org-policy violations.
+	ParentProjectNumber string `json:"parentProjectNumber,omitempty"`
+
 	// Remediation: Output only. Compliance violation remediation
 	Remediation *GoogleCloudAssuredworkloadsV1ViolationRemediation `json:"remediation,omitempty"`
 
 	// ResolveTime: Output only. Time of the event which fixed the
 	// Violation. If the violation is ACTIVE this will be empty.
 	ResolveTime string `json:"resolveTime,omitempty"`
+
+	// ResourceName: Optional. Output only. Name of the resource like
+	// //storage.googleapis.com/myprojectxyz-testbucket. Empty for
+	// org-policy violations.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ResourceType: Optional. Output only. Type of the resource like
+	// compute.googleapis.com/Disk, etc. Empty for org-policy violations.
+	ResourceType string `json:"resourceType,omitempty"`
 
 	// State: Output only. State of the violation
 	//
@@ -742,6 +770,14 @@ type GoogleCloudAssuredworkloadsV1Violation struct {
 	// UpdateTime: Output only. The last time when the Violation record was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ViolationType: Output only. Type of the violation
+	//
+	// Possible values:
+	//   "VIOLATION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "ORG_POLICY" - Org Policy Violation.
+	//   "RESOURCE" - Resource Violation.
+	ViolationType string `json:"violationType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -837,6 +873,8 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediation struct {
 	//
 	// "REMEDIATION_RESTRICT_CMEK_CRYPTO_KEY_PROJECTS_ORG_POLICY_VIOLATION"
 	// - Remediation type for gcp.restrictCmekCryptoKeyProjects
+	//   "REMEDIATION_RESOURCE_VIOLATION" - Remediation type for resource
+	// violation.
 	RemediationType string `json:"remediationType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompliantValues") to
@@ -1160,26 +1198,34 @@ func (s *GoogleCloudAssuredworkloadsV1Workload) MarshalJSON() ([]byte, error) {
 // GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus: Represents the
 // Compliance Status of this workload
 type GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus struct {
+	// AcknowledgedResourceViolationCount: Number of current resource
+	// violations which are not acknowledged.
+	AcknowledgedResourceViolationCount int64 `json:"acknowledgedResourceViolationCount,omitempty"`
+
 	// AcknowledgedViolationCount: Number of current orgPolicy violations
 	// which are acknowledged.
 	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
+
+	// ActiveResourceViolationCount: Number of current resource violations
+	// which are acknowledged.
+	ActiveResourceViolationCount int64 `json:"activeResourceViolationCount,omitempty"`
 
 	// ActiveViolationCount: Number of current orgPolicy violations which
 	// are not acknowledged.
 	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "AcknowledgedViolationCount") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AcknowledgedResourceViolationCount") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "AcknowledgedViolationCount") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
+	// "AcknowledgedResourceViolationCount") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include

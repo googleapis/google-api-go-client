@@ -4874,7 +4874,7 @@ func (s *GoogleCloudRetailV2RuleFilterAction) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRetailV2RuleForceReturnFacetAction: Force returns an
 // attribute/facet in the request around a certain position or above. *
-// Rule Condition: - Must specify non-empty Condition.query_terms (for
+// Rule Condition: Must specify non-empty Condition.query_terms (for
 // search only) or Condition.page_categories (for browse only), but
 // can't specify both. * Action Inputs: attribute name, position *
 // Action Result: Will force return a facet key around a certain
@@ -5025,9 +5025,9 @@ func (s *GoogleCloudRetailV2RuleOnewaySynonymsAction) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudRetailV2RuleRedirectAction: Redirects a shopper to a
-// specific page. * Rule Condition: - Must specify
-// Condition.query_terms. * Action Input: Request Query * Action Result:
-// Redirects shopper to provided uri.
+// specific page. * Rule Condition: Must specify Condition.query_terms.
+// * Action Input: Request Query * Action Result: Redirects shopper to
+// provided uri.
 type GoogleCloudRetailV2RuleRedirectAction struct {
 	// RedirectUri: URL must have length equal or less than 2000 characters.
 	RedirectUri string `json:"redirectUri,omitempty"`
@@ -5056,7 +5056,7 @@ func (s *GoogleCloudRetailV2RuleRedirectAction) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRetailV2RuleRemoveFacetAction: Removes an attribute/facet
-// in the request if is present. * Rule Condition: - Must specify
+// in the request if is present. * Rule Condition: Must specify
 // non-empty Condition.query_terms (for search only) or
 // Condition.page_categories (for browse only), but can't specify both.
 // * Action Input: attribute name * Action Result: Will remove the

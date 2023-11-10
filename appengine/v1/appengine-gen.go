@@ -4070,8 +4070,7 @@ type Version struct {
 
 	// HealthCheck: Configures health checking for instances. Unhealthy
 	// instances are stopped and replaced with new instances. Only
-	// applicable in the App Engine flexible environment.Only returned in
-	// GET requests if view=FULL is set.
+	// applicable in the App Engine flexible environment.
 	HealthCheck *HealthCheck `json:"healthCheck,omitempty"`
 
 	// Id: Relative name of the version within the service. Example: v1.
@@ -4113,8 +4112,7 @@ type Version struct {
 	Libraries []*Library `json:"libraries,omitempty"`
 
 	// LivenessCheck: Configures liveness health checking for instances.
-	// Unhealthy instances are stopped and replaced with new instancesOnly
-	// returned in GET requests if view=FULL is set.
+	// Unhealthy instances are stopped and replaced with new instances
 	LivenessCheck *LivenessCheck `json:"livenessCheck,omitempty"`
 
 	// ManualScaling: A service with manual scaling runs continuously,
@@ -4137,8 +4135,7 @@ type Version struct {
 	NobuildFilesRegex string `json:"nobuildFilesRegex,omitempty"`
 
 	// ReadinessCheck: Configures readiness health checking for instances.
-	// Unhealthy instances are not put into the backend traffic
-	// rotation.Only returned in GET requests if view=FULL is set.
+	// Unhealthy instances are not put into the backend traffic rotation.
 	ReadinessCheck *ReadinessCheck `json:"readinessCheck,omitempty"`
 
 	// Resources: Machine resources for this version. Only applicable in the

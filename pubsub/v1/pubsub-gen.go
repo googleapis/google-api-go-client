@@ -1044,6 +1044,13 @@ type MessageStoragePolicy struct {
 	// configuration.
 	AllowedPersistenceRegions []string `json:"allowedPersistenceRegions,omitempty"`
 
+	// EnforceInTransit: Optional. If true, `allowed_persistence_regions` is
+	// also used to enforce in-transit guarantees for messages. That is,
+	// Pub/Sub will fail Publish operations on this topic and subscribe
+	// operations on any subscription attached to this topic in any region
+	// that is not in `allowed_persistence_regions`.
+	EnforceInTransit bool `json:"enforceInTransit,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedPersistenceRegions") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted

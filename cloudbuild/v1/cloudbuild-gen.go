@@ -4232,6 +4232,7 @@ type RepositoryEventConfig struct {
 	//   "GITHUB" - The SCM repo is GITHUB.
 	//   "GITHUB_ENTERPRISE" - The SCM repo is GITHUB Enterprise.
 	//   "GITLAB_ENTERPRISE" - The SCM repo is GITLAB Enterprise.
+	//   "BITBUCKET_DATA_CENTER" - The SCM repo is BITBUCKET Data Center.
 	RepositoryType string `json:"repositoryType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PullRequest") to

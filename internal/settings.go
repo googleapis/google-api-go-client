@@ -55,6 +55,7 @@ type DialSettings struct {
 	EnableDirectPathXds           bool
 	EnableNewAuthLibrary          bool
 	AllowNonDefaultServiceAccount bool
+	UniverseDomain                string
 
 	// Google API system parameters. For more information please read:
 	// https://cloud.google.com/apis/docs/system-parameters

@@ -215,6 +215,10 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#capacity.
 	Capacity *Capacity `json:"capacity,omitempty"`
 
+	// Certification: Optional. List of certifications claimed by this
+	// product.
+	Certification []*GoogleShoppingManufacturersV1ProductCertification `json:"certification,omitempty"`
+
 	// Color: The color of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#color.
 	Color string `json:"color,omitempty"`
@@ -637,6 +641,41 @@ func (s *FloatUnit) UnmarshalJSON(data []byte) error {
 	}
 	s.Amount = float64(s1.Amount)
 	return nil
+}
+
+// GoogleShoppingManufacturersV1ProductCertification: Description of a
+// certification.
+type GoogleShoppingManufacturersV1ProductCertification struct {
+	// Authority: Required. Name of the certification body.
+	Authority string `json:"authority,omitempty"`
+
+	// Code: Required. A unique code to identify the certification.
+	Code string `json:"code,omitempty"`
+
+	// Name: Required. Name of the certification.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Authority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Authority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleShoppingManufacturersV1ProductCertification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleShoppingManufacturersV1ProductCertification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type Grocery struct {

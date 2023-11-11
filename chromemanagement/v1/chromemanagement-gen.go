@@ -3282,6 +3282,10 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// Name: Output only. Resource name of the device.
 	Name string `json:"name,omitempty"`
 
+	// NetworkBandwidthReport: Output only. Network bandwidth reports
+	// collected periodically sorted in a decreasing order of report_time.
+	NetworkBandwidthReport []*GoogleChromeManagementV1NetworkBandwidthReport `json:"networkBandwidthReport,omitempty"`
+
 	// NetworkDiagnosticsReport: Output only. Network diagnostics collected
 	// periodically.
 	NetworkDiagnosticsReport []*GoogleChromeManagementV1NetworkDiagnosticsReport `json:"networkDiagnosticsReport,omitempty"`

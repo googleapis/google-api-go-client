@@ -2810,7 +2810,10 @@ func (s *GooglePrivacyDlpV2DataProfileBigQueryRowSchema) MarshalJSON() ([]byte, 
 // configurations used to generate the profile.
 type GooglePrivacyDlpV2DataProfileConfigSnapshot struct {
 	// DataProfileJob: A copy of the configuration used to generate this
-	// profile.
+	// profile. This is deprecated and will be replaced by DiscoveryConfig.
+	// DataProfileJobConfig will still be written here for Discovery in
+	// BigQuery for backwards compatibility, but will not be updated with
+	// new fields, while DiscoveryConfig will.
 	DataProfileJob *GooglePrivacyDlpV2DataProfileJobConfig `json:"dataProfileJob,omitempty"`
 
 	// InspectConfig: A copy of the inspection config used to generate this

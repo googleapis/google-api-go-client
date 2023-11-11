@@ -528,40 +528,6 @@ func (s *EnvironmentDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GuidanceDetails: Deprecated: this field is not used. Contains
-// guidance details about the Integrity API response, providing
-// additional context to the integrity verdicts.
-type GuidanceDetails struct {
-	// UserRemediationDetails: This shows when there is an issue with at
-	// least one of the integrity verdicts, which can be remedied by the
-	// user and provides additional details.
-	UserRemediationDetails []*UserRemediationDetails `json:"userRemediationDetails,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "UserRemediationDetails") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UserRemediationDetails")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GuidanceDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GuidanceDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RequestDetails: Contains the integrity request information.
 type RequestDetails struct {
 	// Nonce: Nonce that was provided in the request (which is base64
@@ -652,10 +618,6 @@ type TokenPayloadExternal struct {
 	// runs in.
 	EnvironmentDetails *EnvironmentDetails `json:"environmentDetails,omitempty"`
 
-	// GuidanceDetails: Deprecated: this field is not used. Additional
-	// guidance related to the integrity API response.
-	GuidanceDetails *GuidanceDetails `json:"guidanceDetails,omitempty"`
-
 	// RequestDetails: Required. Details about the integrity request.
 	RequestDetails *RequestDetails `json:"requestDetails,omitempty"`
 
@@ -684,49 +646,6 @@ type TokenPayloadExternal struct {
 
 func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPayloadExternal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserRemediationDetails: Deprecated: this field is not used. Contains
-// details of remediation guidance that the user can perform.
-type UserRemediationDetails struct {
-	// Remediation: Description of the user remediation action.
-	//
-	// Possible values:
-	//   "UNKNOWN_USER_REMEDIATION" - User remediation is unknown.
-	//   "RESTORE_FACTORY_ROM" - The user has installed a custom ROM, and
-	// should restore the device to a clean factory ROM.
-	//   "LOCK_BOOTLOADER" - The device bootloader has been unlocked, the
-	// user should lock the bootloader.
-	//   "GET_UNMODIFIED_APP" - The app is unrecognized. The user should get
-	// an unmodified version of the app.
-	//   "SIGN_INTO_GOOGLE_ACCOUNT" - The user has not signed into their
-	// Google account.
-	//   "INSTALL_APP_FROM_PLAY" - The user has no license. They should
-	// install or purchase the app on the Google Play Store to add it to
-	// their library.
-	Remediation string `json:"remediation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Remediation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Remediation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserRemediationDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod UserRemediationDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

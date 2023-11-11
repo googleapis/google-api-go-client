@@ -1425,6 +1425,33 @@ func (s *NodeMatcher) MarshalJSON() ([]byte, error) {
 type NullMatch struct {
 }
 
+// OrMatcher: Specifies a list of alternatives for the match.
+type OrMatcher struct {
+	ValueMatchers []*ValueMatcher `json:"valueMatchers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ValueMatchers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ValueMatchers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrMatcher) MarshalJSON() ([]byte, error) {
+	type NoMethod OrMatcher
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PathSegment: Specifies the segment in a path to retrieve value from
 // Struct.
 type PathSegment struct {
@@ -2032,7 +2059,7 @@ func (s *UpdateFailureState) MarshalJSON() ([]byte, error) {
 
 // ValueMatcher: Specifies the way to match a ProtobufWkt::Value.
 // Primitive values and ListValue are supported. StructValue is not
-// supported and is always not matched. [#next-free-field: 7]
+// supported and is always not matched. [#next-free-field: 8]
 type ValueMatcher struct {
 	// BoolMatch: If specified, a match occurs if and only if the target
 	// value is a bool value and is equal to this field.
@@ -2049,6 +2076,10 @@ type ValueMatcher struct {
 	// NullMatch: If specified, a match occurs if and only if the target
 	// value is a NullValue.
 	NullMatch *NullMatch `json:"nullMatch,omitempty"`
+
+	// OrMatch: If specified, a match occurs if and only if any of the
+	// alternatives in the match accept the value.
+	OrMatch *OrMatcher `json:"orMatch,omitempty"`
 
 	// PresentMatch: If specified, value match will be performed based on
 	// whether the path is referring to a valid primitive value in the

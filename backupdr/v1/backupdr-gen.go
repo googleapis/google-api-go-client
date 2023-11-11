@@ -685,6 +685,15 @@ type ManagementServer struct {
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// WorkforceIdentityBasedManagementUri: Output only. The hostnames of
+	// the exposed AGM endpoints for both types of user i.e. 1p and 3p, used
+	// to connect AGM/RM UI.
+	WorkforceIdentityBasedManagementUri *WorkforceIdentityBasedManagementURI `json:"workforceIdentityBasedManagementUri,omitempty"`
+
+	// WorkforceIdentityBasedOauth2ClientId: Output only. The OAuth client
+	// IDs for both types of user i.e. 1p and 3p.
+	WorkforceIdentityBasedOauth2ClientId *WorkforceIdentityBasedOAuth2ClientID `json:"workforceIdentityBasedOauth2ClientId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1155,6 +1164,78 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkforceIdentityBasedManagementURI: ManagementURI depending on the
+// Workforce Identity i.e. either 1p or 3p.
+type WorkforceIdentityBasedManagementURI struct {
+	// FirstPartyManagementUri: Output only. First party Management URI for
+	// Google Identities.
+	FirstPartyManagementUri string `json:"firstPartyManagementUri,omitempty"`
+
+	// ThirdPartyManagementUri: Output only. Third party Management URI for
+	// External Identity Providers.
+	ThirdPartyManagementUri string `json:"thirdPartyManagementUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FirstPartyManagementUri") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirstPartyManagementUri")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkforceIdentityBasedManagementURI) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkforceIdentityBasedManagementURI
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkforceIdentityBasedOAuth2ClientID: OAuth Client ID depending on
+// the Workforce Identity i.e. either 1p or 3p,
+type WorkforceIdentityBasedOAuth2ClientID struct {
+	// FirstPartyOauth2ClientId: Output only. First party OAuth Client ID
+	// for Google Identities.
+	FirstPartyOauth2ClientId string `json:"firstPartyOauth2ClientId,omitempty"`
+
+	// ThirdPartyOauth2ClientId: Output only. Third party OAuth Client ID
+	// for External Identity Providers.
+	ThirdPartyOauth2ClientId string `json:"thirdPartyOauth2ClientId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FirstPartyOauth2ClientId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirstPartyOauth2ClientId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkforceIdentityBasedOAuth2ClientID) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkforceIdentityBasedOAuth2ClientID
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

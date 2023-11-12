@@ -874,6 +874,11 @@ type Instance struct {
 	// READ_REPLICAS_ENABLED the default block size is /28.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
+	// SatisfiesPzs: Optional. Output only. Reserved for future use. Zone
+	// Separation compliance state of the instance. Field name and
+	// documentation is obfuscated according to go/zs-resource-status.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// SecondaryIpRange: Optional. Additional IP range for node placement.
 	// Required when enabling read replicas on an existing instance. For
 	// DIRECT_PEERING mode value must be a CIDR range of size /28, or

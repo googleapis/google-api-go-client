@@ -1072,6 +1072,7 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRe
 	//   "REPOSITORY_BASE_UNSPECIFIED" - Unspecified repository base.
 	//   "DEBIAN" - Debian.
 	//   "UBUNTU" - Ubuntu LTS/Pro.
+	//   "DEBIAN_SNAPSHOT" - Archived Debian.
 	RepositoryBase string `json:"repositoryBase,omitempty"`
 
 	// RepositoryPath: A custom field to define a path to a specific

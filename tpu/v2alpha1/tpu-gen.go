@@ -1238,6 +1238,9 @@ type Node struct {
 	//   "V2_ALPHA1" - TPU API V2Alpha1 version.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
+	// AutocheckpointEnabled: Optional. Whether Autocheckpoint is enabled.
+	AutocheckpointEnabled bool `json:"autocheckpointEnabled,omitempty"`
+
 	// BootDiskConfig: Optional. Boot disk configuration.
 	BootDiskConfig *BootDiskConfig `json:"bootDiskConfig,omitempty"`
 

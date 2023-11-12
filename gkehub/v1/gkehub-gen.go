@@ -802,6 +802,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	AdmissionWebhook string `json:"admissionWebhook,omitempty"`
 
 	// GitSync: Deployment state of the git-sync pod
@@ -812,6 +813,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	GitSync string `json:"gitSync,omitempty"`
 
 	// Importer: Deployment state of the importer pod
@@ -822,6 +824,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	Importer string `json:"importer,omitempty"`
 
 	// Monitor: Deployment state of the monitor pod
@@ -832,6 +835,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	Monitor string `json:"monitor,omitempty"`
 
 	// ReconcilerManager: Deployment state of reconciler-manager pod
@@ -842,6 +846,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	ReconcilerManager string `json:"reconcilerManager,omitempty"`
 
 	// RootReconciler: Deployment state of root-reconciler
@@ -852,6 +857,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	RootReconciler string `json:"rootReconciler,omitempty"`
 
 	// Syncer: Deployment state of the syncer pod
@@ -862,6 +868,7 @@ type ConfigManagementConfigSyncDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	Syncer string `json:"syncer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdmissionWebhook") to
@@ -1056,6 +1063,7 @@ type ConfigManagementGatekeeperDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	GatekeeperAudit string `json:"gatekeeperAudit,omitempty"`
 
 	// GatekeeperControllerManagerState: Status of
@@ -1067,6 +1075,7 @@ type ConfigManagementGatekeeperDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	GatekeeperControllerManagerState string `json:"gatekeeperControllerManagerState,omitempty"`
 
 	// GatekeeperMutation: Status of the pod serving the mutation webhook.
@@ -1077,6 +1086,7 @@ type ConfigManagementGatekeeperDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	GatekeeperMutation string `json:"gatekeeperMutation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GatekeeperAudit") to
@@ -1249,6 +1259,7 @@ type ConfigManagementHierarchyControllerDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	Extension string `json:"extension,omitempty"`
 
 	// Hnc: The deployment state for open source HNC (e.g. v0.7.0-hc.0)
@@ -1259,6 +1270,7 @@ type ConfigManagementHierarchyControllerDeploymentState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	Hnc string `json:"hnc,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Extension") to
@@ -1543,6 +1555,7 @@ type ConfigManagementOperatorState struct {
 	//   "NOT_INSTALLED" - Deployment is not installed
 	//   "INSTALLED" - Deployment is installed
 	//   "ERROR" - Deployment was attempted to be installed, but has errors
+	//   "PENDING" - Deployment is installing or terminating
 	DeploymentState string `json:"deploymentState,omitempty"`
 
 	// Errors: Install errors.
@@ -1916,6 +1929,38 @@ func (s *ConnectAgentResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DefaultClusterConfig: DefaultClusterConfig describes the default
+// cluster configurations to be applied to all clusters born-in-fleet.
+type DefaultClusterConfig struct {
+	// SecurityPostureConfig: Enable/Disable Security Posture features for
+	// the cluster.
+	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SecurityPostureConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecurityPostureConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DefaultClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EdgeCluster: EdgeCluster contains information specific to Google Edge
 // Clusters.
 type EdgeCluster struct {
@@ -2221,6 +2266,10 @@ func (s *FeatureState) MarshalJSON() ([]byte, error) {
 type Fleet struct {
 	// CreateTime: Output only. When the Fleet was created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DefaultClusterConfig: Optional. The default cluster configurations to
+	// apply across the fleet.
+	DefaultClusterConfig *DefaultClusterConfig `json:"defaultClusterConfig,omitempty"`
 
 	// DeleteTime: Output only. When the Fleet was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -5360,6 +5409,52 @@ type ScopeLifecycleState struct {
 
 func (s *ScopeLifecycleState) MarshalJSON() ([]byte, error) {
 	type NoMethod ScopeLifecycleState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecurityPostureConfig: SecurityPostureConfig defines the flags needed
+// to enable/disable features for the Security Posture API.
+type SecurityPostureConfig struct {
+	// Mode: Sets which mode to use for Security Posture features.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "DISABLED" - Disables Security Posture features on the cluster.
+	//   "BASIC" - Applies Security Posture features on the cluster.
+	Mode string `json:"mode,omitempty"`
+
+	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
+	//
+	// Possible values:
+	//   "VULNERABILITY_MODE_UNSPECIFIED" - Default value not specified.
+	//   "VULNERABILITY_DISABLED" - Disables vulnerability scanning on the
+	// cluster.
+	//   "VULNERABILITY_BASIC" - Applies basic vulnerability scanning on the
+	// cluster.
+	//   "VULNERABILITY_ENTERPRISE" - Applies the Security Posture's
+	// vulnerability on cluster Enterprise level features.
+	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Mode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityPostureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityPostureConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

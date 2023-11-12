@@ -4054,8 +4054,18 @@ type ReleaseRenderEvent struct {
 	// further details as rendering progresses through render states.
 	Message string `json:"message,omitempty"`
 
-	// Release: The name of the `Release`.
+	// Release: The name of the release.
 	Release string `json:"release,omitempty"`
+
+	// ReleaseRenderState: The state of the release render.
+	//
+	// Possible values:
+	//   "RENDER_STATE_UNSPECIFIED" - The render state is unspecified.
+	//   "SUCCEEDED" - All rendering operations have completed successfully.
+	//   "FAILED" - All rendering operations have completed, and one or more
+	// have failed.
+	//   "IN_PROGRESS" - Rendering has started and is not complete.
+	ReleaseRenderState string `json:"releaseRenderState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
@@ -4883,7 +4893,7 @@ type RolloutUpdateEvent struct {
 	// Rollout: The name of the rollout.
 	Rollout string `json:"rollout,omitempty"`
 
-	// RolloutUpdateType: Output only. The type of the rollout update.
+	// RolloutUpdateType: The type of the rollout update.
 	//
 	// Possible values:
 	//   "ROLLOUT_UPDATE_TYPE_UNSPECIFIED" - Rollout update type

@@ -869,7 +869,9 @@ type AllocationPolicy struct {
 	// the Job.
 	Location *LocationPolicy `json:"location,omitempty"`
 
-	// Network: The network policy.
+	// Network: The network policy. If you define an instance template in
+	// the InstancePolicyOrTemplate field, Batch will use the network
+	// settings in the instance template instead of this field.
 	Network *NetworkPolicy `json:"network,omitempty"`
 
 	// Placement: The placement policy.

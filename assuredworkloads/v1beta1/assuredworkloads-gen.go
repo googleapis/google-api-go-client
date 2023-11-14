@@ -316,7 +316,7 @@ type GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis struct {
 
 	// AssetType: Type of the asset being analyzed. Possible values will be
 	// among the ones listed here
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 	AssetType string `json:"assetType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisGroups") to
@@ -367,8 +367,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls Available for public preview
-	// consumption. Don't create production workloads.
+	// Regions and Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	//   "ISR_REGIONS" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
@@ -653,7 +652,7 @@ type GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse struct {
 }
 
 // GoogleCloudAssuredworkloadsV1beta1Violation: Workload monitoring
-// Violation. Next Id: 28
+// Violation.
 type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// Acknowledged: A boolean that indicates if the violation is
 	// acknowledged
@@ -784,7 +783,7 @@ func (s *GoogleCloudAssuredworkloadsV1beta1Violation) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext:
-// Violation exception detail. Next Id: 6
+// Violation exception detail.
 type GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext struct {
 	// AcknowledgementTime: Timestamp when the violation was acknowledged.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
@@ -1022,8 +1021,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls Available for public preview
-	// consumption. Don't create production workloads.
+	// Regions and Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	//   "ISR_REGIONS" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
@@ -2184,7 +2182,7 @@ func (r *OrganizationsLocationsWorkloadsService) AnalyzeWorkloadMove(target stri
 // types to be analyzed, including and under the source resource. If
 // empty, all assets are analyzed. The complete list of asset types is
 // available here
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) AssetTypes(assetTypes ...string) *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall {
 	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
 	return c
@@ -2327,7 +2325,7 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "assetTypes": {
-	//       "description": "Optional. List of asset types to be analyzed, including and under the source resource. If empty, all assets are analyzed. The complete list of asset types is available [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).",
+	//       "description": "Optional. List of asset types to be analyzed, including and under the source resource. If empty, all assets are analyzed. The complete list of asset types is available [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types).",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

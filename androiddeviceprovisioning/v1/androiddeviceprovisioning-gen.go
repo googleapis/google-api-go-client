@@ -259,8 +259,8 @@ type PartnersVendorsCustomersService struct {
 // ClaimDeviceRequest: Request message to claim a device on behalf of a
 // customer.
 type ClaimDeviceRequest struct {
-	// ConfigurationId: Optional. The unique identifier of the configuration
-	// (internally known as profile) to set for the section.
+	// ConfigurationId: Optional. The ID of the configuration applied to the
+	// device section.
 	ConfigurationId int64 `json:"configurationId,omitempty,string"`
 
 	// CustomerId: The ID of the customer for whom the device is being
@@ -290,7 +290,9 @@ type ClaimDeviceRequest struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
-	// SimlockProfileId: Optional.
+	// SimlockProfileId: Optional. Must and can only be set when
+	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
+	// identifier of the SimLock profile.
 	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigurationId") to
@@ -1742,8 +1744,8 @@ func (s *OperationPerDevice) MarshalJSON() ([]byte, error) {
 
 // PartnerClaim: Identifies one claim request.
 type PartnerClaim struct {
-	// ConfigurationId: Optional. The unique identifier of the configuration
-	// (internally known as profile) to set for the section.
+	// ConfigurationId: Optional. The ID of the configuration applied to the
+	// device section.
 	ConfigurationId int64 `json:"configurationId,omitempty,string"`
 
 	// CustomerId: The ID of the customer for whom the device is being
@@ -1774,7 +1776,9 @@ type PartnerClaim struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
-	// SimlockProfileId: Optional.
+	// SimlockProfileId: Optional. Must and can only be set when
+	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
+	// identifier of the SimLock profile.
 	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigurationId") to

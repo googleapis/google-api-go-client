@@ -797,10 +797,85 @@ type SignatureInfo struct {
 	// CryptoKeyVersion used for signing.
 	CustomerKmsKeyVersion string `json:"customerKmsKeyVersion,omitempty"`
 
+	// GoogleKeyAlgorithm: The hashing algorithm used for signature
+	// verification. It will only be present in the case of Google managed
+	// keys.
+	//
+	// Possible values:
+	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
+	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "AES_128_GCM" - AES-GCM (Galois Counter Mode) using 128-bit keys.
+	//   "AES_256_GCM" - AES-GCM (Galois Counter Mode) using 256-bit keys.
+	//   "AES_128_CBC" - AES-CBC (Cipher Block Chaining Mode) using 128-bit
+	// keys.
+	//   "AES_256_CBC" - AES-CBC (Cipher Block Chaining Mode) using 256-bit
+	// keys.
+	//   "AES_128_CTR" - AES-CTR (Counter Mode) using 128-bit keys.
+	//   "AES_256_CTR" - AES-CTR (Counter Mode) using 256-bit keys.
+	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
+	// digest.
+	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA512 digest.
+	//   "RSA_SIGN_RAW_PKCS1_2048" - RSASSA-PKCS1-v1_5 signing without
+	// encoding, with a 2048 bit key.
+	//   "RSA_SIGN_RAW_PKCS1_3072" - RSASSA-PKCS1-v1_5 signing without
+	// encoding, with a 3072 bit key.
+	//   "RSA_SIGN_RAW_PKCS1_4096" - RSASSA-PKCS1-v1_5 signing without
+	// encoding, with a 4096 bit key.
+	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a
+	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
+	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
+	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA512" - RSAES-OAEP 4096 bit key with a
+	// SHA512 digest.
+	//   "RSA_DECRYPT_OAEP_2048_SHA1" - RSAES-OAEP 2048 bit key with a SHA1
+	// digest.
+	//   "RSA_DECRYPT_OAEP_3072_SHA1" - RSAES-OAEP 3072 bit key with a SHA1
+	// digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA1" - RSAES-OAEP 4096 bit key with a SHA1
+	// digest.
+	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
+	// digest. Other hash functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
+	// This curve is only supported for HSM protection level. Other hash
+	// functions can also be used:
+	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
+	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
+	// encryption by an external key manager.
+	GoogleKeyAlgorithm string `json:"googleKeyAlgorithm,omitempty"`
+
 	// GooglePublicKeyPem: The public key for the Google default signing,
 	// encoded in PEM format. The signature was created using a private key
 	// which may be verified using this public key.
 	GooglePublicKeyPem string `json:"googlePublicKeyPem,omitempty"`
+
+	// SerializedApprovalRequest: The serialized ApprovalRequest message
+	// without the approve.signature_info field. This to allow the customer
+	// to verify signatures if they want to.
+	SerializedApprovalRequest string `json:"serializedApprovalRequest,omitempty"`
 
 	// Signature: The digital signature.
 	Signature string `json:"signature,omitempty"`

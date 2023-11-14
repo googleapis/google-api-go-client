@@ -3803,6 +3803,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "looker:v1",
+      "name": "looker",
+      "version": "v1",
+      "title": "Looker (Google Cloud core) API",
+      "description": "",
+      "discoveryRestUrl": "https://looker.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/looker/docs/reference/rest/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "managedidentities:v1alpha1",
       "name": "managedidentities",
       "version": "v1alpha1",

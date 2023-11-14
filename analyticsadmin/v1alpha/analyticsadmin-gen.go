@@ -1532,34 +1532,6 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 	// attributes 100% of the conversion value to the last channel that the
 	// customer clicked through (or engaged view through for YouTube) before
 	// converting. Previously CROSS_CHANNEL_LAST_CLICK
-	//   "PAID_AND_ORGANIC_CHANNELS_FIRST_CLICK" - Starting in June 2023,
-	// new properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Gives all credit for the conversion to the first
-	// channel that a customer clicked (or engaged view through for YouTube)
-	// before converting. Previously CROSS_CHANNEL_FIRST_CLICK
-	//   "PAID_AND_ORGANIC_CHANNELS_LINEAR" - Starting in June 2023, new
-	// properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Distributes the credit for the conversion equally
-	// across all the channels a customer clicked (or engaged view through
-	// for YouTube) before converting. Previously CROSS_CHANNEL_LINEAR
-	//   "PAID_AND_ORGANIC_CHANNELS_POSITION_BASED" - Starting in June 2023,
-	// new properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Attributes 40% credit to the first and last
-	// interaction, and the remaining 20% credit is distributed evenly to
-	// the middle interactions. Previously CROSS_CHANNEL_POSITION_BASED
-	//   "PAID_AND_ORGANIC_CHANNELS_TIME_DECAY" - Starting in June 2023, new
-	// properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Gives more credit to the touchpoints that
-	// happened closer in time to the conversion. Previously
-	// CROSS_CHANNEL_TIME_DECAY
 	//   "GOOGLE_PAID_CHANNELS_LAST_CLICK" - Attributes 100% of the
 	// conversion value to the last Google Paid channel that the customer
 	// clicked through before converting. Previously
@@ -2807,7 +2779,7 @@ type GoogleAnalyticsAdminV1alphaChannelGroup struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GroupingRule: Required. The grouping rules of channels. Maximum
-	// number of rules is 25.
+	// number of rules is 50.
 	GroupingRule []*GoogleAnalyticsAdminV1alphaGroupingRule `json:"groupingRule,omitempty"`
 
 	// Name: Output only. The resource name for this Channel Group resource.

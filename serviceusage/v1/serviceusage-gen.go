@@ -2599,6 +2599,106 @@ func (s *GoogleApiServiceusageV1beta1ServiceIdentity) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleApiServiceusageV2alphaConsumerPolicy: Consumer Policy is a set
+// of rules that define what services or service groups can be used for
+// a cloud resource hierarchy.
+type GoogleApiServiceusageV2alphaConsumerPolicy struct {
+	// Annotations: Optional. Annotations is an unstructured key-value map
+	// stored with a policy that may be set by external tools to store and
+	// retrieve arbitrary metadata. They are not queryable and should be
+	// preserved when modifying objects. AIP-128
+	// (https://google.aip.dev/128#annotations)
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. The time the policy was created. For
+	// singleton policies, this is the first touch of the policy.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EnableRules: Enable rules define usable services, groups, and
+	// categories. There can currently be at most one `EnableRule`. This
+	// restriction will be lifted in later releases.
+	EnableRules []*GoogleApiServiceusageV2alphaEnableRule `json:"enableRules,omitempty"`
+
+	// Etag: Output only. An opaque tag indicating the current version of
+	// the policy, used for concurrency control.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name of the policy. Only the
+	// `default` policy is supported:
+	// `projects/12345/consumerPolicies/default`,
+	// `folders/12345/consumerPolicies/default`,
+	// `organizations/12345/consumerPolicies/default`.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The time the policy was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiServiceusageV2alphaConsumerPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2alphaConsumerPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2alphaEnableRule: The consumer policy rule that
+// defines enabled services, groups, and categories.
+type GoogleApiServiceusageV2alphaEnableRule struct {
+	// Categories: The names of the categories that are enabled. Example:
+	// `categories/googleServices`.
+	Categories []string `json:"categories,omitempty"`
+
+	// Groups: The names of the service groups that are enabled. Example:
+	// `services/container.googleapis.com/groups/dependencies`.
+	Groups []string `json:"groups,omitempty"`
+
+	// Services: The names of the services that are enabled. Example:
+	// `services/storage.googleapis.com`.
+	Services []string `json:"services,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiServiceusageV2alphaEnableRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2alphaEnableRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2alphaUpdateConsumerPolicyMetadata: Metadata
+// for the `UpdateConsumerPolicy` method.
+type GoogleApiServiceusageV2alphaUpdateConsumerPolicyMetadata struct {
+}
+
 // Http: Defines the HTTP configuration for an API service. It contains
 // a list of HttpRule, each specifying the mapping of an RPC method to
 // one or more HTTP REST API methods.

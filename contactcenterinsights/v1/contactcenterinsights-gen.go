@@ -843,7 +843,7 @@ func (s *GoogleCloudContactcenterinsightsV1BulkDeleteConversationsMetadata) Mars
 // GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest: The
 // request to delete conversations in bulk.
 type GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest struct {
-	// Filter: Filter used to select the subset of conversations to analyze.
+	// Filter: Filter used to select the subset of conversations to delete.
 	Filter string `json:"filter,omitempty"`
 
 	// Force: If set to true, all of this conversation's analyses will also
@@ -851,13 +851,11 @@ type GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest struct {
 	// conversation has no analyses.
 	Force bool `json:"force,omitempty"`
 
-	// MaxDeleteCount: Maximum number of conversations to delete. The
-	// default is 1000. It can be changed by setting the `max_delete_count`
-	// field.
+	// MaxDeleteCount: Maximum number of conversations to delete.
 	MaxDeleteCount int64 `json:"maxDeleteCount,omitempty"`
 
-	// Parent: Required. The parent resource to create analyses in. Format:
-	// projects/{project}/locations/{location}
+	// Parent: Required. The parent resource to delete conversations from.
+	// Format: projects/{project}/locations/{location}
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -884,7 +882,7 @@ func (s *GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest) Marsh
 }
 
 // GoogleCloudContactcenterinsightsV1BulkDeleteConversationsResponse:
-// The response for a bulk analyze conversations operation.
+// The response for a bulk delete conversations operation.
 type GoogleCloudContactcenterinsightsV1BulkDeleteConversationsResponse struct {
 }
 
@@ -4793,7 +4791,7 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsMetadata
 // GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest
 // : The request to delete conversations in bulk.
 type GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest struct {
-	// Filter: Filter used to select the subset of conversations to analyze.
+	// Filter: Filter used to select the subset of conversations to delete.
 	Filter string `json:"filter,omitempty"`
 
 	// Force: If set to true, all of this conversation's analyses will also
@@ -4801,13 +4799,11 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest stru
 	// conversation has no analyses.
 	Force bool `json:"force,omitempty"`
 
-	// MaxDeleteCount: Maximum number of conversations to delete. The
-	// default is 1000. It can be changed by setting the `max_delete_count`
-	// field.
+	// MaxDeleteCount: Maximum number of conversations to delete.
 	MaxDeleteCount int64 `json:"maxDeleteCount,omitempty"`
 
-	// Parent: Required. The parent resource to create analyses in. Format:
-	// projects/{project}/locations/{location}
+	// Parent: Required. The parent resource to delete conversations from.
+	// Format: projects/{project}/locations/{location}
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -4834,7 +4830,7 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRequest)
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsRespons
-// e: The response for a bulk analyze conversations operation.
+// e: The response for a bulk delete conversations operation.
 type GoogleCloudContactcenterinsightsV1alpha1BulkDeleteConversationsResponse struct {
 }
 
@@ -7927,7 +7923,7 @@ type ProjectsLocationsConversationsBulkDeleteCall struct {
 
 // BulkDelete: Deletes multiple conversations in a single request.
 //
-//   - parent: The parent resource to create analyses in. Format:
+//   - parent: The parent resource to delete conversations from. Format:
 //     projects/{project}/locations/{location}.
 func (r *ProjectsLocationsConversationsService) BulkDelete(parent string, googlecloudcontactcenterinsightsv1bulkdeleteconversationsrequest *GoogleCloudContactcenterinsightsV1BulkDeleteConversationsRequest) *ProjectsLocationsConversationsBulkDeleteCall {
 	c := &ProjectsLocationsConversationsBulkDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8036,7 +8032,7 @@ func (c *ProjectsLocationsConversationsBulkDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource to create analyses in. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The parent resource to delete conversations from. Format: projects/{project}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

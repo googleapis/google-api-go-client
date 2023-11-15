@@ -593,15 +593,20 @@ type ContactSettings struct {
 	// publicly available. When setting this option, you must also provide a
 	// `PUBLIC_CONTACT_DATA_ACKNOWLEDGEMENT` in the `contact_notices` field
 	// of the request.
-	//   "PRIVATE_CONTACT_DATA" - None of the data from `ContactSettings` is
-	// publicly available. Instead, proxy contact data is published for your
-	// domain. Email sent to the proxy email address is forwarded to the
+	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
+	// [Cloud Domains feature
+	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
+	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// available. Instead, proxy contact data is published for your domain.
+	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
 	// service at no additional cost.
-	//   "REDACTED_CONTACT_DATA" - Some data from `ContactSettings` is
-	// publicly available. The actual information redacted depends on the
-	// domain. For details, see [the registration privacy
-	// article](https://support.google.com/domains/answer/3251242).
+	//   "REDACTED_CONTACT_DATA" - The organization name (if provided) and
+	// limited non-identifying data from `ContactSettings` is available to
+	// the public (e.g. country and state). The remaining data is marked as
+	// `REDACTED FOR PRIVACY` in the WHOIS database. The actual information
+	// redacted depends on the domain. For details, see [the registration
+	// privacy article](https://support.google.com/domains/answer/3251242).
 	Privacy string `json:"privacy,omitempty"`
 
 	// RegistrantContact: Required. The registrant contact for the
@@ -684,7 +689,10 @@ type DnsSettings struct {
 	// Commonly empty.
 	GlueRecords []*GlueRecord `json:"glueRecords,omitempty"`
 
-	// GoogleDomainsDns: The free DNS zone provided by Google Domains
+	// GoogleDomainsDns: Deprecated: For more information, see Cloud Domains
+	// feature deprecation
+	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+	// The free DNS zone provided by Google Domains
 	// (https://domains.google/).
 	GoogleDomainsDns *GoogleDomainsDns `json:"googleDomainsDns,omitempty"`
 
@@ -837,8 +845,10 @@ func (s *DsRecord) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExportRegistrationRequest: Request for the `ExportRegistration`
-// method.
+// ExportRegistrationRequest: Deprecated: For more information, see
+// Cloud Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Request for the `ExportRegistration` method.
 type ExportRegistrationRequest struct {
 }
 
@@ -945,10 +955,13 @@ func (s *GlueRecord) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDomainsDns: Configuration for using the free DNS zone provided
-// by Google Domains as a `Registration`'s `dns_provider`. You cannot
-// configure the DNS zone itself using the API. To configure the DNS
-// zone, go to Google Domains (https://domains.google/).
+// GoogleDomainsDns: Deprecated: For more information, see Cloud Domains
+// feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Configuration for using the free DNS zone provided by Google Domains
+// as a `Registration`'s `dns_provider`. You cannot configure the DNS
+// zone itself using the API. To configure the DNS zone, go to Google
+// Domains (https://domains.google/).
 type GoogleDomainsDns struct {
 	// DsRecords: Output only. The list of DS records published for this
 	// domain. The list is automatically populated when `ds_state` is
@@ -998,7 +1011,10 @@ func (s *GoogleDomainsDns) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImportDomainRequest: Request for the `ImportDomain` method.
+// ImportDomainRequest: Deprecated: For more information, see Cloud
+// Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Request for the `ImportDomain` method.
 type ImportDomainRequest struct {
 	// DomainName: Required. The domain name. Unicode domain names must be
 	// expressed in Punycode format.
@@ -1195,19 +1211,53 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // ManagementSettings: Defines renewal, billing, and transfer settings
 // for a `Registration`.
 type ManagementSettings struct {
-	// RenewalMethod: Output only. The renewal method for this
-	// `Registration`.
+	// PreferredRenewalMethod: Optional. The desired renewal method for this
+	// `Registration`. The actual `renewal_method` is automatically updated
+	// to reflect this choice. If unset or equal to
+	// `RENEWAL_METHOD_UNSPECIFIED`, it will be treated as if it were set to
+	// `AUTOMATIC_RENEWAL`. Can't be set to `RENEWAL_DISABLED` during
+	// resource creation and can only be updated when the `Registration`
+	// resource has state `ACTIVE` or `SUSPENDED`. When
+	// `preferred_renewal_method` is set to `AUTOMATIC_RENEWAL` the actual
+	// `renewal_method` can be set to `RENEWAL_DISABLED` in case of e.g.
+	// problems with the Billing Account or reported domain abuse. In such
+	// cases check the `issues` field on the `Registration`. After the
+	// problem is resolved the `renewal_method` will be automatically
+	// updated to `preferred_renewal_method` in a few hours.
 	//
 	// Possible values:
 	//   "RENEWAL_METHOD_UNSPECIFIED" - The renewal method is undefined.
-	//   "AUTOMATIC_RENEWAL" - The domain is automatically renewed each year
-	// . To disable automatic renewals, delete the resource by calling
-	// `DeleteRegistration` or export it by calling `ExportRegistration`.
-	//   "MANUAL_RENEWAL" - The domain must be explicitly renewed each year
-	// before its `expire_time`. This option is only available when the
-	// `Registration` is in state `EXPORTED`. To manage the domain's current
-	// billing and renewal settings, go to [Google
-	// Domains](https://domains.google/).
+	//   "AUTOMATIC_RENEWAL" - The domain is automatically renewed each
+	// year.
+	//   "MANUAL_RENEWAL" - Deprecated: For more information, see [Cloud
+	// Domains feature
+	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
+	// e-deprecations) This option was never used. Use RENEWAL_DISABLED
+	// instead.
+	//   "RENEWAL_DISABLED" - The domain won't be renewed and will expire at
+	// its expiration time.
+	PreferredRenewalMethod string `json:"preferredRenewalMethod,omitempty"`
+
+	// RenewalMethod: Output only. The actual renewal method for this
+	// `Registration`. When `preferred_renewal_method` is set to
+	// `AUTOMATIC_RENEWAL` the actual `renewal_method` can be equal to
+	// `RENEWAL_DISABLED` in case of e.g. problems with the Billing Account
+	// or reported domain abuse. In such cases check the `issues` field on
+	// the `Registration`. After the problem is resolved the
+	// `renewal_method` will be automatically updated to
+	// `preferred_renewal_method` in a few hours.
+	//
+	// Possible values:
+	//   "RENEWAL_METHOD_UNSPECIFIED" - The renewal method is undefined.
+	//   "AUTOMATIC_RENEWAL" - The domain is automatically renewed each
+	// year.
+	//   "MANUAL_RENEWAL" - Deprecated: For more information, see [Cloud
+	// Domains feature
+	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
+	// e-deprecations) This option was never used. Use RENEWAL_DISABLED
+	// instead.
+	//   "RENEWAL_DISABLED" - The domain won't be renewed and will expire at
+	// its expiration time.
 	RenewalMethod string `json:"renewalMethod,omitempty"`
 
 	// TransferLockState: Controls whether the domain can be transferred to
@@ -1221,20 +1271,22 @@ type ManagementSettings struct {
 	// another registrar.
 	TransferLockState string `json:"transferLockState,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RenewalMethod") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "PreferredRenewalMethod") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RenewalMethod") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PreferredRenewalMethod")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1728,15 +1780,20 @@ type RegisterParameters struct {
 	// publicly available. When setting this option, you must also provide a
 	// `PUBLIC_CONTACT_DATA_ACKNOWLEDGEMENT` in the `contact_notices` field
 	// of the request.
-	//   "PRIVATE_CONTACT_DATA" - None of the data from `ContactSettings` is
-	// publicly available. Instead, proxy contact data is published for your
-	// domain. Email sent to the proxy email address is forwarded to the
+	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
+	// [Cloud Domains feature
+	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
+	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// available. Instead, proxy contact data is published for your domain.
+	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
 	// service at no additional cost.
-	//   "REDACTED_CONTACT_DATA" - Some data from `ContactSettings` is
-	// publicly available. The actual information redacted depends on the
-	// domain. For details, see [the registration privacy
-	// article](https://support.google.com/domains/answer/3251242).
+	//   "REDACTED_CONTACT_DATA" - The organization name (if provided) and
+	// limited non-identifying data from `ContactSettings` is available to
+	// the public (e.g. country and state). The remaining data is marked as
+	// `REDACTED FOR PRIVACY` in the WHOIS database. The actual information
+	// redacted depends on the domain. For details, see [the registration
+	// privacy article](https://support.google.com/domains/answer/3251242).
 	SupportedPrivacy []string `json:"supportedPrivacy,omitempty"`
 
 	// YearlyPrice: Price to register or renew the domain for one year.
@@ -1774,16 +1831,21 @@ func (s *RegisterParameters) MarshalJSON() ([]byte, error) {
 // availability and obtain information like pricing, which is needed to
 // build a call to `RegisterDomain`. Another way to create a new
 // `Registration` is to transfer an existing domain from another
-// registrar. First, go to the current registrar to unlock the domain
-// for transfer and retrieve the domain's transfer authorization code.
-// Then call `RetrieveTransferParameters` to confirm that the domain is
-// unlocked and to get values needed to build a call to
-// `TransferDomain`. Finally, you can create a new `Registration` by
-// importing an existing domain managed with Google Domains
-// (https://domains.google/). First, call `RetrieveImportableDomains` to
-// list domains to which the calling user has sufficient access. Then
-// call `ImportDomain` on any domain names you want to use with Cloud
-// Domains.
+// registrar (Deprecated: For more information, see Cloud Domains
+// feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)).
+// First, go to the current registrar to unlock the domain for transfer
+// and retrieve the domain's transfer authorization code. Then call
+// `RetrieveTransferParameters` to confirm that the domain is unlocked
+// and to get values needed to build a call to `TransferDomain`.
+// Finally, you can create a new `Registration` by importing an existing
+// domain managed with Google Domains (https://domains.google/)
+// (Deprecated: For more information, see Cloud Domains feature
+// deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)).
+// First, call `RetrieveImportableDomains` to list domains to which the
+// calling user has sufficient access. Then call `ImportDomain` on any
+// domain names you want to use with Cloud Domains.
 type Registration struct {
 	// ContactSettings: Required. Settings for contact information linked to
 	// the `Registration`. You cannot update these with the
@@ -1825,6 +1887,9 @@ type Registration struct {
 	// domain is suspended. To resend the verification email, call
 	// ConfigureContactSettings and provide the current
 	// `registrant_contact.email`.
+	//   "PROBLEM_WITH_BILLING" - Billing account is not in good standing.
+	// The domain will not automatically renew at its expiration time unless
+	// you resolve problems with your billing account.
 	Issues []string `json:"issues,omitempty"`
 
 	// Labels: Set of labels associated with the `Registration`.
@@ -1879,7 +1944,8 @@ type Registration struct {
 	//   "IMPORT_PENDING" - The domain is being imported from Google Domains
 	// to Cloud Domains.
 	//   "ACTIVE" - The domain is registered and operational. The domain
-	// renews automatically as long as it remains in this state.
+	// renews automatically as long as it remains in this state and the
+	// RenewalMethod is set to AUTOMATIC_RENEWAL.
 	//   "SUSPENDED" - The domain is suspended and inoperative. For more
 	// details, see the `issues` field.
 	//   "EXPORTED" - The domain is no longer managed with Cloud Domains. It
@@ -1901,19 +1967,27 @@ type Registration struct {
 	// publicly available. When setting this option, you must also provide a
 	// `PUBLIC_CONTACT_DATA_ACKNOWLEDGEMENT` in the `contact_notices` field
 	// of the request.
-	//   "PRIVATE_CONTACT_DATA" - None of the data from `ContactSettings` is
-	// publicly available. Instead, proxy contact data is published for your
-	// domain. Email sent to the proxy email address is forwarded to the
+	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
+	// [Cloud Domains feature
+	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
+	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// available. Instead, proxy contact data is published for your domain.
+	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
 	// service at no additional cost.
-	//   "REDACTED_CONTACT_DATA" - Some data from `ContactSettings` is
-	// publicly available. The actual information redacted depends on the
-	// domain. For details, see [the registration privacy
-	// article](https://support.google.com/domains/answer/3251242).
+	//   "REDACTED_CONTACT_DATA" - The organization name (if provided) and
+	// limited non-identifying data from `ContactSettings` is available to
+	// the public (e.g. country and state). The remaining data is marked as
+	// `REDACTED FOR PRIVACY` in the WHOIS database. The actual information
+	// redacted depends on the domain. For details, see [the registration
+	// privacy article](https://support.google.com/domains/answer/3251242).
 	SupportedPrivacy []string `json:"supportedPrivacy,omitempty"`
 
-	// TransferFailureReason: Output only. The reason the domain transfer
-	// failed. Only set for domains in TRANSFER_FAILED state.
+	// TransferFailureReason: Output only. Deprecated: For more information,
+	// see Cloud Domains feature deprecation
+	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+	// The reason the domain transfer failed. Only set for domains in
+	// TRANSFER_FAILED state.
 	//
 	// Possible values:
 	//   "TRANSFER_FAILURE_REASON_UNSPECIFIED" - Transfer failure
@@ -1974,8 +2048,10 @@ func (s *Registration) MarshalJSON() ([]byte, error) {
 type ResetAuthorizationCodeRequest struct {
 }
 
-// RetrieveImportableDomainsResponse: Response for the
-// `RetrieveImportableDomains` method.
+// RetrieveImportableDomainsResponse: Deprecated: For more information,
+// see Cloud Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Response for the `RetrieveImportableDomains` method.
 type RetrieveImportableDomainsResponse struct {
 	// Domains: A list of domains that the calling user manages in Google
 	// Domains.
@@ -2048,8 +2124,10 @@ func (s *RetrieveRegisterParametersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RetrieveTransferParametersResponse: Response for the
-// `RetrieveTransferParameters` method.
+// RetrieveTransferParametersResponse: Deprecated: For more information,
+// see Cloud Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Response for the `RetrieveTransferParameters` method.
 type RetrieveTransferParametersResponse struct {
 	// TransferParameters: Parameters to use when calling the
 	// `TransferDomain` method.
@@ -2263,7 +2341,10 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TransferDomainRequest: Request for the `TransferDomain` method.
+// TransferDomainRequest: Deprecated: For more information, see Cloud
+// Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Request for the `TransferDomain` method.
 type TransferDomainRequest struct {
 	// AuthorizationCode: The domain's transfer authorization code. You can
 	// obtain this from the domain's current registrar.
@@ -2321,8 +2402,10 @@ func (s *TransferDomainRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TransferParameters: Parameters required to transfer a domain from
-// another registrar.
+// TransferParameters: Deprecated: For more information, see Cloud
+// Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Parameters required to transfer a domain from another registrar.
 type TransferParameters struct {
 	// CurrentRegistrar: The registrar that currently manages the domain.
 	CurrentRegistrar string `json:"currentRegistrar,omitempty"`
@@ -2348,15 +2431,20 @@ type TransferParameters struct {
 	// publicly available. When setting this option, you must also provide a
 	// `PUBLIC_CONTACT_DATA_ACKNOWLEDGEMENT` in the `contact_notices` field
 	// of the request.
-	//   "PRIVATE_CONTACT_DATA" - None of the data from `ContactSettings` is
-	// publicly available. Instead, proxy contact data is published for your
-	// domain. Email sent to the proxy email address is forwarded to the
+	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
+	// [Cloud Domains feature
+	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
+	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// available. Instead, proxy contact data is published for your domain.
+	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
 	// service at no additional cost.
-	//   "REDACTED_CONTACT_DATA" - Some data from `ContactSettings` is
-	// publicly available. The actual information redacted depends on the
-	// domain. For details, see [the registration privacy
-	// article](https://support.google.com/domains/answer/3251242).
+	//   "REDACTED_CONTACT_DATA" - The organization name (if provided) and
+	// limited non-identifying data from `ContactSettings` is available to
+	// the public (e.g. country and state). The remaining data is marked as
+	// `REDACTED FOR PRIVACY` in the WHOIS database. The actual information
+	// redacted depends on the domain. For details, see [the registration
+	// privacy article](https://support.google.com/domains/answer/3251242).
 	SupportedPrivacy []string `json:"supportedPrivacy,omitempty"`
 
 	// TransferLockState: Indicates whether the domain is protected by a
@@ -3555,16 +3643,18 @@ type ProjectsLocationsRegistrationsDeleteCall struct {
 // Delete: Deletes a `Registration` resource. This method works on any
 // `Registration` resource using Subscription or Commitment billing
 // (/domains/pricing#billing-models), provided that the resource was
-// created at least 1 day in the past. For `Registration` resources
-// using Monthly billing (/domains/pricing#billing-models), this method
-// works if: * `state` is `EXPORTED` with `expire_time` in the past *
-// `state` is `REGISTRATION_FAILED` * `state` is `TRANSFER_FAILED` When
-// an active registration is successfully deleted, you can continue to
-// use the domain in Google Domains (https://domains.google/) until it
-// expires. The calling user becomes the domain's sole owner in Google
-// Domains, and permissions for the domain are subsequently managed
-// there. The domain does not renew automatically unless the new owner
-// sets up billing in Google Domains.
+// created at least 1 day in the past. When an active registration is
+// successfully deleted, you can continue to use the domain in Google
+// Domains (https://domains.google/) until it expires. The calling user
+// becomes the domain's sole owner in Google Domains, and permissions
+// for the domain are subsequently managed there. The domain does not
+// renew automatically unless the new owner sets up billing in Google
+// Domains. After January 2024 you will only be able to delete
+// `Registration` resources when `state` is one of: `EXPORTED`,
+// `EXPIRED`,`REGISTRATION_FAILED` or `TRANSFER_FAILED`. See Cloud
+// Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// for more details.
 //
 //   - name: The name of the `Registration` to delete, in the format
 //     `projects/*/locations/*/registrations/*`.
@@ -3660,7 +3750,7 @@ func (c *ProjectsLocationsRegistrationsDeleteCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a `Registration` resource. This method works on any `Registration` resource using [Subscription or Commitment billing](/domains/pricing#billing-models), provided that the resource was created at least 1 day in the past. For `Registration` resources using [Monthly billing](/domains/pricing#billing-models), this method works if: * `state` is `EXPORTED` with `expire_time` in the past * `state` is `REGISTRATION_FAILED` * `state` is `TRANSFER_FAILED` When an active registration is successfully deleted, you can continue to use the domain in [Google Domains](https://domains.google/) until it expires. The calling user becomes the domain's sole owner in Google Domains, and permissions for the domain are subsequently managed there. The domain does not renew automatically unless the new owner sets up billing in Google Domains.",
+	//   "description": "Deletes a `Registration` resource. This method works on any `Registration` resource using [Subscription or Commitment billing](/domains/pricing#billing-models), provided that the resource was created at least 1 day in the past. When an active registration is successfully deleted, you can continue to use the domain in [Google Domains](https://domains.google/) until it expires. The calling user becomes the domain's sole owner in Google Domains, and permissions for the domain are subsequently managed there. The domain does not renew automatically unless the new owner sets up billing in Google Domains. After January 2024 you will only be able to delete `Registration` resources when `state` is one of: `EXPORTED`, `EXPIRED`,`REGISTRATION_FAILED` or `TRANSFER_FAILED`. See [Cloud Domains feature deprecation](https://cloud.google.com/domains/docs/deprecations/feature-deprecations) for more details.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrations/{registrationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "domains.projects.locations.registrations.delete",
@@ -3698,9 +3788,12 @@ type ProjectsLocationsRegistrationsExportCall struct {
 	header_                   http.Header
 }
 
-// Export: Exports a `Registration` resource, such that it is no longer
-// managed by Cloud Domains. When an active domain is successfully
-// exported, you can continue to use the domain in Google Domains
+// Export: Deprecated: For more information, see Cloud Domains feature
+// deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Exports a `Registration` resource, such that it is no longer managed
+// by Cloud Domains. When an active domain is successfully exported, you
+// can continue to use the domain in Google Domains
 // (https://domains.google/) until it expires. The calling user becomes
 // the domain's sole owner in Google Domains, and permissions for the
 // domain are subsequently managed there. The domain does not renew
@@ -3806,7 +3899,8 @@ func (c *ProjectsLocationsRegistrationsExportCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports a `Registration` resource, such that it is no longer managed by Cloud Domains. When an active domain is successfully exported, you can continue to use the domain in [Google Domains](https://domains.google/) until it expires. The calling user becomes the domain's sole owner in Google Domains, and permissions for the domain are subsequently managed there. The domain does not renew automatically unless the new owner sets up billing in Google Domains.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: For more information, see [Cloud Domains feature deprecation](https://cloud.google.com/domains/docs/deprecations/feature-deprecations) Exports a `Registration` resource, such that it is no longer managed by Cloud Domains. When an active domain is successfully exported, you can continue to use the domain in [Google Domains](https://domains.google/) until it expires. The calling user becomes the domain's sole owner in Google Domains, and permissions for the domain are subsequently managed there. The domain does not renew automatically unless the new owner sets up billing in Google Domains.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrations/{registrationsId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "domains.projects.locations.registrations.export",
@@ -4169,11 +4263,14 @@ type ProjectsLocationsRegistrationsImportCall struct {
 	header_             http.Header
 }
 
-// Import: Imports a domain name from Google Domains
-// (https://domains.google/) for use in Cloud Domains. To transfer a
-// domain from another registrar, use the `TransferDomain` method
-// instead. Since individual users can own domains in Google Domains,
-// the calling user must have ownership permission on the domain.
+// Import: Deprecated: For more information, see Cloud Domains feature
+// deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Imports a domain name from Google Domains (https://domains.google/)
+// for use in Cloud Domains. To transfer a domain from another
+// registrar, use the `TransferDomain` method instead. Since individual
+// users can own domains in Google Domains, the calling user must have
+// ownership permission on the domain.
 //
 //   - parent: The parent resource of the Registration. Must be in the
 //     format `projects/*/locations/*`.
@@ -4275,7 +4372,8 @@ func (c *ProjectsLocationsRegistrationsImportCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports a domain name from [Google Domains](https://domains.google/) for use in Cloud Domains. To transfer a domain from another registrar, use the `TransferDomain` method instead. Since individual users can own domains in Google Domains, the calling user must have ownership permission on the domain.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: For more information, see [Cloud Domains feature deprecation](https://cloud.google.com/domains/docs/deprecations/feature-deprecations) Imports a domain name from [Google Domains](https://domains.google/) for use in Cloud Domains. To transfer a domain from another registrar, use the `TransferDomain` method instead. Since individual users can own domains in Google Domains, the calling user must have ownership permission on the domain.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrations:import",
 	//   "httpMethod": "POST",
 	//   "id": "domains.projects.locations.registrations.import",
@@ -5146,12 +5244,14 @@ type ProjectsLocationsRegistrationsRetrieveImportableDomainsCall struct {
 	header_      http.Header
 }
 
-// RetrieveImportableDomains: Lists domain names from Google Domains
-// (https://domains.google/) that can be imported to Cloud Domains using
-// the `ImportDomain` method. Since individual users can own domains in
-// Google Domains, the list of domains returned depends on the
-// individual user making the call. Domains already managed by Cloud
-// Domains are not returned.
+// RetrieveImportableDomains: Deprecated: For more information, see
+// Cloud Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Lists domain names from Google Domains (https://domains.google/) that
+// can be imported to Cloud Domains using the `ImportDomain` method.
+// Since individual users can own domains in Google Domains, the list of
+// domains returned depends on the individual user making the call.
+// Domains already managed by Cloud Domains are not returned.
 //
 //   - location: The location. Must be in the format
 //     `projects/*/locations/*`.
@@ -5276,7 +5376,8 @@ func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists domain names from [Google Domains](https://domains.google/) that can be imported to Cloud Domains using the `ImportDomain` method. Since individual users can own domains in Google Domains, the list of domains returned depends on the individual user making the call. Domains already managed by Cloud Domains are not returned.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: For more information, see [Cloud Domains feature deprecation](https://cloud.google.com/domains/docs/deprecations/feature-deprecations) Lists domain names from [Google Domains](https://domains.google/) that can be imported to Cloud Domains using the `ImportDomain` method. Since individual users can own domains in Google Domains, the list of domains returned depends on the individual user making the call. Domains already managed by Cloud Domains are not returned.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrations:retrieveImportableDomains",
 	//   "httpMethod": "GET",
 	//   "id": "domains.projects.locations.registrations.retrieveImportableDomains",
@@ -5509,11 +5610,13 @@ type ProjectsLocationsRegistrationsRetrieveTransferParametersCall struct {
 	header_      http.Header
 }
 
-// RetrieveTransferParameters: Gets parameters needed to transfer a
-// domain name from another registrar to Cloud Domains. For domains
-// already managed by Google Domains (https://domains.google/), use
-// `ImportDomain` instead. Use the returned values to call
-// `TransferDomain`.
+// RetrieveTransferParameters: Deprecated: For more information, see
+// Cloud Domains feature deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Gets parameters needed to transfer a domain name from another
+// registrar to Cloud Domains. For domains already managed by Google
+// Domains (https://domains.google/), use `ImportDomain` instead. Use
+// the returned values to call `TransferDomain`.
 //
 //   - location: The location. Must be in the format
 //     `projects/*/locations/*`.
@@ -5631,7 +5734,8 @@ func (c *ProjectsLocationsRegistrationsRetrieveTransferParametersCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets parameters needed to transfer a domain name from another registrar to Cloud Domains. For domains already managed by [Google Domains](https://domains.google/), use `ImportDomain` instead. Use the returned values to call `TransferDomain`.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: For more information, see [Cloud Domains feature deprecation](https://cloud.google.com/domains/docs/deprecations/feature-deprecations) Gets parameters needed to transfer a domain name from another registrar to Cloud Domains. For domains already managed by [Google Domains](https://domains.google/), use `ImportDomain` instead. Use the returned values to call `TransferDomain`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrations:retrieveTransferParameters",
 	//   "httpMethod": "GET",
 	//   "id": "domains.projects.locations.registrations.retrieveTransferParameters",
@@ -6133,24 +6237,26 @@ type ProjectsLocationsRegistrationsTransferCall struct {
 	header_               http.Header
 }
 
-// Transfer: Transfers a domain name from another registrar to Cloud
-// Domains. For domains already managed by Google Domains
-// (https://domains.google/), use `ImportDomain` instead. Before calling
-// this method, go to the domain's current registrar to unlock the
-// domain for transfer and retrieve the domain's transfer authorization
-// code. Then call `RetrieveTransferParameters` to confirm that the
-// domain is unlocked and to get values needed to build a call to this
-// method. A successful call creates a `Registration` resource in state
-// `TRANSFER_PENDING`. It can take several days to complete the transfer
-// process. The registrant can often speed up this process by approving
-// the transfer through the current registrar, either by clicking a link
-// in an email from the registrar or by visiting the registrar's
-// website. A few minutes after transfer approval, the resource
-// transitions to state `ACTIVE`, indicating that the transfer was
-// successful. If the transfer is rejected or the request expires
-// without being approved, the resource can end up in state
-// `TRANSFER_FAILED`. If transfer fails, you can safely delete the
-// resource and retry the transfer.
+// Transfer: Deprecated: For more information, see Cloud Domains feature
+// deprecation
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// Transfers a domain name from another registrar to Cloud Domains. For
+// domains already managed by Google Domains (https://domains.google/),
+// use `ImportDomain` instead. Before calling this method, go to the
+// domain's current registrar to unlock the domain for transfer and
+// retrieve the domain's transfer authorization code. Then call
+// `RetrieveTransferParameters` to confirm that the domain is unlocked
+// and to get values needed to build a call to this method. A successful
+// call creates a `Registration` resource in state `TRANSFER_PENDING`.
+// It can take several days to complete the transfer process. The
+// registrant can often speed up this process by approving the transfer
+// through the current registrar, either by clicking a link in an email
+// from the registrar or by visiting the registrar's website. A few
+// minutes after transfer approval, the resource transitions to state
+// `ACTIVE`, indicating that the transfer was successful. If the
+// transfer is rejected or the request expires without being approved,
+// the resource can end up in state `TRANSFER_FAILED`. If transfer
+// fails, you can safely delete the resource and retry the transfer.
 //
 //   - parent: The parent resource of the `Registration`. Must be in the
 //     format `projects/*/locations/*`.
@@ -6252,7 +6358,8 @@ func (c *ProjectsLocationsRegistrationsTransferCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Transfers a domain name from another registrar to Cloud Domains. For domains already managed by [Google Domains](https://domains.google/), use `ImportDomain` instead. Before calling this method, go to the domain's current registrar to unlock the domain for transfer and retrieve the domain's transfer authorization code. Then call `RetrieveTransferParameters` to confirm that the domain is unlocked and to get values needed to build a call to this method. A successful call creates a `Registration` resource in state `TRANSFER_PENDING`. It can take several days to complete the transfer process. The registrant can often speed up this process by approving the transfer through the current registrar, either by clicking a link in an email from the registrar or by visiting the registrar's website. A few minutes after transfer approval, the resource transitions to state `ACTIVE`, indicating that the transfer was successful. If the transfer is rejected or the request expires without being approved, the resource can end up in state `TRANSFER_FAILED`. If transfer fails, you can safely delete the resource and retry the transfer.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: For more information, see [Cloud Domains feature deprecation](https://cloud.google.com/domains/docs/deprecations/feature-deprecations) Transfers a domain name from another registrar to Cloud Domains. For domains already managed by [Google Domains](https://domains.google/), use `ImportDomain` instead. Before calling this method, go to the domain's current registrar to unlock the domain for transfer and retrieve the domain's transfer authorization code. Then call `RetrieveTransferParameters` to confirm that the domain is unlocked and to get values needed to build a call to this method. A successful call creates a `Registration` resource in state `TRANSFER_PENDING`. It can take several days to complete the transfer process. The registrant can often speed up this process by approving the transfer through the current registrar, either by clicking a link in an email from the registrar or by visiting the registrar's website. A few minutes after transfer approval, the resource transitions to state `ACTIVE`, indicating that the transfer was successful. If the transfer is rejected or the request expires without being approved, the resource can end up in state `TRANSFER_FAILED`. If transfer fails, you can safely delete the resource and retry the transfer.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/registrations:transfer",
 	//   "httpMethod": "POST",
 	//   "id": "domains.projects.locations.registrations.transfer",

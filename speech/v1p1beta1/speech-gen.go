@@ -1188,8 +1188,9 @@ type RecognitionConfig struct {
 	// `sample_rate_hertz` has to match the sample rate of the file being
 	// used.
 	//   "WEBM_OPUS" - Opus encoded audio frames in WebM container
-	// ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must
-	// be one of 8000, 12000, 16000, 24000, or 48000.
+	// ([WebM](https://www.webmproject.org/docs/container/)).
+	// `sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or
+	// 48000.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: Required. The language of the supplied audio as a
@@ -1252,7 +1253,7 @@ type RecognitionConfig struct {
 	// adaptation (https://cloud.google.com/speech-to-text/docs/adaptation).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
-	// TranscriptNormalization: Use transcription normalization to
+	// TranscriptNormalization: Optional. Use transcription normalization to
 	// automatically replace parts of the transcript with phrases of your
 	// choosing. For StreamingRecognize, this normalization only applies to
 	// stable partial transcripts (stability > 0.8) and final transcripts.

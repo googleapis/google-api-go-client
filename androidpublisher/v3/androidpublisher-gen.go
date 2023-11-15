@@ -2829,7 +2829,6 @@ type Grant struct {
 	//   "CAN_VIEW_NON_FINANCIAL_DATA" - View app information (read-only).
 	//   "CAN_VIEW_APP_QUALITY" - View app quality data such as Vitals,
 	// Crashes etc.
-	//   "CAN_MANAGE_DEEPLINKS" - Manage the deep links setup of an app.
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
@@ -4831,13 +4830,18 @@ func (s *RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
 }
 
 // RegionsVersion: The version of the available regions being used for
-// the specified resource. A string representing the version of
-// available regions being used for the specified resource. Regional
-// prices for the resource have to be specified according to the
-// information published in this article
-// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// the specified resource.
 type RegionsVersion struct {
-	// Version: Required. The latest version is 2022/02.
+	// Version: Required. A string representing the version of available
+	// regions being used for the specified resource. Regional prices for
+	// the resource have to be specified according to the information
+	// published in this article
+	// (https://support.google.com/googleplay/android-developer/answer/10532353).
+	// Each time the supported locations substantially change, the version
+	// will be incremented. Using this field will ensure that creating and
+	// updating the resource with an older region's version and set of
+	// regional prices and currencies will succeed even though a new version
+	// is available. The latest version is 2022/02.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Version") to
@@ -6668,6 +6672,57 @@ func (s *Track) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TrackConfig: Configurations of the new track.
+type TrackConfig struct {
+	// FormFactor: Required. Form factor of the new track. Defaults to the
+	// default track.
+	//
+	// Possible values:
+	//   "FORM_FACTOR_UNSPECIFIED" - Fallback value, do not use.
+	//   "DEFAULT" - Default track.
+	//   "WEAR" - Wear form factor track.
+	//   "AUTOMOTIVE" - Automotive form factor track.
+	FormFactor string `json:"formFactor,omitempty"`
+
+	// Track: Required. Identifier of the new track. For default tracks,
+	// this field consists of the track alias only. Form factor tracks have
+	// a special prefix as an identifier, for example `wear:production`,
+	// `automotive:production`. This prefix must match the value of the
+	// `form_factor` field, if it is not a default track. More on track name
+	// (https://developers.google.com/android-publisher/tracks#ff-track-name)
+	Track string `json:"track,omitempty"`
+
+	// Type: Required. Type of the new track. Currently, the only supported
+	// value is closedTesting.
+	//
+	// Possible values:
+	//   "TRACK_TYPE_UNSPECIFIED" - Fallback value, do not use.
+	//   "CLOSED_TESTING" - Closed testing track.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormFactor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FormFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrackConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TrackConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TrackCountryAvailability: Resource for per-track country availability
 // information.
 type TrackCountryAvailability struct {
@@ -6929,7 +6984,7 @@ type User struct {
 	//   "DEVELOPER_LEVEL_PERMISSION_UNSPECIFIED" - Unknown or unspecified
 	// permission.
 	//   "CAN_SEE_ALL_APPS" - View app information and download bulk reports
-	// (read-only).
+	// (read-only). Deprecated: Check CAN_VIEW_NON_FINANCIAL_DATA_GLOBAL.
 	//   "CAN_VIEW_FINANCIAL_DATA_GLOBAL" - View financial data, orders, and
 	// cancellation survey responses.
 	//   "CAN_MANAGE_PERMISSIONS_GLOBAL" - Admin (all permissions).
@@ -6955,8 +7010,6 @@ type User struct {
 	// download bulk reports (read-only).
 	//   "CAN_VIEW_APP_QUALITY_GLOBAL" - View app quality information for
 	// all apps for the developer.
-	//   "CAN_MANAGE_DEEPLINKS_GLOBAL" - Manage the deep links setup for all
-	// apps for the developer.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 
 	// Email: Immutable. The user's email address.
@@ -13520,6 +13573,158 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 
 }
 
+// method id "androidpublisher.edits.tracks.create":
+
+type EditsTracksCreateCall struct {
+	s           *Service
+	packageName string
+	editId      string
+	trackconfig *TrackConfig
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a new track.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+func (r *EditsTracksService) Create(packageName string, editId string, trackconfig *TrackConfig) *EditsTracksCreateCall {
+	c := &EditsTracksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.editId = editId
+	c.trackconfig = trackconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EditsTracksCreateCall) Fields(s ...googleapi.Field) *EditsTracksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EditsTracksCreateCall) Context(ctx context.Context) *EditsTracksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EditsTracksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EditsTracksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trackconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"editId":      c.editId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.edits.tracks.create" call.
+// Exactly one of *Track or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Track.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *EditsTracksCreateCall) Do(opts ...googleapi.CallOption) (*Track, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Track{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new track.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.edits.tracks.create",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "editId"
+	//   ],
+	//   "parameters": {
+	//     "editId": {
+	//       "description": "Required. Identifier of the edit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks",
+	//   "request": {
+	//     "$ref": "TrackConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "Track"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.edits.tracks.get":
 
 type EditsTracksGetCall struct {
@@ -17113,7 +17318,16 @@ func (c *MonetizationSubscriptionsCreateCall) ProductId(productId string) *Monet
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -17230,7 +17444,7 @@ func (c *MonetizationSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -17761,7 +17975,16 @@ func (r *MonetizationSubscriptionsService) Patch(packageName string, productId s
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -17888,7 +18111,7 @@ func (c *MonetizationSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18765,7 +18988,16 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) OfferId(offerId str
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersCreateCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -18898,7 +19130,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -19667,7 +19899,16 @@ func (r *MonetizationSubscriptionsBasePlansOffersService) Patch(packageName stri
 }
 
 // RegionsVersionVersion sets the optional parameter
-// "regionsVersion.version": Required. The latest version is 2022/02.
+// "regionsVersion.version": Required. A string representing the version
+// of available regions being used for the specified resource. Regional
+// prices for the resource have to be specified according to the
+// information published in this article
+// (https://support.google.com/googleplay/android-developer/answer/10532353).
+// Each time the supported locations substantially change, the version
+// will be incremented. Using this field will ensure that creating and
+// updating the resource with an older region's version and set of
+// regional prices and currencies will succeed even though a new version
+// is available. The latest version is 2022/02.
 func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) RegionsVersionVersion(regionsVersionVersion string) *MonetizationSubscriptionsBasePlansOffersPatchCall {
 	c.urlParams_.Set("regionsVersion.version", regionsVersionVersion)
 	return c
@@ -19810,7 +20051,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "regionsVersion.version": {
-	//       "description": "Required. The latest version is 2022/02.",
+	//       "description": "Required. A string representing the version of available regions being used for the specified resource. Regional prices for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region's version and set of regional prices and currencies will succeed even though a new version is available. The latest version is 2022/02.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

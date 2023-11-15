@@ -629,6 +629,9 @@ func (s *CseKeyPair) MarshalJSON() ([]byte, error) {
 
 // CsePrivateKeyMetadata: Metadata for a private key instance.
 type CsePrivateKeyMetadata struct {
+	// HardwareKeyMetadata: Metadata for hardware keys.
+	HardwareKeyMetadata *HardwareKeyMetadata `json:"hardwareKeyMetadata,omitempty"`
+
 	// KaclsKeyMetadata: Metadata for a private key instance managed by an
 	// external key access control list service.
 	KaclsKeyMetadata *KaclsKeyMetadata `json:"kaclsKeyMetadata,omitempty"`
@@ -637,15 +640,15 @@ type CsePrivateKeyMetadata struct {
 	// key metadata instance.
 	PrivateKeyMetadataId string `json:"privateKeyMetadataId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KaclsKeyMetadata") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "HardwareKeyMetadata")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KaclsKeyMetadata") to
+	// NullFields is a list of field names (e.g. "HardwareKeyMetadata") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -935,6 +938,34 @@ type ForwardingAddress struct {
 
 func (s *ForwardingAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod ForwardingAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HardwareKeyMetadata: Metadata for hardware keys.
+type HardwareKeyMetadata struct {
+	// Description: Description about the hardware key.
+	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HardwareKeyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod HardwareKeyMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1644,6 +1675,8 @@ type ListLabelsResponse struct {
 	// an `id`, `name`, `messageListVisibility`, `labelListVisibility`, and
 	// `type`. The labels.get method can fetch additional label details.
 	Labels []*Label `json:"labels,omitempty"`
+
+	ProductId int64 `json:"productId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

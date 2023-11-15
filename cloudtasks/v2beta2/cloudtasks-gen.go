@@ -756,9 +756,8 @@ func (s *CancelLeaseRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CmekConfig: CMEK, or Customer Managed Encryption Keys, enables GCP
-// products to put control over encryption and key management in their
-// customer’s hands.
+// CmekConfig: Describes the customer-managed encryption key (CMEK)
+// configuration associated with a project and location.
 type CmekConfig struct {
 	// KmsKey: Resource name of the Cloud KMS key, of the form
 	// `projects/PROJECT_ID/locations/LOCATION_ID/keyRings/KEY_RING_ID/crypto
@@ -5474,9 +5473,7 @@ type ProjectsLocationsQueuesTasksBufferCall struct {
 // D:buffer To create the task with an automatically generated ID, use
 // the following format:
 // projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer
-// . Note: This feature is in its experimental stage. You must request
-// access to the API through the Cloud Tasks BufferTask Experiment
-// Signup form (https://forms.gle/X8Zr5hiXH5tTGFqh8).
+// .
 //
 //   - queue: The parent queue name. For example:
 //     projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
@@ -5583,7 +5580,7 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer. Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferTask Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8).",
+	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{taskId}:buffer",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.buffer",

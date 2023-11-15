@@ -1562,9 +1562,18 @@ type MediationAbExperiment struct {
 	// DisplayName: The display name for the mediation A/B experiment.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EndTime: Output only. The time at which the experiment was ended or
+	// target to end (in UTC).
+	EndTime string `json:"endTime,omitempty"`
+
 	// ExperimentId: Output only. Unique identifier for the mediation A/B
 	// experiment. It is an output only property.
 	ExperimentId string `json:"experimentId,omitempty"`
+
+	// MediationGroupId: Output only. The mediation group id this experiment
+	// belongs to. This can be used for filtering the experiments in the
+	// list experiments API.
+	MediationGroupId string `json:"mediationGroupId,omitempty"`
 
 	// Name: Resource name for this experiment. The format is
 	// accounts/{publisher_id}/
@@ -1573,6 +1582,10 @@ type MediationAbExperiment struct {
 	// accounts/pub-9876543210987654/mediationGroups/0123456789/
 	// mediationAbExperiment/12345
 	Name string `json:"name,omitempty"`
+
+	// StartTime: Output only. The time at which the experiment was started
+	// (in UTC).
+	StartTime string `json:"startTime,omitempty"`
 
 	// State: Output only. The state of the experiment. It is an output only
 	// field.
@@ -1598,6 +1611,16 @@ type MediationAbExperiment struct {
 	// expressed as an integer in the inclusive range of [1,99]. See
 	// https://support.google.com/admob/answer/9572326 for details.
 	TreatmentTrafficPercentage int64 `json:"treatmentTrafficPercentage,omitempty,string"`
+
+	// VariantLeader: Output only. The variant leader for the experiment
+	// according to some key metrics.
+	//
+	// Possible values:
+	//   "VARIANT_LEADER_UNSPECIFIED" - Default value of the enum. Do not
+	// use.
+	//   "CONTROL" - The control leading the experiment.
+	//   "TREATMENT" - The treatment leading the experiment.
+	VariantLeader string `json:"variantLeader,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

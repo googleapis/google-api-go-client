@@ -551,7 +551,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the repository, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+                      "description": "The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -1713,7 +1713,7 @@
       }
     }
   },
-  "revision": "20231002",
+  "revision": "20231108",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
     "AptArtifact": {
@@ -2150,12 +2150,14 @@
           "enum": [
             "REPOSITORY_BASE_UNSPECIFIED",
             "DEBIAN",
-            "UBUNTU"
+            "UBUNTU",
+            "DEBIAN_SNAPSHOT"
           ],
           "enumDescriptions": [
             "Unspecified repository base.",
             "Debian.",
-            "Ubuntu LTS/Pro."
+            "Ubuntu LTS/Pro.",
+            "Archived Debian."
           ],
           "type": "string"
         },
@@ -3013,6 +3015,10 @@
           "$ref": "PythonRepository",
           "description": "Specific settings for a Python remote repository."
         },
+        "upstreamCredentials": {
+          "$ref": "UpstreamCredentials",
+          "description": "Optional. The credentials used to access the remote repository."
+        },
         "yumRepository": {
           "$ref": "YumRepository",
           "description": "Specific settings for a Yum remote repository."
@@ -3109,7 +3115,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the repository, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+          "description": "The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`.",
           "type": "string"
         },
         "remoteRepositoryConfig": {
@@ -3390,6 +3396,17 @@
       },
       "type": "object"
     },
+    "UpstreamCredentials": {
+      "description": "The credentials to access the remote repository.",
+      "id": "UpstreamCredentials",
+      "properties": {
+        "usernamePasswordCredentials": {
+          "$ref": "UsernamePasswordCredentials",
+          "description": "Use username and password to access the remote repository."
+        }
+      },
+      "type": "object"
+    },
     "UpstreamPolicy": {
       "description": "Artifact policy configuration for the repository contents.",
       "id": "UpstreamPolicy",
@@ -3404,7 +3421,22 @@
           "type": "integer"
         },
         "repository": {
-          "description": "A reference to the repository resource, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+          "description": "A reference to the repository resource, for example: `projects/p1/locations/us-central1/repositories/repo1`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UsernamePasswordCredentials": {
+      "description": "Username and password credentials.",
+      "id": "UsernamePasswordCredentials",
+      "properties": {
+        "passwordSecretVersion": {
+          "description": "The Secret Manager key version that holds the password to access the remote repository. Must be in the format of `projects/{project}/secrets/{secret}/versions/{version}`.",
+          "type": "string"
+        },
+        "username": {
+          "description": "The username to access the remote repository.",
           "type": "string"
         }
       },

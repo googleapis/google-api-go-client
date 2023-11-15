@@ -1254,10 +1254,6 @@ type DeviceSession struct {
 	// AndroidDevice: Required. The requested device
 	AndroidDevice *AndroidDevice `json:"androidDevice,omitempty"`
 
-	// AndroidDeviceList: Optional. The list of requested devices. At most
-	// two devices may be simultaneously requested.
-	AndroidDeviceList *AndroidDeviceList `json:"androidDeviceList,omitempty"`
-
 	// CreateTime: Output only. The time that the Session was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1308,7 +1304,7 @@ type DeviceSession struct {
 
 	// Ttl: Optional. The amount of time that a device will be initially
 	// allocated for. This can eventually be extended with the
-	// ExtendDeviceSession RPC. Default: 30 minutes.
+	// UpdateDeviceSession RPC. Default: 30 minutes.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3499,6 +3495,10 @@ type TestSetup struct {
 	// FilesToPush: List of files to push to the device before starting the
 	// test.
 	FilesToPush []*DeviceFile `json:"filesToPush,omitempty"`
+
+	// InitialSetupApks: Optional. Initial setup APKs to install before the
+	// app under test is installed. Currently capped at 100.
+	InitialSetupApks []*Apk `json:"initialSetupApks,omitempty"`
 
 	// NetworkProfile: The network traffic profile used for running the
 	// test. Available network profiles can be queried by using the

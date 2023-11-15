@@ -1624,8 +1624,9 @@ func (s *Endpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GetRemarketingTagResponse: Deprecated. This will be removed in
-// October 2023. For more information, see the release notes:
+// GetRemarketingTagResponse: This has been sunset as of October 2023,
+// and will return an error response if called. For more information,
+// see the release notes:
 // https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
 // Response for a request to get remarketing tag.
 type GetRemarketingTagResponse struct {
@@ -7162,8 +7163,9 @@ type BuyersGetRemarketingTagCall struct {
 	header_      http.Header
 }
 
-// GetRemarketingTag: Deprecated. This will be removed in October 2023.
-// For more information, see the release notes:
+// GetRemarketingTag: This has been sunset as of October 2023, and will
+// return an error response if called. For more information, see the
+// release notes:
 // https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
 // Gets remarketing tag for a buyer. A remarketing tag is a piece of
 // JavaScript code that can be placed on a web page. When a user visits
@@ -7283,7 +7285,7 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 	}
 	return ret, nil
 	// {
-	//   "description": "Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
+	//   "description": "This has been sunset as of October 2023, and will return an error response if called. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
 	//   "flatPath": "v1/buyers/{buyersId}:getRemarketingTag",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.getRemarketingTag",
@@ -8700,8 +8702,9 @@ type BuyersUserListsGetRemarketingTagCall struct {
 	header_      http.Header
 }
 
-// GetRemarketingTag: Deprecated. This will be removed in October 2023.
-// For more information, see the release notes:
+// GetRemarketingTag: This has been sunset as of October 2023, and will
+// return an error response if called. For more information, see the
+// release notes:
 // https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api
 // Gets remarketing tag for a buyer. A remarketing tag is a piece of
 // JavaScript code that can be placed on a web page. When a user visits
@@ -8821,7 +8824,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
+	//   "description": "This has been sunset as of October 2023, and will return an error response if called. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:getRemarketingTag",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.userLists.getRemarketingTag",

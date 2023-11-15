@@ -165,6 +165,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.NetworkPolicies = NewProjectsLocationsNetworkPoliciesService(s)
 	rs.NodeTypes = NewProjectsLocationsNodeTypesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -176,6 +177,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	Global *ProjectsLocationsGlobalService
 
 	NetworkPolicies *ProjectsLocationsNetworkPoliciesService
 
@@ -190,12 +193,69 @@ type ProjectsLocationsService struct {
 	VmwareEngineNetworks *ProjectsLocationsVmwareEngineNetworksService
 }
 
+func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
+	rs := &ProjectsLocationsGlobalService{s: s}
+	rs.DnsBindPermission = NewProjectsLocationsGlobalDnsBindPermissionService(s)
+	rs.NetworkPeerings = NewProjectsLocationsGlobalNetworkPeeringsService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalService struct {
+	s *Service
+
+	DnsBindPermission *ProjectsLocationsGlobalDnsBindPermissionService
+
+	NetworkPeerings *ProjectsLocationsGlobalNetworkPeeringsService
+}
+
+func NewProjectsLocationsGlobalDnsBindPermissionService(s *Service) *ProjectsLocationsGlobalDnsBindPermissionService {
+	rs := &ProjectsLocationsGlobalDnsBindPermissionService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalDnsBindPermissionService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGlobalNetworkPeeringsService(s *Service) *ProjectsLocationsGlobalNetworkPeeringsService {
+	rs := &ProjectsLocationsGlobalNetworkPeeringsService{s: s}
+	rs.PeeringRoutes = NewProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalNetworkPeeringsService struct {
+	s *Service
+
+	PeeringRoutes *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService
+}
+
+func NewProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService(s *Service) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService {
+	rs := &ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsNetworkPoliciesService(s *Service) *ProjectsLocationsNetworkPoliciesService {
 	rs := &ProjectsLocationsNetworkPoliciesService{s: s}
+	rs.ExternalAccessRules = NewProjectsLocationsNetworkPoliciesExternalAccessRulesService(s)
 	return rs
 }
 
 type ProjectsLocationsNetworkPoliciesService struct {
+	s *Service
+
+	ExternalAccessRules *ProjectsLocationsNetworkPoliciesExternalAccessRulesService
+}
+
+func NewProjectsLocationsNetworkPoliciesExternalAccessRulesService(s *Service) *ProjectsLocationsNetworkPoliciesExternalAccessRulesService {
+	rs := &ProjectsLocationsNetworkPoliciesExternalAccessRulesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNetworkPoliciesExternalAccessRulesService struct {
 	s *Service
 }
 
@@ -220,7 +280,10 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsPrivateCloudsService(s *Service) *ProjectsLocationsPrivateCloudsService {
 	rs := &ProjectsLocationsPrivateCloudsService{s: s}
 	rs.Clusters = NewProjectsLocationsPrivateCloudsClustersService(s)
+	rs.ExternalAddresses = NewProjectsLocationsPrivateCloudsExternalAddressesService(s)
 	rs.HcxActivationKeys = NewProjectsLocationsPrivateCloudsHcxActivationKeysService(s)
+	rs.LoggingServers = NewProjectsLocationsPrivateCloudsLoggingServersService(s)
+	rs.ManagementDnsZoneBindings = NewProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService(s)
 	rs.Subnets = NewProjectsLocationsPrivateCloudsSubnetsService(s)
 	return rs
 }
@@ -230,17 +293,44 @@ type ProjectsLocationsPrivateCloudsService struct {
 
 	Clusters *ProjectsLocationsPrivateCloudsClustersService
 
+	ExternalAddresses *ProjectsLocationsPrivateCloudsExternalAddressesService
+
 	HcxActivationKeys *ProjectsLocationsPrivateCloudsHcxActivationKeysService
+
+	LoggingServers *ProjectsLocationsPrivateCloudsLoggingServersService
+
+	ManagementDnsZoneBindings *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService
 
 	Subnets *ProjectsLocationsPrivateCloudsSubnetsService
 }
 
 func NewProjectsLocationsPrivateCloudsClustersService(s *Service) *ProjectsLocationsPrivateCloudsClustersService {
 	rs := &ProjectsLocationsPrivateCloudsClustersService{s: s}
+	rs.Nodes = NewProjectsLocationsPrivateCloudsClustersNodesService(s)
 	return rs
 }
 
 type ProjectsLocationsPrivateCloudsClustersService struct {
+	s *Service
+
+	Nodes *ProjectsLocationsPrivateCloudsClustersNodesService
+}
+
+func NewProjectsLocationsPrivateCloudsClustersNodesService(s *Service) *ProjectsLocationsPrivateCloudsClustersNodesService {
+	rs := &ProjectsLocationsPrivateCloudsClustersNodesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPrivateCloudsClustersNodesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPrivateCloudsExternalAddressesService(s *Service) *ProjectsLocationsPrivateCloudsExternalAddressesService {
+	rs := &ProjectsLocationsPrivateCloudsExternalAddressesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPrivateCloudsExternalAddressesService struct {
 	s *Service
 }
 
@@ -250,6 +340,24 @@ func NewProjectsLocationsPrivateCloudsHcxActivationKeysService(s *Service) *Proj
 }
 
 type ProjectsLocationsPrivateCloudsHcxActivationKeysService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPrivateCloudsLoggingServersService(s *Service) *ProjectsLocationsPrivateCloudsLoggingServersService {
+	rs := &ProjectsLocationsPrivateCloudsLoggingServersService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPrivateCloudsLoggingServersService struct {
+	s *Service
+}
+
+func NewProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService(s *Service) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService {
+	rs := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService struct {
 	s *Service
 }
 
@@ -503,6 +611,11 @@ type Cluster struct {
 	// failed node is getting replaced.
 	State string `json:"state,omitempty"`
 
+	// StretchedClusterConfig: Optional. Configuration of a stretched
+	// cluster. Required for clusters that belong to a STRETCHED private
+	// cloud.
+	StretchedClusterConfig *StretchedClusterConfig `json:"stretchedClusterConfig,omitempty"`
+
 	// Uid: Output only. System-generated unique identifier for the
 	// resource.
 	Uid string `json:"uid,omitempty"`
@@ -568,6 +681,98 @@ type Credentials struct {
 
 func (s *Credentials) MarshalJSON() ([]byte, error) {
 	type NoMethod Credentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsBindPermission: DnsBindPermission resource that contains the
+// accounts having the consumer DNS bind permission on the corresponding
+// intranet VPC of the consumer project.
+type DnsBindPermission struct {
+	// Name: Required. Output only. The name of the resource which stores
+	// the users/service accounts having the permission to bind to the
+	// corresponding intranet VPC of the consumer project. DnsBindPermission
+	// is a global resource. Resource names are schemeless URIs that follow
+	// the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/global/dnsBindPermission`
+	Name string `json:"name,omitempty"`
+
+	// Principals: Output only. Users/Service accounts which have access for
+	// binding on the intranet VPC project corresponding to the consumer
+	// project.
+	Principals []*Principal `json:"principals,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsBindPermission) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsBindPermission
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DnsForwarding: DNS forwarding config. This config defines a list of
+// domain to name server mappings, and is attached to the private cloud
+// for custom domain resolution.
+type DnsForwarding struct {
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForwardingRules: Required. List of domain mappings to configure
+	ForwardingRules []*ForwardingRule `json:"forwardingRules,omitempty"`
+
+	// Name: Output only. The resource name of this DNS profile. Resource
+	// names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/dn
+	// sForwarding`
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DnsForwarding) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsForwarding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -639,6 +844,311 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalAccessRule: External access firewall rules for filtering
+// incoming traffic destined to `ExternalAddress` resources.
+type ExternalAccessRule struct {
+	// Action: The action that the external access rule performs.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Defaults to allow.
+	//   "ALLOW" - Allows connections that match the other specified
+	// components.
+	//   "DENY" - Blocks connections that match the other specified
+	// components.
+	Action string `json:"action,omitempty"`
+
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: User-provided description for this external access rule.
+	Description string `json:"description,omitempty"`
+
+	// DestinationIpRanges: If destination ranges are specified, the
+	// external access rule applies only to the traffic that has a
+	// destination IP address in these ranges. The specified IP addresses
+	// must have reserved external IP addresses in the scope of the parent
+	// network policy. To match all external IP addresses in the scope of
+	// the parent network policy, specify `0.0.0.0/0`. To match a specific
+	// external IP address, specify it using the `IpRange.external_address`
+	// property.
+	DestinationIpRanges []*IpRange `json:"destinationIpRanges,omitempty"`
+
+	// DestinationPorts: A list of destination ports to which the external
+	// access rule applies. This field is only applicable for the UDP or TCP
+	// protocol. Each entry must be either an integer or a range. For
+	// example: `["22"]`, `["80","443"]`, or `["12345-12349"]`. To match all
+	// destination ports, specify `["0-65535"]`.
+	DestinationPorts []string `json:"destinationPorts,omitempty"`
+
+	// IpProtocol: The IP protocol to which the external access rule
+	// applies. This value can be one of the following three protocol
+	// strings (not case-sensitive): `tcp`, `udp`, or `icmp`.
+	IpProtocol string `json:"ipProtocol,omitempty"`
+
+	// Name: Output only. The resource name of this external access rule.
+	// Resource names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1/networkPolicies/my-policy/e
+	// xternalAccessRules/my-rule`
+	Name string `json:"name,omitempty"`
+
+	// Priority: External access rule priority, which determines the
+	// external access rule to use when multiple rules apply. If multiple
+	// rules have the same priority, their ordering is non-deterministic. If
+	// specific ordering is required, assign unique priorities to enforce
+	// such ordering. The external access rule priority is an integer from
+	// 100 to 4096, both inclusive. Lower integers indicate higher
+	// precedence. For example, a rule with priority `100` has higher
+	// precedence than a rule with priority `101`.
+	Priority int64 `json:"priority,omitempty"`
+
+	// SourceIpRanges: If source ranges are specified, the external access
+	// rule applies only to traffic that has a source IP address in these
+	// ranges. These ranges can either be expressed in the CIDR format or as
+	// an IP address. As only inbound rules are supported, `ExternalAddress`
+	// resources cannot be the source IP addresses of an external access
+	// rule. To match all source addresses, specify `0.0.0.0/0`.
+	SourceIpRanges []*IpRange `json:"sourceIpRanges,omitempty"`
+
+	// SourcePorts: A list of source ports to which the external access rule
+	// applies. This field is only applicable for the UDP or TCP protocol.
+	// Each entry must be either an integer or a range. For example:
+	// `["22"]`, `["80","443"]`, or `["12345-12349"]`. To match all source
+	// ports, specify `["0-65535"]`.
+	SourcePorts []string `json:"sourcePorts,omitempty"`
+
+	// State: Output only. The state of the resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
+	// state is omitted.
+	//   "ACTIVE" - The rule is ready.
+	//   "CREATING" - The rule is being created.
+	//   "UPDATING" - The rule is being updated.
+	//   "DELETING" - The rule is being deleted.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. System-generated unique identifier for the
+	// resource.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalAccessRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalAccessRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalAddress: Represents an allocated external IP address and its
+// corresponding internal IP address in a private cloud.
+type ExternalAddress struct {
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: User-provided description for this resource.
+	Description string `json:"description,omitempty"`
+
+	// ExternalIp: Output only. The external IP address of a workload VM.
+	ExternalIp string `json:"externalIp,omitempty"`
+
+	// InternalIp: The internal IP address of a workload VM.
+	InternalIp string `json:"internalIp,omitempty"`
+
+	// Name: Output only. The resource name of this external IP address.
+	// Resource names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/ex
+	// ternalAddresses/my-address`
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The state of the resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be
+	// used.
+	//   "ACTIVE" - The address is ready.
+	//   "CREATING" - The address is being created.
+	//   "UPDATING" - The address is being updated.
+	//   "DELETING" - The address is being deleted.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. System-generated unique identifier for the
+	// resource.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalAddress) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FetchNetworkPolicyExternalAddressesResponse: Response message for
+// VmwareEngine.FetchNetworkPolicyExternalAddresses
+type FetchNetworkPolicyExternalAddressesResponse struct {
+	// ExternalAddresses: A list of external IP addresses assigned to VMware
+	// workload VMs within the scope of the given network policy.
+	ExternalAddresses []*ExternalAddress `json:"externalAddresses,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalAddresses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalAddresses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FetchNetworkPolicyExternalAddressesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchNetworkPolicyExternalAddressesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ForwardingRule: A forwarding rule is a mapping of a `domain` to
+// `name_servers`. This mapping allows VMware Engine to resolve domains
+// for attached private clouds by forwarding DNS requests for a given
+// domain to the specified nameservers.
+type ForwardingRule struct {
+	// Domain: Required. Domain used to resolve a `name_servers` list.
+	Domain string `json:"domain,omitempty"`
+
+	// NameServers: Required. List of DNS servers to use for domain
+	// resolution
+	NameServers []string `json:"nameServers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ForwardingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ForwardingRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GrantDnsBindPermissionRequest: Request message for
+// VmwareEngine.GrantDnsBindPermission
+type GrantDnsBindPermissionRequest struct {
+	// Principal: Required. The consumer provided user/service account which
+	// needs to be granted permission to bind with the intranet VPC
+	// corresponding to the consumer project.
+	Principal *Principal `json:"principal,omitempty"`
+
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check if original operation with the same request ID was
+	// received, and if so, will ignore the second request. This prevents
+	// clients from accidentally creating duplicate commitments. The request
+	// ID must be a valid UUID with the exception that zero UUID is not
+	// supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Principal") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GrantDnsBindPermissionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GrantDnsBindPermissionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -746,6 +1256,49 @@ func (s *HcxActivationKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IpRange: An IP range provided in any one of the supported formats.
+type IpRange struct {
+	// ExternalAddress: The name of an `ExternalAddress` resource. The
+	// external address must have been reserved in the scope of this
+	// external access rule's parent network policy. Provide the external
+	// address name in the form of
+	// `projects/{project}/locations/{location}/privateClouds/{private_cloud}
+	// /externalAddresses/{external_address}`. For example:
+	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/ex
+	// ternalAddresses/my-address`.
+	ExternalAddress string `json:"externalAddress,omitempty"`
+
+	// IpAddress: A single IP address. For example: `10.0.0.5`.
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// IpAddressRange: An IP address range in the CIDR format. For example:
+	// `10.0.0.0/24`.
+	IpAddressRange string `json:"ipAddressRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IpRange) MarshalJSON() ([]byte, error) {
+	type NoMethod IpRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListClustersResponse: Response message for VmwareEngine.ListClusters
 type ListClustersResponse struct {
 	// Clusters: A list of private cloud clusters.
@@ -783,6 +1336,92 @@ type ListClustersResponse struct {
 
 func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClustersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListExternalAccessRulesResponse: Response message for
+// VmwareEngine.ListExternalAccessRules
+type ListExternalAccessRulesResponse struct {
+	// ExternalAccessRules: A list of external access firewall rules.
+	ExternalAccessRules []*ExternalAccessRule `json:"externalAccessRules,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached when making an
+	// aggregated query using wildcards.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalAccessRules")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalAccessRules") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListExternalAccessRulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExternalAccessRulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListExternalAddressesResponse: Response message for
+// VmwareEngine.ListExternalAddresses
+type ListExternalAddressesResponse struct {
+	// ExternalAddresses: A list of external IP addresses.
+	ExternalAddresses []*ExternalAddress `json:"externalAddresses,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached when making an
+	// aggregated query using wildcards.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalAddresses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalAddresses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListExternalAddressesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExternalAddressesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -863,6 +1502,135 @@ type ListLocationsResponse struct {
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListLoggingServersResponse: Response message for
+// VmwareEngine.ListLoggingServers
+type ListLoggingServersResponse struct {
+	// LoggingServers: A list of Logging Servers.
+	LoggingServers []*LoggingServer `json:"loggingServers,omitempty"`
+
+	// NextPageToken: A token, which can be send as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached when making an
+	// aggregated query using wildcards.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LoggingServers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LoggingServers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLoggingServersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLoggingServersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListManagementDnsZoneBindingsResponse: Response message for
+// VmwareEngine.ListManagementDnsZoneBindings
+type ListManagementDnsZoneBindingsResponse struct {
+	// ManagementDnsZoneBindings: A list of management DNS zone bindings.
+	ManagementDnsZoneBindings []*ManagementDnsZoneBinding `json:"managementDnsZoneBindings,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached when making an
+	// aggregated query using wildcards.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagementDnsZoneBindings") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ManagementDnsZoneBindings") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListManagementDnsZoneBindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListManagementDnsZoneBindingsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListNetworkPeeringsResponse: Response message for
+// VmwareEngine.ListNetworkPeerings
+type ListNetworkPeeringsResponse struct {
+	// NetworkPeerings: A list of network peerings.
+	NetworkPeerings []*NetworkPeering `json:"networkPeerings,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Unreachable resources.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkPeerings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkPeerings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListNetworkPeeringsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListNetworkPeeringsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -952,6 +1720,43 @@ func (s *ListNodeTypesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListNodesResponse: Response message for VmwareEngine.ListNodes
+type ListNodesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Nodes: The nodes.
+	Nodes []*Node `json:"nodes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListNodesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListNodesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -985,6 +1790,44 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPeeringRoutesResponse: Response message for
+// VmwareEngine.ListPeeringRoutes
+type ListPeeringRoutesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PeeringRoutes: A list of peering routes.
+	PeeringRoutes []*PeeringRoute `json:"peeringRoutes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPeeringRoutesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPeeringRoutesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1242,6 +2085,116 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LocationMetadata: VmwareEngine specific metadata for the given
+// google.cloud.location.Location. It is returned as a content of the
+// `google.cloud.location.Location.metadata` field.
+type LocationMetadata struct {
+	// Capabilities: Output only. Capabilities of this location.
+	//
+	// Possible values:
+	//   "CAPABILITY_UNSPECIFIED" - The default value. This value is used if
+	// the capability is omitted or unknown.
+	//   "STRETCHED_CLUSTERS" - Stretch clusters are supported in this
+	// location.
+	Capabilities []string `json:"capabilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Capabilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Capabilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LoggingServer: Logging server to receive vCenter or ESXi logs.
+type LoggingServer struct {
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Hostname: Required. Fully-qualified domain name (FQDN) or IP Address
+	// of the logging server.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Name: Output only. The resource name of this logging server. Resource
+	// names are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/lo
+	// ggingServers/my-logging-server`
+	Name string `json:"name,omitempty"`
+
+	// Port: Required. Port number at which the logging server receives
+	// logs.
+	Port int64 `json:"port,omitempty"`
+
+	// Protocol: Required. Protocol used by vCenter to send logs to a
+	// logging server.
+	//
+	// Possible values:
+	//   "PROTOCOL_UNSPECIFIED" - Unspecified communications protocol. This
+	// is the default value.
+	//   "UDP" - UDP
+	//   "TCP" - TCP
+	Protocol string `json:"protocol,omitempty"`
+
+	// SourceType: Required. The type of component that produces logs that
+	// will be forwarded to this logging server.
+	//
+	// Possible values:
+	//   "SOURCE_TYPE_UNSPECIFIED" - The default value. This value should
+	// never be used.
+	//   "ESXI" - Logs produced by ESXI hosts
+	//   "VCSA" - Logs produced by vCenter server
+	SourceType string `json:"sourceType,omitempty"`
+
+	// Uid: Output only. System-generated unique identifier for the
+	// resource.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoggingServer) MarshalJSON() ([]byte, error) {
+	type NoMethod LoggingServer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ManagementCluster: Management cluster configuration.
 type ManagementCluster struct {
 	// ClusterId: Required. The user-provided identifier of the new
@@ -1256,6 +2209,10 @@ type ManagementCluster struct {
 	// cluster, where the key is canonical identifier of the node type
 	// (corresponds to the `NodeType`).
 	NodeTypeConfigs map[string]NodeTypeConfig `json:"nodeTypeConfigs,omitempty"`
+
+	// StretchedClusterConfig: Optional. Configuration of a stretched
+	// cluster. Required for STRETCHED private clouds.
+	StretchedClusterConfig *StretchedClusterConfig `json:"stretchedClusterConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterId") to
 	// unconditionally include in API requests. By default, fields with
@@ -1280,9 +2237,94 @@ func (s *ManagementCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ManagementDnsZoneBinding: Represents a binding between a network and
+// the management DNS zone. A management DNS zone is the Cloud DNS
+// cross-project binding zone that VMware Engine creates for each
+// private cloud. It contains FQDNs and corresponding IP addresses for
+// the private cloud's ESXi hosts and management VM appliances like
+// vCenter and NSX Manager.
+type ManagementDnsZoneBinding struct {
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: User-provided description for this resource.
+	Description string `json:"description,omitempty"`
+
+	// Name: Output only. The resource name of this binding. Resource names
+	// are schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/ma
+	// nagementDnsZoneBindings/my-management-dns-zone-binding`
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The state of the resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be
+	// used.
+	//   "ACTIVE" - The binding is ready.
+	//   "CREATING" - The binding is being created.
+	//   "UPDATING" - The binding is being updated.
+	//   "DELETING" - The binding is being deleted.
+	//   "FAILED" - The binding has failed.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. System-generated unique identifier for the
+	// resource.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VmwareEngineNetwork: Network to bind is a VMware Engine network.
+	// Specify the name in the following form for VMware engine network:
+	// `projects/{project}/locations/global/vmwareEngineNetworks/{vmware_engi
+	// ne_network_id}`. `{project}` can either be a project number or a
+	// project ID.
+	VmwareEngineNetwork string `json:"vmwareEngineNetwork,omitempty"`
+
+	// VpcNetwork: Network to bind is a standard consumer VPC. Specify the
+	// name in the following form for consumer VPC network:
+	// `projects/{project}/global/networks/{network_id}`. `{project}` can
+	// either be a project number or a project ID.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagementDnsZoneBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagementDnsZoneBinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkConfig: Network configuration in the consumer project with
 // which the peering has to be done.
 type NetworkConfig struct {
+	// DnsServerIp: Output only. DNS Server IP of the Private Cloud. All DNS
+	// queries can be forwarded to this address for name resolution of
+	// Private Cloud's management entities like vCenter, NSX-T Manager and
+	// ESXi hosts.
+	DnsServerIp string `json:"dnsServerIp,omitempty"`
+
 	// ManagementCidr: Required. Management CIDR used by VMware management
 	// appliances.
 	ManagementCidr string `json:"managementCidr,omitempty"`
@@ -1311,7 +2353,7 @@ type NetworkConfig struct {
 	// vmware_engine_network_id}`
 	VmwareEngineNetworkCanonical string `json:"vmwareEngineNetworkCanonical,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ManagementCidr") to
+	// ForceSendFields is a list of field names (e.g. "DnsServerIp") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1319,18 +2361,159 @@ type NetworkConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ManagementCidr") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DnsServerIp") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NetworkPeering: Details of a network peering.
+type NetworkPeering struct {
+	// CreateTime: Output only. Creation time of this resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. User-provided description for this network
+	// peering.
+	Description string `json:"description,omitempty"`
+
+	// ExchangeSubnetRoutes: Optional. True if full mesh connectivity is
+	// created and managed automatically between peered networks; false
+	// otherwise. Currently this field is always true because Google Compute
+	// Engine automatically creates and manages subnetwork routes between
+	// two VPC networks when peering state is 'ACTIVE'.
+	ExchangeSubnetRoutes bool `json:"exchangeSubnetRoutes,omitempty"`
+
+	// ExportCustomRoutes: Optional. True if custom routes are exported to
+	// the peered network; false otherwise. The default value is true.
+	ExportCustomRoutes bool `json:"exportCustomRoutes,omitempty"`
+
+	// ExportCustomRoutesWithPublicIp: Optional. True if all subnet routes
+	// with a public IP address range are exported; false otherwise. The
+	// default value is true. IPv4 special-use ranges
+	// (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always
+	// exported to peers and are not controlled by this field.
+	ExportCustomRoutesWithPublicIp bool `json:"exportCustomRoutesWithPublicIp,omitempty"`
+
+	// ImportCustomRoutes: Optional. True if custom routes are imported from
+	// the peered network; false otherwise. The default value is true.
+	ImportCustomRoutes bool `json:"importCustomRoutes,omitempty"`
+
+	// ImportCustomRoutesWithPublicIp: Optional. True if all subnet routes
+	// with public IP address range are imported; false otherwise. The
+	// default value is true. IPv4 special-use ranges
+	// (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always
+	// imported to peers and are not controlled by this field.
+	ImportCustomRoutesWithPublicIp bool `json:"importCustomRoutesWithPublicIp,omitempty"`
+
+	// Name: Output only. The resource name of the network peering. Resource
+	// names are scheme-less URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// `projects/my-project/locations/global/networkPeerings/my-peering`
+	Name string `json:"name,omitempty"`
+
+	// PeerMtu: Optional. Maximum transmission unit (MTU) in bytes. The
+	// default value is `1500`. If a value of `0` is provided for this
+	// field, VMware Engine uses the default value instead.
+	PeerMtu int64 `json:"peerMtu,omitempty"`
+
+	// PeerNetwork: Required. The relative resource name of the network to
+	// peer with a standard VMware Engine network. The provided network can
+	// be a consumer VPC network or another standard VMware Engine network.
+	// If the `peer_network_type` is VMWARE_ENGINE_NETWORK, specify the name
+	// in the form:
+	// `projects/{project}/locations/global/vmwareEngineNetworks/{vmware_engi
+	// ne_network_id}`. Otherwise specify the name in the form:
+	// `projects/{project}/global/networks/{network_id}`, where `{project}`
+	// can either be a project number or a project ID.
+	PeerNetwork string `json:"peerNetwork,omitempty"`
+
+	// PeerNetworkType: Required. The type of the network to peer with the
+	// VMware Engine network.
+	//
+	// Possible values:
+	//   "PEER_NETWORK_TYPE_UNSPECIFIED" - Unspecified
+	//   "STANDARD" - Peering connection used for connecting to another VPC
+	// network established by the same user. For example, a peering
+	// connection to another VPC network in the same project or to an
+	// on-premises network.
+	//   "VMWARE_ENGINE_NETWORK" - Peering connection used for connecting to
+	// another VMware Engine network.
+	//   "PRIVATE_SERVICES_ACCESS" - Peering connection used for
+	// establishing [private services
+	// access](https://cloud.google.com/vpc/docs/private-services-access).
+	//   "NETAPP_CLOUD_VOLUMES" - Peering connection used for connecting to
+	// NetApp Cloud Volumes.
+	//   "THIRD_PARTY_SERVICE" - Peering connection used for connecting to
+	// third-party services. Most third-party services require manual setup
+	// of reverse peering on the VPC network associated with the third-party
+	// service.
+	//   "DELL_POWERSCALE" - Peering connection used for connecting to Dell
+	// PowerScale Filers
+	PeerNetworkType string `json:"peerNetworkType,omitempty"`
+
+	// State: Output only. State of the network peering. This field has a
+	// value of 'ACTIVE' when there's a matching configuration in the peer
+	// network. New values may be added to this enum when appropriate.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified network peering state. This is
+	// the default value.
+	//   "INACTIVE" - The peering is not active.
+	//   "ACTIVE" - The peering is active.
+	//   "CREATING" - The peering is being created.
+	//   "DELETING" - The peering is being deleted.
+	State string `json:"state,omitempty"`
+
+	// StateDetails: Output only. Output Only. Details about the current
+	// state of the network peering.
+	StateDetails string `json:"stateDetails,omitempty"`
+
+	// Uid: Output only. System-generated unique identifier for the
+	// resource.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Last update time of this resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VmwareEngineNetwork: Required. The relative resource name of the
+	// VMware Engine network. Specify the name in the following form:
+	// `projects/{project}/locations/{location}/vmwareEngineNetworks/{vmware_
+	// engine_network_id}` where `{project}` can either be a project number
+	// or a project ID.
+	VmwareEngineNetwork string `json:"vmwareEngineNetwork,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkPeering) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkPeering
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1463,11 +2646,85 @@ func (s *NetworkService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Node: Node in a cluster.
+type Node struct {
+	// CustomCoreCount: Output only. Customized number of cores
+	CustomCoreCount int64 `json:"customCoreCount,omitempty,string"`
+
+	// Fqdn: Output only. Fully qualified domain name of the node.
+	Fqdn string `json:"fqdn,omitempty"`
+
+	// InternalIp: Output only. Internal IP address of the node.
+	InternalIp string `json:"internalIp,omitempty"`
+
+	// Name: Output only. The resource name of this node. Resource names are
+	// schemeless URIs that follow the conventions in
+	// https://cloud.google.com/apis/design/resource_names. For example:
+	// projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clu
+	// sters/my-cluster/nodes/my-node
+	Name string `json:"name,omitempty"`
+
+	// NodeTypeId: Output only. The canonical identifier of the node type
+	// (corresponds to the `NodeType`). For example: standard-72.
+	NodeTypeId string `json:"nodeTypeId,omitempty"`
+
+	// State: Output only. The state of the appliance.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value should never be
+	// used.
+	//   "ACTIVE" - Node is operational and can be used by the user.
+	//   "CREATING" - Node is being provisioned.
+	//   "FAILED" - Node is in a failed state.
+	//   "UPGRADING" - Node is undergoing maintenance, e.g.: during private
+	// cloud upgrade.
+	State string `json:"state,omitempty"`
+
+	// Version: Output only. The version number of the VMware ESXi
+	// management component in this cluster.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomCoreCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomCoreCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Node) MarshalJSON() ([]byte, error) {
+	type NoMethod Node
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeType: Describes node type.
 type NodeType struct {
 	// AvailableCustomCoreCounts: Output only. List of possible values of
 	// custom core count.
 	AvailableCustomCoreCounts []int64 `json:"availableCustomCoreCounts,omitempty"`
+
+	// Capabilities: Output only. Capabilities of this node type.
+	//
+	// Possible values:
+	//   "CAPABILITY_UNSPECIFIED" - The default value. This value is used if
+	// the capability is omitted or unknown.
+	//   "STRETCHED_CLUSTERS" - This node type supports stretch clusters.
+	Capabilities []string `json:"capabilities,omitempty"`
 
 	// DiskSizeGb: Output only. The amount of storage available, defined in
 	// GB.
@@ -1900,6 +3157,40 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Principal: Users/Service accounts which have access for DNS binding
+// on the intranet VPC corresponding to the consumer project.
+type Principal struct {
+	// ServiceAccount: The service account which needs to be granted the
+	// permission.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// User: The user who needs to be granted permission.
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServiceAccount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Principal) MarshalJSON() ([]byte, error) {
+	type NoMethod Principal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PrivateCloud: Represents a private cloud resource. Private clouds of
 // type `STANDARD` and `TIME_LIMITED` are zonal resources, `STRETCHED`
 // private clouds are regional.
@@ -1966,6 +3257,8 @@ type PrivateCloud struct {
 	// can have only 1 node and has limited life span. Will be deleted after
 	// defined period of time, can be converted into standard private cloud
 	// by expanding it up to 3 or more nodes.
+	//   "STRETCHED" - Stretched private cloud is a regional resource with
+	// redundancy, with a minimum of 6 nodes, nodes count has to be even.
 	Type string `json:"type,omitempty"`
 
 	// Uid: Output only. System-generated unique identifier for the
@@ -2143,6 +3436,46 @@ func (s *PrivateConnection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RepairManagementDnsZoneBindingRequest: Request message for
+// VmwareEngine.RepairManagementDnsZoneBindings
+type RepairManagementDnsZoneBindingRequest struct {
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check if the original operation with the same request ID
+	// was received, and if so, will ignore the second request. This
+	// prevents clients from accidentally creating duplicate commitments.
+	// The request ID must be a valid UUID with the exception that zero UUID
+	// is not supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepairManagementDnsZoneBindingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RepairManagementDnsZoneBindingRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResetNsxCredentialsRequest: Request message for
 // VmwareEngine.ResetNsxCredentials
 type ResetNsxCredentialsRequest struct {
@@ -2200,6 +3533,14 @@ type ResetVcenterCredentialsRequest struct {
 	// supported (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
 
+	// Username: Optional. The username of the user to be to reset the
+	// credentials. The default value of this field is CloudOwner@gve.local.
+	// The provided value should be one of the following:
+	// solution-user-01@gve.local, solution-user-02@gve.local,
+	// solution-user-03@gve.local, solution-user-04@gve.local,
+	// solution-user-05@gve.local, zertoadmin@gve.local.
+	Username string `json:"username,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2219,6 +3560,51 @@ type ResetVcenterCredentialsRequest struct {
 
 func (s *ResetVcenterCredentialsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ResetVcenterCredentialsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevokeDnsBindPermissionRequest: Request message for
+// VmwareEngine.RevokeDnsBindPermission
+type RevokeDnsBindPermissionRequest struct {
+	// Principal: Required. The consumer provided user/service account which
+	// needs to be granted permission to bind with the intranet VPC
+	// corresponding to the consumer project.
+	Principal *Principal `json:"principal,omitempty"`
+
+	// RequestId: Optional. A request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server
+	// will know to ignore the request if it has already been completed. The
+	// server guarantees that a request doesn't result in creation of
+	// duplicate commitments for at least 60 minutes. For example, consider
+	// a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the
+	// server can check if original operation with the same request ID was
+	// received, and if so, will ignore the second request. This prevents
+	// clients from accidentally creating duplicate commitments. The request
+	// ID must be a valid UUID with the exception that zero UUID is not
+	// supported (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Principal") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevokeDnsBindPermissionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RevokeDnsBindPermissionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2304,6 +3690,46 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StretchedClusterConfig: Configuration of a stretched cluster.
+type StretchedClusterConfig struct {
+	// PreferredLocation: Required. Zone that will remain operational when
+	// connection between the two zones is lost. Specify the resource name
+	// of a zone that belongs to the region of the private cloud. For
+	// example: `projects/{project}/locations/europe-west3-a` where
+	// `{project}` can either be a project number or a project ID.
+	PreferredLocation string `json:"preferredLocation,omitempty"`
+
+	// SecondaryLocation: Required. Additional zone for a higher level of
+	// availability and load balancing. Specify the resource name of a zone
+	// that belongs to the region of the private cloud. For example:
+	// `projects/{project}/locations/europe-west3-b` where `{project}` can
+	// either be a project number or a project ID.
+	SecondaryLocation string `json:"secondaryLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PreferredLocation")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PreferredLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StretchedClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StretchedClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Subnet: Subnet in a private cloud. Either `management` subnets (such
 // as vMotion) that are read-only, or `userDefined`, which can also be
 // updated.
@@ -2341,6 +3767,10 @@ type Subnet struct {
 	// Type: Output only. The type of the subnet. For example "management"
 	// or "userDefined".
 	Type string `json:"type,omitempty"`
+
+	// VlanId: Output only. VLAN ID of the VLAN on which the subnet is
+	// configured
+	VlanId int64 `json:"vlanId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2550,6 +3980,8 @@ type VmwareEngineNetwork struct {
 	//   "LEGACY" - Network type used by private clouds created in projects
 	// without a network of type `STANDARD`. This network type is no longer
 	// used for new VMware Engine private cloud deployments.
+	//   "STANDARD" - Standard network type used for private cloud
+	// connectivity.
 	Type string `json:"type,omitempty"`
 
 	// Uid: Output only. System-generated unique identifier for the
@@ -2993,6 +4425,1606 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "vmwareengine.projects.locations.global.getDnsBindPermission":
+
+type ProjectsLocationsGlobalGetDnsBindPermissionCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDnsBindPermission: Gets all the principals having bind permission
+// on the intranet VPC associated with the consumer project granted by
+// the Grant API.
+//
+//   - name: The name of the resource which stores the users/service
+//     accounts having the permission to bind to the corresponding
+//     intranet VPC of the consumer project. DnsBindPermission is a global
+//     resource. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/global/dnsBindPermission`.
+func (r *ProjectsLocationsGlobalService) GetDnsBindPermission(name string) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
+	c := &ProjectsLocationsGlobalGetDnsBindPermissionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Context(ctx context.Context) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.getDnsBindPermission" call.
+// Exactly one of *DnsBindPermission or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DnsBindPermission.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Do(opts ...googleapi.CallOption) (*DnsBindPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DnsBindPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets all the principals having bind permission on the intranet VPC associated with the consumer project granted by the Grant API.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/dnsBindPermission",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.global.getDnsBindPermission",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/dnsBindPermission$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "DnsBindPermission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.dnsBindPermission.grant":
+
+type ProjectsLocationsGlobalDnsBindPermissionGrantCall struct {
+	s                             *Service
+	name                          string
+	grantdnsbindpermissionrequest *GrantDnsBindPermissionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Grant: Grants the bind permission to the customer provided
+// principal(user / service account) to bind their DNS zone with the
+// intranet VPC associated with the project.
+//
+//   - name: The name of the resource which stores the users/service
+//     accounts having the permission to bind to the corresponding
+//     intranet VPC of the consumer project. DnsBindPermission is a global
+//     resource. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/global/dnsBindPermission`.
+func (r *ProjectsLocationsGlobalDnsBindPermissionService) Grant(name string, grantdnsbindpermissionrequest *GrantDnsBindPermissionRequest) *ProjectsLocationsGlobalDnsBindPermissionGrantCall {
+	c := &ProjectsLocationsGlobalDnsBindPermissionGrantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.grantdnsbindpermissionrequest = grantdnsbindpermissionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDnsBindPermissionGrantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Context(ctx context.Context) *ProjectsLocationsGlobalDnsBindPermissionGrantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.grantdnsbindpermissionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:grant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.dnsBindPermission.grant" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Grants the bind permission to the customer provided principal(user / service account) to bind their DNS zone with the intranet VPC associated with the project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/dnsBindPermission:grant",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.global.dnsBindPermission.grant",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/dnsBindPermission$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:grant",
+	//   "request": {
+	//     "$ref": "GrantDnsBindPermissionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.dnsBindPermission.revoke":
+
+type ProjectsLocationsGlobalDnsBindPermissionRevokeCall struct {
+	s                              *Service
+	name                           string
+	revokednsbindpermissionrequest *RevokeDnsBindPermissionRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Revoke: Revokes the bind permission from the customer provided
+// principal(user / service account) on the intranet VPC associated with
+// the consumer project.
+//
+//   - name: The name of the resource which stores the users/service
+//     accounts having the permission to bind to the corresponding
+//     intranet VPC of the consumer project. DnsBindPermission is a global
+//     resource. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/global/dnsBindPermission`.
+func (r *ProjectsLocationsGlobalDnsBindPermissionService) Revoke(name string, revokednsbindpermissionrequest *RevokeDnsBindPermissionRequest) *ProjectsLocationsGlobalDnsBindPermissionRevokeCall {
+	c := &ProjectsLocationsGlobalDnsBindPermissionRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.revokednsbindpermissionrequest = revokednsbindpermissionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDnsBindPermissionRevokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Context(ctx context.Context) *ProjectsLocationsGlobalDnsBindPermissionRevokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revokednsbindpermissionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:revoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.dnsBindPermission.revoke" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revokes the bind permission from the customer provided principal(user / service account) on the intranet VPC associated with the consumer project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/dnsBindPermission:revoke",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.global.dnsBindPermission.revoke",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/dnsBindPermission$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:revoke",
+	//   "request": {
+	//     "$ref": "RevokeDnsBindPermissionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.networkPeerings.create":
+
+type ProjectsLocationsGlobalNetworkPeeringsCreateCall struct {
+	s              *Service
+	parent         string
+	networkpeering *NetworkPeering
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new network peering between the peer network and
+// VMware Engine network provided in a `NetworkPeering` resource.
+//
+//   - parent: The resource name of the location to create the new network
+//     peering in. This value is always `global`, because `NetworkPeering`
+//     is a global resource. Resource names are schemeless URIs that
+//     follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/global`.
+func (r *ProjectsLocationsGlobalNetworkPeeringsService) Create(parent string, networkpeering *NetworkPeering) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+	c := &ProjectsLocationsGlobalNetworkPeeringsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.networkpeering = networkpeering
+	return c
+}
+
+// NetworkPeeringId sets the optional parameter "networkPeeringId":
+// Required. The user-provided identifier of the new `NetworkPeering`.
+// This identifier must be unique among `NetworkPeering` resources
+// within the parent and becomes the final token in the name URI. The
+// identifier must meet the following requirements: * Only contains 1-63
+// alphanumeric characters and hyphens * Begins with an alphabetical
+// character * Ends with a non-hyphen character * Not formatted as a
+// UUID * Complies with RFC 1034
+// (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) NetworkPeeringId(networkPeeringId string) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+	c.urlParams_.Set("networkPeeringId", networkPeeringId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.networkpeering)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/networkPeerings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.networkPeerings.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new network peering between the peer network and VMware Engine network provided in a `NetworkPeering` resource.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.global.networkPeerings.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "networkPeeringId": {
+	//       "description": "Required. The user-provided identifier of the new `NetworkPeering`. This identifier must be unique among `NetworkPeering` resources within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the location to create the new network peering in. This value is always `global`, because `NetworkPeering` is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/networkPeerings",
+	//   "request": {
+	//     "$ref": "NetworkPeering"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.networkPeerings.delete":
+
+type ProjectsLocationsGlobalNetworkPeeringsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a `NetworkPeering` resource. When a network peering
+// is deleted for a VMware Engine network, the peer network becomes
+// inaccessible to that VMware Engine network.
+//
+//   - name: The resource name of the network peering to be deleted.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/global/networkPeerings/my-peering`.
+func (r *ProjectsLocationsGlobalNetworkPeeringsService) Delete(name string) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+	c := &ProjectsLocationsGlobalNetworkPeeringsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.networkPeerings.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a `NetworkPeering` resource. When a network peering is deleted for a VMware Engine network, the peer network becomes inaccessible to that VMware Engine network.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "vmwareengine.projects.locations.global.networkPeerings.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the network peering to be deleted. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.networkPeerings.get":
+
+type ProjectsLocationsGlobalNetworkPeeringsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a `NetworkPeering` resource by its resource name. The
+// resource contains details of the network peering, such as peered
+// networks, import and export custom route configurations, and peering
+// state.
+//
+//   - name: The resource name of the network peering to retrieve.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/global/networkPeerings/my-peering`.
+func (r *ProjectsLocationsGlobalNetworkPeeringsService) Get(name string) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+	c := &ProjectsLocationsGlobalNetworkPeeringsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.networkPeerings.get" call.
+// Exactly one of *NetworkPeering or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *NetworkPeering.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Do(opts ...googleapi.CallOption) (*NetworkPeering, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NetworkPeering{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a `NetworkPeering` resource by its resource name. The resource contains details of the network peering, such as peered networks, import and export custom route configurations, and peering state.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.global.networkPeerings.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the network peering to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NetworkPeering"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.networkPeerings.list":
+
+type ProjectsLocationsGlobalNetworkPeeringsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `NetworkPeering` resources in a given project.
+//
+//   - parent: The resource name of the location (global) to query for
+//     network peerings. Resource names are schemeless URIs that follow
+//     the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/global`.
+func (r *ProjectsLocationsGlobalNetworkPeeringsService) List(parent string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c := &ProjectsLocationsGlobalNetworkPeeringsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must
+// specify the field name, a comparison operator, and the value that you
+// want to use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be `=`, `!=`, `>`, or `<`. For
+// example, if you are filtering a list of network peerings, you can
+// exclude the ones named `example-peering` by specifying `name !=
+// "example-peering". To filter on multiple expressions, provide each
+// separate expression within parentheses. For example: ``` (name =
+// "example-peering") (createTime > "2021-04-12T08:15:10.40Z") ``` By
+// default, each expression is an `AND` expression. However, you can
+// include `AND` and `OR` expressions explicitly. For example: ``` (name
+// = "example-peering-1") AND (createTime > "2021-04-12T08:15:10.40Z")
+// OR (name = "example-peering-2") ```
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Filter(filter string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, returned results are ordered by `name`
+// in ascending order. You can also sort results in descending order
+// based on the `name` value using `orderBy="name desc". Currently,
+// only ordering by `name` is supported.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of network peerings to return in one page. The maximum value is
+// coerced to 1000. The default value of this field is 500.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListNetworkPeerings` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListNetworkPeerings` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/networkPeerings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.networkPeerings.list" call.
+// Exactly one of *ListNetworkPeeringsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListNetworkPeeringsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Do(opts ...googleapi.CallOption) (*ListNetworkPeeringsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNetworkPeeringsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists `NetworkPeering` resources in a given project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.global.networkPeerings.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `\u003e`, or `\u003c`. For example, if you are filtering a list of network peerings, you can exclude the ones named `example-peering` by specifying `name != \"example-peering\"`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = \"example-peering\") (createTime \u003e \"2021-04-12T08:15:10.40Z\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = \"example-peering-1\") AND (createTime \u003e \"2021-04-12T08:15:10.40Z\") OR (name = \"example-peering-2\") ```",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, returned results are ordered by `name` in ascending order. You can also sort results in descending order based on the `name` value using `orderBy=\"name desc\"`. Currently, only ordering by `name` is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of network peerings to return in one page. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListNetworkPeerings` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListNetworkPeerings` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the location (global) to query for network peerings. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/networkPeerings",
+	//   "response": {
+	//     "$ref": "ListNetworkPeeringsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Pages(ctx context.Context, f func(*ListNetworkPeeringsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmwareengine.projects.locations.global.networkPeerings.patch":
+
+type ProjectsLocationsGlobalNetworkPeeringsPatchCall struct {
+	s              *Service
+	name           string
+	networkpeering *NetworkPeering
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Modifies a `NetworkPeering` resource. Only the `description`
+// field can be updated. Only fields specified in `updateMask` are
+// applied.
+//
+//   - name: Output only. The resource name of the network peering.
+//     Resource names are scheme-less URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/global/networkPeerings/my-peering`.
+func (r *ProjectsLocationsGlobalNetworkPeeringsService) Patch(name string, networkpeering *NetworkPeering) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+	c := &ProjectsLocationsGlobalNetworkPeeringsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.networkpeering = networkpeering
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) RequestId(requestId string) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `NetworkPeering` resource by the update. The fields specified in the
+// `update_mask` are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.networkpeering)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.networkPeerings.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modifies a `NetworkPeering` resource. Only the `description` field can be updated. Only fields specified in `updateMask` are applied.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "vmwareengine.projects.locations.global.networkPeerings.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of the network peering. Resource names are scheme-less URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `NetworkPeering` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "NetworkPeering"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.global.networkPeerings.peeringRoutes.list":
+
+type ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the network peering routes exchanged over a peering
+// connection.
+//
+//   - parent: The resource name of the network peering to retrieve
+//     peering routes from. Resource names are schemeless URIs that follow
+//     the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/global/networkPeerings/my-peering`.
+func (r *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService) List(parent string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c := &ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. Currently, only filtering
+// on the `direction` field is supported. To return routes imported from
+// the peer network, provide "direction=INCOMING". To return routes
+// exported from the VMware Engine network, provide
+// "direction=OUTGOING". Other filter expressions return an error.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Filter(filter string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of peering routes to return in one page. The service may return fewer
+// than this value. The maximum value is coerced to 1000. The default
+// value of this field is 500.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListPeeringRoutes` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListPeeringRoutes` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/peeringRoutes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.global.networkPeerings.peeringRoutes.list" call.
+// Exactly one of *ListPeeringRoutesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPeeringRoutesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Do(opts ...googleapi.CallOption) (*ListPeeringRoutesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPeeringRoutesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the network peering routes exchanged over a peering connection.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}/peeringRoutes",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.global.networkPeerings.peeringRoutes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that matches resources returned in the response. Currently, only filtering on the `direction` field is supported. To return routes imported from the peer network, provide \"direction=INCOMING\". To return routes exported from the VMware Engine network, provide \"direction=OUTGOING\". Other filter expressions return an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of peering routes to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListPeeringRoutes` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPeeringRoutes` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the network peering to retrieve peering routes from. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/peeringRoutes",
+	//   "response": {
+	//     "$ref": "ListPeeringRoutesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Pages(ctx context.Context, f func(*ListPeeringRoutesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "vmwareengine.projects.locations.networkPolicies.create":
 
 type ProjectsLocationsNetworkPoliciesCreateCall struct {
@@ -3342,6 +6374,212 @@ func (c *ProjectsLocationsNetworkPoliciesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ]
 	// }
 
+}
+
+// method id "vmwareengine.projects.locations.networkPolicies.fetchExternalAddresses":
+
+type ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall struct {
+	s             *Service
+	networkPolicy string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// FetchExternalAddresses: Lists external IP addresses assigned to
+// VMware workload VMs within the scope of the given network policy.
+//
+//   - networkPolicy: The resource name of the network policy to query for
+//     assigned external IP addresses. Resource names are schemeless URIs
+//     that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/networkPolicies/my-policy
+//     `.
+func (r *ProjectsLocationsNetworkPoliciesService) FetchExternalAddresses(networkPolicy string) *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall {
+	c := &ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.networkPolicy = networkPolicy
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of external IP addresses to return in one page. The service may
+// return fewer than this value. The maximum value is coerced to 1000.
+// The default value of this field is 500.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) PageSize(pageSize int64) *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `FetchNetworkPolicyExternalAddresses` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// parameters provided to `FetchNetworkPolicyExternalAddresses`, except
+// for `page_size` and `page_token`, must match the call that provided
+// the page token.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) PageToken(pageToken string) *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) Context(ctx context.Context) *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+networkPolicy}:fetchExternalAddresses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"networkPolicy": c.networkPolicy,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.networkPolicies.fetchExternalAddresses" call.
+// Exactly one of *FetchNetworkPolicyExternalAddressesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *FetchNetworkPolicyExternalAddressesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) Do(opts ...googleapi.CallOption) (*FetchNetworkPolicyExternalAddressesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchNetworkPolicyExternalAddressesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists external IP addresses assigned to VMware workload VMs within the scope of the given network policy.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPolicies/{networkPoliciesId}:fetchExternalAddresses",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.networkPolicies.fetchExternalAddresses",
+	//   "parameterOrder": [
+	//     "networkPolicy"
+	//   ],
+	//   "parameters": {
+	//     "networkPolicy": {
+	//       "description": "Required. The resource name of the network policy to query for assigned external IP addresses. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/networkPolicies/my-policy`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of external IP addresses to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `FetchNetworkPolicyExternalAddresses` call. Provide this to retrieve the subsequent page. When paginating, all parameters provided to `FetchNetworkPolicyExternalAddresses`, except for `page_size` and `page_token`, must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+networkPolicy}:fetchExternalAddresses",
+	//   "response": {
+	//     "$ref": "FetchNetworkPolicyExternalAddressesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNetworkPoliciesFetchExternalAddressesCall) Pages(ctx context.Context, f func(*FetchNetworkPolicyExternalAddressesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "vmwareengine.projects.locations.networkPolicies.get":
@@ -3920,6 +7158,935 @@ func (c *ProjectsLocationsNetworkPoliciesPatchCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "NetworkPolicy"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.networkPolicies.externalAccessRules.create":
+
+type ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall struct {
+	s                  *Service
+	parent             string
+	externalaccessrule *ExternalAccessRule
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new external access rule in a given network policy.
+//
+//   - parent: The resource name of the network policy to create a new
+//     external access firewall rule in. Resource names are schemeless
+//     URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/networkPolicies/my-policy
+//     `.
+func (r *ProjectsLocationsNetworkPoliciesExternalAccessRulesService) Create(parent string, externalaccessrule *ExternalAccessRule) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
+	c := &ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.externalaccessrule = externalaccessrule
+	return c
+}
+
+// ExternalAccessRuleId sets the optional parameter
+// "externalAccessRuleId": Required. The user-provided identifier of the
+// `ExternalAccessRule` to be created. This identifier must be unique
+// among `ExternalAccessRule` resources within the parent and becomes
+// the final token in the name URI. The identifier must meet the
+// following requirements: * Only contains 1-63 alphanumeric characters
+// and hyphens * Begins with an alphabetical character * Ends with a
+// non-hyphen character * Not formatted as a UUID * Complies with RFC
+// 1034 (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) ExternalAccessRuleId(externalAccessRuleId string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
+	c.urlParams_.Set("externalAccessRuleId", externalAccessRuleId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) RequestId(requestId string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) Context(ctx context.Context) *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.externalaccessrule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/externalAccessRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.networkPolicies.externalAccessRules.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new external access rule in a given network policy.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPolicies/{networkPoliciesId}/externalAccessRules",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.networkPolicies.externalAccessRules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "externalAccessRuleId": {
+	//       "description": "Required. The user-provided identifier of the `ExternalAccessRule` to be created. This identifier must be unique among `ExternalAccessRule` resources within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the network policy to create a new external access firewall rule in. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/networkPolicies/my-policy`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/externalAccessRules",
+	//   "request": {
+	//     "$ref": "ExternalAccessRule"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.networkPolicies.externalAccessRules.delete":
+
+type ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single external access rule.
+//
+//   - name: The resource name of the external access firewall rule to
+//     delete. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/us-central1/networkPolicies/my-policy
+//     /externalAccessRules/my-rule`.
+func (r *ProjectsLocationsNetworkPoliciesExternalAccessRulesService) Delete(name string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall {
+	c := &ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall) RequestId(requestId string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall) Context(ctx context.Context) *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.networkPolicies.externalAccessRules.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single external access rule.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPolicies/{networkPoliciesId}/externalAccessRules/{externalAccessRulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "vmwareengine.projects.locations.networkPolicies.externalAccessRules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the external access firewall rule to delete. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/networkPolicies/my-policy/externalAccessRules/my-rule`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPolicies/[^/]+/externalAccessRules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.networkPolicies.externalAccessRules.get":
+
+type ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single external access rule.
+//
+//   - name: The resource name of the external access firewall rule to
+//     retrieve. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/us-central1/networkPolicies/my-policy
+//     /externalAccessRules/my-rule`.
+func (r *ProjectsLocationsNetworkPoliciesExternalAccessRulesService) Get(name string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall {
+	c := &ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall) Context(ctx context.Context) *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.networkPolicies.externalAccessRules.get" call.
+// Exactly one of *ExternalAccessRule or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExternalAccessRule.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesGetCall) Do(opts ...googleapi.CallOption) (*ExternalAccessRule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExternalAccessRule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single external access rule.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPolicies/{networkPoliciesId}/externalAccessRules/{externalAccessRulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.networkPolicies.externalAccessRules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the external access firewall rule to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/networkPolicies/my-policy/externalAccessRules/my-rule`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPolicies/[^/]+/externalAccessRules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ExternalAccessRule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.networkPolicies.externalAccessRules.list":
+
+type ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `ExternalAccessRule` resources in the specified network
+// policy.
+//
+//   - parent: The resource name of the network policy to query for
+//     external access firewall rules. Resource names are schemeless URIs
+//     that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/networkPolicies/my-policy
+//     `.
+func (r *ProjectsLocationsNetworkPoliciesExternalAccessRulesService) List(parent string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c := &ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must
+// specify the field name, a comparison operator, and the value that you
+// want to use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be `=`, `!=`, `>`, or `<`. For
+// example, if you are filtering a list of external access rules, you
+// can exclude the ones named `example-rule` by specifying `name !=
+// "example-rule". To filter on multiple expressions, provide each
+// separate expression within parentheses. For example: ``` (name =
+// "example-rule") (createTime > "2021-04-12T08:15:10.40Z") ``` By
+// default, each expression is an `AND` expression. However, you can
+// include `AND` and `OR` expressions explicitly. For example: ``` (name
+// = "example-rule-1") AND (createTime > "2021-04-12T08:15:10.40Z") OR
+// (name = "example-rule-2") ```
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) Filter(filter string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, returned results are ordered by `name`
+// in ascending order. You can also sort results in descending order
+// based on the `name` value using `orderBy="name desc". Currently,
+// only ordering by `name` is supported.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) OrderBy(orderBy string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of external access rules to return in one page. The service may
+// return fewer than this value. The maximum value is coerced to 1000.
+// The default value of this field is 500.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListExternalAccessRulesRequest` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `ListExternalAccessRulesRequest` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) PageToken(pageToken string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) Context(ctx context.Context) *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/externalAccessRules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.networkPolicies.externalAccessRules.list" call.
+// Exactly one of *ListExternalAccessRulesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListExternalAccessRulesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) Do(opts ...googleapi.CallOption) (*ListExternalAccessRulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExternalAccessRulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists `ExternalAccessRule` resources in the specified network policy.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPolicies/{networkPoliciesId}/externalAccessRules",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.networkPolicies.externalAccessRules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `\u003e`, or `\u003c`. For example, if you are filtering a list of external access rules, you can exclude the ones named `example-rule` by specifying `name != \"example-rule\"`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = \"example-rule\") (createTime \u003e \"2021-04-12T08:15:10.40Z\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = \"example-rule-1\") AND (createTime \u003e \"2021-04-12T08:15:10.40Z\") OR (name = \"example-rule-2\") ```",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, returned results are ordered by `name` in ascending order. You can also sort results in descending order based on the `name` value using `orderBy=\"name desc\"`. Currently, only ordering by `name` is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of external access rules to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListExternalAccessRulesRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExternalAccessRulesRequest` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the network policy to query for external access firewall rules. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/networkPolicies/my-policy`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/externalAccessRules",
+	//   "response": {
+	//     "$ref": "ListExternalAccessRulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesListCall) Pages(ctx context.Context, f func(*ListExternalAccessRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmwareengine.projects.locations.networkPolicies.externalAccessRules.patch":
+
+type ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall struct {
+	s                  *Service
+	name               string
+	externalaccessrule *ExternalAccessRule
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates the parameters of a single external access rule. Only
+// fields specified in `update_mask` are applied.
+//
+//   - name: Output only. The resource name of this external access rule.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1/networkPolicies/my-policy
+//     /externalAccessRules/my-rule`.
+func (r *ProjectsLocationsNetworkPoliciesExternalAccessRulesService) Patch(name string, externalaccessrule *ExternalAccessRule) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
+	c := &ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.externalaccessrule = externalaccessrule
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) RequestId(requestId string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `ExternalAccessRule` resource by the update. The fields specified in
+// the `update_mask` are relative to the resource, not the full request.
+// A field will be overwritten if it is in the mask. If the user does
+// not provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) Context(ctx context.Context) *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.externalaccessrule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.networkPolicies.externalAccessRules.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNetworkPoliciesExternalAccessRulesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single external access rule. Only fields specified in `update_mask` are applied.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPolicies/{networkPoliciesId}/externalAccessRules/{externalAccessRulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "vmwareengine.projects.locations.networkPolicies.externalAccessRules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of this external access rule. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/networkPolicies/my-policy/externalAccessRules/my-rule`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPolicies/[^/]+/externalAccessRules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `ExternalAccessRule` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ExternalAccessRule"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -5332,6 +9499,156 @@ func (c *ProjectsLocationsPrivateCloudsGetCall) Do(opts ...googleapi.CallOption)
 
 }
 
+// method id "vmwareengine.projects.locations.privateClouds.getDnsForwarding":
+
+type ProjectsLocationsPrivateCloudsGetDnsForwardingCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDnsForwarding: Gets details of the `DnsForwarding` config.
+//
+//   - name: The resource name of a `DnsForwarding` to retrieve. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     dnsForwarding`.
+func (r *ProjectsLocationsPrivateCloudsService) GetDnsForwarding(name string) *ProjectsLocationsPrivateCloudsGetDnsForwardingCall {
+	c := &ProjectsLocationsPrivateCloudsGetDnsForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsGetDnsForwardingCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsGetDnsForwardingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsGetDnsForwardingCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsGetDnsForwardingCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsGetDnsForwardingCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsGetDnsForwardingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsGetDnsForwardingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsGetDnsForwardingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.getDnsForwarding" call.
+// Exactly one of *DnsForwarding or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DnsForwarding.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsGetDnsForwardingCall) Do(opts ...googleapi.CallOption) (*DnsForwarding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DnsForwarding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of the `DnsForwarding` config.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/dnsForwarding",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.getDnsForwarding",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of a `DnsForwarding` to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/dnsForwarding`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/dnsForwarding$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "DnsForwarding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "vmwareengine.projects.locations.privateClouds.getIamPolicy":
 
 type ProjectsLocationsPrivateCloudsGetIamPolicyCall struct {
@@ -6543,6 +10860,18 @@ func (r *ProjectsLocationsPrivateCloudsService) ShowVcenterCredentials(privateCl
 	return c
 }
 
+// Username sets the optional parameter "username": The username of the
+// user to be queried for credentials. The default value of this field
+// is CloudOwner@gve.local. The provided value must be one of the
+// following: CloudOwner@gve.local, solution-user-01@gve.local,
+// solution-user-02@gve.local, solution-user-03@gve.local,
+// solution-user-04@gve.local, solution-user-05@gve.local,
+// zertoadmin@gve.local.
+func (c *ProjectsLocationsPrivateCloudsShowVcenterCredentialsCall) Username(username string) *ProjectsLocationsPrivateCloudsShowVcenterCredentialsCall {
+	c.urlParams_.Set("username", username)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6655,6 +10984,11 @@ func (c *ProjectsLocationsPrivateCloudsShowVcenterCredentialsCall) Do(opts ...go
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "username": {
+	//       "description": "Optional. The username of the user to be queried for credentials. The default value of this field is CloudOwner@gve.local. The provided value must be one of the following: CloudOwner@gve.local, solution-user-01@gve.local, solution-user-02@gve.local, solution-user-03@gve.local, solution-user-04@gve.local, solution-user-05@gve.local, zertoadmin@gve.local.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -6958,6 +11292,194 @@ func (c *ProjectsLocationsPrivateCloudsUndeleteCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1/{+name}:undelete",
 	//   "request": {
 	//     "$ref": "UndeletePrivateCloudRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.updateDnsForwarding":
+
+type ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall struct {
+	s             *Service
+	name          string
+	dnsforwarding *DnsForwarding
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateDnsForwarding: Updates the parameters of the `DnsForwarding`
+// config, like associated domains. Only fields specified in
+// `update_mask` are applied.
+//
+//   - name: Output only. The resource name of this DNS profile. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     dnsForwarding`.
+func (r *ProjectsLocationsPrivateCloudsService) UpdateDnsForwarding(name string, dnsforwarding *DnsForwarding) *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall {
+	c := &ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.dnsforwarding = dnsforwarding
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `DnsForwarding` resource by the update. The fields specified in the
+// `update_mask` are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dnsforwarding)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.updateDnsForwarding" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of the `DnsForwarding` config, like associated domains. Only fields specified in `update_mask` are applied.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/dnsForwarding",
+	//   "httpMethod": "PATCH",
+	//   "id": "vmwareengine.projects.locations.privateClouds.updateDnsForwarding",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of this DNS profile. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/dnsForwarding`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/dnsForwarding$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `DnsForwarding` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "DnsForwarding"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -8361,6 +12883,1288 @@ func (c *ProjectsLocationsPrivateCloudsClustersTestIamPermissionsCall) Do(opts .
 
 }
 
+// method id "vmwareengine.projects.locations.privateClouds.clusters.nodes.get":
+
+type ProjectsLocationsPrivateCloudsClustersNodesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single node.
+//
+//   - name: The resource name of the node to retrieve. For example:
+//     `projects/{project}/locations/{location}/privateClouds/{private_clou
+//     d}/clusters/{cluster}/nodes/{node}`.
+func (r *ProjectsLocationsPrivateCloudsClustersNodesService) Get(name string) *ProjectsLocationsPrivateCloudsClustersNodesGetCall {
+	c := &ProjectsLocationsPrivateCloudsClustersNodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsClustersNodesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsClustersNodesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsClustersNodesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsClustersNodesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.clusters.nodes.get" call.
+// Exactly one of *Node or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Node.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesGetCall) Do(opts ...googleapi.CallOption) (*Node, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Node{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single node.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/clusters/{clustersId}/nodes/{nodesId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.clusters.nodes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the node to retrieve. For example: `projects/{project}/locations/{location}/privateClouds/{private_cloud}/clusters/{cluster}/nodes/{node}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/clusters/[^/]+/nodes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Node"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.clusters.nodes.list":
+
+type ProjectsLocationsPrivateCloudsClustersNodesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists nodes in a given cluster.
+//
+//   - parent: The resource name of the cluster to be queried for nodes.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     clusters/my-cluster`.
+func (r *ProjectsLocationsPrivateCloudsClustersNodesService) List(parent string) *ProjectsLocationsPrivateCloudsClustersNodesListCall {
+	c := &ProjectsLocationsPrivateCloudsClustersNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of nodes to return in one page. The service may return fewer than
+// this value. The maximum value is coerced to 1000. The default value
+// of this field is 500.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateCloudsClustersNodesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListNodes` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListNodes` must match the call that provided the page token.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) PageToken(pageToken string) *ProjectsLocationsPrivateCloudsClustersNodesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsClustersNodesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsClustersNodesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsClustersNodesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/nodes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.clusters.nodes.list" call.
+// Exactly one of *ListNodesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListNodesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) Do(opts ...googleapi.CallOption) (*ListNodesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNodesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists nodes in a given cluster.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/clusters/{clustersId}/nodes",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.clusters.nodes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of nodes to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListNodes` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListNodes` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the cluster to be queried for nodes. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/my-cluster`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/nodes",
+	//   "response": {
+	//     "$ref": "ListNodesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateCloudsClustersNodesListCall) Pages(ctx context.Context, f func(*ListNodesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.externalAddresses.create":
+
+type ProjectsLocationsPrivateCloudsExternalAddressesCreateCall struct {
+	s               *Service
+	parent          string
+	externaladdress *ExternalAddress
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new `ExternalAddress` resource in a given private
+// cloud. The network policy that corresponds to the private cloud must
+// have the external IP address network service enabled
+// (`NetworkPolicy.external_ip`).
+//
+//   - parent: The resource name of the private cloud to create a new
+//     external IP address in. Resource names are schemeless URIs that
+//     follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsExternalAddressesService) Create(parent string, externaladdress *ExternalAddress) *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall {
+	c := &ProjectsLocationsPrivateCloudsExternalAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.externaladdress = externaladdress
+	return c
+}
+
+// ExternalAddressId sets the optional parameter "externalAddressId":
+// Required. The user-provided identifier of the `ExternalAddress` to be
+// created. This identifier must be unique among `ExternalAddress`
+// resources within the parent and becomes the final token in the name
+// URI. The identifier must meet the following requirements: * Only
+// contains 1-63 alphanumeric characters and hyphens * Begins with an
+// alphabetical character * Ends with a non-hyphen character * Not
+// formatted as a UUID * Complies with RFC 1034
+// (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) ExternalAddressId(externalAddressId string) *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall {
+	c.urlParams_.Set("externalAddressId", externalAddressId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.externaladdress)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/externalAddresses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.externalAddresses.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new `ExternalAddress` resource in a given private cloud. The network policy that corresponds to the private cloud must have the external IP address network service enabled (`NetworkPolicy.external_ip`).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/externalAddresses",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.privateClouds.externalAddresses.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "externalAddressId": {
+	//       "description": "Required. The user-provided identifier of the `ExternalAddress` to be created. This identifier must be unique among `ExternalAddress` resources within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the private cloud to create a new external IP address in. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/externalAddresses",
+	//   "request": {
+	//     "$ref": "ExternalAddress"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.externalAddresses.delete":
+
+type ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single external IP address. When you delete an
+// external IP address, connectivity between the external IP address and
+// the corresponding internal IP address is lost.
+//
+//   - name: The resource name of the external IP address to delete.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     externalAddresses/my-ip`.
+func (r *ProjectsLocationsPrivateCloudsExternalAddressesService) Delete(name string) *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall {
+	c := &ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.externalAddresses.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single external IP address. When you delete an external IP address, connectivity between the external IP address and the corresponding internal IP address is lost.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/externalAddresses/{externalAddressesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "vmwareengine.projects.locations.privateClouds.externalAddresses.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the external IP address to delete. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalAddresses/my-ip`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/externalAddresses/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.externalAddresses.get":
+
+type ProjectsLocationsPrivateCloudsExternalAddressesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single external IP address.
+//
+//   - name: The resource name of the external IP address to retrieve.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     externalAddresses/my-ip`.
+func (r *ProjectsLocationsPrivateCloudsExternalAddressesService) Get(name string) *ProjectsLocationsPrivateCloudsExternalAddressesGetCall {
+	c := &ProjectsLocationsPrivateCloudsExternalAddressesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsExternalAddressesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsExternalAddressesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsExternalAddressesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.externalAddresses.get" call.
+// Exactly one of *ExternalAddress or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ExternalAddress.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesGetCall) Do(opts ...googleapi.CallOption) (*ExternalAddress, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExternalAddress{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single external IP address.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/externalAddresses/{externalAddressesId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.externalAddresses.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the external IP address to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalAddresses/my-ip`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/externalAddresses/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ExternalAddress"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.externalAddresses.list":
+
+type ProjectsLocationsPrivateCloudsExternalAddressesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists external IP addresses assigned to VMware workload VMs in
+// a given private cloud.
+//
+//   - parent: The resource name of the private cloud to be queried for
+//     external IP addresses. Resource names are schemeless URIs that
+//     follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsExternalAddressesService) List(parent string) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c := &ProjectsLocationsPrivateCloudsExternalAddressesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must
+// specify the field name, a comparison operator, and the value that you
+// want to use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be `=`, `!=`, `>`, or `<`. For
+// example, if you are filtering a list of IP addresses, you can exclude
+// the ones named `example-ip` by specifying `name != "example-ip". To
+// filter on multiple expressions, provide each separate expression
+// within parentheses. For example: ``` (name = "example-ip")
+// (createTime > "2021-04-12T08:15:10.40Z") ``` By default, each
+// expression is an `AND` expression. However, you can include `AND` and
+// `OR` expressions explicitly. For example: ``` (name = "example-ip-1")
+// AND (createTime > "2021-04-12T08:15:10.40Z") OR (name =
+// "example-ip-2") ```
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) Filter(filter string) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, returned results are ordered by `name`
+// in ascending order. You can also sort results in descending order
+// based on the `name` value using `orderBy="name desc". Currently,
+// only ordering by `name` is supported.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) OrderBy(orderBy string) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of external IP addresses to return in one page. The service may
+// return fewer than this value. The maximum value is coerced to 1000.
+// The default value of this field is 500.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListExternalAddresses` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListExternalAddresses` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) PageToken(pageToken string) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsExternalAddressesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/externalAddresses")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.externalAddresses.list" call.
+// Exactly one of *ListExternalAddressesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListExternalAddressesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) Do(opts ...googleapi.CallOption) (*ListExternalAddressesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExternalAddressesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists external IP addresses assigned to VMware workload VMs in a given private cloud.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/externalAddresses",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.externalAddresses.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `\u003e`, or `\u003c`. For example, if you are filtering a list of IP addresses, you can exclude the ones named `example-ip` by specifying `name != \"example-ip\"`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = \"example-ip\") (createTime \u003e \"2021-04-12T08:15:10.40Z\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = \"example-ip-1\") AND (createTime \u003e \"2021-04-12T08:15:10.40Z\") OR (name = \"example-ip-2\") ```",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, returned results are ordered by `name` in ascending order. You can also sort results in descending order based on the `name` value using `orderBy=\"name desc\"`. Currently, only ordering by `name` is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of external IP addresses to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListExternalAddresses` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListExternalAddresses` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the private cloud to be queried for external IP addresses. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/externalAddresses",
+	//   "response": {
+	//     "$ref": "ListExternalAddressesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesListCall) Pages(ctx context.Context, f func(*ListExternalAddressesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.externalAddresses.patch":
+
+type ProjectsLocationsPrivateCloudsExternalAddressesPatchCall struct {
+	s               *Service
+	name            string
+	externaladdress *ExternalAddress
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates the parameters of a single external IP address. Only
+// fields specified in `update_mask` are applied. During operation
+// processing, the resource is temporarily in the `ACTIVE` state before
+// the operation fully completes. For that period of time, you can't
+// update the resource. Use the operation status to determine when the
+// processing fully completes.
+//
+//   - name: Output only. The resource name of this external IP address.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     externalAddresses/my-address`.
+func (r *ProjectsLocationsPrivateCloudsExternalAddressesService) Patch(name string, externaladdress *ExternalAddress) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
+	c := &ProjectsLocationsPrivateCloudsExternalAddressesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.externaladdress = externaladdress
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `ExternalAddress` resource by the update. The fields specified in the
+// `update_mask` are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.externaladdress)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.externalAddresses.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsExternalAddressesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single external IP address. Only fields specified in `update_mask` are applied. During operation processing, the resource is temporarily in the `ACTIVE` state before the operation fully completes. For that period of time, you can't update the resource. Use the operation status to determine when the processing fully completes.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/externalAddresses/{externalAddressesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "vmwareengine.projects.locations.privateClouds.externalAddresses.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of this external IP address. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalAddresses/my-address`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/externalAddresses/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `ExternalAddress` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ExternalAddress"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "vmwareengine.projects.locations.privateClouds.hcxActivationKeys.create":
 
 type ProjectsLocationsPrivateCloudsHcxActivationKeysCreateCall struct {
@@ -9364,6 +15168,2020 @@ func (c *ProjectsLocationsPrivateCloudsHcxActivationKeysTestIamPermissionsCall) 
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.loggingServers.create":
+
+type ProjectsLocationsPrivateCloudsLoggingServersCreateCall struct {
+	s             *Service
+	parent        string
+	loggingserver *LoggingServer
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Create a new logging server for a given private cloud.
+//
+//   - parent: The resource name of the private cloud to create a new
+//     Logging Server in. Resource names are schemeless URIs that follow
+//     the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsLoggingServersService) Create(parent string, loggingserver *LoggingServer) *ProjectsLocationsPrivateCloudsLoggingServersCreateCall {
+	c := &ProjectsLocationsPrivateCloudsLoggingServersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.loggingserver = loggingserver
+	return c
+}
+
+// LoggingServerId sets the optional parameter "loggingServerId":
+// Required. The user-provided identifier of the `LoggingServer` to be
+// created. This identifier must be unique among `LoggingServer`
+// resources within the parent and becomes the final token in the name
+// URI. The identifier must meet the following requirements: * Only
+// contains 1-63 alphanumeric characters and hyphens * Begins with an
+// alphabetical character * Ends with a non-hyphen character * Not
+// formatted as a UUID * Complies with RFC 1034
+// (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) LoggingServerId(loggingServerId string) *ProjectsLocationsPrivateCloudsLoggingServersCreateCall {
+	c.urlParams_.Set("loggingServerId", loggingServerId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsLoggingServersCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsLoggingServersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsLoggingServersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loggingserver)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/loggingServers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.loggingServers.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a new logging server for a given private cloud.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/loggingServers",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.privateClouds.loggingServers.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "loggingServerId": {
+	//       "description": "Required. The user-provided identifier of the `LoggingServer` to be created. This identifier must be unique among `LoggingServer` resources within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the private cloud to create a new Logging Server in. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/loggingServers",
+	//   "request": {
+	//     "$ref": "LoggingServer"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.loggingServers.delete":
+
+type ProjectsLocationsPrivateCloudsLoggingServersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single logging server.
+//
+//   - name: The resource name of the logging server to delete. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     loggingServers/my-logging-server`.
+func (r *ProjectsLocationsPrivateCloudsLoggingServersService) Delete(name string) *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall {
+	c := &ProjectsLocationsPrivateCloudsLoggingServersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.loggingServers.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single logging server.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/loggingServers/{loggingServersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "vmwareengine.projects.locations.privateClouds.loggingServers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the logging server to delete. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/loggingServers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.loggingServers.get":
+
+type ProjectsLocationsPrivateCloudsLoggingServersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a logging server.
+//
+//   - name: The resource name of the Logging Server to retrieve. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     loggingServers/my-logging-server`.
+func (r *ProjectsLocationsPrivateCloudsLoggingServersService) Get(name string) *ProjectsLocationsPrivateCloudsLoggingServersGetCall {
+	c := &ProjectsLocationsPrivateCloudsLoggingServersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsLoggingServersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsLoggingServersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsLoggingServersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsLoggingServersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.loggingServers.get" call.
+// Exactly one of *LoggingServer or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LoggingServer.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersGetCall) Do(opts ...googleapi.CallOption) (*LoggingServer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LoggingServer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a logging server.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/loggingServers/{loggingServersId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.loggingServers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Logging Server to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/loggingServers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "LoggingServer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.loggingServers.list":
+
+type ProjectsLocationsPrivateCloudsLoggingServersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists logging servers configured for a given private cloud.
+//
+//   - parent: The resource name of the private cloud to be queried for
+//     logging servers. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsLoggingServersService) List(parent string) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c := &ProjectsLocationsPrivateCloudsLoggingServersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must
+// specify the field name, a comparison operator, and the value that you
+// want to use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be `=`, `!=`, `>`, or `<`. For
+// example, if you are filtering a list of logging servers, you can
+// exclude the ones named `example-server` by specifying `name !=
+// "example-server". To filter on multiple expressions, provide each
+// separate expression within parentheses. For example: ``` (name =
+// "example-server") (createTime > "2021-04-12T08:15:10.40Z") ``` By
+// default, each expression is an `AND` expression. However, you can
+// include `AND` and `OR` expressions explicitly. For example: ``` (name
+// = "example-server-1") AND (createTime > "2021-04-12T08:15:10.40Z") OR
+// (name = "example-server-2") ```
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) Filter(filter string) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, returned results are ordered by `name`
+// in ascending order. You can also sort results in descending order
+// based on the `name` value using `orderBy="name desc". Currently,
+// only ordering by `name` is supported.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) OrderBy(orderBy string) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of logging servers to return in one page. The service may return
+// fewer than this value. The maximum value is coerced to 1000. The
+// default value of this field is 500.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListLoggingServersRequest` call. Provide
+// this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListLoggingServersRequest` must match the
+// call that provided the page token.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) PageToken(pageToken string) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsLoggingServersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/loggingServers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.loggingServers.list" call.
+// Exactly one of *ListLoggingServersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLoggingServersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) Do(opts ...googleapi.CallOption) (*ListLoggingServersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListLoggingServersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists logging servers configured for a given private cloud.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/loggingServers",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.loggingServers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `\u003e`, or `\u003c`. For example, if you are filtering a list of logging servers, you can exclude the ones named `example-server` by specifying `name != \"example-server\"`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = \"example-server\") (createTime \u003e \"2021-04-12T08:15:10.40Z\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = \"example-server-1\") AND (createTime \u003e \"2021-04-12T08:15:10.40Z\") OR (name = \"example-server-2\") ```",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, returned results are ordered by `name` in ascending order. You can also sort results in descending order based on the `name` value using `orderBy=\"name desc\"`. Currently, only ordering by `name` is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of logging servers to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListLoggingServersRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListLoggingServersRequest` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the private cloud to be queried for logging servers. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/loggingServers",
+	//   "response": {
+	//     "$ref": "ListLoggingServersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersListCall) Pages(ctx context.Context, f func(*ListLoggingServersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.loggingServers.patch":
+
+type ProjectsLocationsPrivateCloudsLoggingServersPatchCall struct {
+	s             *Service
+	name          string
+	loggingserver *LoggingServer
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates the parameters of a single logging server. Only fields
+// specified in `update_mask` are applied.
+//
+//   - name: Output only. The resource name of this logging server.
+//     Resource names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     loggingServers/my-logging-server`.
+func (r *ProjectsLocationsPrivateCloudsLoggingServersService) Patch(name string, loggingserver *LoggingServer) *ProjectsLocationsPrivateCloudsLoggingServersPatchCall {
+	c := &ProjectsLocationsPrivateCloudsLoggingServersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.loggingserver = loggingserver
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsLoggingServersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `LoggingServer` resource by the update. The fields specified in the
+// `update_mask` are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsLoggingServersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsLoggingServersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsLoggingServersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loggingserver)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.loggingServers.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsLoggingServersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single logging server. Only fields specified in `update_mask` are applied.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/loggingServers/{loggingServersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "vmwareengine.projects.locations.privateClouds.loggingServers.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of this logging server. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/loggingServers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `LoggingServer` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "LoggingServer"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.create":
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall struct {
+	s                        *Service
+	parent                   string
+	managementdnszonebinding *ManagementDnsZoneBinding
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Create: Creates a new `ManagementDnsZoneBinding` resource in a
+// private cloud. This RPC creates the DNS binding and the resource that
+// represents the DNS binding of the consumer VPC network to the
+// management DNS zone. A management DNS zone is the Cloud DNS
+// cross-project binding zone that VMware Engine creates for each
+// private cloud. It contains FQDNs and corresponding IP addresses for
+// the private cloud's ESXi hosts and management VM appliances like
+// vCenter and NSX Manager.
+//
+//   - parent: The resource name of the private cloud to create a new
+//     management DNS zone binding for. Resource names are schemeless URIs
+//     that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService) Create(parent string, managementdnszonebinding *ManagementDnsZoneBinding) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall {
+	c := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.managementdnszonebinding = managementdnszonebinding
+	return c
+}
+
+// ManagementDnsZoneBindingId sets the optional parameter
+// "managementDnsZoneBindingId": Required. The user-provided identifier
+// of the `ManagementDnsZoneBinding` resource to be created. This
+// identifier must be unique among `ManagementDnsZoneBinding` resources
+// within the parent and becomes the final token in the name URI. The
+// identifier must meet the following requirements: * Only contains 1-63
+// alphanumeric characters and hyphens * Begins with an alphabetical
+// character * Ends with a non-hyphen character * Not formatted as a
+// UUID * Complies with RFC 1034
+// (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) ManagementDnsZoneBindingId(managementDnsZoneBindingId string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall {
+	c.urlParams_.Set("managementDnsZoneBindingId", managementDnsZoneBindingId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managementdnszonebinding)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/managementDnsZoneBindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new `ManagementDnsZoneBinding` resource in a private cloud. This RPC creates the DNS binding and the resource that represents the DNS binding of the consumer VPC network to the management DNS zone. A management DNS zone is the Cloud DNS cross-project binding zone that VMware Engine creates for each private cloud. It contains FQDNs and corresponding IP addresses for the private cloud's ESXi hosts and management VM appliances like vCenter and NSX Manager.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/managementDnsZoneBindings",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "managementDnsZoneBindingId": {
+	//       "description": "Required. The user-provided identifier of the `ManagementDnsZoneBinding` resource to be created. This identifier must be unique among `ManagementDnsZoneBinding` resources within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the private cloud to create a new management DNS zone binding for. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/managementDnsZoneBindings",
+	//   "request": {
+	//     "$ref": "ManagementDnsZoneBinding"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.delete":
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a `ManagementDnsZoneBinding` resource. When a
+// management DNS zone binding is deleted, the corresponding consumer
+// VPC network is no longer bound to the management DNS zone.
+//
+//   - name: The resource name of the management DNS zone binding to
+//     delete. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     managementDnsZoneBindings/my-management-dns-zone-binding`.
+func (r *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService) Delete(name string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall {
+	c := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a `ManagementDnsZoneBinding` resource. When a management DNS zone binding is deleted, the corresponding consumer VPC network is no longer bound to the management DNS zone.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/managementDnsZoneBindings/{managementDnsZoneBindingsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the management DNS zone binding to delete. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/managementDnsZoneBindings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.get":
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a 'ManagementDnsZoneBinding' resource by its resource
+// name.
+//
+//   - name: The resource name of the management DNS zone binding to
+//     retrieve. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     managementDnsZoneBindings/my-management-dns-zone-binding`.
+func (r *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService) Get(name string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall {
+	c := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.get" call.
+// Exactly one of *ManagementDnsZoneBinding or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ManagementDnsZoneBinding.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsGetCall) Do(opts ...googleapi.CallOption) (*ManagementDnsZoneBinding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ManagementDnsZoneBinding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a 'ManagementDnsZoneBinding' resource by its resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/managementDnsZoneBindings/{managementDnsZoneBindingsId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the management DNS zone binding to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/managementDnsZoneBindings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ManagementDnsZoneBinding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.list":
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Consumer VPCs bound to Management DNS Zone of a given
+// private cloud.
+//
+//   - parent: The resource name of the private cloud to be queried for
+//     management DNS zone bindings. Resource names are schemeless URIs
+//     that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
+func (r *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService) List(parent string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must
+// specify the field name, a comparison operator, and the value that you
+// want to use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be `=`, `!=`, `>`, or `<`. For
+// example, if you are filtering a list of Management DNS Zone Bindings,
+// you can exclude the ones named `example-management-dns-zone-binding`
+// by specifying `name != "example-management-dns-zone-binding". To
+// filter on multiple expressions, provide each separate expression
+// within parentheses. For example: ``` (name =
+// "example-management-dns-zone-binding") (createTime >
+// "2021-04-12T08:15:10.40Z") ``` By default, each expression is an
+// `AND` expression. However, you can include `AND` and `OR` expressions
+// explicitly. For example: ``` (name =
+// "example-management-dns-zone-binding-1") AND (createTime >
+// "2021-04-12T08:15:10.40Z") OR (name =
+// "example-management-dns-zone-binding-2") ```
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) Filter(filter string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, returned results are ordered by `name`
+// in ascending order. You can also sort results in descending order
+// based on the `name` value using `orderBy="name desc". Currently,
+// only ordering by `name` is supported.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) OrderBy(orderBy string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of management DNS zone bindings to return in one page. The service
+// may return fewer than this value. The maximum value is coerced to
+// 1000. The default value of this field is 500.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListManagementDnsZoneBindings` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `ListManagementDnsZoneBindings` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) PageToken(pageToken string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/managementDnsZoneBindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.list" call.
+// Exactly one of *ListManagementDnsZoneBindingsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListManagementDnsZoneBindingsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) Do(opts ...googleapi.CallOption) (*ListManagementDnsZoneBindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListManagementDnsZoneBindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Consumer VPCs bound to Management DNS Zone of a given private cloud.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/managementDnsZoneBindings",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `\u003e`, or `\u003c`. For example, if you are filtering a list of Management DNS Zone Bindings, you can exclude the ones named `example-management-dns-zone-binding` by specifying `name != \"example-management-dns-zone-binding\"`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = \"example-management-dns-zone-binding\") (createTime \u003e \"2021-04-12T08:15:10.40Z\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = \"example-management-dns-zone-binding-1\") AND (createTime \u003e \"2021-04-12T08:15:10.40Z\") OR (name = \"example-management-dns-zone-binding-2\") ```",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, returned results are ordered by `name` in ascending order. You can also sort results in descending order based on the `name` value using `orderBy=\"name desc\"`. Currently, only ordering by `name` is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of management DNS zone bindings to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListManagementDnsZoneBindings` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListManagementDnsZoneBindings` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the private cloud to be queried for management DNS zone bindings. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/managementDnsZoneBindings",
+	//   "response": {
+	//     "$ref": "ListManagementDnsZoneBindingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsListCall) Pages(ctx context.Context, f func(*ListManagementDnsZoneBindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.patch":
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall struct {
+	s                        *Service
+	name                     string
+	managementdnszonebinding *ManagementDnsZoneBinding
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Patch: Updates a `ManagementDnsZoneBinding` resource. Only fields
+// specified in `update_mask` are applied.
+//
+//   - name: Output only. The resource name of this binding. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     managementDnsZoneBindings/my-management-dns-zone-binding`.
+func (r *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService) Patch(name string, managementdnszonebinding *ManagementDnsZoneBinding) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall {
+	c := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.managementdnszonebinding = managementdnszonebinding
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server guarantees that a request
+// doesn't result in creation of duplicate commitments for at least 60
+// minutes. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with
+// the same request ID, the server can check if the original operation
+// with the same request ID was received, and if so, will ignore the
+// second request. This prevents clients from accidentally creating
+// duplicate commitments. The request ID must be a valid UUID with the
+// exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) RequestId(requestId string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `ManagementDnsZoneBinding` resource by the update. The fields
+// specified in the `update_mask` are relative to the resource, not the
+// full request. A field will be overwritten if it is in the mask. If
+// the user does not provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.managementdnszonebinding)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a `ManagementDnsZoneBinding` resource. Only fields specified in `update_mask` are applied.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/managementDnsZoneBindings/{managementDnsZoneBindingsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name of this binding. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/managementDnsZoneBindings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server guarantees that a request doesn't result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `ManagementDnsZoneBinding` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ManagementDnsZoneBinding"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.repair":
+
+type ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall struct {
+	s                                     *Service
+	name                                  string
+	repairmanagementdnszonebindingrequest *RepairManagementDnsZoneBindingRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Repair: Retries to create a `ManagementDnsZoneBinding` resource that
+// is in failed state.
+//
+//   - name: The resource name of the management DNS zone binding to
+//     repair. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/
+//     managementDnsZoneBindings/my-management-dns-zone-binding`.
+func (r *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsService) Repair(name string, repairmanagementdnszonebindingrequest *RepairManagementDnsZoneBindingRequest) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall {
+	c := &ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.repairmanagementdnszonebindingrequest = repairmanagementdnszonebindingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall) Context(ctx context.Context) *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.repairmanagementdnszonebindingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:repair")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.repair" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateCloudsManagementDnsZoneBindingsRepairCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retries to create a `ManagementDnsZoneBinding` resource that is in failed state.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateClouds/{privateCloudsId}/managementDnsZoneBindings/{managementDnsZoneBindingsId}:repair",
+	//   "httpMethod": "POST",
+	//   "id": "vmwareengine.projects.locations.privateClouds.managementDnsZoneBindings.repair",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the management DNS zone binding to repair. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/managementDnsZoneBindings/my-management-dns-zone-binding`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateClouds/[^/]+/managementDnsZoneBindings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:repair",
+	//   "request": {
+	//     "$ref": "RepairManagementDnsZoneBindingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -341,8 +341,25 @@ type AppProfile struct {
 	// `projects/{project}/instances/{instance}/appProfiles/_a-zA-Z0-9*`.
 	Name string `json:"name,omitempty"`
 
+	// Priority: This field has been deprecated in favor of
+	// `standard_isolation.priority`. If you set this field,
+	// `standard_isolation.priority` will be set instead. The priority of
+	// requests sent using this app profile.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Default value. Mapped to PRIORITY_HIGH
+	// (the legacy behavior) on creation.
+	//   "PRIORITY_LOW"
+	//   "PRIORITY_MEDIUM"
+	//   "PRIORITY_HIGH"
+	Priority string `json:"priority,omitempty"`
+
 	// SingleClusterRouting: Use a single-cluster routing policy.
 	SingleClusterRouting *SingleClusterRouting `json:"singleClusterRouting,omitempty"`
+
+	// StandardIsolation: The standard options used for isolating this app
+	// profile's traffic from other use cases.
+	StandardIsolation *StandardIsolation `json:"standardIsolation,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -792,6 +809,11 @@ type CheckConsistencyRequest struct {
 	// GenerateConsistencyToken for the Table.
 	ConsistencyToken string `json:"consistencyToken,omitempty"`
 
+	// StandardReadRemoteWrites: Checks that reads using an app profile with
+	// `StandardIsolation` can see all writes committed before the token was
+	// created, even if the read and write target different clusters.
+	StandardReadRemoteWrites *StandardReadRemoteWrites `json:"standardReadRemoteWrites,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1065,9 +1087,9 @@ type ColumnFamily struct {
 	// family.
 	GcRule *GcRule `json:"gcRule,omitempty"`
 
-	// Stats: Only available with STATS_VIEW, this includes summary
-	// statistics about column family contents. For statistics over an
-	// entire table, see TableStats above.
+	// Stats: Output only. Only available with STATS_VIEW, this includes
+	// summary statistics about column family contents. For statistics over
+	// an entire table, see TableStats above.
 	Stats *ColumnFamilyStats `json:"stats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcRule") to
@@ -2462,17 +2484,13 @@ func (s *Modification) MarshalJSON() ([]byte, error) {
 // ModifyColumnFamiliesRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies
 type ModifyColumnFamiliesRequest struct {
-	// IgnoreWarnings: If true, ignore safety checks when modifying the
-	// column families.
-	IgnoreWarnings bool `json:"ignoreWarnings,omitempty"`
-
 	// Modifications: Required. Modifications to be atomically applied to
 	// the specified table's families. Entries are applied in order, meaning
 	// that earlier modifications can be masked by later ones (in the case
 	// of repeated updates to the same family, for example).
 	Modifications []*Modification `json:"modifications,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IgnoreWarnings") to
+	// ForceSendFields is a list of field names (e.g. "Modifications") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2480,13 +2498,12 @@ type ModifyColumnFamiliesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IgnoreWarnings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Modifications") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3103,6 +3120,48 @@ func (s *Split) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StandardIsolation: Standard options for isolating this app profile's
+// traffic from other use cases.
+type StandardIsolation struct {
+	// Priority: The priority of requests sent using this app profile.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Default value. Mapped to PRIORITY_HIGH
+	// (the legacy behavior) on creation.
+	//   "PRIORITY_LOW"
+	//   "PRIORITY_MEDIUM"
+	//   "PRIORITY_HIGH"
+	Priority string `json:"priority,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Priority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Priority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StandardIsolation) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardIsolation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StandardReadRemoteWrites: Checks that all writes before the
+// consistency token was generated is replicated in every cluster and
+// readable.
+type StandardReadRemoteWrites struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -3197,9 +3256,9 @@ type Table struct {
 	// information about the restore.
 	RestoreInfo *RestoreInfo `json:"restoreInfo,omitempty"`
 
-	// Stats: Only available with STATS_VIEW, this includes summary
-	// statistics about the entire table contents. For statistics about a
-	// specific column family, see ColumnFamilyStats in the mapped
+	// Stats: Output only. Only available with STATS_VIEW, this includes
+	// summary statistics about the entire table contents. For statistics
+	// about a specific column family, see ColumnFamilyStats in the mapped
 	// ColumnFamily collection above.
 	Stats *TableStats `json:"stats,omitempty"`
 

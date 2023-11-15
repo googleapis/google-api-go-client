@@ -1311,6 +1311,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "demoteDestination": {
+                  "description": "Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/migrationJobs/{migrationJobsId}:demoteDestination",
+                  "httpMethod": "POST",
+                  "id": "datamigration.projects.locations.migrationJobs.demoteDestination",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Name of the migration job resource to demote its destination.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/migrationJobs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:demoteDestination",
+                  "request": {
+                    "$ref": "DemoteDestinationRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "generateSshScript": {
                   "description": "Generate a SSH configuration script to configure the reverse SSH connectivity.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/migrationJobs/{migrationJobsId}:generateSshScript",
@@ -2097,7 +2125,7 @@
       }
     }
   },
-  "revision": "20230912",
+  "revision": "20231106",
   "rootUrl": "https://datamigration.googleapis.com/",
   "schemas": {
     "AlloyDbConnectionProfile": {
@@ -2477,10 +2505,19 @@
             "SQL_DATABASE_VERSION_UNSPECIFIED",
             "MYSQL_5_6",
             "MYSQL_5_7",
+            "MYSQL_8_0",
+            "MYSQL_8_0_18",
+            "MYSQL_8_0_26",
+            "MYSQL_8_0_27",
+            "MYSQL_8_0_28",
+            "MYSQL_8_0_30",
+            "MYSQL_8_0_31",
+            "MYSQL_8_0_32",
+            "MYSQL_8_0_33",
+            "MYSQL_8_0_34",
             "POSTGRES_9_6",
             "POSTGRES_11",
             "POSTGRES_10",
-            "MYSQL_8_0",
             "POSTGRES_12",
             "POSTGRES_13",
             "POSTGRES_14",
@@ -2490,10 +2527,19 @@
             "Unspecified version.",
             "MySQL 5.6.",
             "MySQL 5.7.",
+            "MySQL 8.0.",
+            "The database major version is MySQL 8.0 and the minor version is 18.",
+            "The database major version is MySQL 8.0 and the minor version is 26.",
+            "The database major version is MySQL 8.0 and the minor version is 27.",
+            "The database major version is MySQL 8.0 and the minor version is 28.",
+            "The database major version is MySQL 8.0 and the minor version is 30.",
+            "The database major version is MySQL 8.0 and the minor version is 31.",
+            "The database major version is MySQL 8.0 and the minor version is 32.",
+            "The database major version is MySQL 8.0 and the minor version is 33.",
+            "The database major version is MySQL 8.0 and the minor version is 34.",
             "PostgreSQL 9.6.",
             "PostgreSQL 11.",
             "PostgreSQL 10.",
-            "MySQL 8.0.",
             "PostgreSQL 12.",
             "PostgreSQL 13.",
             "PostgreSQL 14.",
@@ -2982,7 +3028,7 @@
           "type": "string"
         },
         "version": {
-          "description": "Required. Engine named version, for example 12.c.1.",
+          "description": "Required. Engine version, for example \"12.c.1\".",
           "type": "string"
         }
       },
@@ -3178,6 +3224,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "DemoteDestinationRequest": {
+      "description": "Request message for 'DemoteDestination' request.",
+      "id": "DemoteDestinationRequest",
+      "properties": {},
       "type": "object"
     },
     "DescribeConversionWorkspaceRevisionsResponse": {
@@ -4507,7 +4559,8 @@
             "ERROR_RDBMS",
             "SOURCE_SIZE_EXCEEDS_THRESHOLD",
             "EXISTING_CONFLICTING_DATABASES",
-            "PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE"
+            "PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE",
+            "EXISTING_DATA"
           ],
           "enumDescriptions": [
             "An unknown error occurred",
@@ -4537,7 +4590,8 @@
             "There was an underlying RDBMS error.",
             "The source DB size in Bytes exceeds a certain threshold. The migration might require an increase of quota, or might not be supported.",
             "The destination DB contains existing databases that are conflicting with those in the source DB.",
-            "Insufficient privilege to enable the parallelism configuration."
+            "Insufficient privilege to enable the parallelism configuration.",
+            "The destination instance contains existing data or user defined entities (for example databases, tables, or functions). You can only migrate to empty instances. Clear your destination instance and retry the migration job."
           ],
           "readOnly": true,
           "type": "string"
@@ -4864,6 +4918,10 @@
       "description": "Specifies connection parameters required specifically for PostgreSQL databases.",
       "id": "PostgreSqlConnectionProfile",
       "properties": {
+        "alloydbClusterId": {
+          "description": "Optional. If the destination is an AlloyDB database, use this field to provide the AlloyDB cluster ID.",
+          "type": "string"
+        },
         "cloudSqlId": {
           "description": "If the source is a Cloud SQL database, use this field to provide the Cloud SQL instance ID of the source.",
           "type": "string"

@@ -333,10 +333,22 @@ type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService struct {
 
 func NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService {
 	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService{s: s}
+	rs.Instances = NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService(s)
 	return rs
 }
 
 type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService struct {
+	s *Service
+
+	Instances *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService {
+	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService struct {
 	s *Service
 }
 
@@ -1459,6 +1471,101 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BlobStorageInfo: BlobStorageInfo contains details about the data
+// stored in Blob Storage for the referenced resource. Note: Storage
+// class is only valid for DICOM and hence will only be populated for
+// DICOM resources.
+type BlobStorageInfo struct {
+	// SizeBytes: Size in bytes of data stored in Blob Storage.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// StorageClass: The storage class in which the Blob data is stored.
+	//
+	// Possible values:
+	//   "BLOB_STORAGE_CLASS_UNSPECIFIED" - If unspecified in CreateDataset,
+	// the StorageClass defaults to STANDARD. If unspecified in
+	// UpdateDataset and the StorageClass is set in the field mask, an
+	// InvalidRequest error is thrown.
+	//   "STANDARD" - This stores the Object in Blob Standard Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#standard
+	//   "NEARLINE" - This stores the Object in Blob Nearline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#nearline
+	//   "COLDLINE" - This stores the Object in Blob Coldline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#coldline
+	//   "ARCHIVE" - This stores the Object in Blob Archive Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#archive
+	StorageClass string `json:"storageClass,omitempty"`
+
+	// StorageClassUpdateTime: The time at which the storage class was
+	// updated. This is used to compute early deletion fees of the resource.
+	StorageClassUpdateTime string `json:"storageClassUpdateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BlobStorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BlobStorageInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BlobStorageSettings: Settings for data stored in Blob storage.
+type BlobStorageSettings struct {
+	// BlobStorageClass: The Storage class in which the Blob data is stored.
+	//
+	// Possible values:
+	//   "BLOB_STORAGE_CLASS_UNSPECIFIED" - If unspecified in CreateDataset,
+	// the StorageClass defaults to STANDARD. If unspecified in
+	// UpdateDataset and the StorageClass is set in the field mask, an
+	// InvalidRequest error is thrown.
+	//   "STANDARD" - This stores the Object in Blob Standard Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#standard
+	//   "NEARLINE" - This stores the Object in Blob Nearline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#nearline
+	//   "COLDLINE" - This stores the Object in Blob Coldline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#coldline
+	//   "ARCHIVE" - This stores the Object in Blob Archive Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#archive
+	BlobStorageClass string `json:"blobStorageClass,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BlobStorageClass") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlobStorageClass") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BlobStorageSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod BlobStorageSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5609,26 +5716,31 @@ type ImportAnnotationsResponse struct {
 // This API accepts duplicate DICOM instances by ignoring the
 // newly-pushed instance. It does not overwrite.
 type ImportDicomDataRequest struct {
+	// BlobStorageSettings: Optional. The blob storage settings for the data
+	// imported by this operation.
+	BlobStorageSettings *BlobStorageSettings `json:"blobStorageSettings,omitempty"`
+
 	// GcsSource: Cloud Storage source data location and import
 	// configuration. The Cloud Healthcare Service Agent requires the
 	// `roles/storage.objectViewer` Cloud IAM roles on the Cloud Storage
 	// location.
 	GcsSource *GoogleCloudHealthcareV1beta1DicomGcsSource `json:"gcsSource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsSource") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BlobStorageSettings")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlobStorageSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7510,13 +7622,13 @@ func (s *RevokeConsentRequest) MarshalJSON() ([]byte, error) {
 // RollbackFhirResourceFilteringFields: Filters to select resources that
 // need to be rolled back.
 type RollbackFhirResourceFilteringFields struct {
-	// MetadataFilter: Optional. A string to use for filtering resource
-	// metadata. Complies with AIP-160 except without the has operator.
-	// Additionally, supports 2 functions: hastag("system") = "code" for tag
-	// filtering and extension_ts_value("uri") = timestamp for filtering
-	// extensions with timestamp, which is given as a unix timestamp.
-	// extension_ts_url can be used with >, <, <=, >=, != comparisons as
-	// well.
+	// MetadataFilter: Optional. A filter expression that matches data in
+	// the `Resource.meta` element. Supports all filters in AIP-160
+	// (https://google.aip.dev/160) except the "has" (`:`) operator.
+	// Supports the following custom functions: * `tag("") = "" for tag
+	// filtering. * `extension_value_ts("") = ` for filtering extensions
+	// with a timestamp, where `` is a Unix timestamp. Supports the `>`,
+	// `<`, `<=`, `>=`, and `!=` comparison operators.
 	MetadataFilter string `json:"metadataFilter,omitempty"`
 
 	// OperationIds: Optional. A list of operation IDs to roll back. Only
@@ -8117,6 +8229,49 @@ func (s *SeriesMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SetBlobStorageSettingsRequest: Request message for
+// `SetBlobStorageSettings` method.
+type SetBlobStorageSettingsRequest struct {
+	// BlobStorageSettings: The blob storage settings to update for the
+	// specified resources. Only fields listed in `update_mask` are applied.
+	BlobStorageSettings *BlobStorageSettings `json:"blobStorageSettings,omitempty"`
+
+	// FilterConfig: Optional. A filter configuration. If `filter_config` is
+	// specified, set the value of `resource` to the resource name of a
+	// DICOM store in the format
+	// `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`
+	// .
+	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BlobStorageSettings")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlobStorageSettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SetBlobStorageSettingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetBlobStorageSettingsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SetBlobStorageSettingsResponse: Returns additional info in regards to
+// a completed set blob storage settings API.
+type SetBlobStorageSettingsResponse struct {
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -8236,6 +8391,52 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageInfo: StorageInfo encapsulates all the storage info of a
+// resource.
+type StorageInfo struct {
+	// BlobStorageInfo: Info about the data stored in blob storage for the
+	// resource.
+	BlobStorageInfo *BlobStorageInfo `json:"blobStorageInfo,omitempty"`
+
+	// ReferencedResource: The resource whose storage info is returned. For
+	// example, to specify the resource path of a DICOM Instance:
+	// `projects/{projectid}/datasets/{datasetid}/dicomStores/{dicom_store_id
+	// }/dicomWeb/studi/{study_uid}/series/{series_uid}/instances/{instance_u
+	// id}`
+	ReferencedResource string `json:"referencedResource,omitempty"`
+
+	// StructuredStorageInfo: Info about the data stored in structured
+	// storage for the resource.
+	StructuredStorageInfo *StructuredStorageInfo `json:"structuredStorageInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BlobStorageInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BlobStorageInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StreamConfig: Contains configuration for streaming FHIR export.
 type StreamConfig struct {
 	// BigqueryDestination: The destination BigQuery structure that contains
@@ -8319,6 +8520,35 @@ type StreamConfig struct {
 
 func (s *StreamConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StructuredStorageInfo: StructuredStorageInfo contains details about
+// the data stored in Structured Storage for the referenced resource.
+type StructuredStorageInfo struct {
+	// SizeBytes: Size in bytes of data stored in structured storage.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StructuredStorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StructuredStorageInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -20824,9 +21054,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForInstances, see Searching for studies,
-// series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForInstances, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
 //     request. For example, `instances`, `series/{series_uid}/instances`,
@@ -20909,7 +21138,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Do(opts ...
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForInstances returns a list of matching instances. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForInstances returns a list of matching instances. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/instances",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.searchForInstances",
@@ -20964,9 +21193,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForSeries, see Searching for studies, series,
-// instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForSeries, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
 //     example, `series` or `studies/{study_uid}/series`.
@@ -21048,7 +21276,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Do(opts ...goo
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForSeries returns a list of matching series. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForSeries returns a list of matching series. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/series",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.searchForSeries",
@@ -21103,9 +21331,8 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForStudies, see Searching for studies, series,
-// instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForStudies, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForStudies DICOMweb request.
 //     For example, `studies`.
@@ -21187,7 +21414,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForStudies returns a list of matching studies. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForStudies returns a list of matching studies. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForStudies, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForStudies, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.searchForStudies",
@@ -21214,6 +21441,161 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	//   "path": "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}",
 	//   "response": {
 	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.dicomStores.setBlobStorageSettings":
+
+type ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall struct {
+	s                             *Service
+	resource                      string
+	setblobstoragesettingsrequest *SetBlobStorageSettingsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// SetBlobStorageSettings: SetBlobStorageSettings sets the blob storage
+// settings of the specified resources.
+//
+//   - resource: The path of the resource to update the blob storage
+//     settings in the format of
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }/dicomWeb/studies/{studyUID}`,
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instance
+//     UID}`. If `filter_config` is specified, set the value of `resource`
+//     to the resource name of a DICOM store in the format
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }`.
+func (r *ProjectsLocationsDatasetsDicomStoresService) SetBlobStorageSettings(resource string, setblobstoragesettingsrequest *SetBlobStorageSettingsRequest) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setblobstoragesettingsrequest = setblobstoragesettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setblobstoragesettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setBlobStorageSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.setBlobStorageSettings" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "SetBlobStorageSettings sets the blob storage settings of the specified resources.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:setBlobStorageSettings",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.setBlobStorageSettings",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "Required. The path of the resource to update the blob storage settings in the format of `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`, `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}`. If `filter_config` is specified, set the value of `resource` to the resource name of a DICOM store in the format `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:setBlobStorageSettings",
+	//   "request": {
+	//     "$ref": "SetBlobStorageSettingsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-healthcare",
@@ -21390,8 +21772,8 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in
 // the Cloud Healthcare API conformance statement. For samples that show
-// how to call StoreInstances, see Storing DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
+// how to call StoreInstances, see Store DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
 //
 //   - dicomWebPath: The path of the StoreInstances DICOMweb request. For
 //     example, `studies/[{study_uid}]`. Note that the `study_uid` is
@@ -21461,7 +21843,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Do(opts ...goog
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Storing DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).",
+	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.storeInstances",
@@ -21800,6 +22182,161 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall)
 
 }
 
+// method id "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.setBlobStorageSettings":
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall struct {
+	s                             *Service
+	resource                      string
+	setblobstoragesettingsrequest *SetBlobStorageSettingsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// SetBlobStorageSettings: SetBlobStorageSettings sets the blob storage
+// settings of the specified resources.
+//
+//   - resource: The path of the resource to update the blob storage
+//     settings in the format of
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }/dicomWeb/studies/{studyUID}`,
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instance
+//     UID}`. If `filter_config` is specified, set the value of `resource`
+//     to the resource name of a DICOM store in the format
+//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
+//     }`.
+func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService) SetBlobStorageSettings(resource string, setblobstoragesettingsrequest *SetBlobStorageSettingsRequest) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setblobstoragesettingsrequest = setblobstoragesettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setblobstoragesettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setBlobStorageSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.setBlobStorageSettings" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "SetBlobStorageSettings sets the blob storage settings of the specified resources.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}:setBlobStorageSettings",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.setBlobStorageSettings",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "Required. The path of the resource to update the blob storage settings in the format of `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`, `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}`. If `filter_config` is specified, set the value of `resource` to the resource name of a DICOM store in the format `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:setBlobStorageSettings",
+	//   "request": {
+	//     "$ref": "SetBlobStorageSettingsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.getSeriesMetrics":
 
 type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall struct {
@@ -21950,6 +22487,158 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetri
 
 }
 
+// method id "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances.getStorageInfo":
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetStorageInfo: GetStorageInfo returns the storage info of the
+// specified resource.
+//
+//   - resource: The path of the resource for which the storage info is
+//     requested (for exaxmple for a DICOM Instance:
+//     `projects/{projectid}/datasets/{datasetid}/dicomStores/{dicomStoreId
+//     }/dicomWeb/studies/{study_uid}/series/{series_uid}/instances/{instan
+//     ce_uid}`).
+func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService) GetStorageInfo(resource string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:getStorageInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances.getStorageInfo" call.
+// Exactly one of *StorageInfo or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StorageInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Do(opts ...googleapi.CallOption) (*StorageInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StorageInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetStorageInfo returns the storage info of the specified resource.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}:getStorageInfo",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances.getStorageInfo",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "Required. The path of the resource for which the storage info is requested (for exaxmple for a DICOM Instance: `projects/{projectid}/datasets/{datasetid}/dicomStores/{dicomStoreId}/dicomWeb/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`)",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+/series/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+resource}:getStorageInfo",
+	//   "response": {
+	//     "$ref": "StorageInfo"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.dicomStores.studies.delete":
 
 type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
@@ -21966,8 +22655,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
 // will be marked successful when the deletion is complete. Warning:
 // Instances cannot be inserted into a study that is being deleted by an
 // operation until the operation completes. For samples that show how to
-// call DeleteStudy, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+// call DeleteStudy, see Delete a study, series, or instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).
 //
 //   - dicomWebPath: The path of the DeleteStudy request. For example,
 //     `studies/{study_uid}`.
@@ -22066,7 +22755,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "DeleteStudy deletes all instances within the given study using a long running operation. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a study that is being deleted by an operation until the operation completes. For samples that show how to call DeleteStudy, see [Deleting a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).",
+	//   "description": "DeleteStudy deletes all instances within the given study using a long running operation. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a study that is being deleted by an operation until the operation completes. For samples that show how to call DeleteStudy, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.delete",
@@ -22121,8 +22810,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 // Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveStudyMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+// show how to call RetrieveStudyMetadata, see Retrieve metadata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).
 //
 //   - dicomWebPath: The path of the RetrieveStudyMetadata DICOMweb
 //     request. For example, `studies/{study_uid}/metadata`.
@@ -22204,7 +22893,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Do(opt
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveStudyMetadata returns instance associated with the given study presented as metadata with the bulk data removed. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudyMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudyMetadata, see [Retrieving metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).",
+	//   "description": "RetrieveStudyMetadata returns instance associated with the given study presented as metadata with the bulk data removed. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudyMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudyMetadata, see [Retrieve metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.retrieveMetadata",
@@ -22259,8 +22948,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveStudy, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+// show how to call RetrieveStudy, see Retrieve DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 //
 //   - dicomWebPath: The path of the RetrieveStudy DICOMweb request. For
 //     example, `studies/{study_uid}`.
@@ -22342,7 +23031,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveStudy returns all instances within the given study. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudy, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudy, see [Retrieving DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).",
+	//   "description": "RetrieveStudy returns all instances within the given study. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveStudy, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveStudy, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.retrieveStudy",
@@ -22397,9 +23086,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForInstances, see Searching for studies,
-// series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForInstances, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
 //     request. For example, `instances`, `series/{series_uid}/instances`,
@@ -22482,7 +23170,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Do(o
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForInstances returns a list of matching instances. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForInstances returns a list of matching instances. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/instances",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.searchForInstances",
@@ -22537,9 +23225,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForSeries, see Searching for studies, series,
-// instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForSeries, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
 //     example, `series` or `studies/{study_uid}/series`.
@@ -22621,7 +23308,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Do(opts
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForSeries returns a list of matching series. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForSeries returns a list of matching series. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForSeries, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForSeries, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.searchForSeries",
@@ -22676,8 +23363,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in
 // the Cloud Healthcare API conformance statement. For samples that show
-// how to call StoreInstances, see Storing DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
+// how to call StoreInstances, see Store DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).
 //
 //   - dicomWebPath: The path of the StoreInstances DICOMweb request. For
 //     example, `studies/[{study_uid}]`. Note that the `study_uid` is
@@ -22747,7 +23434,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Storing DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).",
+	//   "description": "StoreInstances stores DICOM instances associated with study instance unique identifiers (SUID). See [Store Transaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5). For details on the implementation of StoreInstances, see [Store transaction](https://cloud.google.com/healthcare/docs/dicom#store_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call StoreInstances, see [Store DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#store-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.storeInstances",
@@ -22802,9 +23489,9 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 // Operation which will be marked successful when the deletion is
 // complete. Warning: Instances cannot be inserted into a series that is
 // being deleted by an operation until the operation completes. For
-// samples that show how to call DeleteSeries, see Deleting a study,
+// samples that show how to call DeleteSeries, see Delete a study,
 // series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).
 //
 //   - dicomWebPath: The path of the DeleteSeries request. For example,
 //     `studies/{study_uid}/series/{series_uid}`.
@@ -22906,7 +23593,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "DeleteSeries deletes all instances within the given study and series using a long running operation. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a series that is being deleted by an operation until the operation completes. For samples that show how to call DeleteSeries, see [Deleting a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).",
+	//   "description": "DeleteSeries deletes all instances within the given study and series using a long running operation. The method returns an Operation which will be marked successful when the deletion is complete. Warning: Instances cannot be inserted into a series that is being deleted by an operation until the operation completes. For samples that show how to call DeleteSeries, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.delete",
@@ -22962,8 +23649,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 // Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveSeriesMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+// show how to call RetrieveSeriesMetadata, see Retrieve metadata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).
 //
 //   - dicomWebPath: The path of the RetrieveSeriesMetadata DICOMweb
 //     request. For example,
@@ -23046,7 +23733,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveSeriesMetadata returns instance associated with the given study and series, presented as metadata with the bulk data removed. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeriesMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeriesMetadata, see [Retrieving metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).",
+	//   "description": "RetrieveSeriesMetadata returns instance associated with the given study and series, presented as metadata with the bulk data removed. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeriesMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeriesMetadata, see [Retrieve metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveMetadata",
@@ -23101,8 +23788,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 // study/series/instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveSeries, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+// show how to call RetrieveSeries, see Retrieve DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 //
 //   - dicomWebPath: The path of the RetrieveSeries DICOMweb request. For
 //     example, `studies/{study_uid}/series/{series_uid}`.
@@ -23184,7 +23871,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) Do
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveSeries returns all instances within the given study and series. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeries, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeries, see [Retrieving DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).",
+	//   "description": "RetrieveSeries returns all instances within the given study and series. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveSeries, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveSeries, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveSeries",
@@ -23239,9 +23926,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 // transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call SearchForInstances, see Searching for studies,
-// series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
+// show how to call SearchForInstances, see Search for DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).
 //
 //   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
 //     request. For example, `instances`, `series/{series_uid}/instances`,
@@ -23324,7 +24010,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "SearchForInstances returns a list of matching instances. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Searching for studies, series, instances, and frames](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).",
+	//   "description": "SearchForInstances returns a list of matching instances. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of SearchForInstances, see [Search transaction](https://cloud.google.com/healthcare/docs/dicom#search_transaction) in the Cloud Healthcare API conformance statement. For samples that show how to call SearchForInstances, see [Search for DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#search-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.searchForInstances",
@@ -23376,8 +24062,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall struct
 // to the GET requests specified in the Retrieve transaction. Study and
 // series search results can take a few seconds to be updated after an
 // instance is deleted using DeleteInstance. For samples that show how
-// to call DeleteInstance, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
+// to call DeleteInstance, see Delete a study, series, or instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).
 //
 //   - dicomWebPath: The path of the DeleteInstance request. For example,
 //     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
@@ -23479,7 +24165,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "DeleteInstance deletes an instance associated with the given study, series, and SOP Instance UID. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. Study and series search results can take a few seconds to be updated after an instance is deleted using DeleteInstance. For samples that show how to call DeleteInstance, see [Deleting a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).",
+	//   "description": "DeleteInstance deletes an instance associated with the given study, series, and SOP Instance UID. Delete requests are equivalent to the GET requests specified in the Retrieve transaction. Study and series search results can take a few seconds to be updated after an instance is deleted using DeleteInstance. For samples that show how to call DeleteInstance, see [Delete a study, series, or instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#delete-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.delete",
@@ -23537,8 +24223,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 // and DICOM instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in
 // the Cloud Healthcare API conformance statement. For samples that show
-// how to call RetrieveInstance, see Retrieving an instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).
+// how to call RetrieveInstance, see Retrieve an instance
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-instance).
 //
 //   - dicomWebPath: The path of the RetrieveInstance DICOMweb request.
 //     For example,
@@ -23621,7 +24307,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveInstance returns instance associated with the given study, series, and SOP Instance UID. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstance, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) and [DICOM instances](https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstance, see [Retrieving an instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).",
+	//   "description": "RetrieveInstance returns instance associated with the given study, series, and SOP Instance UID. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstance, see [DICOM study/series/instances](https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances) and [DICOM instances](https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstance, see [Retrieve an instance](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-instance).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveInstance",
@@ -23678,8 +24364,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveInstanceMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
+// show how to call RetrieveInstanceMetadata, see Retrieve metadata
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).
 //
 //   - dicomWebPath: The path of the RetrieveInstanceMetadata DICOMweb
 //     request. For example,
@@ -23763,7 +24449,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveInstanceMetadata returns instance associated with the given study, series, and SOP Instance UID presented as metadata with the bulk data removed. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstanceMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstanceMetadata, see [Retrieving metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).",
+	//   "description": "RetrieveInstanceMetadata returns instance associated with the given study, series, and SOP Instance UID presented as metadata with the bulk data removed. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveInstanceMetadata, see [Metadata resources](https://cloud.google.com/healthcare/docs/dicom#metadata_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveInstanceMetadata, see [Retrieve metadata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-metadata).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveMetadata",
@@ -23819,9 +24505,9 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // Rendered resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveRenderedInstance, see Retrieving consumer
+// show how to call RetrieveRenderedInstance, see Retrieve consumer
 // image formats
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).
 //
 //   - dicomWebPath: The path of the RetrieveRenderedInstance DICOMweb
 //     request. For example,
@@ -23905,7 +24591,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveRenderedInstance returns instance associated with the given study, series, and SOP Instance UID in an acceptable Rendered Media Type. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedInstance, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedInstance, see [Retrieving consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).",
+	//   "description": "RetrieveRenderedInstance returns instance associated with the given study, series, and SOP Instance UID in an acceptable Rendered Media Type. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedInstance, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedInstance, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/rendered",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveRendered",
@@ -23960,8 +24646,8 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 // For details on the implementation of RetrieveFrames, see DICOM frames
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the
 // Cloud Healthcare API conformance statement. For samples that show how
-// to call RetrieveFrames, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
+// to call RetrieveFrames, see Retrieve DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).
 //
 //   - dicomWebPath: The path of the RetrieveFrames DICOMweb request. For
 //     example,
@@ -24045,7 +24731,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieving DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).",
+	//   "description": "RetrieveFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveFrames, see [DICOM frames](https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveFrames, see [Retrieve DICOM data](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-dicom).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/frames/{framesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveFrames",
@@ -24101,9 +24787,9 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // Rendered resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
-// show how to call RetrieveRenderedFrames, see Retrieving consumer
-// image formats
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
+// show how to call RetrieveRenderedFrames, see Retrieve consumer image
+// formats
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).
 //
 //   - dicomWebPath: The path of the RetrieveRenderedFrames DICOMweb
 //     request. For example,
@@ -24187,7 +24873,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieving consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).",
+	//   "description": "RetrieveRenderedFrames returns instances associated with the given study, series, SOP Instance UID and frame numbers in an acceptable Rendered Media Type. See [RetrieveTransaction](http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4). For details on the implementation of RetrieveRenderedFrames, see [Rendered resources](https://cloud.google.com/healthcare/docs/dicom#rendered_resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveRenderedFrames, see [Retrieve consumer image formats](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-consumer).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/frames/{framesId}/rendered",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveRendered",
@@ -31010,7 +31696,7 @@ type ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall struct {
 	header_      http.Header
 }
 
-// GetHL7v2StoreMetrics: Gets metrics asssociated with the HL7v2 store.
+// GetHL7v2StoreMetrics: Gets metrics associated with the HL7v2 store.
 //
 //   - name: The resource name of the HL7v2 store to get metrics for, in
 //     the format
@@ -31121,7 +31807,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets metrics asssociated with the HL7v2 store.",
+	//   "description": "Gets metrics associated with the HL7v2 store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:getHL7v2StoreMetrics",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.getHL7v2StoreMetrics",

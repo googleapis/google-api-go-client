@@ -970,6 +970,13 @@ type ConnectionSchemaMetadata struct {
 	//   "STATE_UNSPECIFIED" - Default state.
 	//   "REFRESHING" - Schema refresh is in progress.
 	//   "UPDATED" - Schema has been updated.
+	//   "REFRESHING_SCHEMA_METADATA" - Schema refresh for metadata is in
+	// progress.
+	//   "UPDATED_SCHEMA_METADATA" - Schema metadata has been updated.
+	//   "REFRESH_SCHEMA_METADATA_FAILED" - Failed to refresh schema
+	// metadata
+	//   "REFRESHING_FULL_SCHEMA" - Triggered full schema refresh
+	//   "UPDATED_FULL_SCHEMA" - Updated full schema
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. Timestamp when the connection runtime schema
@@ -1553,6 +1560,46 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: Regional encryption config for CMEK details.
+type EncryptionConfig struct {
+	// EncryptionType: Optional. Encryption type for the region.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Egress mode unspecified.
+	//   "GMEK" - Network egress through auto assigned IPs.
+	//   "CMEK" - Network egress through static IPs.
+	EncryptionType string `json:"encryptionType,omitempty"`
+
+	// KmsKeyName: Optional. KMS crypto key. This field accepts identifiers
+	// of the form
+	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
+	// s/ {crypto_key}`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EncryptionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EncryptionKey: Encryption Key value.
 type EncryptionKey struct {
 	// KmsKeyName: The [KMS key name] with which the content of the
@@ -1724,6 +1771,9 @@ type EventSubscription struct {
 	// EventTypeId: Optional. Event type id of the event of current
 	// EventSubscription.
 	EventTypeId string `json:"eventTypeId,omitempty"`
+
+	// Jms: Optional. JMS is the source for the event listener.
+	Jms *JMS `json:"jms,omitempty"`
 
 	// Name: Required. Resource name of the EventSubscription. Format:
 	// projects/{project}/locations/{location}/connections/{connection}/event
@@ -1986,6 +2036,16 @@ type EventingConfigTemplate struct {
 	// EnrichmentSupported: Enrichment Supported.
 	EnrichmentSupported bool `json:"enrichmentSupported,omitempty"`
 
+	// EventListenerType: The type of the event listener for a specific
+	// connector.
+	//
+	// Possible values:
+	//   "EVENT_LISTENER_TYPE_UNSPECIFIED" - Default value.
+	//   "WEBHOOK_LISTENER" - Webhook listener. e.g. Jira, Zendesk,
+	// Servicenow etc.,
+	//   "JMS_LISTENER" - JMS Listener. e.g. IBM MQ, Rabbit MQ etc.,
+	EventListenerType string `json:"eventListenerType,omitempty"`
+
 	// IsEventingSupported: Is Eventing Supported.
 	IsEventingSupported bool `json:"isEventingSupported,omitempty"`
 
@@ -2046,6 +2106,15 @@ type EventingDetails struct {
 
 	// SearchTags: Output only. Array of search keywords.
 	SearchTags []string `json:"searchTags,omitempty"`
+
+	// Type: Output only. The type of the event listener for a specific
+	// connector.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value.
+	//   "WEBHOOK" - Webhook listener. e.g. Jira, Zendesk, Servicenow etc.,
+	//   "JMS" - JMS Listener. e.g. IBM MQ, Rabbit MQ etc.,
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomEventTypes") to
 	// unconditionally include in API requests. By default, fields with
@@ -2586,6 +2655,42 @@ type InputParameter struct {
 
 func (s *InputParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod InputParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JMS: JMS message denotes the source of the event
+type JMS struct {
+	// Name: Optional. Name of the JMS source. i.e. queueName or topicName
+	Name string `json:"name,omitempty"`
+
+	// Type: Optional. Type of the JMS Source. i.e. Queue or Topic
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default state.
+	//   "QUEUE" - JMS Queue.
+	//   "TOPIC" - JMS Topic.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JMS) MarshalJSON() ([]byte, error) {
+	type NoMethod JMS
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3863,6 +3968,10 @@ type RefreshConnectionSchemaMetadataRequest struct {
 
 // RegionalSettings: Regional Settings details.
 type RegionalSettings struct {
+	// EncryptionConfig: Optional. Regional encryption config to hold CMEK
+	// details.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
 	// Name: Output only. Resource name of the Connection. Format:
 	// projects/{project}/locations/{location}/regionalSettings
 	Name string `json:"name,omitempty"`
@@ -3874,7 +3983,7 @@ type RegionalSettings struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3882,12 +3991,13 @@ type RegionalSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncryptionConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

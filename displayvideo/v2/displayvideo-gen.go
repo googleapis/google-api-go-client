@@ -4844,6 +4844,48 @@ func (s *CommonInStreamAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Consent: User consent status.
+type Consent struct {
+	// AdPersonalization: Represents consent for ad personalization.
+	//
+	// Possible values:
+	//   "CONSENT_STATUS_UNSPECIFIED" - Consent is not specified.
+	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
+	//   "CONSENT_STATUS_DENIED" - Consent is denied.
+	AdPersonalization string `json:"adPersonalization,omitempty"`
+
+	// AdUserData: Represents consent for ad user data.
+	//
+	// Possible values:
+	//   "CONSENT_STATUS_UNSPECIFIED" - Consent is not specified.
+	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
+	//   "CONSENT_STATUS_DENIED" - Consent is denied.
+	AdUserData string `json:"adUserData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdPersonalization")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdPersonalization") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Consent) MarshalJSON() ([]byte, error) {
+	type NoMethod Consent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContactInfo: Contact information defining a Customer Match audience
 // member.
 type ContactInfo struct {
@@ -4905,12 +4947,15 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 // ContactInfoList: Wrapper message for a list of contact information
 // defining Customer Match audience members.
 type ContactInfoList struct {
+	// Consent: Input only. User consent status.
+	Consent *Consent `json:"consent,omitempty"`
+
 	// ContactInfos: A list of ContactInfo objects defining Customer Match
 	// audience members. The size of members after splitting the
 	// contact_infos mustn't be greater than 500,000.
 	ContactInfos []*ContactInfo `json:"contactInfos,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ContactInfos") to
+	// ForceSendFields is a list of field names (e.g. "Consent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4918,10 +4963,10 @@ type ContactInfoList struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContactInfos") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Consent") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -5737,6 +5782,10 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
+	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide)
+	// before migrating to this version. Currently in beta. Only available
+	// for use by a subset of users.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -13598,12 +13647,15 @@ func (s *MobileApp) MarshalJSON() ([]byte, error) {
 // MobileDeviceIdList: Wrapper message for a list of mobile device IDs
 // defining Customer Match audience members.
 type MobileDeviceIdList struct {
+	// Consent: Input only. User consent status.
+	Consent *Consent `json:"consent,omitempty"`
+
 	// MobileDeviceIds: A list of mobile device IDs defining Customer Match
 	// audience members. The size of mobile_device_ids mustn't be greater
 	// than 500,000.
 	MobileDeviceIds []string `json:"mobileDeviceIds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MobileDeviceIds") to
+	// ForceSendFields is a list of field names (e.g. "Consent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -13611,13 +13663,12 @@ type MobileDeviceIdList struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MobileDeviceIds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Consent") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -15883,6 +15934,10 @@ type SdfConfig struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
+	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide)
+	// before migrating to this version. Currently in beta. Only available
+	// for use by a subset of users.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
@@ -15966,6 +16021,10 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_5_4" - SDF version 5.4
 	//   "SDF_VERSION_5_5" - SDF version 5.5
 	//   "SDF_VERSION_6" - SDF version 6
+	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide)
+	// before migrating to this version. Currently in beta. Only available
+	// for use by a subset of users.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to

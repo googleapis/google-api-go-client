@@ -452,7 +452,10 @@ type Container struct {
 	// but you can create your own custom container images
 	// (https://cloud.google.com/workstations/docs/custom-container-images).
 	// If using a private image, the `host.gceInstance.serviceAccount` field
-	// must be specified in the workstation configuration and must have
+	// must be specified in the workstation configuration. If using a custom
+	// container image, the service account must have Artifact Registry
+	// Reader
+	// (https://cloud.google.com/artifact-registry/docs/access-control#roles)
 	// permission to pull the specified image. Otherwise, the image must be
 	// publicly accessible.
 	Image string `json:"image,omitempty"`
@@ -530,6 +533,34 @@ type CustomerEncryptionKey struct {
 
 func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerEncryptionKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DomainConfig: Configuration options for a custom domain.
+type DomainConfig struct {
+	// Domain: Immutable. Domain used by Workstations for HTTP ingress.
+	Domain string `json:"domain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -737,14 +768,16 @@ type GceInstance struct {
 	// specified, be sure that the service account has
 	// `logginglogEntries.create` permission on the project so it can write
 	// logs out to Cloud Logging. If using a custom container image, the
-	// service account must have permissions to pull the specified image. If
-	// you as the administrator want to be able to `ssh` into the underlying
-	// VM, you need to set this value to a service account for which you
-	// have the `iam.serviceAccounts.actAs` permission. Conversely, if you
-	// don't want anyone to be able to `ssh` into the underlying VM, use a
-	// service account where no one has that permission. If not set, VMs run
-	// with a service account provided by the Cloud Workstations service,
-	// and the image must be publicly accessible.
+	// service account must have Artifact Registry Reader
+	// (https://cloud.google.com/artifact-registry/docs/access-control#roles)
+	// permission to pull the specified image. If you as the administrator
+	// want to be able to `ssh` into the underlying VM, you need to set this
+	// value to a service account for which you have the
+	// `iam.serviceAccounts.actAs` permission. Conversely, if you don't want
+	// anyone to be able to `ssh` into the underlying VM, use a service
+	// account where no one has that permission. If not set, VMs run with a
+	// service account provided by the Cloud Workstations service, and the
+	// image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ServiceAccountScopes: Optional. Scopes to grant to the
@@ -1970,6 +2003,9 @@ type WorkstationCluster struct {
 	// DisplayName: Optional. Human-readable name for this workstation
 	// cluster.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// DomainConfig: Optional. Configuration options for a custom domain.
+	DomainConfig *DomainConfig `json:"domainConfig,omitempty"`
 
 	// Etag: Optional. Checksum computed by the server. May be sent on
 	// update and delete requests to make sure that the client has an

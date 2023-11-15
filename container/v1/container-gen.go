@@ -1324,6 +1324,9 @@ type Cluster struct {
 	// of this resource for username and password information.
 	Endpoint string `json:"endpoint,omitempty"`
 
+	// EnterpriseConfig: GKE Enterprise Configuration.
+	EnterpriseConfig *EnterpriseConfig `json:"enterpriseConfig,omitempty"`
+
 	// Etag: This checksum is computed by the server based on the value of
 	// cluster fields, and may be sent on update requests to ensure the
 	// client has an up-to-date value before proceeding.
@@ -1865,6 +1868,11 @@ type ClusterUpdate struct {
 	// apply to all auto-provisioned node pools in autopilot clusters and
 	// node auto-provisioning enabled clusters.
 	DesiredNodePoolAutoConfigNetworkTags *NetworkTags `json:"desiredNodePoolAutoConfigNetworkTags,omitempty"`
+
+	// DesiredNodePoolAutoConfigResourceManagerTags: The desired resource
+	// manager tags that apply to all auto-provisioned node pools in
+	// autopilot clusters and node auto-provisioning enabled clusters.
+	DesiredNodePoolAutoConfigResourceManagerTags *ResourceManagerTags `json:"desiredNodePoolAutoConfigResourceManagerTags,omitempty"`
 
 	// DesiredNodePoolAutoscaling: Autoscaler configuration for the node
 	// pool specified in desired_node_pool_id. If there is only one pool in
@@ -2459,6 +2467,42 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EnterpriseConfig: EnterpriseConfig is the cluster enterprise
+// configuration.
+type EnterpriseConfig struct {
+	// ClusterTier: Output only. [Output only] cluster_tier specifies the
+	// premium tier of the cluster.
+	//
+	// Possible values:
+	//   "CLUSTER_TIER_UNSPECIFIED" - CLUSTER_TIER_UNSPECIFIED is when
+	// cluster_tier is not set.
+	//   "STANDARD" - STANDARD indicates a standard GKE cluster.
+	//   "ENTERPRISE" - ENTERPRISE indicates a GKE Enterprise cluster.
+	ClusterTier string `json:"clusterTier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterTier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterTier") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EphemeralStorageLocalSsdConfig: EphemeralStorageLocalSsdConfig
 // contains configuration for the node ephemeral storage using Local
 // SSDs.
@@ -2694,6 +2738,8 @@ type GatewayAPIConfig struct {
 	// Possible values:
 	//   "CHANNEL_UNSPECIFIED" - Default value.
 	//   "CHANNEL_DISABLED" - Gateway API support is disabled
+	//   "CHANNEL_EXPERIMENTAL" - Gateway API support is enabled,
+	// experimental CRDs are installed
 	//   "CHANNEL_STANDARD" - Gateway API support is enabled, standard CRDs
 	// are installed
 	Channel string `json:"channel,omitempty"`
@@ -4702,6 +4748,10 @@ type NodeConfig struct {
 	// annotate any related Google Compute Engine resources.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
+	// ResourceManagerTags: A map of resource manager tag keys and values to
+	// be attached to the nodes.
+	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
+
 	// SandboxConfig: Sandbox configuration for this node.
 	SandboxConfig *SandboxConfig `json:"sandboxConfig,omitempty"`
 
@@ -5178,6 +5228,11 @@ type NodePoolAutoConfig struct {
 	// the list must comply with RFC1035.
 	NetworkTags *NetworkTags `json:"networkTags,omitempty"`
 
+	// ResourceManagerTags: Resource manager tag keys and values to be
+	// attached to the nodes for managing Compute Engine firewalls using
+	// Network Firewall Policies.
+	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "NetworkTags") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5541,6 +5596,9 @@ type Operation struct {
 	// For more details, see [documentation on
 	// resizes](https://cloud.google.com/kubernetes-engine/docs/concepts/main
 	// tenance-windows-and-exclusions#repairs).
+	//   "FLEET_FEATURE_UPGRADE" - Fleet features of GKE Enterprise are
+	// being upgraded. The cluster should be assumed to be blocked for other
+	// upgrades until the operation finishes.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Progress: Output only. [Output only] Progress information for an
@@ -6205,6 +6263,43 @@ type ResourceLimit struct {
 
 func (s *ResourceLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceLimit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceManagerTags: A map of resource manager tag keys and values to
+// be attached to the nodes for managing Compute Engine firewalls using
+// Network Firewall Policies. Tags must be according to specifications
+// in
+// https://cloud.google.com/vpc/docs/tags-firewalls-overview#specifications.
+// A maximum of 5 tag key-value pairs can be specified. Existing tags
+// will be replaced with new values.
+type ResourceManagerTags struct {
+	// Tags: TagKeyValue must be in one of the following formats
+	// ([KEY]=[VALUE]) 1. `tagKeys/{tag_key_id}=tagValues/{tag_value_id}` 2.
+	// `{org_id}/{tag_key_name}={tag_value_name}` 3.
+	// `{project_id}/{tag_key_name}={tag_value_name}`
+	Tags map[string]string `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceManagerTags) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceManagerTags
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7847,6 +7942,12 @@ type UpdateNodePoolRequest struct {
 	// ResourceLabels: The resource labels for the node pool to use to
 	// annotate any related Google Compute Engine resources.
 	ResourceLabels *ResourceLabels `json:"resourceLabels,omitempty"`
+
+	// ResourceManagerTags: Desired resource manager tag keys and values to
+	// be attached to the nodes for managing Compute Engine firewalls using
+	// Network Firewall Policies. Existing tags will be replaced with new
+	// values.
+	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
 
 	// Tags: The desired network tags to be applied to all nodes in the node
 	// pool. If this field is not present, the tags will not be changed.

@@ -844,10 +844,28 @@ type CloudSqlSettings struct {
 	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - Unspecified version.
 	//   "MYSQL_5_6" - MySQL 5.6.
 	//   "MYSQL_5_7" - MySQL 5.7.
+	//   "MYSQL_8_0" - MySQL 8.0.
+	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
+	// minor version is 18.
+	//   "MYSQL_8_0_26" - The database major version is MySQL 8.0 and the
+	// minor version is 26.
+	//   "MYSQL_8_0_27" - The database major version is MySQL 8.0 and the
+	// minor version is 27.
+	//   "MYSQL_8_0_28" - The database major version is MySQL 8.0 and the
+	// minor version is 28.
+	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the
+	// minor version is 30.
+	//   "MYSQL_8_0_31" - The database major version is MySQL 8.0 and the
+	// minor version is 31.
+	//   "MYSQL_8_0_32" - The database major version is MySQL 8.0 and the
+	// minor version is 32.
+	//   "MYSQL_8_0_33" - The database major version is MySQL 8.0 and the
+	// minor version is 33.
+	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the
+	// minor version is 34.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.
-	//   "MYSQL_8_0" - MySQL 8.0.
 	//   "POSTGRES_12" - PostgreSQL 12.
 	//   "POSTGRES_13" - PostgreSQL 13.
 	//   "POSTGRES_14" - PostgreSQL 14.
@@ -1500,7 +1518,7 @@ type DatabaseEngineInfo struct {
 	//   "ORACLE" - The source engine is Oracle.
 	Engine string `json:"engine,omitempty"`
 
-	// Version: Required. Engine named version, for example 12.c.1.
+	// Version: Required. Engine version, for example "12.c.1".
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Engine") to
@@ -1715,6 +1733,11 @@ func (s *DatabaseType) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DemoteDestinationRequest: Request message for 'DemoteDestination'
+// request.
+type DemoteDestinationRequest struct {
 }
 
 // DescribeConversionWorkspaceRevisionsResponse: Response message for
@@ -3565,6 +3588,10 @@ type MigrationJobVerificationError struct {
 	// existing databases that are conflicting with those in the source DB.
 	//   "PARALLEL_IMPORT_INSUFFICIENT_PRIVILEGE" - Insufficient privilege
 	// to enable the parallelism configuration.
+	//   "EXISTING_DATA" - The destination instance contains existing data
+	// or user defined entities (for example databases, tables, or
+	// functions). You can only migrate to empty instances. Clear your
+	// destination instance and retry the migration job.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,
@@ -4127,6 +4154,10 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 // PostgreSqlConnectionProfile: Specifies connection parameters required
 // specifically for PostgreSQL databases.
 type PostgreSqlConnectionProfile struct {
+	// AlloydbClusterId: Optional. If the destination is an AlloyDB
+	// database, use this field to provide the AlloyDB cluster ID.
+	AlloydbClusterId string `json:"alloydbClusterId,omitempty"`
+
 	// CloudSqlId: If the source is a Cloud SQL database, use this field to
 	// provide the Cloud SQL instance ID of the source.
 	CloudSqlId string `json:"cloudSqlId,omitempty"`
@@ -4176,7 +4207,7 @@ type PostgreSqlConnectionProfile struct {
 	// Database Migration Service.
 	Username string `json:"username,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudSqlId") to
+	// ForceSendFields is a list of field names (e.g. "AlloydbClusterId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4184,12 +4215,13 @@ type PostgreSqlConnectionProfile struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudSqlId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AlloydbClusterId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -11822,6 +11854,151 @@ func (c *ProjectsLocationsMigrationJobsDeleteCall) Do(opts ...googleapi.CallOpti
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datamigration.projects.locations.migrationJobs.demoteDestination":
+
+type ProjectsLocationsMigrationJobsDemoteDestinationCall struct {
+	s                        *Service
+	name                     string
+	demotedestinationrequest *DemoteDestinationRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// DemoteDestination: Demotes the destination database to become a read
+// replica of the source. This is applicable for the following
+// migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud
+// SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.
+//
+// - name: Name of the migration job resource to demote its destination.
+func (r *ProjectsLocationsMigrationJobsService) DemoteDestination(name string, demotedestinationrequest *DemoteDestinationRequest) *ProjectsLocationsMigrationJobsDemoteDestinationCall {
+	c := &ProjectsLocationsMigrationJobsDemoteDestinationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.demotedestinationrequest = demotedestinationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Fields(s ...googleapi.Field) *ProjectsLocationsMigrationJobsDemoteDestinationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Context(ctx context.Context) *ProjectsLocationsMigrationJobsDemoteDestinationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.demotedestinationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:demoteDestination")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.migrationJobs.demoteDestination" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/migrationJobs/{migrationJobsId}:demoteDestination",
+	//   "httpMethod": "POST",
+	//   "id": "datamigration.projects.locations.migrationJobs.demoteDestination",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the migration job resource to demote its destination.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/migrationJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:demoteDestination",
+	//   "request": {
+	//     "$ref": "DemoteDestinationRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

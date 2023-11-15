@@ -4232,6 +4232,7 @@ type RepositoryEventConfig struct {
 	//   "GITHUB" - The SCM repo is GITHUB.
 	//   "GITHUB_ENTERPRISE" - The SCM repo is GITHUB Enterprise.
 	//   "GITLAB_ENTERPRISE" - The SCM repo is GITLAB Enterprise.
+	//   "BITBUCKET_DATA_CENTER" - The SCM repo is BITBUCKET Data Center.
 	RepositoryType string `json:"repositoryType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PullRequest") to
@@ -4695,6 +4696,16 @@ type StorageSource struct {
 	// be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing
 	// source to build.
 	Object string `json:"object,omitempty"`
+
+	// SourceFetcher: Optional. Option to specify the tool to fetch the
+	// source file for the build.
+	//
+	// Possible values:
+	//   "SOURCE_FETCHER_UNSPECIFIED" - Unspecified defaults to GSUTIL.
+	//   "GSUTIL" - Use the "gsutil" tool to download the source file.
+	//   "GCS_FETCHER" - Use the Cloud Storage Fetcher tool to download the
+	// source file.
+	SourceFetcher string `json:"sourceFetcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
 	// unconditionally include in API requests. By default, fields with

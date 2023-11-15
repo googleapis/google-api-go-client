@@ -386,6 +386,12 @@ func (s *GoogleCloudRecaptchaenterpriseV1AndroidKeySettings) MarshalJSON() ([]by
 // GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest: The
 // request message to annotate an Assessment.
 type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
+	// AccountId: Optional. A stable account identifier to apply to the
+	// assessment. This is an alternative to setting `account_id` in
+	// `CreateAssessment`, for example when a stable account identifier is
+	// not yet known in the initial request.
+	AccountId string `json:"accountId,omitempty"`
+
 	// Annotation: Optional. The annotation that will be assigned to the
 	// Event. This field can be left empty to provide reasons that apply to
 	// an event without concluding whether the event is legitimate or
@@ -407,11 +413,10 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// the reasons field instead.
 	Annotation string `json:"annotation,omitempty"`
 
-	// HashedAccountId: Optional. Unique stable hashed user identifier to
-	// apply to the assessment. This is an alternative to setting the
-	// hashed_account_id in CreateAssessment, for example when the account
-	// identifier is not yet known in the initial request. It is recommended
-	// that the identifier is hashed using hmac-sha256 with stable secret.
+	// HashedAccountId: Optional. A stable hashed account identifier to
+	// apply to the assessment. This is an alternative to setting
+	// `hashed_account_id` in `CreateAssessment`, for example when a stable
+	// account identifier is not yet known in the initial request.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// Reasons: Optional. Reasons for the annotation that are assigned to
@@ -466,7 +471,7 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// in the transaction.
 	TransactionEvent *GoogleCloudRecaptchaenterpriseV1TransactionEvent `json:"transactionEvent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Annotation") to
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -474,7 +479,7 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Annotation") to include in
+	// NullFields is a list of field names (e.g. "AccountId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -540,7 +545,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId) MarshalJSON() ([]byte
 // assessment resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// AccountDefenderAssessment: Output only. Assessment returned by
-	// account defender when a hashed_account_id is provided.
+	// account defender when an account identifier is provided.
 	AccountDefenderAssessment *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment `json:"accountDefenderAssessment,omitempty"`
 
 	// AccountVerification: Optional. Account verification information for
@@ -714,9 +719,9 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// response.
 	FirewallPolicyEvaluation bool `json:"firewallPolicyEvaluation,omitempty"`
 
-	// HashedAccountId: Optional. Unique stable hashed user identifier for
-	// the request. The identifier must be hashed using hmac-sha256 with
-	// stable secret.
+	// HashedAccountId: Optional. Deprecated: use `user_info.account_id`
+	// instead. Unique stable hashed user identifier for the request. The
+	// identifier must be hashed using hmac-sha256 with stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// Headers: Optional. HTTP header information about the request.
@@ -746,6 +751,13 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// UserAgent: Optional. The user agent present in the request from the
 	// user's device related to this event.
 	UserAgent string `json:"userAgent,omitempty"`
+
+	// UserInfo: Optional. Information about the user that generates this
+	// event, when they can be identified. They are often identified through
+	// the use of an account for logged-in requests or login/registration
+	// requests, or by providing user identifiers for guest actions like
+	// checkout.
+	UserInfo *GoogleCloudRecaptchaenterpriseV1UserInfo `json:"userInfo,omitempty"`
 
 	// UserIpAddress: Optional. The IP address in the request from the
 	// user's device related to this event.
@@ -2605,6 +2617,86 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionEvent) UnmarshalJSON(data []
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// GoogleCloudRecaptchaenterpriseV1UserId: An identifier associated with
+// a user.
+type GoogleCloudRecaptchaenterpriseV1UserId struct {
+	// Email: Optional. An email address.
+	Email string `json:"email,omitempty"`
+
+	// PhoneNumber: Optional. A phone number. Should use the E.164 format.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// Username: Optional. A unique username, if different from all the
+	// other identifiers and `account_id` that are provided. Can be a unique
+	// login handle or display name for a user.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1UserId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1UserId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1UserInfo: User information associated
+// with a request protected by reCAPTCHA Enterprise.
+type GoogleCloudRecaptchaenterpriseV1UserInfo struct {
+	// AccountId: Optional. For logged-in requests or login/registration
+	// requests, the unique account identifier associated with this user.
+	// You can use the username if it is stable (meaning it is the same for
+	// every request associated with the same user), or any stable user ID
+	// of your choice. Leave blank for non logged-in actions or guest
+	// checkout.
+	AccountId string `json:"accountId,omitempty"`
+
+	// CreateAccountTime: Optional. Creation time for this account
+	// associated with this user. Leave blank for non logged-in actions,
+	// guest checkout, or when there is no account associated with the
+	// current user.
+	CreateAccountTime string `json:"createAccountTime,omitempty"`
+
+	// UserIds: Optional. Identifiers associated with this user or request.
+	UserIds []*GoogleCloudRecaptchaenterpriseV1UserId `json:"userIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1UserInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1UserInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1WafSettings: Settings specific to

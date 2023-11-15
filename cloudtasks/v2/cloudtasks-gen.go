@@ -530,9 +530,69 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CmekConfig: CMEK, or Customer Managed Encryption Keys, enables GCP
-// products to put control over encryption and key management in their
-// customer’s hands.
+// BufferTaskRequest: Request message for BufferTask.
+type BufferTaskRequest struct {
+	// Body: Optional. Body of the HTTP request. The body can take any
+	// generic value. The value is written to the HttpRequest of the [Task].
+	Body *HttpBody `json:"body,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Body") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Body") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BufferTaskRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BufferTaskRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BufferTaskResponse: Response message for BufferTask.
+type BufferTaskResponse struct {
+	// Task: The created task.
+	Task *Task `json:"task,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Task") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Task") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BufferTaskResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BufferTaskResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CmekConfig: Describes the customer-managed encryption key (CMEK)
+// configuration associated with a project and location.
 type CmekConfig struct {
 	// KmsKey: Resource name of the Cloud KMS key, of the form
 	// `projects/PROJECT_ID/locations/LOCATION_ID/keyRings/KEY_RING_ID/crypto
@@ -785,6 +845,119 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Header: Defines a header message. A header can have a key and a
+// value.
+type Header struct {
+	// Key: The Key of the header.
+	Key string `json:"key,omitempty"`
+
+	// Value: The Value of the header.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Header) MarshalJSON() ([]byte, error) {
+	type NoMethod Header
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HeaderOverride: Wraps the Header object.
+type HeaderOverride struct {
+	// Header: header embodying a key and a value.
+	Header *Header `json:"header,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Header") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Header") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HeaderOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod HeaderOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HttpBody: Message that represents an arbitrary HTTP body. It should
+// only be used for payload formats that can't be represented as JSON,
+// such as raw binary or an HTML page. This message can be used both in
+// streaming and non-streaming API methods in the request as well as the
+// response. It can be used as a top-level request field, which is
+// convenient if one wants to extract parameters from either the URL or
+// HTTP template into the request fields and also want access to the raw
+// HTTP body. Example: message GetResourceRequest { // A unique request
+// id. string request_id = 1; // The raw HTTP body is bound to this
+// field. google.api.HttpBody http_body = 2; } service ResourceService {
+// rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
+// rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); rpc UpdateCalendar(stream
+// google.api.HttpBody) returns (stream google.api.HttpBody); } Use of
+// this type only changes how the request and response bodies are
+// handled, all other features will continue to work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the
+	// content type of the body.
+	ContentType string `json:"contentType,omitempty"`
+
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+
+	// Extensions: Application specific response metadata. Must be set in
+	// the first response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HttpRequest: HTTP request. The task will be pushed to the worker as
 // an HTTP request. If the worker or the redirected worker acknowledges
 // the task by returning a successful HTTP response code ([`200` -
@@ -885,6 +1058,88 @@ type HttpRequest struct {
 
 func (s *HttpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HttpTarget: HTTP target. When specified as a Queue, all the tasks
+// with [HttpRequest] will be overridden according to the target.
+type HttpTarget struct {
+	// HeaderOverrides: HTTP target headers. This map contains the header
+	// field names and values. Headers will be set when running the
+	// CreateTask and/or BufferTask. These headers represent a subset of the
+	// headers that will be configured for the task's HTTP request. Some
+	// HTTP request headers will be ignored or replaced. A partial list of
+	// headers that will be ignored or replaced is: * Several predefined
+	// headers, prefixed with "X-CloudTasks-", can be used to define
+	// properties of the task. * Host: This will be computed by Cloud Tasks
+	// and derived from HttpRequest.url. * Content-Length: This will be
+	// computed by Cloud Tasks. `Content-Type` won't be set by Cloud Tasks.
+	// You can explicitly set `Content-Type` to a media type when the task
+	// is created. For example,`Content-Type` can be set to
+	// "application/octet-stream" or "application/json". The default
+	// value is set to "application/json". * User-Agent: This will be set
+	// to "Google-Cloud-Tasks". Headers which can have multiple values
+	// (according to RFC2616) can be specified using comma-separated values.
+	// The size of the headers must be less than 80KB. Queue-level headers
+	// to override headers of all the tasks in the queue.
+	HeaderOverrides []*HeaderOverride `json:"headerOverrides,omitempty"`
+
+	// HttpMethod: The HTTP method to use for the request. When specified,
+	// it overrides HttpRequest for the task. Note that if the value is set
+	// to HttpMethod the HttpRequest of the task will be ignored at
+	// execution time.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
+	//   "POST" - HTTP POST
+	//   "GET" - HTTP GET
+	//   "HEAD" - HTTP HEAD
+	//   "PUT" - HTTP PUT
+	//   "DELETE" - HTTP DELETE
+	//   "PATCH" - HTTP PATCH
+	//   "OPTIONS" - HTTP OPTIONS
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// OauthToken: If specified, an OAuth token
+	// (https://developers.google.com/identity/protocols/OAuth2) will be
+	// generated and attached as the `Authorization` header in the HTTP
+	// request. This type of authorization should generally only be used
+	// when calling Google APIs hosted on *.googleapis.com.
+	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
+
+	// OidcToken: If specified, an OIDC
+	// (https://developers.google.com/identity/protocols/OpenIDConnect)
+	// token will be generated and attached as an `Authorization` header in
+	// the HTTP request. This type of authorization can be used for many
+	// scenarios, including calling Cloud Run, or endpoints where you intend
+	// to validate the token yourself.
+	OidcToken *OidcToken `json:"oidcToken,omitempty"`
+
+	// UriOverride: URI override. When specified, overrides the execution
+	// URI for all the tasks in the queue.
+	UriOverride *UriOverride `json:"uriOverride,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HeaderOverrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HeaderOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpTarget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1134,6 +1389,35 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PathOverride: PathOverride. Path message defines path override for
+// HTTP targets.
+type PathOverride struct {
+	// Path: The URI path (e.g., /users/1234). Default is an empty string.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod PathOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PauseQueueRequest: Request message for PauseQueue.
 type PauseQueueRequest struct {
 }
@@ -1248,6 +1532,36 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 type PurgeQueueRequest struct {
 }
 
+// QueryOverride: QueryOverride. Query message defines query override
+// for HTTP targets.
+type QueryOverride struct {
+	// QueryParams: The query parameters (e.g., qparam1=123&qparam2=456).
+	// Default is an empty string.
+	QueryParams string `json:"queryParams,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryParams") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryParams") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Queue: A queue is a container of related tasks. Queues are configured
 // to manage how those tasks are dispatched. Configurable properties
 // include rate limits, retry options, queue types, and others.
@@ -1259,6 +1573,9 @@ type Queue struct {
 	// queue, no matter what the setting is for the task-level
 	// app_engine_routing.
 	AppEngineRoutingOverride *AppEngineRouting `json:"appEngineRoutingOverride,omitempty"`
+
+	// HttpTarget: Modifies HTTP target for HTTP tasks.
+	HttpTarget *HttpTarget `json:"httpTarget,omitempty"`
 
 	// Name: Caller-specified and required in CreateQueue, after which it
 	// becomes output only. The queue name. The queue name must have the
@@ -1908,6 +2225,82 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UriOverride: URI Override. When specified, all the HTTP tasks inside
+// the queue will be partially or fully overridden depending on the
+// configured values.
+type UriOverride struct {
+	// Host: Host override. When specified, replaces the host part of the
+	// task URL. For example, if the task URL is "https://www.google.com,"
+	// and host value is set to "example.net", the overridden URI will be
+	// changed to "https://example.net." Host value cannot be an empty
+	// string (INVALID_ARGUMENT).
+	Host string `json:"host,omitempty"`
+
+	// PathOverride: URI path. When specified, replaces the existing path of
+	// the task URL. Setting the path value to an empty string clears the
+	// URI path segment.
+	PathOverride *PathOverride `json:"pathOverride,omitempty"`
+
+	// Port: Port override. When specified, replaces the port part of the
+	// task URI. For instance, for a URI http://www.google.com/foo and
+	// port=123, the overridden URI becomes http://www.google.com:123/foo.
+	// Note that the port value must be a positive integer. Setting the port
+	// to 0 (Zero) clears the URI port.
+	Port int64 `json:"port,omitempty,string"`
+
+	// QueryOverride: URI query. When specified, replaces the query part of
+	// the task URI. Setting the query value to an empty string clears the
+	// URI query segment.
+	QueryOverride *QueryOverride `json:"queryOverride,omitempty"`
+
+	// Scheme: Scheme override. When specified, the task URI scheme is
+	// replaced by the provided value (HTTP or HTTPS).
+	//
+	// Possible values:
+	//   "SCHEME_UNSPECIFIED" - Scheme unspecified. Defaults to HTTPS.
+	//   "HTTP" - Convert the scheme to HTTP, e.g., https://www.google.ca
+	// will change to http://www.google.ca.
+	//   "HTTPS" - Convert the scheme to HTTPS, e.g., http://www.google.ca
+	// will change to https://www.google.ca.
+	Scheme string `json:"scheme,omitempty"`
+
+	// UriOverrideEnforceMode: URI Override Enforce Mode When specified,
+	// determines the Target UriOverride mode. If not specified, it defaults
+	// to ALWAYS.
+	//
+	// Possible values:
+	//   "URI_OVERRIDE_ENFORCE_MODE_UNSPECIFIED" - UriOverrideEnforceMode
+	// Unspecified. Defaults to ALWAYS.
+	//   "IF_NOT_EXISTS" - In the IF_NOT_EXISTS mode, queue-level
+	// configuration is only applied where task-level configuration does not
+	// exist.
+	//   "ALWAYS" - In the ALWAYS mode, queue-level configuration overrides
+	// all task-level configuration
+	UriOverrideEnforceMode string `json:"uriOverrideEnforceMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Host") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UriOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod UriOverride
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2740,11 +3133,18 @@ type ProjectsLocationsQueuesDeleteCall struct {
 }
 
 // Delete: Deletes a queue. This command will delete the queue even if
-// it has tasks in it. Note: If you delete a queue, a queue with the
-// same name can't be created for 7 days. WARNING: Using this method may
-// have unintended side effects if you are using an App Engine
-// `queue.yaml` or `queue.xml` file to manage your queues. Read Overview
-// of Queue Management and queue.yaml
+// it has tasks in it. Note: If you delete a queue, you may be prevented
+// from creating a new queue with the same name as the deleted queue for
+// a tombstone window of up to 3 days. During this window, the
+// CreateQueue operation may appear to recreate the queue, but this can
+// be misleading. If you attempt to create a queue with the same name as
+// one that is in the tombstone window, run GetQueue to confirm that the
+// queue creation was successful. If GetQueue returns 200 response code,
+// your queue was successfully created with the name of the previously
+// deleted queue. Otherwise, your queue did not successfully recreate.
+// WARNING: Using this method may have unintended side effects if you
+// are using an App Engine `queue.yaml` or `queue.xml` file to manage
+// your queues. Read Overview of Queue Management and queue.yaml
 // (https://cloud.google.com/tasks/docs/queue-yaml) before using this
 // method.
 //
@@ -2842,7 +3242,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a queue. This command will delete the queue even if it has tasks in it. Note: If you delete a queue, a queue with the same name can't be created for 7 days. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
+	//   "description": "Deletes a queue. This command will delete the queue even if it has tasks in it. Note: If you delete a queue, you may be prevented from creating a new queue with the same name as the deleted queue for a tombstone window of up to 3 days. During this window, the CreateQueue operation may appear to recreate the queue, but this can be misleading. If you attempt to create a queue with the same name as one that is in the tombstone window, run GetQueue to confirm that the queue creation was successful. If GetQueue returns 200 response code, your queue was successfully created with the name of the previously deleted queue. Otherwise, your queue did not successfully recreate. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudtasks.projects.locations.queues.delete",
@@ -4294,6 +4694,170 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudtasks.projects.locations.queues.tasks.buffer":
+
+type ProjectsLocationsQueuesTasksBufferCall struct {
+	s                 *Service
+	queue             string
+	taskId            string
+	buffertaskrequest *BufferTaskRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Buffer: Creates and buffers a new task without the need to explicitly
+// define a Task message. The queue must have HTTP target. To create the
+// task with a custom ID, use the following format and set TASK_ID to
+// your desired ID:
+// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_I
+// D:buffer To create the task with an automatically generated ID, use
+// the following format:
+// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer
+// .
+//
+//   - queue: The parent queue name. For example:
+//     projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
+//     queue must already exist.
+//   - taskId: Optional. Task ID for the task being created. If not
+//     provided, Cloud Tasks generates an ID for the task.
+func (r *ProjectsLocationsQueuesTasksService) Buffer(queue string, taskId string, buffertaskrequest *BufferTaskRequest) *ProjectsLocationsQueuesTasksBufferCall {
+	c := &ProjectsLocationsQueuesTasksBufferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.queue = queue
+	c.taskId = taskId
+	c.buffertaskrequest = buffertaskrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuesTasksBufferCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksBufferCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuesTasksBufferCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksBufferCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuesTasksBufferCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuesTasksBufferCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.buffertaskrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+queue}/tasks/{taskId}:buffer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"queue":  c.queue,
+		"taskId": c.taskId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudtasks.projects.locations.queues.tasks.buffer" call.
+// Exactly one of *BufferTaskResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BufferTaskResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuesTasksBufferCall) Do(opts ...googleapi.CallOption) (*BufferTaskResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BufferTaskResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{taskId}:buffer",
+	//   "httpMethod": "POST",
+	//   "id": "cloudtasks.projects.locations.queues.tasks.buffer",
+	//   "parameterOrder": [
+	//     "queue",
+	//     "taskId"
+	//   ],
+	//   "parameters": {
+	//     "queue": {
+	//       "description": "Required. The parent queue name. For example: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "taskId": {
+	//       "description": "Optional. Task ID for the task being created. If not provided, Cloud Tasks generates an ID for the task.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+queue}/tasks/{taskId}:buffer",
+	//   "request": {
+	//     "$ref": "BufferTaskRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BufferTaskResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

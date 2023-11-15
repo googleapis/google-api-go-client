@@ -928,6 +928,7 @@ type GoogleAppsScriptTypeProcess struct {
 	//   "TIMED_OUT" - The process timed out.
 	//   "UNKNOWN" - Process status unknown.
 	//   "DELAYED" - The process is delayed, waiting for quota.
+	//   "EXECUTION_DISABLED" - AppsScript executions are disabled by Admin.
 	ProcessStatus string `json:"processStatus,omitempty"`
 
 	// ProcessType: The executions type.
@@ -1856,6 +1857,7 @@ func (c *ProcessesListCall) UserProcessFilterStartTime(userProcessFilterStartTim
 //	"TIMED_OUT" - The process timed out.
 //	"UNKNOWN" - Process status unknown.
 //	"DELAYED" - The process is delayed, waiting for quota.
+//	"EXECUTION_DISABLED" - AppsScript executions are disabled by Admin.
 func (c *ProcessesListCall) UserProcessFilterStatuses(userProcessFilterStatuses ...string) *ProcessesListCall {
 	c.urlParams_.SetMulti("userProcessFilter.statuses", append([]string{}, userProcessFilterStatuses...))
 	return c
@@ -2061,7 +2063,8 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//         "FAILED",
 	//         "TIMED_OUT",
 	//         "UNKNOWN",
-	//         "DELAYED"
+	//         "DELAYED",
+	//         "EXECUTION_DISABLED"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified status.",
@@ -2072,7 +2075,8 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//         "The process failed.",
 	//         "The process timed out.",
 	//         "Process status unknown.",
-	//         "The process is delayed, waiting for quota."
+	//         "The process is delayed, waiting for quota.",
+	//         "AppsScript executions are disabled by Admin."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2250,6 +2254,7 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStartTime(scriptPr
 //	"TIMED_OUT" - The process timed out.
 //	"UNKNOWN" - Process status unknown.
 //	"DELAYED" - The process is delayed, waiting for quota.
+//	"EXECUTION_DISABLED" - AppsScript executions are disabled by Admin.
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStatuses(scriptProcessFilterStatuses ...string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.SetMulti("scriptProcessFilter.statuses", append([]string{}, scriptProcessFilterStatuses...))
 	return c
@@ -2450,7 +2455,8 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//         "FAILED",
 	//         "TIMED_OUT",
 	//         "UNKNOWN",
-	//         "DELAYED"
+	//         "DELAYED",
+	//         "EXECUTION_DISABLED"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified status.",
@@ -2461,7 +2467,8 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//         "The process failed.",
 	//         "The process timed out.",
 	//         "Process status unknown.",
-	//         "The process is delayed, waiting for quota."
+	//         "The process is delayed, waiting for quota.",
+	//         "AppsScript executions are disabled by Admin."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

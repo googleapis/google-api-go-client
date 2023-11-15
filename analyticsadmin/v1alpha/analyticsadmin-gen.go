@@ -1532,34 +1532,6 @@ type GoogleAnalyticsAdminV1alphaAttributionSettings struct {
 	// attributes 100% of the conversion value to the last channel that the
 	// customer clicked through (or engaged view through for YouTube) before
 	// converting. Previously CROSS_CHANNEL_LAST_CLICK
-	//   "PAID_AND_ORGANIC_CHANNELS_FIRST_CLICK" - Starting in June 2023,
-	// new properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Gives all credit for the conversion to the first
-	// channel that a customer clicked (or engaged view through for YouTube)
-	// before converting. Previously CROSS_CHANNEL_FIRST_CLICK
-	//   "PAID_AND_ORGANIC_CHANNELS_LINEAR" - Starting in June 2023, new
-	// properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Distributes the credit for the conversion equally
-	// across all the channels a customer clicked (or engaged view through
-	// for YouTube) before converting. Previously CROSS_CHANNEL_LINEAR
-	//   "PAID_AND_ORGANIC_CHANNELS_POSITION_BASED" - Starting in June 2023,
-	// new properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Attributes 40% credit to the first and last
-	// interaction, and the remaining 20% credit is distributed evenly to
-	// the middle interactions. Previously CROSS_CHANNEL_POSITION_BASED
-	//   "PAID_AND_ORGANIC_CHANNELS_TIME_DECAY" - Starting in June 2023, new
-	// properties can no longer use this model. See [Analytics
-	// Help](https://support.google.com/analytics/answer/9164320#040623) for
-	// more details. Starting in September 2023, we will sunset this model
-	// for all properties. Gives more credit to the touchpoints that
-	// happened closer in time to the conversion. Previously
-	// CROSS_CHANNEL_TIME_DECAY
 	//   "GOOGLE_PAID_CHANNELS_LAST_CLICK" - Attributes 100% of the
 	// conversion value to the last Google Paid channel that the customer
 	// clicked through before converting. Previously
@@ -2807,7 +2779,7 @@ type GoogleAnalyticsAdminV1alphaChannelGroup struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GroupingRule: Required. The grouping rules of channels. Maximum
-	// number of rules is 25.
+	// number of rules is 50.
 	GroupingRule []*GoogleAnalyticsAdminV1alphaGroupingRule `json:"groupingRule,omitempty"`
 
 	// Name: Output only. The resource name for this Channel Group resource.
@@ -3093,6 +3065,10 @@ type GoogleAnalyticsAdminV1alphaConversionEvent struct {
 	// created per property.
 	Custom bool `json:"custom,omitempty"`
 
+	// DefaultConversionValue: Optional. Defines a default value/currency
+	// for a conversion event.
+	DefaultConversionValue *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue `json:"defaultConversionValue,omitempty"`
+
 	// Deletable: Output only. If set, this event can currently be deleted
 	// with DeleteConversionEvent.
 	Deletable bool `json:"deletable,omitempty"`
@@ -3131,6 +3107,58 @@ func (s *GoogleAnalyticsAdminV1alphaConversionEvent) MarshalJSON() ([]byte, erro
 	type NoMethod GoogleAnalyticsAdminV1alphaConversionEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue:
+// Defines a default value/currency for a conversion event. Both value
+// and currency must be provided.
+type GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue struct {
+	// CurrencyCode: When a conversion event for this event_name has no set
+	// currency, this currency will be applied as the default. Must be in
+	// ISO 4217 currency code format. See
+	// https://en.wikipedia.org/wiki/ISO_4217 for more.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// Value: This value will be used to populate the value for all
+	// conversions of the specified event_name where the event "value"
+	// parameter is unset.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAnalyticsAdminV1alphaConversionEventDefaultConversionValue
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // GoogleAnalyticsAdminV1alphaConversionValues: Conversion value

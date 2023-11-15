@@ -247,6 +247,72 @@ func (s *AccountDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppAccessRiskVerdict: Contains signals about others apps on the
+// device which could be used to access or control the requesting app.
+type AppAccessRiskVerdict struct {
+	// OtherApps: Required. App access risk verdict related to apps that are
+	// not installed by Google Play, and are not preloaded on the system
+	// image by the device manufacturer.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Risk type is unknown.
+	//   "UNEVALUATED" - App access risk was not evaluated because a
+	// requirement was missed, such as the device not being trusted enough.
+	//   "NOT_INSTALLED" - No apps under this field are installed on the
+	// device. This is only valid for the other apps field.
+	//   "INSTALLED" - One or more apps under this field are installed on
+	// the device.
+	//   "CAPTURING" - Apps under this field are running that could be used
+	// to read or capture inputs and outputs of the requesting app, such as
+	// screen recording apps.
+	//   "CONTROLLING" - Apps under this field are running that could be
+	// used to control the device and inputs and outputs of the requesting
+	// app, such as remote controlling apps.
+	OtherApps string `json:"otherApps,omitempty"`
+
+	// PlayOrSystemApps: Required. App access risk verdict related to apps
+	// that are not installed by the Google Play Store, and are not
+	// preloaded on the system image by the device manufacturer.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Risk type is unknown.
+	//   "UNEVALUATED" - App access risk was not evaluated because a
+	// requirement was missed, such as the device not being trusted enough.
+	//   "NOT_INSTALLED" - No apps under this field are installed on the
+	// device. This is only valid for the other apps field.
+	//   "INSTALLED" - One or more apps under this field are installed on
+	// the device.
+	//   "CAPTURING" - Apps under this field are running that could be used
+	// to read or capture inputs and outputs of the requesting app, such as
+	// screen recording apps.
+	//   "CONTROLLING" - Apps under this field are running that could be
+	// used to control the device and inputs and outputs of the requesting
+	// app, such as remote controlling apps.
+	PlayOrSystemApps string `json:"playOrSystemApps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OtherApps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OtherApps") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppAccessRiskVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod AppAccessRiskVerdict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppIntegrity: Contains the application integrity information.
 type AppIntegrity struct {
 	// AppRecognitionVerdict: Required. Details about the app recognition
@@ -416,16 +482,29 @@ func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GuidanceDetails: Contains guidance details about the Integrity API
-// response, providing additional context to the integrity verdicts.
-type GuidanceDetails struct {
-	// UserRemediationDetails: This shows when there is an issue with at
-	// least one of the integrity verdicts, which can be remedied by the
-	// user and provides additional details.
-	UserRemediationDetails []*UserRemediationDetails `json:"userRemediationDetails,omitempty"`
+// EnvironmentDetails: Contains information about the environment Play
+// Integrity API runs in, e.g. Play Protect verdict.
+type EnvironmentDetails struct {
+	// AppAccessRiskVerdict: The evaluation of the App Access Risk verdicts.
+	AppAccessRiskVerdict *AppAccessRiskVerdict `json:"appAccessRiskVerdict,omitempty"`
+
+	// PlayProtectVerdict: The evaluation of Play Protect verdict.
+	//
+	// Possible values:
+	//   "PLAY_PROTECT_VERDICT_UNSPECIFIED" - Play Protect verdict has not
+	// been set.
+	//   "UNEVALUATED" - Play Protect state was not evaluated. Device may
+	// not be trusted.
+	//   "NO_ISSUES" - Play Protect is on and no issues found.
+	//   "NO_DATA" - Play Protect is on but no scan has been performed yet.
+	// The device or Play Store app may have been reset.
+	//   "MEDIUM_RISK" - Play Protect is on and warnings found.
+	//   "HIGH_RISK" - Play Protect is on and high severity issues found.
+	//   "POSSIBLE_RISK" - Play Protect is turned off. Turn on Play Protect.
+	PlayProtectVerdict string `json:"playProtectVerdict,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "UserRemediationDetails") to unconditionally include in API requests.
+	// "AppAccessRiskVerdict") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -433,18 +512,18 @@ type GuidanceDetails struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UserRemediationDetails")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AppAccessRiskVerdict") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *GuidanceDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod GuidanceDetails
+func (s *EnvironmentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvironmentDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -535,9 +614,9 @@ type TokenPayloadExternal struct {
 	// DeviceIntegrity: Required. Details about the device integrity.
 	DeviceIntegrity *DeviceIntegrity `json:"deviceIntegrity,omitempty"`
 
-	// GuidanceDetails: Additional guidance related to the integrity API
-	// response.
-	GuidanceDetails *GuidanceDetails `json:"guidanceDetails,omitempty"`
+	// EnvironmentDetails: Details of the environment Play Integrity API
+	// runs in.
+	EnvironmentDetails *EnvironmentDetails `json:"environmentDetails,omitempty"`
 
 	// RequestDetails: Required. Details about the integrity request.
 	RequestDetails *RequestDetails `json:"requestDetails,omitempty"`
@@ -567,49 +646,6 @@ type TokenPayloadExternal struct {
 
 func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPayloadExternal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UserRemediationDetails: Contains details of remediation guidance that
-// the user can perform.
-type UserRemediationDetails struct {
-	// Remediation: Description of the user remediation action.
-	//
-	// Possible values:
-	//   "UNKNOWN_USER_REMEDIATION" - User remediation is unknown.
-	//   "RESTORE_FACTORY_ROM" - The user has installed a custom ROM, and
-	// should restore the device to a clean factory ROM.
-	//   "LOCK_BOOTLOADER" - The device bootloader has been unlocked, the
-	// user should lock the bootloader.
-	//   "GET_UNMODIFIED_APP" - The app is unrecognized. The user should get
-	// an unmodified version of the app.
-	//   "SIGN_INTO_GOOGLE_ACCOUNT" - The user has not signed into their
-	// Google account.
-	//   "INSTALL_APP_FROM_PLAY" - The user has no license. They should
-	// install or purchase the app on the Google Play Store to add it to
-	// their library.
-	Remediation string `json:"remediation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Remediation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Remediation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UserRemediationDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod UserRemediationDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

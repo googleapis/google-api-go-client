@@ -335,6 +335,7 @@ type Backup struct {
 	// version.
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// DeleteTime: Output only. Delete time stamp
@@ -620,6 +621,7 @@ type Cluster struct {
 	// version.
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// DeleteTime: Output only. Delete time stamp
@@ -1081,6 +1083,11 @@ type GenerateClientCertificateRequest struct {
 	// valid UUID with the exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
+
+	// UseMetadataExchange: Optional. An optional hint to the endpoint to
+	// generate a client ceritificate that can be used by AlloyDB connectors
+	// to exchange additional metadata with the server after TLS handshake.
+	UseMetadataExchange bool `json:"useMetadataExchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CertDuration") to
 	// unconditionally include in API requests. By default, fields with
@@ -2678,7 +2685,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	// CLs
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 
-	// ResourceId: Required. Primary key associated with the Resource
+	// ResourceId: Primary key associated with the Resource. resource_id is
+	// available in individual feed level as well.
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
@@ -2758,7 +2766,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// ResourceContainer: Closest parent container of this resource. In GCP,
 	// 'container' refers to a Cloud Resource Manager project. It must be
 	// resource name of a Cloud Resource Manager project with the format of
-	// "provider//", such as "gcp/projects/123".
+	// "provider//", such as "gcp/projects/123". For GCP provided resources,
+	// number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceName: Required. Database resource name associated with the
@@ -2790,6 +2799,14 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//
 	// Possible values:
 	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is protected by automatic failover. Checks for resources
+	// that are configured to have redundancy within a region that enables
+	// automatic failover.
+	//   "SIGNAL_TYPE_GROUP_NOT_REPLICATING_ACROSS_REGIONS" - Represents if
+	// a group is replicating across regions. Checks for resources that are
+	// configured to have redundancy, and ongoing replication, across
+	// regions.
 	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_ZONES" - Represents if the
 	// resource is available in multiple zones or not.
 	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_REGIONS" - Represents if a
@@ -2909,6 +2926,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_SENSITIVE_TRACE_INFO_NOT_MASKED" - Represents if the
 	// 3625 (trace flag) database flag for a Cloud SQL for SQL Server
 	// instance is not set to on.
+	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
+	// enabled.
 	// LINT.ThenChange(//depot/google3/storage/databasecenter/ingestion/borgj
 	// ob/message_adapter/health_signal_feed/health_signal_mapping.h)
 	SignalType string `json:"signalType,omitempty"`
@@ -3081,6 +3100,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// ResourceContainer: Closest parent Cloud Resource Manager container of
 	// this resource. It must be resource name of a Cloud Resource Manager
 	// project with the format of "provider//", such as "gcp/projects/123".
+	// For GCP provided resources, number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceName: Required. Different from DatabaseResourceId.unique_id,
@@ -3330,6 +3350,7 @@ type SupportedDatabaseFlag struct {
 	// version.
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 
 	// Possible values:

@@ -353,6 +353,10 @@ type AggregateAssetsValuesRequest struct {
 	// provided filter.
 	Filter string `json:"filter,omitempty"`
 
+	// ShowHidden: Optional. When this value is set to 'true' the response
+	// will include all assets, including those that are hidden.
+	ShowHidden bool `json:"showHidden,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Aggregations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -745,6 +749,17 @@ type Asset struct {
 
 	// CreateTime: Output only. The timestamp when the asset was created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// Hidden: Optional. Indicates if the asset is hidden.
+	Hidden bool `json:"hidden,omitempty"`
+
+	// HideReason: Optional. An optional reason for marking this asset as
+	// hidden.
+	HideReason string `json:"hideReason,omitempty"`
+
+	// HideTime: Output only. The timestamp when the asset was marked as
+	// hidden.
+	HideTime string `json:"hideTime,omitempty"`
 
 	// InsightList: Output only. The list of insights associated with the
 	// asset.
@@ -1671,6 +1686,39 @@ func (s *DateTime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DetectedSoftware: Information about software detected on an asset.
+type DetectedSoftware struct {
+	// SoftwareFamily: Output only. Software family of the detected
+	// software, e.g. Database, SAP family.
+	SoftwareFamily string `json:"softwareFamily,omitempty"`
+
+	// SoftwareName: Output only. Software's name.
+	SoftwareName string `json:"softwareName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SoftwareFamily") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SoftwareFamily") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DetectedSoftware) MarshalJSON() ([]byte, error) {
+	type NoMethod DetectedSoftware
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DiskEntry: Single disk entry.
 type DiskEntry struct {
 	// DiskLabel: Disk label.
@@ -2301,10 +2349,10 @@ type Group struct {
 	// CreateTime: Output only. The timestamp when the group was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: The description of the resource.
+	// Description: Optional. The description of the group.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: User-friendly display name.
+	// DisplayName: Optional. User-friendly display name.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Labels as key value pairs.
@@ -2873,6 +2921,10 @@ type Insight struct {
 	// MigrationInsight: Output only. An insight about potential migrations
 	// for an asset.
 	MigrationInsight *MigrationInsight `json:"migrationInsight,omitempty"`
+
+	// SoftwareInsight: Output only. An insight regarding software detected
+	// on an asset.
+	SoftwareInsight *SoftwareInsight `json:"softwareInsight,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GenericInsight") to
 	// unconditionally include in API requests. By default, fields with
@@ -5488,6 +5540,36 @@ func (s *Settings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SoftwareInsight: An insight regarding software detected on an asset.
+type SoftwareInsight struct {
+	// DetectedSoftware: Output only. Information about the detected
+	// software.
+	DetectedSoftware *DetectedSoftware `json:"detectedSoftware,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedSoftware") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedSoftware") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SoftwareInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod SoftwareInsight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SoleTenancyPreferences: Preferences concerning Sole Tenancy nodes and
 // VMs.
 type SoleTenancyPreferences struct {
@@ -8008,6 +8090,14 @@ func (c *ProjectsLocationsAssetsListCall) PageToken(pageToken string) *ProjectsL
 	return c
 }
 
+// ShowHidden sets the optional parameter "showHidden": When this value
+// is set to 'true' the response will include all assets, including
+// those that are hidden.
+func (c *ProjectsLocationsAssetsListCall) ShowHidden(showHidden bool) *ProjectsLocationsAssetsListCall {
+	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
+	return c
+}
+
 // View sets the optional parameter "view": View of the assets. Defaults
 // to BASIC.
 //
@@ -8167,6 +8257,11 @@ func (c *ProjectsLocationsAssetsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showHidden": {
+	//       "description": "Optional. When this value is set to 'true' the response will include all assets, including those that are hidden.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "view": {
 	//       "description": "View of the assets. Defaults to BASIC.",

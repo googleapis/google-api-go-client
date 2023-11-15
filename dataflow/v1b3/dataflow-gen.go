@@ -3102,6 +3102,11 @@ type Job struct {
 	// field has no effect when specified at job creation.
 	RuntimeUpdatableParams *RuntimeUpdatableParams `json:"runtimeUpdatableParams,omitempty"`
 
+	// SatisfiesPzi: Output only. Reserved for future use. This field is set
+	// only in responses from the server; it is ignored if it is set in any
+	// requests.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+
 	// SatisfiesPzs: Reserved for future use. This field is set only in
 	// responses from the server; it is ignored if it is set in any
 	// requests.

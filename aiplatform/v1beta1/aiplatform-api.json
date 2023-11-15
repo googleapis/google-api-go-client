@@ -3083,6 +3083,34 @@
             },
             "endpoints": {
               "methods": {
+                "computeTokens": {
+                  "description": "Return a list of tokens based on the input text.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/endpoints/{endpointsId}:computeTokens",
+                  "httpMethod": "POST",
+                  "id": "aiplatform.projects.locations.endpoints.computeTokens",
+                  "parameterOrder": [
+                    "endpoint"
+                  ],
+                  "parameters": {
+                    "endpoint": {
+                      "description": "Required. The name of the Endpoint requested to get lists of tokens and token ids.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/endpoints/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+endpoint}:computeTokens",
+                  "request": {
+                    "$ref": "GoogleCloudAiplatformV1beta1ComputeTokensRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudAiplatformV1beta1ComputeTokensResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "countTokens": {
                   "description": "Perform a token counting.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/endpoints/{endpointsId}:countTokens",
@@ -12089,6 +12117,34 @@
             },
             "pipelineJobs": {
               "methods": {
+                "batchDelete": {
+                  "description": "Batch deletes PipelineJobs The Operation is atomic. If it fails, none of the PipelineJobs are deleted. If it succeeds, all of the PipelineJobs are deleted.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/pipelineJobs:batchDelete",
+                  "httpMethod": "POST",
+                  "id": "aiplatform.projects.locations.pipelineJobs.batchDelete",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The name of the PipelineJobs' parent resource. Format: `projects/{project}/locations/{location}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/pipelineJobs:batchDelete",
+                  "request": {
+                    "$ref": "GoogleCloudAiplatformV1beta1BatchDeletePipelineJobsRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "cancel": {
                   "description": "Cancels a PipelineJob. Starts asynchronous cancellation on the PipelineJob. The server makes a best effort to cancel the pipeline, but success is not guaranteed. Clients can use PipelineService.GetPipelineJob or other methods to check whether the cancellation succeeded or whether the pipeline completed despite cancellation. On successful cancellation, the PipelineJob is not deleted; instead it becomes a pipeline with a PipelineJob.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`, and PipelineJob.state is set to `CANCELLED`.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/pipelineJobs/{pipelineJobsId}:cancel",
@@ -12411,6 +12467,34 @@
               "resources": {
                 "models": {
                   "methods": {
+                    "computeTokens": {
+                      "description": "Return a list of tokens based on the input text.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/publishers/{publishersId}/models/{modelsId}:computeTokens",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.publishers.models.computeTokens",
+                      "parameterOrder": [
+                        "endpoint"
+                      ],
+                      "parameters": {
+                        "endpoint": {
+                          "description": "Required. The name of the Endpoint requested to get lists of tokens and token ids.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/publishers/[^/]+/models/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+endpoint}:computeTokens",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1beta1ComputeTokensRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudAiplatformV1beta1ComputeTokensResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "countTokens": {
                       "description": "Perform a token counting.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/publishers/{publishersId}/models/{modelsId}:countTokens",
@@ -16094,7 +16178,7 @@
       }
     }
   },
-  "revision": "20231012",
+  "revision": "20231107",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -16623,6 +16707,20 @@
           "description": "Immutable. The number of machine replicas used at the start of the batch operation. If not set, Vertex AI decides starting number, not greater than max_replica_count",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1BatchDeletePipelineJobsRequest": {
+      "description": "Request message for PipelineService.BatchDeletePipelineJobs.",
+      "id": "GoogleCloudAiplatformV1beta1BatchDeletePipelineJobsRequest",
+      "properties": {
+        "names": {
+          "description": "Required. The names of the PipelineJobs to delete. A maximum of 32 PipelineJobs can be deleted in a batch. Format: `projects/{project}/locations/{location}/pipelineJobs/{pipelineJob}`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -17296,6 +17394,34 @@
           "format": "int64",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1ComputeTokensRequest": {
+      "description": "Request message for ComputeTokens RPC call.",
+      "id": "GoogleCloudAiplatformV1beta1ComputeTokensRequest",
+      "properties": {
+        "instances": {
+          "description": "Required. The instances that are the input to token computing API call. Schema is identical to the prediction schema of the text model, even for the non-text models, like chat models, or Codey models.",
+          "items": {
+            "type": "any"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1ComputeTokensResponse": {
+      "description": "Response message for ComputeTokens RPC call.",
+      "id": "GoogleCloudAiplatformV1beta1ComputeTokensResponse",
+      "properties": {
+        "tokensInfo": {
+          "description": "Lists of tokens info from the input. A ComputeTokensRequest could have multiple instances with a prompt in each instance. We also need to return lists of tokens info for the request with multiple instances.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1TokensInfo"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -17987,7 +18113,7 @@
           "type": "string"
         },
         "protectedArtifactLocationId": {
-          "description": "The ID of the location to store protected artifacts. e.g. us-central1. Populate only when the location is different than CustomJob location. For unprotected artifacts, the value of this field is ignored. List of supported locations: https://cloud.google.com/vertex-ai/docs/general/locations",
+          "description": "The ID of the location to store protected artifacts. e.g. us-central1. Populate only when the location is different than CustomJob location. List of supported locations: https://cloud.google.com/vertex-ai/docs/general/locations",
           "type": "string"
         },
         "reservedIpRanges": {
@@ -18581,7 +18707,7 @@
         },
         "dedicatedResources": {
           "$ref": "GoogleCloudAiplatformV1beta1DedicatedResources",
-          "description": "Optional. A description of resources that are dedicated to the DeployedIndex, and that need a higher degree of manual configuration. If min_replica_count is not set, the default value is 2 (we don't provide SLA when min_replica_count=1). If max_replica_count is not set, the default value is min_replica_count. The max allowed replica count is 1000. Available machine types for SMALL shard: e2-standard-2 and all machine types available for MEDIUM and LARGE shard. Available machine types for MEDIUM shard: e2-standard-16 and all machine types available for LARGE shard. Available machine types for LARGE shard: e2-highmem-16, n2d-standard-32. n1-standard-16 and n1-standard-32 are still available, but we recommend e2-standard-16 and e2-highmem-16 for cost efficiency."
+          "description": "Optional. A description of resources that are dedicated to the DeployedIndex, and that need a higher degree of manual configuration. The field min_replica_count must be set to a value strictly greater than 0, or else validation will fail. We don't provide SLA when min_replica_count=1. If max_replica_count is not set, the default value is min_replica_count. The max allowed replica count is 1000. Available machine types for SMALL shard: e2-standard-2 and all machine types available for MEDIUM and LARGE shard. Available machine types for MEDIUM shard: e2-standard-16 and all machine types available for LARGE shard. Available machine types for LARGE shard: e2-highmem-16, n2d-standard-32. n1-standard-16 and n1-standard-32 are still available, but we recommend e2-standard-16 and e2-highmem-16 for cost efficiency."
         },
         "deployedIndexAuthConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1DeployedIndexAuthConfig",
@@ -19373,6 +19499,13 @@
       "description": "Request message for PredictionService.Explain.",
       "id": "GoogleCloudAiplatformV1beta1ExplainRequest",
       "properties": {
+        "concurrentExplanationSpecOverride": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudAiplatformV1beta1ExplanationSpecOverride"
+          },
+          "description": "Optional. This field is the same as the one above, but supports multiple explanations to occur in parallel. The key can be any string. Each override will be run against the model, then its explanations will be grouped together. Note - these explanations are run **In Addition** to the default Explanation in the deployed model.",
+          "type": "object"
+        },
         "deployedModelId": {
           "description": "If specified, this ExplainRequest will be served by the chosen DeployedModel, overriding Endpoint.traffic_split.",
           "type": "string"
@@ -19399,6 +19532,13 @@
       "description": "Response message for PredictionService.Explain.",
       "id": "GoogleCloudAiplatformV1beta1ExplainResponse",
       "properties": {
+        "concurrentExplanations": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudAiplatformV1beta1ExplainResponseConcurrentExplanation"
+          },
+          "description": "This field stores the results of the explanations run in parallel with The default explanation strategy/method.",
+          "type": "object"
+        },
         "deployedModelId": {
           "description": "ID of the Endpoint's DeployedModel that served this explanation.",
           "type": "string"
@@ -19414,6 +19554,20 @@
           "description": "The predictions that are the output of the predictions call. Same as PredictResponse.predictions.",
           "items": {
             "type": "any"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1ExplainResponseConcurrentExplanation": {
+      "description": "This message is a wrapper grouping Concurrent Explanations.",
+      "id": "GoogleCloudAiplatformV1beta1ExplainResponseConcurrentExplanation",
+      "properties": {
+        "explanations": {
+          "description": "The explanations of the Model's PredictResponse.predictions. It has the same number of elements as instances to be explained.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1Explanation"
           },
           "type": "array"
         }
@@ -20177,6 +20331,10 @@
             "Used for Feature that is bytes."
           ],
           "type": "string"
+        },
+        "versionColumnName": {
+          "description": "Only applicable for Vertex AI Feature Store. The name of the BigQuery Table/View columnn hosting data for this version. If no value is provided, will use feature_id.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -20337,6 +20495,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "optimized": {
+          "$ref": "GoogleCloudAiplatformV1beta1FeatureOnlineStoreOptimized",
+          "description": "Contains settings for the Optimized store that will be created to serve featureValues for all FeatureViews under this FeatureOnlineStore. When choose Optimized storage type, need to set PrivateServiceConnectConfig.enable_private_service_connect to use private endpoint. Otherwise will use public endpoint by default."
+        },
         "state": {
           "description": "Output only. State of the featureOnlineStore.",
           "enum": [
@@ -20393,11 +20555,20 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1FeatureOnlineStoreDedicatedServingEndpoint": {
-      "description": "The dedicated serving endpoint for this FeatureOnlineStore.",
+      "description": "The dedicated serving endpoint for this FeatureOnlineStore. Only need to set when you choose Optimized storage type or enable EmbeddingManagement. Will use public endpoint by default.",
       "id": "GoogleCloudAiplatformV1beta1FeatureOnlineStoreDedicatedServingEndpoint",
       "properties": {
+        "privateServiceConnectConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1PrivateServiceConnectConfig",
+          "description": "Optional. Private service connect config. If PrivateServiceConnectConfig.enable_private_service_connect set to true, customers will use private service connection to send request. Otherwise, the connection will set to public endpoint."
+        },
         "publicEndpointDomainName": {
           "description": "Output only. This field will be populated with the domain name to use for this FeatureOnlineStore",
+          "readOnly": true,
+          "type": "string"
+        },
+        "serviceAttachment": {
+          "description": "Output only. The name of the service attachment resource. Populated if private service connect is enabled and after FeatureViewSync is created.",
           "readOnly": true,
           "type": "string"
         }
@@ -20413,6 +20584,12 @@
           "type": "boolean"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1FeatureOnlineStoreOptimized": {
+      "description": "Optimized storage type to replace lightning",
+      "id": "GoogleCloudAiplatformV1beta1FeatureOnlineStoreOptimized",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1FeatureSelector": {
@@ -21270,17 +21447,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudAiplatformV1beta1GenieSource": {
-      "description": "Contains information about the source of the models generated from Generative AI Studio.",
-      "id": "GoogleCloudAiplatformV1beta1GenieSource",
-      "properties": {
-        "baseModelUri": {
-          "description": "Required. The public base model URI.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudAiplatformV1beta1HyperparameterTuningJob": {
       "description": "Represents a HyperparameterTuningJob. A HyperparameterTuningJob has a Study specification and multiple CustomJobs with identical CustomJob specification.",
       "id": "GoogleCloudAiplatformV1beta1HyperparameterTuningJob",
@@ -21736,6 +21902,13 @@
           },
           "type": "array"
         },
+        "numericRestricts": {
+          "description": "Optional. List of Restrict of the datapoint, used to perform \"restricted searches\" where boolean rule are used to filter the subset of the database eligible for matching. This uses numeric comparisons.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1IndexDatapointNumericRestriction"
+          },
+          "type": "array"
+        },
         "restricts": {
           "description": "Optional. List of Restrict of the datapoint, used to perform \"restricted searches\" where boolean rule are used to filter the subset of the database eligible for matching. This uses categorical tokens. See: https://cloud.google.com/vertex-ai/docs/matching-engine/filtering",
           "items": {
@@ -21752,6 +21925,52 @@
       "properties": {
         "crowdingAttribute": {
           "description": "The attribute value used for crowding. The maximum number of neighbors to return per crowding attribute value (per_crowding_attribute_num_neighbors) is configured per-query. This field is ignored if per_crowding_attribute_num_neighbors is larger than the total number of neighbors to return for a given query.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1IndexDatapointNumericRestriction": {
+      "description": "This field allows restricts to be based on numeric comparisons rather than categorical tokens.",
+      "id": "GoogleCloudAiplatformV1beta1IndexDatapointNumericRestriction",
+      "properties": {
+        "namespace": {
+          "description": "The namespace of this restriction. e.g.: cost.",
+          "type": "string"
+        },
+        "op": {
+          "description": "This MUST be specified for queries and must NOT be specified for datapoints.",
+          "enum": [
+            "OPERATOR_UNSPECIFIED",
+            "LESS",
+            "LESS_EQUAL",
+            "EQUAL",
+            "GREATER_EQUAL",
+            "GREATER"
+          ],
+          "enumDescriptions": [
+            "Default value of the enum.",
+            "Datapoints are eligible iff their value is \u003c the query's.",
+            "Datapoints are eligible iff their value is \u003c= the query's.",
+            "Datapoints are eligible iff their value is == the query's.",
+            "Datapoints are eligible iff their value is \u003e= the query's.",
+            "Datapoints are eligible iff their value is \u003e the query's."
+          ],
+          "type": "string"
+        },
+        "valueDouble": {
+          "description": "Represents 64 bit float.",
+          "format": "double",
+          "type": "number"
+        },
+        "valueFloat": {
+          "description": "Represents 32 bit float.",
+          "format": "float",
+          "type": "number"
+        },
+        "valueInt": {
+          "description": "Represents 64 bit integer.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -23395,10 +23614,6 @@
           "$ref": "GoogleCloudAiplatformV1beta1ExplanationSpec",
           "description": "The default explanation specification for this Model. The Model can be used for requesting explanation after being deployed if it is populated. The Model can be used for batch explanation if it is populated. All fields of the explanation_spec can be overridden by explanation_spec of DeployModelRequest.deployed_model, or explanation_spec of BatchPredictionJob. If the default explanation specification is not set for this Model, this Model can still be used for requesting explanation by setting explanation_spec of DeployModelRequest.deployed_model and for batch explanation by setting explanation_spec of BatchPredictionJob."
         },
-        "generatedModelSource": {
-          "$ref": "GoogleCloudAiplatformV1beta1ModelGeneratedModelSource",
-          "description": "Optional. Used to specify the source of the Model Garden model or Genie models. Only present for models created or tuned from Model Garden and Genie."
-        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -24073,32 +24288,6 @@
           "description": "Output only. The ID of the export format. The possible format IDs are: * `tflite` Used for Android mobile devices. * `edgetpu-tflite` Used for [Edge TPU](https://cloud.google.com/edge-tpu/) devices. * `tf-saved-model` A tensorflow model in SavedModel format. * `tf-js` A [TensorFlow.js](https://www.tensorflow.org/js) model that can be used in the browser and in Node.js using JavaScript. * `core-ml` Used for iOS mobile devices. * `custom-trained` A Model that was uploaded or trained by custom code.",
           "readOnly": true,
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAiplatformV1beta1ModelGardenSource": {
-      "description": "Contains information about the source of the models generated from Model Garden.",
-      "id": "GoogleCloudAiplatformV1beta1ModelGardenSource",
-      "properties": {
-        "publicModelName": {
-          "description": "Required. The model garden source model resource name.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAiplatformV1beta1ModelGeneratedModelSource": {
-      "description": "Used to specify the source of the Model Garden model or Genie models. Only present for models created or tuned from Model Garden and Genie.",
-      "id": "GoogleCloudAiplatformV1beta1ModelGeneratedModelSource",
-      "properties": {
-        "genieSource": {
-          "$ref": "GoogleCloudAiplatformV1beta1GenieSource",
-          "description": "Information about the base model of Genie models."
-        },
-        "modelGardenSource": {
-          "$ref": "GoogleCloudAiplatformV1beta1ModelGardenSource",
-          "description": "Source information of Model Garden models."
         }
       },
       "type": "object"
@@ -26882,6 +27071,10 @@
             "Notebook execution process has failed. Expect this message within timeout."
           ],
           "type": "string"
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "Optional. The error details of the event."
         },
         "vmToken": {
           "description": "Required. The VM identity token (a JWT) for authenticating the VM. https://cloud.google.com/compute/docs/instances/verifying-instance-identity",
@@ -31426,6 +31619,10 @@
           },
           "type": "array"
         },
+        "studyStoppingConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1StudySpecStudyStoppingConfig",
+          "description": "Conditions for automated stopping of a Study. Enable automated stopping by configuring at least one condition."
+        },
         "transferLearningConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1StudySpecTransferLearningConfig",
           "description": "The configuration info/options for transfer learning. Currently supported for Vertex AI Vizier service, not HyperParameterTuningJob"
@@ -31765,6 +31962,45 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1StudySpecStudyStoppingConfig": {
+      "description": "The configuration (stopping conditions) for automated stopping of a Study. Conditions include trial budgets, time budgets, and convergence detection.",
+      "id": "GoogleCloudAiplatformV1beta1StudySpecStudyStoppingConfig",
+      "properties": {
+        "maxDurationNoProgress": {
+          "description": "If the objective value has not improved for this much time, stop the study. WARNING: Effective only for single-objective studies.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "maxNumTrials": {
+          "description": "If there are more than this many trials, stop the study.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maxNumTrialsNoProgress": {
+          "description": "If the objective value has not improved for this many consecutive trials, stop the study. WARNING: Effective only for single-objective studies.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maximumRuntimeConstraint": {
+          "$ref": "GoogleCloudAiplatformV1beta1StudyTimeConstraint",
+          "description": "If the specified time or duration has passed, stop the study."
+        },
+        "minNumTrials": {
+          "description": "If there are fewer than this many COMPLETED trials, do not stop the study.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minimumRuntimeConstraint": {
+          "$ref": "GoogleCloudAiplatformV1beta1StudyTimeConstraint",
+          "description": "Each \"stopping rule\" in this proto specifies an \"if\" condition. Before Vizier would generate a new suggestion, it first checks each specified stopping rule, from top to bottom in this list. Note that the first few rules (e.g. minimum_runtime_constraint, min_num_trials) will prevent other stopping rules from being evaluated until they are met. For example, setting `min_num_trials=5` and `always_stop_after= 1 hour` means that the Study will ONLY stop after it has 5 COMPLETED trials, even if more than an hour has passed since its creation. It follows the first applicable rule (whose \"if\" condition is satisfied) to make a stopping decision. If none of the specified rules are applicable, then Vizier decides that the study should not stop. If Vizier decides that the study should stop, the study enters STOPPING state (or STOPPING_ASAP if should_stop_asap = true). IMPORTANT: The automatic study state transition happens precisely as described above; that is, deleting trials or updating StudyConfig NEVER automatically moves the study state back to ACTIVE. If you want to _resume_ a Study that was stopped, 1) change the stopping conditions if necessary, 2) activate the study, and then 3) ask for suggestions. If the specified time or duration has not passed, do not stop the study."
+        },
+        "shouldStopAsap": {
+          "description": "If true, a Study enters STOPPING_ASAP whenever it would normally enters STOPPING state. The bottom line is: set to true if you want to interrupt on-going evaluations of Trials as soon as the study stopping condition is met. (Please see Study.State documentation for the source of truth).",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1StudySpecTransferLearningConfig": {
       "description": "This contains flag for manually disabling transfer learning for a study. The names of prior studies being used for transfer learning (if any) are also listed here.",
       "id": "GoogleCloudAiplatformV1beta1StudySpecTransferLearningConfig",
@@ -31780,6 +32016,23 @@
           },
           "readOnly": true,
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1StudyTimeConstraint": {
+      "description": "Time-based Constraint for Study",
+      "id": "GoogleCloudAiplatformV1beta1StudyTimeConstraint",
+      "properties": {
+        "endTime": {
+          "description": "Compares the wallclock time to this time. Must use UTC timezone.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "maxDuration": {
+          "description": "Counts the wallclock time passed since the creation of this Study.",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"
@@ -32416,6 +32669,29 @@
           "description": "The fraction of the input data that is to be used to validate the Model.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1TokensInfo": {
+      "description": "Tokens info with a list of tokens and the corresponding list of token ids.",
+      "id": "GoogleCloudAiplatformV1beta1TokensInfo",
+      "properties": {
+        "tokenIds": {
+          "description": "A list of token ids from the input.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tokens": {
+          "description": "A list of tokens from the input.",
+          "items": {
+            "format": "byte",
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

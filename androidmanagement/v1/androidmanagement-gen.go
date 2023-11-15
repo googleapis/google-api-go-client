@@ -878,13 +878,14 @@ type ApplicationPolicy struct {
 	// Possible values:
 	//   "AUTO_UPDATE_MODE_UNSPECIFIED" - Unspecified. Defaults to
 	// AUTO_UPDATE_DEFAULT.
-	//   "AUTO_UPDATE_DEFAULT" - The app is automatically updated with low
-	// priority to minimize the impact on the user.The app is updated when
-	// all of the following constraints are met: The device is not actively
-	// used. The device is connected to an unmetered network. The device is
-	// charging.The device is notified about a new update within 24 hours
-	// after it is published by the developer, after which the app is
-	// updated the next time the constraints above are met.
+	//   "AUTO_UPDATE_DEFAULT" - The default update mode.The app is
+	// automatically updated with low priority to minimize the impact on the
+	// user.The app is updated when all of the following constraints are
+	// met: The device is not actively used. The device is connected to an
+	// unmetered network. The device is charging. The app to be updated is
+	// not running in the foreground.The device is notified about a new
+	// update within 24 hours after it is published by the developer, after
+	// which the app is updated the next time the constraints above are met.
 	//   "AUTO_UPDATE_POSTPONED" - The app is not automatically updated for
 	// a maximum of 90 days after the app becomes out of date.90 days after
 	// the app becomes out of date, the latest available version is
@@ -993,8 +994,8 @@ type ApplicationPolicy struct {
 	//   "INSTALL_TYPE_UNSPECIFIED" - Unspecified. Defaults to AVAILABLE.
 	//   "PREINSTALLED" - The app is automatically installed and can be
 	// removed by the user.
-	//   "FORCE_INSTALLED" - The app is automatically installed and can't be
-	// removed by the user.
+	//   "FORCE_INSTALLED" - The app is automatically installed regardless
+	// of a set maintenance window and can't be removed by the user.
 	//   "BLOCKED" - The app is blocked and can't be installed. If the app
 	// was installed under a previous policy, it will be uninstalled. This
 	// also blocks its instant app functionality.
@@ -1562,7 +1563,9 @@ type Command struct {
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// NewPassword: For commands of type RESET_PASSWORD, optionally
-	// specifies the new password.
+	// specifies the new password. Note: The new password must be at least 6
+	// characters long if it is numeric in case of Android 14 devices. Else
+	// the command will fail with INVALID_VALUE.
 	NewPassword string `json:"newPassword,omitempty"`
 
 	// ResetPasswordFlags: For commands of type RESET_PASSWORD, optionally
@@ -3034,17 +3037,18 @@ func (s *FilePushedEvent) MarshalJSON() ([]byte, error) {
 
 // FreezePeriod: A system freeze period. When a device’s clock is
 // within the freeze period, all incoming system updates (including
-// security patches) are blocked and won’t be installed. When a device
-// is outside the freeze period, normal update behavior applies. Leap
-// years are ignored in freeze period calculations, in particular: * If
-// Feb. 29th is set as the start or end date of a freeze period, the
-// freeze period will start or end on Feb. 28th instead. * When a
-// device’s system clock reads Feb. 29th, it’s treated as Feb. 28th.
-// * When calculating the number of days in a freeze period or the time
-// between two freeze periods, Feb. 29th is ignored and not counted as a
-// day.Note: For Freeze Periods to take effect, SystemUpdateType cannot
-// be specified as SYSTEM_UPDATE_TYPE_UNSPECIFIED, because freeze
-// periods require a defined policy to be specified.
+// security patches) are blocked and won’t be installed.When the
+// device is outside any set freeze periods, the normal policy behavior
+// (automatic, windowed, or postponed) applies.Leap years are ignored in
+// freeze period calculations, in particular: If Feb. 29th is set as the
+// start or end date of a freeze period, the freeze period will start or
+// end on Feb. 28th instead. When a device’s system clock reads Feb.
+// 29th, it’s treated as Feb. 28th. When calculating the number of
+// days in a freeze period or the time between two freeze periods, Feb.
+// 29th is ignored and not counted as a day.Note: For Freeze Periods to
+// take effect, SystemUpdateType cannot be specified as
+// SYSTEM_UPDATE_TYPE_UNSPECIFIED, because freeze periods require a
+// defined policy to be specified.
 type FreezePeriod struct {
 	// EndDate: The end date (inclusive) of the freeze period. Must be no
 	// later than 90 days from the start date. If the end date is earlier
@@ -4396,6 +4400,18 @@ type NonComplianceDetail struct {
 	// Play Terms of Service.
 	//   "USER_INVALID" - The user is no longer valid. The user may have
 	// been deleted or disabled.
+	//   "NETWORK_ERROR_UNRELIABLE_CONNECTION" - A network error on the
+	// user's device has prevented the install from succeeding. This usually
+	// happens when the device's internet connectivity is degraded,
+	// unavailable or there's a network configuration issue. Please ensure
+	// the device has access to full internet connectivity on a network that
+	// meets Android Enterprise Network Requirements
+	// (https://support.google.com/work/android/answer/10513641). App
+	// install or update will automatically resume once this is the case.
+	//   "INSUFFICIENT_STORAGE" - The user's device does not have sufficient
+	// storage space to install the app. This can be resolved by clearing up
+	// storage space on the device. App install or update will automatically
+	// resume once the device has sufficient storage.
 	InstallationFailureReason string `json:"installationFailureReason,omitempty"`
 
 	// NonComplianceReason: The reason the device is not in compliance with
@@ -5172,8 +5188,8 @@ type PersonalUsagePolicies struct {
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off.
 	// The minimum duration must be at least 3 days. Other details are as
 	// follows: - If the duration is set to 0, the feature is turned off. -
-	// If the duration is set to any value between 1-2 days, the feature is
-	// automatically set to 3 days. *Note:* If you want to avoid personal
+	// If the duration is set to a value smaller than the minimum duration,
+	// the feature returns an error. *Note:* If you want to avoid personal
 	// profiles being suspended during long periods of off-time, you can
 	// temporarily set a large value for this parameter.
 	MaxDaysWithWorkOff int64 `json:"maxDaysWithWorkOff,omitempty"`
@@ -6755,6 +6771,8 @@ type SystemUpdate struct {
 	// it is updated as soon as possible even outside of the maintenance
 	// window.
 	//   "POSTPONE" - Postpone automatic install up to a maximum of 30 days.
+	// This policy does not affect security updates (e.g. monthly security
+	// patches).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndMinutes") to

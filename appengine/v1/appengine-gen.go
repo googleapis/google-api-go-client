@@ -1144,6 +1144,52 @@ func (s *CreateVersionMetadataV1Beta) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: A full date, with
+// non-zero year, month, and day values. A month and day, with a zero
+// year (for example, an anniversary). A year on its own, with a zero
+// month and a zero day. A year and month, with a zero day (for example,
+// a credit card expiration date).Related types: google.type.TimeOfDay
+// google.type.DateTime google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DebugInstanceRequest: Request message for Instances.DebugInstance.
 type DebugInstanceRequest struct {
 	// SshKey: Public SSH key to add to the instance. Examples:
@@ -2194,6 +2240,42 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListRuntimesResponse: Response message for Applications.ListRuntimes.
+type ListRuntimesResponse struct {
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Runtimes: The runtimes available to the requested application.
+	Runtimes []*Runtime `json:"runtimes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRuntimesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRuntimesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3311,6 +3393,68 @@ func (s *Resources) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Runtime: Runtime versions for App Engine.
+type Runtime struct {
+	// DecommissionedDate: Date when Runtime is decommissioned.
+	DecommissionedDate *Date `json:"decommissionedDate,omitempty"`
+
+	// DeprecationDate: Date when Runtime is deprecated.
+	DeprecationDate *Date `json:"deprecationDate,omitempty"`
+
+	// EndOfSupportDate: Date when Runtime is end of support.
+	EndOfSupportDate *Date `json:"endOfSupportDate,omitempty"`
+
+	// Environment: The environment of the runtime.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Default value.
+	//   "STANDARD" - App Engine Standard.
+	//   "FLEXIBLE" - App Engine Flexible
+	Environment string `json:"environment,omitempty"`
+
+	// Name: The name of the runtime, e.g., 'go113', 'nodejs12', etc.
+	Name string `json:"name,omitempty"`
+
+	// Stage: The stage of life this runtime is in, e.g., BETA, GA, etc.
+	//
+	// Possible values:
+	//   "RUNTIME_STAGE_UNSPECIFIED" - Not specified.
+	//   "DEVELOPMENT" - The runtime is in development.
+	//   "ALPHA" - The runtime is in the Alpha stage.
+	//   "BETA" - The runtime is in the Beta stage.
+	//   "GA" - The runtime is generally available.
+	//   "DEPRECATED" - The runtime is deprecated.
+	//   "DECOMMISSIONED" - The runtime is no longer supported.
+	//   "END_OF_SUPPORT" - The runtime is end of support.
+	Stage string `json:"stage,omitempty"`
+
+	// Warnings: Warning messages, e.g., a deprecation warning.
+	Warnings []string `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DecommissionedDate")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DecommissionedDate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Runtime) MarshalJSON() ([]byte, error) {
+	type NoMethod Runtime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ScriptHandler: Executes a script to handle the request that matches
 // the URL pattern.
 type ScriptHandler struct {
@@ -3913,6 +4057,11 @@ type Version struct {
 	// FlexibleRuntimeSettings: Settings for App Engine flexible runtimes.
 	FlexibleRuntimeSettings *FlexibleRuntimeSettings `json:"flexibleRuntimeSettings,omitempty"`
 
+	// GeneratedCustomerMetadata: Additional Google Generated Customer
+	// Metadata, this field won't be provided by default and can be
+	// requested by setting the IncludeExtraData field in GetVersionRequest
+	GeneratedCustomerMetadata googleapi.RawMessage `json:"generatedCustomerMetadata,omitempty"`
+
 	// Handlers: An ordered list of URL-matching patterns that should be
 	// applied to incoming requests. The first matching URL handles the
 	// request and other request handlers are not attempted.Only returned in
@@ -3921,8 +4070,7 @@ type Version struct {
 
 	// HealthCheck: Configures health checking for instances. Unhealthy
 	// instances are stopped and replaced with new instances. Only
-	// applicable in the App Engine flexible environment.Only returned in
-	// GET requests if view=FULL is set.
+	// applicable in the App Engine flexible environment.
 	HealthCheck *HealthCheck `json:"healthCheck,omitempty"`
 
 	// Id: Relative name of the version within the service. Example: v1.
@@ -3964,8 +4112,7 @@ type Version struct {
 	Libraries []*Library `json:"libraries,omitempty"`
 
 	// LivenessCheck: Configures liveness health checking for instances.
-	// Unhealthy instances are stopped and replaced with new instancesOnly
-	// returned in GET requests if view=FULL is set.
+	// Unhealthy instances are stopped and replaced with new instances
 	LivenessCheck *LivenessCheck `json:"livenessCheck,omitempty"`
 
 	// ManualScaling: A service with manual scaling runs continuously,
@@ -3988,8 +4135,7 @@ type Version struct {
 	NobuildFilesRegex string `json:"nobuildFilesRegex,omitempty"`
 
 	// ReadinessCheck: Configures readiness health checking for instances.
-	// Unhealthy instances are not put into the backend traffic
-	// rotation.Only returned in GET requests if view=FULL is set.
+	// Unhealthy instances are not put into the backend traffic rotation.
 	ReadinessCheck *ReadinessCheck `json:"readinessCheck,omitempty"`
 
 	// Resources: Machine resources for this version. Only applicable in the
@@ -4505,6 +4651,182 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	//   "path": "v1/apps/{appsId}",
 	//   "response": {
 	//     "$ref": "Application"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/appengine.admin",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "appengine.apps.listRuntimes":
+
+type AppsListRuntimesCall struct {
+	s            *APIService
+	appsId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListRuntimes: Lists all the available runtimes for the application.
+//
+//   - appsId: Part of `parent`.  Name of the parent Application resource.
+//     Example: apps/myapp.
+func (r *AppsService) ListRuntimes(appsId string) *AppsListRuntimesCall {
+	c := &AppsListRuntimesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appsId = appsId
+	return c
+}
+
+// Environment sets the optional parameter "environment": The
+// environment of the Application.
+//
+// Possible values:
+//
+//	"ENVIRONMENT_UNSPECIFIED" - Default value.
+//	"STANDARD" - App Engine Standard.
+//	"FLEXIBLE" - App Engine Flexible
+func (c *AppsListRuntimesCall) Environment(environment string) *AppsListRuntimesCall {
+	c.urlParams_.Set("environment", environment)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsListRuntimesCall) Fields(s ...googleapi.Field) *AppsListRuntimesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsListRuntimesCall) IfNoneMatch(entityTag string) *AppsListRuntimesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsListRuntimesCall) Context(ctx context.Context) *AppsListRuntimesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsListRuntimesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsListRuntimesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/apps/{appsId}:listRuntimes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appsId": c.appsId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "appengine.apps.listRuntimes" call.
+// Exactly one of *ListRuntimesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListRuntimesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AppsListRuntimesCall) Do(opts ...googleapi.CallOption) (*ListRuntimesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRuntimesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the available runtimes for the application.",
+	//   "flatPath": "v1/apps/{appsId}:listRuntimes",
+	//   "httpMethod": "GET",
+	//   "id": "appengine.apps.listRuntimes",
+	//   "parameterOrder": [
+	//     "appsId"
+	//   ],
+	//   "parameters": {
+	//     "appsId": {
+	//       "description": "Part of `parent`. Required. Name of the parent Application resource. Example: apps/myapp.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "environment": {
+	//       "description": "Optional. The environment of the Application.",
+	//       "enum": [
+	//         "ENVIRONMENT_UNSPECIFIED",
+	//         "STANDARD",
+	//         "FLEXIBLE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "App Engine Standard.",
+	//         "App Engine Flexible"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/apps/{appsId}:listRuntimes",
+	//   "response": {
+	//     "$ref": "ListRuntimesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/appengine.admin",

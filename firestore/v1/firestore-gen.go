@@ -1896,13 +1896,11 @@ type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
 
 	// SnapshotTime: The timestamp that corresponds to the version of the
-	// database to be exported. The timestamp must be rounded to the minute,
-	// in the past, and not older than 5 days. Please choose a reasonable
-	// timestamp based on prior knowledge on how long exports take as data
-	// at provided snapshot timestamp can expire during export. If
-	// specified, then the exported documents will represent a consistent
-	// view of the database at the provided time. Otherwise, there are no
-	// guarantees about the consistency of the exported documents.
+	// database to be exported. The timestamp must be in the past, rounded
+	// to the minute and not older than earliestVersionTime. If specified,
+	// then the exported documents will represent a consistent view of the
+	// database at the provided time. Otherwise, there are no guarantees
+	// about the consistency of the exported documents.
 	SnapshotTime string `json:"snapshotTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
@@ -2592,6 +2590,16 @@ func (s *GoogleFirestoreAdminV1ListBackupsResponse) MarshalJSON() ([]byte, error
 type GoogleFirestoreAdminV1ListDatabasesResponse struct {
 	// Databases: The databases in the project.
 	Databases []*GoogleFirestoreAdminV1Database `json:"databases,omitempty"`
+
+	// Unreachable: In the event that data about individual databases cannot
+	// be listed they will be recorded here. An example entry might be:
+	// projects/some_project/locations/some_location This can happen if the
+	// Cloud Region that the Database resides in is currently unavailable.
+	// In this case we can't fetch all the details about the database. You
+	// may be able to get a more detailed error message (or possibly fetch
+	// the resource) by sending a 'Get' request for the resource or a 'List'
+	// request for the specific location.
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

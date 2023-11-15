@@ -905,14 +905,12 @@ func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
 }
 
 // ChatClientDataSourceMarkup: Chat apps only. For a `SelectionInput`
-// widget that uses a multi-select menu, a data source from Google Chat.
-// For example, a list of Google Chat spaces of which the user is a
-// member. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// widget that uses a multiselect menu, a data source from Google Chat.
+// The data source populates selection items for the multiselect menu.
+// For example, a user can select Google Chat spaces that they're a
+// member of.
 type ChatClientDataSourceMarkup struct {
-	// SpaceDataSource: A data source representing a Google Chat space.
-	// Format: spaces/{space} Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// SpaceDataSource: Google Chat spaces that the user is a member of.
 	SpaceDataSource *SpaceDataSource `json:"spaceDataSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SpaceDataSource") to
@@ -2791,32 +2789,20 @@ func (s *GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1PlatformDataSource: Chat apps only. For a
-// `SelectionInput` widget that uses a multi-select menu, the data from
-// a Google Workspace host application
-// (https://developers.google.com/chat/api/reference/rest/v1/HostApp).
-// Used to populate the items in the multi-select menu. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// `SelectionInput` widget that uses a multiselect menu, a data source
+// from Google Workspace. Used to populate items in a multiselect menu.
 type GoogleAppsCardV1PlatformDataSource struct {
-	// CommonDataSource: For a `SelectionInput` widget that uses a
-	// multi-select menu, a data source shared by all Google Workspace host
+	// CommonDataSource: A data source shared by all Google Workspace
 	// applications, such as users in a Google Workspace organization.
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	//
 	// Possible values:
-	//   "UNKNOWN" - Default value. Don't use. [Developer
-	// Preview](https://developers.google.com/workspace/preview).
-	//   "USER" - A list of users provided by the Google Workspace host
-	// application. For example, to source users from Google Chat, use the
-	// resource name of the
-	// [user](https://developers.google.com/chat/api/reference/rest/v1/User).
-	//  Format: users/{user} [Developer
-	// Preview](https://developers.google.com/workspace/preview).
+	//   "UNKNOWN" - Default value. Don't use.
+	//   "USER" - Google Workspace users. The user can only view and select
+	// users from their Google Workspace organization.
 	CommonDataSource string `json:"commonDataSource,omitempty"`
 
 	// HostAppDataSource: A data source that's unique to a Google Workspace
-	// host application, such as Gmail emails, Google Calendar events, or
-	// Google Chat messages. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// host application, such spaces in Google Chat.
 	HostAppDataSource *HostAppDataSourceMarkup `json:"hostAppDataSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonDataSource") to
@@ -2909,8 +2895,7 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // undefined or abstract data from users, use the TextInput widget.
 type GoogleAppsCardV1SelectionInput struct {
 	// ExternalDataSource: An external data source, such as a relational
-	// data base. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// data base.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
 
 	// Items: An array of selectable items. For example, an array of radio
@@ -2924,18 +2909,16 @@ type GoogleAppsCardV1SelectionInput struct {
 	// "Urgency" or "Select urgency".
 	Label string `json:"label,omitempty"`
 
-	// MultiSelectMaxSelectedItems: For multi-select menus, the maximum
+	// MultiSelectMaxSelectedItems: For multiselect menus, the maximum
 	// number of items that a user can select. Minimum value is 1 item. If
-	// unspecified, set to 3 items. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// unspecified, defaults to 3 items.
 	MultiSelectMaxSelectedItems int64 `json:"multiSelectMaxSelectedItems,omitempty"`
 
-	// MultiSelectMinQueryLength: For multi-select menus, the number of text
+	// MultiSelectMinQueryLength: For multiselect menus, the number of text
 	// characters that a user inputs before the Chat app queries
-	// autocomplete and displays suggested items on the card. If
-	// unspecified, set to 0 characters for static data sources and 3
-	// characters for external data sources. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// autocomplete and displays suggested items in the menu. If
+	// unspecified, defaults to 0 characters for static data sources and 3
+	// characters for external data sources.
 	MultiSelectMinQueryLength int64 `json:"multiSelectMinQueryLength,omitempty"`
 
 	// Name: The name that identifies the selection input in a form input
@@ -2950,10 +2933,7 @@ type GoogleAppsCardV1SelectionInput struct {
 	// (https://developers.google.com/chat/ui/read-form-data).
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
-	// PlatformDataSource: A data source from a Google Workspace host
-	// application
-	// (https://developers.google.com/chat/api/reference/rest/v1/HostApp).
-	// Developer Preview (https://developers.google.com/workspace/preview).
+	// PlatformDataSource: A data source from Google Workspace.
 	PlatformDataSource *GoogleAppsCardV1PlatformDataSource `json:"platformDataSource,omitempty"`
 
 	// Type: The type of items that are displayed to users in a
@@ -2971,20 +2951,20 @@ type GoogleAppsCardV1SelectionInput struct {
 	//   "DROPDOWN" - A dropdown menu. Users can select one item from the
 	// menu.
 	//   "MULTI_SELECT" - Supported by Chat apps, but not Google Workspace
-	// Add-ons. A multi-select menu for static or dynamic data. From the
-	// menu bar, users select one or more items. Users can also input values
-	// to populate dynamic data. For example, users can start typing the
-	// name of a Google Chat space and the widget autosuggests the space. To
-	// populate items for a multi-select menu, you can use one of the
+	// Add-ons. A multiselect menu for static or dynamic data. From the menu
+	// bar, users select one or more items. Users can also input values to
+	// populate dynamic data. For example, users can start typing the name
+	// of a Google Chat space and the widget autosuggests the space. To
+	// populate items for a multiselect menu, you can use one of the
 	// following types of data sources: * Static data: Items are specified
 	// as `SelectionItem` objects in the widget. Up to 100 items. * Google
-	// Workspace data: Items are populated using data from a Google
-	// Workspace application, such as Google Chat users or spaces. *
-	// External data: Items are populated from a dynamic external data
-	// source. For examples of how to implement multi-select menus, see the
-	// [`SelectionInput` widget
-	// page](https://developers.google.com/chat/ui/widgets/selection-input).
-	// [Developer Preview](https://developers.google.com/workspace/preview).
+	// Workspace data: Items are populated using data from Google Workspace,
+	// such as Google Workspace users or Google Chat spaces. * External
+	// data: Items are populated from an external data source outside of
+	// Google Workspace. For examples of how to implement multiselect menus,
+	// see the [`SelectionInput` widget
+	// page](https://developers.google.com/chat/ui/widgets/selection-input#mu
+	// ltiselect-menu).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExternalDataSource")
@@ -3014,9 +2994,8 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1SelectionItem: An item that users can select in a
 // selection input, such as a checkbox or switch.
 type GoogleAppsCardV1SelectionItem struct {
-	// BottomText: For multi-select menus, a text description or label
-	// that's displayed below the item's `text` field. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// BottomText: For multiselect menus, a text description or label that's
+	// displayed below the item's `text` field.
 	BottomText string `json:"bottomText,omitempty"`
 
 	// Selected: Whether the item is selected by default. If the selection
@@ -3024,11 +3003,10 @@ type GoogleAppsCardV1SelectionItem struct {
 	// menu), only set this field for one item.
 	Selected bool `json:"selected,omitempty"`
 
-	// StartIconUri: For multi-select menus, the URL for the icon displayed
+	// StartIconUri: For multiselect menus, the URL for the icon displayed
 	// next to the item's `text` field. Supports PNG and JPEG files. Must be
 	// an `HTTPS` URL. For example,
 	// `https://developers.google.com/chat/images/quickstart-app-avatar.png`.
-	//  Developer Preview (https://developers.google.com/workspace/preview).
 	StartIconUri string `json:"startIconUri,omitempty"`
 
 	// Text: The text that identifies or describes the item to users.
@@ -3505,12 +3483,11 @@ func (s *GoogleAppsCardV1Widgets) MarshalJSON() ([]byte, error) {
 }
 
 // HostAppDataSourceMarkup: Chat apps only. For a `SelectionInput`
-// widget that uses a multi-select menu, a data source from a Google
-// Workspace host application. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// widget that uses a multiselect menu, a data source from a Google
+// Workspace application. The data source populates selection items for
+// the multiselect menu.
 type HostAppDataSourceMarkup struct {
-	// ChatDataSource: The data source is Google Chat. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// ChatDataSource: A data source from Google Chat.
 	ChatDataSource *ChatClientDataSourceMarkup `json:"chatDataSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChatDataSource") to
@@ -3804,7 +3781,8 @@ func (s *KeyValue) MarshalJSON() ([]byte, error) {
 }
 
 type ListMembershipsResponse struct {
-	// Memberships: List of memberships in the requested (or first) page.
+	// Memberships: Unordered list. List of memberships in the requested (or
+	// first) page.
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// NextPageToken: A token that you can send as `pageToken` to retrieve
@@ -4227,7 +4205,7 @@ type Message struct {
 
 	// Thread: The thread the message belongs to. For example usage, see
 	// Start or reply to a message thread
-	// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+	// (https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).
 	Thread *Thread `json:"thread,omitempty"`
 
 	// ThreadReply: Output only. When `true`, the message is a response in a
@@ -4705,13 +4683,12 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpaceDataSource: A data source representing a Google Chat space.
-// Format: spaces/{space} Developer Preview
-// (https://developers.google.com/workspace/preview).
+// SpaceDataSource: A data source that populates Google Chat spaces as
+// selection items for a multiselect menu. Only populates spaces that
+// the user is a member of.
 type SpaceDataSource struct {
-	// DefaultToCurrentSpace: When `true`, uses the card's Google Chat space
-	// as the default selection. The default value is `false`. Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// DefaultToCurrentSpace: If set to `true`, the multiselect menu selects
+	// the current Google Chat space as an item by default.
 	DefaultToCurrentSpace bool `json:"defaultToCurrentSpace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7135,8 +7112,6 @@ type SpacesMembersGetCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). User
-// authentication
 // (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - name: Resource name of the membership to retrieve. To get the app's
@@ -7253,7 +7228,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a membership. For an example, see [Get a membership](https://developers.google.com/chat/api/guides/v1/members/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Returns details about a membership. For an example, see [Get a membership](https://developers.google.com/chat/api/guides/v1/members/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.get",
@@ -7308,8 +7283,6 @@ type SpacesMembersListCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). User
-// authentication
 // (https://developers.google.com/chat/api/guides/auth/users).
 //
 //   - parent: The resource name of the space for which to fetch a
@@ -7471,7 +7444,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists memberships in a space. For an example, see [List memberships](https://developers.google.com/chat/api/guides/v1/members/list). Listing memberships with [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/chat/api/guides/auth/users) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Lists memberships in a space. For an example, see [List memberships](https://developers.google.com/chat/api/guides/v1/members/list). Listing memberships with [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/chat/api/guides/auth/users) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -7599,7 +7572,11 @@ func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCr
 //
 // Possible values:
 //
-//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a new thread.
+//
+// Using this option ignores any thread ID or `thread_key` that's
+// included.
+//
 //	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
 //
 // reply to the thread specified by thread ID or `thread_key`. If it
@@ -7627,7 +7604,7 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 // characters. To start or add to a thread, create a message and specify
 // a `threadKey` or the thread.name. For example usage, see Start or
 // reply to a message thread
-// (https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+// (https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -7745,7 +7722,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//         "REPLY_MESSAGE_OR_FAIL"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Default. Starts a thread.",
+	//         "Default. Starts a new thread. Using this option ignores any thread ID or `thread_key` that's included.",
 	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If it fails, the message starts a new thread instead.",
 	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If it fails, a `NOT_FOUND` error is returned instead."
 	//       ],
@@ -7766,7 +7743,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     },
 	//     "threadKey": {
 	//       "deprecated": true,
-	//       "description": "Optional. Deprecated: Use thread.thread_key instead. ID for the thread. Supports up to 4000 characters. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. ID for the thread. Supports up to 4000 characters. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](https://developers.google.com/chat/api/guides/v1/messages/create#create-message-thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7805,8 +7782,6 @@ type SpacesMessagesDeleteCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). User
-// authentication
 // (https://developers.google.com/chat/api/guides/auth/users). Requests
 // authenticated with service accounts can only delete messages created
 // by the calling Chat app.
@@ -7918,7 +7893,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only delete messages created by the calling Chat app.",
+	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only delete messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -7971,8 +7946,6 @@ type SpacesMessagesGetCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). User
-// authentication
 // (https://developers.google.com/chat/api/guides/auth/users). Note:
 // Might return a message from a blocked member or space.
 //
@@ -8088,7 +8061,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a message. For an example, see [Read a message](https://developers.google.com/chat/api/guides/v1/messages/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Note: Might return a message from a blocked member or space.",
+	//   "description": "Returns details about a message. For an example, see [Read a message](https://developers.google.com/chat/api/guides/v1/messages/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Note: Might return a message from a blocked member or space.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",
@@ -8405,8 +8378,6 @@ type SpacesMessagesPatchCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). User
-// authentication
 // (https://developers.google.com/chat/api/guides/auth/users). Requests
 // authenticated with service accounts can only update messages created
 // by the calling Chat app.
@@ -8534,7 +8505,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "chat.spaces.messages.patch",
@@ -8598,8 +8569,6 @@ type SpacesMessagesUpdateCall struct {
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). User
-// authentication
 // (https://developers.google.com/chat/api/guides/auth/users). Requests
 // authenticated with service accounts can only update messages created
 // by the calling Chat app.
@@ -8727,7 +8696,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). [User authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",

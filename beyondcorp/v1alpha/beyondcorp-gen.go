@@ -2475,6 +2475,10 @@ func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaListBrowserDlpRulesResponse)
 //
 //	Message for response to listing PartnerTenants.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaListPartnerTenantsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// PartnerTenants: The list of PartnerTenant objects.
 	PartnerTenants []*GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant `json:"partnerTenants,omitempty"`
 
@@ -2482,7 +2486,7 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaListPartnerTenantsResponse struc
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "PartnerTenants") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2490,13 +2494,12 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaListPartnerTenantsResponse struc
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PartnerTenants") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2509,6 +2512,10 @@ func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaListPartnerTenantsResponse) 
 // GoogleCloudBeyondcorpPartnerservicesV1alphaListProxyConfigsResponse:
 // Message for response to listing ProxyConfigs.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaListProxyConfigsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// ProxyConfigs: The list of ProxyConfig objects.
 	ProxyConfigs []*GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig `json:"proxyConfigs,omitempty"`
 
@@ -2516,7 +2523,7 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaListProxyConfigsResponse struct 
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ProxyConfigs") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2524,7 +2531,7 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaListProxyConfigsResponse struct 
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProxyConfigs") to include
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -2681,7 +2688,7 @@ func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaPartnerTenant) MarshalJSON()
 }
 
 // GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig: Proxy
-// Configuration of a Tenant.
+// Configuration of a PartnerTenant.
 type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2696,9 +2703,6 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 
 	// Name: Output only. ProxyConfig resource name.
 	Name string `json:"name,omitempty"`
-
-	// ProxyProtocolConfig: Optional. Protocol config data for the Proxy.
-	ProxyProtocolConfig *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig `json:"proxyProtocolConfig,omitempty"`
 
 	// ProxyUri: Required. The URI of the proxy server.
 	ProxyUri string `json:"proxyUri,omitempty"`
@@ -2738,36 +2742,6 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 
 func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig: The
-// protocol data that specifies how to communicate with Partner's Proxy.
-type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig struct {
-	// Metadata: Optional. Untyped property bag to be sent back to the proxy
-	// using client specific mechanism.
-	Metadata map[string]string `json:"metadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1alphaProxyProtocolConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3382,7 +3356,7 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	// ignored when creating a subscription.
 	Name string `json:"name,omitempty"`
 
-	// SeatCount: Output only. Number of seats in the subscription.
+	// SeatCount: Optional. Number of seats in the subscription.
 	SeatCount int64 `json:"seatCount,omitempty,string"`
 
 	// Sku: Required. SKU of subscription.
@@ -5297,6 +5271,49 @@ func (r *OrganizationsLocationsGlobalPartnerTenantsService) List(parent string) 
 	return c
 }
 
+// Filter sets the optional parameter "filter": A filter specifying
+// constraints of a list operation. All fields in the PartnerTenant
+// message are supported. For example, the following query will return
+// the PartnerTenants with displayName "test-tenant"
+// organizations/${ORG_ID}/locations/${LOCATION}/partnerTenants?filter=di
+// splayName="test-tenant" Nested fields are also supported. The follow
+// query will return PartnerTenants with internal_tenant_id "1234"
+// organizations/${ORG_ID}/locations/${LOCATION}/partnerTenants?filter=pa
+// rtnerMetadata.internalTenantId="1234" For more information, please
+// refer to https://google.aip.dev/160.
+func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) Filter(filter string) *OrganizationsLocationsGlobalPartnerTenantsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering
+// of results. See Sorting order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order)
+// for more information.
+func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) OrderBy(orderBy string) *OrganizationsLocationsGlobalPartnerTenantsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return. If not specified, a default value of 50 will be
+// used by the service. Regardless of the page_size value, the response
+// may include a partial list and a caller should only rely on
+// response's next_page_token to determine if there are more instances
+// left to be queried.
+func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) PageSize(pageSize int64) *OrganizationsLocationsGlobalPartnerTenantsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous
+// ListPartnerTenantsResponse, if any.
+func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) PageToken(pageToken string) *OrganizationsLocationsGlobalPartnerTenantsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5409,6 +5426,27 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) Do(opts ...googleap
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter specifying constraints of a list operation. All fields in the PartnerTenant message are supported. For example, the following query will return the PartnerTenants with displayName \"test-tenant\" organizations/${ORG_ID}/locations/${LOCATION}/partnerTenants?filter=displayName=\"test-tenant\" Nested fields are also supported. The follow query will return PartnerTenants with internal_tenant_id \"1234\" organizations/${ORG_ID}/locations/${LOCATION}/partnerTenants?filter=partnerMetadata.internalTenantId=\"1234\" For more information, please refer to https://google.aip.dev/160.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Specifies the ordering of results. See [Sorting order](https://cloud.google.com/apis/design/design_patterns#sorting_order) for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return. If not specified, a default value of 50 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response's next_page_token to determine if there are more instances left to be queried.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous ListPartnerTenantsResponse, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The parent organization to which the PartnerTenants belong. Format: `organizations/{organization_id}/locations/global`",
 	//       "location": "path",
@@ -5426,6 +5464,27 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) Do(opts ...googleap
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsGlobalPartnerTenantsListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpPartnerservicesV1alphaListPartnerTenantsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "beyondcorp.organizations.locations.global.partnerTenants.patch":
@@ -5473,7 +5532,8 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) RequestId(requestI
 // PartnerTenant resource by the update. The fields specified in the
 // update_mask are relative to the resource, not the full request. A
 // field will be overwritten if it is in the mask. If the user does not
-// provide a mask then all fields will be overwritten.
+// provide a mask then all fields will be overwritten. Mutable fields:
+// display_name, partner_metadata, group_information.
 func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsGlobalPartnerTenantsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5591,7 +5651,7 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsPatchCall) Do(opts ...googlea
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the PartnerTenant resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. ",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the PartnerTenant resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten. Mutable fields: display_name, partner_metadata, group_information.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7207,9 +7267,10 @@ type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall struct {
 // organization and PartnerTenant. Can only be called by on onboarded
 // Beyondcorp Enterprise partner.
 //
-//   - parent: The resource name of the Tenant using the form:
-//     `organizations/{organization_id}/locations/global/tenants/{tenant_id
-//     }`.
+//   - parent: The resource name of the parent PartnerTenant using the
+//     form:
+//     `organizations/{organization_id}/locations/global/partnerTenants/{pa
+//     rtner_tenant_id}`.
 func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) Create(parent string, googlecloudbeyondcorppartnerservicesv1alphaproxyconfig *GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall {
 	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7335,7 +7396,7 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsCreateCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the Tenant using the form: `organizations/{organization_id}/locations/global/tenants/{tenant_id}`",
+	//       "description": "Required. The resource name of the parent PartnerTenant using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+$",
 	//       "required": true,
@@ -7530,8 +7591,8 @@ type OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall struct {
 // Get: Gets details of a single ProxyConfig.
 //
 //   - name: The resource name of the ProxyConfig using the form:
-//     `organizations/{organization_id}/locations/global/tenants/{tenant_id
-//     }/proxyConfigs/{proxy_config_id}`.
+//     `organizations/{organization_id}/locations/global/partnerTenants/{pa
+//     rtner_tenant_id}/proxyConfigs/{proxy_config_id}`.
 func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) Get(name string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall {
 	c := &OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7649,7 +7710,7 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsGetCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the ProxyConfig using the form: `organizations/{organization_id}/locations/global/tenants/{tenant_id}/proxyConfigs/{proxy_config_id}`",
+	//       "description": "Required. The resource name of the ProxyConfig using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}/proxyConfigs/{proxy_config_id}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/global/partnerTenants/[^/]+/proxyConfigs/[^/]+$",
 	//       "required": true,
@@ -7865,6 +7926,50 @@ func (r *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsService) List(par
 	return c
 }
 
+// Filter sets the optional parameter "filter": A filter specifying
+// constraints of a list operation. All fields in the ProxyConfig
+// message are supported. For example, the following query will return
+// the ProxyConfigs with displayName "test-config"
+// organizations/${ORG_ID}/locations/global/partnerTenants/${PARTNER_TENA
+// NT_ID}/proxyConfigs?filter=displayName="test-config" Nested fields
+// are also supported. The follow query will return ProxyConfigs with
+// pacUri "example.com/pac.pac"
+// organizations/${ORG_ID}/locations/global/partnerTenants/${PARTNER_TENA
+// NT_ID}/proxyConfigs?filter=routingInfo.pacUri="example.com/pac.pac"
+// For more information, please refer to https://google.aip.dev/160.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) Filter(filter string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering
+// of results. See Sorting order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order)
+// for more information.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) OrderBy(orderBy string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return. If not specified, a default value of 50 will be
+// used by the service. Regardless of the page_size value, the response
+// may include a partial list and a caller should only rely on
+// response's next_page_token to determine if there are more instances
+// left to be queried.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) PageSize(pageSize int64) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous
+// ListProxyConfigsRequest, if any.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) PageToken(pageToken string) *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7975,6 +8080,27 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) Do(opts
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter specifying constraints of a list operation. All fields in the ProxyConfig message are supported. For example, the following query will return the ProxyConfigs with displayName \"test-config\" organizations/${ORG_ID}/locations/global/partnerTenants/${PARTNER_TENANT_ID}/proxyConfigs?filter=displayName=\"test-config\" Nested fields are also supported. The follow query will return ProxyConfigs with pacUri \"example.com/pac.pac\" organizations/${ORG_ID}/locations/global/partnerTenants/${PARTNER_TENANT_ID}/proxyConfigs?filter=routingInfo.pacUri=\"example.com/pac.pac\" For more information, please refer to https://google.aip.dev/160.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Specifies the ordering of results. See [Sorting order](https://cloud.google.com/apis/design/design_patterns#sorting_order) for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return. If not specified, a default value of 50 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response's next_page_token to determine if there are more instances left to be queried.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous ListProxyConfigsRequest, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The parent organization to which the ProxyConfigs belong. Format: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}`",
 	//       "location": "path",
@@ -7992,6 +8118,27 @@ func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) Do(opts
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsGlobalPartnerTenantsProxyConfigsListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpPartnerservicesV1alphaListProxyConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "beyondcorp.organizations.locations.global.partnerTenants.proxyConfigs.patch":

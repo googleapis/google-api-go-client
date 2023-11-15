@@ -339,8 +339,8 @@ type CustomVoiceParams struct {
 	// custom voice.
 	Model string `json:"model,omitempty"`
 
-	// ReportedUsage: Optional. The usage of the synthesized audio to be
-	// reported.
+	// ReportedUsage: Optional. Deprecated. The usage of the synthesized
+	// audio to be reported.
 	//
 	// Possible values:
 	//   "REPORTED_USAGE_UNSPECIFIED" - Request with reported usage

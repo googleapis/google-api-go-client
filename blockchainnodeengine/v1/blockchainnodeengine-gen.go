@@ -225,6 +225,12 @@ type BlockchainNode struct {
 	// `projects/my-project/locations/us-central1/blockchainNodes/my-node`.
 	Name string `json:"name,omitempty"`
 
+	// PrivateServiceConnectEnabled: Optional. When true, the node is only
+	// accessible via Private Service Connect; no public endpoints are
+	// exposed. Otherwise, the node is only accessible via public endpoints.
+	// See https://cloud.google.com/vpc/docs/private-service-connect.
+	PrivateServiceConnectEnabled bool `json:"privateServiceConnectEnabled,omitempty"`
+
 	// State: Output only. A status representing the state of the node.
 	//
 	// Possible values:
@@ -413,6 +419,8 @@ type EthereumDetails struct {
 	// protocol.
 	//   "TESTNET_SEPOLIA" - The Ethereum Testnet based on Sepolia/Bepolia
 	// protocol. See https://github.com/eth-clients/sepolia.
+	//   "TESTNET_HOLESKY" - The Ethereum Testnet based on Holesky
+	// specification. See https://github.com/eth-clients/holesky.
 	Network string `json:"network,omitempty"`
 
 	// NodeType: Immutable. The type of Ethereum node.

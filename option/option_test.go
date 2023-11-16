@@ -74,25 +74,27 @@ func TestApply(t *testing.T) {
 		WithRequestReason("Request Reason"),
 		WithTelemetryDisabled(),
 		WithUniverseDomain("universe.com"),
+		WithDefaultUniverseDomain("googleapis.com"),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		Scopes:            []string{"https://example.com/auth/helloworld", "https://example.com/auth/otherthing"},
-		UserAgent:         "ua",
-		Endpoint:          "https://example.com:443",
-		GRPCConn:          conn,
-		Credentials:       &google.DefaultCredentials{ProjectID: "p"},
-		CredentialsFile:   "service-account.json",
-		CredentialsJSON:   []byte(`{some: "json"}`),
-		APIKey:            "api-key",
-		Audiences:         []string{"https://example.com/"},
-		QuotaProject:      "user-project",
-		RequestReason:     "Request Reason",
-		TelemetryDisabled: true,
-		UniverseDomain:    "universe.com",
+		Scopes:                []string{"https://example.com/auth/helloworld", "https://example.com/auth/otherthing"},
+		UserAgent:             "ua",
+		Endpoint:              "https://example.com:443",
+		GRPCConn:              conn,
+		Credentials:           &google.DefaultCredentials{ProjectID: "p"},
+		CredentialsFile:       "service-account.json",
+		CredentialsJSON:       []byte(`{some: "json"}`),
+		APIKey:                "api-key",
+		Audiences:             []string{"https://example.com/"},
+		QuotaProject:          "user-project",
+		RequestReason:         "Request Reason",
+		TelemetryDisabled:     true,
+		UniverseDomain:        "universe.com",
+		DefaultUniverseDomain: "googleapis.com",
 	}
 	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")) {
 		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")))

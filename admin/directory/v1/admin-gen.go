@@ -5167,7 +5167,8 @@ type User struct {
 	DeletionTime string `json:"deletionTime,omitempty"`
 
 	// Emails: The list of the user's email addresses. The maximum allowed
-	// data size for this field is 10KB.
+	// data size for this field is 10KB. This excludes
+	// `publicKeyEncryptionCertificates`.
 	Emails interface{} `json:"emails,omitempty"`
 
 	// Etag: Output only. ETag of the resource.
@@ -5532,6 +5533,10 @@ type UserEmail struct {
 	// marked as primary.
 	Primary bool `json:"primary,omitempty"`
 
+	// PublicKeyEncryptionCertificates: Public Key Encryption Certificates.
+	// Current limit: 1 per email address, and 5 per user.
+	PublicKeyEncryptionCertificates *UserEmailPublicKeyEncryptionCertificates `json:"public_key_encryption_certificates,omitempty"`
+
 	// Type: Each entry can have a type which indicates standard types of
 	// that entry. For example email could be of home, work etc. In addition
 	// to the standard type, an entry can have a custom type and can take
@@ -5558,6 +5563,45 @@ type UserEmail struct {
 
 func (s *UserEmail) MarshalJSON() ([]byte, error) {
 	type NoMethod UserEmail
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserEmailPublicKeyEncryptionCertificates: Public Key Encryption
+// Certificates. Current limit: 1 per email address, and 5 per user.
+type UserEmailPublicKeyEncryptionCertificates struct {
+	// Certificate: X.509 encryption certificate in `PEM` format. Must only
+	// be an end-entity (leaf) certificate.
+	Certificate string `json:"certificate,omitempty"`
+
+	// IsDefault: Whether this is the default certificate for the given
+	// email address.
+	IsDefault bool `json:"is_default,omitempty"`
+
+	// State: Denotes the certificate's state in its lifecycle. Possible
+	// values are `not_yet_validated`, `valid`, `invalid`, `expired`, and
+	// `revoked`.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Certificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserEmailPublicKeyEncryptionCertificates) MarshalJSON() ([]byte, error) {
+	type NoMethod UserEmailPublicKeyEncryptionCertificates
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -1869,6 +1869,11 @@ type PipelineRun struct {
 	// Etag: Needed for declarative-friendly resources.
 	Etag string `json:"etag,omitempty"`
 
+	// FinallyStartTime: Output only. FinallyStartTime is when all
+	// non-finally tasks have been completed and only finally tasks are
+	// being executed. +optional
+	FinallyStartTime string `json:"finallyStartTime,omitempty"`
+
 	// Name: Output only. The `PipelineRun` name with format
 	// `projects/{project}/locations/{location}/pipelineRuns/{pipeline_run}`
 	Name string `json:"name,omitempty"`
@@ -3203,6 +3208,11 @@ type WorkspaceBinding struct {
 	// Secret: Secret Volume Source.
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
 
+	// SubPath: Optional. SubPath is optionally a directory on the volume
+	// which should be used for this binding (i.e. the volume will be
+	// mounted at this sub directory). +optional
+	SubPath string `json:"subPath,omitempty"`
+
 	// VolumeClaim: Volume claim that will be created in the same namespace.
 	VolumeClaim *VolumeClaim `json:"volumeClaim,omitempty"`
 
@@ -3280,6 +3290,11 @@ func (s *WorkspaceDeclaration) MarshalJSON() ([]byte, error) {
 type WorkspacePipelineTaskBinding struct {
 	// Name: Name of the workspace as declared by the task.
 	Name string `json:"name,omitempty"`
+
+	// SubPath: Optional. SubPath is optionally a directory on the volume
+	// which should be used for this binding (i.e. the volume will be
+	// mounted at this sub directory). +optional
+	SubPath string `json:"subPath,omitempty"`
 
 	// Workspace: Name of the workspace declared by the pipeline.
 	Workspace string `json:"workspace,omitempty"`

@@ -2082,6 +2082,10 @@ type Restore struct {
 	// d}/backups/{backup_id}.
 	Backup string `json:"backup,omitempty"`
 
+	// BackupLocation: Optional. A Cloud Storage URI specifying where the
+	// backup artifacts are stored, in the format gs:///.
+	BackupLocation string `json:"backupLocation,omitempty"`
+
 	// Details: Output only. The restore details containing the revision of
 	// the service to be restored to, in format of JSON.
 	Details string `json:"details,omitempty"`

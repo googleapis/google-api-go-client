@@ -744,8 +744,7 @@ type AttachedResource struct {
 	// AssetType: The type of this attached resource. Example:
 	// `osconfig.googleapis.com/Inventory` You can find the supported
 	// attached asset types of each resource in this table:
-	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-	// earchable_asset_types`
+	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types`
 	AssetType string `json:"assetType,omitempty"`
 
 	// VersionedResources: Versioned resource representations of this
@@ -6030,7 +6029,7 @@ type ResourceSearchResult struct {
 	// returned by the List or Get APIs provided by the corresponding Google
 	// Cloud service (e.g., Compute Engine). see API references and
 	// supported searchable attributes
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types)
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 	// to see which fields are included. You can search values of these
 	// fields through free text search. However, you should not consume the
 	// field programically as the field names and values may change as the
@@ -6865,8 +6864,7 @@ type VersionedResource struct {
 	// `https://cloud.google.com/compute/docs/reference/rest/v1/instances`.
 	// You can find the resource definition for each supported resource type
 	// in this table:
-	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-	// earchable_asset_types`
+	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types`
 	Resource googleapi.RawMessage `json:"resource,omitempty"`
 
 	// Version: API version of the resource. Example: If the resource is an
@@ -7463,7 +7461,7 @@ func (r *EffectiveIamPoliciesService) BatchGet(scope string) *EffectiveIamPolici
 // to the [full_resource_names]
 // (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 // of searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 // A maximum of 20 resources' effective policies can be retrieved in a
 // batch.
 func (c *EffectiveIamPoliciesBatchGetCall) Names(names ...string) *EffectiveIamPoliciesBatchGetCall {
@@ -7580,7 +7578,7 @@ func (c *EffectiveIamPoliciesBatchGetCall) Do(opts ...googleapi.CallOption) (*Ba
 	//   ],
 	//   "parameters": {
 	//     "names": {
-	//       "description": "Required. The names refer to the [full_resource_names] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). A maximum of 20 resources' effective policies can be retrieved in a batch.",
+	//       "description": "Required. The names refer to the [full_resource_names] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types). A maximum of 20 resources' effective policies can be retrieved in a batch.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -10326,7 +10324,7 @@ type V1AnalyzeOrgPolicyGovernedAssetsCall struct {
 // compute.requireOsLogin * compute.disableNestedVirtualization This RPC
 // only returns either resources of types supported by searchable asset
 // types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types),
 // or IAM policies.
 //
 //   - scope: The organization to scope the request. Only organization
@@ -10491,7 +10489,7 @@ func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types), or IAM policies.",
+	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types), or IAM policies.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedAssets",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.analyzeOrgPolicyGovernedAssets",
@@ -11408,7 +11406,7 @@ func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCa
 // AssetTypes sets the optional parameter "assetTypes": A list of asset
 // types that the IAM policies are attached to. If empty, it will search
 // the IAM policies that are attached to all the searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 // Regular expressions are also supported. For example: *
 // "compute.googleapis.com.*" snapshots IAM policies attached to asset
 // type starts with "compute.googleapis.com". * ".*Instance" snapshots
@@ -11607,7 +11605,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//   ],
 	//   "parameters": {
 	//     "assetTypes": {
-	//       "description": "Optional. A list of asset types that the IAM policies are attached to. If empty, it will search the IAM policies that are attached to all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots IAM policies attached to asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots IAM policies attached to asset type ends with \"Instance\". * \".*Instance.*\" snapshots IAM policies attached to asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
+	//       "description": "Optional. A list of asset types that the IAM policies are attached to. If empty, it will search the IAM policies that are attached to all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots IAM policies attached to asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots IAM policies attached to asset type ends with \"Instance\". * \".*Instance.*\" snapshots IAM policies attached to asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -11708,7 +11706,7 @@ func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 // AssetTypes sets the optional parameter "assetTypes": A list of asset
 // types that this request searches for. If empty, it will search all
 // the searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 // Regular expressions are also supported. For example: *
 // "compute.googleapis.com.*" snapshots resources whose asset type
 // starts with "compute.googleapis.com". * ".*Instance" snapshots
@@ -11961,7 +11959,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//   ],
 	//   "parameters": {
 	//     "assetTypes": {
-	//       "description": "Optional. A list of asset types that this request searches for. If empty, it will search all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots resources whose asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots resources whose asset type ends with \"Instance\". * \".*Instance.*\" snapshots resources whose asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
+	//       "description": "Optional. A list of asset types that this request searches for. If empty, it will search all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots resources whose asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots resources whose asset type ends with \"Instance\". * \".*Instance.*\" snapshots resources whose asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

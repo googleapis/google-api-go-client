@@ -2307,6 +2307,54 @@ func (s *GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataQualityColumnResult: DataQualityColumnResult
+// provides a more detailed, per-column view of the results.
+type GoogleCloudDataplexV1DataQualityColumnResult struct {
+	// Column: Output only. The column specified in the DataQualityRule.
+	Column string `json:"column,omitempty"`
+
+	// Score: Output only. The column-level data quality score for this data
+	// scan job if and only if the 'column' field is set.The score ranges
+	// between between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityColumnResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityColumnResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualityColumnResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityColumnResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // GoogleCloudDataplexV1DataQualityDimension: A dimension captures data
 // quality intent about a defined subset of the rules specified.
 type GoogleCloudDataplexV1DataQualityDimension struct {
@@ -2349,6 +2397,11 @@ type GoogleCloudDataplexV1DataQualityDimensionResult struct {
 	// Passed: Whether the dimension passed or failed.
 	Passed bool `json:"passed,omitempty"`
 
+	// Score: Output only. The dimension-level data quality score for this
+	// data scan job if and only if the 'dimension' field is set.The score
+	// ranges between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2372,9 +2425,28 @@ func (s *GoogleCloudDataplexV1DataQualityDimensionResult) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDataplexV1DataQualityDimensionResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityDimensionResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // GoogleCloudDataplexV1DataQualityResult: The output of a
 // DataQualityScan.
 type GoogleCloudDataplexV1DataQualityResult struct {
+	// Columns: Output only. A list of results at the column level.A column
+	// will have a corresponding DataQualityColumnResult if and only if
+	// there is at least one rule with the 'column' field set to it.
+	Columns []*GoogleCloudDataplexV1DataQualityColumnResult `json:"columns,omitempty"`
+
 	// Dimensions: A list of results at the dimension level.A dimension will
 	// have a corresponding DataQualityDimensionResult if and only if there
 	// is at least one rule with the 'dimension' field set to it.
@@ -2395,7 +2467,11 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// ScannedData: The data scanned for this result.
 	ScannedData *GoogleCloudDataplexV1ScannedData `json:"scannedData,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// Score: Output only. The overall data quality score.The score ranges
+	// between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2403,7 +2479,7 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// NullFields is a list of field names (e.g. "Columns") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2416,6 +2492,20 @@ func (s *GoogleCloudDataplexV1DataQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualityResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataQualityResultPostScanActionsResult: The

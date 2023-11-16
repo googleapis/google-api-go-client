@@ -6141,8 +6141,8 @@ type VmwareNetworkConfig struct {
 	// StaticIpConfig: Configuration settings for a static IP configuration.
 	StaticIpConfig *VmwareStaticIpConfig `json:"staticIpConfig,omitempty"`
 
-	// VcenterNetwork: Output only. vcenter_network specifies vCenter
-	// network name. Inherited from the admin cluster.
+	// VcenterNetwork: vcenter_network specifies vCenter network name.
+	// Inherited from the admin cluster.
 	VcenterNetwork string `json:"vcenterNetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

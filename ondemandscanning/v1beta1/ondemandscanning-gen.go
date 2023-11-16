@@ -2237,11 +2237,15 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 }
 
 type Maintainer struct {
+	Email string `json:"email,omitempty"`
+
 	Kind string `json:"kind,omitempty"`
 
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2249,7 +2253,7 @@ type Maintainer struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "Email") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

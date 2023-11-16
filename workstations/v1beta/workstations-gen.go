@@ -2108,6 +2108,14 @@ type WorkstationConfig struct {
 	// soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
 
+	// DisableTcpConnections: Optional. Disables support for plain TCP
+	// connections in the workstation. By default the service supports TCP
+	// connections via a websocket relay. Setting this option to true
+	// disables that relay, which prevents the usage of services that
+	// require plain tcp connections, such as ssh. When enabled, all
+	// communication must occur over https or wss.
+	DisableTcpConnections bool `json:"disableTcpConnections,omitempty"`
+
 	// DisplayName: Optional. Human-readable name for this workstation
 	// configuration.
 	DisplayName string `json:"displayName,omitempty"`

@@ -680,6 +680,10 @@ type Cluster struct {
 	// to PRIMARY cluster.
 	PrimaryConfig *PrimaryConfig `json:"primaryConfig,omitempty"`
 
+	// PscConfig: Optional. The configuration for Private Service Connect
+	// (PSC) for the cluster.
+	PscConfig *PscConfig `json:"pscConfig,omitempty"`
+
 	// Reconciling: Output only. Reconciling
 	// (https://google.aip.dev/128#reconciliation). Set to true if the
 	// current state of Cluster does not match the user's intended state,
@@ -1881,7 +1885,7 @@ type NetworkConfig struct {
 	// Field name is intended to be consistent with Cloud SQL.
 	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
 
-	// Network: Required. The resource link for the VPC network in which
+	// Network: Optional. The resource link for the VPC network in which
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
@@ -2147,6 +2151,36 @@ type PromoteClusterRequest struct {
 
 func (s *PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PromoteClusterRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PscConfig: PscConfig contains PSC related configuration at a cluster
+// level. NEXT ID: 2
+type PscConfig struct {
+	// PscEnabled: Optional. Create an instance that allows connections from
+	// Private Service Connect endpoints to the instance.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PscEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PscEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

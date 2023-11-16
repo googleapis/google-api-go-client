@@ -2460,24 +2460,38 @@ func (s *ExternalTransaction) MarshalJSON() ([]byte, error) {
 // ExternalTransactionAddress: User's address for the external
 // transaction.
 type ExternalTransactionAddress struct {
+	// AdministrativeArea: Optional. Top-level administrative subdivision of
+	// the country/region. Only required for transactions in India. Valid
+	// values are "ANDAMAN AND NICOBAR ISLANDS", "ANDHRA PRADESH",
+	// "ARUNACHAL PRADESH", "ASSAM", "BIHAR", "CHANDIGARH", "CHHATTISGARH",
+	// "DADRA AND NAGAR HAVELI", "DADRA AND NAGAR HAVELI AND DAMAN AND DIU",
+	// "DAMAN AND DIU", "DELHI", "GOA", "GUJARAT", "HARYANA", "HIMACHAL
+	// PRADESH", "JAMMU AND KASHMIR", "JHARKHAND", "KARNATAKA", "KERALA",
+	// "LADAKH", "LAKSHADWEEP", "MADHYA PRADESH", "MAHARASHTRA", "MANIPUR",
+	// "MEGHALAYA", "MIZORAM", "NAGALAND", "ODISHA", "PUDUCHERRY", "PUNJAB",
+	// "RAJASTHAN", "SIKKIM", "TAMIL NADU", "TELANGANA", "TRIPURA", "UTTAR
+	// PRADESH", "UTTARAKHAND", and "WEST BENGAL".
+	AdministrativeArea string `json:"administrativeArea,omitempty"`
+
 	// RegionCode: Required. Two letter region code based on ISO-3166-1
 	// Alpha-2 (UN region codes).
 	RegionCode string `json:"regionCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RegionCode") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdministrativeArea")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RegionCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdministrativeArea") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4487,6 +4501,19 @@ type RecurringExternalTransaction struct {
 	// first payment. Required when creating recurring external
 	// transactions.
 	InitialExternalTransactionId string `json:"initialExternalTransactionId,omitempty"`
+
+	// MigratedTransactionProgram: Input only. Provided during the call to
+	// Create. Must only be used when migrating a subscription from manual
+	// monthly reporting to automated reporting.
+	//
+	// Possible values:
+	//   "EXTERNAL_TRANSACTION_PROGRAM_UNSPECIFIED" - Unspecified
+	// transaction program. Not used.
+	//   "USER_CHOICE_BILLING" - User choice billing, where a user may
+	// choose between Google Play Billing developer-managed billing.
+	//   "ALTERTNATIVE_BILLING_ONLY" - Alternatively billing only, where
+	// users may only use developer-manager billing.
+	MigratedTransactionProgram string `json:"migratedTransactionProgram,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExternalSubscription") to unconditionally include in API requests.

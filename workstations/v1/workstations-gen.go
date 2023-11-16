@@ -1831,6 +1831,10 @@ type Workstation struct {
 	// DisplayName: Optional. Human-readable name for this workstation.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Env: Optional. Environment variables passed to the workstation
+	// container's entrypoint.
+	Env map[string]string `json:"env,omitempty"`
+
 	// Etag: Optional. Checksum computed by the server. May be sent on
 	// update and delete requests to make sure that the client has an
 	// up-to-date value before proceeding.

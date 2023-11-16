@@ -1457,6 +1457,18 @@ type DiagnoseClusterRequest struct {
 	// performed. Format: projects/{project}/regions/{region}/jobs/{job}
 	Jobs []string `json:"jobs,omitempty"`
 
+	// TarballAccess: Optional. (Optional) The access type to the diagnostic
+	// tarball. If not specified, falls back to default access of the bucket
+	//
+	// Possible values:
+	//   "TARBALL_ACCESS_UNSPECIFIED" - Tarball Access unspecified. Falls
+	// back to default access of the bucket
+	//   "GOOGLE_CLOUD_SUPPORT" - Google Cloud Support group has read access
+	// to the diagnostic tarball
+	//   "GOOGLE_DATAPROC_DIAGNOSE" - Google Cloud Dataproc Diagnose service
+	// account has read access to the diagnostic tarball
+	TarballAccess string `json:"tarballAccess,omitempty"`
+
 	// TarballGcsDir: Optional. (Optional) The output Cloud Storage
 	// directory for the diagnostic tarball. If not specified, a
 	// task-specific directory in the cluster's staging bucket will be used.

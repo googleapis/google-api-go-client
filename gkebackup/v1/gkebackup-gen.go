@@ -1787,7 +1787,7 @@ func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
 
 // Restore: Represents both a request to Restore some portion of a
 // Backup into a target GKE cluster and a record of the restore
-// operation itself. Next id: 19
+// operation itself. Next id: 20
 type Restore struct {
 	// Backup: Required. Immutable. A reference to the Backup used as the
 	// source from which this Restore will restore. Note that this Backup
@@ -1906,7 +1906,7 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RestoreConfig: Configuration of a restore. Next id: 12
+// RestoreConfig: Configuration of a restore. Next id: 13
 type RestoreConfig struct {
 	// AllNamespaces: Restore all namespaced resources in the Backup if set
 	// to "True". Specifying this field to "False" is an error.

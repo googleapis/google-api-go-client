@@ -280,6 +280,17 @@ func (s *AlloyDbConnectionProfile) MarshalJSON() ([]byte, error) {
 
 // AlloyDbSettings: Settings for creating an AlloyDB cluster.
 type AlloyDbSettings struct {
+	// DatabaseVersion: Optional. The database engine major version. This is
+	// an optional field. If a database version is not supplied at cluster
+	// creation time, then a default database version will be used.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database
+	// version.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
+
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a
 	// cluster with a customer-managed encryption key (CMEK). When this
@@ -305,7 +316,7 @@ type AlloyDbSettings struct {
 	// required to create a cluster.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
+	// ForceSendFields is a list of field names (e.g. "DatabaseVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -313,7 +324,7 @@ type AlloyDbSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EncryptionConfig") to
+	// NullFields is a list of field names (e.g. "DatabaseVersion") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

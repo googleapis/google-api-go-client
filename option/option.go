@@ -367,5 +367,5 @@ func WithDefaultUniverseDomain(ud string) ClientOption {
 type withDefaultUniverseDomain string
 
 func (w withDefaultUniverseDomain) Apply(o *internal.DialSettings) {
-	o.UniverseDomain = string(w)
+	o.DefaultUniverseDomain = string(w)
 }

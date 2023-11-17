@@ -287,9 +287,8 @@ type AdvanceChildRolloutJob struct {
 // information specific to a advanceChildRollout `JobRun`.
 type AdvanceChildRolloutJobRun struct {
 	// Rollout: Output only. Name of the `ChildRollout`. Format is
-	// projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	Rollout string `json:"rollout,omitempty"`
 
 	// RolloutPhaseId: Output only. the ID of the ChildRollout's Phase.
@@ -404,7 +403,7 @@ type AdvanceRolloutRule struct {
 
 	// Id: Required. ID of the rule. This id must be unique in the
 	// `Automation` resource to which this rule belongs. The format is
-	// a-z{0,62}.
+	// `a-z{0,62}`.
 	Id string `json:"id,omitempty"`
 
 	// SourcePhases: Optional. Proceeds only after phase name matched any
@@ -614,13 +613,13 @@ type Automation struct {
 	// set and used by the user, and not by Cloud Deploy. Annotations must
 	// meet the following constraints: * Annotations are key/value pairs. *
 	// Valid annotation keys have two segments: an optional prefix and name,
-	// separated by a slash (/). * The name segment is required and must be
-	// 63 characters or less, beginning and ending with an alphanumeric
-	// character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.),
-	// and alphanumerics between. * The prefix is optional. If specified,
-	// the prefix must be a DNS subdomain: a series of DNS labels separated
-	// by dots(.), not longer than 253 characters in total, followed by a
-	// slash (/). See
+	// separated by a slash (`/`). * The name segment is required and must
+	// be 63 characters or less, beginning and ending with an alphanumeric
+	// character (`[a-z0-9A-Z]`) with dashes (`-`), underscores (`_`), dots
+	// (`.`), and alphanumerics between. * The prefix is optional. If
+	// specified, the prefix must be a DNS subdomain: a series of DNS labels
+	// separated by dots(`.`), not longer than 253 characters in total,
+	// followed by a slash (`/`). See
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
 	// for more details.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -649,8 +648,8 @@ type Automation struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. Name of the `Automation`. Format is
-	// projects/{project}/locations/{location}/deliveryPipelines/{delivery_pi
-	// peline}/automations/{automation}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{delivery_p
+	// ipeline}/automations/{automation}`.
 	Name string `json:"name,omitempty"`
 
 	// Rules: Required. List of Automation rules associated with the
@@ -899,8 +898,8 @@ func (s *AutomationRuleCondition) MarshalJSON() ([]byte, error) {
 }
 
 // AutomationRun: An `AutomationRun` resource in the Cloud Deploy API.
-// An `AutomationResource` represents an automation execution instance
-// of an automation rule.
+// An `AutomationRun` represents an automation execution instance of an
+// automation rule.
 type AutomationRun struct {
 	// AdvanceRolloutOperation: Output only. Advances a rollout to the next
 	// phase.
@@ -929,8 +928,8 @@ type AutomationRun struct {
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Name: Output only. Name of the `AutomationRun`. Format is
-	// projects/{project}/locations/{location}/deliveryPipelines/{delivery_pi
-	// peline}/automationRuns/{automation_run}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{delivery_p
+	// ipeline}/automationRuns/{automation_run}`.
 	Name string `json:"name,omitempty"`
 
 	// PromoteReleaseOperation: Output only. Promotes a release to a
@@ -1396,7 +1395,7 @@ func (s *CloudRunLocation) MarshalJSON() ([]byte, error) {
 type CloudRunMetadata struct {
 	// Job: Output only. The name of the Cloud Run job that is associated
 	// with a `Rollout`. Format is
-	// projects/{project}/locations/{location}/jobs/{job_name}.
+	// `projects/{project}/locations/{location}/jobs/{job_name}`.
 	Job string `json:"job,omitempty"`
 
 	// Revision: Output only. The Cloud Run Revision id associated with a
@@ -1405,7 +1404,7 @@ type CloudRunMetadata struct {
 
 	// Service: Output only. The name of the Cloud Run Service that is
 	// associated with a `Rollout`. Format is
-	// projects/{project}/locations/{location}/services/{service}.
+	// `projects/{project}/locations/{location}/services/{service}`.
 	Service string `json:"service,omitempty"`
 
 	// ServiceUrls: Output only. The Cloud Run Service urls that are
@@ -1440,7 +1439,7 @@ func (s *CloudRunMetadata) MarshalJSON() ([]byte, error) {
 type CloudRunRenderMetadata struct {
 	// Service: Output only. The name of the Cloud Run Service in the
 	// rendered manifest. Format is
-	// projects/{project}/locations/{location}/services/{service}.
+	// `projects/{project}/locations/{location}/services/{service}`.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
@@ -1515,9 +1514,8 @@ type CreateChildRolloutJob struct {
 // information specific to a createChildRollout `JobRun`.
 type CreateChildRolloutJobRun struct {
 	// Rollout: Output only. Name of the `ChildRollout`. Format is
-	// projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	Rollout string `json:"rollout,omitempty"`
 
 	// RolloutPhaseId: Output only. The ID of the childRollout Phase
@@ -1697,7 +1695,7 @@ type DeliveryPipeline struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Optional. Name of the `DeliveryPipeline`. Format is
-	// projects/{project}/ locations/{location}/deliveryPipelines/a-z{0,62}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// SerialPipeline: SerialPipeline defines a sequential set of stages for
@@ -1838,7 +1836,7 @@ type DeployJobRun struct {
 
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to deploy. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// FailureCause: Output only. The reason the deploy failed. This will
@@ -2183,7 +2181,7 @@ func (s *GatewayServiceMesh) MarshalJSON() ([]byte, error) {
 // GkeCluster: Information specifying a GKE Cluster.
 type GkeCluster struct {
 	// Cluster: Information specifying a GKE Cluster. Format is
-	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}.
+	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`.
 	Cluster string `json:"cluster,omitempty"`
 
 	// InternalIp: Optional. If true, `cluster` is accessed using the
@@ -2358,9 +2356,8 @@ type JobRun struct {
 	JobId string `json:"jobId,omitempty"`
 
 	// Name: Optional. Name of the `JobRun`. Format is
-	// projects/{project}/locations/{location}/
-	// deliveryPipelines/{deliveryPipeline}/releases/{releases}/rollouts/
-	// {rollouts}/jobRuns/{uuid}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{releases}/rollouts/{rollouts}/jobRuns/{uuid}`.
 	Name string `json:"name,omitempty"`
 
 	// PhaseId: Output only. ID of the `Rollout` phase this `JobRun` belongs
@@ -3501,7 +3498,7 @@ type PostdeployJobRun struct {
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to execute the custom actions associated with the
 	// postdeploy Job. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// FailureCause: Output only. The reason the postdeploy failed. This
@@ -3615,7 +3612,7 @@ type PredeployJobRun struct {
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to execute the custom actions associated with the
 	// predeploy Job. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// FailureCause: Output only. The reason the predeploy failed. This will
@@ -3771,7 +3768,7 @@ type PromoteReleaseRule struct {
 
 	// Id: Required. ID of the rule. This id must be unique in the
 	// `Automation` resource to which this rule belongs. The format is
-	// a-z{0,62}.
+	// `a-z{0,62}`.
 	Id string `json:"id,omitempty"`
 
 	// Wait: Optional. How long the release need to be paused until being
@@ -3852,9 +3849,9 @@ type Release struct {
 	// additionally constrained to be <= 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Optional. Name of the `Release`. Format is projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/a-z{0,62}.
+	// Name: Optional. Name of the `Release`. Format is
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// RenderEndTime: Output only. Time at which the render completed.
@@ -4054,8 +4051,18 @@ type ReleaseRenderEvent struct {
 	// further details as rendering progresses through render states.
 	Message string `json:"message,omitempty"`
 
-	// Release: The name of the `Release`.
+	// Release: The name of the release.
 	Release string `json:"release,omitempty"`
+
+	// ReleaseRenderState: The state of the release render.
+	//
+	// Possible values:
+	//   "RENDER_STATE_UNSPECIFIED" - The render state is unspecified.
+	//   "SUCCEEDED" - All rendering operations have completed successfully.
+	//   "FAILED" - All rendering operations have completed, and one or more
+	// have failed.
+	//   "IN_PROGRESS" - Rendering has started and is not complete.
+	ReleaseRenderState string `json:"releaseRenderState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
@@ -4224,7 +4231,7 @@ type RepairRolloutRule struct {
 
 	// Id: Required. ID of the rule. This id must be unique in the
 	// `Automation` resource to which this rule belongs. The format is
-	// a-z{0,62}.
+	// `a-z{0,62}`.
 	Id string `json:"id,omitempty"`
 
 	// Jobs: Optional. Jobs to repair. Proceeds only after job name matched
@@ -4666,9 +4673,9 @@ type Rollout struct {
 	ApproveTime string `json:"approveTime,omitempty"`
 
 	// ControllerRollout: Output only. Name of the `ControllerRollout`.
-	// Format is projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// Format is
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	ControllerRollout string `json:"controllerRollout,omitempty"`
 
 	// CreateTime: Output only. Time at which the `Rollout` was created.
@@ -4739,9 +4746,9 @@ type Rollout struct {
 	// rollout.
 	Metadata *Metadata `json:"metadata,omitempty"`
 
-	// Name: Optional. Name of the `Rollout`. Format is projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// Name: Optional. Name of the `Rollout`. Format is
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// Phases: Output only. The phases that represent the workflows of this
@@ -4883,7 +4890,7 @@ type RolloutUpdateEvent struct {
 	// Rollout: The name of the rollout.
 	Rollout string `json:"rollout,omitempty"`
 
-	// RolloutUpdateType: Output only. The type of the rollout update.
+	// RolloutUpdateType: The type of the rollout update.
 	//
 	// Possible values:
 	//   "ROLLOUT_UPDATE_TYPE_UNSPECIFIED" - Rollout update type
@@ -5390,7 +5397,7 @@ type Target struct {
 	MultiTarget *MultiTarget `json:"multiTarget,omitempty"`
 
 	// Name: Optional. Name of the `Target`. Format is
-	// projects/{project}/locations/{location}/targets/a-z{0,62}.
+	// `projects/{project}/locations/{location}/targets/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// RequireApproval: Optional. Whether or not the `Target` requires
@@ -5589,6 +5596,9 @@ type TargetRender struct {
 	// successfully because the custom action required for predeploy or
 	// postdeploy was not found in the skaffold configuration. See
 	// failure_message for additional details.
+	//   "DEPLOYMENT_STRATEGY_NOT_SUPPORTED" - Release failed during
+	// rendering because the release configuration is not supported with the
+	// specified deployment strategy.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the render
@@ -5644,7 +5654,8 @@ func (s *TargetRender) MarshalJSON() ([]byte, error) {
 type TargetsPresentCondition struct {
 	// MissingTargets: The list of Target names that do not exist. For
 	// example,
-	// projects/{project_id}/locations/{location_name}/targets/{target_name}.
+	// `projects/{project_id}/locations/{location_name}/targets/{target_name}
+	// `.
 	MissingTargets []string `json:"missingTargets,omitempty"`
 
 	// Status: True if there aren't any missing Targets.
@@ -5802,7 +5813,7 @@ type VerifyJobRun struct {
 
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to verify. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// EventLogPath: Output only. File path of the Skaffold event log
@@ -6374,7 +6385,7 @@ type ProjectsLocationsDeliveryPipelinesCreateCall struct {
 //
 //   - parent: The parent collection in which the `DeliveryPipeline`
 //     should be created. Format should be
-//     projects/{project_id}/locations/{location_name}.
+//     `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Create(parent string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6519,7 +6530,7 @@ func (c *ProjectsLocationsDeliveryPipelinesCreateCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `DeliveryPipeline` should be created. Format should be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent collection in which the `DeliveryPipeline` should be created. Format should be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -6564,8 +6575,8 @@ type ProjectsLocationsDeliveryPipelinesDeleteCall struct {
 //
 //   - name: The name of the `DeliveryPipeline` to delete. Format should
 //     be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Delete(name string) *ProjectsLocationsDeliveryPipelinesDeleteCall {
 	c := &ProjectsLocationsDeliveryPipelinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6732,7 +6743,7 @@ func (c *ProjectsLocationsDeliveryPipelinesDeleteCall) Do(opts ...googleapi.Call
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `DeliveryPipeline` to delete. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The name of the `DeliveryPipeline` to delete. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -6774,8 +6785,8 @@ type ProjectsLocationsDeliveryPipelinesGetCall struct {
 // Get: Gets details of a single DeliveryPipeline.
 //
 //   - name: Name of the `DeliveryPipeline`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Get(name string) *ProjectsLocationsDeliveryPipelinesGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6890,7 +6901,7 @@ func (c *ProjectsLocationsDeliveryPipelinesGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `DeliveryPipeline`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. Name of the `DeliveryPipeline`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -7097,7 +7108,7 @@ type ProjectsLocationsDeliveryPipelinesListCall struct {
 // List: Lists DeliveryPipelines in a given project and location.
 //
 //   - parent: The parent, which owns this collection of pipelines. Format
-//     must be projects/{project_id}/locations/{location_name}.
+//     must be `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) List(parent string) *ProjectsLocationsDeliveryPipelinesListCall {
 	c := &ProjectsLocationsDeliveryPipelinesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7265,7 +7276,7 @@ func (c *ProjectsLocationsDeliveryPipelinesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of pipelines. Format must be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent, which owns this collection of pipelines. Format must be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7318,8 +7329,8 @@ type ProjectsLocationsDeliveryPipelinesPatchCall struct {
 // Patch: Updates the parameters of a single DeliveryPipeline.
 //
 //   - name: Optional. Name of the `DeliveryPipeline`. Format is
-//     projects/{project}/
-//     locations/{location}/deliveryPipelines/a-z{0,62}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}
+//     `.
 func (r *ProjectsLocationsDeliveryPipelinesService) Patch(name string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c := &ProjectsLocationsDeliveryPipelinesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7476,7 +7487,7 @@ func (c *ProjectsLocationsDeliveryPipelinesPatchCall) Do(opts ...googleapi.CallO
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Optional. Name of the `DeliveryPipeline`. Format is projects/{project}/ locations/{location}/deliveryPipelines/a-z{0,62}.",
+	//       "description": "Optional. Name of the `DeliveryPipeline`. Format is `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -7529,8 +7540,8 @@ type ProjectsLocationsDeliveryPipelinesRollbackTargetCall struct {
 //
 //   - name: The `DeliveryPipeline` for which the rollback `Rollout`
 //     should be created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) RollbackTarget(name string, rollbacktargetrequest *RollbackTargetRequest) *ProjectsLocationsDeliveryPipelinesRollbackTargetCall {
 	c := &ProjectsLocationsDeliveryPipelinesRollbackTargetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7638,7 +7649,7 @@ func (c *ProjectsLocationsDeliveryPipelinesRollbackTargetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The `DeliveryPipeline` for which the rollback `Rollout` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The `DeliveryPipeline` for which the rollback `Rollout` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -7974,8 +7985,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall struct {
 // error.
 //
 //   - name: Name of the `AutomationRun`. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}/automationRuns/{automation_run}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}/automationRuns/{automation_run}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) Cancel(name string, cancelautomationrunrequest *CancelAutomationRunRequest) *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8083,7 +8094,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `AutomationRun`. Format is projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}.",
+	//       "description": "Required. Name of the `AutomationRun`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automationRuns/[^/]+$",
 	//       "required": true,
@@ -8118,8 +8129,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall struct {
 // Get: Gets details of a single AutomationRun.
 //
 //   - name: Name of the `AutomationRun`. Format must be
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}/automationRuns/{automation_run}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}/automationRuns/{automation_run}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) Get(name string) *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8234,7 +8245,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `AutomationRun`. Format must be projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}.",
+	//       "description": "Required. Name of the `AutomationRun`. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automationRuns/[^/]+$",
 	//       "required": true,
@@ -8267,8 +8278,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsListCall struct {
 //
 //   - parent: The parent, which owns this collection of automationRuns.
 //     Format must be
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8435,7 +8446,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of automationRuns. Format must be projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}.",
+	//       "description": "Required. The parent, which owns this collection of automationRuns. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -8489,8 +8500,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsCreateCall struct {
 //
 //   - parent: The parent collection in which the `Automation` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Create(parent string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8635,7 +8646,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Automation` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The parent collection in which the `Automation` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -8679,8 +8690,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall struct {
 // Delete: Deletes a single Automation resource.
 //
 //   - name: The name of the `Automation` to delete. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/automations/{automation_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/automations/{automation_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Delete(name string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8834,7 +8845,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `Automation` to delete. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}.",
+	//       "description": "Required. The name of the `Automation` to delete. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
 	//       "required": true,
@@ -8876,8 +8887,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsGetCall struct {
 // Get: Gets details of a single Automation.
 //
 //   - name: Name of the `Automation`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/automations/{automation_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/automations/{automation_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Get(name string) *ProjectsLocationsDeliveryPipelinesAutomationsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8992,7 +9003,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Automation`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}.",
+	//       "description": "Required. Name of the `Automation`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
 	//       "required": true,
@@ -9025,8 +9036,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsListCall struct {
 //
 //   - parent: The parent, which owns this collection of automations.
 //     Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9193,7 +9204,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of automations. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The parent, which owns this collection of automations. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -9246,8 +9257,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsPatchCall struct {
 // Patch: Updates the parameters of a single Automation resource.
 //
 //   - name: Output only. Name of the `Automation`. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}/automations/{automation}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}/automations/{automation}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Patch(name string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9404,7 +9415,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) Do(opts ...goog
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Output only. Name of the `Automation`. Format is projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automations/{automation}.",
+	//       "description": "Output only. Name of the `Automation`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automations/{automation}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
 	//       "required": true,
@@ -9455,8 +9466,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesAbandonCall struct {
 // Abandon: Abandons a Release in the Delivery Pipeline.
 //
 //   - name: Name of the Release. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Abandon(name string, abandonreleaserequest *AbandonReleaseRequest) *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesAbandonCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9564,7 +9575,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Release. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}.",
+	//       "description": "Required. Name of the Release. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
 	//       "required": true,
@@ -9600,8 +9611,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesCreateCall struct {
 //
 //   - parent: The parent collection in which the `Release` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Create(parent string, release *Release) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9741,7 +9752,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Release` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The parent collection in which the `Release` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -9791,8 +9802,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesGetCall struct {
 // Get: Gets details of a single Release.
 //
 //   - name: Name of the `Release`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9907,7 +9918,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesGetCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Release`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}.",
+	//       "description": "Required. Name of the `Release`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
 	//       "required": true,
@@ -10161,8 +10172,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall struct {
 // Advance: Advances a Rollout in a given project and location.
 //
 //   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Advance(name string, advancerolloutrequest *AdvanceRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10270,7 +10281,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10305,8 +10316,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall struct {
 // Approve: Approves a Rollout.
 //
 //   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Approve(name string, approverolloutrequest *ApproveRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10414,7 +10425,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10449,8 +10460,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall struct {
 // Cancel: Cancels a Rollout in a given project and location.
 //
 //   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Cancel(name string, cancelrolloutrequest *CancelRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10558,7 +10569,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10594,8 +10605,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall struct {
 //
 //   - parent: The parent collection in which the `Rollout` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Create(parent string, rollout *Rollout) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10743,7 +10754,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Rollout` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}.",
+	//       "description": "Required. The parent collection in which the `Rollout` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
 	//       "required": true,
@@ -10798,8 +10809,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall struct {
 // Get: Gets details of a single Rollout.
 //
 //   - name: Name of the `Rollout`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}/rollouts/{rollout_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}/rollouts/{rollout_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10914,7 +10925,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Rollout`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}.",
+	//       "description": "Required. Name of the `Rollout`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10946,8 +10957,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall struct {
 // IgnoreJob: Ignores the specified Job in a Rollout.
 //
 //   - rollout: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) IgnoreJob(rollout string, ignorejobrequest *IgnoreJobRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rollout = rollout
@@ -11055,7 +11066,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "rollout": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -11312,8 +11323,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall struct {
 // RetryJob: Retries the specified Job in a Rollout.
 //
 //   - rollout: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) RetryJob(rollout string, retryjobrequest *RetryJobRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rollout = rollout
@@ -11421,7 +11432,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "rollout": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -11456,9 +11467,9 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall struct {
 // Get: Gets details of a single JobRun.
 //
 //   - name: Name of the `JobRun`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRun
-//     s/{job_run_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRu
+//     ns/{job_run_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11573,7 +11584,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `JobRun`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRuns/{job_run_name}.",
+	//       "description": "Required. Name of the `JobRun`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRuns/{job_run_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+/jobRuns/[^/]+$",
 	//       "required": true,
@@ -11826,8 +11837,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall stru
 // Terminate: Terminates a Job Run in a given project and location.
 //
 //   - name: Name of the `JobRun`. Format must be
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService) Terminate(name string, terminatejobrunrequest *TerminateJobRunRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11935,7 +11946,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `JobRun`. Format must be projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}.",
+	//       "description": "Required. Name of the `JobRun`. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+/jobRuns/[^/]+$",
 	//       "required": true,
@@ -12611,7 +12622,7 @@ type ProjectsLocationsTargetsCreateCall struct {
 //
 //   - parent: The parent collection in which the `Target` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}.
+//     `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsTargetsService) Create(parent string, target *Target) *ProjectsLocationsTargetsCreateCall {
 	c := &ProjectsLocationsTargetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12751,7 +12762,7 @@ func (c *ProjectsLocationsTargetsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Target` should be created. Format should be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent collection in which the `Target` should be created. Format should be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -12800,8 +12811,8 @@ type ProjectsLocationsTargetsDeleteCall struct {
 // Delete: Deletes a single Target.
 //
 //   - name: The name of the `Target` to delete. Format should be
-//     projects/{project_id}/locations/{location_name}/targets/{target_name
-//     }.
+//     `projects/{project_id}/locations/{location_name}/targets/{target_nam
+//     e}`.
 func (r *ProjectsLocationsTargetsService) Delete(name string) *ProjectsLocationsTargetsDeleteCall {
 	c := &ProjectsLocationsTargetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12955,7 +12966,7 @@ func (c *ProjectsLocationsTargetsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `Target` to delete. Format should be projects/{project_id}/locations/{location_name}/targets/{target_name}.",
+	//       "description": "Required. The name of the `Target` to delete. Format should be `projects/{project_id}/locations/{location_name}/targets/{target_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
@@ -12997,8 +13008,8 @@ type ProjectsLocationsTargetsGetCall struct {
 // Get: Gets details of a single Target.
 //
 //   - name: Name of the `Target`. Format must be
-//     projects/{project_id}/locations/{location_name}/targets/{target_name
-//     }.
+//     `projects/{project_id}/locations/{location_name}/targets/{target_nam
+//     e}`.
 func (r *ProjectsLocationsTargetsService) Get(name string) *ProjectsLocationsTargetsGetCall {
 	c := &ProjectsLocationsTargetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13113,7 +13124,7 @@ func (c *ProjectsLocationsTargetsGetCall) Do(opts ...googleapi.CallOption) (*Tar
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Target`. Format must be projects/{project_id}/locations/{location_name}/targets/{target_name}.",
+	//       "description": "Required. Name of the `Target`. Format must be `projects/{project_id}/locations/{location_name}/targets/{target_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
@@ -13320,7 +13331,7 @@ type ProjectsLocationsTargetsListCall struct {
 // List: Lists Targets in a given project and location.
 //
 //   - parent: The parent, which owns this collection of targets. Format
-//     must be projects/{project_id}/locations/{location_name}.
+//     must be `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsTargetsService) List(parent string) *ProjectsLocationsTargetsListCall {
 	c := &ProjectsLocationsTargetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13488,7 +13499,7 @@ func (c *ProjectsLocationsTargetsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of targets. Format must be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent, which owns this collection of targets. Format must be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13541,7 +13552,7 @@ type ProjectsLocationsTargetsPatchCall struct {
 // Patch: Updates the parameters of a single Target.
 //
 //   - name: Optional. Name of the `Target`. Format is
-//     projects/{project}/locations/{location}/targets/a-z{0,62}.
+//     `projects/{project}/locations/{location}/targets/a-z{0,62}`.
 func (r *ProjectsLocationsTargetsService) Patch(name string, target *Target) *ProjectsLocationsTargetsPatchCall {
 	c := &ProjectsLocationsTargetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13698,7 +13709,7 @@ func (c *ProjectsLocationsTargetsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Optional. Name of the `Target`. Format is projects/{project}/locations/{location}/targets/a-z{0,62}.",
+	//       "description": "Optional. Name of the `Target`. Format is `projects/{project}/locations/{location}/targets/a-z{0,62}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,

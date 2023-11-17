@@ -461,6 +461,40 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Entry: A single replacement configuration.
+type Entry struct {
+	// CaseSensitive: Whether the search is case sensitive.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// Replace: What to replace with. Max length is 100 characters.
+	Replace string `json:"replace,omitempty"`
+
+	// Search: What to replace. Max length is 100 characters.
+	Search string `json:"search,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Entry) MarshalJSON() ([]byte, error) {
+	type NoMethod Entry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListCustomClassesResponse: Message returned to the client by the
 // `ListCustomClasses` method.
 type ListCustomClassesResponse struct {
@@ -1132,9 +1166,15 @@ type RecognitionConfig struct {
 	// words, each RTP header is replaced with a single byte containing the
 	// block length. Only Speex wideband is supported. `sample_rate_hertz`
 	// must be 16000.
+	//   "MP3" - MP3 audio. MP3 encoding is a Beta feature and only
+	// available in v1p1beta1. Support all standard MP3 bitrates (which
+	// range from 32-320 kbps). When using this encoding,
+	// `sample_rate_hertz` has to match the sample rate of the file being
+	// used.
 	//   "WEBM_OPUS" - Opus encoded audio frames in WebM container
-	// ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must
-	// be one of 8000, 12000, 16000, 24000, or 48000.
+	// ([WebM](https://www.webmproject.org/docs/container/)).
+	// `sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or
+	// 48000.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: Required. The language of the supplied audio as a
@@ -1196,6 +1236,12 @@ type RecognitionConfig struct {
 	// assist the speech recognition. For more information, see speech
 	// adaptation (https://cloud.google.com/speech-to-text/docs/adaptation).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
+
+	// TranscriptNormalization: Optional. Use transcription normalization to
+	// automatically replace parts of the transcript with phrases of your
+	// choosing. For StreamingRecognize, this normalization only applies to
+	// stable partial transcripts (stability > 0.8) and final transcripts.
+	TranscriptNormalization *TranscriptNormalization `json:"transcriptNormalization,omitempty"`
 
 	// UseEnhanced: Set to true to use an enhanced model for speech
 	// recognition. If `use_enhanced` is set to true and the `model` field
@@ -1756,6 +1802,42 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TranscriptNormalization: Transcription normalization configuration.
+// Use transcription normalization to automatically replace parts of the
+// transcript with phrases of your choosing. For StreamingRecognize,
+// this normalization only applies to stable partial transcripts
+// (stability > 0.8) and final transcripts.
+type TranscriptNormalization struct {
+	// Entries: A list of replacement entries. We will perform replacement
+	// with one entry at a time. For example, the second entry in ["cat" =>
+	// "dog", "mountain cat" => "mountain dog"] will never be applied
+	// because we will always process the first entry before it. At most 100
+	// entries.
+	Entries []*Entry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TranscriptNormalization) MarshalJSON() ([]byte, error) {
+	type NoMethod TranscriptNormalization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

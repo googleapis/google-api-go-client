@@ -1689,6 +1689,40 @@
         },
         "tracks": {
           "methods": {
+            "create": {
+              "description": "Creates a new track.",
+              "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks",
+              "httpMethod": "POST",
+              "id": "androidpublisher.edits.tracks.create",
+              "parameterOrder": [
+                "packageName",
+                "editId"
+              ],
+              "parameters": {
+                "editId": {
+                  "description": "Required. Identifier of the edit.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "packageName": {
+                  "description": "Required. Package name of the app.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks",
+              "request": {
+                "$ref": "TrackConfig"
+              },
+              "response": {
+                "$ref": "Track"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            },
             "get": {
               "description": "Gets a track.",
               "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks/{track}",
@@ -4047,7 +4081,7 @@
       }
     }
   },
-  "revision": "20231107",
+  "revision": "20231115",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -5161,6 +5195,10 @@
       "description": "User's address for the external transaction.",
       "id": "ExternalTransactionAddress",
       "properties": {
+        "administrativeArea": {
+          "description": "Optional. Top-level administrative subdivision of the country/region. Only required for transactions in India. Valid values are \"ANDAMAN AND NICOBAR ISLANDS\", \"ANDHRA PRADESH\", \"ARUNACHAL PRADESH\", \"ASSAM\", \"BIHAR\", \"CHANDIGARH\", \"CHHATTISGARH\", \"DADRA AND NAGAR HAVELI\", \"DADRA AND NAGAR HAVELI AND DAMAN AND DIU\", \"DAMAN AND DIU\", \"DELHI\", \"GOA\", \"GUJARAT\", \"HARYANA\", \"HIMACHAL PRADESH\", \"JAMMU AND KASHMIR\", \"JHARKHAND\", \"KARNATAKA\", \"KERALA\", \"LADAKH\", \"LAKSHADWEEP\", \"MADHYA PRADESH\", \"MAHARASHTRA\", \"MANIPUR\", \"MEGHALAYA\", \"MIZORAM\", \"NAGALAND\", \"ODISHA\", \"PUDUCHERRY\", \"PUNJAB\", \"RAJASTHAN\", \"SIKKIM\", \"TAMIL NADU\", \"TELANGANA\", \"TRIPURA\", \"UTTAR PRADESH\", \"UTTARAKHAND\", and \"WEST BENGAL\".",
+          "type": "string"
+        },
         "regionCode": {
           "description": "Required. Two letter region code based on ISO-3166-1 Alpha-2 (UN region codes).",
           "type": "string"
@@ -6343,6 +6381,20 @@
         },
         "initialExternalTransactionId": {
           "description": "The external transaction id of the first transaction of this recurring series of transactions. For example, for a subscription this would be the transaction id of the first payment. Required when creating recurring external transactions.",
+          "type": "string"
+        },
+        "migratedTransactionProgram": {
+          "description": "Input only. Provided during the call to Create. Must only be used when migrating a subscription from manual monthly reporting to automated reporting.",
+          "enum": [
+            "EXTERNAL_TRANSACTION_PROGRAM_UNSPECIFIED",
+            "USER_CHOICE_BILLING",
+            "ALTERTNATIVE_BILLING_ONLY"
+          ],
+          "enumDescriptions": [
+            "Unspecified transaction program. Not used.",
+            "User choice billing, where a user may choose between Google Play Billing developer-managed billing.",
+            "Alternatively billing only, where users may only use developer-manager billing."
+          ],
           "type": "string"
         }
       },
@@ -7582,6 +7634,45 @@
         },
         "track": {
           "description": "Identifier of the track. Form factor tracks have a special prefix as an identifier, for example `wear:production`, `automotive:production`. [More on track name](https://developers.google.com/android-publisher/tracks#ff-track-name)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TrackConfig": {
+      "description": "Configurations of the new track.",
+      "id": "TrackConfig",
+      "properties": {
+        "formFactor": {
+          "description": "Required. Form factor of the new track. Defaults to the default track.",
+          "enum": [
+            "FORM_FACTOR_UNSPECIFIED",
+            "DEFAULT",
+            "WEAR",
+            "AUTOMOTIVE"
+          ],
+          "enumDescriptions": [
+            "Fallback value, do not use.",
+            "Default track.",
+            "Wear form factor track.",
+            "Automotive form factor track."
+          ],
+          "type": "string"
+        },
+        "track": {
+          "description": "Required. Identifier of the new track. For default tracks, this field consists of the track alias only. Form factor tracks have a special prefix as an identifier, for example `wear:production`, `automotive:production`. This prefix must match the value of the `form_factor` field, if it is not a default track. [More on track name](https://developers.google.com/android-publisher/tracks#ff-track-name)",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Type of the new track. Currently, the only supported value is closedTesting.",
+          "enum": [
+            "TRACK_TYPE_UNSPECIFIED",
+            "CLOSED_TESTING"
+          ],
+          "enumDescriptions": [
+            "Fallback value, do not use.",
+            "Closed testing track."
+          ],
           "type": "string"
         }
       },

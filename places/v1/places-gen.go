@@ -1774,6 +1774,9 @@ type GoogleMapsPlacesV1SearchTextRequestLocationBias struct {
 	Circle *GoogleMapsPlacesV1Circle `json:"circle,omitempty"`
 
 	// Rectangle: A rectangle box defined by northeast and southwest corner.
+	// `rectangle.high()` must be the northeast point of the rectangle
+	// viewport. `rectangle.low()` must be the southwest point of the
+	// rectangle viewport.
 	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Circle") to
@@ -1804,6 +1807,9 @@ func (s *GoogleMapsPlacesV1SearchTextRequestLocationBias) MarshalJSON() ([]byte,
 // outside given location will not be returned.
 type GoogleMapsPlacesV1SearchTextRequestLocationRestriction struct {
 	// Rectangle: A rectangle box defined by northeast and southwest corner.
+	// `rectangle.high()` must be the northeast point of the rectangle
+	// viewport. `rectangle.low()` must be the southwest point of the
+	// rectangle viewport.
 	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Rectangle") to
@@ -2487,11 +2493,11 @@ type PlacesPhotosGetMediaCall struct {
 // GetMedia: Get a photo media with a photo reference string.
 //
 //   - name: The resource name of a photo media in the format:
-//     `places/place_id/photos/photo_reference/media`. The resource name
-//     of a photo as returned in a Place object's photos.name field comes
-//     with the format `places/place_id/photos/photo_reference`. You need
-//     to append `/media` at the end of the photo resource to get the
-//     photo media resource name.
+//     "places/place_id/photos/photo_reference/media". The resource name
+//     of a photo as returned in a Place object's `photos.name` field
+//     comes with the format "places/place_id/photos/photo_reference".
+//     You need to append "/media" at the end of the photo resource to
+//     get the photo media resource name.
 func (r *PlacesPhotosService) GetMedia(name string) *PlacesPhotosGetMediaCall {
 	c := &PlacesPhotosGetMediaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2660,7 +2666,7 @@ func (c *PlacesPhotosGetMediaCall) Do(opts ...googleapi.CallOption) (*GoogleMaps
 	//       "type": "integer"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of a photo media in the format: `places/place_id/photos/photo_reference/media`. The resource name of a photo as returned in a Place object's photos.name field comes with the format `places/place_id/photos/photo_reference`. You need to append `/media` at the end of the photo resource to get the photo media resource name.",
+	//       "description": "Required. The resource name of a photo media in the format: `\"places/place_id/photos/photo_reference/media\"`. The resource name of a photo as returned in a Place object's `photos.name` field comes with the format `\"places/place_id/photos/photo_reference\"`. You need to append `\"/media\"` at the end of the photo resource to get the photo media resource name.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+/photos/[^/]+/media$",
 	//       "required": true,

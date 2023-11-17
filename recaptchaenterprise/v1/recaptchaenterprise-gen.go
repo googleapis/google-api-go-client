@@ -569,8 +569,8 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// involved in a payment transaction.
 	FraudSignals *GoogleCloudRecaptchaenterpriseV1FraudSignals `json:"fraudSignals,omitempty"`
 
-	// Name: Output only. The resource name for the Assessment in the format
-	// `projects/{project}/assessments/{assessment}`.
+	// Name: Output only. Identifier. The resource name for the Assessment
+	// in the format `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
 
 	// PrivatePasswordLeakVerification: Optional. The private password leak
@@ -949,8 +949,8 @@ type GoogleCloudRecaptchaenterpriseV1FirewallPolicy struct {
 	// include 256 UTF-8 characters.
 	Description string `json:"description,omitempty"`
 
-	// Name: The resource name for the FirewallPolicy in the format
-	// `projects/{project}/firewallpolicies/{firewallpolicy}`.
+	// Name: Identifier. The resource name for the FirewallPolicy in the
+	// format `projects/{project}/firewallpolicies/{firewallpolicy}`.
 	Name string `json:"name,omitempty"`
 
 	// Path: Optional. The path for which this policy applies, specified as
@@ -1408,7 +1408,7 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	// (https://cloud.google.com/recaptcha-enterprise/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name for the Key in the format
+	// Name: Identifier. The resource name for the Key in the format
 	// `projects/{project}/keys/{key}`.
 	Name string `json:"name,omitempty"`
 
@@ -1608,7 +1608,7 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	// INVISIBLE), will have challenge-based data.
 	ChallengeMetrics []*GoogleCloudRecaptchaenterpriseV1ChallengeMetrics `json:"challengeMetrics,omitempty"`
 
-	// Name: Output only. The name of the metrics, in the format
+	// Name: Output only. Identifier. The name of the metrics, in the format
 	// `projects/{project}/keys/{key}/metrics`.
 	Name string `json:"name,omitempty"`
 
@@ -1739,8 +1739,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) Marsha
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup: A group of
 // related accounts.
 type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup struct {
-	// Name: Required. The resource name for the related account group in
-	// the format
+	// Name: Required. Identifier. The resource name for the related account
+	// group in the format
 	// `projects/{project}/relatedaccountgroups/{related_account_group}`.
 	Name string `json:"name,omitempty"`
 
@@ -1775,7 +1775,8 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 	// in a previous `CreateAssessment` or `AnnotateAssessment` call.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
-	// Name: Required. The resource name for this membership in the format
+	// Name: Required. Identifier. The resource name for this membership in
+	// the format
 	// `projects/{project}/relatedaccountgroups/{relatedaccountgroup}/members
 	// hips/{membership}`.
 	Name string `json:"name,omitempty"`
@@ -3806,8 +3807,8 @@ type ProjectsFirewallpoliciesPatchCall struct {
 
 // Patch: Updates the specified firewall policy.
 //
-//   - name: The resource name for the FirewallPolicy in the format
-//     `projects/{project}/firewallpolicies/{firewallpolicy}`.
+//   - name: Identifier. The resource name for the FirewallPolicy in the
+//     format `projects/{project}/firewallpolicies/{firewallpolicy}`.
 func (r *ProjectsFirewallpoliciesService) Patch(name string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesPatchCall {
 	c := &ProjectsFirewallpoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3925,7 +3926,7 @@ func (c *ProjectsFirewallpoliciesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the FirewallPolicy in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
+	//       "description": "Identifier. The resource name for the FirewallPolicy in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
 	//       "required": true,
@@ -4884,7 +4885,7 @@ type ProjectsKeysPatchCall struct {
 
 // Patch: Updates the specified key.
 //
-//   - name: The resource name for the Key in the format
+//   - name: Identifier. The resource name for the Key in the format
 //     `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysPatchCall {
 	c := &ProjectsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5002,7 +5003,7 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the Key in the format `projects/{project}/keys/{key}`.",
+	//       "description": "Identifier. The resource name for the Key in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,

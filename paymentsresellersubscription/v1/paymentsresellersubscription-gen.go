@@ -311,9 +311,11 @@ type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
 	// Unit: The unit used for the duration
 	//
 	// Possible values:
-	//   "UNIT_UNSPECIFIED" - Default value.
+	//   "UNIT_UNSPECIFIED" - Default value, reserved as an invalid or an
+	// unexpected value.
 	//   "MONTH" - Unit of a calendar month.
 	//   "DAY" - Unit of a day.
+	//   "HOUR" - Unit of an hour. It is used for testing.
 	Unit string `json:"unit,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to

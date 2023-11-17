@@ -863,6 +863,7 @@ type DeliverInfo struct {
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
 	// onnect-apis).
 	//   "SERVERLESS_NEG" - Target is a serverless network endpoint group.
+	//   "STORAGE_BUCKET" - Target is a Cloud Storage bucket.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -908,7 +909,7 @@ type DropInfo struct {
 	//   "ROUTE_WRONG_NETWORK" - Packet is sent to a wrong (unintended)
 	// network. Example: you trace a packet from VM1:Network1 to
 	// VM2:Network2, however, the route configured in Network1 sends the
-	// packet destined for VM2's IP addresss to Network3.
+	// packet destined for VM2's IP address to Network3.
 	//   "PRIVATE_TRAFFIC_TO_INTERNET" - Packet with internal destination
 	// address sent to the internet gateway.
 	//   "PRIVATE_GOOGLE_ACCESS_DISALLOWED" - Instance with only an internal
@@ -1367,6 +1368,12 @@ type FirewallInfo struct {
 	// policy rule. For details, see [Regional network firewall
 	// policies](https://cloud.google.com/firewall/docs/regional-firewall-pol
 	// icies).
+	//   "UNSUPPORTED_FIREWALL_POLICY_RULE" - Firewall policy rule
+	// containing attributes not yet supported in Connectivity tests.
+	// Firewall analysis is skipped if such a rule can potentially be
+	// matched. Please see the [list of unsupported
+	// configurations](https://cloud.google.com/network-intelligence-center/d
+	// ocs/connectivity-tests/concepts/overview#unsupported-configs).
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is
@@ -1901,6 +1908,8 @@ type LoadBalancerInfo struct {
 	Backends []*LoadBalancerBackend `json:"backends,omitempty"`
 
 	// HealthCheckUri: URI of the health check for the load balancer.
+	// Deprecated and no longer populated as different load balancer
+	// backends might have different health checks.
 	HealthCheckUri string `json:"healthCheckUri,omitempty"`
 
 	// LoadBalancerType: Type of the load balancer.

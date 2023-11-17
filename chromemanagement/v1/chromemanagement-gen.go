@@ -2579,6 +2579,40 @@ func (s *GoogleChromeManagementV1MemoryStatusReport) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1NetworkBandwidthReport: Network bandwidth
+// report. * Granular permission needed: TELEMETRY_API_NETWORK_REPORT
+type GoogleChromeManagementV1NetworkBandwidthReport struct {
+	// DownloadSpeedKbps: Output only. Download speed in kilobits per
+	// second.
+	DownloadSpeedKbps int64 `json:"downloadSpeedKbps,omitempty,string"`
+
+	// ReportTime: Output only. Timestamp of when the report was collected.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadSpeedKbps")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadSpeedKbps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1NetworkBandwidthReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1NetworkBandwidthReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1NetworkDevice: Details about the network
 // device. * This field provides device information, which is static and
 // will not change over time. * Data for this field is controlled via
@@ -3248,6 +3282,10 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// Name: Output only. Resource name of the device.
 	Name string `json:"name,omitempty"`
 
+	// NetworkBandwidthReport: Output only. Network bandwidth reports
+	// collected periodically sorted in a decreasing order of report_time.
+	NetworkBandwidthReport []*GoogleChromeManagementV1NetworkBandwidthReport `json:"networkBandwidthReport,omitempty"`
+
 	// NetworkDiagnosticsReport: Output only. Network diagnostics collected
 	// periodically.
 	NetworkDiagnosticsReport []*GoogleChromeManagementV1NetworkDiagnosticsReport `json:"networkDiagnosticsReport,omitempty"`
@@ -3803,6 +3841,10 @@ type GoogleChromeManagementV1TelemetryUserDevice struct {
 	// the same as the Admin Console's Directory API ID in the ChromeOS
 	// Devices tab.
 	DeviceId string `json:"deviceId,omitempty"`
+
+	// NetworkBandwidthReport: Output only. Network bandwidth reports
+	// collected periodically sorted in a decreasing order of report_time.
+	NetworkBandwidthReport []*GoogleChromeManagementV1NetworkBandwidthReport `json:"networkBandwidthReport,omitempty"`
 
 	// PeripheralsReport: Output only. Peripherals reports collected
 	// periodically sorted in a decreasing order of report_time.

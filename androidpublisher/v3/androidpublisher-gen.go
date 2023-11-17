@@ -2460,24 +2460,38 @@ func (s *ExternalTransaction) MarshalJSON() ([]byte, error) {
 // ExternalTransactionAddress: User's address for the external
 // transaction.
 type ExternalTransactionAddress struct {
+	// AdministrativeArea: Optional. Top-level administrative subdivision of
+	// the country/region. Only required for transactions in India. Valid
+	// values are "ANDAMAN AND NICOBAR ISLANDS", "ANDHRA PRADESH",
+	// "ARUNACHAL PRADESH", "ASSAM", "BIHAR", "CHANDIGARH", "CHHATTISGARH",
+	// "DADRA AND NAGAR HAVELI", "DADRA AND NAGAR HAVELI AND DAMAN AND DIU",
+	// "DAMAN AND DIU", "DELHI", "GOA", "GUJARAT", "HARYANA", "HIMACHAL
+	// PRADESH", "JAMMU AND KASHMIR", "JHARKHAND", "KARNATAKA", "KERALA",
+	// "LADAKH", "LAKSHADWEEP", "MADHYA PRADESH", "MAHARASHTRA", "MANIPUR",
+	// "MEGHALAYA", "MIZORAM", "NAGALAND", "ODISHA", "PUDUCHERRY", "PUNJAB",
+	// "RAJASTHAN", "SIKKIM", "TAMIL NADU", "TELANGANA", "TRIPURA", "UTTAR
+	// PRADESH", "UTTARAKHAND", and "WEST BENGAL".
+	AdministrativeArea string `json:"administrativeArea,omitempty"`
+
 	// RegionCode: Required. Two letter region code based on ISO-3166-1
 	// Alpha-2 (UN region codes).
 	RegionCode string `json:"regionCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RegionCode") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdministrativeArea")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RegionCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdministrativeArea") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4487,6 +4501,19 @@ type RecurringExternalTransaction struct {
 	// first payment. Required when creating recurring external
 	// transactions.
 	InitialExternalTransactionId string `json:"initialExternalTransactionId,omitempty"`
+
+	// MigratedTransactionProgram: Input only. Provided during the call to
+	// Create. Must only be used when migrating a subscription from manual
+	// monthly reporting to automated reporting.
+	//
+	// Possible values:
+	//   "EXTERNAL_TRANSACTION_PROGRAM_UNSPECIFIED" - Unspecified
+	// transaction program. Not used.
+	//   "USER_CHOICE_BILLING" - User choice billing, where a user may
+	// choose between Google Play Billing developer-managed billing.
+	//   "ALTERTNATIVE_BILLING_ONLY" - Alternatively billing only, where
+	// users may only use developer-manager billing.
+	MigratedTransactionProgram string `json:"migratedTransactionProgram,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExternalSubscription") to unconditionally include in API requests.
@@ -6668,6 +6695,57 @@ type Track struct {
 
 func (s *Track) MarshalJSON() ([]byte, error) {
 	type NoMethod Track
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TrackConfig: Configurations of the new track.
+type TrackConfig struct {
+	// FormFactor: Required. Form factor of the new track. Defaults to the
+	// default track.
+	//
+	// Possible values:
+	//   "FORM_FACTOR_UNSPECIFIED" - Fallback value, do not use.
+	//   "DEFAULT" - Default track.
+	//   "WEAR" - Wear form factor track.
+	//   "AUTOMOTIVE" - Automotive form factor track.
+	FormFactor string `json:"formFactor,omitempty"`
+
+	// Track: Required. Identifier of the new track. For default tracks,
+	// this field consists of the track alias only. Form factor tracks have
+	// a special prefix as an identifier, for example `wear:production`,
+	// `automotive:production`. This prefix must match the value of the
+	// `form_factor` field, if it is not a default track. More on track name
+	// (https://developers.google.com/android-publisher/tracks#ff-track-name)
+	Track string `json:"track,omitempty"`
+
+	// Type: Required. Type of the new track. Currently, the only supported
+	// value is closedTesting.
+	//
+	// Possible values:
+	//   "TRACK_TYPE_UNSPECIFIED" - Fallback value, do not use.
+	//   "CLOSED_TESTING" - Closed testing track.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormFactor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FormFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrackConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TrackConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13514,6 +13592,158 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 	//   },
 	//   "response": {
 	//     "$ref": "Testers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.edits.tracks.create":
+
+type EditsTracksCreateCall struct {
+	s           *Service
+	packageName string
+	editId      string
+	trackconfig *TrackConfig
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a new track.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+func (r *EditsTracksService) Create(packageName string, editId string, trackconfig *TrackConfig) *EditsTracksCreateCall {
+	c := &EditsTracksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.editId = editId
+	c.trackconfig = trackconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EditsTracksCreateCall) Fields(s ...googleapi.Field) *EditsTracksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EditsTracksCreateCall) Context(ctx context.Context) *EditsTracksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EditsTracksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EditsTracksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trackconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"editId":      c.editId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.edits.tracks.create" call.
+// Exactly one of *Track or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Track.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *EditsTracksCreateCall) Do(opts ...googleapi.CallOption) (*Track, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Track{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new track.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.edits.tracks.create",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "editId"
+	//   ],
+	//   "parameters": {
+	//     "editId": {
+	//       "description": "Required. Identifier of the edit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/edits/{editId}/tracks",
+	//   "request": {
+	//     "$ref": "TrackConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "Track"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"

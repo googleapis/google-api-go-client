@@ -1250,7 +1250,7 @@ type Device struct {
 	Report *DeviceReport `json:"report,omitempty"`
 
 	// RetailBrand: Retail brand for the device, if set. See
-	// https://developer.android.com/reference/android/os/Build.html#BRAND
+	// android.os.Build.BRAND
 	RetailBrand string `json:"retailBrand,omitempty"`
 
 	// SdkVersion: API compatibility version.
@@ -2726,10 +2726,10 @@ func (s *PageInfo) MarshalJSON() ([]byte, error) {
 // enterprise.
 type Permission struct {
 	// Description: A longer description of the Permissions resource, giving
-	// more details of what it affects. This field may be absent.
+	// more details of what it affects.
 	Description string `json:"description,omitempty"`
 
-	// Name: The name of the permission. This field may be absent.
+	// Name: The name of the permission.
 	Name string `json:"name,omitempty"`
 
 	// PermissionId: An opaque string uniquely identifying the permission.
@@ -2764,10 +2764,11 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 
 // Policy: The device policy for a given managed device.
 type Policy struct {
-	// AutoUpdatePolicy: Recommended alternative: autoUpdateMode which is
-	// set per app, provides greater flexibility around update frequency.
-	// When autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
-	// AUTO_UPDATE_HIGH_PRIORITY, this field has no effect.
+	// AutoUpdatePolicy: Controls when automatic app updates on the device
+	// can be applied. Recommended alternative: autoUpdateMode which is set
+	// per app, provides greater flexibility around update frequency. When
+	// autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
+	// AUTO_UPDATE_HIGH_PRIORITY, autoUpdatePolicy has no effect.
 	// "choiceToTheUser" allows the device's user to configure the app
 	// update policy. "always" enables auto updates. "never" disables auto
 	// updates. "wifiOnly" enables auto updates only when the device is
@@ -3173,7 +3174,10 @@ type ProductPolicy struct {
 	// AutoInstallPolicy: The auto-install policy for the product.
 	AutoInstallPolicy *AutoInstallPolicy `json:"autoInstallPolicy,omitempty"`
 
-	// AutoUpdateMode: The auto-update mode for the product.
+	// AutoUpdateMode: The auto-update mode for the product. When
+	// autoUpdateMode is used, it always takes precedence over the user's
+	// choice. So when a user makes changes to the device settings manually,
+	// these changes are ignored.
 	//
 	// Possible values:
 	//   "autoUpdateModeUnspecified" - Unspecified. Defaults to
@@ -3201,9 +3205,8 @@ type ProductPolicy struct {
 	// configuration for the authenticator app of an identity provider. This
 	// helps to launch the identity provider's authenticator app during the
 	// authentication happening in a private app using Android WebView.
-	// Authenticator app should already be the default handler
-	// (https://developer.android.com/training/app-links/verify-site-associations)
-	// for the authentication url on the device.
+	// Authenticator app should already be the default handler for the
+	// authentication url on the device.
 	EnterpriseAuthenticationAppLinkConfigs []*EnterpriseAuthenticationAppLinkConfig `json:"enterpriseAuthenticationAppLinkConfigs,omitempty"`
 
 	// ManagedConfiguration: The managed configuration for the product.

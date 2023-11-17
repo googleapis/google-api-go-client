@@ -447,6 +447,38 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// Capabilities: Capabilities adds and removes POSIX capabilities from
+// running containers.
+type Capabilities struct {
+	// Add: Optional. Added capabilities +optional
+	Add []string `json:"add,omitempty"`
+
+	// Drop: Optional. Removed capabilities +optional
+	Drop []string `json:"drop,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Add") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Add") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Capabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod Capabilities
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChildStatusReference: ChildStatusReference is used to point to the
 // statuses of individual TaskRuns and Runs within this PipelineRun.
 type ChildStatusReference struct {
@@ -678,6 +710,40 @@ type EnvVar struct {
 
 func (s *EnvVar) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvVar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExecAction: ExecAction describes a "run in container" action.
+type ExecAction struct {
+	// Command: Optional. Command is the command line to execute inside the
+	// container, the working directory for the command is root ('/') in the
+	// container's filesystem. The command is simply exec'd, it is not run
+	// inside a shell, so traditional shell instructions ('|', etc) won't
+	// work. To use a shell, you need to explicitly call out to that shell.
+	// Exit status of 0 is treated as live/healthy and non-zero is
+	// unhealthy. +optional
+	Command []string `json:"command,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Command") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Command") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecAction) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1803,6 +1869,11 @@ type PipelineRun struct {
 	// Etag: Needed for declarative-friendly resources.
 	Etag string `json:"etag,omitempty"`
 
+	// FinallyStartTime: Output only. FinallyStartTime is when all
+	// non-finally tasks have been completed and only finally tasks are
+	// being executed. +optional
+	FinallyStartTime string `json:"finallyStartTime,omitempty"`
+
 	// Name: Output only. The `PipelineRun` name with format
 	// `projects/{project}/locations/{location}/pipelineRuns/{pipeline_run}`
 	Name string `json:"name,omitempty"`
@@ -2136,6 +2207,40 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Probe: Probe describes a health check to be performed against a
+// container to determine whether it is alive or ready to receive
+// traffic.
+type Probe struct {
+	// Exec: Optional. Exec specifies the action to take. +optional
+	Exec *ExecAction `json:"exec,omitempty"`
+
+	// PeriodSeconds: Optional. How often (in seconds) to perform the probe.
+	// Default to 10 seconds. Minimum value is 1. +optional
+	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exec") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Probe) MarshalJSON() ([]byte, error) {
+	type NoMethod Probe
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PropertySpec: PropertySpec holds information about a property in an
 // object.
 type PropertySpec struct {
@@ -2311,23 +2416,62 @@ func (s *SecretVolumeSource) MarshalJSON() ([]byte, error) {
 
 // SecurityContext: Security options the container should be run with.
 type SecurityContext struct {
+	// AllowPrivilegeEscalation: Optional. AllowPrivilegeEscalation controls
+	// whether a process can gain more privileges than its parent process.
+	// This bool directly controls if the no_new_privs flag will be set on
+	// the container process. AllowPrivilegeEscalation is true always when
+	// the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that
+	// this field cannot be set when spec.os.name is windows. +optional
+	AllowPrivilegeEscalation bool `json:"allowPrivilegeEscalation,omitempty"`
+
+	// Capabilities: Optional. Adds and removes POSIX capabilities from
+	// running containers.
+	Capabilities *Capabilities `json:"capabilities,omitempty"`
+
 	// Privileged: Run container in privileged mode.
 	Privileged bool `json:"privileged,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Privileged") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// RunAsGroup: Optional. The GID to run the entrypoint of the container
+	// process. Uses runtime default if unset. May also be set in
+	// PodSecurityContext. If set in both SecurityContext and
+	// PodSecurityContext, the value specified in SecurityContext takes
+	// precedence. Note that this field cannot be set when spec.os.name is
+	// windows. +optional
+	RunAsGroup int64 `json:"runAsGroup,omitempty,string"`
+
+	// RunAsNonRoot: Optional. Indicates that the container must run as a
+	// non-root user. If true, the Kubelet will validate the image at
+	// runtime to ensure that it does not run as UID 0 (root) and fail to
+	// start the container if it does. If unset or false, no such validation
+	// will be performed. May also be set in PodSecurityContext. If set in
+	// both SecurityContext and PodSecurityContext, the value specified in
+	// SecurityContext takes precedence. +optional
+	RunAsNonRoot bool `json:"runAsNonRoot,omitempty"`
+
+	// RunAsUser: Optional. The UID to run the entrypoint of the container
+	// process. Defaults to user specified in image metadata if unspecified.
+	// May also be set in PodSecurityContext. If set in both SecurityContext
+	// and PodSecurityContext, the value specified in SecurityContext takes
+	// precedence. Note that this field cannot be set when spec.os.name is
+	// windows. +optional
+	RunAsUser int64 `json:"runAsUser,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPrivilegeEscalation") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Privileged") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowPrivilegeEscalation")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2391,10 +2535,18 @@ type Sidecar struct {
 	// Name: Name of the Sidecar.
 	Name string `json:"name,omitempty"`
 
+	// ReadinessProbe: Optional. Periodic probe of Sidecar service
+	// readiness. Container will be removed from service endpoints if the
+	// probe fails. Cannot be updated. More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// +optional
+	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
+
 	// Script: The contents of an executable file to execute.
 	Script string `json:"script,omitempty"`
 
-	// SecurityContext: Security options the container should be run with.
+	// SecurityContext: Optional. Security options the container should be
+	// run with.
 	SecurityContext *SecurityContext `json:"securityContext,omitempty"`
 
 	// VolumeMounts: Pod volumes to mount into the container's filesystem.
@@ -2528,6 +2680,14 @@ type Step struct {
 	// Script: The contents of an executable file to execute.
 	Script string `json:"script,omitempty"`
 
+	// SecurityContext: Optional. SecurityContext defines the security
+	// options the Step should be run with. If set, the fields of
+	// SecurityContext override the equivalent fields of PodSecurityContext.
+	// More info:
+	// https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+	// +optional
+	SecurityContext *SecurityContext `json:"securityContext,omitempty"`
+
 	// Timeout: Time after which the Step times out. Defaults to never.
 	Timeout string `json:"timeout,omitempty"`
 
@@ -2556,6 +2716,37 @@ type Step struct {
 
 func (s *Step) MarshalJSON() ([]byte, error) {
 	type NoMethod Step
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StepTemplate: StepTemplate can be used as the basis for all step
+// containers within the Task, so that the steps inherit settings on the
+// base container.
+type StepTemplate struct {
+	// Env: Optional. List of environment variables to set in the Step.
+	// Cannot be updated.
+	Env []*EnvVar `json:"env,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Env") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Env") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StepTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod StepTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2676,6 +2867,11 @@ type TaskSpec struct {
 
 	// Sidecars: Sidecars that run alongside the Task's step containers.
 	Sidecars []*Sidecar `json:"sidecars,omitempty"`
+
+	// StepTemplate: Optional. StepTemplate can be used as the basis for all
+	// step containers within the Task, so that the steps inherit settings
+	// on the base container.
+	StepTemplate []*StepTemplate `json:"stepTemplate,omitempty"`
 
 	// Steps: Steps of the task.
 	Steps []*Step `json:"steps,omitempty"`
@@ -3012,6 +3208,11 @@ type WorkspaceBinding struct {
 	// Secret: Secret Volume Source.
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
 
+	// SubPath: Optional. SubPath is optionally a directory on the volume
+	// which should be used for this binding (i.e. the volume will be
+	// mounted at this sub directory). +optional
+	SubPath string `json:"subPath,omitempty"`
+
 	// VolumeClaim: Volume claim that will be created in the same namespace.
 	VolumeClaim *VolumeClaim `json:"volumeClaim,omitempty"`
 
@@ -3052,6 +3253,11 @@ type WorkspaceDeclaration struct {
 	// Name: Name is the name by which you can bind the volume at runtime.
 	Name string `json:"name,omitempty"`
 
+	// Optional: Optional. Optional marks a Workspace as not being required
+	// in TaskRuns. By default this field is false and so declared
+	// workspaces are required.
+	Optional bool `json:"optional,omitempty"`
+
 	// ReadOnly: ReadOnly dictates whether a mounted volume is writable.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
@@ -3084,6 +3290,11 @@ func (s *WorkspaceDeclaration) MarshalJSON() ([]byte, error) {
 type WorkspacePipelineTaskBinding struct {
 	// Name: Name of the workspace as declared by the task.
 	Name string `json:"name,omitempty"`
+
+	// SubPath: Optional. SubPath is optionally a directory on the volume
+	// which should be used for this binding (i.e. the volume will be
+	// mounted at this sub directory). +optional
+	SubPath string `json:"subPath,omitempty"`
 
 	// Workspace: Name of the workspace declared by the pipeline.
 	Workspace string `json:"workspace,omitempty"`

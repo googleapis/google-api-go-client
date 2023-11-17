@@ -331,11 +331,11 @@ type ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsService struct {
 // Authorization: Authorization defines the On-Prem cluster
 // authorization configuration to bootstrap onto the admin cluster.
 type Authorization struct {
-	// AdminUsers: Required. For VMware and bare metal user clusters, users
-	// will be granted the cluster-admin role on the cluster, which provides
-	// full administrative access to the cluster. For bare metal admin
-	// clusters, users will be granted the cluster-view role, which limits
-	// users to read-only access.
+	// AdminUsers: For VMware and bare metal user clusters, users will be
+	// granted the cluster-admin role on the cluster, which provides full
+	// administrative access to the cluster. For bare metal admin clusters,
+	// users will be granted the cluster-view role, which limits users to
+	// read-only access.
 	AdminUsers []*ClusterUser `json:"adminUsers,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminUsers") to
@@ -4753,6 +4753,36 @@ func (s *VmwareAdminAddonNodeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VmwareAdminAuthorizationConfig: VmwareAdminAuthorizationConfig
+// represents configuration for admin cluster authorization.
+type VmwareAdminAuthorizationConfig struct {
+	// ViewerUsers: For VMware admin clusters, users will be granted the
+	// cluster-viewer role on the cluster.
+	ViewerUsers []*ClusterUser `json:"viewerUsers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ViewerUsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ViewerUsers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmwareAdminAuthorizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminAuthorizationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VmwareAdminCluster: Resource that represents a VMware admin cluster.
 type VmwareAdminCluster struct {
 	// AddonNode: The VMware admin cluster addon node configuration.
@@ -4770,6 +4800,9 @@ type VmwareAdminCluster struct {
 	// AntiAffinityGroups: The VMware admin cluster anti affinity group
 	// configuration.
 	AntiAffinityGroups *VmwareAAGConfig `json:"antiAffinityGroups,omitempty"`
+
+	// Authorization: The VMware admin cluster authorization configuration.
+	Authorization *VmwareAdminAuthorizationConfig `json:"authorization,omitempty"`
 
 	// AutoRepairConfig: The VMware admin cluster auto repair configuration.
 	AutoRepairConfig *VmwareAutoRepairConfig `json:"autoRepairConfig,omitempty"`
@@ -6108,8 +6141,8 @@ type VmwareNetworkConfig struct {
 	// StaticIpConfig: Configuration settings for a static IP configuration.
 	StaticIpConfig *VmwareStaticIpConfig `json:"staticIpConfig,omitempty"`
 
-	// VcenterNetwork: Output only. vcenter_network specifies vCenter
-	// network name. Inherited from the admin cluster.
+	// VcenterNetwork: vcenter_network specifies vCenter network name.
+	// Inherited from the admin cluster.
 	VcenterNetwork string `json:"vcenterNetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

@@ -371,6 +371,11 @@ type ApiWarning struct {
 	//   "MAX_RESULTS_EXCEEDS_LIMIT" - Warning when user provided maxResults
 	// parameter exceeds the limit. The returned result set may be
 	// incomplete.
+	//   "COMPROMISED_CREDENTIALS" - Warning when user tries to
+	// create/update a user with credentials that have previously been
+	// compromised by a public data breach.
+	//   "INTERNAL_STATE_FAILURE" - Warning when the operation succeeds but
+	// some non-critical workflow state failed.
 	Code string `json:"code,omitempty"`
 
 	// Message: The warning message.
@@ -1327,6 +1332,16 @@ type DatabaseInstance struct {
 
 	// Settings: The user settings.
 	Settings *Settings `json:"settings,omitempty"`
+
+	// SqlNetworkArchitecture: The SQL network architecture for the
+	// instance.
+	//
+	// Possible values:
+	//   "SQL_NETWORK_ARCHITECTURE_UNSPECIFIED"
+	//   "NEW_NETWORK_ARCHITECTURE" - Instance is a Tenancy Unit (TU)
+	// instance.
+	//   "OLD_NETWORK_ARCHITECTURE" - Instance is an Umbrella instance.
+	SqlNetworkArchitecture string `json:"sqlNetworkArchitecture,omitempty"`
 
 	// State: The current serving state of the Cloud SQL instance.
 	//
@@ -3189,6 +3204,10 @@ type MaintenanceWindow struct {
 	//   "stable" - For instance update that requires a restart, this update
 	// track indicates your instance prefer to let Cloud SQL choose the
 	// timing of restart (within its Maintenance window, if applicable).
+	//   "week5" - For instance update that requires a restart, this update
+	// track indicates your instance prefer to let Cloud SQL choose the
+	// timing of restart (within its Maintenance window, if applicable) to
+	// be at least 5 weeks after the notification.
 	UpdateTrack string `json:"updateTrack,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -3375,6 +3394,9 @@ func (s *OnPremisesConfiguration) MarshalJSON() ([]byte, error) {
 // return an Operation resource, only the fields relevant to the
 // operation are populated in the resource.
 type Operation struct {
+	// ApiWarning: An Admin API warning message.
+	ApiWarning *ApiWarning `json:"apiWarning,omitempty"`
+
 	// BackupContext: The context for backup operation, if applicable.
 	BackupContext *BackupContext `json:"backupContext,omitempty"`
 
@@ -3498,7 +3520,7 @@ type Operation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "BackupContext") to
+	// ForceSendFields is a list of field names (e.g. "ApiWarning") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3506,10 +3528,10 @@ type Operation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BackupContext") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ApiWarning") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3720,6 +3742,10 @@ type PasswordValidationPolicy struct {
 	//   "COMPLEXITY_DEFAULT" - A combination of lowercase, uppercase,
 	// numeric, and non-alphanumeric characters.
 	Complexity string `json:"complexity,omitempty"`
+
+	// DisallowCompromisedCredentials: Disallow credentials that have been
+	// previously compromised by a public data breach.
+	DisallowCompromisedCredentials bool `json:"disallowCompromisedCredentials,omitempty"`
 
 	// DisallowUsernameSubstring: Disallow username as a part of the
 	// password.

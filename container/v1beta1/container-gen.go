@@ -688,13 +688,16 @@ func (s *AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 // Autopilot: Autopilot is the configuration for Autopilot settings on
 // the cluster.
 type Autopilot struct {
+	// ConversionStatus: ConversionStatus shows conversion status.
+	ConversionStatus *AutopilotConversionStatus `json:"conversionStatus,omitempty"`
+
 	// Enabled: Enable Autopilot
 	Enabled bool `json:"enabled,omitempty"`
 
 	// WorkloadPolicyConfig: Workload policy configuration for Autopilot.
 	WorkloadPolicyConfig *WorkloadPolicyConfig `json:"workloadPolicyConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// ForceSendFields is a list of field names (e.g. "ConversionStatus") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -702,12 +705,13 @@ type Autopilot struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConversionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -769,6 +773,41 @@ type AutopilotCompatibilityIssue struct {
 
 func (s *AutopilotCompatibilityIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod AutopilotCompatibilityIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutopilotConversionStatus: AutopilotConversionStatus represents
+// conversion status.
+type AutopilotConversionStatus struct {
+	// State: Output only. The current state of the conversion.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - STATE_UNSPECIFIED indicates the state is
+	// unspecified.
+	//   "DONE" - DONE indicates the conversion has been completed. Old node
+	// pools will continue being deleted in the background.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutopilotConversionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AutopilotConversionStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5609,23 +5648,7 @@ func (s *NodeNetworkConfig) UnmarshalJSON(data []byte) error {
 // a common configuration and specification, under the control of the
 // cluster master. They may have a set of Kubernetes labels applied to
 // them, which may be used to reference them during pod scheduling. They
-// may also be resized up or down, to accommodate the workload. These
-// upgrade settings control the level of parallelism and the level of
-// disruption caused by an upgrade. maxUnavailable controls the number
-// of nodes that can be simultaneously unavailable. maxSurge controls
-// the number of additional nodes that can be added to the node pool
-// temporarily for the time of the upgrade to increase the number of
-// available nodes. (maxUnavailable + maxSurge) determines the level of
-// parallelism (how many nodes are being upgraded at the same time).
-// Note: upgrades inevitably introduce some disruption since workloads
-// need to be moved from old nodes to new, upgraded ones. Even if
-// maxUnavailable=0, this holds true. (Disruption stays within the
-// limits of PodDisruptionBudget, if it is configured.) Consider a
-// hypothetical node pool with 5 nodes having maxSurge=2,
-// maxUnavailable=1. This means the upgrade process upgrades 3 nodes
-// simultaneously. It creates 2 additional (upgraded) nodes, then it
-// brings down 3 old (not yet upgraded) nodes at the same time. This
-// ensures that there are always at least 4 nodes available.
+// may also be resized up or down, to accommodate the workload.
 type NodePool struct {
 	// Autoscaling: Autoscaler configuration for this NodePool. Autoscaler
 	// is enabled only if a valid configuration is present.
@@ -5688,6 +5711,10 @@ type NodePool struct {
 	// PodIpv4CidrSize: [Output only] The pod CIDR block size per node in
 	// this node pool.
 	PodIpv4CidrSize int64 `json:"podIpv4CidrSize,omitempty"`
+
+	// QueuedProvisioning: Specifies the configuration of queued
+	// provisioning.
+	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -6648,6 +6675,37 @@ type PubSub struct {
 
 func (s *PubSub) MarshalJSON() ([]byte, error) {
 	type NoMethod PubSub
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueuedProvisioning: QueuedProvisioning defines the queued
+// provisioning used by the node pool.
+type QueuedProvisioning struct {
+	// Enabled: Denotes that this nodepool is QRM specific, meaning nodes
+	// can be only obtained through queuing via the Cluster Autoscaler
+	// ProvisioningRequest API.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueuedProvisioning) MarshalJSON() ([]byte, error) {
+	type NoMethod QueuedProvisioning
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8843,12 +8901,28 @@ func (s *UpgradeEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpgradeSettings: These upgrade settings configure the upgrade
-// strategy for the node pool. Use strategy to switch between the
-// strategies applied to the node pool. If the strategy is SURGE, use
-// max_surge and max_unavailable to control the level of parallelism and
-// the level of disruption caused by upgrade. 1. maxSurge controls the
-// number of additional nodes that can be added to the node pool
+// UpgradeSettings: These upgrade settings control the level of
+// parallelism and the level of disruption caused by an upgrade.
+// maxUnavailable controls the number of nodes that can be
+// simultaneously unavailable. maxSurge controls the number of
+// additional nodes that can be added to the node pool temporarily for
+// the time of the upgrade to increase the number of available nodes.
+// (maxUnavailable + maxSurge) determines the level of parallelism (how
+// many nodes are being upgraded at the same time). Note: upgrades
+// inevitably introduce some disruption since workloads need to be moved
+// from old nodes to new, upgraded ones. Even if maxUnavailable=0, this
+// holds true. (Disruption stays within the limits of
+// PodDisruptionBudget, if it is configured.) Consider a hypothetical
+// node pool with 5 nodes having maxSurge=2, maxUnavailable=1. This
+// means the upgrade process upgrades 3 nodes simultaneously. It creates
+// 2 additional (upgraded) nodes, then it brings down 3 old (not yet
+// upgraded) nodes at the same time. This ensures that there are always
+// at least 4 nodes available. These upgrade settings configure the
+// upgrade strategy for the node pool. Use strategy to switch between
+// the strategies applied to the node pool. If the strategy is SURGE,
+// use max_surge and max_unavailable to control the level of parallelism
+// and the level of disruption caused by upgrade. 1. maxSurge controls
+// the number of additional nodes that can be added to the node pool
 // temporarily for the time of the upgrade to increase the number of
 // available nodes. 2. maxUnavailable controls the number of nodes that
 // can be simultaneously unavailable. 3. (maxUnavailable + maxSurge)

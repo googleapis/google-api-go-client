@@ -6514,7 +6514,7 @@ func (s *GoogleCloudApigeeV1KeystoreConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudApigeeV1ListApiCategoriesResponse: The response for
-// `ListApiCategoriesRequest`.
+// `ListApiCategoriesRequest`. Next ID: 6
 type GoogleCloudApigeeV1ListApiCategoriesResponse struct {
 	// Data: The API category resources.
 	Data []*GoogleCloudApigeeV1ApiCategory `json:"data,omitempty"`
@@ -8420,7 +8420,7 @@ type GoogleCloudApigeeV1Organization struct {
 	//   "BILLING_TYPE_UNSPECIFIED" - Billing type not specified.
 	//   "SUBSCRIPTION" - A pre-paid subscription to Apigee.
 	//   "EVALUATION" - Free and limited access to Apigee for evaluation
-	// purposes only. only.
+	// purposes only.
 	//   "PAYG" - Access to Apigee using a Pay-As-You-Go plan.
 	BillingType string `json:"billingType,omitempty"`
 

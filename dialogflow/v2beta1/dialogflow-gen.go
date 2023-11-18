@@ -972,6 +972,61 @@ func (s *GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3BargeInConfig: Configuration of the barge-in
+// behavior. Barge-in instructs the API to return a detected utterance
+// at a proper time while the client is playing back the response audio
+// from a previous request. When the client sees the utterance, it
+// should stop the playback and immediately get ready for receiving the
+// responses for the current request. The barge-in handling requires the
+// client to start streaming audio input as soon as it starts playing
+// back the audio from the previous response. The playback is modeled
+// into two phases: * No barge-in phase: which goes first and during
+// which speech detection should not be carried out. * Barge-in phase:
+// which follows the no barge-in phase and during which the API starts
+// speech detection and may inform the client that an utterance has been
+// detected. Note that no-speech event is not expected in this phase.
+// The client provides this configuration in terms of the durations of
+// those two phases. The durations are measured in terms of the audio
+// length fromt the the start of the input audio. The flow goes like
+// below: --> Time without speech detection | utterance only | utterance
+// or no-speech event | | +-------------+ | +------------+ |
+// +---------------+ ----------+ no barge-in +-|-+ barge-in +-|-+ normal
+// period +----------- +-------------+ | +------------+ |
+// +---------------+ No-speech event is a response with END_OF_UTTERANCE
+// without any transcript following up.
+type GoogleCloudDialogflowCxV3BargeInConfig struct {
+	// NoBargeInDuration: Duration that is not eligible for barge-in at the
+	// beginning of the input audio.
+	NoBargeInDuration string `json:"noBargeInDuration,omitempty"`
+
+	// TotalDuration: Total duration for the playback at the beginning of
+	// the input audio.
+	TotalDuration string `json:"totalDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NoBargeInDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NoBargeInDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3BargeInConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3BargeInConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata: Metadata returned
 // for the TestCases.BatchRunTestCases long running operation.
 type GoogleCloudDialogflowCxV3BatchRunTestCasesMetadata struct {
@@ -2599,6 +2654,10 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// block length. Only Speex wideband is supported. `sample_rate_hertz`
 	// must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
+
+	// BargeInConfig: Configuration of barge-in behavior during the
+	// streaming of input audio.
+	BargeInConfig *GoogleCloudDialogflowCxV3BargeInConfig `json:"bargeInConfig,omitempty"`
 
 	// EnableWordInfo: Optional. If `true`, Dialogflow returns
 	// SpeechWordInfo in StreamingRecognitionResult with information about
@@ -5012,6 +5071,62 @@ func (s *GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1BargeInConfig: Configuration of the
+// barge-in behavior. Barge-in instructs the API to return a detected
+// utterance at a proper time while the client is playing back the
+// response audio from a previous request. When the client sees the
+// utterance, it should stop the playback and immediately get ready for
+// receiving the responses for the current request. The barge-in
+// handling requires the client to start streaming audio input as soon
+// as it starts playing back the audio from the previous response. The
+// playback is modeled into two phases: * No barge-in phase: which goes
+// first and during which speech detection should not be carried out. *
+// Barge-in phase: which follows the no barge-in phase and during which
+// the API starts speech detection and may inform the client that an
+// utterance has been detected. Note that no-speech event is not
+// expected in this phase. The client provides this configuration in
+// terms of the durations of those two phases. The durations are
+// measured in terms of the audio length fromt the the start of the
+// input audio. The flow goes like below: --> Time without speech
+// detection | utterance only | utterance or no-speech event | |
+// +-------------+ | +------------+ | +---------------+ ----------+ no
+// barge-in +-|-+ barge-in +-|-+ normal period +-----------
+// +-------------+ | +------------+ | +---------------+ No-speech event
+// is a response with END_OF_UTTERANCE without any transcript following
+// up.
+type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
+	// NoBargeInDuration: Duration that is not eligible for barge-in at the
+	// beginning of the input audio.
+	NoBargeInDuration string `json:"noBargeInDuration,omitempty"`
+
+	// TotalDuration: Total duration for the playback at the beginning of
+	// the input audio.
+	TotalDuration string `json:"totalDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NoBargeInDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NoBargeInDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1BargeInConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1BargeInConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata: Metadata
 // returned for the TestCases.BatchRunTestCases long running operation.
 type GoogleCloudDialogflowCxV3beta1BatchRunTestCasesMetadata struct {
@@ -6642,6 +6757,10 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// block length. Only Speex wideband is supported. `sample_rate_hertz`
 	// must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
+
+	// BargeInConfig: Configuration of barge-in behavior during the
+	// streaming of input audio.
+	BargeInConfig *GoogleCloudDialogflowCxV3beta1BargeInConfig `json:"bargeInConfig,omitempty"`
 
 	// EnableWordInfo: Optional. If `true`, Dialogflow returns
 	// SpeechWordInfo in StreamingRecognitionResult with information about

@@ -1853,7 +1853,7 @@ type NetworkConfig struct {
 	// Field name is intended to be consistent with Cloud SQL.
 	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
 
-	// Network: Required. The resource link for the VPC network in which
+	// Network: Optional. The resource link for the VPC network in which
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:

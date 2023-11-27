@@ -1675,12 +1675,11 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	MaxResultCount int64 `json:"maxResultCount,omitempty"`
 
 	// MinRating: Filter out results whose average user rating is strictly
-	// less than this limit. A valid value must be an float between 0 and 5
+	// less than this limit. A valid value must be a float between 0 and 5
 	// (inclusively) at a 0.5 cadence i.e. [0, 0.5, 1.0, ... , 5.0]
-	// inclusively. This is to keep parity with LocalRefinement_UserRating.
-	// The input rating will round up to the nearest 0.5(ceiling). For
-	// instance, a rating of 0.6 will eliminate all results with a less than
-	// 1.0 rating.
+	// inclusively. The input rating will round up to the nearest
+	// 0.5(ceiling). For instance, a rating of 0.6 will eliminate all
+	// results with a less than 1.0 rating.
 	MinRating float64 `json:"minRating,omitempty"`
 
 	// OpenNow: Used to restrict the search to places that are currently
@@ -1709,7 +1708,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// default to DISTANCE.
 	//   "DISTANCE" - Ranks results by distance.
 	//   "RELEVANCE" - Ranks results by relevance. Sort order determined by
-	// normal ranking stack. See SortRefinement::RELEVANCE.
+	// normal ranking stack.
 	RankPreference string `json:"rankPreference,omitempty"`
 
 	// RegionCode: The Unicode country/region code (CLDR) of the location

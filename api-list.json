@@ -843,6 +843,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "bigquerydatapolicy:v1",
+      "name": "bigquerydatapolicy",
+      "version": "v1",
+      "title": "BigQuery Data Policy API",
+      "description": "Allows users to manage BigQuery data policies.",
+      "discoveryRestUrl": "https://bigquerydatapolicy.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bigquery/docs/column-data-masking",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "bigquerydatatransfer:v1",
       "name": "bigquerydatatransfer",
       "version": "v1",

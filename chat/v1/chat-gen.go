@@ -5910,12 +5910,12 @@ type SpacesFindDirectMessageCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/users), returns
 // the direct message space between the specified user and the
-// authenticated user. With service account authentication
+// authenticated user. With app authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts),
 // returns the direct message space between the specified user and the
 // calling Chat app. Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) or service
-// account authentication
+// (https://developers.google.com/chat/api/guides/auth/users) or app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 func (r *SpacesService) FindDirectMessage() *SpacesFindDirectMessageCall {
 	c := &SpacesFindDirectMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6036,7 +6036,7 @@ func (c *SpacesFindDirectMessageCall) Do(opts ...googleapi.CallOption) (*Space, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the existing direct message with the specified user. If no direct message space is found, returns a `404 NOT_FOUND` error. For an example, see [Find a direct message](/chat/api/guides/v1/spaces/find-direct-message). With [user authentication](https://developers.google.com/chat/api/guides/auth/users), returns the direct message space between the specified user and the authenticated user. With [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts), returns the direct message space between the specified user and the calling Chat app. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) or [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Returns the existing direct message with the specified user. If no direct message space is found, returns a `404 NOT_FOUND` error. For an example, see [Find a direct message](/chat/api/guides/v1/spaces/find-direct-message). With [user authentication](https://developers.google.com/chat/api/guides/auth/users), returns the direct message space between the specified user and the authenticated user. With [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts), returns the direct message space between the specified user and the calling Chat app. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) or [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces:findDirectMessage",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.findDirectMessage",
@@ -6075,8 +6075,8 @@ type SpacesGetCall struct {
 // Get: Returns details about a space. For an example, see Get a space
 // (https://developers.google.com/chat/api/guides/v1/spaces/get).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users).
@@ -6188,7 +6188,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a space. For an example, see [Get a space](https://developers.google.com/chat/api/guides/v1/spaces/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Returns details about a space. For an example, see [Get a space](https://developers.google.com/chat/api/guides/v1/spaces/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.get",
@@ -6232,8 +6232,8 @@ type SpacesListCall struct {
 // List spaces
 // (https://developers.google.com/chat/api/guides/v1/spaces/list).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). Lists
@@ -6255,11 +6255,11 @@ func (r *SpacesService) List() *SpacesListCall {
 // `OR` operator. For example, the following queries are valid: ```
 // space_type = "SPACE" spaceType = "GROUP_CHAT" OR spaceType =
 // "DIRECT_MESSAGE" ``` Invalid queries are rejected by the server with
-// an `INVALID_ARGUMENT` error. With service account authentication
+// an `INVALID_ARGUMENT` error. With app authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts),
 // this field is ignored and the query always returns all spaces. But
-// the Chat API still validates the query syntax with service accounts,
-// so invalid queries are still rejected.
+// the Chat API still validates the query syntax, so invalid queries are
+// still rejected.
 func (c *SpacesListCall) Filter(filter string) *SpacesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6381,14 +6381,14 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists spaces the caller is a member of. Group chats and DMs aren't listed until the first message is sent. For an example, see [List spaces](https://developers.google.com/chat/api/guides/v1/spaces/list). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent.",
+	//   "description": "Lists spaces the caller is a member of. Group chats and DMs aren't listed until the first message is sent. For an example, see [List spaces](https://developers.google.com/chat/api/guides/v1/spaces/list). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent.",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A query filter. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). You can filter spaces by the space type ([`space_type`](https://developers.google.com/chat/api/reference/rest/v1/spaces#spacetype)). To filter by space type, you must specify valid enum value, such as `SPACE` or `GROUP_CHAT` (the `space_type` can't be `SPACE_TYPE_UNSPECIFIED`). To query for multiple space types, use the `OR` operator. For example, the following queries are valid: ``` space_type = \"SPACE\" spaceType = \"GROUP_CHAT\" OR spaceType = \"DIRECT_MESSAGE\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error. With [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts), this field is ignored and the query always returns all spaces. But the Chat API still validates the query syntax with service accounts, so invalid queries are still rejected.",
+	//       "description": "Optional. A query filter. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). You can filter spaces by the space type ([`space_type`](https://developers.google.com/chat/api/reference/rest/v1/spaces#spacetype)). To filter by space type, you must specify valid enum value, such as `SPACE` or `GROUP_CHAT` (the `space_type` can't be `SPACE_TYPE_UNSPECIFIED`). To query for multiple space types, use the `OR` operator. For example, the following queries are valid: ``` space_type = \"SPACE\" spaceType = \"GROUP_CHAT\" OR spaceType = \"DIRECT_MESSAGE\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error. With [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts), this field is ignored and the query always returns all spaces. But the Chat API still validates the query syntax, so invalid queries are still rejected.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7105,8 +7105,8 @@ type SpacesMembersGetCall struct {
 // membership
 // (https://developers.google.com/chat/api/guides/v1/members/get).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users).
@@ -7225,7 +7225,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a membership. For an example, see [Get a membership](https://developers.google.com/chat/api/guides/v1/members/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Returns details about a membership. For an example, see [Get a membership](https://developers.google.com/chat/api/guides/v1/members/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.get",
@@ -7276,8 +7276,8 @@ type SpacesMembersListCall struct {
 // (https://developers.google.com/chat/api/guides/auth/users) lists
 // memberships in spaces that the authenticated user has access to.
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users).
@@ -7441,7 +7441,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists memberships in a space. For an example, see [List memberships](https://developers.google.com/chat/api/guides/v1/members/list). Listing memberships with [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/chat/api/guides/auth/users) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Lists memberships in a space. For an example, see [List memberships](https://developers.google.com/chat/api/guides/v1/members/list). Listing memberships with [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/chat/api/guides/auth/users) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -7581,7 +7581,8 @@ func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCr
 //
 //	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
 //
-// thread specified by thread ID or `thread_key`. If it fails, a
+// thread specified by thread ID or `thread_key`. If a new `thread_key`
+// is used, a new thread is created. If the message creation fails, a
 // `NOT_FOUND` error is returned instead.
 func (c *SpacesMessagesCreateCall) MessageReplyOption(messageReplyOption string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("messageReplyOption", messageReplyOption)
@@ -7721,7 +7722,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "enumDescriptions": [
 	//         "Default. Starts a new thread. Using this option ignores any thread ID or `thread_key` that's included.",
 	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If it fails, the message starts a new thread instead.",
-	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If it fails, a `NOT_FOUND` error is returned instead."
+	//         "Creates the message as a reply to the thread specified by thread ID or `thread_key`. If a new `thread_key` is used, a new thread is created. If the message creation fails, a `NOT_FOUND` error is returned instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7775,12 +7776,12 @@ type SpacesMessagesDeleteCall struct {
 // Delete: Deletes a message. For an example, see Delete a message
 // (https://developers.google.com/chat/api/guides/v1/messages/delete).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). Requests
-// authenticated with service accounts can only delete messages created
+// (https://developers.google.com/chat/api/guides/auth/users). When
+// using app authentication, requests can only delete messages created
 // by the calling Chat app.
 //
 //   - name: Resource name of the message that you want to delete, in the
@@ -7797,7 +7798,7 @@ func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 // has threaded replies, deletion fails. Only applies when
 // authenticating as a user
 // (https://developers.google.com/chat/api/guides/auth/users). Has no
-// effect when [authenticating with a service account]
+// effect when [authenticating as a Chat app]
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 func (c *SpacesMessagesDeleteCall) Force(force bool) *SpacesMessagesDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
@@ -7890,7 +7891,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only delete messages created by the calling Chat app.",
+	//   "description": "Deletes a message. For an example, see [Delete a message](https://developers.google.com/chat/api/guides/v1/messages/delete). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). When using app authentication, requests can only delete messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -7899,7 +7900,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "When `true`, deleting a message also deletes its threaded replies. When `false`, if a message has threaded replies, deletion fails. Only applies when [authenticating as a user](https://developers.google.com/chat/api/guides/auth/users). Has no effect when [authenticating with a service account] (https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//       "description": "When `true`, deleting a message also deletes its threaded replies. When `false`, if a message has threaded replies, deletion fails. Only applies when [authenticating as a user](https://developers.google.com/chat/api/guides/auth/users). Has no effect when [authenticating as a Chat app] (https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7939,8 +7940,8 @@ type SpacesMessagesGetCall struct {
 // message
 // (https://developers.google.com/chat/api/guides/v1/messages/get).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
 // (https://developers.google.com/chat/api/guides/auth/users). Note:
@@ -8058,7 +8059,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details about a message. For an example, see [Read a message](https://developers.google.com/chat/api/guides/v1/messages/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Note: Might return a message from a blocked member or space.",
+	//   "description": "Returns details about a message. For an example, see [Read a message](https://developers.google.com/chat/api/guides/v1/messages/get). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Note: Might return a message from a blocked member or space.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",
@@ -8371,12 +8372,12 @@ type SpacesMessagesPatchCall struct {
 // `patch` method. For an example, see Update a message
 // (https://developers.google.com/chat/api/guides/v1/messages/update).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). Requests
-// authenticated with service accounts can only update messages created
+// (https://developers.google.com/chat/api/guides/auth/users). When
+// using app authentication, requests can only update messages created
 // by the calling Chat app.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
@@ -8402,10 +8403,9 @@ func (c *SpacesMessagesPatchCall) AllowMissing(allowMissing bool) *SpacesMessage
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
 // Currently supported field paths: - `text` - `attachment` - `cards`
-// (Requires service account authentication
-// (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires
-// service account authentication
-// (/chat/api/guides/auth/service-accounts).)
+// (Requires app authentication
+// (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires app
+// authentication (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesPatchCall) UpdateMask(updateMask string) *SpacesMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8502,7 +8502,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). When using app authentication, requests can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "chat.spaces.messages.patch",
@@ -8523,7 +8523,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).)",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8562,12 +8562,12 @@ type SpacesMessagesUpdateCall struct {
 // `patch` method. For an example, see Update a message
 // (https://developers.google.com/chat/api/guides/v1/messages/update).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth). Fully supports
-// service account authentication
+// (https://developers.google.com/chat/api/guides/auth). Supports app
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts)
 // and user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). Requests
-// authenticated with service accounts can only update messages created
+// (https://developers.google.com/chat/api/guides/auth/users). When
+// using app authentication, requests can only update messages created
 // by the calling Chat app.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
@@ -8593,10 +8593,9 @@ func (c *SpacesMessagesUpdateCall) AllowMissing(allowMissing bool) *SpacesMessag
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
 // Currently supported field paths: - `text` - `attachment` - `cards`
-// (Requires service account authentication
-// (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires
-// service account authentication
-// (/chat/api/guides/auth/service-accounts).)
+// (Requires app authentication
+// (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires app
+// authentication (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8693,7 +8692,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). Requests authenticated with service accounts can only update messages created by the calling Chat app.",
+	//   "description": "Updates a message. There's a difference between the `patch` and `update` methods. The `patch` method uses a `patch` request while the `update` method uses a `put` request. We recommend using the `patch` method. For an example, see [Update a message](https://developers.google.com/chat/api/guides/v1/messages/update). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Supports [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts) and [user authentication](https://developers.google.com/chat/api/guides/auth/users). When using app authentication, requests can only update messages created by the calling Chat app.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",
@@ -8714,7 +8713,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [service account authentication](/chat/api/guides/auth/service-accounts).)",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8752,7 +8751,7 @@ type SpacesMessagesAttachmentsGetCall struct {
 // (https://developers.google.com/chat/api/reference/rest/v1/media/download).
 // For an example, see Get a message attachment
 // (https://developers.google.com/chat/api/guides/v1/media-and-attachments/get).
-// Requires service account authentication
+// Requires app authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 //   - name: Resource name of the attachment, in the form
@@ -8862,7 +8861,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the [media API](https://developers.google.com/chat/api/reference/rest/v1/media/download). For an example, see [Get a message attachment](https://developers.google.com/chat/api/guides/v1/media-and-attachments/get). Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the [media API](https://developers.google.com/chat/api/reference/rest/v1/media/download). For an example, see [Get a message attachment](https://developers.google.com/chat/api/guides/v1/media-and-attachments/get). Requires [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/attachments/{attachmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.attachments.get",

@@ -1083,7 +1083,8 @@ type ListLocationsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The approximate number of Locations in the list
-	// irrespective of pagination.
+	// irrespective of pagination. This field will only be returned if
+	// `filter` is used as a query parameter.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

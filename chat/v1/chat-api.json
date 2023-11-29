@@ -957,7 +957,7 @@
       }
     }
   },
-  "revision": "20231114",
+  "revision": "20231121",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -981,7 +981,7 @@
       "properties": {
         "dialogAction": {
           "$ref": "DialogAction",
-          "description": "Input only. A response to an event related to a [dialog](https://developers.google.com/chat/how-tos/dialogs). Must be accompanied by `ResponseType.Dialog`."
+          "description": "Input only. A response to an interaction event related to a [dialog](https://developers.google.com/chat/how-tos/dialogs). Must be accompanied by `ResponseType.Dialog`."
         },
         "type": {
           "description": "Input only. The type of Chat app response.",
@@ -991,7 +991,8 @@
             "UPDATE_MESSAGE",
             "UPDATE_USER_MESSAGE_CARDS",
             "REQUEST_CONFIG",
-            "DIALOG"
+            "DIALOG",
+            "UPDATE_WIDGET"
           ],
           "enumDescriptions": [
             "Default type that's handled as `NEW_MESSAGE`.",
@@ -999,9 +1000,14 @@
             "Update the Chat app's message. This is only permitted on a `CARD_CLICKED` event where the message sender type is `BOT`.",
             "Update the cards on a user's message. This is only permitted as a response to a `MESSAGE` event with a matched url, or a `CARD_CLICKED` event where the message sender type is `HUMAN`. Text is ignored.",
             "Privately ask the user for additional authentication or configuration.",
-            "Presents a [dialog](https://developers.google.com/chat/how-tos/dialogs)."
+            "Presents a [dialog](https://developers.google.com/chat/how-tos/dialogs).",
+            "Widget text autocomplete options query."
           ],
           "type": "string"
+        },
+        "updatedWidget": {
+          "$ref": "UpdatedWidget",
+          "description": "Input only. The response of the updated widget."
         },
         "url": {
           "description": "Input only. URL for users to authenticate or configure. (Only for `REQUEST_CONFIG` response types.)",
@@ -1561,14 +1567,16 @@
             "MESSAGE",
             "ADDED_TO_SPACE",
             "REMOVED_FROM_SPACE",
-            "CARD_CLICKED"
+            "CARD_CLICKED",
+            "WIDGET_UPDATED"
           ],
           "enumDescriptions": [
             "Default value for the enum. DO NOT USE.",
             "A user sends the Chat app a message, or invokes the Chat app in a space.",
             "A user adds the Chat app to a space, or a Google Workspace administrator installs the Chat app in direct message spaces for users in their organization.",
             "A user removes the Chat app from a space.",
-            "A user clicks an interactive element of a card or dialog from a Chat app, such as a button. If a user interacts with a dialog, the `CARD_CLICKED` interaction event's `isDialogEvent` field is set to `true` and includes a [`DialogEventType`](https://developers.google.com/chat/api/reference/rest/v1/DialogEventType)."
+            "A user clicks an interactive element of a card or dialog from a Chat app, such as a button. If a user interacts with a dialog, the `CARD_CLICKED` interaction event's `isDialogEvent` field is set to `true` and includes a [`DialogEventType`](https://developers.google.com/chat/api/reference/rest/v1/DialogEventType).",
+            "A user updates a widget in a card message or dialog."
           ],
           "type": "string"
         },
@@ -3310,6 +3318,20 @@
       },
       "type": "object"
     },
+    "SelectionItems": {
+      "description": "List of widget autocomplete results.",
+      "id": "SelectionItems",
+      "properties": {
+        "items": {
+          "description": "An array of the SelectionItem objects.",
+          "items": {
+            "$ref": "GoogleAppsCardV1SelectionItem"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "SetUpSpaceRequest": {
       "id": "SetUpSpaceRequest",
       "properties": {
@@ -3618,6 +3640,21 @@
           "description": "The user timezone offset, in milliseconds, from Coordinated Universal Time (UTC).",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "UpdatedWidget": {
+      "description": "The response of the updated widget. Used to provide autocomplete options for a widget.",
+      "id": "UpdatedWidget",
+      "properties": {
+        "suggestions": {
+          "$ref": "SelectionItems",
+          "description": "List of widget autocomplete results"
+        },
+        "widget": {
+          "description": "The ID of the updated widget. The ID must match the one for the widget that triggered the update request.",
+          "type": "string"
         }
       },
       "type": "object"

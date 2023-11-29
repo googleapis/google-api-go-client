@@ -12721,8 +12721,8 @@ func (r *ProjectsLocationsFirewallEndpointAssociationsService) Create(parent str
 }
 
 // FirewallEndpointAssociationId sets the optional parameter
-// "firewallEndpointAssociationId": Required. Id of the requesting
-// object. If auto-generating Id server-side, remove this field and
+// "firewallEndpointAssociationId": Id of the requesting object. If
+// auto-generating Id server-side, remove this field and
 // firewall_endpoint_association_id from the method_signature of Create
 // RPC.
 func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) FirewallEndpointAssociationId(firewallEndpointAssociationId string) *ProjectsLocationsFirewallEndpointAssociationsCreateCall {
@@ -12848,7 +12848,7 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "firewallEndpointAssociationId": {
-	//       "description": "Required. Id of the requesting object. If auto-generating Id server-side, remove this field and firewall_endpoint_association_id from the method_signature of Create RPC.",
+	//       "description": "Optional. Id of the requesting object. If auto-generating Id server-side, remove this field and firewall_endpoint_association_id from the method_signature of Create RPC.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

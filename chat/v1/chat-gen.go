@@ -321,9 +321,9 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 // ActionResponse: Parameters that a Chat app can use to configure how
 // its response is posted.
 type ActionResponse struct {
-	// DialogAction: Input only. A response to an event related to a dialog
-	// (https://developers.google.com/chat/how-tos/dialogs). Must be
-	// accompanied by `ResponseType.Dialog`.
+	// DialogAction: Input only. A response to an interaction event related
+	// to a dialog (https://developers.google.com/chat/how-tos/dialogs).
+	// Must be accompanied by `ResponseType.Dialog`.
 	DialogAction *DialogAction `json:"dialogAction,omitempty"`
 
 	// Type: Input only. The type of Chat app response.
@@ -342,7 +342,11 @@ type ActionResponse struct {
 	// authentication or configuration.
 	//   "DIALOG" - Presents a
 	// [dialog](https://developers.google.com/chat/how-tos/dialogs).
+	//   "UPDATE_WIDGET" - Widget text autocomplete options query.
 	Type string `json:"type,omitempty"`
+
+	// UpdatedWidget: Input only. The response of the updated widget.
+	UpdatedWidget *UpdatedWidget `json:"updatedWidget,omitempty"`
 
 	// Url: Input only. URL for users to authenticate or configure. (Only
 	// for `REQUEST_CONFIG` response types.)
@@ -1369,6 +1373,8 @@ type DeprecatedEvent struct {
 	// is set to `true` and includes a
 	// [`DialogEventType`](https://developers.google.com/chat/api/reference/r
 	// est/v1/DialogEventType).
+	//   "WIDGET_UPDATED" - A user updates a widget in a card message or
+	// dialog.
 	Type string `json:"type,omitempty"`
 
 	// User: The user that triggered the interaction event.
@@ -4416,6 +4422,34 @@ func (s *Section) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SelectionItems: List of widget autocomplete results.
+type SelectionItems struct {
+	// Items: An array of the SelectionItem objects.
+	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SelectionItems) MarshalJSON() ([]byte, error) {
+	type NoMethod SelectionItems
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type SetUpSpaceRequest struct {
 	// Memberships: Optional. The Google Chat users to invite to join the
 	// space. Omit the calling user, as they are added automatically. The
@@ -4997,6 +5031,39 @@ type TimeZone struct {
 
 func (s *TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeZone
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdatedWidget: The response of the updated widget. Used to provide
+// autocomplete options for a widget.
+type UpdatedWidget struct {
+	// Suggestions: List of widget autocomplete results
+	Suggestions *SelectionItems `json:"suggestions,omitempty"`
+
+	// Widget: The ID of the updated widget. The ID must match the one for
+	// the widget that triggered the update request.
+	Widget string `json:"widget,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Suggestions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdatedWidget) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdatedWidget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

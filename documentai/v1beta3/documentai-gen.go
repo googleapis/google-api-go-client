@@ -301,10 +301,6 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	// replace the gcs_uri.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
 
-	// GcsUri: The gcs_uri of the auto-labeling document, which uniquely
-	// identifies a dataset document.
-	GcsUri string `json:"gcsUri,omitempty"`
-
 	// Status: The status of the document auto-labeling.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 

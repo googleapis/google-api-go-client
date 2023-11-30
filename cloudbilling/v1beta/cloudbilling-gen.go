@@ -1304,7 +1304,7 @@ func (s *GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo) MarshalJSO
 }
 
 // GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice:
-// Encapsulates the latest price for the given billing account SKU.
+// Encapsulates the latest price for a billing account SKU.
 type GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice struct {
 	// CurrencyCode: ISO-4217 currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
@@ -1320,8 +1320,8 @@ type GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice struct {
 	// tiers.
 	Rate *GoogleCloudBillingBillingaccountpricesV1betaRate `json:"rate,omitempty"`
 
-	// ValueType: Type of the price. It can have values: ["unspecified",
-	// "rate"].
+	// ValueType: Type of the price. The possible values are:
+	// ["unspecified", "rate"].
 	ValueType string `json:"valueType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2501,7 +2501,7 @@ func (s *GoogleCloudBillingPricesV1betaAggregationInfo) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudBillingPricesV1betaPrice: Encapsulates the latest price
-// for the given SKU.
+// for a SKU.
 type GoogleCloudBillingPricesV1betaPrice struct {
 	// CurrencyCode: ISO-4217 currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
@@ -5728,9 +5728,10 @@ type BillingAccountsSkusPriceGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest price for the given billing account SKU.
+// Get: Gets the latest price for SKUs available to your Cloud Billing
+// account.
 //
-//   - name: Name of the latest billing account price to retrieve. Format:
+//   - name: Name of the billing account price to retrieve. Format:
 //     billingAccounts/{billing_account}/skus/{sku}/price.
 func (r *BillingAccountsSkusPriceService) Get(name string) *BillingAccountsSkusPriceGetCall {
 	c := &BillingAccountsSkusPriceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5739,8 +5740,8 @@ func (r *BillingAccountsSkusPriceService) Get(name string) *BillingAccountsSkusP
 }
 
 // CurrencyCode sets the optional parameter "currencyCode": ISO-4217
-// currency code for the price. If not specified, currency of billing
-// account will be used.
+// currency code for the price. If not specified, the currency of the
+// billing account is used.
 func (c *BillingAccountsSkusPriceGetCall) CurrencyCode(currencyCode string) *BillingAccountsSkusPriceGetCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
@@ -5848,7 +5849,7 @@ func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest price for the given billing account SKU.",
+	//   "description": "Gets the latest price for SKUs available to your Cloud Billing account.",
 	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus/{skusId}/price",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.skus.price.get",
@@ -5857,12 +5858,12 @@ func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "currencyCode": {
-	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, currency of billing account will be used.",
+	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, the currency of the billing account is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Name of the latest billing account price to retrieve. Format: billingAccounts/{billing_account}/skus/{sku}/price",
+	//       "description": "Required. Name of the billing account price to retrieve. Format: billingAccounts/{billing_account}/skus/{sku}/price",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/skus/[^/]+/price$",
 	//       "required": true,

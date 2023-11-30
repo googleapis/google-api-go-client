@@ -3560,6 +3560,14 @@ func (s *MethodPolicy) MarshalJSON() ([]byte, error) {
 
 // MethodSettings: Describes the generator configuration for a method.
 type MethodSettings struct {
+	// AutoPopulatedFields: List of top-level fields of the request message,
+	// that should be automatically populated by the client libraries based
+	// on their (google.api.field_info).format. Currently supported format:
+	// UUID4. Example of a YAML configuration: publishing: method_settings:
+	// - selector: google.example.v1.ExampleService.CreateExample
+	// auto_populated_fields: - request_id
+	AutoPopulatedFields []string `json:"autoPopulatedFields,omitempty"`
+
 	// LongRunning: Describes settings to use for long-running operations
 	// when generating API methods for RPCs. Complements RPCs that use the
 	// annotations in google/longrunning/operations.proto. Example of a YAML
@@ -3575,20 +3583,21 @@ type MethodSettings struct {
 	// options.
 	Selector string `json:"selector,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LongRunning") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AutoPopulatedFields")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LongRunning") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutoPopulatedFields") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

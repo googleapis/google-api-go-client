@@ -2507,12 +2507,12 @@ func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2ServiceScaling: Scaling settings that apply to the
-// service as a whole rather than the individual revision.
+// GoogleCloudRunV2ServiceScaling: Scaling settings applied at the
+// service level rather than at the revision level.
 type GoogleCloudRunV2ServiceScaling struct {
 	// MinInstanceCount: total min instances for the service. This number of
-	// instances will be divide among all revisions with specified traffic
-	// based on the percent of traffic they are receiving. (ALPHA)
+	// instances is divided among all revisions with specified traffic based
+	// on the percent of traffic they are receiving. (ALPHA)
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinInstanceCount") to

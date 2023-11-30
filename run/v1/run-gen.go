@@ -3257,8 +3257,8 @@ type RevisionStatus struct {
 	// receive traffic.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
 
-	// DesiredReplicas: Output only. The desired number of instances running
-	// this revision. For Cloud Run, this only includes instances
+	// DesiredReplicas: Output only. The configured number of instances
+	// running this revision. For Cloud Run, this only includes instances
 	// provisioned using the minScale annotation. It does not include
 	// instances created by autoscaling.
 	DesiredReplicas int64 `json:"desiredReplicas,omitempty"`
@@ -4520,8 +4520,8 @@ type VolumeMount struct {
 	// Volume with the same name.
 	Name string `json:"name,omitempty"`
 
-	// ReadOnly: Only true is accepted for Secret Volumes. Defaults to true
-	// for Secrets Volumes.
+	// ReadOnly: Sets the mount to be read-only or read-write. Not used by
+	// Cloud Run.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// SubPath: Path within the volume from which the container's volume

@@ -1384,6 +1384,9 @@ type Event struct {
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
 
+	// FocusTimeProperties: Focus Time event data.
+	FocusTimeProperties *EventFocusTimeProperties `json:"focusTimeProperties,omitempty"`
+
 	// Gadget: A gadget that extends this event. Gadgets are deprecated;
 	// this structure is instead only used for returning birthday calendar
 	// metadata.
@@ -1469,6 +1472,9 @@ type Event struct {
 	// identifies the instance within the recurring event series even if the
 	// instance was moved to a different time. Immutable.
 	OriginalStartTime *EventDateTime `json:"originalStartTime,omitempty"`
+
+	// OutOfOfficeProperties: Out of office event data.
+	OutOfOfficeProperties *EventOutOfOfficeProperties `json:"outOfOfficeProperties,omitempty"`
 
 	// PrivateCopy: If set to True, Event propagation is disabled. Note that
 	// it is not the same thing as Private event properties. Optional.
@@ -1997,6 +2003,86 @@ type EventDateTime struct {
 
 func (s *EventDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod EventDateTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EventFocusTimeProperties struct {
+	// AutoDeclineMode: Whether to decline meeting invitations which overlap
+	// Focus Time events. Valid values are declineNone, meaning that no
+	// meeting invitations are declined; declineAllConflictingInvitations,
+	// meaning that all conflicting meeting invitations that conflict with
+	// the event are declined; and declineOnlyNewConflictingInvitations,
+	// meaning that only new conflicting meeting invitations which arrive
+	// while the Focus Time event is present are to be declined.
+	AutoDeclineMode string `json:"autoDeclineMode,omitempty"`
+
+	// ChatStatus: The status to mark the user in Chat and related products.
+	// This can be available or doNotDisturb.
+	ChatStatus string `json:"chatStatus,omitempty"`
+
+	// DeclineMessage: Response message to set if an existing event or new
+	// invitation is automatically declined by Calendar.
+	DeclineMessage string `json:"declineMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoDeclineMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoDeclineMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventFocusTimeProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod EventFocusTimeProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EventOutOfOfficeProperties struct {
+	// AutoDeclineMode: Whether to decline meeting invitations which overlap
+	// Out of office events. Valid values are declineNone, meaning that no
+	// meeting invitations are declined; declineAllConflictingInvitations,
+	// meaning that all conflicting meeting invitations that conflict with
+	// the event are declined; and declineOnlyNewConflictingInvitations,
+	// meaning that only new conflicting meeting invitations which arrive
+	// while the Out of office event is present are to be declined.
+	AutoDeclineMode string `json:"autoDeclineMode,omitempty"`
+
+	// DeclineMessage: Response message to set if an existing event or new
+	// invitation is automatically declined by Calendar.
+	DeclineMessage string `json:"declineMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoDeclineMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoDeclineMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventOutOfOfficeProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod EventOutOfOfficeProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7176,8 +7262,22 @@ func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty ...stri
 }
 
 // Q sets the optional parameter "q": Free text search terms to find
-// events that match these terms in the following fields: summary,
-// description, location, attendee's displayName, attendee's email.
+// events that match these terms in the following fields:
+//
+// - summary
+// - description
+// - location
+// - attendee's displayName
+// - attendee's email
+// - workingLocationProperties.officeLocation.buildingId
+// - workingLocationProperties.officeLocation.deskId
+// - workingLocationProperties.officeLocation.label
+// - workingLocationProperties.customLocation.label
+// These search terms also match predefined keywords against all display
+// title translations of working location, out-of-office, and focus-time
+// events. For example, searching for "Office" or "Bureau" returns
+// working location events of type officeLocation, whereas searching for
+// "Out of office" or "Abwesend" returns out-of-office events.
 func (c *EventsListCall) Q(q string) *EventsListCall {
 	c.urlParams_.Set("q", q)
 	return c
@@ -7459,7 +7559,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
+	//       "description": "Free text search terms to find events that match these terms in the following fields:\n\n- summary \n- description \n- location \n- attendee's displayName \n- attendee's email \n- workingLocationProperties.officeLocation.buildingId \n- workingLocationProperties.officeLocation.deskId \n- workingLocationProperties.officeLocation.label \n- workingLocationProperties.customLocation.label \nThese search terms also match predefined keywords against all display title translations of working location, out-of-office, and focus-time events. For example, searching for \"Office\" or \"Bureau\" returns working location events of type officeLocation, whereas searching for \"Out of office\" or \"Abwesend\" returns out-of-office events. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7561,7 +7661,8 @@ type EventsMoveCall struct {
 }
 
 // Move: Moves an event to another calendar, i.e. changes an event's
-// organizer.
+// organizer. Note that only default events can be moved; outOfOffice,
+// focusTime and workingLocation events cannot be moved.
 //
 //   - calendarId: Calendar identifier of the source calendar where the
 //     event currently is on.
@@ -7693,7 +7794,7 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves an event to another calendar, i.e. changes an event's organizer.",
+	//   "description": "Moves an event to another calendar, i.e. changes an event's organizer. Note that only default events can be moved; outOfOffice, focusTime and workingLocation events cannot be moved.",
 	//   "httpMethod": "POST",
 	//   "id": "calendar.events.move",
 	//   "parameterOrder": [
@@ -8600,8 +8701,22 @@ func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty ...str
 }
 
 // Q sets the optional parameter "q": Free text search terms to find
-// events that match these terms in the following fields: summary,
-// description, location, attendee's displayName, attendee's email.
+// events that match these terms in the following fields:
+//
+// - summary
+// - description
+// - location
+// - attendee's displayName
+// - attendee's email
+// - workingLocationProperties.officeLocation.buildingId
+// - workingLocationProperties.officeLocation.deskId
+// - workingLocationProperties.officeLocation.label
+// - workingLocationProperties.customLocation.label
+// These search terms also match predefined keywords against all display
+// title translations of working location, out-of-office, and focus-time
+// events. For example, searching for "Office" or "Bureau" returns
+// working location events of type officeLocation, whereas searching for
+// "Out of office" or "Abwesend" returns out-of-office events.
 func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 	c.urlParams_.Set("q", q)
 	return c
@@ -8875,7 +8990,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Free text search terms to find events that match these terms in the following fields: summary, description, location, attendee's displayName, attendee's email. Optional.",
+	//       "description": "Free text search terms to find events that match these terms in the following fields:\n\n- summary \n- description \n- location \n- attendee's displayName \n- attendee's email \n- workingLocationProperties.officeLocation.buildingId \n- workingLocationProperties.officeLocation.deskId \n- workingLocationProperties.officeLocation.label \n- workingLocationProperties.customLocation.label \nThese search terms also match predefined keywords against all display title translations of working location, out-of-office, and focus-time events. For example, searching for \"Office\" or \"Bureau\" returns working location events of type officeLocation, whereas searching for \"Out of office\" or \"Abwesend\" returns out-of-office events. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

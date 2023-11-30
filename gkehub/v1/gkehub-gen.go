@@ -527,6 +527,47 @@ func (s *Authority) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BinaryAuthorizationConfig: BinaryAuthorizationConfig defines the
+// fleet level configuration of binary authorization feature.
+type BinaryAuthorizationConfig struct {
+	// EvaluationMode: Optional. Mode of operation for binauthz policy
+	// evaluation.
+	//
+	// Possible values:
+	//   "EVALUATION_MODE_UNSPECIFIED" - Default value
+	//   "DISABLED" - Disable BinaryAuthorization
+	//   "POLICY_BINDINGS" - Use Binary Authorization with the policies
+	// specified in policy_bindings.
+	EvaluationMode string `json:"evaluationMode,omitempty"`
+
+	// PolicyBindings: Optional. Binauthz policies that apply to this
+	// cluster.
+	PolicyBindings []*PolicyBinding `json:"policyBindings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EvaluationMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EvaluationMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BinaryAuthorizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BinaryAuthorizationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -610,11 +651,463 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// ClusterUpgradeFleetSpec: **ClusterUpgrade**: The configuration for
+// the fleet-level ClusterUpgrade feature.
+type ClusterUpgradeFleetSpec struct {
+	// GkeUpgradeOverrides: Allow users to override some properties of each
+	// GKE upgrade.
+	GkeUpgradeOverrides []*ClusterUpgradeGKEUpgradeOverride `json:"gkeUpgradeOverrides,omitempty"`
+
+	// PostConditions: Required. Post conditions to evaluate to mark an
+	// upgrade COMPLETE. Required.
+	PostConditions *ClusterUpgradePostConditions `json:"postConditions,omitempty"`
+
+	// UpstreamFleets: This fleet consumes upgrades that have COMPLETE
+	// status code in the upstream fleets. See UpgradeStatus.Code for code
+	// definitions. The fleet name should be either fleet project number or
+	// id. This is defined as repeated for future proof reasons. Initial
+	// implementation will enforce at most one upstream fleet.
+	UpstreamFleets []string `json:"upstreamFleets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GkeUpgradeOverrides")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GkeUpgradeOverrides") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeFleetSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeFleetSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeFleetState: **ClusterUpgrade**: The state for the
+// fleet-level ClusterUpgrade feature.
+type ClusterUpgradeFleetState struct {
+	// DownstreamFleets: This fleets whose upstream_fleets contain the
+	// current fleet. The fleet name should be either fleet project number
+	// or id.
+	DownstreamFleets []string `json:"downstreamFleets,omitempty"`
+
+	// GkeState: Feature state for GKE clusters.
+	GkeState *ClusterUpgradeGKEUpgradeFeatureState `json:"gkeState,omitempty"`
+
+	// Ignored: A list of memberships ignored by the feature. For example,
+	// manually upgraded clusters can be ignored if they are newer than the
+	// default versions of its release channel. The membership resource is
+	// in the format: `projects/{p}/locations/{l}/membership/{m}`.
+	Ignored map[string]ClusterUpgradeIgnoredMembership `json:"ignored,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownstreamFleets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownstreamFleets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeFleetState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeFleetState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeGKEUpgrade: GKEUpgrade represents a GKE provided
+// upgrade, e.g., control plane upgrade.
+type ClusterUpgradeGKEUpgrade struct {
+	// Name: Name of the upgrade, e.g., "k8s_control_plane". It should be a
+	// valid upgrade name. It must not exceet 99 characters.
+	Name string `json:"name,omitempty"`
+
+	// Version: Version of the upgrade, e.g., "1.22.1-gke.100". It should be
+	// a valid version. It must not exceet 99 characters.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeGKEUpgrade) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeGKEUpgrade
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeGKEUpgradeFeatureCondition: GKEUpgradeFeatureCondition
+// describes the condition of the feature for GKE clusters at a certain
+// point of time.
+type ClusterUpgradeGKEUpgradeFeatureCondition struct {
+	// Reason: Reason why the feature is in this status.
+	Reason string `json:"reason,omitempty"`
+
+	// Status: Status of the condition, one of True, False, Unknown.
+	Status string `json:"status,omitempty"`
+
+	// Type: Type of the condition, for example, "ready".
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Last timestamp the condition was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Reason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeGKEUpgradeFeatureCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeGKEUpgradeFeatureCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeGKEUpgradeFeatureState: GKEUpgradeFeatureState contains
+// feature states for GKE clusters in the scope.
+type ClusterUpgradeGKEUpgradeFeatureState struct {
+	// Conditions: Current conditions of the feature.
+	Conditions []*ClusterUpgradeGKEUpgradeFeatureCondition `json:"conditions,omitempty"`
+
+	// UpgradeState: Upgrade state. It will eventually replace `state`.
+	UpgradeState []*ClusterUpgradeGKEUpgradeState `json:"upgradeState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Conditions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeGKEUpgradeFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeGKEUpgradeFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeGKEUpgradeOverride: Properties of a GKE upgrade that
+// can be overridden by the user. For example, a user can skip soaking
+// by overriding the soaking to 0.
+type ClusterUpgradeGKEUpgradeOverride struct {
+	// PostConditions: Required. Post conditions to override for the
+	// specified upgrade (name + version). Required.
+	PostConditions *ClusterUpgradePostConditions `json:"postConditions,omitempty"`
+
+	// Upgrade: Required. Which upgrade to override. Required.
+	Upgrade *ClusterUpgradeGKEUpgrade `json:"upgrade,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PostConditions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostConditions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeGKEUpgradeOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeGKEUpgradeOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeGKEUpgradeState: GKEUpgradeState is a GKEUpgrade and
+// its state at the scope and fleet level.
+type ClusterUpgradeGKEUpgradeState struct {
+	// Stats: Number of GKE clusters in each status code.
+	Stats map[string]string `json:"stats,omitempty"`
+
+	// Status: Status of the upgrade.
+	Status *ClusterUpgradeUpgradeStatus `json:"status,omitempty"`
+
+	// Upgrade: Which upgrade to track the state.
+	Upgrade *ClusterUpgradeGKEUpgrade `json:"upgrade,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Stats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stats") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeGKEUpgradeState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeGKEUpgradeState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeIgnoredMembership: IgnoredMembership represents a
+// membership ignored by the feature. A membership can be ignored
+// because it was manually upgraded to a newer version than RC default.
+type ClusterUpgradeIgnoredMembership struct {
+	// IgnoredTime: Time when the membership was first set to ignored.
+	IgnoredTime string `json:"ignoredTime,omitempty"`
+
+	// Reason: Reason why the membership is ignored.
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IgnoredTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IgnoredTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeIgnoredMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeIgnoredMembership
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeMembershipGKEUpgradeState: ScopeGKEUpgradeState is a
+// GKEUpgrade and its state per-membership.
+type ClusterUpgradeMembershipGKEUpgradeState struct {
+	// Status: Status of the upgrade.
+	Status *ClusterUpgradeUpgradeStatus `json:"status,omitempty"`
+
+	// Upgrade: Which upgrade to track the state.
+	Upgrade *ClusterUpgradeGKEUpgrade `json:"upgrade,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeMembershipGKEUpgradeState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeMembershipGKEUpgradeState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeMembershipState: Per-membership state for this feature.
+type ClusterUpgradeMembershipState struct {
+	// Fleet: Project number or id of the fleet. It is set only for
+	// Memberships that are part of fleet-based Rollout Sequencing.
+	Fleet string `json:"fleet,omitempty"`
+
+	// Ignored: Whether this membership is ignored by the feature. For
+	// example, manually upgraded clusters can be ignored if they are newer
+	// than the default versions of its release channel.
+	Ignored *ClusterUpgradeIgnoredMembership `json:"ignored,omitempty"`
+
+	// Scopes: Fully qualified scope names that this clusters is bound to
+	// which also have rollout sequencing enabled.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Upgrades: Actual upgrade state against desired.
+	Upgrades []*ClusterUpgradeMembershipGKEUpgradeState `json:"upgrades,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fleet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fleet") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradePostConditions: Post conditional checks after an
+// upgrade has been applied on all eligible clusters.
+type ClusterUpgradePostConditions struct {
+	// Soaking: Required. Amount of time to "soak" after a rollout has been
+	// finished before marking it COMPLETE. Cannot exceed 30 days. Required.
+	Soaking string `json:"soaking,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Soaking") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Soaking") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradePostConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradePostConditions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeUpgradeStatus: UpgradeStatus provides status
+// information for each upgrade.
+type ClusterUpgradeUpgradeStatus struct {
+	// Code: Status code of the upgrade.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Required by
+	// https://linter.aip.dev/126/unspecified.
+	//   "INELIGIBLE" - The upgrade is ineligible. At the scope level, this
+	// means the upgrade is ineligible for all the clusters in the scope.
+	//   "PENDING" - The upgrade is pending. At the scope level, this means
+	// the upgrade is pending for all the clusters in the scope.
+	//   "IN_PROGRESS" - The upgrade is in progress. At the scope level,
+	// this means the upgrade is in progress for at least one cluster in the
+	// scope.
+	//   "SOAKING" - The upgrade has finished and is soaking until the
+	// soaking time is up. At the scope level, this means at least one
+	// cluster is in soaking while the rest are either soaking or complete.
+	//   "FORCED_SOAKING" - A cluster will be forced to enter soaking if an
+	// upgrade doesn't finish within a certain limit, despite it's actual
+	// status.
+	//   "COMPLETE" - The upgrade has passed all post conditions (soaking).
+	// At the scope level, this means all eligible clusters are in COMPLETE
+	// status.
+	Code string `json:"code,omitempty"`
+
+	// Reason: Reason for this status.
+	Reason string `json:"reason,omitempty"`
+
+	// UpdateTime: Last timestamp the status was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterUpgradeUpgradeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeUpgradeStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CommonFeatureSpec: CommonFeatureSpec contains Hub-wide configuration
 // information
 type CommonFeatureSpec struct {
 	// Appdevexperience: Appdevexperience specific spec.
 	Appdevexperience *AppDevExperienceFeatureSpec `json:"appdevexperience,omitempty"`
+
+	// Clusterupgrade: ClusterUpgrade (fleet-based) feature spec.
+	Clusterupgrade *ClusterUpgradeFleetSpec `json:"clusterupgrade,omitempty"`
 
 	// Fleetobservability: FleetObservability feature spec.
 	Fleetobservability *FleetObservabilityFeatureSpec `json:"fleetobservability,omitempty"`
@@ -651,6 +1144,9 @@ func (s *CommonFeatureSpec) MarshalJSON() ([]byte, error) {
 type CommonFeatureState struct {
 	// Appdevexperience: Appdevexperience specific state.
 	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
+
+	// Clusterupgrade: ClusterUpgrade fleet-level state.
+	Clusterupgrade *ClusterUpgradeFleetState `json:"clusterupgrade,omitempty"`
 
 	// Fleetobservability: FleetObservability feature state.
 	Fleetobservability *FleetObservabilityFeatureState `json:"fleetobservability,omitempty"`
@@ -761,11 +1257,6 @@ type ConfigManagementConfigSync struct {
 	// SourceFormat: Specifies whether the Config Sync Repo is in
 	// "hierarchical" or "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
-
-	// StopSyncing: Set to true to stop syncing configs for a single cluster
-	// when automatic Feature management is enabled. Default to false. The
-	// field will be ignored when automatic Feature management is disabled.
-	StopSyncing bool `json:"stopSyncing,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale")
 	// to unconditionally include in API requests. By default, fields with
@@ -1409,16 +1900,6 @@ type ConfigManagementMembershipSpec struct {
 	// cluster.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
 
-	// Management: Enables automatic Feature management.
-	//
-	// Possible values:
-	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
-	//   "MANAGEMENT_AUTOMATIC" - Google will manage the Feature for the
-	// cluster.
-	//   "MANAGEMENT_MANUAL" - User will manually manage the Feature for the
-	// cluster.
-	Management string `json:"management,omitempty"`
-
 	// PolicyController: Policy Controller configuration for the cluster.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
 
@@ -1932,26 +2413,30 @@ func (s *ConnectAgentResource) MarshalJSON() ([]byte, error) {
 // DefaultClusterConfig: DefaultClusterConfig describes the default
 // cluster configurations to be applied to all clusters born-in-fleet.
 type DefaultClusterConfig struct {
+	// BinaryAuthorizationConfig: Optional. Enable/Disable binary
+	// authorization features for the cluster.
+	BinaryAuthorizationConfig *BinaryAuthorizationConfig `json:"binaryAuthorizationConfig,omitempty"`
+
 	// SecurityPostureConfig: Enable/Disable Security Posture features for
 	// the cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "SecurityPostureConfig") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "BinaryAuthorizationConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SecurityPostureConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "BinaryAuthorizationConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3837,6 +4322,9 @@ type MembershipFeatureState struct {
 	// Appdevexperience: Appdevexperience specific state.
 	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
 
+	// Clusterupgrade: ClusterUpgrade state.
+	Clusterupgrade *ClusterUpgradeMembershipState `json:"clusterupgrade,omitempty"`
+
 	// Configmanagement: Config Management-specific state.
 	Configmanagement *ConfigManagementMembershipState `json:"configmanagement,omitempty"`
 
@@ -4454,6 +4942,36 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyBinding: Binauthz policy that applies to this cluster.
+type PolicyBinding struct {
+	// Name: The relative resource name of the binauthz platform policy to
+	// audit. GKE platform policies have the following format:
+	// `projects/{project_number}/platforms/gke/policies/{policy_id}`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyBinding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5076,8 +5594,8 @@ type RBACRoleBinding struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The resource name for the rbacrolebinding
-	// `projects/{project}/locations/{location}/namespaces/{namespace}/rbacro
-	// lebindings/{rbacrolebinding}` or
+	// `projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindin
+	// gs/{rbacrolebinding}` or
 	// `projects/{project}/locations/{location}/memberships/{membership}/rbac
 	// rolebindings/{rbacrolebinding}`
 	Name string `json:"name,omitempty"`
@@ -14311,8 +14829,8 @@ type ProjectsLocationsScopesRbacrolebindingsPatchCall struct {
 // Patch: Updates a Scope RBACRoleBinding.
 //
 //   - name: The resource name for the rbacrolebinding
-//     `projects/{project}/locations/{location}/namespaces/{namespace}/rbac
-//     rolebindings/{rbacrolebinding}` or
+//     `projects/{project}/locations/{location}/scopes/{scope}/rbacrolebind
+//     ings/{rbacrolebinding}` or
 //     `projects/{project}/locations/{location}/memberships/{membership}/rb
 //     acrolebindings/{rbacrolebinding}`.
 func (r *ProjectsLocationsScopesRbacrolebindingsService) Patch(name string, rbacrolebinding *RBACRoleBinding) *ProjectsLocationsScopesRbacrolebindingsPatchCall {
@@ -14429,7 +14947,7 @@ func (c *ProjectsLocationsScopesRbacrolebindingsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/namespaces/{namespace}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
+	//       "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/scopes/[^/]+/rbacrolebindings/[^/]+$",
 	//       "required": true,

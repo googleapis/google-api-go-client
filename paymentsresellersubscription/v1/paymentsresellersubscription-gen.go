@@ -92,8 +92,19 @@ const apiVersion = "v1"
 const basePath = "https://paymentsresellersubscription.googleapis.com/"
 const mtlsBasePath = "https://paymentsresellersubscription.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Associate you with your personal info on Google
+	OpenIDScope = "openid"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"openid",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -456,8 +467,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest struct {
 	// is recommended. The idempotency key for the request. The ID
 	// generation logic is controlled by the partner. request_id should be
 	// the same as on retries of the same request. A different request_id
-	// must be used for a extension of a different cycle. A random UUID is
-	// recommended.
+	// must be used for a extension of a different cycle.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Extension") to
@@ -2034,7 +2044,10 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   "path": "v1/{+parent}/products",
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2072,8 +2085,8 @@ type PartnersPromotionsFindEligibleCall struct {
 }
 
 // FindEligible: To find eligible promotions for the current user. The
-// API requires user authorization via OAuth. The user is inferred from
-// the authenticated OAuth credential.
+// API requires user authorization via OAuth. The bare minimum oauth
+// scope `openid` is sufficient, which will skip the consent screen.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2178,7 +2191,7 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The user is inferred from the authenticated OAuth credential.",
+	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip the consent screen.",
 	//   "flatPath": "v1/partners/{partnersId}/promotions:findEligible",
 	//   "httpMethod": "POST",
 	//   "id": "paymentsresellersubscription.partners.promotions.findEligible",
@@ -2200,7 +2213,10 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2424,7 +2440,10 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   "path": "v1/{+parent}/promotions",
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2592,7 +2611,10 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2752,7 +2774,10 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2899,7 +2924,10 @@ func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3047,7 +3075,10 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3195,7 +3226,10 @@ func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3357,7 +3391,10 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3505,7 +3542,10 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }

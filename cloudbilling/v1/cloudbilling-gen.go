@@ -425,6 +425,14 @@ type BillingAccount struct {
 	// it will be unable to use paid services.
 	Open bool `json:"open,omitempty"`
 
+	// Parent: Output only. The billing account's parent resource
+	// identifier. Use the `MoveBillingAccount` method to update the
+	// account's parent resource if it is a organization. Format: -
+	// organizations/{organization_id}, for example: organizations/12345678
+	// - billingAccounts/{billing_account_id}, for example:
+	// `billingAccounts/012345-567890-ABCDEF`
+	Parent string `json:"parent,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

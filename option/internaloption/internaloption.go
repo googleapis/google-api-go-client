@@ -129,6 +129,9 @@ func (w withDefaultScopes) Apply(o *internal.DialSettings) {
 // WithDefaultUniverseDomain returns a ClientOption that sets the default universe domain.
 //
 // It should only be used internally by generated clients.
+//
+// This is similar to the public WithUniverse, but allows us to determine whether the user has
+// overridden the default universe.
 func WithDefaultUniverseDomain(ud string) option.ClientOption {
 	return withDefaultUniverseDomain(ud)
 }

@@ -5979,6 +5979,8 @@ type ExternalAction struct {
 	// their account.
 	//   "LEGAL_APPEAL_IN_HELP_CENTER" - Redirect to the form in Help Center
 	// where the merchant can request a legal appeal for the issue.
+	//   "VERIFY_IDENTITY_IN_MERCHANT_CENTER" - Redirect to Merchant Center
+	// where the merchant can perform identity verification.
 	Type string `json:"type,omitempty"`
 
 	// Uri: URL to external system, for example Merchant Center, where the
@@ -13590,6 +13592,35 @@ type PosStore struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#posStore"
 	Kind string `json:"kind,omitempty"`
+
+	// MatchingStatus: Output only. The matching status of POS store and
+	// Google Business Profile store. Possible values are: - "matched":
+	// The POS store is successfully matched with the Google Business
+	// Profile store. - "failed": The POS store is not matched with the
+	// Google Business Profile store. See matching_status_hint for further
+	// details. Note that there is up to 48 hours propagation delay for
+	// changes in Merchant Center (e.g. creation of new account, accounts
+	// linking) and Google Business Profile (e.g. store address update)
+	// which may affect the matching status. In such cases, after a delay
+	// call pos.list
+	// (https://developers.google.com/shopping-content/reference/rest/v2.1/pos/list)
+	// to retrieve the updated matching status.
+	MatchingStatus string `json:"matchingStatus,omitempty"`
+
+	// MatchingStatusHint: Output only. The hint of why the matching has
+	// failed. This is only set when matching_status=failed. Possible values
+	// are: - "linked-store-not-found": There aren't any Google Business
+	// Profile stores available for matching. Connect your Merchant Center
+	// account with the Google Business Profile account. Or add a new Google
+	// Business Profile store corresponding to the POS store. -
+	// "store-match-not-found": The provided POS store couldn't be matched
+	// to any of the connected Google Business Profile stores. Merchant
+	// Center account is connected correctly and stores are available on
+	// Google Business Profile, but POS store location address does not
+	// match with Google Business Profile stores' addresses. Update POS
+	// store address or Google Business Profile store address to match
+	// correctly.
+	MatchingStatusHint string `json:"matchingStatusHint,omitempty"`
 
 	// PhoneNumber: The store phone number.
 	PhoneNumber string `json:"phoneNumber,omitempty"`

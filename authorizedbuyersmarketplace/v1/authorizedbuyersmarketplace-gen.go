@@ -713,6 +713,8 @@ type CreativeRequirements struct {
 	// creative format.
 	//   "DISPLAY" - Banner creatives such as image or HTML5 assets.
 	//   "VIDEO" - Video creatives that can be played in a video player.
+	//   "AUDIO" - Audio creatives that can play during audio content or
+	// point to a third party ad server.
 	CreativeFormat string `json:"creativeFormat,omitempty"`
 
 	// CreativePreApprovalPolicy: Output only. Specifies the creative

@@ -2481,6 +2481,7 @@ type GitFileSource struct {
 	// (i.e. GitHub Enterprise).
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
 	//   "GITLAB" - A GitLab-hosted repo.
+	//   "BITBUCKET_CLOUD" - A Bitbucket Cloud-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
 	// Repository: The fully qualified resource name of the Repos API
@@ -3037,6 +3038,7 @@ type GitRepoSource struct {
 	// (i.e. GitHub Enterprise).
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
 	//   "GITLAB" - A GitLab-hosted repo.
+	//   "BITBUCKET_CLOUD" - A Bitbucket Cloud-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
 	// Repository: The connected repository resource name, in the format
@@ -4233,6 +4235,7 @@ type RepositoryEventConfig struct {
 	//   "GITHUB_ENTERPRISE" - The SCM repo is GITHUB Enterprise.
 	//   "GITLAB_ENTERPRISE" - The SCM repo is GITLAB Enterprise.
 	//   "BITBUCKET_DATA_CENTER" - The SCM repo is BITBUCKET Data Center.
+	//   "BITBUCKET_CLOUD" - The SCM repo is BITBUCKET Cloud.
 	RepositoryType string `json:"repositoryType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PullRequest") to

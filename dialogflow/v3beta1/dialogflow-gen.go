@@ -14717,47 +14717,6 @@ func (s *GoogleCloudDialogflowV2DeployConversationModelOperationMetadata) Marsha
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2EncryptionSpec: A customer-managed encryption
-// key specification that can be applied to all created resources (e.g.
-// Conversation).
-type GoogleCloudDialogflowV2EncryptionSpec struct {
-	// KmsKey: Required. The name of customer-managed encryption key that is
-	// used to secure a resource and its sub-resources. If empty, the
-	// resource is secured by the default Google encryption key. Only the
-	// key in the same location as this resource is allowed to be used for
-	// encryption. Format:
-	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys
-	// /{key}`
-	KmsKey string `json:"kmsKey,omitempty"`
-
-	// Name: Immutable. The resource name of the encryption key
-	// specification resource. Format:
-	// projects/{project}/locations/{location}/encryptionSpec
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KmsKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KmsKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2EncryptionSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2EncryptionSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2EntityType: Each intent parameter has a type,
 // called the entity type, which dictates exactly how data from an
 // end-user expression is extracted. Dialogflow provides predefined
@@ -15229,69 +15188,6 @@ type GoogleCloudDialogflowV2ImportDocumentsResponse struct {
 
 func (s *GoogleCloudDialogflowV2ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2ImportDocumentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata: Metadata for
-// initializing a location-level encryption specification.
-type GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata struct {
-	// Request: Output only. The original request for initialization.
-	Request *GoogleCloudDialogflowV2InitializeEncryptionSpecRequest `json:"request,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Request") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Request") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2InitializeEncryptionSpecRequest: The request
-// to initialize a location-level encryption specification.
-type GoogleCloudDialogflowV2InitializeEncryptionSpecRequest struct {
-	// EncryptionSpec: Required. The encryption spec used for CMEK
-	// encryption. It is required that the kms key is in the same region as
-	// the endpoint. The same key will be used for all provisioned
-	// resources, if encryption is available. If the kms_key_name is left
-	// empty, no encryption will be enforced.
-	EncryptionSpec *GoogleCloudDialogflowV2EncryptionSpec `json:"encryptionSpec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EncryptionSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2InitializeEncryptionSpecRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18098,47 +17994,6 @@ func (s *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1EncryptionSpec: A customer-managed
-// encryption key specification that can be applied to all created
-// resources (e.g. Conversation).
-type GoogleCloudDialogflowV2beta1EncryptionSpec struct {
-	// KmsKey: Required. The name of customer-managed encryption key that is
-	// used to secure a resource and its sub-resources. If empty, the
-	// resource is secured by the default Google encryption key. Only the
-	// key in the same location as this resource is allowed to be used for
-	// encryption. Format:
-	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys
-	// /{key}`
-	KmsKey string `json:"kmsKey,omitempty"`
-
-	// Name: Immutable. The resource name of the encryption key
-	// specification resource. Format:
-	// projects/{project}/locations/{location}/encryptionSpec
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KmsKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KmsKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1EncryptionSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1EncryptionSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2beta1EntityType: Each intent parameter has a
 // type, called the entity type, which dictates exactly how data from an
 // end-user expression is extracted. Dialogflow provides predefined
@@ -18539,69 +18394,6 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportDocumentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata:
-// Metadata for initializing a location-level encryption specification.
-type GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata struct {
-	// Request: Output only. The original request for initialization.
-	Request *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest `json:"request,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Request") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Request") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest: The
-// request to initialize a location-level encryption specification.
-type GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest struct {
-	// EncryptionSpec: Required. The encryption spec used for CMEK
-	// encryption. It is required that the kms key is in the same region as
-	// the endpoint. The same key will be used for all provisioned
-	// resources, if encryption is available. If the kms_key_name is left
-	// empty, no encryption will be enforced.
-	EncryptionSpec *GoogleCloudDialogflowV2beta1EncryptionSpec `json:"encryptionSpec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EncryptionSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

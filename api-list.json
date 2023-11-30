@@ -6219,6 +6219,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "walletobjects:v1",
+      "name": "walletobjects",
+      "version": "v1",
+      "title": "Google Wallet API",
+      "description": "API for issuers to save and manage Google Wallet Objects.",
+      "discoveryRestUrl": "https://walletobjects.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/pay/passes",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "webfonts:v1",
       "name": "webfonts",
       "version": "v1",

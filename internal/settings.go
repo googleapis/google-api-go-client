@@ -181,7 +181,7 @@ func getDefaultUniverse(settings *DialSettings) string {
 	if settings.DefaultUniverseDomain != "" {
 		return settings.DefaultUniverseDomain
 	}
-	return "googleapis.com"
+	return gdUniverse
 }
 
 var (

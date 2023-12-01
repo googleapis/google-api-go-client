@@ -103,7 +103,7 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 				DefaultEndpoint: "https://foo.googleapis.com",
 			},
 			wantEnd: "https://foo.googleapis.com",
-			wantUni: "googleapis.com",
+			wantUni: gdUniverse,
 		},
 		{
 			desc: "simple endpoint override",
@@ -111,7 +111,7 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 				Endpoint: "https://bar.googleapis.com",
 			},
 			wantEnd: "https://bar.googleapis.com",
-			wantUni: "googleapis.com",
+			wantUni: gdUniverse,
 		},
 		{
 			desc: "default + mtlsModeAuto + nocert",
@@ -121,7 +121,7 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 			},
 			mtlsMode: mTLSModeAuto,
 			wantEnd:  "https://foo.googleapis.com",
-			wantUni:  "googleapis.com",
+			wantUni:  gdUniverse,
 		},
 		{
 			desc: "default + mtlsModeAuto + cert",
@@ -132,7 +132,7 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 			clientCertSource: fakeCertSource,
 			mtlsMode:         mTLSModeAuto,
 			wantEnd:          "https://foo.mtls.googleapis.com",
-			wantUni:          "googleapis.com",
+			wantUni:          gdUniverse,
 		},
 		{
 			desc: "default + mtlsModeAlways",
@@ -142,7 +142,7 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 			},
 			mtlsMode: mTLSModeAlways,
 			wantEnd:  "https://foo.mtls.googleapis.com",
-			wantUni:  "googleapis.com",
+			wantUni:  gdUniverse,
 		},
 		{
 			desc: "custom uni + mtlsModeAlways",
@@ -153,6 +153,33 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 			},
 			mtlsMode: mTLSModeAlways,
 			wantErr:  ErrMTLSUniverse,
+		},
+		{
+			desc: "partial endpoint + default",
+			settings: &DialSettings{
+				Endpoint:        "myhost:3999",
+				DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
+			},
+			wantEnd: "https://myhost:3999/bar/baz",
+			wantUni: gdUniverse,
+		},
+		{
+			desc: "partial endpoint + default + custom uni",
+			settings: &DialSettings{
+				Endpoint:        "myhost:3999",
+				DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
+				UniverseDomain:  "bar.com",
+			},
+			wantEnd: "https://myhost:3999/bar/baz",
+			wantUni: "bar.com",
+		},
+		{
+			desc: "partial endpoint + no default",
+			settings: &DialSettings{
+				Endpoint: "myhost:3999",
+			},
+			wantEnd: "myhost:3999",
+			wantUni: gdUniverse,
 		},
 	}
 	for _, tc := range testCases {

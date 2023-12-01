@@ -138,53 +138,6 @@ func isClientCertificateEnabled() bool {
 	return strings.ToLower(useClientCert) == "true"
 }
 
-var universePatternToken = "%%UNIVERSE%%"
-
-// getEndpointAndUniverse returns the endpoint for the service as well as the universe
-// domain, taking in to account the various overrides the user may have provided.
-//
-// This method will also select a default endpoint based on MTLS settings, controlled by
-// the GOOGLE_API_USE_MTLS_ENDPOINT environment variable.
-//
-// If the endpoint override is an address (host:port) rather than full base
-// URL (ex. https://...), then the user-provided address will be merged into
-// the default endpoint. For example, WithEndpoint("myhost:8000") and
-// WithDefaultEndpoint("https://foo.com/bar/baz") will return "https://myhost:8080/bar/baz"
-func getEndpointAndUniverse(settings *DialSettings, clientCertSource cert.Source) (string, string, error) {
-	// parameterize the default endpoints with the default universe.
-	defUniverse := getDefaultUniverse(settings)
-	defEndpoint := strings.Replace(settings.DefaultEndpoint, defUniverse, universePatternToken, 1)
-	defMTLSEndpoint := strings.Replace(settings.DefaultMTLSEndpoint, defUniverse, universePatternToken, 1)
-
-	universe := getUniverse(settings)
-	if settings.Endpoint == "" {
-		mtlsMode := getMTLSMode()
-		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
-			return mergeDefaultEndpointUniverse(defMTLSEndpoint, universe), universe, nil
-		}
-		return mergeDefaultEndpointUniverse(defEndpoint, universe), universe, nil
-	}
-	if strings.Contains(settings.Endpoint, "://") {
-		// user supplied an explicit endpoint with a full URL.
-		return settings.Endpoint, universe, nil
-	}
-	if defEndpoint == "" {
-		// The default endpoint isn't configured, so use the use provided endpoint without
-		// normalizing.
-		return settings.Endpoint, universe, nil
-	}
-	merged, err := mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
-	if err != nil {
-		return "", "", err
-	}
-	return merged, universe, nil
-}
-
-// mergeDefaultEndpointUniverse handles replaceing a parameterized default endpoint with a universe value.
-func mergeDefaultEndpointUniverse(endpoint, universe string) string {
-	return strings.Replace(endpoint, universePatternToken, universe, 1)
-}
-
 // getEndpoint returns the endpoint for the service, taking into account the
 // user-provided endpoint override "settings.Endpoint".
 //
@@ -218,26 +171,6 @@ func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, 
 
 	// Assume user-provided endpoint is host[:port], merge it with the default endpoint.
 	return mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
-}
-
-// getUniverse returns the effective universe.
-func getUniverse(settings *DialSettings) string {
-	if settings.UniverseDomain != "" {
-		return settings.UniverseDomain
-	}
-	return getDefaultUniverse(settings)
-}
-
-// getDefaultUniverse returns the specified default universe, or the implicit default
-// googleapis.com.
-//
-// TODO:  Once code generators supply WithDefaultUniverse as part of default options,
-// this utility method can be removed.
-func getDefaultUniverse(settings *DialSettings) string {
-	if settings.DefaultUniverseDomain != "" {
-		return settings.DefaultUniverseDomain
-	}
-	return "googleapis.com"
 }
 
 func getMTLSMode() string {

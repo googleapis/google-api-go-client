@@ -7,9 +7,12 @@ package internal
 
 import (
 	"crypto/tls"
+	"errors"
+	"fmt"
 	"net/http"
 	"testing"
 
+	"google.golang.org/api/internal/cert"
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 
@@ -79,3 +82,97 @@ func TestSettingsValidate(t *testing.T) {
 type dummyTS struct{}
 
 func (dummyTS) Token() (*oauth2.Token, error) { return nil, nil }
+
+func TestGetEndpointAndUniverse(t *testing.T) {
+
+	fakeCertSource := func(*tls.CertificateRequestInfo) (*tls.Certificate, error) {
+		return nil, fmt.Errorf("invalid source")
+	}
+	testCases := []struct {
+		desc             string
+		settings         *DialSettings
+		clientCertSource cert.Source
+		mtlsMode         string
+		wantEnd          string
+		wantUni          string
+		wantErr          error
+	}{
+		{
+			desc: "simple default",
+			settings: &DialSettings{
+				DefaultEndpoint: "https://foo.googleapis.com",
+			},
+			wantEnd: "https://foo.googleapis.com",
+			wantUni: "googleapis.com",
+		},
+		{
+			desc: "simple endpoint override",
+			settings: &DialSettings{
+				Endpoint: "https://bar.googleapis.com",
+			},
+			wantEnd: "https://bar.googleapis.com",
+			wantUni: "googleapis.com",
+		},
+		{
+			desc: "default + mtlsModeAuto + nocert",
+			settings: &DialSettings{
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			mtlsMode: mTLSModeAuto,
+			wantEnd:  "https://foo.googleapis.com",
+			wantUni:  "googleapis.com",
+		},
+		{
+			desc: "default + mtlsModeAuto + cert",
+			settings: &DialSettings{
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			clientCertSource: fakeCertSource,
+			mtlsMode:         mTLSModeAuto,
+			wantEnd:          "https://foo.mtls.googleapis.com",
+			wantUni:          "googleapis.com",
+		},
+		{
+			desc: "default + mtlsModeAlways",
+			settings: &DialSettings{
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			mtlsMode: mTLSModeAlways,
+			wantEnd:  "https://foo.mtls.googleapis.com",
+			wantUni:  "googleapis.com",
+		},
+		{
+			desc: "custom uni + mtlsModeAlways",
+			settings: &DialSettings{
+				UniverseDomain:      "blah.com",
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			mtlsMode: mTLSModeAlways,
+			wantErr:  MTLSUniverseErr,
+		},
+	}
+	for _, tc := range testCases {
+		mtlsMode := mTLSModeAuto
+		if tc.mtlsMode != "" {
+			mtlsMode = tc.mtlsMode
+		}
+		gotEnd, gotUni, gotErr := getEndpointAndUniverse(tc.settings, tc.clientCertSource, mtlsMode)
+		if tc.wantErr != nil {
+			if !errors.Is(gotErr, tc.wantErr) {
+				t.Errorf("%q: error mismatch, got %v want %v", tc.desc, gotErr, tc.wantErr)
+			}
+			continue
+		} else {
+			if gotEnd != tc.wantEnd {
+				t.Errorf("%q: endpoint mismatch, got %q want %q", tc.desc, gotEnd, tc.wantEnd)
+			}
+			if gotUni != tc.wantUni {
+				t.Errorf("%q: universe mismatch, got %q want %q", tc.desc, gotUni, tc.wantUni)
+			}
+		}
+	}
+}

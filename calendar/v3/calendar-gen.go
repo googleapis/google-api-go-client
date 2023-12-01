@@ -1373,8 +1373,10 @@ type Event struct {
 	// EventType: Specific type of the event. This cannot be modified after
 	// the event is created. Possible values are:
 	// - "default" - A regular event or not further specified.
-	// - "outOfOffice" - An out-of-office event.
-	// - "focusTime" - A focus-time event.
+	// - "outOfOffice" - An out-of-office event. An outOfOfficeProperties
+	// parameter must be supplied to make a valid event (even if empty).
+	// - "focusTime" - A focus-time event. A focusTimeProperties parameter
+	// must be supplied to make a valid event (even if empty).
 	// - "workingLocation" - A working location event.  Currently, only
 	// "default " and "workingLocation" events can be created using the API.
 	// Extended support for other event types will be made available in
@@ -1384,7 +1386,8 @@ type Event struct {
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
 
-	// FocusTimeProperties: Focus Time event data.
+	// FocusTimeProperties: Focus Time event data. Required if eventType is
+	// focusTime.
 	FocusTimeProperties *EventFocusTimeProperties `json:"focusTimeProperties,omitempty"`
 
 	// Gadget: A gadget that extends this event. Gadgets are deprecated;
@@ -1473,7 +1476,8 @@ type Event struct {
 	// instance was moved to a different time. Immutable.
 	OriginalStartTime *EventDateTime `json:"originalStartTime,omitempty"`
 
-	// OutOfOfficeProperties: Out of office event data.
+	// OutOfOfficeProperties: Out of office event data. Required if
+	// eventType is outOfOffice.
 	OutOfOfficeProperties *EventOutOfOfficeProperties `json:"outOfOfficeProperties,omitempty"`
 
 	// PrivateCopy: If set to True, Event propagation is disabled. Note that
@@ -7185,14 +7189,8 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 // - "focusTime"
 // - "outOfOffice"
 // - "workingLocation"This parameter can be repeated multiple times to
-// return events of different types. Currently, these are the only
-// allowed values for this field:
-// - ["default", "focusTime", "outOfOffice"]
-// - ["default", "focusTime", "outOfOffice", "workingLocation"]
-// - ["workingLocation"] The default is ["default", "focusTime",
-// "outOfOffice"].
-// Additional combinations of these four event types will be made
-// available in later releases.
+// return events of different types. The default is ["default",
+// "focusTime", "outOfOffice"].
 func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -7509,7 +7507,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\" \n- \"workingLocation\"This parameter can be repeated multiple times to return events of different types. Currently, these are the only allowed values for this field: \n- [\"default\", \"focusTime\", \"outOfOffice\"] \n- [\"default\", \"focusTime\", \"outOfOffice\", \"workingLocation\"] \n- [\"workingLocation\"] The default is [\"default\", \"focusTime\", \"outOfOffice\"].\nAdditional combinations of these four event types will be made available in later releases.",
+	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\" \n- \"workingLocation\"This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -8624,14 +8622,8 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 // - "focusTime"
 // - "outOfOffice"
 // - "workingLocation"This parameter can be repeated multiple times to
-// return events of different types. Currently, these are the only
-// allowed values for this field:
-// - ["default", "focusTime", "outOfOffice"]
-// - ["default", "focusTime", "outOfOffice", "workingLocation"]
-// - ["workingLocation"] The default is ["default", "focusTime",
-// "outOfOffice"].
-// Additional combinations of these four event types will be made
-// available in later releases.
+// return events of different types. The default is ["default",
+// "focusTime", "outOfOffice"].
 func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -8940,7 +8932,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\" \n- \"workingLocation\"This parameter can be repeated multiple times to return events of different types. Currently, these are the only allowed values for this field: \n- [\"default\", \"focusTime\", \"outOfOffice\"] \n- [\"default\", \"focusTime\", \"outOfOffice\", \"workingLocation\"] \n- [\"workingLocation\"] The default is [\"default\", \"focusTime\", \"outOfOffice\"].\nAdditional combinations of these four event types will be made available in later releases.",
+	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\" \n- \"workingLocation\"This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

@@ -187,7 +187,7 @@ func getDefaultUniverse(settings *DialSettings) string {
 var (
 	universePatternToken = "%%UNIVERSE%%"
 	gdUniverse           = "googleapis.com"
-	MTLSUniverseErr      = errors.New("mTLS is not supported in any universe other than googleapis.com")
+	ErrMTLSUniverse      = errors.New("mTLS is not supported in any universe other than googleapis.com")
 )
 
 // getEndpointAndUniverse returns the endpoint for the service as well as the universe
@@ -210,7 +210,7 @@ func getEndpointAndUniverse(settings *DialSettings, clientCertSource cert.Source
 	if settings.Endpoint == "" {
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
 			if universe != gdUniverse {
-				return "", "", MTLSUniverseErr
+				return "", "", ErrMTLSUniverse
 			}
 			return mergeDefaultEndpointUniverse(defMTLSEndpoint, universe), universe, nil
 		}

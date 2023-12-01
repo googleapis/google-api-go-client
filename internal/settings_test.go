@@ -152,7 +152,7 @@ func TestGetEndpointAndUniverse(t *testing.T) {
 				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
 			},
 			mtlsMode: mTLSModeAlways,
-			wantErr:  MTLSUniverseErr,
+			wantErr:  ErrMTLSUniverse,
 		},
 	}
 	for _, tc := range testCases {

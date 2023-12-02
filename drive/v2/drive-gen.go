@@ -1586,6 +1586,11 @@ type ContentRestriction struct {
 	// (formatted RFC 3339 timestamp). Only populated if readOnly is true.
 	RestrictionDate string `json:"restrictionDate,omitempty"`
 
+	// SystemRestricted: Output only. Whether the content restriction was
+	// applied by the system, for example due to an esignature. Users cannot
+	// modify or remove system restricted content restrictions.
+	SystemRestricted bool `json:"systemRestricted,omitempty"`
+
 	// Type: Output only. The type of the content restriction. Currently the
 	// only possible value is `globalContentRestriction`.
 	Type string `json:"type,omitempty"`

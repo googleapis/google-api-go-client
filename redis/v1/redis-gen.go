@@ -869,6 +869,12 @@ type Instance struct {
 	// READ_REPLICAS_ENABLED the default block size is /28.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
+	// SatisfiesPzi: Optional. Output only. Reserved for future use. Zone
+	// Isolation compliance state of the instance. Field name and
+	// documentation is obfuscated according to
+	// go/per-resource-zi-bit-semantics.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+
 	// SatisfiesPzs: Optional. Output only. Reserved for future use. Zone
 	// Separation compliance state of the instance. Field name and
 	// documentation is obfuscated according to go/zs-resource-status.

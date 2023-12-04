@@ -2899,6 +2899,70 @@ func (s *GoogleCloudApigeeV1Attributes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest: Request for
+// BatchUpdateSecurityIncident.
+type GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest struct {
+	// Requests: Optional. Required. The request message specifying the
+	// resources to update. A maximum of 1000 can be modified in a batch.
+	Requests []*GoogleCloudApigeeV1UpdateSecurityIncidentRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse: Response for
+// BatchUpdateSecurityIncident.
+type GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse struct {
+	// SecurityIncidents: Output only. Updated security incidents
+	SecurityIncidents []*GoogleCloudApigeeV1SecurityIncident `json:"securityIncidents,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SecurityIncidents")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecurityIncidents") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1CanaryEvaluation: CanaryEvaluation represents the
 // canary analysis between two versions of the runtime that is serving
 // requests.
@@ -11058,12 +11122,28 @@ type GoogleCloudApigeeV1SecurityIncident struct {
 	// the incident were last detected.
 	LastDetectedTime string `json:"lastDetectedTime,omitempty"`
 
+	// LastObservabilityChangeTime: Output only. The time when the incident
+	// observability was last changed.
+	LastObservabilityChangeTime string `json:"lastObservabilityChangeTime,omitempty"`
+
 	// Name: Immutable. Name of the security incident resource. Format:
 	// organizations/{org}/environments/{environment}/securityIncidents/{inci
 	// dent} Example:
 	// organizations/apigee-org/environments/dev/securityIncidents/1234-5678-
 	// 9101-1111
 	Name string `json:"name,omitempty"`
+
+	// Observability: Optional. Indicates if the user archived this
+	// incident.
+	//
+	// Possible values:
+	//   "OBSERVABILITY_UNSPECIFIED" - The incident observability is
+	// unspecified.
+	//   "ACTIVE" - The incident is currently active. Can change to this
+	// status from archived.
+	//   "ARCHIVED" - The incident is currently archived and was archived by
+	// the customer.
+	Observability string `json:"observability,omitempty"`
 
 	// RiskLevel: Output only. Risk level of the incident.
 	//
@@ -11111,7 +11191,8 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// Description: Description of the security profile.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Display name of the security profile.
+	// DisplayName: DEPRECATED: DO NOT USE Display name of the security
+	// profile.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Environments: List of environments attached to security profile.
@@ -11139,9 +11220,10 @@ type GoogleCloudApigeeV1SecurityProfile struct {
 	// RevisionId: Output only. Revision ID of the security profile.
 	RevisionId int64 `json:"revisionId,omitempty,string"`
 
-	// RevisionPublishTime: Output only. The time when revision was
-	// published. Once published, the security profile revision cannot be
-	// updated further and can be attached to environments.
+	// RevisionPublishTime: Output only. DEPRECATED: DO NOT USE The time
+	// when revision was published. Once published, the security profile
+	// revision cannot be updated further and can be attached to
+	// environments.
 	RevisionPublishTime string `json:"revisionPublishTime,omitempty"`
 
 	// RevisionUpdateTime: Output only. The time when revision was updated.
@@ -11222,7 +11304,8 @@ type GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation struct {
 	// to.
 	Name string `json:"name,omitempty"`
 
-	// SecurityProfileRevisionId: Revision ID of the security profile.
+	// SecurityProfileRevisionId: DEPRECATED: DO NOT USE Revision ID of the
+	// security profile.
 	SecurityProfileRevisionId int64 `json:"securityProfileRevisionId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12741,6 +12824,42 @@ type GoogleCloudApigeeV1UpdateError struct {
 
 func (s *GoogleCloudApigeeV1UpdateError) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1UpdateError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1UpdateSecurityIncidentRequest: Request for
+// UpdateSecurityIncident.
+type GoogleCloudApigeeV1UpdateSecurityIncidentRequest struct {
+	// SecurityIncident: Required. The security incident to update. Must
+	// contain all existing populated fields of the current incident.
+	SecurityIncident *GoogleCloudApigeeV1SecurityIncident `json:"securityIncident,omitempty"`
+
+	// UpdateMask: Required. The list of fields to update. Allowed fields
+	// are: LINT.IfChange(allowed_update_fields_comment) - observability
+	// LINT.ThenChange()
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SecurityIncident") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecurityIncident") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1UpdateSecurityIncidentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1UpdateSecurityIncidentRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -46635,6 +46754,155 @@ func (c *OrganizationsEnvironmentsSecurityActionsListCall) Pages(ctx context.Con
 	}
 }
 
+// method id "apigee.organizations.environments.securityIncidents.batchUpdate":
+
+type OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googlecloudapigeev1batchupdatesecurityincidentsrequest *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// BatchUpdate: BatchUpdateSecurityIncident updates multiple existing
+// security incidents.
+//
+//   - parent: Optional. The parent resource shared by all security
+//     incidents being updated. If this is set, the parent field in the
+//     UpdateSecurityIncidentRequest messages must either be empty or
+//     match this field.
+func (r *OrganizationsEnvironmentsSecurityIncidentsService) BatchUpdate(parent string, googlecloudapigeev1batchupdatesecurityincidentsrequest *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest) *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall {
+	c := &OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1batchupdatesecurityincidentsrequest = googlecloudapigeev1batchupdatesecurityincidentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1batchupdatesecurityincidentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityIncidents:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityIncidents.batchUpdate" call.
+// Exactly one of
+// *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityIncidentsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "BatchUpdateSecurityIncident updates multiple existing security incidents.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityIncidents:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityIncidents.batchUpdate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Optional. The parent resource shared by all security incidents being updated. If this is set, the parent field in the UpdateSecurityIncidentRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/securityIncidents:batchUpdate",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1BatchUpdateSecurityIncidentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1BatchUpdateSecurityIncidentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.environments.securityIncidents.get":
 
 type OrganizationsEnvironmentsSecurityIncidentsGetCall struct {
@@ -46998,6 +47266,168 @@ func (c *OrganizationsEnvironmentsSecurityIncidentsListCall) Pages(ctx context.C
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apigee.organizations.environments.securityIncidents.patch":
+
+type OrganizationsEnvironmentsSecurityIncidentsPatchCall struct {
+	s                                   *Service
+	name                                string
+	googlecloudapigeev1securityincident *GoogleCloudApigeeV1SecurityIncident
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Patch: UpdateSecurityIncidents updates an existing security incident.
+//
+//   - name: Immutable. Name of the security incident resource. Format:
+//     organizations/{org}/environments/{environment}/securityIncidents/{in
+//     cident} Example:
+//     organizations/apigee-org/environments/dev/securityIncidents/1234-567
+//     8-9101-1111.
+func (r *OrganizationsEnvironmentsSecurityIncidentsService) Patch(name string, googlecloudapigeev1securityincident *GoogleCloudApigeeV1SecurityIncident) *OrganizationsEnvironmentsSecurityIncidentsPatchCall {
+	c := &OrganizationsEnvironmentsSecurityIncidentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityincident = googlecloudapigeev1securityincident
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update. Allowed fields are:
+// LINT.IfChange(allowed_update_fields_comment) - observability
+// LINT.ThenChange()
+func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) UpdateMask(updateMask string) *OrganizationsEnvironmentsSecurityIncidentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityIncidentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityIncidentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityincident)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityIncidents.patch" call.
+// Exactly one of *GoogleCloudApigeeV1SecurityIncident or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecurityIncident.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityIncidentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityIncident, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityIncident{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "UpdateSecurityIncidents updates an existing security incident.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityIncidents/{securityIncidentsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.environments.securityIncidents.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Name of the security incident resource. Format: organizations/{org}/environments/{environment}/securityIncidents/{incident} Example: organizations/apigee-org/environments/dev/securityIncidents/1234-5678-9101-1111",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/securityIncidents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update. Allowed fields are: LINT.IfChange(allowed_update_fields_comment) - observability LINT.ThenChange()",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityIncident"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecurityIncident"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apigee.organizations.environments.securityReports.create":

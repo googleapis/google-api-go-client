@@ -35,6 +35,7 @@ package internal
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"net"
 	"net/url"
 	"os"
@@ -56,29 +57,30 @@ const (
 )
 
 // getClientCertificateSourceAndEndpoint is a convenience function that invokes
-// getClientCertificateSource and getEndpoint sequentially and returns the client
-// cert source and endpoint as a tuple.
-func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source, string, error) {
+// getClientCertificateSource and getEndpointAndUniverse sequentially and returns the client
+// cert source, endpoint, and universe as a tuple.
+func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source, string, string, error) {
 	clientCertSource, err := getClientCertificateSource(settings)
 	if err != nil {
-		return nil, "", err
+		return nil, "", "", err
 	}
-	endpoint, err := getEndpoint(settings, clientCertSource)
+	endpoint, universe, err := getEndpointAndUniverse(settings, clientCertSource, getMTLSMode())
 	if err != nil {
-		return nil, "", err
+		return nil, "", "", err
 	}
-	return clientCertSource, endpoint, nil
+	return clientCertSource, endpoint, universe, nil
 }
 
 type transportConfig struct {
 	clientCertSource cert.Source // The client certificate source.
 	endpoint         string      // The corresponding endpoint to use based on client certificate source.
+	universe         string      // The corresponding universe (suffix domain).
 	s2aAddress       string      // The S2A address if it can be used, otherwise an empty string.
 	s2aMTLSEndpoint  string      // The MTLS endpoint to use with S2A.
 }
 
 func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
-	clientCertSource, endpoint, err := getClientCertificateSourceAndEndpoint(settings)
+	clientCertSource, endpoint, universe, err := getClientCertificateSourceAndEndpoint(settings)
 	if err != nil {
 		return &transportConfig{
 			clientCertSource: nil, endpoint: "", s2aAddress: "", s2aMTLSEndpoint: "",
@@ -87,6 +89,7 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 	defaultTransportConfig := transportConfig{
 		clientCertSource: clientCertSource,
 		endpoint:         endpoint,
+		universe:         universe,
 		s2aAddress:       "",
 		s2aMTLSEndpoint:  "",
 	}
@@ -138,39 +141,78 @@ func isClientCertificateEnabled() bool {
 	return strings.ToLower(useClientCert) == "true"
 }
 
-// getEndpoint returns the endpoint for the service, taking into account the
-// user-provided endpoint override "settings.Endpoint".
+// getUniverse returns the effective universe.
+func getUniverse(settings *DialSettings) string {
+	if settings.UniverseDomain != "" {
+		return settings.UniverseDomain
+	}
+	return getDefaultUniverse(settings)
+}
+
+// getDefaultUniverse returns the specified default universe, or the implicit default
+// googleapis.com.
 //
-// If no endpoint override is specified, we will either return the default endpoint or
-// the default mTLS endpoint if a client certificate is available.
+// TODO:  Once code generators supply WithDefaultUniverse as part of default options,
+// this utility method may be removed, though this may need to be used for resolving
+// env-based universe.
+func getDefaultUniverse(settings *DialSettings) string {
+	if settings.DefaultUniverseDomain != "" {
+		return settings.DefaultUniverseDomain
+	}
+	return gdUniverse
+}
+
+var (
+	universePatternToken = "%%UNIVERSE%%"
+	gdUniverse           = "googleapis.com"
+	ErrMTLSUniverse      = errors.New("mTLS is not supported in any universe other than googleapis.com")
+)
+
+// getEndpointAndUniverse returns the endpoint for the service as well as the universe
+// domain, taking in to account the various overrides the user may have provided.
 //
-// You can override the default endpoint choice (mtls vs. regular) by setting the
-// GOOGLE_API_USE_MTLS_ENDPOINT environment variable.
+// This method will also select a default endpoint based on MTLS settings, controlled by
+// the GOOGLE_API_USE_MTLS_ENDPOINT environment variable.
 //
 // If the endpoint override is an address (host:port) rather than full base
 // URL (ex. https://...), then the user-provided address will be merged into
 // the default endpoint. For example, WithEndpoint("myhost:8000") and
 // WithDefaultEndpoint("https://foo.com/bar/baz") will return "https://myhost:8080/bar/baz"
-func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, error) {
+func getEndpointAndUniverse(settings *DialSettings, clientCertSource cert.Source, mtlsMode string) (string, string, error) {
+	// parameterize the default endpoints with the default universe.
+	defUniverse := getDefaultUniverse(settings)
+	defEndpoint := strings.Replace(settings.DefaultEndpoint, defUniverse, universePatternToken, 1)
+	defMTLSEndpoint := strings.Replace(settings.DefaultMTLSEndpoint, defUniverse, universePatternToken, 1)
+
+	universe := getUniverse(settings)
 	if settings.Endpoint == "" {
-		mtlsMode := getMTLSMode()
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
-			return settings.DefaultMTLSEndpoint, nil
+			if universe != gdUniverse {
+				return "", "", ErrMTLSUniverse
+			}
+			return mergeDefaultEndpointUniverse(defMTLSEndpoint, universe), universe, nil
 		}
-		return settings.DefaultEndpoint, nil
+		return mergeDefaultEndpointUniverse(defEndpoint, universe), universe, nil
 	}
 	if strings.Contains(settings.Endpoint, "://") {
-		// User passed in a full URL path, use it verbatim.
-		return settings.Endpoint, nil
+		// user supplied an explicit endpoint with a full URL.
+		return settings.Endpoint, universe, nil
 	}
-	if settings.DefaultEndpoint == "" {
-		// If DefaultEndpoint is not configured, use the user provided endpoint verbatim.
-		// This allows a naked "host[:port]" URL to be used with GRPC Direct Path.
-		return settings.Endpoint, nil
+	if defEndpoint == "" {
+		// The default endpoint isn't configured, so use the use provided endpoint without
+		// normalizing.
+		return settings.Endpoint, universe, nil
 	}
+	merged, err := mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
+	if err != nil {
+		return "", "", err
+	}
+	return merged, universe, nil
+}
 
-	// Assume user-provided endpoint is host[:port], merge it with the default endpoint.
-	return mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
+// mergeDefaultEndpointUniverse handles replaceing a parameterized default endpoint with a universe value.
+func mergeDefaultEndpointUniverse(endpoint, universe string) string {
+	return strings.Replace(endpoint, universePatternToken, universe, 1)
 }
 
 func getMTLSMode() string {

@@ -11,11 +11,9 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	"google.golang.org/api/internal/cert"
 	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 )
@@ -161,78 +159,4 @@ func (ds *DialSettings) Validate() error {
 		return errors.New("WithImpersonatedCredentials requires scopes being provided")
 	}
 	return nil
-}
-
-// getUniverse returns the effective universe.
-func getUniverse(settings *DialSettings) string {
-	if settings.UniverseDomain != "" {
-		return settings.UniverseDomain
-	}
-	return getDefaultUniverse(settings)
-}
-
-// getDefaultUniverse returns the specified default universe, or the implicit default
-// googleapis.com.
-//
-// TODO:  Once code generators supply WithDefaultUniverse as part of default options,
-// this utility method may be removed, though this may need to be used for resolving
-// env-based universe.
-func getDefaultUniverse(settings *DialSettings) string {
-	if settings.DefaultUniverseDomain != "" {
-		return settings.DefaultUniverseDomain
-	}
-	return gdUniverse
-}
-
-var (
-	universePatternToken = "%%UNIVERSE%%"
-	gdUniverse           = "googleapis.com"
-	ErrMTLSUniverse      = errors.New("mTLS is not supported in any universe other than googleapis.com")
-)
-
-// getEndpointAndUniverse returns the endpoint for the service as well as the universe
-// domain, taking in to account the various overrides the user may have provided.
-//
-// This method will also select a default endpoint based on MTLS settings, controlled by
-// the GOOGLE_API_USE_MTLS_ENDPOINT environment variable.
-//
-// If the endpoint override is an address (host:port) rather than full base
-// URL (ex. https://...), then the user-provided address will be merged into
-// the default endpoint. For example, WithEndpoint("myhost:8000") and
-// WithDefaultEndpoint("https://foo.com/bar/baz") will return "https://myhost:8080/bar/baz"
-func getEndpointAndUniverse(settings *DialSettings, clientCertSource cert.Source, mtlsMode string) (string, string, error) {
-	// parameterize the default endpoints with the default universe.
-	defUniverse := getDefaultUniverse(settings)
-	defEndpoint := strings.Replace(settings.DefaultEndpoint, defUniverse, universePatternToken, 1)
-	defMTLSEndpoint := strings.Replace(settings.DefaultMTLSEndpoint, defUniverse, universePatternToken, 1)
-
-	universe := getUniverse(settings)
-	if settings.Endpoint == "" {
-		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
-			if universe != gdUniverse {
-				return "", "", ErrMTLSUniverse
-			}
-			return mergeDefaultEndpointUniverse(defMTLSEndpoint, universe), universe, nil
-		}
-		return mergeDefaultEndpointUniverse(defEndpoint, universe), universe, nil
-	}
-	if strings.Contains(settings.Endpoint, "://") {
-		// user supplied an explicit endpoint with a full URL.
-		return settings.Endpoint, universe, nil
-	}
-	if defEndpoint == "" {
-		// The default endpoint isn't configured, so use the use provided endpoint without
-		// normalizing.
-		return settings.Endpoint, universe, nil
-	}
-	merged, err := mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
-	if err != nil {
-		return "", "", err
-	}
-	return merged, universe, nil
-}
-
-// mergeDefaultEndpointUniverse handles replaceing a parameterized default endpoint with a universe value.
-func mergeDefaultEndpointUniverse(endpoint, universe string) string {
-	return strings.Replace(endpoint, universePatternToken, universe, 1)
 }

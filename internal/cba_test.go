@@ -6,10 +6,14 @@ package internal
 
 import (
 	"crypto/tls"
+	"errors"
+	"fmt"
 	"net/http"
 	"os"
 	"testing"
 	"time"
+
+	"google.golang.org/api/internal/cert"
 )
 
 const (
@@ -20,59 +24,123 @@ const (
 
 var dummyClientCertSource = func(info *tls.CertificateRequestInfo) (*tls.Certificate, error) { return nil, nil }
 
-func TestGetEndpoint(t *testing.T) {
+func TestGetEndpointAndUniverse(t *testing.T) {
+
+	fakeCertSource := func(*tls.CertificateRequestInfo) (*tls.Certificate, error) {
+		return nil, fmt.Errorf("invalid source")
+	}
 	testCases := []struct {
-		UserEndpoint    string
-		DefaultEndpoint string
-		Want            string
-		WantErr         bool
+		desc             string
+		settings         *DialSettings
+		clientCertSource cert.Source
+		mtlsMode         string
+		wantEnd          string
+		wantUni          string
+		wantErr          error
 	}{
 		{
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://foo.googleapis.com/bar/baz",
+			desc: "simple default",
+			settings: &DialSettings{
+				DefaultEndpoint: "https://foo.googleapis.com",
+			},
+			wantEnd: "https://foo.googleapis.com",
+			wantUni: gdUniverse,
 		},
 		{
-			UserEndpoint:    "myhost:3999",
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://myhost:3999/bar/baz",
+			desc: "simple endpoint override",
+			settings: &DialSettings{
+				Endpoint: "https://bar.googleapis.com",
+			},
+			wantEnd: "https://bar.googleapis.com",
+			wantUni: gdUniverse,
 		},
 		{
-			UserEndpoint:    "https://host/path/to/bar",
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://host/path/to/bar",
+			desc: "default + mtlsModeAuto + nocert",
+			settings: &DialSettings{
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			mtlsMode: mTLSModeAuto,
+			wantEnd:  "https://foo.googleapis.com",
+			wantUni:  gdUniverse,
 		},
 		{
-			UserEndpoint:    "host:123",
-			DefaultEndpoint: "",
-			Want:            "host:123",
+			desc: "default + mtlsModeAuto + cert",
+			settings: &DialSettings{
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			clientCertSource: fakeCertSource,
+			mtlsMode:         mTLSModeAuto,
+			wantEnd:          "https://foo.mtls.googleapis.com",
+			wantUni:          gdUniverse,
 		},
 		{
-			UserEndpoint:    "host:123",
-			DefaultEndpoint: "default:443",
-			Want:            "host:123",
+			desc: "default + mtlsModeAlways",
+			settings: &DialSettings{
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			mtlsMode: mTLSModeAlways,
+			wantEnd:  "https://foo.mtls.googleapis.com",
+			wantUni:  gdUniverse,
 		},
 		{
-			UserEndpoint:    "host:123",
-			DefaultEndpoint: "default:443/bar/baz",
-			Want:            "host:123/bar/baz",
+			desc: "custom uni + mtlsModeAlways",
+			settings: &DialSettings{
+				UniverseDomain:      "blah.com",
+				DefaultEndpoint:     "https://foo.googleapis.com",
+				DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com",
+			},
+			mtlsMode: mTLSModeAlways,
+			wantErr:  ErrMTLSUniverse,
+		},
+		{
+			desc: "partial endpoint + default",
+			settings: &DialSettings{
+				Endpoint:        "myhost:3999",
+				DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
+			},
+			wantEnd: "https://myhost:3999/bar/baz",
+			wantUni: gdUniverse,
+		},
+		{
+			desc: "partial endpoint + default + custom uni",
+			settings: &DialSettings{
+				Endpoint:        "myhost:3999",
+				DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
+				UniverseDomain:  "bar.com",
+			},
+			wantEnd: "https://myhost:3999/bar/baz",
+			wantUni: "bar.com",
+		},
+		{
+			desc: "partial endpoint + no default",
+			settings: &DialSettings{
+				Endpoint: "myhost:3999",
+			},
+			wantEnd: "myhost:3999",
+			wantUni: gdUniverse,
 		},
 	}
-
 	for _, tc := range testCases {
-		got, err := getEndpoint(&DialSettings{
-			Endpoint:        tc.UserEndpoint,
-			DefaultEndpoint: tc.DefaultEndpoint,
-		}, nil)
-		if tc.WantErr && err == nil {
-			t.Errorf("want err, got nil err")
-			continue
+		mtlsMode := mTLSModeAuto
+		if tc.mtlsMode != "" {
+			mtlsMode = tc.mtlsMode
 		}
-		if !tc.WantErr && err != nil {
-			t.Errorf("want nil err, got %v", err)
+		gotEnd, gotUni, gotErr := getEndpointAndUniverse(tc.settings, tc.clientCertSource, mtlsMode)
+		if tc.wantErr != nil {
+			if !errors.Is(gotErr, tc.wantErr) {
+				t.Errorf("%q: error mismatch, got %v want %v", tc.desc, gotErr, tc.wantErr)
+			}
 			continue
-		}
-		if tc.Want != got {
-			t.Errorf("getEndpoint(%q, %q): got %v; want %v", tc.UserEndpoint, tc.DefaultEndpoint, got, tc.Want)
+		} else {
+			if gotEnd != tc.wantEnd {
+				t.Errorf("%q: endpoint mismatch, got %q want %q", tc.desc, gotEnd, tc.wantEnd)
+			}
+			if gotUni != tc.wantUni {
+				t.Errorf("%q: universe mismatch, got %q want %q", tc.desc, gotUni, tc.wantUni)
+			}
 		}
 	}
 }
@@ -114,11 +182,11 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := getEndpoint(&DialSettings{
+		got, _, err := getEndpointAndUniverse(&DialSettings{
 			Endpoint:            tc.UserEndpoint,
 			DefaultEndpoint:     tc.DefaultEndpoint,
 			DefaultMTLSEndpoint: tc.DefaultMTLSEndpoint,
-		}, dummyClientCertSource)
+		}, dummyClientCertSource, getMTLSMode())
 		if tc.WantErr && err == nil {
 			t.Errorf("want err, got nil err")
 			continue

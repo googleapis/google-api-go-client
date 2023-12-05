@@ -14,7 +14,25 @@ import (
 	"cloud.google.com/go/compute/metadata"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
+	"google.golang.org/grpc"
 )
+
+func TestDial(t *testing.T) {
+	oldDialContext := dialContext
+	// Replace package var in order to assert DialContext args.
+	dialContext = func(ctxGot context.Context, target string, opts ...grpc.DialOption) (conn *grpc.ClientConn, err error) {
+		if len(opts) != 4 {
+			t.Fatalf("got: %d, want: 4", len(opts))
+		}
+		return nil, nil
+	}
+	defer func() {
+		dialContext = oldDialContext
+	}()
+
+	var o internal.DialSettings
+	dial(context.Background(), false, &o)
+}
 
 func TestCheckDirectPathEndPoint(t *testing.T) {
 	for _, testcase := range []struct {

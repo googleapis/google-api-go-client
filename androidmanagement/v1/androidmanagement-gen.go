@@ -840,7 +840,7 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 // ApplicationPolicy: Policy for an individual app. Note: Application
 // availability on a given device cannot be changed using this policy if
 // installAppsDisabled is enabled. The maximum number of applications
-// that you can specify per enterprise policy is 3,000.
+// that you can specify per policy is 3,000.
 type ApplicationPolicy struct {
 	// AccessibleTrackIds: List of the app’s track IDs that a device
 	// belonging to the enterprise can access. If the list contains multiple
@@ -5295,7 +5295,8 @@ type Policy struct {
 	// apply.
 	AppAutoUpdatePolicy string `json:"appAutoUpdatePolicy,omitempty"`
 
-	// Applications: Policy applied to apps.
+	// Applications: Policy applied to apps. This can have at most 3,000
+	// elements.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
 
 	// AutoDateAndTimeZone: Whether auto date, time, and time zone are

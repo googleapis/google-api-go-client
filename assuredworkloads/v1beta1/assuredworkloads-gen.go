@@ -209,7 +209,7 @@ type OrganizationsLocationsWorkloadsViolationsService struct {
 }
 
 // GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest:
-// Request for acknowledging the violation Next Id: 5
+// Request for acknowledging the violation
 type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
 	// AcknowledgeType: Optional. Acknowledge type of specified violation.
 	//

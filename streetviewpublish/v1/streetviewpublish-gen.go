@@ -1154,6 +1154,7 @@ type PhotoSequence struct {
 	//   "NOT_OUTDOORS" - Some frames were indoors, which is unsupported.
 	//   "INSUFFICIENT_VIDEO_FRAMES" - Not enough video frames.
 	//   "INSUFFICIENT_MOVEMENT" - Not enough moving data.
+	//   "MAST_DOWN" - Mast is down.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// Filename: Output only. The filename of the upload. Does not include

@@ -497,6 +497,57 @@ func (s *CryptoKeyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataResidencyAugmentedView: Next tag: 7
+type DataResidencyAugmentedView struct {
+	// CrGopoGuris: Cloud resource to Google owned production object mapping
+	// in the form of GURIs. The GURIs should be available in DG KB
+	// storage/cns tables. This is the preferred way of providing cloud
+	// resource mappings. For further details please read
+	// go/cloud-resource-monitoring_sig
+	CrGopoGuris []string `json:"crGopoGuris,omitempty"`
+
+	// CrGopoPrefixes: Cloud resource to Google owned production object
+	// mapping in the form of prefixes. These should be available in DG KB
+	// storage/cns tables. The entity type, which is the part of the string
+	// before the first colon in the GURI, must be completely specified in
+	// prefix. For details about GURI please read go/guri. For further
+	// details about the field please read go/cloud-resource-monitoring_sig.
+	CrGopoPrefixes []string `json:"crGopoPrefixes,omitempty"`
+
+	// ServiceData: Service-specific data. Only required for pre-determined
+	// services. Generally used to bind a Cloud Resource to some a TI
+	// container that uniquely specifies a customer. See milestone 2 of DRZ
+	// KR8 SIG for more information.
+	ServiceData *ServiceData `json:"serviceData,omitempty"`
+
+	// TpIds: The list of project_id's of the tenant projects in the
+	// 'google.com' org which serve the Cloud Resource. See go/drz-mst-sig
+	// for more details.
+	TpIds []string `json:"tpIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CrGopoGuris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CrGopoGuris") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataResidencyAugmentedView) MarshalJSON() ([]byte, error) {
+	type NoMethod DataResidencyAugmentedView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DnsPeering: DNS peering configuration. These configurations are used
 // to create DNS peering with the customer Cloud DNS.
 type DnsPeering struct {
@@ -702,6 +753,10 @@ type Instance struct {
 	// CryptoKeyConfig: The crypto key configuration. This field is used by
 	// the Customer-Managed Encryption Keys (CMEK) feature.
 	CryptoKeyConfig *CryptoKeyConfig `json:"cryptoKeyConfig,omitempty"`
+
+	// DataplexDataLineageIntegrationEnabled: Optional. Reserved for future
+	// use.
+	DataplexDataLineageIntegrationEnabled bool `json:"dataplexDataLineageIntegrationEnabled,omitempty"`
 
 	// DataprocServiceAccount: User-managed service account to set on
 	// Dataproc when Cloud Data Fusion creates Dataproc to run data
@@ -1209,7 +1264,7 @@ type NetworkConfig struct {
 	// is required only when using connection type VPC peering. In case of
 	// shared VPC where the network resides in another host project the
 	// network should specified in the form of
-	// projects/{project-id}/global/networks/{network}. This is only
+	// projects/{host-project-id}/global/networks/{network}. This is only
 	// required for connectivity type VPC_PEERING.
 	Network string `json:"network,omitempty"`
 
@@ -1357,6 +1412,54 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersistentDiskData: Persistent Disk service-specific Data. Contains
+// information that may not be appropriate for the generic DRZ Augmented
+// View. This currently includes LSV Colossus Roots and GCS Buckets.
+type PersistentDiskData struct {
+	// CfsRoots: Path to Colossus root for an LSV. NOTE: Unlike
+	// `cr_ti_guris` and `cr_ti_prefixes`, the field `cfs_roots` below does
+	// not need to be a GUri or GUri prefix. It can simply be any valid CFS
+	// or CFS2 Path. The DRZ KR8 SIG has more details overall, but generally
+	// the `cfs_roots` provided here should be scoped to an individual
+	// Persistent Disk. An example for a PD Disk with a disk ID
+	// 3277719120423414466, follows: * `cr_ti_guris` could be
+	// ‘/cfs2/pj/pd-cloud-prod’ as this is a valid GUri present in the
+	// DG KB and contains enough information to perform location monitoring
+	// and scope ownership of the Production Object. * `cfs_roots` would be:
+	// ‘/cfs2/pj/pd-cloud-staging/lsv000001234@/
+	// lsv/projects~773365403387~zones~2700~disks~3277719120423414466
+	// ~bank-blue-careful-3526-lsv00054DB1B7254BA3/’ as this allows us to
+	// enumerate the files on CFS2 that belong to an individual Disk.
+	CfsRoots []string `json:"cfsRoots,omitempty"`
+
+	// GcsBucketNames: The GCS Buckets that back this snapshot or image.
+	// This is required as `cr_ti_prefixes` and `cr_ti_guris` only accept TI
+	// resources. This should be the globally unique bucket name.
+	GcsBucketNames []string `json:"gcsBucketNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CfsRoots") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CfsRoots") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersistentDiskData) MarshalJSON() ([]byte, error) {
+	type NoMethod PersistentDiskData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1537,6 +1640,37 @@ type RemoveIamPolicyResponse struct {
 // RestartInstanceRequest: Request message for restarting a Data Fusion
 // instance.
 type RestartInstanceRequest struct {
+}
+
+// ServiceData: This message defines service-specific data that certain
+// service teams must provide as part of the Data Residency Augmented
+// View for a resource. Next ID: 2
+type ServiceData struct {
+	// Pd: Auxiliary data for the persistent disk pipeline provided to
+	// provide the LSV Colossus Roots and GCS Buckets.
+	Pd *PersistentDiskData `json:"pd,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Pd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Pd") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceData) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.

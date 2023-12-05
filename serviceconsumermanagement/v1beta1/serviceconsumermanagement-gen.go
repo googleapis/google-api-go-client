@@ -166,6 +166,7 @@ type OperationsService struct {
 func NewServicesService(s *APIService) *ServicesService {
 	rs := &ServicesService{s: s}
 	rs.ConsumerQuotaMetrics = NewServicesConsumerQuotaMetricsService(s)
+	rs.Properties = NewServicesPropertiesService(s)
 	return rs
 }
 
@@ -173,6 +174,8 @@ type ServicesService struct {
 	s *APIService
 
 	ConsumerQuotaMetrics *ServicesConsumerQuotaMetricsService
+
+	Properties *ServicesPropertiesService
 }
 
 func NewServicesConsumerQuotaMetricsService(s *APIService) *ServicesConsumerQuotaMetricsService {
@@ -205,6 +208,15 @@ func NewServicesConsumerQuotaMetricsLimitsProducerOverridesService(s *APIService
 }
 
 type ServicesConsumerQuotaMetricsLimitsProducerOverridesService struct {
+	s *APIService
+}
+
+func NewServicesPropertiesService(s *APIService) *ServicesPropertiesService {
+	rs := &ServicesPropertiesService{s: s}
+	return rs
+}
+
+type ServicesPropertiesService struct {
 	s *APIService
 }
 
@@ -2335,6 +2347,14 @@ func (s *MethodPolicy) MarshalJSON() ([]byte, error) {
 
 // MethodSettings: Describes the generator configuration for a method.
 type MethodSettings struct {
+	// AutoPopulatedFields: List of top-level fields of the request message,
+	// that should be automatically populated by the client libraries based
+	// on their (google.api.field_info).format. Currently supported format:
+	// UUID4. Example of a YAML configuration: publishing: method_settings:
+	// - selector: google.example.v1.ExampleService.CreateExample
+	// auto_populated_fields: - request_id
+	AutoPopulatedFields []string `json:"autoPopulatedFields,omitempty"`
+
 	// LongRunning: Describes settings to use for long-running operations
 	// when generating API methods for RPCs. Complements RPCs that use the
 	// annotations in google/longrunning/operations.proto. Example of a YAML
@@ -2350,20 +2370,21 @@ type MethodSettings struct {
 	// options.
 	Selector string `json:"selector,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LongRunning") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AutoPopulatedFields")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LongRunning") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutoPopulatedFields") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4049,6 +4070,76 @@ type V1Beta1BatchCreateProducerOverridesResponse struct {
 
 func (s *V1Beta1BatchCreateProducerOverridesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod V1Beta1BatchCreateProducerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1ConsumerProperty: A property assigned to a consumer of a
+// service.
+type V1Beta1ConsumerProperty struct {
+	// Description: Output only. The description of the property.
+	Description string `json:"description,omitempty"`
+
+	// Name: Output only. The resource name of this property. An example
+	// name would be:
+	// `services/serviceconsumermanagement.googleapis.com/projects/123/proper
+	// ties/SERVICE_LEVEL` The resource name is intended to be opaque and
+	// should not be parsed for its component strings, since its
+	// representation could change in the future.
+	Name string `json:"name,omitempty"`
+
+	// Propagation: Output only. A long-running operation which tracks the
+	// propagation of recent changes to this resource to all affected
+	// backends. If this field is empty, all affected backends have been
+	// notified of the change. If this field contains an operation in
+	// progress, then the most recent change to this resource has not yet
+	// been sent out to all backends. If this field contains an operation
+	// that has failed with an error, the caller should retry the change.
+	Propagation *Operation `json:"propagation,omitempty"`
+
+	// PropertyKey: Output only. The name of the property as it appears in
+	// the service configuration. An example property name would be:
+	// `SERVICE_LEVEL`
+	PropertyKey string `json:"propertyKey,omitempty"`
+
+	// Type: Output only. The type of this property.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - The type is unspecified, and will result in an
+	// error.
+	//   "INT64" - The type is `int64`.
+	//   "BOOL" - The type is `bool`.
+	//   "STRING" - The type is `string`.
+	//   "DOUBLE" - The type is 'double'.
+	Type string `json:"type,omitempty"`
+
+	// Value: Value of this property for the consumer. This field may be
+	// empty if the consumer has not been assigned a value.
+	Value interface{} `json:"value,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ConsumerProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ConsumerProperty
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6640,6 +6731,152 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Do(opts .
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "serviceconsumermanagement.services.properties.create":
+
+type ServicesPropertiesCreateCall struct {
+	s                       *APIService
+	parent                  string
+	v1beta1consumerproperty *V1Beta1ConsumerProperty
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Creates a consumer property. If the property already exists,
+// this method fails with an ALREADY_EXISTS error. For this failure
+// case, the Status details field will contain the existing property's
+// value.
+//
+//   - parent: Name of the property to create. An example name would be:
+//     `services/serviceconsumermanagement.googleapis.com/projects/123`.
+func (r *ServicesPropertiesService) Create(parent string, v1beta1consumerproperty *V1Beta1ConsumerProperty) *ServicesPropertiesCreateCall {
+	c := &ServicesPropertiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.v1beta1consumerproperty = v1beta1consumerproperty
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesPropertiesCreateCall) Fields(s ...googleapi.Field) *ServicesPropertiesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesPropertiesCreateCall) Context(ctx context.Context) *ServicesPropertiesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesPropertiesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesPropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.v1beta1consumerproperty)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/properties")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.properties.create" call.
+// Exactly one of *V1Beta1ConsumerProperty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *V1Beta1ConsumerProperty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ServicesPropertiesCreateCall) Do(opts ...googleapi.CallOption) (*V1Beta1ConsumerProperty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &V1Beta1ConsumerProperty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a consumer property. If the property already exists, this method fails with an ALREADY_EXISTS error. For this failure case, the Status details field will contain the existing property's value.",
+	//   "flatPath": "v1beta1/services/{servicesId}/{servicesId1}/{servicesId2}/properties",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.properties.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the property to create. An example name would be: `services/serviceconsumermanagement.googleapis.com/projects/123`",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/properties",
+	//   "request": {
+	//     "$ref": "V1Beta1ConsumerProperty"
+	//   },
+	//   "response": {
+	//     "$ref": "V1Beta1ConsumerProperty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

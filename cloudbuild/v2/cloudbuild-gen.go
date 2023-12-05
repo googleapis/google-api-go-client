@@ -2871,7 +2871,7 @@ type TaskSpec struct {
 	// StepTemplate: Optional. StepTemplate can be used as the basis for all
 	// step containers within the Task, so that the steps inherit settings
 	// on the base container.
-	StepTemplate []*StepTemplate `json:"stepTemplate,omitempty"`
+	StepTemplate *StepTemplate `json:"stepTemplate,omitempty"`
 
 	// Steps: Steps of the task.
 	Steps []*Step `json:"steps,omitempty"`

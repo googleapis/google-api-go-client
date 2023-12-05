@@ -446,6 +446,10 @@ type GoogleCloudRecommenderV1CostProjection struct {
 	// cost is computed using list prices or custom contract prices.
 	Cost *GoogleTypeMoney `json:"cost,omitempty"`
 
+	// CostInLocalCurrency: The approximate cost savings in the billing
+	// account's local currency.
+	CostInLocalCurrency *GoogleTypeMoney `json:"costInLocalCurrency,omitempty"`
+
 	// Duration: Duration for which this cost applies.
 	Duration string `json:"duration,omitempty"`
 
@@ -496,7 +500,7 @@ type GoogleCloudRecommenderV1Impact struct {
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1CostProjection `json:"costProjection,omitempty"`
 
-	// ReliabilityProjection: Use with CategoryType.RELAIBILITY
+	// ReliabilityProjection: Use with CategoryType.RELIABILITY
 	ReliabilityProjection *GoogleCloudRecommenderV1ReliabilityProjection `json:"reliabilityProjection,omitempty"`
 
 	// SecurityProjection: Use with CategoryType.SECURITY

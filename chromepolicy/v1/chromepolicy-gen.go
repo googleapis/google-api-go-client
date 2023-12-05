@@ -2096,10 +2096,10 @@ type Proto2FieldDescriptorProto struct {
 
 	// Proto3Optional: If true, this is a proto3 "optional". When a proto3
 	// field is optional, it tracks presence regardless of field type. When
-	// proto3_optional is true, this field must be belong to a oneof to
-	// signal to old proto3 clients that presence is tracked for this field.
-	// This oneof is known as a "synthetic" oneof, and this field must be
-	// its sole member (each proto3 optional field gets its own synthetic
+	// proto3_optional is true, this field must belong to a oneof to signal
+	// to old proto3 clients that presence is tracked for this field. This
+	// oneof is known as a "synthetic" oneof, and this field must be its
+	// sole member (each proto3 optional field gets its own synthetic
 	// oneof). Synthetic oneofs exist in the descriptor only, and do not
 	// generate any API. Synthetic oneofs must be ordered after all "real"
 	// oneofs. For message fields, proto3_optional doesn't create any

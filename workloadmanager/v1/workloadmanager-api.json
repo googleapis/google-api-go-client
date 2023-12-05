@@ -92,13 +92,13 @@
       "location": "query",
       "type": "string"
     },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "location": "query",
       "type": "string"
     },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "location": "query",
       "type": "string"
     }
@@ -707,7 +707,7 @@
       }
     }
   },
-  "revision": "20230907",
+  "revision": "20231114",
   "rootUrl": "https://workloadmanager.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -1551,12 +1551,20 @@
       "description": "A presentation of SAP workload insight. The schema of SAP workloads validation related data.",
       "id": "SapValidation",
       "properties": {
+        "projectId": {
+          "description": "Required. The project_id of the cloud project that the Insight data comes from.",
+          "type": "string"
+        },
         "validationDetails": {
           "description": "Optional. A list of SAP validation metrics data.",
           "items": {
             "$ref": "SapValidationValidationDetail"
           },
           "type": "array"
+        },
+        "zone": {
+          "description": "Optional. The zone of the instance that the Insight data comes from.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1569,8 +1577,12 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The pairs of metrics data: field name \u0026 field value.",
+          "description": "Optional. The pairs of metrics data: field name & field value.",
           "type": "object"
+        },
+        "isPresent": {
+          "description": "Optional. Was there a SAP system detected for this validation type.",
+          "type": "boolean"
         },
         "sapValidationType": {
           "description": "Optional. The SAP system that the validation data is from.",

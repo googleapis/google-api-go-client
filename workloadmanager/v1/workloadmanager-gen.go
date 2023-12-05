@@ -1457,24 +1457,31 @@ func (s *SapDiscoveryResource) MarshalJSON() ([]byte, error) {
 // SapValidation: A presentation of SAP workload insight. The schema of
 // SAP workloads validation related data.
 type SapValidation struct {
+	// ProjectId: Required. The project_id of the cloud project that the
+	// Insight data comes from.
+	ProjectId string `json:"projectId,omitempty"`
+
 	// ValidationDetails: Optional. A list of SAP validation metrics data.
 	ValidationDetails []*SapValidationValidationDetail `json:"validationDetails,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ValidationDetails")
-	// to unconditionally include in API requests. By default, fields with
+	// Zone: Optional. The zone of the instance that the Insight data comes
+	// from.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ValidationDetails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ProjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1490,6 +1497,10 @@ type SapValidationValidationDetail struct {
 	// Details: Optional. The pairs of metrics data: field name & field
 	// value.
 	Details map[string]string `json:"details,omitempty"`
+
+	// IsPresent: Optional. Was there a SAP system detected for this
+	// validation type.
+	IsPresent bool `json:"isPresent,omitempty"`
 
 	// SapValidationType: Optional. The SAP system that the validation data
 	// is from.

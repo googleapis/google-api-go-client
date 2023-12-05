@@ -3488,6 +3488,36 @@ func (s *GoogleAppsCardV1Widgets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Group: A Google Group in Google Chat.
+type Group struct {
+	// Name: Resource name for a Google Group. Represents a group
+	// (https://cloud.google.com/identity/docs/reference/rest/v1/groups) in
+	// Cloud Identity Groups API. Format: groups/{group}
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Group) MarshalJSON() ([]byte, error) {
+	type NoMethod Group
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HostAppDataSourceMarkup: Chat apps only. For a `SelectionInput`
 // widget that uses a multiselect menu, a data source from a Google
 // Workspace application. The data source populates selection items for
@@ -3993,9 +4023,17 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 // whether a user or Chat app is invited to, part of, or absent from a
 // space.
 type Membership struct {
-	// CreateTime: Output only. The creation time of the membership, such as
-	// when a member joined or was invited to join a space.
+	// CreateTime: Optional. Immutable. The creation time of the membership,
+	// such as when a member joined or was invited to join a space.
+	// Developer Preview (https://developers.google.com/workspace/preview):
+	// This field is output only, except when used to import historical
+	// memberships in import mode spaces.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// GroupMember: The Google Group the membership corresponds to. Only
+	// supports read operations. Other operations, like creating or updating
+	// a membership, aren't currently supported.
+	GroupMember *Group `json:"groupMember,omitempty"`
 
 	// Member: The Google Chat user or app the membership corresponds to. If
 	// your Chat app authenticates as a user
@@ -7398,6 +7436,15 @@ func (c *SpacesMembersListCall) PageToken(pageToken string) *SpacesMembersListCa
 	return c
 }
 
+// ShowGroups sets the optional parameter "showGroups": When `true`,
+// also returns memberships associated with a Google Group, in addition
+// to other types of memberships. If a filter is set, Google Group
+// memberships that don't match the filter criteria aren't returned.
+func (c *SpacesMembersListCall) ShowGroups(showGroups bool) *SpacesMembersListCall {
+	c.urlParams_.Set("showGroups", fmt.Sprint(showGroups))
+	return c
+}
+
 // ShowInvited sets the optional parameter "showInvited": When `true`,
 // also returns memberships associated with invited members, in addition
 // to other types of memberships. If a filter is set, invited
@@ -7538,6 +7585,11 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showGroups": {
+	//       "description": "Optional. When `true`, also returns memberships associated with a Google Group, in addition to other types of memberships. If a filter is set, Google Group memberships that don't match the filter criteria aren't returned.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "showInvited": {
 	//       "description": "Optional. When `true`, also returns memberships associated with invited members, in addition to other types of memberships. If a filter is set, invited memberships that don't match the filter criteria aren't returned. Currently requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",

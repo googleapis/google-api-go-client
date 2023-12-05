@@ -477,6 +477,14 @@ type GoogleCloudRecommenderV1beta1CostProjection struct {
 	// Duration: Duration for which this cost applies.
 	Duration string `json:"duration,omitempty"`
 
+	// PricingType: How the cost is calculated.
+	//
+	// Possible values:
+	//   "PRICING_TYPE_UNSPECIFIED" - Default pricing type.
+	//   "LIST_PRICE" - The price listed by GCP for all customers.
+	//   "CUSTOM_PRICE" - A price derived from past usage and billing.
+	PricingType string `json:"pricingType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Cost") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -730,7 +738,7 @@ func (s *GoogleCloudRecommenderV1beta1InsightStateInfo) MarshalJSON() ([]byte, e
 
 // GoogleCloudRecommenderV1beta1InsightType: The type of insight.
 type GoogleCloudRecommenderV1beta1InsightType struct {
-	// Name: The insight_type’s name in format insightTypes/{insight_type}
+	// Name: The insight_type's name in format insightTypes/{insight_type}
 	// eg: insightTypes/google.iam.policy.Insight
 	Name string `json:"name,omitempty"`
 

@@ -432,6 +432,12 @@ type AccessReason struct {
 	//   "GOOGLE_RESPONSE_TO_PRODUCTION_ALERT" - The principal accessed
 	// customer data in order to diagnose or resolve a suspected issue in
 	// services or a known outage.
+	//   "CLOUD_INITIATED_ACCESS" - Similar to 'GOOGLE_INITIATED_SERVICE' or
+	// 'GOOGLE_INITIATED_REVIEW', but meant to reflect when the cloud
+	// operator is not Google (namely, a TPC operator), and accessed
+	// customer data in order to diagnose or resolve a suspected issue in
+	// services or a known outage, or for security, fraud, abuse, or
+	// compliance review purposes.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -872,9 +878,10 @@ type SignatureInfo struct {
 	// which may be verified using this public key.
 	GooglePublicKeyPem string `json:"googlePublicKeyPem,omitempty"`
 
-	// SerializedApprovalRequest: The serialized ApprovalRequest message
-	// without the approve.signature_info field. This to allow the customer
-	// to verify signatures if they want to.
+	// SerializedApprovalRequest: The ApprovalRequest that is serialized
+	// without the SignatureInfo message field. This data is used with the
+	// hashing algorithm to generate the digital signature, and it can be
+	// used for signature verification.
 	SerializedApprovalRequest string `json:"serializedApprovalRequest,omitempty"`
 
 	// Signature: The digital signature.

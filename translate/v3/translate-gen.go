@@ -176,6 +176,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.AdaptiveMtDatasets = NewProjectsLocationsAdaptiveMtDatasetsService(s)
 	rs.Datasets = NewProjectsLocationsDatasetsService(s)
 	rs.Glossaries = NewProjectsLocationsGlossariesService(s)
 	rs.Models = NewProjectsLocationsModelsService(s)
@@ -186,6 +187,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	AdaptiveMtDatasets *ProjectsLocationsAdaptiveMtDatasetsService
+
 	Datasets *ProjectsLocationsDatasetsService
 
 	Glossaries *ProjectsLocationsGlossariesService
@@ -193,6 +196,51 @@ type ProjectsLocationsService struct {
 	Models *ProjectsLocationsModelsService
 
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsAdaptiveMtDatasetsService(s *Service) *ProjectsLocationsAdaptiveMtDatasetsService {
+	rs := &ProjectsLocationsAdaptiveMtDatasetsService{s: s}
+	rs.AdaptiveMtFiles = NewProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService(s)
+	rs.AdaptiveMtSentences = NewProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService(s)
+	return rs
+}
+
+type ProjectsLocationsAdaptiveMtDatasetsService struct {
+	s *Service
+
+	AdaptiveMtFiles *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService
+
+	AdaptiveMtSentences *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService
+}
+
+func NewProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService(s *Service) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService {
+	rs := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService{s: s}
+	rs.AdaptiveMtSentences = NewProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService(s)
+	return rs
+}
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService struct {
+	s *Service
+
+	AdaptiveMtSentences *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService
+}
+
+func NewProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService(s *Service) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService {
+	rs := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService(s *Service) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService {
+	rs := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDatasetsService(s *Service) *ProjectsLocationsDatasetsService {
@@ -253,6 +301,250 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 
 type ProjectsLocationsOperationsService struct {
 	s *Service
+}
+
+// AdaptiveMtDataset: An Adaptive MT Dataset.
+type AdaptiveMtDataset struct {
+	// CreateTime: Output only. Timestamp when this dataset was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: The name of the dataset to show in the interface. The
+	// name can be up to 32 characters long and can consist only of ASCII
+	// Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExampleCount: The number of examples in the dataset.
+	ExampleCount int64 `json:"exampleCount,omitempty"`
+
+	// Name: Required. The resource name of the dataset, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
+	// asets/{dataset_id}`
+	Name string `json:"name,omitempty"`
+
+	// SourceLanguageCode: The BCP-47 language code of the source language.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// TargetLanguageCode: The BCP-47 language code of the target language.
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this dataset was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdaptiveMtDataset) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptiveMtDataset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdaptiveMtFile: An AdaptiveMtFile.
+type AdaptiveMtFile struct {
+	// CreateTime: Output only. Timestamp when this file was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: The file's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntryCount: The number of entries that the file contains.
+	EntryCount int64 `json:"entryCount,omitempty"`
+
+	// Name: Required. The resource name of the file, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
+	// asets/{dataset}/files/{file}`
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this file was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdaptiveMtFile) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptiveMtFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdaptiveMtSentence: An AdaptiveMt sentence entry.
+type AdaptiveMtSentence struct {
+	// CreateTime: Output only. Timestamp when this sentence was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Required. The resource name of the file, in form of
+	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
+	// asets/{dataset}/files/{file}/sentences/{sentence}`
+	Name string `json:"name,omitempty"`
+
+	// SourceSentence: Required. The source sentence.
+	SourceSentence string `json:"sourceSentence,omitempty"`
+
+	// TargetSentence: Required. The target sentence.
+	TargetSentence string `json:"targetSentence,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when this sentence was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdaptiveMtSentence) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptiveMtSentence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdaptiveMtTranslateRequest: The request for sending an AdaptiveMt
+// translation query.
+type AdaptiveMtTranslateRequest struct {
+	// Content: Required. The content of the input in string format. For now
+	// only one sentence per request is supported.
+	Content []string `json:"content,omitempty"`
+
+	// Dataset: Required. The resource name for the dataset to use for
+	// adaptive MT.
+	// `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{datase
+	// t}`
+	Dataset string `json:"dataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdaptiveMtTranslateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptiveMtTranslateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdaptiveMtTranslateResponse: An AdaptiveMtTranslate response.
+type AdaptiveMtTranslateResponse struct {
+	// LanguageCode: Output only. The translation's language code.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Translations: Output only. The translation.
+	Translations []*AdaptiveMtTranslation `json:"translations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdaptiveMtTranslateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptiveMtTranslateResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdaptiveMtTranslation: An AdaptiveMt translation.
+type AdaptiveMtTranslation struct {
+	// TranslatedText: Output only. The translated text.
+	TranslatedText string `json:"translatedText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TranslatedText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TranslatedText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdaptiveMtTranslation) MarshalJSON() ([]byte, error) {
+	type NoMethod AdaptiveMtTranslation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // BatchDocumentInputConfig: Input configuration for
@@ -1014,6 +1306,40 @@ func (s *ExportDataRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FileInputSource: An inlined file.
+type FileInputSource struct {
+	// Content: Required. The file's byte contents.
+	Content string `json:"content,omitempty"`
+
+	// DisplayName: Required. The file's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MimeType: Required. The file's mime type.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileInputSource) MarshalJSON() ([]byte, error) {
+	type NoMethod FileInputSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GcsDestination: The Google Cloud Storage location for the output
 // content.
 type GcsDestination struct {
@@ -1376,6 +1702,73 @@ func (s *GlossaryTermsSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportAdaptiveMtFileRequest: The request for importing an AdaptiveMt
+// file along with its sentences.
+type ImportAdaptiveMtFileRequest struct {
+	// FileInputSource: Inline file source.
+	FileInputSource *FileInputSource `json:"fileInputSource,omitempty"`
+
+	// GcsInputSource: Google Cloud Storage file source.
+	GcsInputSource *GcsInputSource `json:"gcsInputSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileInputSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileInputSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportAdaptiveMtFileRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportAdaptiveMtFileRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportAdaptiveMtFileResponse: The response for importing an
+// AdaptiveMtFile
+type ImportAdaptiveMtFileResponse struct {
+	// AdaptiveMtFile: Output only. The Adaptive MT file that was imported.
+	AdaptiveMtFile *AdaptiveMtFile `json:"adaptiveMtFile,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptiveMtFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptiveMtFile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportAdaptiveMtFileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportAdaptiveMtFileResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ImportDataRequest: Request message for ImportData.
 type ImportDataRequest struct {
 	// InputConfig: Required. The config for the input content.
@@ -1547,6 +1940,121 @@ type LanguageCodesSet struct {
 
 func (s *LanguageCodesSet) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageCodesSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAdaptiveMtDatasetsResponse: A list of AdaptiveMtDatasets.
+type ListAdaptiveMtDatasetsResponse struct {
+	// AdaptiveMtDatasets: Output only. A list of Adaptive MT datasets.
+	AdaptiveMtDatasets []*AdaptiveMtDataset `json:"adaptiveMtDatasets,omitempty"`
+
+	// NextPageToken: Optional. A token to retrieve a page of results. Pass
+	// this value in the [ListAdaptiveMtDatasetsRequest.page_token] field in
+	// the subsequent call to `ListAdaptiveMtDatasets` method to retrieve
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptiveMtDatasets")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptiveMtDatasets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdaptiveMtDatasetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdaptiveMtDatasetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAdaptiveMtFilesResponse: The response for listing all AdaptiveMt
+// files under a given dataset.
+type ListAdaptiveMtFilesResponse struct {
+	// AdaptiveMtFiles: Output only. The Adaptive MT files.
+	AdaptiveMtFiles []*AdaptiveMtFile `json:"adaptiveMtFiles,omitempty"`
+
+	// NextPageToken: Optional. A token to retrieve a page of results. Pass
+	// this value in the ListAdaptiveMtFilesRequest.page_token field in the
+	// subsequent call to `ListAdaptiveMtFiles` method to retrieve the next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptiveMtFiles") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptiveMtFiles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdaptiveMtFilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdaptiveMtFilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAdaptiveMtSentencesResponse: List AdaptiveMt sentences response.
+type ListAdaptiveMtSentencesResponse struct {
+	// AdaptiveMtSentences: Output only. The list of AdaptiveMtSentences.
+	AdaptiveMtSentences []*AdaptiveMtSentence `json:"adaptiveMtSentences,omitempty"`
+
+	// NextPageToken: Optional.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptiveMtSentences")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptiveMtSentences") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdaptiveMtSentencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdaptiveMtSentencesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2860,7 +3368,8 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 	//     "$ref": "DetectLanguageResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -3047,7 +3556,8 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//     "$ref": "SupportedLanguages"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -3195,7 +3705,8 @@ func (c *ProjectsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTe
 	//     "$ref": "RomanizeTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -3345,7 +3856,152 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 	//     "$ref": "TranslateTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtTranslate":
+
+type ProjectsLocationsAdaptiveMtTranslateCall struct {
+	s                          *Service
+	parent                     string
+	adaptivemttranslaterequest *AdaptiveMtTranslateRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// AdaptiveMtTranslate: Translate text using Adaptive MT.
+//
+//   - parent: Location to make a regional call. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}`.
+func (r *ProjectsLocationsService) AdaptiveMtTranslate(parent string, adaptivemttranslaterequest *AdaptiveMtTranslateRequest) *ProjectsLocationsAdaptiveMtTranslateCall {
+	c := &ProjectsLocationsAdaptiveMtTranslateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.adaptivemttranslaterequest = adaptivemttranslaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtTranslateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtTranslateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtTranslateCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtTranslateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtTranslateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtTranslateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adaptivemttranslaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:adaptiveMtTranslate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtTranslate" call.
+// Exactly one of *AdaptiveMtTranslateResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdaptiveMtTranslateResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtTranslateCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtTranslateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdaptiveMtTranslateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Translate text using Adaptive MT.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:adaptiveMtTranslate",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.adaptiveMtTranslate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Location to make a regional call. Format: `projects/{project-number-or-id}/locations/{location-id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:adaptiveMtTranslate",
+	//   "request": {
+	//     "$ref": "AdaptiveMtTranslateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AdaptiveMtTranslateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -3800,7 +4456,8 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "DetectLanguageResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -4134,7 +4791,8 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "SupportedLanguages"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -4492,7 +5150,8 @@ func (c *ProjectsLocationsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*R
 	//     "$ref": "RomanizeTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -4793,10 +5452,1682 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "TranslateTextResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.create":
+
+type ProjectsLocationsAdaptiveMtDatasetsCreateCall struct {
+	s                 *Service
+	parent            string
+	adaptivemtdataset *AdaptiveMtDataset
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates an Adaptive MT dataset.
+//
+//   - parent: Name of the parent project. In form of
+//     `projects/{project-number-or-id}/locations/{location-id}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsService) Create(parent string, adaptivemtdataset *AdaptiveMtDataset) *ProjectsLocationsAdaptiveMtDatasetsCreateCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.adaptivemtdataset = adaptivemtdataset
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adaptivemtdataset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/adaptiveMtDatasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.create" call.
+// Exactly one of *AdaptiveMtDataset or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AdaptiveMtDataset.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtDataset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdaptiveMtDataset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an Adaptive MT dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/adaptiveMtDatasets",
+	//   "request": {
+	//     "$ref": "AdaptiveMtDataset"
+	//   },
+	//   "response": {
+	//     "$ref": "AdaptiveMtDataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.delete":
+
+type ProjectsLocationsAdaptiveMtDatasetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an Adaptive MT dataset, including all its entries and
+// associated metadata.
+//
+//   - name: Name of the dataset. In the form of
+//     `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtD
+//     atasets/{adaptive-mt-dataset-id}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsService) Delete(name string) *ProjectsLocationsAdaptiveMtDatasetsDeleteCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an Adaptive MT dataset, including all its entries and associated metadata.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the dataset. In the form of `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.get":
+
+type ProjectsLocationsAdaptiveMtDatasetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the Adaptive MT dataset.
+//
+//   - name: Name of the dataset. In the form of
+//     `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtD
+//     atasets/{adaptive-mt-dataset-id}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsService) Get(name string) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.get" call.
+// Exactly one of *AdaptiveMtDataset or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AdaptiveMtDataset.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtDataset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdaptiveMtDataset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the Adaptive MT dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the dataset. In the form of `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "AdaptiveMtDataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.importAdaptiveMtFile":
+
+type ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall struct {
+	s                           *Service
+	parent                      string
+	importadaptivemtfilerequest *ImportAdaptiveMtFileRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// ImportAdaptiveMtFile: Imports an AdaptiveMtFile and adds all of its
+// sentences into the AdaptiveMtDataset.
+//
+//   - parent: The resource name of the file, in form of
+//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
+//     atasets/{dataset}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsService) ImportAdaptiveMtFile(parent string, importadaptivemtfilerequest *ImportAdaptiveMtFileRequest) *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.importadaptivemtfilerequest = importadaptivemtfilerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importadaptivemtfilerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:importAdaptiveMtFile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.importAdaptiveMtFile" call.
+// Exactly one of *ImportAdaptiveMtFileResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ImportAdaptiveMtFileResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Do(opts ...googleapi.CallOption) (*ImportAdaptiveMtFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ImportAdaptiveMtFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports an AdaptiveMtFile and adds all of its sentences into the AdaptiveMtDataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}:importAdaptiveMtFile",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.importAdaptiveMtFile",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}:importAdaptiveMtFile",
+	//   "request": {
+	//     "$ref": "ImportAdaptiveMtFileRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ImportAdaptiveMtFileResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.list":
+
+type ProjectsLocationsAdaptiveMtDatasetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Adaptive MT datasets for which the caller has read
+// permission.
+//
+//   - parent: The resource name of the project from which to list the
+//     Adaptive MT datasets.
+//     `projects/{project-number-or-id}/locations/{location-id}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for
+// filtering the results of the request. Filter is not supported yet.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Filter(filter string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server picks an appropriate default.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) PageSize(pageSize int64) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListAdaptiveMtDatasetsResponse.next_page_token
+// returned from the previous call to `ListAdaptiveMtDatasets` method.
+// The first page is returned if `page_token`is empty or missing.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/adaptiveMtDatasets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.list" call.
+// Exactly one of *ListAdaptiveMtDatasetsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAdaptiveMtDatasetsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtDatasetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAdaptiveMtDatasetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all Adaptive MT datasets for which the caller has read permission.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression for filtering the results of the request. Filter is not supported yet.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. The server may return fewer results than requested. If unspecified, the server picks an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtDatasetsResponse.next_page_token returned from the previous call to `ListAdaptiveMtDatasets` method. The first page is returned if `page_token`is empty or missing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the project from which to list the Adaptive MT datasets. `projects/{project-number-or-id}/locations/{location-id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/adaptiveMtDatasets",
+	//   "response": {
+	//     "$ref": "ListAdaptiveMtDatasetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtDatasetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.delete":
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an AdaptiveMtFile along with its sentences.
+//
+//   - name: The resource name of the file to delete, in form of
+//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
+//     atasets/{dataset}/files/{file}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Delete(name string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an AdaptiveMtFile along with its sentences.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles/{adaptiveMtFilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the file to delete, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/files/{file}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.get":
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets and AdaptiveMtFile
+//
+//   - name: The resource name of the file, in form of
+//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
+//     atasets/{dataset}/files/{file}`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Get(name string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.get" call.
+// Exactly one of *AdaptiveMtFile or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AdaptiveMtFile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtFile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdaptiveMtFile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets and AdaptiveMtFile",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles/{adaptiveMtFilesId}",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/files/{file}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "AdaptiveMtFile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.list":
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.
+//
+//   - parent: The resource name of the project from which to list the
+//     Adaptive MT files.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
+//     }`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize":
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) PageSize(pageSize int64) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListAdaptiveMtFilesResponse.next_page_token
+// returned from the previous call to `ListAdaptiveMtFiles` method. The
+// first page is returned if `page_token`is empty or missing.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/adaptiveMtFiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.list" call.
+// Exactly one of *ListAdaptiveMtFilesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdaptiveMtFilesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtFilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAdaptiveMtFilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. ",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtFilesResponse.next_page_token returned from the previous call to `ListAdaptiveMtFiles` method. The first page is returned if `page_token`is empty or missing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the project from which to list the Adaptive MT files. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/adaptiveMtFiles",
+	//   "response": {
+	//     "$ref": "ListAdaptiveMtFilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtFilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.adaptiveMtSentences.list":
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all AdaptiveMtSentences under a given file/dataset.
+//
+//   - parent: The resource name of the project from which to list the
+//     Adaptive MT files. The following format lists all sentences under a
+//     file.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
+//     }/adaptiveMtFiles/{file}` The following format lists all sentences
+//     within a dataset.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
+//     }`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize":
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) PageSize(pageSize int64) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListAdaptiveMtSentencesRequest.next_page_token
+// returned from the previous call to `ListTranslationMemories` method.
+// The first page is returned if `page_token` is empty or missing.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/adaptiveMtSentences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.adaptiveMtSentences.list" call.
+// Exactly one of *ListAdaptiveMtSentencesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAdaptiveMtSentencesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtSentencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAdaptiveMtSentencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all AdaptiveMtSentences under a given file/dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles/{adaptiveMtFilesId}/adaptiveMtSentences",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.adaptiveMtSentences.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtSentencesRequest.next_page_token returned from the previous call to `ListTranslationMemories` method. The first page is returned if `page_token` is empty or missing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the project from which to list the Adaptive MT files. The following format lists all sentences under a file. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}` The following format lists all sentences within a dataset. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/adaptiveMtSentences",
+	//   "response": {
+	//     "$ref": "ListAdaptiveMtSentencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtSentencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.list":
+
+type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all AdaptiveMtSentences under a given file/dataset.
+//
+//   - parent: The resource name of the project from which to list the
+//     Adaptive MT files. The following format lists all sentences under a
+//     file.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
+//     }/adaptiveMtFiles/{file}` The following format lists all sentences
+//     within a dataset.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
+//     }`.
+func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
+	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize":
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) PageSize(pageSize int64) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListAdaptiveMtSentencesRequest.next_page_token
+// returned from the previous call to `ListTranslationMemories` method.
+// The first page is returned if `page_token` is empty or missing.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/adaptiveMtSentences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.list" call.
+// Exactly one of *ListAdaptiveMtSentencesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAdaptiveMtSentencesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtSentencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAdaptiveMtSentencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all AdaptiveMtSentences under a given file/dataset.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtSentences",
+	//   "httpMethod": "GET",
+	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtSentencesRequest.next_page_token returned from the previous call to `ListTranslationMemories` method. The first page is returned if `page_token` is empty or missing.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the project from which to list the Adaptive MT files. The following format lists all sentences under a file. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}` The following format lists all sentences within a dataset. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/adaptiveMtSentences",
+	//   "response": {
+	//     "$ref": "ListAdaptiveMtSentencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtSentencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "translate.projects.locations.datasets.create":
@@ -4935,7 +7266,8 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -5359,7 +7691,8 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 	//     "$ref": "Dataset"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -5678,7 +8011,8 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//     "$ref": "ListDatasetsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -6186,7 +8520,8 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -6333,7 +8668,8 @@ func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "Glossary"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -6536,7 +8872,8 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "ListGlossariesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -7140,7 +9477,8 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Do(opts ...googleapi
 	//     "$ref": "GlossaryEntry"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -7316,7 +9654,8 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Do(opts ...googleap
 	//     "$ref": "ListGlossaryEntriesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 
@@ -8092,7 +10431,8 @@ func (c *ProjectsLocationsModelsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "$ref": "ListModelsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
 	//   ]
 	// }
 

@@ -161,10 +161,22 @@ func (s *Service) userAgent() string {
 
 func NewPropertiesService(s *Service) *PropertiesService {
 	rs := &PropertiesService{s: s}
+	rs.AudienceExports = NewPropertiesAudienceExportsService(s)
 	return rs
 }
 
 type PropertiesService struct {
+	s *Service
+
+	AudienceExports *PropertiesAudienceExportsService
+}
+
+func NewPropertiesAudienceExportsService(s *Service) *PropertiesAudienceExportsService {
+	rs := &PropertiesAudienceExportsService{s: s}
+	return rs
+}
+
+type PropertiesAudienceExportsService struct {
 	s *Service
 }
 
@@ -203,6 +215,110 @@ func (s *ActiveMetricRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ActiveMetricRestriction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AudienceExport: An audience export is a list of users in an audience
+// at the time of the list's creation. One audience may have multiple
+// audience exports created for different days.
+type AudienceExport struct {
+	// Audience: Required. The audience resource name. This resource name
+	// identifies the audience being listed and is shared between the
+	// Analytics Data & Admin APIs. Format:
+	// `properties/{property}/audiences/{audience}`
+	Audience string `json:"audience,omitempty"`
+
+	// AudienceDisplayName: Output only. The descriptive display name for
+	// this audience. For example, "Purchasers".
+	AudienceDisplayName string `json:"audienceDisplayName,omitempty"`
+
+	// BeginCreatingTime: Output only. The time when CreateAudienceExport
+	// was called and the AudienceExport began the `CREATING` state.
+	BeginCreatingTime string `json:"beginCreatingTime,omitempty"`
+
+	// CreationQuotaTokensCharged: Output only. The total quota tokens
+	// charged during creation of the AudienceExport. Because this token
+	// count is based on activity from the `CREATING` state, this tokens
+	// charged will be fixed once an AudienceExport enters the `ACTIVE` or
+	// `FAILED` states.
+	CreationQuotaTokensCharged int64 `json:"creationQuotaTokensCharged,omitempty"`
+
+	// Dimensions: Required. The dimensions requested and displayed in the
+	// query response.
+	Dimensions []*V1betaAudienceDimension `json:"dimensions,omitempty"`
+
+	// ErrorMessage: Output only. Error message is populated when an
+	// audience export fails during creation. A common reason for such a
+	// failure is quota exhaustion.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Name: Output only. Identifier. The audience export resource name
+	// assigned during creation. This resource name identifies this
+	// `AudienceExport`. Format:
+	// `properties/{property}/audienceExports/{audience_export}`
+	Name string `json:"name,omitempty"`
+
+	// PercentageCompleted: Output only. The percentage completed for this
+	// audience export ranging between 0 to 100.
+	PercentageCompleted float64 `json:"percentageCompleted,omitempty"`
+
+	// RowCount: Output only. The total number of rows in the AudienceExport
+	// result.
+	RowCount int64 `json:"rowCount,omitempty"`
+
+	// State: Output only. The current state for this AudienceExport.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state will never be used.
+	//   "CREATING" - The AudienceExport is currently creating and will be
+	// available in the future. Creating occurs immediately after the
+	// CreateAudienceExport call.
+	//   "ACTIVE" - The AudienceExport is fully created and ready for
+	// querying. An AudienceExport is updated to active asynchronously from
+	// a request; this occurs some time (for example 15 minutes) after the
+	// initial create call.
+	//   "FAILED" - The AudienceExport failed to be created. It is possible
+	// that re-requesting this audience export will succeed.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audience") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AudienceExport) MarshalJSON() ([]byte, error) {
+	type NoMethod AudienceExport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *AudienceExport) UnmarshalJSON(data []byte) error {
+	type NoMethod AudienceExport
+	var s1 struct {
+		PercentageCompleted gensupport.JSONFloat64 `json:"percentageCompleted"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PercentageCompleted = float64(s1.PercentageCompleted)
+	return nil
 }
 
 // AudienceListMetadata: This metadata is currently blank.
@@ -1225,6 +1341,45 @@ func (s *InListFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListAudienceExportsResponse: A list of all audience exports for a
+// property.
+type ListAudienceExportsResponse struct {
+	// AudienceExports: Each audience export for a property.
+	AudienceExports []*AudienceExport `json:"audienceExports,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AudienceExports") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudienceExports") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAudienceExportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAudienceExportsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Metadata: The dimensions, metrics and comparisons currently accepted
 // in reporting methods.
 type Metadata struct {
@@ -1707,6 +1862,68 @@ func (s *NumericValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
+	// `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal, successful response of the operation. If the
+	// original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OrderBy: Order bys define how rows will be sorted in the response.
 // For example, ordering rows by descending event count is one ordering,
 // and ordering rows by the event name string is a different ordering.
@@ -2016,6 +2233,102 @@ type PropertyQuota struct {
 
 func (s *PropertyQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyQuota
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryAudienceExportRequest: A request to list users in an audience
+// export.
+type QueryAudienceExportRequest struct {
+	// Limit: Optional. The number of rows to return. If unspecified, 10,000
+	// rows are returned. The API returns a maximum of 250,000 rows per
+	// request, no matter how many you ask for. `limit` must be positive.
+	// The API can also return fewer rows than the requested `limit`, if
+	// there aren't as many dimension values as the `limit`. To learn more
+	// about this pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+	Limit int64 `json:"limit,omitempty,string"`
+
+	// Offset: Optional. The row count of the start row. The first row is
+	// counted as row 0. When paging, the first request does not specify
+	// offset; or equivalently, sets offset to 0; the first request returns
+	// the first `limit` of rows. The second request sets offset to the
+	// `limit` of the first request; the second request returns the second
+	// `limit` of rows. To learn more about this pagination parameter, see
+	// Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+	Offset int64 `json:"offset,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Limit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Limit") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAudienceExportRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAudienceExportRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryAudienceExportResponse: A list of users in an audience export.
+type QueryAudienceExportResponse struct {
+	// AudienceExport: Configuration data about AudienceExport being
+	// queried. Returned to help interpret the audience rows in this
+	// response. For example, the dimensions in this AudienceExport
+	// correspond to the columns in the AudienceRows.
+	AudienceExport *AudienceExport `json:"audienceExport,omitempty"`
+
+	// AudienceRows: Rows for each user in an audience export. The number of
+	// rows in this response will be less than or equal to request's page
+	// size.
+	AudienceRows []*V1betaAudienceRow `json:"audienceRows,omitempty"`
+
+	// RowCount: The total number of rows in the AudienceExport result.
+	// `rowCount` is independent of the number of rows returned in the
+	// response, the `limit` request parameter, and the `offset` request
+	// parameter. For example if a query returns 175 rows and includes
+	// `limit` of 50 in the API request, the response will contain
+	// `rowCount` of 175 but only 50 rows. To learn more about this
+	// pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
+	RowCount int64 `json:"rowCount,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AudienceExport") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudienceExport") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAudienceExportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAudienceExportResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2764,6 +3077,50 @@ func (s *SchemaRestrictionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StringFilter: The filter for string
 type StringFilter struct {
 	// CaseSensitive: If true, the string value is case sensitive.
@@ -2805,6 +3162,99 @@ type StringFilter struct {
 
 func (s *StringFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod StringFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1betaAudienceDimension: An audience dimension is a user attribute.
+// Specific user attributed are requested and then later returned in the
+// `QueryAudienceExportResponse`.
+type V1betaAudienceDimension struct {
+	// DimensionName: Optional. The API name of the dimension. See the API
+	// Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-api-schema#dimensions)
+	// for the list of dimension names.
+	DimensionName string `json:"dimensionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1betaAudienceDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod V1betaAudienceDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1betaAudienceDimensionValue: The value of a dimension.
+type V1betaAudienceDimensionValue struct {
+	// Value: Value as a string if the dimension type is a string.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1betaAudienceDimensionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod V1betaAudienceDimensionValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1betaAudienceRow: Dimension value attributes for the audience user
+// row.
+type V1betaAudienceRow struct {
+	// DimensionValues: Each dimension value attribute for an audience user.
+	// One dimension value will be added for each dimension column
+	// requested.
+	DimensionValues []*V1betaAudienceDimensionValue `json:"dimensionValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionValues") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1betaAudienceRow) MarshalJSON() ([]byte, error) {
+	type NoMethod V1betaAudienceRow
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3883,6 +4333,698 @@ func (c *PropertiesRunReportCall) Do(opts ...googleapi.CallOption) (*RunReportRe
 	//   },
 	//   "response": {
 	//     "$ref": "RunReportResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsdata.properties.audienceExports.create":
+
+type PropertiesAudienceExportsCreateCall struct {
+	s              *Service
+	parent         string
+	audienceexport *AudienceExport
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates an audience export for later retrieval. This method
+// quickly returns the audience export's resource name and initiates a
+// long running asynchronous request to form an audience export. To
+// export the users in an audience export, first create the audience
+// export through this method and then send the audience resource name
+// to the `QueryAudienceExport` method. See Creating an Audience Export
+// (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
+// for an introduction to Audience Exports with examples. An audience
+// export is a snapshot of the users currently in the audience at the
+// time of audience export creation. Creating audience exports for one
+// audience on different days will return different results as users
+// enter and exit the audience. Audiences in Google Analytics 4 allow
+// you to segment your users in the ways that are important to your
+// business. To learn more, see
+// https://support.google.com/analytics/answer/9267572. Audience exports
+// contain the users in each audience. Audience Export APIs have some
+// methods at alpha and other methods at beta stability. The intention
+// is to advance methods to beta stability after some feedback and
+// adoption. To give your feedback on this API, complete the Google
+// Analytics Audience Export API Feedback
+// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+//
+//   - parent: The parent resource where this audience export will be
+//     created. Format: `properties/{property}`.
+func (r *PropertiesAudienceExportsService) Create(parent string, audienceexport *AudienceExport) *PropertiesAudienceExportsCreateCall {
+	c := &PropertiesAudienceExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.audienceexport = audienceexport
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudienceExportsCreateCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudienceExportsCreateCall) Context(ctx context.Context) *PropertiesAudienceExportsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudienceExportsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudienceExportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.audienceexport)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/audienceExports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsdata.properties.audienceExports.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PropertiesAudienceExportsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an audience export for later retrieval. This method quickly returns the audience export's resource name and initiates a long running asynchronous request to form an audience export. To export the users in an audience export, first create the audience export through this method and then send the audience resource name to the `QueryAudienceExport` method. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. An audience export is a snapshot of the users currently in the audience at the time of audience export creation. Creating audience exports for one audience on different days will return different results as users enter and exit the audience. Audiences in Google Analytics 4 allow you to segment your users in the ways that are important to your business. To learn more, see https://support.google.com/analytics/answer/9267572. Audience exports contain the users in each audience. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsdata.properties.audienceExports.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this audience export will be created. Format: `properties/{property}`",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/audienceExports",
+	//   "request": {
+	//     "$ref": "AudienceExport"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsdata.properties.audienceExports.get":
+
+type PropertiesAudienceExportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets configuration metadata about a specific audience export.
+// This method can be used to understand an audience export after it has
+// been created. See Creating an Audience Export
+// (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
+// for an introduction to Audience Exports with examples. Audience
+// Export APIs have some methods at alpha and other methods at beta
+// stability. The intention is to advance methods to beta stability
+// after some feedback and adoption. To give your feedback on this API,
+// complete the Google Analytics Audience Export API Feedback
+// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+//
+//   - name: The audience export resource name. Format:
+//     `properties/{property}/audienceExports/{audience_export}`.
+func (r *PropertiesAudienceExportsService) Get(name string) *PropertiesAudienceExportsGetCall {
+	c := &PropertiesAudienceExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudienceExportsGetCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesAudienceExportsGetCall) IfNoneMatch(entityTag string) *PropertiesAudienceExportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudienceExportsGetCall) Context(ctx context.Context) *PropertiesAudienceExportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudienceExportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudienceExportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsdata.properties.audienceExports.get" call.
+// Exactly one of *AudienceExport or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AudienceExport.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAudienceExportsGetCall) Do(opts ...googleapi.CallOption) (*AudienceExport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AudienceExport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets configuration metadata about a specific audience export. This method can be used to understand an audience export after it has been created. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports/{audienceExportsId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsdata.properties.audienceExports.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The audience export resource name. Format: `properties/{property}/audienceExports/{audience_export}`",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/audienceExports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "AudienceExport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsdata.properties.audienceExports.list":
+
+type PropertiesAudienceExportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all audience exports for a property. This method can be
+// used for you to find and reuse existing audience exports rather than
+// creating unnecessary new audience exports. The same audience can have
+// multiple audience exports that represent the export of users that
+// were in an audience on different days. See Creating an Audience
+// Export
+// (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
+// for an introduction to Audience Exports with examples. Audience
+// Export APIs have some methods at alpha and other methods at beta
+// stability. The intention is to advance methods to beta stability
+// after some feedback and adoption. To give your feedback on this API,
+// complete the Google Analytics Audience Export API Feedback
+// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+//
+//   - parent: All audience exports for this property will be listed in
+//     the response. Format: `properties/{property}`.
+func (r *PropertiesAudienceExportsService) List(parent string) *PropertiesAudienceExportsListCall {
+	c := &PropertiesAudienceExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of audience exports to return. The service may return fewer than this
+// value. If unspecified, at most 200 audience exports will be returned.
+// The maximum value is 1000 (higher values will be coerced to the
+// maximum).
+func (c *PropertiesAudienceExportsListCall) PageSize(pageSize int64) *PropertiesAudienceExportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListAudienceExports` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListAudienceExports` must match the call that provided
+// the page token.
+func (c *PropertiesAudienceExportsListCall) PageToken(pageToken string) *PropertiesAudienceExportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudienceExportsListCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesAudienceExportsListCall) IfNoneMatch(entityTag string) *PropertiesAudienceExportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudienceExportsListCall) Context(ctx context.Context) *PropertiesAudienceExportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudienceExportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudienceExportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/audienceExports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsdata.properties.audienceExports.list" call.
+// Exactly one of *ListAudienceExportsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAudienceExportsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAudienceExportsListCall) Do(opts ...googleapi.CallOption) (*ListAudienceExportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAudienceExportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all audience exports for a property. This method can be used for you to find and reuse existing audience exports rather than creating unnecessary new audience exports. The same audience can have multiple audience exports that represent the export of users that were in an audience on different days. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsdata.properties.audienceExports.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of audience exports to return. The service may return fewer than this value. If unspecified, at most 200 audience exports will be returned. The maximum value is 1000 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListAudienceExports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAudienceExports` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. All audience exports for this property will be listed in the response. Format: `properties/{property}`",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/audienceExports",
+	//   "response": {
+	//     "$ref": "ListAudienceExportsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesAudienceExportsListCall) Pages(ctx context.Context, f func(*ListAudienceExportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsdata.properties.audienceExports.query":
+
+type PropertiesAudienceExportsQueryCall struct {
+	s                          *Service
+	name                       string
+	queryaudienceexportrequest *QueryAudienceExportRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Query: Retrieves an audience export of users. After creating an
+// audience, the users are not immediately available for exporting.
+// First, a request to `CreateAudienceExport` is necessary to create an
+// audience export of users, and then second, this method is used to
+// retrieve the users in the audience export. See Creating an Audience
+// Export
+// (https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics)
+// for an introduction to Audience Exports with examples. Audiences in
+// Google Analytics 4 allow you to segment your users in the ways that
+// are important to your business. To learn more, see
+// https://support.google.com/analytics/answer/9267572. Audience Export
+// APIs have some methods at alpha and other methods at beta stability.
+// The intention is to advance methods to beta stability after some
+// feedback and adoption. To give your feedback on this API, complete
+// the Google Analytics Audience Export API Feedback
+// (https://forms.gle/EeA5u5LW6PEggtCEA) form.
+//
+//   - name: The name of the audience export to retrieve users from.
+//     Format: `properties/{property}/audienceExports/{audience_export}`.
+func (r *PropertiesAudienceExportsService) Query(name string, queryaudienceexportrequest *QueryAudienceExportRequest) *PropertiesAudienceExportsQueryCall {
+	c := &PropertiesAudienceExportsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.queryaudienceexportrequest = queryaudienceexportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesAudienceExportsQueryCall) Fields(s ...googleapi.Field) *PropertiesAudienceExportsQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesAudienceExportsQueryCall) Context(ctx context.Context) *PropertiesAudienceExportsQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesAudienceExportsQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesAudienceExportsQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryaudienceexportrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsdata.properties.audienceExports.query" call.
+// Exactly one of *QueryAudienceExportResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryAudienceExportResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesAudienceExportsQueryCall) Do(opts ...googleapi.CallOption) (*QueryAudienceExportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryAudienceExportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves an audience export of users. After creating an audience, the users are not immediately available for exporting. First, a request to `CreateAudienceExport` is necessary to create an audience export of users, and then second, this method is used to retrieve the users in the audience export. See [Creating an Audience Export](https://developers.google.com/analytics/devguides/reporting/data/v1/audience-list-basics) for an introduction to Audience Exports with examples. Audiences in Google Analytics 4 allow you to segment your users in the ways that are important to your business. To learn more, see https://support.google.com/analytics/answer/9267572. Audience Export APIs have some methods at alpha and other methods at beta stability. The intention is to advance methods to beta stability after some feedback and adoption. To give your feedback on this API, complete the [Google Analytics Audience Export API Feedback](https://forms.gle/EeA5u5LW6PEggtCEA) form.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/audienceExports/{audienceExportsId}:query",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsdata.properties.audienceExports.query",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the audience export to retrieve users from. Format: `properties/{property}/audienceExports/{audience_export}`",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/audienceExports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}:query",
+	//   "request": {
+	//     "$ref": "QueryAudienceExportRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "QueryAudienceExportResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics",

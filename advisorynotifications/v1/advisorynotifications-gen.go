@@ -133,6 +133,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Organizations = NewOrganizationsService(s)
+	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -142,6 +143,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Organizations *OrganizationsService
+
+	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -181,6 +184,39 @@ func NewOrganizationsLocationsNotificationsService(s *Service) *OrganizationsLoc
 }
 
 type OrganizationsLocationsNotificationsService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Locations = NewProjectsLocationsService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Locations *ProjectsLocationsService
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.Notifications = NewProjectsLocationsNotificationsService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	Notifications *ProjectsLocationsNotificationsService
+}
+
+func NewProjectsLocationsNotificationsService(s *Service) *ProjectsLocationsNotificationsService {
+	rs := &ProjectsLocationsNotificationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsNotificationsService struct {
 	s *Service
 }
 
@@ -398,7 +434,8 @@ type GoogleCloudAdvisorynotificationsV1Notification struct {
 
 	// Name: The resource name of the notification. Format:
 	// organizations/{organization}/locations/{location}/notifications/{notif
-	// ication}.
+	// ication} or
+	// projects/{project}/locations/{location}/notifications/{notification}.
 	Name string `json:"name,omitempty"`
 
 	// NotificationType: Type of notification
@@ -481,7 +518,7 @@ type GoogleCloudAdvisorynotificationsV1Settings struct {
 	// be thrown, and the client should retry the read-modify-write cycle.
 	Etag string `json:"etag,omitempty"`
 
-	// Name: Output only. The resource name of the settings to retrieve.
+	// Name: Identifier. The resource name of the settings to retrieve.
 	// Format: organizations/{organization}/locations/{location}/settings.
 	Name string `json:"name,omitempty"`
 
@@ -756,7 +793,7 @@ type OrganizationsLocationsUpdateSettingsCall struct {
 
 // UpdateSettings: Update notification settings.
 //
-//   - name: Output only. The resource name of the settings to retrieve.
+//   - name: Identifier. The resource name of the settings to retrieve.
 //     Format: organizations/{organization}/locations/{location}/settings.
 func (r *OrganizationsLocationsService) UpdateSettings(name string, googlecloudadvisorynotificationsv1settings *GoogleCloudAdvisorynotificationsV1Settings) *OrganizationsLocationsUpdateSettingsCall {
 	c := &OrganizationsLocationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -867,7 +904,7 @@ func (c *OrganizationsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings.",
+	//       "description": "Identifier. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/settings$",
 	//       "required": true,
@@ -903,7 +940,9 @@ type OrganizationsLocationsNotificationsGetCall struct {
 //
 //   - name: A name of the notification to retrieve. Format:
 //     organizations/{organization}/locations/{location}/notifications/{not
-//     ification}.
+//     ification} or
+//     projects/{projects}/locations/{location}/notifications/{notification
+//     }.
 func (r *OrganizationsLocationsNotificationsService) Get(name string) *OrganizationsLocationsNotificationsGetCall {
 	c := &OrganizationsLocationsNotificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1036,7 +1075,7 @@ func (c *OrganizationsLocationsNotificationsGetCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. A name of the notification to retrieve. Format: organizations/{organization}/locations/{location}/notifications/{notification}.",
+	//       "description": "Required. A name of the notification to retrieve. Format: organizations/{organization}/locations/{location}/notifications/{notification} or projects/{projects}/locations/{location}/notifications/{notification}.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/notifications/[^/]+$",
 	//       "required": true,
@@ -1069,7 +1108,8 @@ type OrganizationsLocationsNotificationsListCall struct {
 //
 //   - parent: The parent, which owns this collection of notifications.
 //     Must be of the form
-//     "organizations/{organization}/locations/{location}".
+//     "organizations/{organization}/locations/{location}" or
+//     "projects/{project}/locations/{location}".
 func (r *OrganizationsLocationsNotificationsService) List(parent string) *OrganizationsLocationsNotificationsListCall {
 	c := &OrganizationsLocationsNotificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1254,7 +1294,7 @@ func (c *OrganizationsLocationsNotificationsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\"",
+	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1291,6 +1331,429 @@ func (c *OrganizationsLocationsNotificationsListCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsNotificationsListCall) Pages(ctx context.Context, f func(*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "advisorynotifications.projects.locations.notifications.get":
+
+type ProjectsLocationsNotificationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a notification.
+//
+//   - name: A name of the notification to retrieve. Format:
+//     organizations/{organization}/locations/{location}/notifications/{not
+//     ification} or
+//     projects/{projects}/locations/{location}/notifications/{notification
+//     }.
+func (r *ProjectsLocationsNotificationsService) Get(name string) *ProjectsLocationsNotificationsGetCall {
+	c := &ProjectsLocationsNotificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": ISO code for
+// requested localization language. If unset, will be interpereted as
+// "en". If the requested language is valid, but not supported for this
+// notification, English will be returned with an "Not applicable"
+// LocalizationState. If the ISO code is invalid (i.e. not a real
+// language), this RPC will throw an error.
+func (c *ProjectsLocationsNotificationsGetCall) LanguageCode(languageCode string) *ProjectsLocationsNotificationsGetCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotificationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotificationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNotificationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotificationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotificationsGetCall) Context(ctx context.Context) *ProjectsLocationsNotificationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotificationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotificationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "advisorynotifications.projects.locations.notifications.get" call.
+// Exactly one of *GoogleCloudAdvisorynotificationsV1Notification or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAdvisorynotificationsV1Notification.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotificationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Notification, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAdvisorynotificationsV1Notification{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a notification.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notifications/{notificationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "advisorynotifications.projects.locations.notifications.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "ISO code for requested localization language. If unset, will be interpereted as \"en\". If the requested language is valid, but not supported for this notification, English will be returned with an \"Not applicable\" LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. A name of the notification to retrieve. Format: organizations/{organization}/locations/{location}/notifications/{notification} or projects/{projects}/locations/{location}/notifications/{notification}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/notifications/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudAdvisorynotificationsV1Notification"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "advisorynotifications.projects.locations.notifications.list":
+
+type ProjectsLocationsNotificationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists notifications under a given parent.
+//
+//   - parent: The parent, which owns this collection of notifications.
+//     Must be of the form
+//     "organizations/{organization}/locations/{location}" or
+//     "projects/{project}/locations/{location}".
+func (r *ProjectsLocationsNotificationsService) List(parent string) *ProjectsLocationsNotificationsListCall {
+	c := &ProjectsLocationsNotificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": ISO code for
+// requested localization language. If unset, will be interpereted as
+// "en". If the requested language is valid, but not supported for this
+// notification, English will be returned with an "Not applicable"
+// LocalizationState. If the ISO code is invalid (i.e. not a real
+// language), this RPC will throw an error.
+func (c *ProjectsLocationsNotificationsListCall) LanguageCode(languageCode string) *ProjectsLocationsNotificationsListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of notifications to return. The service may return fewer than this
+// value. If unspecified or equal to 0, at most 50 notifications will be
+// returned. The maximum value is 50; values above 50 will be coerced to
+// 50.
+func (c *ProjectsLocationsNotificationsListCall) PageSize(pageSize int64) *ProjectsLocationsNotificationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token
+// returned from a previous request. When paginating, all other
+// parameters provided in the request must match the call that returned
+// the page token.
+func (c *ProjectsLocationsNotificationsListCall) PageToken(pageToken string) *ProjectsLocationsNotificationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which parts of the
+// notification resource should be returned in the response.
+//
+// Possible values:
+//
+//	"NOTIFICATION_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
+// BASIC.
+//
+//	"BASIC" - Server responses only include title, creation time and
+//
+// Notification ID. Note: for internal use responses also include the
+// last update time, the latest message text and whether notification
+// has attachments.
+//
+//	"FULL" - Include everything.
+func (c *ProjectsLocationsNotificationsListCall) View(view string) *ProjectsLocationsNotificationsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNotificationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotificationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsNotificationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotificationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNotificationsListCall) Context(ctx context.Context) *ProjectsLocationsNotificationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNotificationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNotificationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notifications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "advisorynotifications.projects.locations.notifications.list" call.
+// Exactly one of
+// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse.ServerRes
+// ponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsNotificationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAdvisorynotificationsV1ListNotificationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists notifications under a given parent.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notifications",
+	//   "httpMethod": "GET",
+	//   "id": "advisorynotifications.projects.locations.notifications.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "ISO code for requested localization language. If unset, will be interpereted as \"en\". If the requested language is valid, but not supported for this notification, English will be returned with an \"Not applicable\" LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of notifications to return. The service may return fewer than this value. If unspecified or equal to 0, at most 50 notifications will be returned. The maximum value is 50; values above 50 will be coerced to 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token returned from a previous request. When paginating, all other parameters provided in the request must match the call that returned the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the notification resource should be returned in the response.",
+	//       "enum": [
+	//         "NOTIFICATION_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified, equivalent to BASIC.",
+	//         "Server responses only include title, creation time and Notification ID. Note: for internal use responses also include the last update time, the latest message text and whether notification has attachments.",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notifications",
+	//   "response": {
+	//     "$ref": "GoogleCloudAdvisorynotificationsV1ListNotificationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsNotificationsListCall) Pages(ctx context.Context, f func(*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

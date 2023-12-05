@@ -1775,7 +1775,10 @@ type GoogleMapsPlacesV1SearchTextRequestLocationBias struct {
 	// Rectangle: A rectangle box defined by northeast and southwest corner.
 	// `rectangle.high()` must be the northeast point of the rectangle
 	// viewport. `rectangle.low()` must be the southwest point of the
-	// rectangle viewport.
+	// rectangle viewport. `rectangle.low().latitude()` cannot be greater
+	// than `rectangle.high().latitude()`. This will result in an empty
+	// latitude range. A rectangle viewport cannot be wider than 180
+	// degrees.
 	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Circle") to
@@ -1808,7 +1811,10 @@ type GoogleMapsPlacesV1SearchTextRequestLocationRestriction struct {
 	// Rectangle: A rectangle box defined by northeast and southwest corner.
 	// `rectangle.high()` must be the northeast point of the rectangle
 	// viewport. `rectangle.low()` must be the southwest point of the
-	// rectangle viewport.
+	// rectangle viewport. `rectangle.low().latitude()` cannot be greater
+	// than `rectangle.high().latitude()`. This will result in an empty
+	// latitude range. A rectangle viewport cannot be wider than 180
+	// degrees.
 	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Rectangle") to

@@ -368,9 +368,10 @@ type EthereumDetails struct {
 	// the `debug` namespace. Defaults to `false`.
 	ApiEnableDebug bool `json:"apiEnableDebug,omitempty"`
 
-	// BeaconFeeRecipient: An Ethereum address which the beacon client will
-	// send fee rewards to if no recipient is configured in the validator
-	// client. See
+	// BeaconFeeRecipient: Deprecated: Use the same field in the
+	// ValidatorConfig message as replacement. An Ethereum address which the
+	// beacon client will send fee rewards to if no recipient is configured
+	// in the validator client. See
 	// https://lighthouse-book.sigmaprime.io/suggested-fee-recipient.html or
 	// https://docs.prylabs.network/docs/execution-node/fee-recipient for
 	// examples of how this is used. Note that while this is often described
@@ -436,6 +437,10 @@ type EthereumDetails struct {
 	//   "ARCHIVE" - Holds the same data as full node as well as all of the
 	// blockchain's history state data dating back to the Genesis Block.
 	NodeType string `json:"nodeType,omitempty"`
+
+	// ValidatorConfig: Configuration for validator-related parameters on
+	// the beacon client, and for any GCP-managed validator client.
+	ValidatorConfig *ValidatorConfig `json:"validatorConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalEndpoints")
 	// to unconditionally include in API requests. By default, fields with
@@ -879,6 +884,37 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidatorConfig: Configuration for validator-related parameters on
+// the beacon client, and for any GCP-managed validator client.
+type ValidatorConfig struct {
+	// MevRelayUrls: URLs for MEV-relay services to use for block building.
+	// When set, a GCP-managed MEV-boost service is configured on the beacon
+	// client.
+	MevRelayUrls []string `json:"mevRelayUrls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MevRelayUrls") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MevRelayUrls") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidatorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidatorConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

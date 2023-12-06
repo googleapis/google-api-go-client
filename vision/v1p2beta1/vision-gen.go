@@ -6469,8 +6469,7 @@ func (s *GoogleCloudVisionV1p2beta1WebDetection) MarshalJSON() ([]byte, error) {
 // GoogleCloudVisionV1p2beta1WebDetectionParams: Parameters for web
 // detection request.
 type GoogleCloudVisionV1p2beta1WebDetectionParams struct {
-	// IncludeGeoResults: Whether to include results derived from the geo
-	// information in the image.
+	// IncludeGeoResults: This field has no effect on results.
 	IncludeGeoResults bool `json:"includeGeoResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeGeoResults")

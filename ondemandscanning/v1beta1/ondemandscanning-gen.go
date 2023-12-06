@@ -2618,6 +2618,10 @@ type PackageData struct {
 	//   "GO_STDLIB" - Go toolchain + standard library packages.
 	//   "PYPI" - Python packages.
 	//   "NPM" - NPM packages.
+	//   "NUGET" - Nuget (C#/.NET) packages.
+	//   "RUBYGEMS" - Ruby packges (from RubyGems package manager).
+	//   "RUST" - Rust packages from Cargo (Github ecosystem is `RUST`).
+	//   "COMPOSER" - PHP packages from Composer package manager.
 	PackageType string `json:"packageType,omitempty"`
 
 	// PatchedCve: CVEs that this package is no longer vulnerable to

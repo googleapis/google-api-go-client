@@ -4703,6 +4703,7 @@ type GoogleCloudDataplexV1GovernanceEvent struct {
 	//   "GOVERNANCE_RULE_SEARCH_LIMIT_EXCEEDS" - Rule processing exceeds
 	// the allowed limit.
 	//   "GOVERNANCE_RULE_ERRORS" - Rule processing errors.
+	//   "GOVERNANCE_RULE_PROCESSING" - Governance rule prcoessing Event.
 	EventType string `json:"eventType,omitempty"`
 
 	// Message: The log message.

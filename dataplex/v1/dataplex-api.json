@@ -4360,7 +4360,7 @@
       }
     }
   },
-  "revision": "20231110",
+  "revision": "20231129",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -7116,7 +7116,8 @@
             "ACCESS_POLICY_UPDATE",
             "GOVERNANCE_RULE_MATCHED_RESOURCES",
             "GOVERNANCE_RULE_SEARCH_LIMIT_EXCEEDS",
-            "GOVERNANCE_RULE_ERRORS"
+            "GOVERNANCE_RULE_ERRORS",
+            "GOVERNANCE_RULE_PROCESSING"
           ],
           "enumDescriptions": [
             "An unspecified event type.",
@@ -7134,7 +7135,8 @@
             "Access policy update event.",
             "Number of resources matched with particular Query.",
             "Rule processing exceeds the allowed limit.",
-            "Rule processing errors."
+            "Rule processing errors.",
+            "Governance rule prcoessing Event."
           ],
           "type": "string"
         },

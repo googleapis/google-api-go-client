@@ -2917,7 +2917,7 @@ type Job struct {
 	// `JOB_STATE_STOPPED` state unless otherwise specified. A job in the
 	// `JOB_STATE_RUNNING` state may asynchronously enter a terminal state.
 	// After a job has reached a terminal state, no further state updates
-	// may be made. This field may be mutated by the Cloud Dataflow service;
+	// may be made. This field might be mutated by the Dataflow service;
 	// callers cannot mutate it.
 	//
 	// Possible values:
@@ -2983,9 +2983,9 @@ type Job struct {
 	// ExecutionInfo: Deprecated.
 	ExecutionInfo *JobExecutionInfo `json:"executionInfo,omitempty"`
 
-	// Id: The unique ID of this job. This field is set by the Cloud
-	// Dataflow service when the Job is created, and is immutable for the
-	// life of the job.
+	// Id: The unique ID of this job. This field is set by the Dataflow
+	// service when the job is created, and is immutable for the life of the
+	// job.
 	Id string `json:"id,omitempty"`
 
 	// JobMetadata: This field is populated by the Dataflow service to
@@ -3006,12 +3006,12 @@ type Job struct {
 	// that contains this job.
 	Location string `json:"location,omitempty"`
 
-	// Name: The user-specified Cloud Dataflow job name. Only one Job with a
-	// given name can exist in a project within one region at any given
+	// Name: The user-specified Dataflow job name. Only one active job with
+	// a given name can exist in a project within one region at any given
 	// time. Jobs in different regions can have the same name. If a caller
-	// attempts to create a Job with the same name as an already-existing
-	// Job, the attempt returns the existing Job. The name must match the
-	// regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
+	// attempts to create a job with the same name as an active job that
+	// already exists, the attempt returns the existing job. The name must
+	// match the regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 
 	// PipelineDescription: Preliminary field: The format of this data may
@@ -3020,7 +3020,7 @@ type Job struct {
 	// retrieved with JOB_VIEW_DESCRIPTION or JOB_VIEW_ALL.
 	PipelineDescription *PipelineDescription `json:"pipelineDescription,omitempty"`
 
-	// ProjectId: The ID of the Cloud Platform project that the job belongs
+	// ProjectId: The ID of the Google Cloud project that the job belongs
 	// to.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -3146,7 +3146,7 @@ type Job struct {
 	// to be replaced to the corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 
-	// Type: The type of Cloud Dataflow job.
+	// Type: The type of Dataflow job.
 	//
 	// Possible values:
 	//   "JOB_TYPE_UNKNOWN" - The type of the job is unspecified, or
@@ -5349,6 +5349,12 @@ type RuntimeUpdatableParams struct {
 	// field is currently only supported for Streaming Engine jobs.
 	MinNumWorkers int64 `json:"minNumWorkers,omitempty"`
 
+	// WorkerUtilizationHint: Target worker utilization, compared against
+	// the aggregate utilization of the worker pool by autoscaler, to
+	// determine upscaling and downscaling when absent other constraints
+	// such as backlog.
+	WorkerUtilizationHint float64 `json:"workerUtilizationHint,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MaxNumWorkers") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5370,6 +5376,20 @@ func (s *RuntimeUpdatableParams) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeUpdatableParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *RuntimeUpdatableParams) UnmarshalJSON(data []byte) error {
+	type NoMethod RuntimeUpdatableParams
+	var s1 struct {
+		WorkerUtilizationHint gensupport.JSONFloat64 `json:"workerUtilizationHint"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.WorkerUtilizationHint = float64(s1.WorkerUtilizationHint)
+	return nil
 }
 
 // SDKInfo: SDK Information.

@@ -553,8 +553,8 @@ type GoogleMapsPlacesV1Photo struct {
 	HeightPx int64 `json:"heightPx,omitempty"`
 
 	// Name: Identifier. A reference representing this place photo which may
-	// be used to look up this place photo again (a.k.a. the API "resource"
-	// name: places/{place_id}/photos/{photo}).
+	// be used to look up this place photo again (also called the API
+	// "resource" name: `places/{place_id}/photos/{photo}`).
 	Name string `json:"name,omitempty"`
 
 	// WidthPx: The maximum available width, in pixels.
@@ -587,7 +587,7 @@ func (s *GoogleMapsPlacesV1Photo) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1PhotoMedia: A photo media from Places API.
 type GoogleMapsPlacesV1PhotoMedia struct {
 	// Name: The resource name of a photo media in the format:
-	// `places/place_id/photos/photo_reference/media`.
+	// `places/{place_id}/photos/{photo_reference}/media`.
 	Name string `json:"name,omitempty"`
 
 	// PhotoUri: A short-lived uri that can be used to render the photo.
@@ -1400,7 +1400,7 @@ type GoogleMapsPlacesV1Review struct {
 
 	// Name: A reference representing this place review which may be used to
 	// look up this place review again (also called the API "resource" name:
-	// places/place_id/reviews/review).
+	// `places/{place_id}/reviews/{review}`).
 	Name string `json:"name,omitempty"`
 
 	// OriginalText: The review text in its original language.
@@ -1465,25 +1465,29 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// ExcludedPrimaryTypes: Excluded primary Place type (e.g. "restaurant"
 	// or "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
-	// If there are any conflicting primary types, i.e. a type appears in
-	// both included_primary_types and excluded_primary_types, an
-	// INVALID_ARGUMENT error is returned. If a Place type is specified with
-	// multiple type restrictions, only places that satisfy all of the
-	// restrictions are returned. For example, if we have {included_types =
-	// ["restaurant"], excluded_primary_types = ["restaurant"]}, the
-	// returned places provide "restaurant" related services but do not
-	// operate primarily as "restaurants".
+	// Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If there are any conflicting primary types, i.e. a
+	// type appears in both included_primary_types and
+	// excluded_primary_types, an INVALID_ARGUMENT error is returned. If a
+	// Place type is specified with multiple type restrictions, only places
+	// that satisfy all of the restrictions are returned. For example, if we
+	// have {included_types = ["restaurant"], excluded_primary_types =
+	// ["restaurant"]}, the returned places provide "restaurant" related
+	// services but do not operate primarily as "restaurants".
 	ExcludedPrimaryTypes []string `json:"excludedPrimaryTypes,omitempty"`
 
 	// ExcludedTypes: Excluded Place type (eg, "restaurant" or
 	// "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
-	// If the client provides both included_types (e.g. restaurant) and
-	// excluded_types (e.g. cafe), then the response should include places
-	// that are restaurant but not cafe. The response includes places that
-	// match at least one of the included_types and none of the
-	// excluded_types. If there are any conflicting types, i.e. a type
-	// appears in both included_types and excluded_types, an
+	// Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If the client provides both included_types (e.g.
+	// restaurant) and excluded_types (e.g. cafe), then the response should
+	// include places that are restaurant but not cafe. The response
+	// includes places that match at least one of the included_types and
+	// none of the excluded_types. If there are any conflicting types, i.e.
+	// a type appears in both included_types and excluded_types, an
 	// INVALID_ARGUMENT error is returned. If a Place type is specified with
 	// multiple type restrictions, only places that satisfy all of the
 	// restrictions are returned. For example, if we have {included_types =
@@ -1496,8 +1500,10 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// or "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
 	// A place can only have a single primary type from the supported types
-	// table associated with it. If there are any conflicting primary types,
-	// i.e. a type appears in both included_primary_types and
+	// table associated with it. Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If there are any conflicting primary types, i.e. a
+	// type appears in both included_primary_types and
 	// excluded_primary_types, an INVALID_ARGUMENT error is returned. If a
 	// Place type is specified with multiple type restrictions, only places
 	// that satisfy all of the restrictions are returned. For example, if we
@@ -1509,14 +1515,16 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// IncludedTypes: Included Place type (eg, "restaurant" or
 	// "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
-	// If there are any conflicting types, i.e. a type appears in both
-	// included_types and excluded_types, an INVALID_ARGUMENT error is
-	// returned. If a Place type is specified with multiple type
-	// restrictions, only places that satisfy all of the restrictions are
-	// returned. For example, if we have {included_types = ["restaurant"],
-	// excluded_primary_types = ["restaurant"]}, the returned places provide
-	// "restaurant" related services but do not operate primarily as
-	// "restaurants".
+	// Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If there are any conflicting types, i.e. a type
+	// appears in both included_types and excluded_types, an
+	// INVALID_ARGUMENT error is returned. If a Place type is specified with
+	// multiple type restrictions, only places that satisfy all of the
+	// restrictions are returned. For example, if we have {included_types =
+	// ["restaurant"], excluded_primary_types = ["restaurant"]}, the
+	// returned places provide "restaurant" related services but do not
+	// operate primarily as "restaurants".
 	IncludedTypes []string `json:"includedTypes,omitempty"`
 
 	// LanguageCode: Place details will be displayed with the preferred
@@ -2062,7 +2070,8 @@ type PlacesGetCall struct {
 // Get: Get place details with a place id (in a name) string.
 //
 //   - name: A place ID returned in a Place (with "places/" prefix), or
-//     equivalently the name in the same Place. Format: places/*place_id*.
+//     equivalently the name in the same Place. Format:
+//     `places/{place_id}`.
 func (r *PlacesService) Get(name string) *PlacesGetCall {
 	c := &PlacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2203,7 +2212,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: places/*place_id*.",
+	//       "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: `places/{place_id}`.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+$",
 	//       "required": true,
@@ -2498,11 +2507,11 @@ type PlacesPhotosGetMediaCall struct {
 // GetMedia: Get a photo media with a photo reference string.
 //
 //   - name: The resource name of a photo media in the format:
-//     "places/place_id/photos/photo_reference/media". The resource name
-//     of a photo as returned in a Place object's `photos.name` field
-//     comes with the format "places/place_id/photos/photo_reference".
-//     You need to append "/media" at the end of the photo resource to
-//     get the photo media resource name.
+//     `places/{place_id}/photos/{photo_reference}/media`. The resource
+//     name of a photo as returned in a Place object's `photos.name` field
+//     comes with the format `places/{place_id}/photos/{photo_reference}`.
+//     You need to append `/media` at the end of the photo resource to get
+//     the photo media resource name.
 func (r *PlacesPhotosService) GetMedia(name string) *PlacesPhotosGetMediaCall {
 	c := &PlacesPhotosGetMediaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2671,7 +2680,7 @@ func (c *PlacesPhotosGetMediaCall) Do(opts ...googleapi.CallOption) (*GoogleMaps
 	//       "type": "integer"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of a photo media in the format: `\"places/place_id/photos/photo_reference/media\"`. The resource name of a photo as returned in a Place object's `photos.name` field comes with the format `\"places/place_id/photos/photo_reference\"`. You need to append `\"/media\"` at the end of the photo resource to get the photo media resource name.",
+	//       "description": "Required. The resource name of a photo media in the format: `places/{place_id}/photos/{photo_reference}/media`. The resource name of a photo as returned in a Place object's `photos.name` field comes with the format `places/{place_id}/photos/{photo_reference}`. You need to append `/media` at the end of the photo resource to get the photo media resource name.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+/photos/[^/]+/media$",
 	//       "required": true,

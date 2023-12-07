@@ -408,6 +408,66 @@ func (s *CloudDataLineageIntegration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DagProcessorResource: Configuration for resources used by Airflow DAG
+// processors.
+type DagProcessorResource struct {
+	// Count: Optional. The number of DAG processors. If not provided or set
+	// to 0, a single DAG processor instance will be created.
+	Count int64 `json:"count,omitempty"`
+
+	// Cpu: Optional. CPU request and limit for a single Airflow DAG
+	// processor replica.
+	Cpu float64 `json:"cpu,omitempty"`
+
+	// MemoryGb: Optional. Memory (GB) request and limit for a single
+	// Airflow DAG processor replica.
+	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// StorageGb: Optional. Storage (GB) request and limit for a single
+	// Airflow DAG processor replica.
+	StorageGb float64 `json:"storageGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DagProcessorResource) MarshalJSON() ([]byte, error) {
+	type NoMethod DagProcessorResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DagProcessorResource) UnmarshalJSON(data []byte) error {
+	type NoMethod DagProcessorResource
+	var s1 struct {
+		Cpu       gensupport.JSONFloat64 `json:"cpu"`
+		MemoryGb  gensupport.JSONFloat64 `json:"memoryGb"`
+		StorageGb gensupport.JSONFloat64 `json:"storageGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.MemoryGb = float64(s1.MemoryGb)
+	s.StorageGb = float64(s1.StorageGb)
+	return nil
+}
+
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
 // by the Apache Airflow software.
 type DatabaseConfig struct {
@@ -1371,6 +1431,29 @@ func (s *NetworkingConfig) MarshalJSON() ([]byte, error) {
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
+	// ComposerInternalIpv4CidrBlock: Optional. The IP range in CIDR
+	// notation to use internally by Cloud Composer. IP addresses are not
+	// reserved - and the same range can be used by multiple Cloud Composer
+	// environments. In case of overlap, IPs from this range will not be
+	// accessible in the user's VPC network. Cannot be updated. If not
+	// specified, the default value of '100.64.128.0/20' is used. This field
+	// is supported for Cloud Composer environments in versions
+	// composer-3.*.*-airflow-*.*.* and newer.
+	ComposerInternalIpv4CidrBlock string `json:"composerInternalIpv4CidrBlock,omitempty"`
+
+	// ComposerNetworkAttachment: Optional. Network Attachment that Cloud
+	// Composer environment is connected to, which provides connectivity
+	// with a user's VPC network. Takes precedence over network and
+	// subnetwork settings. If not provided, but network and subnetwork are
+	// defined during environment, it will be provisioned. If not provided
+	// and network and subnetwork are also empty, then connectivity to
+	// user's VPC network is disabled. Network attachment must be provided
+	// in format
+	// projects/{project}/regions/{region}/networkAttachments/{networkAttachm
+	// ent}. This field is supported for Cloud Composer environments in
+	// versions composer-3.*.*-airflow-*.*.* and newer.
+	ComposerNetworkAttachment string `json:"composerNetworkAttachment,omitempty"`
+
 	// DiskSizeGb: Optional. The disk size in GB used for node VMs. Minimum
 	// size is 30GB. If unspecified, defaults to 100GB. Cannot be updated.
 	// This field is supported for Cloud Composer environments in versions
@@ -1477,20 +1560,22 @@ type NodeConfig struct {
 	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
 	Tags []string `json:"tags,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ComposerInternalIpv4CidrBlock") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ComposerInternalIpv4CidrBlock") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1777,6 +1862,16 @@ type PrivateEnvironmentConfig struct {
 	// in tenant project will be reserved for Cloud SQL. Needs to be
 	// disjoint from web_server_ipv4_cidr_block
 	CloudSqlIpv4CidrBlock string `json:"cloudSqlIpv4CidrBlock,omitempty"`
+
+	// EnablePrivateBuildsOnly: Optional. If `true`, builds performed during
+	// operations that install Python packages have only private
+	// connectivity to Google services (including Artifact Registry) and VPC
+	// network (if either `NodeConfig.network` and `NodeConfig.subnetwork`
+	// fields or `NodeConfig.composer_network_attachment` field are
+	// specified). If `false`, the builds also have access to the internet.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-3.*.*-airflow-*.*.* and newer.
+	EnablePrivateBuildsOnly bool `json:"enablePrivateBuildsOnly,omitempty"`
 
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
 	// Composer environment is created. If this field is set to true,
@@ -2112,6 +2207,17 @@ type SoftwareConfig struct {
 	// field is supported for Cloud Composer environments in versions
 	// composer-1.*.*-airflow-2.*.*.
 	SchedulerCount int64 `json:"schedulerCount,omitempty"`
+
+	// WebServerPluginsMode: Optional. Whether or not the web server uses
+	// custom plugins. If unspecified, the field defaults to
+	// `PLUGINS_ENABLED`. This field is supported for Cloud Composer
+	// environments in versions composer-3.*.*-airflow-*.*.* and newer.
+	//
+	// Possible values:
+	//   "WEB_SERVER_PLUGINS_MODE_UNSPECIFIED" - Default mode.
+	//   "PLUGINS_DISABLED" - Web server plugins are not supported.
+	//   "PLUGINS_ENABLED" - Web server plugins are supported.
+	WebServerPluginsMode string `json:"webServerPluginsMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AirflowConfigOverrides") to unconditionally include in API requests.
@@ -2524,6 +2630,11 @@ func (s *WorkerResource) UnmarshalJSON(data []byte) error {
 // Cloud Composer environments in versions composer-2.*.*-airflow-*.*.*
 // and newer.
 type WorkloadsConfig struct {
+	// DagProcessor: Optional. Resources used by Airflow DAG processors.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-3.*.*-airflow-*.*.* and newer.
+	DagProcessor *DagProcessorResource `json:"dagProcessor,omitempty"`
+
 	// Scheduler: Optional. Resources used by Airflow schedulers.
 	Scheduler *SchedulerResource `json:"scheduler,omitempty"`
 
@@ -2536,7 +2647,7 @@ type WorkloadsConfig struct {
 	// Worker: Optional. Resources used by Airflow workers.
 	Worker *WorkerResource `json:"worker,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Scheduler") to
+	// ForceSendFields is a list of field names (e.g. "DagProcessor") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2544,10 +2655,10 @@ type WorkloadsConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Scheduler") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DagProcessor") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

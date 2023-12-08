@@ -35,6 +35,8 @@ package internal
 import (
 	"context"
 	"crypto/tls"
+	"errors"
+	"fmt"
 	"net"
 	"net/url"
 	"os"
@@ -67,6 +69,15 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	if err != nil {
 		return nil, "", err
 	}
+	// TODO(chrisdsmith): Closes: CL-R1 (remove this note before publication)
+	// TODO(chrisdsmith): Closes: CL-R3 (remove this note before publication)
+	// TODO(chrisdsmith): Use this composed endpoint everywhere to replace DialSettings.DefaultEndpoint
+	if settings.Endpoint == "" && settings.UniverseDomainNotGDU() {
+		endpoint = fmt.Sprintf(settings.DefaultEndpointTemplate, settings.GetUniverseDomain())
+		if err != nil {
+			return nil, "", err
+		}
+	}
 	return clientCertSource, endpoint, nil
 }
 
@@ -93,6 +104,12 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 
 	if !shouldUseS2A(clientCertSource, settings) {
 		return &defaultTransportConfig, nil
+	}
+	// TODO(chrisdsmith): Closes: CL-R10 (remove this note before publication)
+	if settings.UniverseDomainNotGDU() {
+		return &transportConfig{
+			clientCertSource: nil, endpoint: "", s2aAddress: "", s2aMTLSEndpoint: "",
+		}, errors.New("mTLS is not supported in any universe other than googleapis.com")
 	}
 
 	s2aMTLSEndpoint := settings.DefaultMTLSEndpoint
@@ -155,6 +172,10 @@ func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, 
 	if settings.Endpoint == "" {
 		mtlsMode := getMTLSMode()
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
+			// TODO(chrisdsmith): Closes: CL-R10 (remove this note before publication)
+			if settings.UniverseDomainNotGDU() {
+				return "", errors.New("mTLS is not supported in any universe other than googleapis.com")
+			}
 			return settings.DefaultMTLSEndpoint, nil
 		}
 		return settings.DefaultEndpoint, nil

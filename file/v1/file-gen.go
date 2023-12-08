@@ -483,8 +483,8 @@ type FileShareConfig struct {
 
 	// Name: Required. The name of the file share. Must use 1-16 characters
 	// for the basic service tier and 1-63 characters for all other service
-	// tiers. Must use lowercase letters, numbers, or underscores [a-z0-9_].
-	// Must start with a letter. Immutable.
+	// tiers. Must use lowercase letters, numbers, or underscores
+	// `[a-z0-9_]`. Must start with a letter. Immutable.
 	Name string `json:"name,omitempty"`
 
 	// NfsExportOptions: Nfs Export Options. There is a limit of 10 export
@@ -1767,8 +1767,8 @@ type RevertInstanceRequest struct {
 	// TargetSnapshotId: Required. The snapshot resource ID, in the format
 	// 'my-snapshot', where the specified ID is the {snapshot_id} of the
 	// fully qualified name like
-	// projects/{project_id}/locations/{location_id}/instances/{instance_id}/
-	// snapshots/{snapshot_id}
+	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
+	// /snapshots/{snapshot_id}`
 	TargetSnapshotId string `json:"targetSnapshotId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetSnapshotId") to
@@ -4257,8 +4257,8 @@ type ProjectsLocationsInstancesRevertCall struct {
 // snapshot.
 //
 //   - name:
-//     projects/{project_id}/locations/{location_id}/instances/{instance_id
-//     }. The resource name of the instance, in the format.
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//     d}`. The resource name of the instance, in the format.
 func (r *ProjectsLocationsInstancesService) Revert(name string, revertinstancerequest *RevertInstanceRequest) *ProjectsLocationsInstancesRevertCall {
 	c := &ProjectsLocationsInstancesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4366,7 +4366,7 @@ func (c *ProjectsLocationsInstancesRevertCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. projects/{project_id}/locations/{location_id}/instances/{instance_id}. The resource name of the instance, in the format",
+	//       "description": "Required. `projects/{project_id}/locations/{location_id}/instances/{instance_id}`. The resource name of the instance, in the format",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,

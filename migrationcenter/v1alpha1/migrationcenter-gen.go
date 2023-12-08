@@ -4644,7 +4644,7 @@ type ReportSummaryAssetAggregateStats struct {
 	// families.
 	OperatingSystem *ReportSummaryChartData `json:"operatingSystem,omitempty"`
 
-	// StorageBytesHistogram: Histogram showing a distribution of memory
+	// StorageBytesHistogram: Histogram showing a distribution of storage
 	// sizes.
 	StorageBytesHistogram *ReportSummaryHistogramChartData `json:"storageBytesHistogram,omitempty"`
 

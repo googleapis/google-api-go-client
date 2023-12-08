@@ -486,8 +486,8 @@ type AccessDeterminationLogConfig struct {
 	// audit logs.
 	//   "MINIMUM" - The following information is included: - One of the
 	// following
-	// [`consentMode`](https://cloud.google.com/healthcare-api/private/docs/h
-	// ow-tos/fhir-consent#audit_logs) fields:
+	// [`consentMode`](https://cloud.google.com/healthcare-api/docs/fhir-cons
+	// ent#audit_logs) fields:
 	// (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). - The accessor's
 	// request headers - The `log_level` of the
 	// [AccessDeterminationLogConfig](google.cloud.healthcare.v1beta1.fhir.Fh
@@ -2002,10 +2002,9 @@ type ConsentConfig struct {
 	AccessDeterminationLogConfig *AccessDeterminationLogConfig `json:"accessDeterminationLogConfig,omitempty"`
 
 	// AccessEnforced: Optional. If set to true, when accessing FHIR
-	// resources, the consent headers provided using SMART-on-FHIR
-	// (https://cloud.google.com/healthcare/private/docs/how-tos/smart-on-fhir)
-	// will be verified against consents given by patients. See the
-	// ConsentEnforcementVersion for the supported consent headers.
+	// resources, the consent headers will be verified against consents
+	// given by patients. See the ConsentEnforcementVersion for the
+	// supported consent headers.
 	AccessEnforced bool `json:"accessEnforced,omitempty"`
 
 	// ConsentHeaderHandling: Optional. Different options to configure the
@@ -2033,8 +2032,8 @@ type ConsentConfig struct {
 	// enforcement version or an error is returned.
 	//   "V1" - Enforcement version 1. See the [FHIR Consent resources in
 	// the Cloud Healthcare
-	// API](https://cloud.google.com/healthcare-api/private/docs/how-tos/fhir
-	// -consent) guide for more details.
+	// API](https://cloud.google.com/healthcare-api/docs/fhir-consent) guide
+	// for more details.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

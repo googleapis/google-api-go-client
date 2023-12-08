@@ -13059,8 +13059,9 @@ func (r *ProjectsLocationsRepositoriesWorkspacesService) SearchFiles(workspace s
 }
 
 // Filter sets the optional parameter "filter": Optional filter for the
-// returned list in go/filtering format. Filtering is only currently
-// supported on the `path` field.
+// returned list in filtering format. Filtering is only currently
+// supported on the `path` field. See https://google.aip.dev/160 for
+// details.
 func (c *ProjectsLocationsRepositoriesWorkspacesSearchFilesCall) Filter(filter string) *ProjectsLocationsRepositoriesWorkspacesSearchFilesCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -13193,7 +13194,7 @@ func (c *ProjectsLocationsRepositoriesWorkspacesSearchFilesCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Optional filter for the returned list in go/filtering format. Filtering is only currently supported on the `path` field.",
+	//       "description": "Optional. Optional filter for the returned list in filtering format. Filtering is only currently supported on the `path` field. See https://google.aip.dev/160 for details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

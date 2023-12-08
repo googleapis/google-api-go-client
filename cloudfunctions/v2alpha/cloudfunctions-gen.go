@@ -606,6 +606,14 @@ type EventTrigger struct {
 	// with an exponential backoff (capped at 10 seconds).
 	RetryPolicy string `json:"retryPolicy,omitempty"`
 
+	// Service: Optional. The hostname of the service that 1st Gen function
+	// should be observed. If no string is provided, the default service
+	// implementing the API will be used. For example,
+	// `storage.googleapis.com` is the default for all event types in the
+	// `google.storage` namespace. The field is only applicable to 1st Gen
+	// functions.
+	Service string `json:"service,omitempty"`
+
 	// ServiceAccountEmail: Optional. The email of the trigger's service
 	// account. The service account must have permission to invoke Cloud Run
 	// services, the permission is `run.routes.invoke`. If empty, defaults
@@ -2190,9 +2198,9 @@ type ServiceConfig struct {
 	// will be returned if the latest revision is serving 100% of traffic.
 	AllTrafficOnLatestRevision bool `json:"allTrafficOnLatestRevision,omitempty"`
 
-	// AvailableCpu: [Preview] The number of CPUs used in a single container
-	// instance. Default value is calculated from available memory. Supports
-	// the same values as Cloud Run, see
+	// AvailableCpu: The number of CPUs used in a single container instance.
+	// Default value is calculated from available memory. Supports the same
+	// values as Cloud Run, see
 	// https://cloud.google.com/run/docs/reference/rest/v1/Container#resourcerequirements
 	// Example: "1" indicates 1 vCPU
 	AvailableCpu string `json:"availableCpu,omitempty"`
@@ -2231,8 +2239,8 @@ type ServiceConfig struct {
 	// more details.
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
 
-	// MaxInstanceRequestConcurrency: [Preview] Sets the maximum number of
-	// concurrent requests that each instance can receive. Defaults to 1.
+	// MaxInstanceRequestConcurrency: Sets the maximum number of concurrent
+	// requests that each instance can receive. Defaults to 1.
 	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 
 	// MinInstanceCount: The limit on the minimum number of function

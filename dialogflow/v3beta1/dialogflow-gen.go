@@ -201,6 +201,7 @@ func NewProjectsLocationsAgentsService(s *Service) *ProjectsLocationsAgentsServi
 	rs.EntityTypes = NewProjectsLocationsAgentsEntityTypesService(s)
 	rs.Environments = NewProjectsLocationsAgentsEnvironmentsService(s)
 	rs.Flows = NewProjectsLocationsAgentsFlowsService(s)
+	rs.Generators = NewProjectsLocationsAgentsGeneratorsService(s)
 	rs.Intents = NewProjectsLocationsAgentsIntentsService(s)
 	rs.Sessions = NewProjectsLocationsAgentsSessionsService(s)
 	rs.TestCases = NewProjectsLocationsAgentsTestCasesService(s)
@@ -219,6 +220,8 @@ type ProjectsLocationsAgentsService struct {
 	Environments *ProjectsLocationsAgentsEnvironmentsService
 
 	Flows *ProjectsLocationsAgentsFlowsService
+
+	Generators *ProjectsLocationsAgentsGeneratorsService
 
 	Intents *ProjectsLocationsAgentsIntentsService
 
@@ -360,6 +363,15 @@ func NewProjectsLocationsAgentsFlowsVersionsService(s *Service) *ProjectsLocatio
 }
 
 type ProjectsLocationsAgentsFlowsVersionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAgentsGeneratorsService(s *Service) *ProjectsLocationsAgentsGeneratorsService {
+	rs := &ProjectsLocationsAgentsGeneratorsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAgentsGeneratorsService struct {
 	s *Service
 }
 
@@ -639,13 +651,8 @@ func (s *GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 // detected. Note that no-speech event is not expected in this phase.
 // The client provides this configuration in terms of the durations of
 // those two phases. The durations are measured in terms of the audio
-// length fromt the the start of the input audio. The flow goes like
-// below: --> Time without speech detection | utterance only | utterance
-// or no-speech event | | +-------------+ | +------------+ |
-// +---------------+ ----------+ no barge-in +-|-+ barge-in +-|-+ normal
-// period +----------- +-------------+ | +------------+ |
-// +---------------+ No-speech event is a response with END_OF_UTTERANCE
-// without any transcript following up.
+// length from the the start of the input audio. No-speech event is a
+// response with END_OF_UTTERANCE without any transcript following up.
 type GoogleCloudDialogflowCxV3BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
 	// beginning of the input audio.
@@ -2319,19 +2326,8 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
 
 	// Model: Optional. Which Speech model to select for the given request.
-	// Select the model best suited to your domain to get best results. If a
-	// model is not explicitly specified, then we auto-select a model based
-	// on the parameters in the InputAudioConfig. If enhanced speech model
-	// is enabled for the agent and an enhanced version of the specified
-	// model for the language does not exist, then the speech is recognized
-	// using the standard version of the specified model. Refer to Cloud
-	// Speech API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -2340,9 +2336,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
 	// this case Dialogflow defaults to USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the Speech
-	// model that the caller is eligible for. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible for enhanced models.
+	// model that the caller is eligible for.
 	//   "USE_STANDARD" - Use standard model variant even if an enhanced
 	// model is available. See the [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
@@ -2351,11 +2345,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// variant does not exist for the given model and request language,
 	// Dialogflow falls back to the standard variant. The [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
-	// odels) describes which models have enhanced variants. * If the API
-	// caller isn't eligible for enhanced models, Dialogflow returns an
-	// error. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible.
+	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
@@ -5115,14 +5105,9 @@ func (s *GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error)
 // utterance has been detected. Note that no-speech event is not
 // expected in this phase. The client provides this configuration in
 // terms of the durations of those two phases. The durations are
-// measured in terms of the audio length fromt the the start of the
-// input audio. The flow goes like below: --> Time without speech
-// detection | utterance only | utterance or no-speech event | |
-// +-------------+ | +------------+ | +---------------+ ----------+ no
-// barge-in +-|-+ barge-in +-|-+ normal period +-----------
-// +-------------+ | +------------+ | +---------------+ No-speech event
-// is a response with END_OF_UTTERANCE without any transcript following
-// up.
+// measured in terms of the audio length from the the start of the input
+// audio. No-speech event is a response with END_OF_UTTERANCE without
+// any transcript following up.
 type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
 	// beginning of the input audio.
@@ -8310,6 +8295,92 @@ func (s *GoogleCloudDialogflowCxV3beta1GenerativeSettingsKnowledgeConnectorSetti
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1Generator: Generators contain prompt to
+// be sent to the LLM model to generate text. The prompt can contain
+// parameters which will be resolved before calling the model. It can
+// optionally contain banned phrases to ensure the model responses are
+// safe.
+type GoogleCloudDialogflowCxV3beta1Generator struct {
+	// DisplayName: Required. The human-readable name of the generator,
+	// unique within the agent. The prompt contains pre-defined parameters
+	// such as $conversation, $last-user-utterance, etc. populated by
+	// Dialogflow. It can also contain custom placeholders which will be
+	// resolved during fulfillment.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: The unique identifier of the generator. Must be set for the
+	// Generators.UpdateGenerator method. Generators.CreateGenerate
+	// populates the name automatically. Format:
+	// `projects//locations//agents//generators/`.
+	Name string `json:"name,omitempty"`
+
+	// Placeholders: Optional. List of custom placeholders in the prompt
+	// text.
+	Placeholders []*GoogleCloudDialogflowCxV3beta1GeneratorPlaceholder `json:"placeholders,omitempty"`
+
+	// PromptText: Required. Prompt for the LLM model.
+	PromptText *GoogleCloudDialogflowCxV3beta1Phrase `json:"promptText,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1Generator) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1Generator
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1GeneratorPlaceholder: Represents a
+// custom placeholder in the prompt text.
+type GoogleCloudDialogflowCxV3beta1GeneratorPlaceholder struct {
+	// Id: Unique ID used to map custom placeholder to parameters in
+	// fulfillment.
+	Id string `json:"id,omitempty"`
+
+	// Name: Custom placeholder value in the prompt text.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1GeneratorPlaceholder) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1GeneratorPlaceholder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata:
 // Metadata in google::longrunning::Operation for Knowledge operations.
 type GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata struct {
@@ -8837,19 +8908,8 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
 
 	// Model: Optional. Which Speech model to select for the given request.
-	// Select the model best suited to your domain to get best results. If a
-	// model is not explicitly specified, then we auto-select a model based
-	// on the parameters in the InputAudioConfig. If enhanced speech model
-	// is enabled for the agent and an enhanced version of the specified
-	// model for the language does not exist, then the speech is recognized
-	// using the standard version of the specified model. Refer to Cloud
-	// Speech API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -8858,9 +8918,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
 	// this case Dialogflow defaults to USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the Speech
-	// model that the caller is eligible for. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible for enhanced models.
+	// model that the caller is eligible for.
 	//   "USE_STANDARD" - Use standard model variant even if an enhanced
 	// model is available. See the [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
@@ -8869,11 +8927,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// variant does not exist for the given model and request language,
 	// Dialogflow falls back to the standard variant. The [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
-	// odels) describes which models have enhanced variants. * If the API
-	// caller isn't eligible for enhanced models, Dialogflow returns an
-	// error. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible.
+	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
@@ -9603,6 +9657,44 @@ type GoogleCloudDialogflowCxV3beta1ListFlowsResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ListFlowsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ListFlowsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse: The response
+// message for Generators.ListGenerators.
+type GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse struct {
+	// Generators: The list of generators. There will be a maximum number of
+	// items returned based on the page_size field in the request.
+	Generators []*GoogleCloudDialogflowCxV3beta1Generator `json:"generators,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Generators") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Generators") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10565,6 +10657,36 @@ type GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1Phrase: Text input which can be used
+// for prompt or banned phrases.
+type GoogleCloudDialogflowCxV3beta1Phrase struct {
+	// Text: Required. Text input which can be used for prompt or banned
+	// phrases.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1Phrase) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1Phrase
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -34215,6 +34337,858 @@ func (c *ProjectsLocationsAgentsFlowsVersionsPatchCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowCxV3beta1Version"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.generators.create":
+
+type ProjectsLocationsAgentsGeneratorsCreateCall struct {
+	s                                       *Service
+	parent                                  string
+	googleclouddialogflowcxv3beta1generator *GoogleCloudDialogflowCxV3beta1Generator
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Create: Creates a generator in the specified agent.
+//
+//   - parent: The agent to create a generator for. Format:
+//     `projects//locations//agents/`.
+func (r *ProjectsLocationsAgentsGeneratorsService) Create(parent string, googleclouddialogflowcxv3beta1generator *GoogleCloudDialogflowCxV3beta1Generator) *ProjectsLocationsAgentsGeneratorsCreateCall {
+	c := &ProjectsLocationsAgentsGeneratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3beta1generator = googleclouddialogflowcxv3beta1generator
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// to create generators for the following fields: *
+// `Generator.prompt_text.text` If not specified, the agent's default
+// language is used.
+func (c *ProjectsLocationsAgentsGeneratorsCreateCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsGeneratorsCreateCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsGeneratorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsGeneratorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsGeneratorsCreateCall) Context(ctx context.Context) *ProjectsLocationsAgentsGeneratorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsGeneratorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsGeneratorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1generator)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/generators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.generators.create" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1Generator or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDialogflowCxV3beta1Generator.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsGeneratorsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Generator, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1Generator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a generator in the specified agent.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.generators.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language to create generators for the following fields: * `Generator.prompt_text.text` If not specified, the agent's default language is used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The agent to create a generator for. Format: `projects//locations//agents/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}/generators",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1Generator"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1Generator"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.generators.delete":
+
+type ProjectsLocationsAgentsGeneratorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified generators.
+//
+//   - name: The name of the generator to delete. Format:
+//     `projects//locations//agents//generators/`.
+func (r *ProjectsLocationsAgentsGeneratorsService) Delete(name string) *ProjectsLocationsAgentsGeneratorsDeleteCall {
+	c := &ProjectsLocationsAgentsGeneratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": This field has no effect
+// for generators not being used. For generators that are used by
+// pages/flows/transition route groups: * If `force` is set to false, an
+// error will be returned with message indicating the referenced
+// resources. * If `force` is set to true, Dialogflow will remove the
+// generator, as well as any references to the generator (i.e.
+// Generator) in fulfillments.
+func (c *ProjectsLocationsAgentsGeneratorsDeleteCall) Force(force bool) *ProjectsLocationsAgentsGeneratorsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsGeneratorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsGeneratorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsGeneratorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAgentsGeneratorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsGeneratorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsGeneratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.generators.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsGeneratorsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified generators.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators/{generatorsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.locations.agents.generators.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "This field has no effect for generators not being used. For generators that are used by pages/flows/transition route groups: * If `force` is set to false, an error will be returned with message indicating the referenced resources. * If `force` is set to true, Dialogflow will remove the generator, as well as any references to the generator (i.e. Generator) in fulfillments.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the generator to delete. Format: `projects//locations//agents//generators/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generators/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.generators.get":
+
+type ProjectsLocationsAgentsGeneratorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified generator.
+//
+//   - name: The name of the generator. Format:
+//     `projects//locations//agents//generators/`.
+func (r *ProjectsLocationsAgentsGeneratorsService) Get(name string) *ProjectsLocationsAgentsGeneratorsGetCall {
+	c := &ProjectsLocationsAgentsGeneratorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// to list generators for.
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsGeneratorsGetCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsGeneratorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentsGeneratorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) Context(ctx context.Context) *ProjectsLocationsAgentsGeneratorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.generators.get" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1Generator or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDialogflowCxV3beta1Generator.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsGeneratorsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Generator, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1Generator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified generator.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators/{generatorsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.agents.generators.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language to list generators for.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the generator. Format: `projects//locations//agents//generators/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generators/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1Generator"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.generators.list":
+
+type ProjectsLocationsAgentsGeneratorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all generators in the specified agent.
+//
+//   - parent: The agent to list all generators for. Format:
+//     `projects//locations//agents/`.
+func (r *ProjectsLocationsAgentsGeneratorsService) List(parent string) *ProjectsLocationsAgentsGeneratorsListCall {
+	c := &ProjectsLocationsAgentsGeneratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// to list generators for.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsGeneratorsListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return in a single page. By default 100 and at most 1000.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) PageSize(pageSize int64) *ProjectsLocationsAgentsGeneratorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) PageToken(pageToken string) *ProjectsLocationsAgentsGeneratorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsGeneratorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentsGeneratorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) Context(ctx context.Context) *ProjectsLocationsAgentsGeneratorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsGeneratorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/generators")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.generators.list" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all generators in the specified agent.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.agents.generators.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language to list generators for.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return in a single page. By default 100 and at most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The agent to list all generators for. Format: `projects//locations//agents/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}/generators",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAgentsGeneratorsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowCxV3beta1ListGeneratorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.locations.agents.generators.patch":
+
+type ProjectsLocationsAgentsGeneratorsPatchCall struct {
+	s                                       *Service
+	nameid                                  string
+	googleclouddialogflowcxv3beta1generator *GoogleCloudDialogflowCxV3beta1Generator
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Patch: Update the specified generator.
+//
+//   - name: The unique identifier of the generator. Must be set for the
+//     Generators.UpdateGenerator method. Generators.CreateGenerate
+//     populates the name automatically. Format:
+//     `projects//locations//agents//generators/`.
+func (r *ProjectsLocationsAgentsGeneratorsService) Patch(nameid string, googleclouddialogflowcxv3beta1generator *GoogleCloudDialogflowCxV3beta1Generator) *ProjectsLocationsAgentsGeneratorsPatchCall {
+	c := &ProjectsLocationsAgentsGeneratorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowcxv3beta1generator = googleclouddialogflowcxv3beta1generator
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The language
+// to list generators for.
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsGeneratorsPatchCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to
+// control which fields get updated. If the mask is not present, all
+// fields will be updated.
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAgentsGeneratorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsGeneratorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) Context(ctx context.Context) *ProjectsLocationsAgentsGeneratorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1generator)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.generators.patch" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1Generator or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDialogflowCxV3beta1Generator.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsGeneratorsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Generator, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1Generator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the specified generator.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators/{generatorsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dialogflow.projects.locations.agents.generators.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The language to list generators for.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The unique identifier of the generator. Must be set for the Generators.UpdateGenerator method. Generators.CreateGenerate populates the name automatically. Format: `projects//locations//agents//generators/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generators/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The mask to control which fields get updated. If the mask is not present, all fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1Generator"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1Generator"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

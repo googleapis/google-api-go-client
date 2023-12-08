@@ -1043,6 +1043,10 @@ type Instance struct {
 	//   "SUSPENDED" - The instance is suspended.
 	State string `json:"state,omitempty"`
 
+	// ThirdPartyProxyUrl: Output only. The workforce pools proxy endpoint
+	// that is used to access the Jupyter notebook.
+	ThirdPartyProxyUrl string `json:"thirdPartyProxyUrl,omitempty"`
+
 	// UpdateTime: Output only. Instance update time.
 	UpdateTime string `json:"updateTime,omitempty"`
 

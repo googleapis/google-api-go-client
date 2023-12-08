@@ -1059,23 +1059,15 @@ func (s *ClusterUpgradeMembershipGKEUpgradeState) MarshalJSON() ([]byte, error) 
 
 // ClusterUpgradeMembershipState: Per-membership state for this feature.
 type ClusterUpgradeMembershipState struct {
-	// Fleet: Project number or id of the fleet. It is set only for
-	// Memberships that are part of fleet-based Rollout Sequencing.
-	Fleet string `json:"fleet,omitempty"`
-
 	// Ignored: Whether this membership is ignored by the feature. For
 	// example, manually upgraded clusters can be ignored if they are newer
 	// than the default versions of its release channel.
 	Ignored *ClusterUpgradeIgnoredMembership `json:"ignored,omitempty"`
 
-	// Scopes: Fully qualified scope names that this clusters is bound to
-	// which also have rollout sequencing enabled.
-	Scopes []string `json:"scopes,omitempty"`
-
 	// Upgrades: Actual upgrade state against desired.
 	Upgrades []*ClusterUpgradeMembershipGKEUpgradeState `json:"upgrades,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Fleet") to
+	// ForceSendFields is a list of field names (e.g. "Ignored") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1083,8 +1075,8 @@ type ClusterUpgradeMembershipState struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fleet") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Ignored") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1424,8 +1416,7 @@ type ConfigManagementConfigSync struct {
 	// GSA should have the Monitoring Metric Writer
 	// (roles/monitoring.metricWriter) IAM role. The Kubernetes
 	// ServiceAccount `default` in the namespace
-	// `config-management-monitoring` should be bound to the GSA. This field
-	// is required when automatic Feature management is enabled.
+	// `config-management-monitoring` should be bound to the GSA.
 	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
 
 	// Oci: OCI repo configuration for the cluster

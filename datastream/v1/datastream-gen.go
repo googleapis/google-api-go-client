@@ -2964,6 +2964,7 @@ type Validation struct {
 	//   "NOT_EXECUTED" - Validation did not execute.
 	//   "FAILED" - Validation failed.
 	//   "PASSED" - Validation passed.
+	//   "WARNING" - Validation executed with warnings.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to

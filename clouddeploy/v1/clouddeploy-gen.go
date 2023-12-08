@@ -165,6 +165,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.CustomTargetTypes = NewProjectsLocationsCustomTargetTypesService(s)
 	rs.DeliveryPipelines = NewProjectsLocationsDeliveryPipelinesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Targets = NewProjectsLocationsTargetsService(s)
@@ -174,11 +175,22 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	CustomTargetTypes *ProjectsLocationsCustomTargetTypesService
+
 	DeliveryPipelines *ProjectsLocationsDeliveryPipelinesService
 
 	Operations *ProjectsLocationsOperationsService
 
 	Targets *ProjectsLocationsTargetsService
+}
+
+func NewProjectsLocationsCustomTargetTypesService(s *Service) *ProjectsLocationsCustomTargetTypesService {
+	rs := &ProjectsLocationsCustomTargetTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCustomTargetTypesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDeliveryPipelinesService(s *Service) *ProjectsLocationsDeliveryPipelinesService {
@@ -320,8 +332,8 @@ func (s *AdvanceChildRolloutJobRun) MarshalJSON() ([]byte, error) {
 // AdvanceRolloutOperation: Contains the information of an automated
 // advance-rollout operation.
 type AdvanceRolloutOperation struct {
-	// DestinationPhase: Output only. The phase to which the rollout will be
-	// advanced to.
+	// DestinationPhase: Output only. The phase the rollout will be advanced
+	// to.
 	DestinationPhase string `json:"destinationPhase,omitempty"`
 
 	// Rollout: Output only. The name of the rollout that initiates the
@@ -604,7 +616,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Automation: An `Automation` resource in the Cloud Deploy API. An
 // `Automation` enables the automation of manually driven actions for a
-// Delivery Pipeline, which includes Release promotion amongst Targets,
+// Delivery Pipeline, which includes Release promotion among Targets,
 // Rollout repair and Rollout deployment strategy advancement. The
 // intention of Automation is to reduce manual intervention in the
 // continuous delivery process.
@@ -898,8 +910,8 @@ func (s *AutomationRuleCondition) MarshalJSON() ([]byte, error) {
 }
 
 // AutomationRun: An `AutomationRun` resource in the Cloud Deploy API.
-// An `AutomationRun` represents an automation execution instance of an
-// automation rule.
+// An `AutomationRun` represents an execution instance of an automation
+// rule.
 type AutomationRun struct {
 	// AdvanceRolloutOperation: Output only. Advances a rollout to the next
 	// phase.
@@ -923,8 +935,8 @@ type AutomationRun struct {
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ExpireTime: Output only. Time the `AutomationRun` will expire. An
-	// `AutomationRun` will expire after 14 days from its creation date.
+	// ExpireTime: Output only. Time the `AutomationRun` expires. An
+	// `AutomationRun` expires after 14 days from its creation date.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Name: Output only. Name of the `AutomationRun`. Format is
@@ -960,7 +972,7 @@ type AutomationRun struct {
 	State string `json:"state,omitempty"`
 
 	// StateDescription: Output only. Explains the current state of the
-	// `AutomationRun`. Present only an explanation is needed.
+	// `AutomationRun`. Present only when an explanation is needed.
 	StateDescription string `json:"stateDescription,omitempty"`
 
 	// TargetId: Output only. The ID of the target that represents the
@@ -1335,6 +1347,18 @@ type CloudRunConfig struct {
 	// CanaryDeployments, but optional for CustomCanaryDeployments.
 	AutomaticTrafficControl bool `json:"automaticTrafficControl,omitempty"`
 
+	// CanaryRevisionTags: Optional. A list of tags that are added to the
+	// canary revision while the canary deployment is in progress.
+	CanaryRevisionTags []string `json:"canaryRevisionTags,omitempty"`
+
+	// PriorRevisionTags: Optional. A list of tags that are added to the
+	// prior revision while the canary deployment is in progress.
+	PriorRevisionTags []string `json:"priorRevisionTags,omitempty"`
+
+	// StableRevisionTags: Optional. A list of tags that are added to the
+	// final stable revision after the canary deployment is completed.
+	StableRevisionTags []string `json:"stableRevisionTags,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AutomaticTrafficControl") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1571,6 +1595,218 @@ type CustomCanaryDeployment struct {
 
 func (s *CustomCanaryDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomCanaryDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomMetadata: CustomMetadata contains information from a user
+// defined operation.
+type CustomMetadata struct {
+	// Values: Output only. Key-value pairs provided by the user defined
+	// operation.
+	Values map[string]string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTarget: Information specifying a Custom Target.
+type CustomTarget struct {
+	// CustomTargetType: Required. The name of the CustomTargetType. Format
+	// must be
+	// `projects/{project}/locations/{location}/customTargetTypes/{custom_tar
+	// get_type}`.
+	CustomTargetType string `json:"customTargetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomTargetType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomTargetType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTargetDeployMetadata: CustomTargetDeployMetadata contains
+// information from a Custom Target deploy operation.
+type CustomTargetDeployMetadata struct {
+	// SkipMessage: Output only. Skip message provided in the results of a
+	// custom deploy operation.
+	SkipMessage string `json:"skipMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkipMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkipMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTargetDeployMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetDeployMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTargetSkaffoldActions: CustomTargetSkaffoldActions represents
+// the `CustomTargetType` configuration using Skaffold custom actions.
+type CustomTargetSkaffoldActions struct {
+	// DeployAction: Required. The Skaffold custom action responsible for
+	// deploy operations.
+	DeployAction string `json:"deployAction,omitempty"`
+
+	// IncludeSkaffoldModules: Optional. List of Skaffold modules Cloud
+	// Deploy will include in the Skaffold Config as required before
+	// performing diagnose.
+	IncludeSkaffoldModules []*SkaffoldModules `json:"includeSkaffoldModules,omitempty"`
+
+	// RenderAction: Optional. The Skaffold custom action responsible for
+	// render operations. If not provided then Cloud Deploy will perform the
+	// render operations via `skaffold render`.
+	RenderAction string `json:"renderAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeployAction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeployAction") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTargetSkaffoldActions) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetSkaffoldActions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTargetType: A `CustomTargetType` resource in the Cloud Deploy
+// API. A `CustomTargetType` defines a type of custom target that can be
+// referenced in a `Target` in order to facilitate deploying to a
+// runtime that does not have a 1P integration with Cloud Deploy.
+type CustomTargetType struct {
+	// Annotations: Optional. User annotations. These attributes can only be
+	// set and used by the user, and not by Cloud Deploy. See
+	// https://google.aip.dev/128#annotations for more details such as
+	// format and size limitations.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. Time at which the `CustomTargetType` was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomActions: Configures render and deploy for the
+	// `CustomTargetType` using Skaffold custom actions.
+	CustomActions *CustomTargetSkaffoldActions `json:"customActions,omitempty"`
+
+	// CustomTargetTypeId: Output only. Resource id of the
+	// `CustomTargetType`.
+	CustomTargetTypeId string `json:"customTargetTypeId,omitempty"`
+
+	// Description: Optional. Description of the `CustomTargetType`. Max
+	// length is 255 characters.
+	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. This checksum is computed by the server based on the
+	// value of other fields, and may be sent on update and delete requests
+	// to ensure the client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. Labels are attributes that can be set and used by
+	// both the user and by Cloud Deploy. Labels must meet the following
+	// constraints: * Keys and values can contain only lowercase letters,
+	// numeric characters, underscores, and dashes. * All characters must
+	// use UTF-8 encoding, and international characters are allowed. * Keys
+	// must start with a lowercase letter or international character. * Each
+	// resource is limited to a maximum of 64 labels. Both keys and values
+	// are additionally constrained to be <= 128 bytes.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Optional. Name of the `CustomTargetType`. Format is
+	// `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}`.
+	Name string `json:"name,omitempty"`
+
+	// Uid: Output only. Unique identifier of the `CustomTargetType`.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Most recent time at which the
+	// `CustomTargetType` was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTargetType) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1859,6 +2095,8 @@ type DeployJobRun struct {
 	// Cloud Build logs for more information.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
+	//   "DEPLOY_FEATURE_NOT_SUPPORTED" - The deploy operation had a feature
+	// configured that is not supported.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the deploy
@@ -1898,6 +2136,14 @@ type DeployJobRunMetadata struct {
 	// CloudRun: Output only. The name of the Cloud Run Service that is
 	// associated with a `DeployJobRun`.
 	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
+
+	// Custom: Output only. Custom metadata provided by user defined deploy
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
+
+	// CustomTarget: Output only. Custom Target metadata associated with a
+	// `DeployJobRun`.
+	CustomTarget *CustomTargetDeployMetadata `json:"customTarget,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
 	// unconditionally include in API requests. By default, fields with
@@ -2560,7 +2806,7 @@ func (s *ListAutomationRunsResponse) MarshalJSON() ([]byte, error) {
 
 // ListAutomationsResponse: The response object from `ListAutomations`.
 type ListAutomationsResponse struct {
-	// Automations: The `Automations` objects.
+	// Automations: The `Automation` objects.
 	Automations []*Automation `json:"automations,omitempty"`
 
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
@@ -2594,6 +2840,48 @@ type ListAutomationsResponse struct {
 
 func (s *ListAutomationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAutomationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListCustomTargetTypesResponse: The response object from
+// `ListCustomTargetTypes.`
+type ListCustomTargetTypesResponse struct {
+	// CustomTargetTypes: The `CustomTargetType` objects.
+	CustomTargetTypes []*CustomTargetType `json:"customTargetTypes,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomTargetTypes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomTargetTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomTargetTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomTargetTypesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2936,6 +3224,10 @@ type Metadata struct {
 	// CloudRun: Output only. The name of the Cloud Run Service that is
 	// associated with a `Rollout`.
 	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
+
+	// Custom: Output only. Custom metadata provided by user defined
+	// `Rollout` operations.
+	Custom *CustomMetadata `json:"custom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Automation") to
 	// unconditionally include in API requests. By default, fields with
@@ -3822,6 +4114,10 @@ type Release struct {
 	// CreateTime: Output only. Time at which the `Release` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomTargetTypeSnapshots: Output only. Snapshot of the custom target
+	// types referenced by the targets taken at release creation time.
+	CustomTargetTypeSnapshots []*CustomTargetType `json:"customTargetTypeSnapshots,omitempty"`
+
 	// DeliveryPipelineSnapshot: Output only. Snapshot of the parent
 	// pipeline taken at release creation time.
 	DeliveryPipelineSnapshot *DeliveryPipeline `json:"deliveryPipelineSnapshot,omitempty"`
@@ -3933,7 +4229,7 @@ type ReleaseCondition struct {
 	ReleaseReadyCondition *ReleaseReadyCondition `json:"releaseReadyCondition,omitempty"`
 
 	// SkaffoldSupportedCondition: Details around the support state of the
-	// release's skaffold version.
+	// release's Skaffold version.
 	SkaffoldSupportedCondition *SkaffoldSupportedCondition `json:"skaffoldSupportedCondition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4094,6 +4390,10 @@ type RenderMetadata struct {
 	// Run.
 	CloudRun *CloudRunRenderMetadata `json:"cloudRun,omitempty"`
 
+	// Custom: Output only. Custom metadata provided by user defined render
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4188,6 +4488,13 @@ type RepairRolloutOperation struct {
 	// action in the repair sequence.
 	CurrentRepairModeIndex int64 `json:"currentRepairModeIndex,omitempty,string"`
 
+	// JobId: Output only. The job ID for the Job to repair.
+	JobId string `json:"jobId,omitempty"`
+
+	// PhaseId: Output only. The phase ID of the phase that includes the job
+	// being repaired.
+	PhaseId string `json:"phaseId,omitempty"`
+
 	// RepairPhases: Output only. Records of the repair attempts. Each
 	// repair phase may have multiple retry attempts or single rollback
 	// attempt.
@@ -4281,8 +4588,8 @@ func (s *RepairRolloutRule) MarshalJSON() ([]byte, error) {
 
 // Retry: Retries the failed job.
 type Retry struct {
-	// Attempts: Required. Total number of retries. Retry will skipped if
-	// set to 0; The minimum value is 1, and the maximum value is 10.
+	// Attempts: Required. Total number of retries. Retry is skipped if set
+	// to 0; The minimum value is 1, and the maximum value is 10.
 	Attempts int64 `json:"attempts,omitempty,string"`
 
 	// BackoffMode: Optional. The pattern of how wait time will be
@@ -4701,10 +5008,12 @@ type Rollout struct {
 	// alloted time.
 	//   "RELEASE_FAILED" - Release is in a failed state.
 	//   "RELEASE_ABANDONED" - Release is abandoned.
-	//   "VERIFICATION_CONFIG_NOT_FOUND" - No skaffold verify configuration
+	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration
 	// was found.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
+	//   "OPERATION_FEATURE_NOT_SUPPORTED" - A Rollout operation had a
+	// feature configured that is not supported.
 	DeployFailureCause string `json:"deployFailureCause,omitempty"`
 
 	// DeployStartTime: Output only. Time at which the `Rollout` started
@@ -5089,34 +5398,140 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SkaffoldGCSSource: Cloud Storage bucket containing Skaffold Config
+// modules.
+type SkaffoldGCSSource struct {
+	// Path: Optional. Relative path from the source to the Skaffold file.
+	Path string `json:"path,omitempty"`
+
+	// Source: Required. Cloud Storage source paths to copy recursively. For
+	// example, providing "gs://my-bucket/dir/configs/*" will result in
+	// Skaffold copying all files within the "dir/configs" directory in the
+	// bucket "my-bucket".
+	Source string `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldGCSSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldGCSSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SkaffoldGitSource: Git repository containing Skaffold Config modules.
+type SkaffoldGitSource struct {
+	// Path: Optional. Relative path from the repository root to the
+	// Skaffold file.
+	Path string `json:"path,omitempty"`
+
+	// Ref: Optional. Git ref the package should be cloned from.
+	Ref string `json:"ref,omitempty"`
+
+	// Repo: Required. Git repository the package should be cloned from.
+	Repo string `json:"repo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldGitSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldGitSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SkaffoldModules: Skaffold Config modules and their remote source.
+type SkaffoldModules struct {
+	// Configs: Optional. The Skaffold Config modules to use from the
+	// specified source.
+	Configs []string `json:"configs,omitempty"`
+
+	// Git: Remote git repository containing the Skaffold Config modules.
+	Git *SkaffoldGitSource `json:"git,omitempty"`
+
+	// GoogleCloudStorage: Cloud Storage bucket containing the Skaffold
+	// Config modules.
+	GoogleCloudStorage *SkaffoldGCSSource `json:"googleCloudStorage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Configs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Configs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldModules) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldModules
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SkaffoldSupportedCondition: SkaffoldSupportedCondition contains
-// information about when support for the release's version of skaffold
+// information about when support for the release's version of Skaffold
 // ends.
 type SkaffoldSupportedCondition struct {
 	// MaintenanceModeTime: The time at which this release's version of
-	// skaffold will enter maintenance mode.
+	// Skaffold will enter maintenance mode.
 	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
 
-	// SkaffoldSupportState: The skaffold support state for this release's
-	// version of skaffold.
+	// SkaffoldSupportState: The Skaffold support state for this release's
+	// version of Skaffold.
 	//
 	// Possible values:
 	//   "SKAFFOLD_SUPPORT_STATE_UNSPECIFIED" - Default value. This value is
 	// unused.
-	//   "SKAFFOLD_SUPPORT_STATE_SUPPORTED" - This skaffold version is
+	//   "SKAFFOLD_SUPPORT_STATE_SUPPORTED" - This Skaffold version is
 	// currently supported.
-	//   "SKAFFOLD_SUPPORT_STATE_MAINTENANCE_MODE" - This skaffold version
+	//   "SKAFFOLD_SUPPORT_STATE_MAINTENANCE_MODE" - This Skaffold version
 	// is in maintenance mode.
-	//   "SKAFFOLD_SUPPORT_STATE_UNSUPPORTED" - This skaffold version is no
+	//   "SKAFFOLD_SUPPORT_STATE_UNSUPPORTED" - This Skaffold version is no
 	// longer supported.
 	SkaffoldSupportState string `json:"skaffoldSupportState,omitempty"`
 
-	// Status: True if the version of skaffold used by this release is
+	// Status: True if the version of Skaffold used by this release is
 	// supported.
 	Status bool `json:"status,omitempty"`
 
 	// SupportExpirationTime: The time at which this release's version of
-	// skaffold will no longer be supported.
+	// Skaffold will no longer be supported.
 	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaintenanceModeTime")
@@ -5145,7 +5560,7 @@ func (s *SkaffoldSupportedCondition) MarshalJSON() ([]byte, error) {
 
 // SkaffoldVersion: Details of a supported Skaffold version.
 type SkaffoldVersion struct {
-	// MaintenanceModeTime: The time at which this version of skaffold will
+	// MaintenanceModeTime: The time at which this version of Skaffold will
 	// enter maintenance mode.
 	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
 
@@ -5153,7 +5568,7 @@ type SkaffoldVersion struct {
 	// supported.
 	SupportEndDate *Date `json:"supportEndDate,omitempty"`
 
-	// SupportExpirationTime: The time at which this version of skaffold
+	// SupportExpirationTime: The time at which this version of Skaffold
 	// will no longer be supported.
 	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
 
@@ -5357,6 +5772,9 @@ type Target struct {
 
 	// CreateTime: Output only. Time at which the `Target` was created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomTarget: Optional. Information specifying a Custom Target.
+	CustomTarget *CustomTarget `json:"customTarget,omitempty"`
 
 	// DeployParameters: Optional. The deploy parameters to use for this
 	// target.
@@ -5591,14 +6009,16 @@ type TargetRender struct {
 	// Deploy's request. See failure_message for additional details.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - The render operation did not
 	// complete successfully because the verification stanza required for
-	// verify was not found on the skaffold configuration.
+	// verify was not found on the Skaffold configuration.
 	//   "CUSTOM_ACTION_NOT_FOUND" - The render operation did not complete
 	// successfully because the custom action required for predeploy or
-	// postdeploy was not found in the skaffold configuration. See
+	// postdeploy was not found in the Skaffold configuration. See
 	// failure_message for additional details.
 	//   "DEPLOYMENT_STRATEGY_NOT_SUPPORTED" - Release failed during
 	// rendering because the release configuration is not supported with the
 	// specified deployment strategy.
+	//   "RENDER_FEATURE_NOT_SUPPORTED" - The render operation had a feature
+	// configured that is not supported.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the render
@@ -5648,9 +6068,9 @@ func (s *TargetRender) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TargetsPresentCondition: TargetsPresentCondition contains information
-// on any Targets defined in the Delivery Pipeline that do not actually
-// exist.
+// TargetsPresentCondition: `TargetsPresentCondition` contains
+// information on any Targets referenced in the Delivery Pipeline that
+// do not actually exist.
 type TargetsPresentCondition struct {
 	// MissingTargets: The list of Target names that do not exist. For
 	// example,
@@ -6367,6 +6787,974 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.create":
+
+type ProjectsLocationsCustomTargetTypesCreateCall struct {
+	s                *Service
+	parent           string
+	customtargettype *CustomTargetType
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new CustomTargetType in a given project and
+// location.
+//
+//   - parent: The parent collection in which the `CustomTargetType`
+//     should be created in. Format should be
+//     `projects/{project_id}/locations/{location_name}`.
+func (r *ProjectsLocationsCustomTargetTypesService) Create(parent string, customtargettype *CustomTargetType) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c := &ProjectsLocationsCustomTargetTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.customtargettype = customtargettype
+	return c
+}
+
+// CustomTargetTypeId sets the optional parameter "customTargetTypeId":
+// Required. ID of the `CustomTargetType`.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) CustomTargetTypeId(customTargetTypeId string) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("customTargetTypeId", customTargetTypeId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) RequestId(requestId string) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated and the user is provided with an
+// expected result, but no actual change is made.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customtargettype)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customTargetTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new CustomTargetType in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customTargetTypeId": {
+	//       "description": "Required. ID of the `CustomTargetType`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent collection in which the `CustomTargetType` should be created in. Format should be `projects/{project_id}/locations/{location_name}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated and the user is provided with an expected result, but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customTargetTypes",
+	//   "request": {
+	//     "$ref": "CustomTargetType"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.delete":
+
+type ProjectsLocationsCustomTargetTypesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single CustomTargetType.
+//
+//   - name: The name of the `CustomTargetType` to delete. Format must be
+//     `projects/{project_id}/locations/{location_name}/customTargetTypes/{
+//     custom_target_type}`.
+func (r *ProjectsLocationsCustomTargetTypesService) Delete(name string) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c := &ProjectsLocationsCustomTargetTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, then deleting an already deleted or non-existing
+// `CustomTargetType` will succeed.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": This checksum is computed by
+// the server based on the value of other fields, and may be sent on
+// update and delete requests to ensure the client has an up-to-date
+// value before proceeding.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Etag(etag string) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) RequestId(requestId string) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated but no actual change is made.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single CustomTargetType.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, then deleting an already deleted or non-existing `CustomTargetType` will succeed.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "etag": {
+	//       "description": "Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the `CustomTargetType` to delete. Format must be `projects/{project_id}/locations/{location_name}/customTargetTypes/{custom_target_type}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.get":
+
+type ProjectsLocationsCustomTargetTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single CustomTargetType.
+//
+//   - name: Name of the `CustomTargetType`. Format must be
+//     `projects/{project_id}/locations/{location_name}/customTargetTypes/{
+//     custom_target_type}`.
+func (r *ProjectsLocationsCustomTargetTypesService) Get(name string) *ProjectsLocationsCustomTargetTypesGetCall {
+	c := &ProjectsLocationsCustomTargetTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomTargetTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.get" call.
+// Exactly one of *CustomTargetType or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CustomTargetType.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Do(opts ...googleapi.CallOption) (*CustomTargetType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomTargetType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single CustomTargetType.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `CustomTargetType`. Format must be `projects/{project_id}/locations/{location_name}/customTargetTypes/{custom_target_type}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "CustomTargetType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.list":
+
+type ProjectsLocationsCustomTargetTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists CustomTargetTypes in a given project and location.
+//
+//   - parent: The parent that owns this collection of custom target
+//     types. Format must be
+//     `projects/{project_id}/locations/{location_name}`.
+func (r *ProjectsLocationsCustomTargetTypesService) List(parent string) *ProjectsLocationsCustomTargetTypesListCall {
+	c := &ProjectsLocationsCustomTargetTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter custom target
+// types to be returned. See https://google.aip.dev/160 for more
+// details.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Filter(filter string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsCustomTargetTypesListCall) OrderBy(orderBy string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of `CustomTargetType` objects to return. The service may return fewer
+// than this value. If unspecified, at most 50 `CustomTargetType`
+// objects will be returned. The maximum value is 1000; values above
+// 1000 will be set to 1000.
+func (c *ProjectsLocationsCustomTargetTypesListCall) PageSize(pageSize int64) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListCustomTargetTypes` call. Provide this
+// to retrieve the subsequent page. When paginating, all other provided
+// parameters match the call that provided the page token.
+func (c *ProjectsLocationsCustomTargetTypesListCall) PageToken(pageToken string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomTargetTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customTargetTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.list" call.
+// Exactly one of *ListCustomTargetTypesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListCustomTargetTypesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Do(opts ...googleapi.CallOption) (*ListCustomTargetTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomTargetTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists CustomTargetTypes in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter custom target types to be returned. See https://google.aip.dev/160 for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field to sort by. See https://google.aip.dev/132#ordering for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of `CustomTargetType` objects to return. The service may return fewer than this value. If unspecified, at most 50 `CustomTargetType` objects will be returned. The maximum value is 1000; values above 1000 will be set to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListCustomTargetTypes` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns this collection of custom target types. Format must be `projects/{project_id}/locations/{location_name}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customTargetTypes",
+	//   "response": {
+	//     "$ref": "ListCustomTargetTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Pages(ctx context.Context, f func(*ListCustomTargetTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.patch":
+
+type ProjectsLocationsCustomTargetTypesPatchCall struct {
+	s                *Service
+	name             string
+	customtargettype *CustomTargetType
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Updates a single CustomTargetType.
+//
+//   - name: Optional. Name of the `CustomTargetType`. Format is
+//     `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}
+//     `.
+func (r *ProjectsLocationsCustomTargetTypesService) Patch(name string, customtargettype *CustomTargetType) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c := &ProjectsLocationsCustomTargetTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customtargettype = customtargettype
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, updating a `CustomTargetType` that does not exist will result
+// in the creation of a new `CustomTargetType`.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) RequestId(requestId string) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `CustomTargetType` resource by the update. The fields specified in
+// the update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it is in the mask. If the user does not
+// provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated and the user is provided with an
+// expected result, but no actual change is made.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customtargettype)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a single CustomTargetType.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, updating a `CustomTargetType` that does not exist will result in the creation of a new `CustomTargetType`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Optional. Name of the `CustomTargetType`. Format is `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `CustomTargetType` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated and the user is provided with an expected result, but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "CustomTargetType"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "clouddeploy.projects.locations.deliveryPipelines.create":
@@ -8276,8 +9664,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsListCall struct {
 
 // List: Lists AutomationRuns in a given project and location.
 //
-//   - parent: The parent, which owns this collection of automationRuns.
-//     Format must be
+//   - parent: The parent `Delivery Pipeline`, which owns this collection
+//     of automationRuns. Format must be
 //     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
 //     _pipeline}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
@@ -8446,7 +9834,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of automationRuns. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}`.",
+	//       "description": "Required. The parent `Delivery Pipeline`, which owns this collection of automationRuns. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -9034,8 +10422,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsListCall struct {
 
 // List: Lists Automations in a given project and location.
 //
-//   - parent: The parent, which owns this collection of automations.
-//     Format must be
+//   - parent: The parent `Delivery Pipeline`, which owns this collection
+//     of automations. Format must be
 //     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
 //     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
@@ -9204,7 +10592,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of automations. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
+	//       "description": "Required. The parent `Delivery Pipeline`, which owns this collection of automations. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,

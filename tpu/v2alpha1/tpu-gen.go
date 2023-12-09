@@ -256,6 +256,7 @@ type AcceleratorConfig struct {
 	//   "V2" - TPU v2.
 	//   "V3" - TPU v3.
 	//   "V4" - TPU v4.
+	//   "V5P" - TPU v5.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Topology") to

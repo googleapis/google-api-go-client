@@ -900,18 +900,32 @@ type DropInfo struct {
 	// enabled.
 	//   "FIREWALL_RULE" - Dropped due to a firewall rule, unless allowed
 	// due to connection tracking.
-	//   "NO_ROUTE" - Dropped due to no routes.
+	//   "NO_ROUTE" - Dropped due to no matching routes.
 	//   "ROUTE_BLACKHOLE" - Dropped due to invalid route. Route's next hop
 	// is a blackhole.
 	//   "ROUTE_WRONG_NETWORK" - Packet is sent to a wrong (unintended)
 	// network. Example: you trace a packet from VM1:Network1 to
 	// VM2:Network2, however, the route configured in Network1 sends the
 	// packet destined for VM2's IP address to Network3.
+	//   "ROUTE_NEXT_HOP_IP_ADDRESS_NOT_RESOLVED" - Route's next hop IP
+	// address cannot be resolved to a GCP resource.
+	//   "ROUTE_NEXT_HOP_RESOURCE_NOT_FOUND" - Route's next hop resource is
+	// not found.
+	//   "NO_ROUTE_FROM_INTERNET_TO_PRIVATE_IPV6_ADDRESS" - Packet is sent
+	// from the Internet to the private IPv6 address.
+	//   "VPN_TUNNEL_LOCAL_SELECTOR_MISMATCH" - The packet does not match a
+	// policy-based VPN tunnel local selector.
+	//   "VPN_TUNNEL_REMOTE_SELECTOR_MISMATCH" - The packet does not match a
+	// policy-based VPN tunnel remote selector.
 	//   "PRIVATE_TRAFFIC_TO_INTERNET" - Packet with internal destination
 	// address sent to the internet gateway.
 	//   "PRIVATE_GOOGLE_ACCESS_DISALLOWED" - Instance with only an internal
 	// IP address tries to access Google API and services, but private
-	// Google access is not enabled.
+	// Google access is not enabled in the subnet.
+	//   "PRIVATE_GOOGLE_ACCESS_VIA_VPN_TUNNEL_UNSUPPORTED" - Source
+	// endpoint tries to access Google API and services through the VPN
+	// tunnel to another network, but Private Google Access needs to be
+	// enabled in the source endpoint network.
 	//   "NO_EXTERNAL_ADDRESS" - Instance with only an internal IP address
 	// tries to access external hosts, but Cloud NAT is not enabled in the
 	// subnet, unless special configurations on a VM allow this connection.
@@ -921,9 +935,6 @@ type DropInfo struct {
 	// verify if the IP address is being used in the project.
 	//   "FORWARDING_RULE_MISMATCH" - Forwarding rule's protocol and ports
 	// do not match the packet header.
-	//   "FORWARDING_RULE_REGION_MISMATCH" - Packet could be dropped because
-	// it was sent from a different region to a regional forwarding without
-	// global access.
 	//   "FORWARDING_RULE_NO_INSTANCES" - Forwarding rule does not have
 	// backends configured.
 	//   "FIREWALL_BLOCKING_LOAD_BALANCER_BACKEND_HEALTH_CHECK" - Firewalls
@@ -989,9 +1000,16 @@ type DropInfo struct {
 	// connector is set.
 	//   "VPC_CONNECTOR_NOT_RUNNING" - Packet could be dropped because the
 	// VPC connector is not in a running state.
+	//   "FORWARDING_RULE_REGION_MISMATCH" - Packet could be dropped because
+	// it was sent from a different region to a regional forwarding without
+	// global access.
 	//   "PSC_CONNECTION_NOT_ACCEPTED" - The Private Service Connect
 	// endpoint is in a project that is not approved to connect to the
 	// service.
+	//   "PSC_ENDPOINT_ACCESSED_FROM_PEERED_NETWORK" - The packet is sent to
+	// the Private Service Connect endpoint over the peering, but [it's not
+	// supported](https://cloud.google.com/vpc/docs/configure-private-service
+	// -connect-services#on-premises).
 	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run
 	// revision that is not ready.
 	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside
@@ -999,10 +1017,22 @@ type DropInfo struct {
 	//   "LOAD_BALANCER_HAS_NO_PROXY_SUBNET" - Packet sent to a load
 	// balancer, which requires a proxy-only subnet and the subnet is not
 	// found.
+	//   "CLOUD_NAT_NO_ADDRESSES" - Packet sent to Cloud Nat without active
+	// NAT IPs.
 	Cause string `json:"cause,omitempty"`
+
+	// DestinationIp: Destination IP address of the dropped packet (if
+	// relevant).
+	DestinationIp string `json:"destinationIp,omitempty"`
+
+	// Region: Region of the dropped packet (if relevant).
+	Region string `json:"region,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
 	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// SourceIp: Source IP address of the dropped packet (if relevant).
+	SourceIp string `json:"sourceIp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cause") to
 	// unconditionally include in API requests. By default, fields with
@@ -1118,9 +1148,7 @@ type Endpoint struct {
 	Instance string `json:"instance,omitempty"`
 
 	// IpAddress: The IP address of the endpoint, which can be an external
-	// or internal IP. An IPv6 address is only allowed when the test's
-	// destination is a global load balancer VIP
-	// (https://cloud.google.com/load-balancing/docs/load-balancing-overview).
+	// or internal IP.
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// LoadBalancerId: Output only. ID of the load balancer the forwarding
@@ -1564,7 +1592,6 @@ type GoogleServiceInfo struct {
 	//
 	// Possible values:
 	//   "GOOGLE_SERVICE_TYPE_UNSPECIFIED" - Unspecified Google Service.
-	// Includes most of Google APIs and services.
 	//   "IAP" - Identity aware proxy.
 	// https://cloud.google.com/iap/docs/using-tcp-forwarding
 	//   "GFE_PROXY_OR_HEALTH_CHECK_PROBER" - One of two services sharing IP
@@ -1574,6 +1601,11 @@ type GoogleServiceInfo struct {
 	// alternate name servers that use private routing.
 	// https://cloud.google.com/dns/docs/zones/forwarding-zones#firewall-rules
 	// https://cloud.google.com/dns/docs/policies#firewall-rules
+	//   "GOOGLE_API" - private.googleapis.com and restricted.googleapis.com
+	//   "GOOGLE_API_PSC" - Google API via Private Service Connect.
+	// https://cloud.google.com/vpc/docs/configure-private-service-connect-apis
+	//   "GOOGLE_API_VPC_SC" - Google API via VPC Service Controls.
+	// https://cloud.google.com/vpc/docs/configure-private-service-connect-apis
 	GoogleServiceType string `json:"googleServiceType,omitempty"`
 
 	// SourceIp: Source IP address.
@@ -1886,6 +1918,85 @@ func (s *LoadBalancerBackend) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoadBalancerBackendInfo: For display only. Metadata associated with
+// the load balancer backend.
+type LoadBalancerBackendInfo struct {
+	// BackendDisplayName: Display name of the backend. For example, it
+	// might be an instance name for the instance group backends, or an IP
+	// address and port for zonal network endpoint group backends.
+	BackendDisplayName string `json:"backendDisplayName,omitempty"`
+
+	// BackendServiceUri: URI of the backend service this backend belongs to
+	// (if applicable).
+	BackendServiceUri string `json:"backendServiceUri,omitempty"`
+
+	// HealthCheckConfigState: Output only. Health check configuration state
+	// for the backend. This is a result of the static firewall analysis
+	// (verifying that health check traffic from required IP ranges to the
+	// backend is allowed or not). The backend might still be unhealthy even
+	// if these firewalls are configured. Please refer to the documentation
+	// for more information:
+	// https://cloud.google.com/load-balancing/docs/firewall-rules
+	//
+	// Possible values:
+	//   "HEALTH_CHECK_CONFIG_STATE_UNSPECIFIED" - Configuration state
+	// unspecified. It usually means that the backend has no health check
+	// attached, or there was an unexpected configuration error preventing
+	// Connectivity tests from verifying health check configuration.
+	//   "FIREWALLS_CONFIGURED" - Firewall rules (policies) allowing health
+	// check traffic from all required IP ranges to the backend are
+	// configured.
+	//   "FIREWALLS_PARTIALLY_CONFIGURED" - Firewall rules (policies) allow
+	// health check traffic only from a part of required IP ranges.
+	//   "FIREWALLS_NOT_CONFIGURED" - Firewall rules (policies) deny health
+	// check traffic from all required IP ranges to the backend.
+	//   "FIREWALLS_UNSUPPORTED" - The network contains firewall rules of
+	// unsupported types, so Connectivity tests were not able to verify
+	// health check configuration status. Please refer to the documentation
+	// for the list of unsupported configurations:
+	// https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview#unsupported-configs
+	HealthCheckConfigState string `json:"healthCheckConfigState,omitempty"`
+
+	// HealthCheckUri: URI of the health check attached to this backend (if
+	// applicable).
+	HealthCheckUri string `json:"healthCheckUri,omitempty"`
+
+	// InstanceGroupUri: URI of the instance group this backend belongs to
+	// (if applicable).
+	InstanceGroupUri string `json:"instanceGroupUri,omitempty"`
+
+	// InstanceUri: URI of the backend instance (if applicable). Populated
+	// for instance group backends, and zonal NEG backends.
+	InstanceUri string `json:"instanceUri,omitempty"`
+
+	// NetworkEndpointGroupUri: URI of the network endpoint group this
+	// backend belongs to (if applicable).
+	NetworkEndpointGroupUri string `json:"networkEndpointGroupUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackendDisplayName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackendDisplayName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoadBalancerBackendInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadBalancerBackendInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LoadBalancerInfo: For display only. Metadata associated with a load
 // balancer.
 type LoadBalancerInfo struct {
@@ -1989,6 +2100,87 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NatInfo: For display only. Metadata associated with NAT.
+type NatInfo struct {
+	// NatGatewayName: The name of Cloud NAT Gateway. Only valid when type
+	// is CLOUD_NAT.
+	NatGatewayName string `json:"natGatewayName,omitempty"`
+
+	// NetworkUri: URI of the network where NAT translation takes place.
+	NetworkUri string `json:"networkUri,omitempty"`
+
+	// NewDestinationIp: Destination IP address after NAT translation.
+	NewDestinationIp string `json:"newDestinationIp,omitempty"`
+
+	// NewDestinationPort: Destination port after NAT translation. Only
+	// valid when protocol is TCP or UDP.
+	NewDestinationPort int64 `json:"newDestinationPort,omitempty"`
+
+	// NewSourceIp: Source IP address after NAT translation.
+	NewSourceIp string `json:"newSourceIp,omitempty"`
+
+	// NewSourcePort: Source port after NAT translation. Only valid when
+	// protocol is TCP or UDP.
+	NewSourcePort int64 `json:"newSourcePort,omitempty"`
+
+	// OldDestinationIp: Destination IP address before NAT translation.
+	OldDestinationIp string `json:"oldDestinationIp,omitempty"`
+
+	// OldDestinationPort: Destination port before NAT translation. Only
+	// valid when protocol is TCP or UDP.
+	OldDestinationPort int64 `json:"oldDestinationPort,omitempty"`
+
+	// OldSourceIp: Source IP address before NAT translation.
+	OldSourceIp string `json:"oldSourceIp,omitempty"`
+
+	// OldSourcePort: Source port before NAT translation. Only valid when
+	// protocol is TCP or UDP.
+	OldSourcePort int64 `json:"oldSourcePort,omitempty"`
+
+	// Protocol: IP protocol in string format, for example: "TCP", "UDP",
+	// "ICMP".
+	Protocol string `json:"protocol,omitempty"`
+
+	// RouterUri: Uri of the Cloud Router. Only valid when type is
+	// CLOUD_NAT.
+	RouterUri string `json:"routerUri,omitempty"`
+
+	// Type: Type of NAT.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "INTERNAL_TO_EXTERNAL" - From Compute Engine instance's internal
+	// address to external address.
+	//   "EXTERNAL_TO_INTERNAL" - From Compute Engine instance's external
+	// address to internal address.
+	//   "CLOUD_NAT" - Cloud NAT Gateway.
+	//   "PRIVATE_SERVICE_CONNECT" - Private service connect NAT.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NatGatewayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NatGatewayName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NatInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod NatInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2329,6 +2521,70 @@ func (s *ProbingDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProxyConnectionInfo: For display only. Metadata associated with
+// ProxyConnection.
+type ProxyConnectionInfo struct {
+	// NetworkUri: URI of the network where connection is proxied.
+	NetworkUri string `json:"networkUri,omitempty"`
+
+	// NewDestinationIp: Destination IP address of a new connection.
+	NewDestinationIp string `json:"newDestinationIp,omitempty"`
+
+	// NewDestinationPort: Destination port of a new connection. Only valid
+	// when protocol is TCP or UDP.
+	NewDestinationPort int64 `json:"newDestinationPort,omitempty"`
+
+	// NewSourceIp: Source IP address of a new connection.
+	NewSourceIp string `json:"newSourceIp,omitempty"`
+
+	// NewSourcePort: Source port of a new connection. Only valid when
+	// protocol is TCP or UDP.
+	NewSourcePort int64 `json:"newSourcePort,omitempty"`
+
+	// OldDestinationIp: Destination IP address of an original connection
+	OldDestinationIp string `json:"oldDestinationIp,omitempty"`
+
+	// OldDestinationPort: Destination port of an original connection. Only
+	// valid when protocol is TCP or UDP.
+	OldDestinationPort int64 `json:"oldDestinationPort,omitempty"`
+
+	// OldSourceIp: Source IP address of an original connection.
+	OldSourceIp string `json:"oldSourceIp,omitempty"`
+
+	// OldSourcePort: Source port of an original connection. Only valid when
+	// protocol is TCP or UDP.
+	OldSourcePort int64 `json:"oldSourcePort,omitempty"`
+
+	// Protocol: IP protocol in string format, for example: "TCP", "UDP",
+	// "ICMP".
+	Protocol string `json:"protocol,omitempty"`
+
+	// SubnetUri: Uri of proxy subnet.
+	SubnetUri string `json:"subnetUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProxyConnectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ProxyConnectionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReachabilityDetails: Results of the configuration analysis from the
 // last run of the test.
 type ReachabilityDetails struct {
@@ -2658,12 +2914,22 @@ type Step struct {
 	// LoadBalancer: Display information of the load balancers.
 	LoadBalancer *LoadBalancerInfo `json:"loadBalancer,omitempty"`
 
+	// LoadBalancerBackendInfo: Display information of a specific load
+	// balancer backend.
+	LoadBalancerBackendInfo *LoadBalancerBackendInfo `json:"loadBalancerBackendInfo,omitempty"`
+
+	// Nat: Display information of a NAT.
+	Nat *NatInfo `json:"nat,omitempty"`
+
 	// Network: Display information of a Google Cloud network.
 	Network *NetworkInfo `json:"network,omitempty"`
 
 	// ProjectId: Project ID that contains the configuration this step is
 	// validating.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// ProxyConnection: Display information of a ProxyConnection.
+	ProxyConnection *ProxyConnectionInfo `json:"proxyConnection,omitempty"`
 
 	// Route: Display information of a Compute Engine route.
 	Route *RouteInfo `json:"route,omitempty"`
@@ -2678,9 +2944,7 @@ type Step struct {
 	//   "START_FROM_INTERNET" - Initial state: packet originating from the
 	// internet. The endpoint information is populated.
 	//   "START_FROM_GOOGLE_SERVICE" - Initial state: packet originating
-	// from a Google service. Some Google services, such as health check
-	// probers or Identity Aware Proxy use special routes, outside VPC
-	// routing configuration to reach Compute Engine Instances.
+	// from a Google service. The google_service information is populated.
 	//   "START_FROM_PRIVATE_NETWORK" - Initial state: packet originating
 	// from a VPC or on-premises network with internal source IP. If the
 	// source is a VPC network visible to the user, a NetworkInfo is
@@ -2707,6 +2971,8 @@ type Step struct {
 	//   "APPLY_ROUTE" - Config checking state: verify route.
 	//   "APPLY_FORWARDING_RULE" - Config checking state: match forwarding
 	// rule.
+	//   "ANALYZE_LOAD_BALANCER_BACKEND" - Config checking state: verify
+	// load balancer backend configuration.
 	//   "SPOOFING_APPROVED" - Config checking state: packet sent or
 	// received under foreign IP address and allowed.
 	//   "ARRIVE_AT_INSTANCE" - Forwarding state: arriving at a Compute

@@ -830,6 +830,11 @@ type FirewallEndpoint struct {
 	// configured. Format: projects/{project}/global/networks/{name}.
 	AssociatedNetworks []string `json:"associatedNetworks,omitempty"`
 
+	// Associations: Output only. List of FirewallEndpointAssociations that
+	// are associated to this endpoint. An association will only appear in
+	// this list after traffic routing is fully configured.
+	Associations []*FirewallEndpointAssociationReference `json:"associations,omitempty"`
+
 	// BillingProjectId: Optional. Project to bill on endpoint uptime usage.
 	BillingProjectId string `json:"billingProjectId,omitempty"`
 
@@ -843,7 +848,7 @@ type FirewallEndpoint struct {
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. name of resource
+	// Name: Immutable. Identifier. name of resource
 	Name string `json:"name,omitempty"`
 
 	// Reconciling: Output only. Whether reconciling is in progress,
@@ -903,7 +908,7 @@ type FirewallEndpointAssociation struct {
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. name of resource
+	// Name: Immutable. Identifier. name of resource
 	Name string `json:"name,omitempty"`
 
 	// Network: Required. The URL of the network that is being associated.
@@ -953,6 +958,43 @@ type FirewallEndpointAssociation struct {
 
 func (s *FirewallEndpointAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallEndpointAssociation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointAssociationReference: This is a subset of the
+// FirewallEndpointAssociation message, containing fields to be used by
+// the consumer.
+type FirewallEndpointAssociationReference struct {
+	// Name: Output only. The resource name of the
+	// FirewallEndpointAssociation. Format:
+	// projects/{project}/locations/{location}/firewallEndpointAssociations/{
+	// id}
+	Name string `json:"name,omitempty"`
+
+	// Network: Output only. The VPC network associated. Format:
+	// projects/{project}/global/networks/{name}.
+	Network string `json:"network,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FirewallEndpointAssociationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallEndpointAssociationReference
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5402,7 +5444,7 @@ type OrganizationsLocationsFirewallEndpointsPatchCall struct {
 
 // Patch: Update a single Endpoint.
 //
-// - name: Output only. name of resource.
+// - name: Immutable. Identifier. name of resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *OrganizationsLocationsFirewallEndpointsPatchCall {
 	c := &OrganizationsLocationsFirewallEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5539,7 +5581,7 @@ func (c *OrganizationsLocationsFirewallEndpointsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. name of resource",
+	//       "description": "Immutable. Identifier. name of resource",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/firewallEndpoints/[^/]+$",
 	//       "required": true,
@@ -13411,7 +13453,7 @@ type ProjectsLocationsFirewallEndpointAssociationsPatchCall struct {
 
 // Patch: Update a single FirewallEndpointAssociation.
 //
-// - name: Output only. name of resource.
+// - name: Immutable. Identifier. name of resource.
 func (r *ProjectsLocationsFirewallEndpointAssociationsService) Patch(name string, firewallendpointassociation *FirewallEndpointAssociation) *ProjectsLocationsFirewallEndpointAssociationsPatchCall {
 	c := &ProjectsLocationsFirewallEndpointAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13548,7 +13590,7 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsPatchCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. name of resource",
+	//       "description": "Immutable. Identifier. name of resource",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/firewallEndpointAssociations/[^/]+$",
 	//       "required": true,

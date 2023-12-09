@@ -1267,8 +1267,7 @@ func (s *GoogleCloudContactcenterinsightsV1ConversationCallMetadata) MarshalJSON
 }
 
 // GoogleCloudContactcenterinsightsV1ConversationDataSource: The
-// conversation source, which is a combination of transcript, audio, and
-// metadata.
+// conversation source, which is a combination of transcript and audio.
 type GoogleCloudContactcenterinsightsV1ConversationDataSource struct {
 	// DialogflowSource: The source when the conversation comes from
 	// Dialogflow.
@@ -2610,7 +2609,7 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	//
 	// Possible values:
 	//   "BUCKET_OBJECT_TYPE_UNSPECIFIED" - The object type is unspecified
-	// and will default to TRANSCRIPT.
+	// and will default to `TRANSCRIPT`.
 	//   "TRANSCRIPT" - The object is a transcript.
 	//   "AUDIO" - The object is an audio file.
 	BucketObjectType string `json:"bucketObjectType,omitempty"`
@@ -4143,11 +4142,11 @@ type GoogleCloudContactcenterinsightsV1UploadConversationRequest struct {
 	Parent string `json:"parent,omitempty"`
 
 	// RedactionConfig: Optional. DLP settings for transcript redaction.
-	// Optional, will default to the config specified in Settings.
+	// Will default to the config specified in Settings.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
 
-	// SpeechConfig: Optional. Default Speech-to-Text configuration.
-	// Optional, will default to the config specified in Settings.
+	// SpeechConfig: Optional. Speech-to-Text configuration. Will default to
+	// the config specified in Settings.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1SpeechConfig `json:"speechConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conversation") to
@@ -5039,8 +5038,7 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ConversationCallMetadata) Marsh
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource: The
-// conversation source, which is a combination of transcript, audio, and
-// metadata.
+// conversation source, which is a combination of transcript and audio.
 type GoogleCloudContactcenterinsightsV1alpha1ConversationDataSource struct {
 	// DialogflowSource: The source when the conversation comes from
 	// Dialogflow.
@@ -6351,7 +6349,7 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	//
 	// Possible values:
 	//   "BUCKET_OBJECT_TYPE_UNSPECIFIED" - The object type is unspecified
-	// and will default to TRANSCRIPT.
+	// and will default to `TRANSCRIPT`.
 	//   "TRANSCRIPT" - The object is a transcript.
 	//   "AUDIO" - The object is an audio file.
 	BucketObjectType string `json:"bucketObjectType,omitempty"`
@@ -7278,11 +7276,11 @@ type GoogleCloudContactcenterinsightsV1alpha1UploadConversationRequest struct {
 	Parent string `json:"parent,omitempty"`
 
 	// RedactionConfig: Optional. DLP settings for transcript redaction.
-	// Optional, will default to the config specified in Settings.
+	// Will default to the config specified in Settings.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1alpha1RedactionConfig `json:"redactionConfig,omitempty"`
 
-	// SpeechConfig: Optional. Default Speech-to-Text configuration.
-	// Optional, will default to the config specified in Settings.
+	// SpeechConfig: Optional. Speech-to-Text configuration. Will default to
+	// the config specified in Settings.
 	SpeechConfig *GoogleCloudContactcenterinsightsV1alpha1SpeechConfig `json:"speechConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conversation") to

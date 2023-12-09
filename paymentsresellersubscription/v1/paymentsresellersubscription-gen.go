@@ -254,7 +254,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// delinquency
 	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
 	// unrecoverable system error.
-	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Cancellation by a system.
+	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
+	// do not use in Cancel API. The subscription is cancelled by Google
+	// automatically since it is no longer valid.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	CancellationReason string `json:"cancellationReason,omitempty"`
 
@@ -1375,7 +1377,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	// delinquency
 	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
 	// unrecoverable system error.
-	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Cancellation by a system.
+	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
+	// do not use in Cancel API. The subscription is cancelled by Google
+	// automatically since it is no longer valid.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	Reason string `json:"reason,omitempty"`
 

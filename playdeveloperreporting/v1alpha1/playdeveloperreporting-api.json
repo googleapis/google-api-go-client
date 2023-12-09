@@ -941,7 +941,7 @@
       }
     }
   },
-  "revision": "20230803",
+  "revision": "20231207",
   "rootUrl": "https://playdeveloperreporting.googleapis.com/",
   "schemas": {
     "GooglePlayDeveloperReportingV1alpha1Anomaly": {
@@ -1236,6 +1236,10 @@
             "Application Not Responding (ANR) error. To learn more about this type of errors visit the corresponding Android Developers documentation.",
             "Crash caused by an unhandled exception in Java (or Kotlin or any other JVM language) or a signal in native code such as SIGSEGV."
           ],
+          "type": "string"
+        },
+        "vcsInformation": {
+          "description": "Version control system information from BUNDLE-METADATA/version-control-info.textproto or META-INF/version-control-info.textproto of the app bundle or APK, respectively.",
           "type": "string"
         }
       },

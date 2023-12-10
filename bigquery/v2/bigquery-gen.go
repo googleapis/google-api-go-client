@@ -7396,7 +7396,20 @@ type RemoteModelInfo struct {
 	// See more details at [REST Resource:
 	// documents](https://cloud.google.com/natural-language/docs/reference/re
 	// st/v1/documents).
+	//   "CLOUD_AI_SPEECH_TO_TEXT_V2" - V2 Speech-to-Text API. See more
+	// details at [Google Cloud Speech-to-Text V2
+	// API](https://cloud.google.com/speech-to-text/v2/docs)
 	RemoteServiceType string `json:"remoteServiceType,omitempty"`
+
+	// SpeechRecognizer: Output only. The name of the speech recognizer to
+	// use for speech recognition. The expected format is
+	// `projects/{project}/locations/{location}/recognizers/{recognizer}`.
+	// Customers can specify this field at model creation. If not specified,
+	// a default recognizer `projects/{model
+	// project}/locations/global/recognizers/_` will be used. See more
+	// details at recognizers
+	// (https://cloud.google.com/speech-to-text/v2/docs/reference/rest/v2/projects.locations.recognizers)
+	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Connection") to
 	// unconditionally include in API requests. By default, fields with
@@ -10376,6 +10389,54 @@ type UserDefinedFunctionResource struct {
 
 func (s *UserDefinedFunctionResource) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDefinedFunctionResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VectorSearchStatistics: Statistics for a vector search query.
+// Populated as part of JobStatistics2.
+type VectorSearchStatistics struct {
+	// IndexUnusedReasons: When `indexUsageMode` is `UNUSED` or
+	// `PARTIALLY_USED`, this field explains why indexes were not used in
+	// all or part of the vector search query. If `indexUsageMode` is
+	// `FULLY_USED`, this field is not populated.
+	IndexUnusedReasons []*IndexUnusedReason `json:"indexUnusedReasons,omitempty"`
+
+	// IndexUsageMode: Specifies the index usage mode for the query.
+	//
+	// Possible values:
+	//   "INDEX_USAGE_MODE_UNSPECIFIED" - Index usage mode not specified.
+	//   "UNUSED" - No vector indexes were used in the vector search query.
+	// See [`indexUnusedReasons`]
+	// (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for detailed
+	// reasons.
+	//   "PARTIALLY_USED" - Part of the vector search query used vector
+	// indexes. See [`indexUnusedReasons`]
+	// (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for why
+	// other parts of the query did not use vector indexes.
+	//   "FULLY_USED" - The entire vector search query used vector indexes.
+	IndexUsageMode string `json:"indexUsageMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexUnusedReasons")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexUnusedReasons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VectorSearchStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod VectorSearchStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

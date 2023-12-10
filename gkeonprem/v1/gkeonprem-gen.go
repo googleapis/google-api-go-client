@@ -5313,6 +5313,10 @@ type VmwareAdminVCenterConfig struct {
 	// cluster.
 	ResourcePool string `json:"resourcePool,omitempty"`
 
+	// StoragePolicyName: The name of the vCenter storage policy for the
+	// user cluster.
+	StoragePolicyName string `json:"storagePolicyName,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6141,8 +6145,8 @@ type VmwareNetworkConfig struct {
 	// StaticIpConfig: Configuration settings for a static IP configuration.
 	StaticIpConfig *VmwareStaticIpConfig `json:"staticIpConfig,omitempty"`
 
-	// VcenterNetwork: vcenter_network specifies vCenter network name.
-	// Inherited from the admin cluster.
+	// VcenterNetwork: Output only. vcenter_network specifies vCenter
+	// network name. Inherited from the admin cluster.
 	VcenterNetwork string `json:"vcenterNetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

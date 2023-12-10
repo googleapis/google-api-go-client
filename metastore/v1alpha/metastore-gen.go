@@ -297,6 +297,53 @@ func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
 type AlterMetadataResourceLocationResponse struct {
 }
 
+// AlterTablePropertiesRequest: Request message for
+// DataprocMetastore.AlterTableProperties.
+type AlterTablePropertiesRequest struct {
+	// Properties: A map that describes the desired values to mutate. If
+	// update_mask is empty, the properties will not update. Otherwise, the
+	// properties only alters the value whose associated paths exist in the
+	// update mask
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// TableName: Required. The name of the table containing the properties
+	// you're altering in the following
+	// format.databases/{database_id}/tables/{table_id}
+	TableName string `json:"tableName,omitempty"`
+
+	// UpdateMask: A field mask that specifies the metadata table properties
+	// that are overwritten by the update. Fields specified in the
+	// update_mask are relative to the resource (not to the full request). A
+	// field is overwritten if it is in the mask.For example, given the
+	// target properties: properties { a: 1 b: 2 } And an update properties:
+	// properties { a: 2 b: 3 c: 4 } then if the field mask is:paths:
+	// "properties.b", "properties.c"then the result will be: properties {
+	// a: 1 b: 3 c: 4 }
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Properties") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlterTablePropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AlterTablePropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -2236,10 +2283,6 @@ type Restore struct {
 	// form:projects/{project_id}/locations/{location_id}/services/{service_i
 	// d}/backups/{backup_id}.
 	Backup string `json:"backup,omitempty"`
-
-	// BackupLocation: Optional. A Cloud Storage URI specifying where the
-	// backup artifacts are stored, in the format gs:///.
-	BackupLocation string `json:"backupLocation,omitempty"`
 
 	// Details: Output only. The restore details containing the revision of
 	// the service to be restored to, in format of JSON.
@@ -5274,6 +5317,152 @@ func (c *ProjectsLocationsServicesAlterLocationCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1alpha/{+service}:alterLocation",
 	//   "request": {
 	//     "$ref": "AlterMetadataResourceLocationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.alterTableProperties":
+
+type ProjectsLocationsServicesAlterTablePropertiesCall struct {
+	s                           *APIService
+	service                     string
+	altertablepropertiesrequest *AlterTablePropertiesRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// AlterTableProperties: Alter metadata table properties.
+//
+//   - service: The relative resource name of the Dataproc Metastore
+//     service that's being used to mutate metadata table properties, in
+//     the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) AlterTableProperties(service string, altertablepropertiesrequest *AlterTablePropertiesRequest) *ProjectsLocationsServicesAlterTablePropertiesCall {
+	c := &ProjectsLocationsServicesAlterTablePropertiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.altertablepropertiesrequest = altertablepropertiesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesAlterTablePropertiesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Context(ctx context.Context) *ProjectsLocationsServicesAlterTablePropertiesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.altertablepropertiesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:alterTableProperties")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.alterTableProperties" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Alter metadata table properties.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterTableProperties",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.alterTableProperties",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the Dataproc Metastore service that's being used to mutate metadata table properties, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+service}:alterTableProperties",
+	//   "request": {
+	//     "$ref": "AlterTablePropertiesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

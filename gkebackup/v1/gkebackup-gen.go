@@ -1906,7 +1906,7 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RestoreConfig: Configuration of a restore. Next id: 13
+// RestoreConfig: Configuration of a restore. Next id: 14
 type RestoreConfig struct {
 	// AllNamespaces: Restore all namespaced resources in the Backup if set
 	// to "True". Specifying this field to "False" is an error.

@@ -293,6 +293,11 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutomaticUpdatePolicy: Security patches are applied automatically to
+// the runtime without requiring the function to be redeployed.
+type AutomaticUpdatePolicy struct {
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -444,6 +449,10 @@ func (s *CallFunctionResponse) MarshalJSON() ([]byte, error) {
 // computation executed in response to an event. It encapsulate function
 // and triggers configurations.
 type CloudFunction struct {
+	// AutomaticUpdatePolicy: See the comment next to this message for more
+	// details.
+	AutomaticUpdatePolicy *AutomaticUpdatePolicy `json:"automaticUpdatePolicy,omitempty"`
+
 	// AvailableMemoryMb: The amount of memory in MB available for a
 	// function. Defaults to 256MB.
 	AvailableMemoryMb int64 `json:"availableMemoryMb,omitempty"`
@@ -584,6 +593,10 @@ type CloudFunction struct {
 	// Network: Deprecated: use vpc_connector
 	Network string `json:"network,omitempty"`
 
+	// OnDeployUpdatePolicy: See the comment next to this message for more
+	// details.
+	OnDeployUpdatePolicy *OnDeployUpdatePolicy `json:"onDeployUpdatePolicy,omitempty"`
+
 	// Runtime: The runtime in which to run the function. Required when
 	// deploying a new function, optional when updating an existing
 	// function. For a complete list of possible choices, see the `gcloud`
@@ -674,15 +687,16 @@ type CloudFunction struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AvailableMemoryMb")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticUpdatePolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AvailableMemoryMb") to
+	// NullFields is a list of field names (e.g. "AutomaticUpdatePolicy") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1772,6 +1786,37 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnDeployUpdatePolicy: Security patches are only applied when a
+// function is redeployed.
+type OnDeployUpdatePolicy struct {
+	// RuntimeVersion: Output only. contains the runtime version which was
+	// used during latest function deployment.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RuntimeVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RuntimeVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnDeployUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod OnDeployUpdatePolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

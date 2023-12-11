@@ -220,6 +220,41 @@ type ProjectsLocationsConnectionsEntityTypesEntitiesService struct {
 	s *Service
 }
 
+// AccessCredentials: AccessCredentials includes the OAuth access token,
+// and the other fields returned along with it.
+type AccessCredentials struct {
+	// AccessToken: OAuth access token.
+	AccessToken string `json:"accessToken,omitempty"`
+
+	// ExpiresIn: Duration till the access token expires.
+	ExpiresIn string `json:"expiresIn,omitempty"`
+
+	// RefreshToken: OAuth refresh token.
+	RefreshToken string `json:"refreshToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessCredentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Action: Action message contains metadata information about a single
 // action present in the external system.
 type Action struct {
@@ -269,6 +304,90 @@ type Action struct {
 
 func (s *Action) MarshalJSON() ([]byte, error) {
 	type NoMethod Action
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckReadinessResponse: Response containing status of the connector
+// for readiness prober.
+type CheckReadinessResponse struct {
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckReadinessResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckReadinessResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckStatusResponse: The status of the connector.
+type CheckStatusResponse struct {
+	// Description: When the connector is not in ACTIVE state, the
+	// description must be populated to specify the reason why it's not in
+	// ACTIVE state.
+	Description string `json:"description,omitempty"`
+
+	// State: State of the connector.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "ACTIVE" - The connector is active and ready to process runtime
+	// requests. This can also mean that from the connector's perspective,
+	// the connector is not in an error state and should be able to process
+	// runtime requests successfully.
+	//   "ERROR" - The connector is in an error state and cannot process
+	// runtime requests. An example reason would be that the connection
+	// container has some network issues that prevent outbound requests from
+	// being sent.
+	//   "AUTH_ERROR" - This is a more specific error state that the
+	// developers can opt to use when the connector is facing auth-related
+	// errors caused by auth configuration not present, invalid auth
+	// credentials, etc.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckStatusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckStatusResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -360,6 +479,44 @@ type EntityType struct {
 
 func (s *EntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeAuthCodeRequest: ExchangeAuthCodeRequest currently includes
+// no fields.
+type ExchangeAuthCodeRequest struct {
+}
+
+// ExchangeAuthCodeResponse: ExchangeAuthCodeResponse includes the
+// returned access token and its associated credentials.
+type ExchangeAuthCodeResponse struct {
+	AccessCredentials *AccessCredentials `json:"accessCredentials,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessCredentials")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessCredentials") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeAuthCodeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeAuthCodeResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1078,6 +1235,44 @@ func (s *Reference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RefreshAccessTokenRequest: RefreshAccessTokenRequest currently
+// includes no fields.
+type RefreshAccessTokenRequest struct {
+}
+
+// RefreshAccessTokenResponse: RefreshAccessTokenResponse includes the
+// returned access token and its associated credentials.
+type RefreshAccessTokenResponse struct {
+	AccessCredentials *AccessCredentials `json:"accessCredentials,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessCredentials")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessCredentials") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshAccessTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshAccessTokenResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResultMetadata: Result Metadata message contains metadata about the
 // result returned after executing an Action.
 type ResultMetadata struct {
@@ -1195,6 +1390,445 @@ func (s *UpdateEntitiesWithConditionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateEntitiesWithConditionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "connectors.projects.locations.connections.checkReadiness":
+
+type ProjectsLocationsConnectionsCheckReadinessCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CheckReadiness: Reports readiness status of the connector. Similar
+// logic to GetStatus but modified for kubernetes health check to
+// understand.
+//
+// - name: .
+func (r *ProjectsLocationsConnectionsService) CheckReadiness(name string) *ProjectsLocationsConnectionsCheckReadinessCall {
+	c := &ProjectsLocationsConnectionsCheckReadinessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsCheckReadinessCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsCheckReadinessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsCheckReadinessCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsCheckReadinessCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsCheckReadinessCall) Context(ctx context.Context) *ProjectsLocationsConnectionsCheckReadinessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsCheckReadinessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsCheckReadinessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:checkReadiness")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.checkReadiness" call.
+// Exactly one of *CheckReadinessResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CheckReadinessResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsCheckReadinessCall) Do(opts ...googleapi.CallOption) (*CheckReadinessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckReadinessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}:checkReadiness",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.checkReadiness",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:checkReadiness",
+	//   "response": {
+	//     "$ref": "CheckReadinessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.checkStatus":
+
+type ProjectsLocationsConnectionsCheckStatusCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CheckStatus: Reports the status of the connection. Note that when the
+// connection is in a state that is not ACTIVE, the implementation of
+// this RPC method must return a Status with the corresponding State
+// instead of returning a gRPC status code that is not "OK", which
+// indicates that ConnectionStatus itself, not the connection, failed.
+//
+// - name: .
+func (r *ProjectsLocationsConnectionsService) CheckStatus(name string) *ProjectsLocationsConnectionsCheckStatusCall {
+	c := &ProjectsLocationsConnectionsCheckStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsCheckStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsCheckStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsCheckStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsCheckStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsCheckStatusCall) Context(ctx context.Context) *ProjectsLocationsConnectionsCheckStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsCheckStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsCheckStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:checkStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.checkStatus" call.
+// Exactly one of *CheckStatusResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CheckStatusResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsCheckStatusCall) Do(opts ...googleapi.CallOption) (*CheckStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CheckStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not \"OK\", which indicates that ConnectionStatus itself, not the connection, failed.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}:checkStatus",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.checkStatus",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:checkStatus",
+	//   "response": {
+	//     "$ref": "CheckStatusResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.exchangeAuthCode":
+
+type ProjectsLocationsConnectionsExchangeAuthCodeCall struct {
+	s                       *Service
+	name                    string
+	exchangeauthcoderequest *ExchangeAuthCodeRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// ExchangeAuthCode: ExchangeAuthCode exchanges the OAuth authorization
+// code (and other necessary data) for an access token (and associated
+// credentials).
+//
+// - name: .
+func (r *ProjectsLocationsConnectionsService) ExchangeAuthCode(name string, exchangeauthcoderequest *ExchangeAuthCodeRequest) *ProjectsLocationsConnectionsExchangeAuthCodeCall {
+	c := &ProjectsLocationsConnectionsExchangeAuthCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exchangeauthcoderequest = exchangeauthcoderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsExchangeAuthCodeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) Context(ctx context.Context) *ProjectsLocationsConnectionsExchangeAuthCodeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exchangeauthcoderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:exchangeAuthCode")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.exchangeAuthCode" call.
+// Exactly one of *ExchangeAuthCodeResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExchangeAuthCodeResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) Do(opts ...googleapi.CallOption) (*ExchangeAuthCodeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExchangeAuthCodeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}:exchangeAuthCode",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.connections.exchangeAuthCode",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:exchangeAuthCode",
+	//   "request": {
+	//     "$ref": "ExchangeAuthCodeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ExchangeAuthCodeResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "connectors.projects.locations.connections.executeSqlQuery":
@@ -1335,6 +1969,149 @@ func (c *ProjectsLocationsConnectionsExecuteSqlQueryCall) Do(opts ...googleapi.C
 	//   },
 	//   "response": {
 	//     "$ref": "ExecuteSqlQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.refreshAccessToken":
+
+type ProjectsLocationsConnectionsRefreshAccessTokenCall struct {
+	s                         *Service
+	name                      string
+	refreshaccesstokenrequest *RefreshAccessTokenRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// RefreshAccessToken: RefreshAccessToken exchanges the OAuth refresh
+// token (and other necessary data) for a new access token (and new
+// associated credentials).
+//
+// - name: .
+func (r *ProjectsLocationsConnectionsService) RefreshAccessToken(name string, refreshaccesstokenrequest *RefreshAccessTokenRequest) *ProjectsLocationsConnectionsRefreshAccessTokenCall {
+	c := &ProjectsLocationsConnectionsRefreshAccessTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.refreshaccesstokenrequest = refreshaccesstokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsRefreshAccessTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) Context(ctx context.Context) *ProjectsLocationsConnectionsRefreshAccessTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.refreshaccesstokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:refreshAccessToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.refreshAccessToken" call.
+// Exactly one of *RefreshAccessTokenResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RefreshAccessTokenResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) Do(opts ...googleapi.CallOption) (*RefreshAccessTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RefreshAccessTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}:refreshAccessToken",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.connections.refreshAccessToken",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:refreshAccessToken",
+	//   "request": {
+	//     "$ref": "RefreshAccessTokenRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RefreshAccessTokenResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

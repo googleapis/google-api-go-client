@@ -429,6 +429,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
 
 func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
 	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
+	rs.Conversations = NewProjectsLocationsCollectionsEnginesConversationsService(s)
 	rs.Operations = NewProjectsLocationsCollectionsEnginesOperationsService(s)
 	rs.ServingConfigs = NewProjectsLocationsCollectionsEnginesServingConfigsService(s)
 	return rs
@@ -437,9 +438,20 @@ func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocation
 type ProjectsLocationsCollectionsEnginesService struct {
 	s *Service
 
+	Conversations *ProjectsLocationsCollectionsEnginesConversationsService
+
 	Operations *ProjectsLocationsCollectionsEnginesOperationsService
 
 	ServingConfigs *ProjectsLocationsCollectionsEnginesServingConfigsService
+}
+
+func NewProjectsLocationsCollectionsEnginesConversationsService(s *Service) *ProjectsLocationsCollectionsEnginesConversationsService {
+	rs := &ProjectsLocationsCollectionsEnginesConversationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesConversationsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsEnginesOperationsService(s *Service) *ProjectsLocationsCollectionsEnginesOperationsService {
@@ -594,10 +606,22 @@ type ProjectsLocationsDataStoresServingConfigsService struct {
 
 func NewProjectsLocationsDataStoresSiteSearchEngineService(s *Service) *ProjectsLocationsDataStoresSiteSearchEngineService {
 	rs := &ProjectsLocationsDataStoresSiteSearchEngineService{s: s}
+	rs.TargetSites = NewProjectsLocationsDataStoresSiteSearchEngineTargetSitesService(s)
 	return rs
 }
 
 type ProjectsLocationsDataStoresSiteSearchEngineService struct {
+	s *Service
+
+	TargetSites *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService
+}
+
+func NewProjectsLocationsDataStoresSiteSearchEngineTargetSitesService(s *Service) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService {
+	rs := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService struct {
 	s *Service
 }
 
@@ -1368,6 +1392,107 @@ func (s *GoogleCloudDiscoveryengineV1alphaAdditionalParams) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSiteMetadata:
+// Metadata related to the progress of the
+// SiteSearchEngineService.BatchCreateTargetSite operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSiteMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSiteMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSiteMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest:
+// Request message for SiteSearchEngineService.s method.
+type GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest struct {
+	// Requests: Required. The request message specifying the resources to
+	// create. A maximum of 20 TargetSites can be created in a batch.
+	Requests []*GoogleCloudDiscoveryengineV1alphaCreateTargetSiteRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse:
+// Response message for SiteSearchEngineService.BatchCreateTargetSites
+// method.
+type GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse struct {
+	// TargetSites: TargetSites created.
+	TargetSites []*GoogleCloudDiscoveryengineV1alphaTargetSite `json:"targetSites,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetSites") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetSites") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaBatchVerifyTargetSitesRequest:
+// Request message for SiteSearchEngineService.BatchVerifyTargetSites
+// method.
+type GoogleCloudDiscoveryengineV1alphaBatchVerifyTargetSitesRequest struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaBigQuerySource: BigQuery source
 // import data from.
 type GoogleCloudDiscoveryengineV1alphaBigQuerySource struct {
@@ -1619,7 +1744,9 @@ type GoogleCloudDiscoveryengineV1alphaConversation struct {
 
 	// Name: Immutable. Fully qualified name
 	// `project/*/locations/global/collections/{collection}/dataStore/*/conve
-	// rsations/*`
+	// rsations/*` or
+	// `project/*/locations/global/collections/{collection}/engines/*/convers
+	// ations/*`.
 	Name string `json:"name,omitempty"`
 
 	// StartTime: Output only. The time the conversation started.
@@ -1953,6 +2080,75 @@ func (s *GoogleCloudDiscoveryengineV1alphaCreateSchemaMetadata) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCreateTargetSiteMetadata: Metadata
+// related to the progress of the
+// SiteSearchEngineService.CreateTargetSite operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaCreateTargetSiteMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCreateTargetSiteMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCreateTargetSiteMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCreateTargetSiteRequest: Request
+// message for SiteSearchEngineService.CreateTargetSite method.
+type GoogleCloudDiscoveryengineV1alphaCreateTargetSiteRequest struct {
+	// Parent: Required. Parent resource name of TargetSite, such as
+	// `projects/{project}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/siteSearchEngine`.
+	Parent string `json:"parent,omitempty"`
+
+	// TargetSite: Required. The TargetSite to create.
+	TargetSite *GoogleCloudDiscoveryengineV1alphaTargetSite `json:"targetSite,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaCreateTargetSiteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCreateTargetSiteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCustomAttribute: A custom attribute
 // that is not explicitly modeled in a resource, e.g. UserEvent.
 type GoogleCloudDiscoveryengineV1alphaCustomAttribute struct {
@@ -2197,6 +2393,88 @@ func (s *GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata: Metadata
+// related to the progress of the
+// SiteSearchEngineService.DeleteTargetSite operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchMetadata:
+// Metadata related to the progress of the
+// SiteSearchEngineService.DisableAdvancedSiteSearch operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest:
+// Request message for SiteSearchEngineService.DisableAdvancedSiteSearch
+// method.
+type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest struct {
+}
+
+// GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchResponse:
+// Response message for
+// SiteSearchEngineService.DisableAdvancedSiteSearch method.
+type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchResponse struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaDocument: Document captures all raw
 // metadata information of items to be recommended or searched.
 type GoogleCloudDiscoveryengineV1alphaDocument struct {
@@ -2408,6 +2686,53 @@ func (s *GoogleCloudDiscoveryengineV1alphaDoubleList) UnmarshalJSON(data []byte)
 		s.Values[i] = float64(s1.Values[i])
 	}
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchMetadata:
+// Metadata related to the progress of the
+// SiteSearchEngineService.EnableAdvancedSiteSearch operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest:
+// Request message for SiteSearchEngineService.EnableAdvancedSiteSearch
+// method.
+type GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest struct {
+}
+
+// GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchResponse:
+// Response message for SiteSearchEngineService.EnableAdvancedSiteSearch
+// method.
+type GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchResponse struct {
 }
 
 // GoogleCloudDiscoveryengineV1alphaEngine: Metadata that describes the
@@ -2906,6 +3231,50 @@ func (s *GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig) MarshalJSON(
 // GoogleCloudDiscoveryengineV1alphaEngineSimilarDocumentsEngineConfig:
 // Additional config specs for a `similar-items` engine.
 type GoogleCloudDiscoveryengineV1alphaEngineSimilarDocumentsEngineConfig struct {
+}
+
+// GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse
+// : Response message for
+// SiteSearchEngineService.FetchDomainVerificationStatus method.
+type GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TargetSites: List of TargetSites containing the site verification
+	// status.
+	TargetSites []*GoogleCloudDiscoveryengineV1alphaTargetSite `json:"targetSites,omitempty"`
+
+	// TotalSize: The total number of items matching the request. This will
+	// always be populated in the response.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaFieldConfig: Configurations for
@@ -3742,6 +4111,48 @@ type GoogleCloudDiscoveryengineV1alphaListSchemasResponse struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaListSchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaListSchemasResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse: Response
+// message for SiteSearchEngineService.ListTargetSites method.
+type GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TargetSites: List of TargetSites.
+	TargetSites []*GoogleCloudDiscoveryengineV1alphaTargetSite `json:"targetSites,omitempty"`
+
+	// TotalSize: The total number of items matching the request. This will
+	// always be populated in the response.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5240,6 +5651,10 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec 
 	// an experimental feature.
 	LanguageCode string `json:"languageCode,omitempty"`
 
+	// ModelSpec: If specified, the spec will be used to modify the model
+	// specification provided to the LLM.
+	ModelSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecModelSpec `json:"modelSpec,omitempty"`
+
 	// SummaryResultCount: The number of top results to generate the summary
 	// from. If the number of results returned is less than
 	// `summaryResultCount`, the summary is generated from all of the
@@ -5267,6 +5682,36 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec 
 
 func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummary
+// SpecModelSpec: Specification of the model.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecModelSpec struct {
+	// Version: The string format of the model version. e.g. stable, latest,
+	// etc.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecModelSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpecModelSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6050,6 +6495,41 @@ func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseSummarySafetyAttributes)
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1alphaSiteSearchEngine: SiteSearchEngine
+// captures DataStore level site search persisting configurations. It is
+// a singleton value per data store.
+type GoogleCloudDiscoveryengineV1alphaSiteSearchEngine struct {
+	// Name: The fully qualified resource name of the site search engine.
+	// Format: `projects/*/locations/*/dataStores/*/siteSearchEngine`
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSiteSearchEngine) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSiteSearchEngine
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo: Verification
 // information for target sites in advanced site search.
 type GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo struct {
@@ -6153,6 +6633,10 @@ type GoogleCloudDiscoveryengineV1alphaTargetSite struct {
 
 	// UpdateTime: Output only. The target site's last updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "ExactMatch") to
 	// unconditionally include in API requests. By default, fields with
@@ -6389,6 +6873,41 @@ type GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaUpdateTargetSiteMetadata: Metadata
+// related to the progress of the
+// SiteSearchEngineService.UpdateTargetSite operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaUpdateTargetSiteMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaUpdateTargetSiteMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaUpdateTargetSiteMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9344,6 +9863,158 @@ func (c *ProjectsLocationsCollectionsDataStoresGetCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "discoveryengine.projects.locations.collections.dataStores.getSiteSearchEngine":
+
+type ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSiteSearchEngine: Gets the SiteSearchEngine.
+//
+//   - name: Resource name of SiteSearchEngine, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`. If the caller does not
+//     have permission to access the [SiteSearchEngine], regardless of
+//     whether or not it exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresService) GetSiteSearchEngine(name string) *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall {
+	c := &ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.getSiteSearchEngine" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaSiteSearchEngine or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaSiteSearchEngine.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaSiteSearchEngine, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaSiteSearchEngine{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the SiteSearchEngine.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.getSiteSearchEngine",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of SiteSearchEngine, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. If the caller does not have permission to access the [SiteSearchEngine], regardless of whether or not it exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaSiteSearchEngine"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.collections.dataStores.list":
 
 type ProjectsLocationsCollectionsDataStoresListCall struct {
@@ -12027,7 +12698,9 @@ type ProjectsLocationsCollectionsDataStoresConversationsPatchCall struct {
 //
 //   - name: Immutable. Fully qualified name
 //     `project/*/locations/global/collections/{collection}/dataStore/*/con
-//     versations/*`.
+//     versations/*` or
+//     `project/*/locations/global/collections/{collection}/engines/*/conve
+//     rsations/*`.
 func (r *ProjectsLocationsCollectionsDataStoresConversationsService) Patch(name string, googleclouddiscoveryenginev1alphaconversation *GoogleCloudDiscoveryengineV1alphaConversation) *ProjectsLocationsCollectionsDataStoresConversationsPatchCall {
 	c := &ProjectsLocationsCollectionsDataStoresConversationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12146,7 +12819,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsPatchCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Fully qualified name `project/*/locations/global/collections/{collection}/dataStore/*/conversations/*`",
+	//       "description": "Immutable. Fully qualified name `project/*/locations/global/collections/{collection}/dataStore/*/conversations/*` or `project/*/locations/global/collections/{collection}/engines/*/conversations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/conversations/[^/]+$",
 	//       "required": true,
@@ -14369,6 +15042,651 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchCall) Pages(c
 	}
 }
 
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.batchVerifyTargetSites":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googleclouddiscoveryenginev1alphabatchverifytargetsitesrequest *GoogleCloudDiscoveryengineV1alphaBatchVerifyTargetSitesRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// BatchVerifyTargetSites: Verify target sites' ownership and validity.
+// This API sends all the target sites under site search engine for
+// verification.
+//
+//   - parent: The parent resource shared by all TargetSites being
+//     verified.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService) BatchVerifyTargetSites(parent string, googleclouddiscoveryenginev1alphabatchverifytargetsitesrequest *GoogleCloudDiscoveryengineV1alphaBatchVerifyTargetSitesRequest) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphabatchverifytargetsitesrequest = googleclouddiscoveryenginev1alphabatchverifytargetsitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphabatchverifytargetsitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}:batchVerifyTargetSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.batchVerifyTargetSites" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTargetSitesCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Verify target sites' ownership and validity. This API sends all the target sites under site search engine for verification.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine:batchVerifyTargetSites",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.batchVerifyTargetSites",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource shared by all TargetSites being verified. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}:batchVerifyTargetSites",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaBatchVerifyTargetSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.disableAdvancedSiteSearch":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall struct {
+	s                                                                 *Service
+	siteSearchEngine                                                  string
+	googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest
+	urlParams_                                                        gensupport.URLParams
+	ctx_                                                              context.Context
+	header_                                                           http.Header
+}
+
+// DisableAdvancedSiteSearch: Downgrade from advanced site search to
+// basic site search.
+//
+//   - siteSearchEngine: Full resource name of the SiteSearchEngine, such
+//     as
+//     `projects/{project}/locations/{location}/dataStores/{data_store_id}/
+//     siteSearchEngine`.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService) DisableAdvancedSiteSearch(siteSearchEngine string, googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	c.googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest = googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:disableAdvancedSiteSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.disableAdvancedSiteSearch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Downgrade from advanced site search to basic site search.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine:disableAdvancedSiteSearch",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.disableAdvancedSiteSearch",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "siteSearchEngine": {
+	//       "description": "Required. Full resource name of the SiteSearchEngine, such as `projects/{project}/locations/{location}/dataStores/{data_store_id}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:disableAdvancedSiteSearch",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.enableAdvancedSiteSearch":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall struct {
+	s                                                                *Service
+	siteSearchEngine                                                 string
+	googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest
+	urlParams_                                                       gensupport.URLParams
+	ctx_                                                             context.Context
+	header_                                                          http.Header
+}
+
+// EnableAdvancedSiteSearch: Upgrade from basic site search to advanced
+// site search.
+//
+//   - siteSearchEngine: Full resource name of the SiteSearchEngine, such
+//     as
+//     `projects/{project}/locations/{location}/dataStores/{data_store_id}/
+//     siteSearchEngine`.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService) EnableAdvancedSiteSearch(siteSearchEngine string, googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	c.googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest = googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:enableAdvancedSiteSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.enableAdvancedSiteSearch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upgrade from basic site search to advanced site search.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine:enableAdvancedSiteSearch",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.enableAdvancedSiteSearch",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "siteSearchEngine": {
+	//       "description": "Required. Full resource name of the SiteSearchEngine, such as `projects/{project}/locations/{location}/dataStores/{data_store_id}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:enableAdvancedSiteSearch",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.fetchDomainVerificationStatus":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall struct {
+	s                *Service
+	siteSearchEngine string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// FetchDomainVerificationStatus: Returns list of target sites with its
+// domain verification status. This method can only be called under data
+// store with BASIC_SITE_SEARCH state at the moment.
+//
+//   - siteSearchEngine: The site search engine resource under which we
+//     fetch all the domain verification status.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService) FetchDomainVerificationStatus(siteSearchEngine string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default. The maximum value is 1000; values
+// above 1000 will be coerced to 1000. If this field is negative, an
+// INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `FetchDomainVerificationStatus` call.
+// Provide this to retrieve the subsequent page. When paginating, all
+// other parameters provided to `FetchDomainVerificationStatus` must
+// match the call that provided the page token.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:fetchDomainVerificationStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.fetchDomainVerificationStatus" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusRespons
+// e or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusRespons
+// e.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns list of target sites with its domain verification status. This method can only be called under data store with BASIC_SITE_SEARCH state at the moment.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine:fetchDomainVerificationStatus",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.fetchDomainVerificationStatus",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `FetchDomainVerificationStatus` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchDomainVerificationStatus` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "siteSearchEngine": {
+	//       "description": "Required. The site search engine resource under which we fetch all the domain verification status. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:fetchDomainVerificationStatus",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerificationStatusCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.recrawlUris":
 
 type ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall struct {
@@ -14867,6 +16185,941 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCal
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.batchCreate":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// BatchCreate: Creates TargetSite in a batch.
+//
+//   - parent: The parent resource shared by all TargetSites being
+//     created.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`. The parent field in the
+//     CreateBookRequest messages must either be empty or match this
+//     field.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService) BatchCreate(parent string, googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest = googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/targetSites:batchCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.batchCreate" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates TargetSite in a batch.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites:batchCreate",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.batchCreate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource shared by all TargetSites being created. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. The parent field in the CreateBookRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/targetSites:batchCreate",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.create":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall struct {
+	s                                           *Service
+	parent                                      string
+	googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Create: Creates a TargetSite.
+//
+//   - parent: Parent resource name of TargetSite, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService) Create(parent string, googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphatargetsite = googleclouddiscoveryenginev1alphatargetsite
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphatargetsite)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/targetSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent resource name of TargetSite, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/targetSites",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaTargetSite"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.delete":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a TargetSite.
+//
+//   - name: Full resource name of TargetSite, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine/targetSites/{target_site}`.
+//     If the caller does not have permission to access the TargetSite,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the requested TargetSite does not exist, a
+//     NOT_FOUND error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService) Delete(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/{targetSitesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of TargetSite, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}`. If the caller does not have permission to access the TargetSite, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested TargetSite does not exist, a NOT_FOUND error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.get":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a TargetSite.
+//
+//   - name: Full resource name of TargetSite, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine/targetSites/{target_site}`.
+//     If the caller does not have permission to access the TargetSite,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the requested TargetSite does not exist, a
+//     NOT_FOUND error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService) Get(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.get" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaTargetSite or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaTargetSite.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaTargetSite, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaTargetSite{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/{targetSitesId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of TargetSite, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}`. If the caller does not have permission to access the TargetSite, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested TargetSite does not exist, a NOT_FOUND error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaTargetSite"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.list":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Gets a list of TargetSites.
+//
+//   - parent: The parent site search engine resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`. If the caller does not
+//     have permission to list TargetSites under this site search engine,
+//     regardless of whether or not this branch exists, a
+//     PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService) List(parent string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default. The maximum value is 1000; values
+// above 1000 will be coerced to 1000. If this field is negative, an
+// INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListTargetSites` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListTargetSites` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/targetSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.list" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a list of TargetSites.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListTargetSites` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTargetSites` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent site search engine resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. If the caller does not have permission to list TargetSites under this site search engine, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/targetSites",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.patch":
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall struct {
+	s                                           *Service
+	name                                        string
+	googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Patch: Updates a TargetSite.
+//
+//   - name: Output only. The fully qualified resource name of the target
+//     site.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine/targetSites/{target_site}`
+//     The `target_site_id` is system-generated.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService) Patch(name string, googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphatargetsite = googleclouddiscoveryenginev1alphatargetsite
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphatargetsite)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.patch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/{targetSitesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The fully qualified resource name of the target site. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}` The `target_site_id` is system-generated.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaTargetSite"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.get":
@@ -17109,6 +19362,982 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "discoveryengine.projects.locations.collections.engines.conversations.converse":
+
+type ProjectsLocationsCollectionsEnginesConversationsConverseCall struct {
+	s                                                            *Service
+	name                                                         string
+	googleclouddiscoveryenginev1alphaconverseconversationrequest *GoogleCloudDiscoveryengineV1alphaConverseConversationRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// Converse: Converses a conversation.
+//
+//   - name: The resource name of the Conversation to get. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection}/dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     Use
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection}/dataStores/{data_store_id}/conversations/-` to activate
+//     auto session mode, which automatically creates a new conversation
+//     inside a ConverseConversation session.
+func (r *ProjectsLocationsCollectionsEnginesConversationsService) Converse(name string, googleclouddiscoveryenginev1alphaconverseconversationrequest *GoogleCloudDiscoveryengineV1alphaConverseConversationRequest) *ProjectsLocationsCollectionsEnginesConversationsConverseCall {
+	c := &ProjectsLocationsCollectionsEnginesConversationsConverseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphaconverseconversationrequest = googleclouddiscoveryenginev1alphaconverseconversationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesConversationsConverseCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesConversationsConverseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesConversationsConverseCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesConversationsConverseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesConversationsConverseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesConversationsConverseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaconverseconversationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:converse")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.conversations.converse" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaConverseConversationResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaConverseConversationResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesConversationsConverseCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaConverseConversationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaConverseConversationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Converses a conversation.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/conversations/{conversationsId}:converse",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.engines.conversations.converse",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Conversation to get. Format: `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}/conversations/{conversation_id}`. Use `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}/conversations/-` to activate auto session mode, which automatically creates a new conversation inside a ConverseConversation session.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:converse",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConverseConversationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConverseConversationResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.conversations.create":
+
+type ProjectsLocationsCollectionsEnginesConversationsCreateCall struct {
+	s                                             *Service
+	parent                                        string
+	googleclouddiscoveryenginev1alphaconversation *GoogleCloudDiscoveryengineV1alphaConversation
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Create: Creates a Conversation. If the Conversation to create already
+// exists, an ALREADY_EXISTS error is returned.
+//
+//   - parent: Full resource name of parent data store. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsCollectionsEnginesConversationsService) Create(parent string, googleclouddiscoveryenginev1alphaconversation *GoogleCloudDiscoveryengineV1alphaConversation) *ProjectsLocationsCollectionsEnginesConversationsCreateCall {
+	c := &ProjectsLocationsCollectionsEnginesConversationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphaconversation = googleclouddiscoveryenginev1alphaconversation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesConversationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesConversationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesConversationsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesConversationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesConversationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesConversationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaconversation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/conversations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.conversations.create" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaConversation or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaConversation.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesConversationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaConversation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaConversation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Conversation. If the Conversation to create already exists, an ALREADY_EXISTS error is returned.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/conversations",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.collections.engines.conversations.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Full resource name of parent data store. Format: `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/conversations",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConversation"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConversation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.conversations.delete":
+
+type ProjectsLocationsCollectionsEnginesConversationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Conversation. If the Conversation to delete does
+// not exist, a NOT_FOUND error is returned.
+//
+//   - name: The resource name of the Conversation to delete. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection}/dataStores/{data_store_id}/conversations/{conversation_id}`.
+func (r *ProjectsLocationsCollectionsEnginesConversationsService) Delete(name string) *ProjectsLocationsCollectionsEnginesConversationsDeleteCall {
+	c := &ProjectsLocationsCollectionsEnginesConversationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesConversationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesConversationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesConversationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesConversationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesConversationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesConversationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.conversations.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesConversationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Conversation. If the Conversation to delete does not exist, a NOT_FOUND error is returned.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/conversations/{conversationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "discoveryengine.projects.locations.collections.engines.conversations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Conversation to delete. Format: `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}/conversations/{conversation_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.conversations.get":
+
+type ProjectsLocationsCollectionsEnginesConversationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Conversation.
+//
+//   - name: The resource name of the Conversation to get. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection}/dataStores/{data_store_id}/conversations/{conversation_id}`.
+func (r *ProjectsLocationsCollectionsEnginesConversationsService) Get(name string) *ProjectsLocationsCollectionsEnginesConversationsGetCall {
+	c := &ProjectsLocationsCollectionsEnginesConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesConversationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesConversationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesConversationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.conversations.get" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaConversation or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaConversation.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaConversation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaConversation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Conversation.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/conversations/{conversationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.engines.conversations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Conversation to get. Format: `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}/conversations/{conversation_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConversation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.conversations.list":
+
+type ProjectsLocationsCollectionsEnginesConversationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Conversations by their parent DataStore.
+//
+//   - parent: The data store resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection}/dataStores/{data_store_id}`.
+func (r *ProjectsLocationsCollectionsEnginesConversationsService) List(parent string) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c := &ProjectsLocationsCollectionsEnginesConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply on the
+// list results. The supported features are: user_pseudo_id, state.
+// Example: "user_pseudo_id = some_id"
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) Filter(filter string) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of fields to order by, sorted in ascending order. Use "desc" after a
+// field name for descending. Supported fields: * `update_time` *
+// `create_time` * `conversation_name` Example: "update_time desc"
+// "create_time"
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) OrderBy(orderBy string) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return. If unspecified, defaults to 50. Max allowed value
+// is 1000.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) PageSize(pageSize int64) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListConversations` call. Provide this to
+// retrieve the subsequent page.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) PageToken(pageToken string) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesConversationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/conversations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.conversations.list" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaListConversationsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListConversationsResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListConversationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListConversationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all Conversations by their parent DataStore.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/conversations",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.engines.conversations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter to apply on the list results. The supported features are: user_pseudo_id, state. Example: \"user_pseudo_id = some_id\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "A comma-separated list of fields to order by, sorted in ascending order. Use \"desc\" after a field name for descending. Supported fields: * `update_time` * `create_time` * `conversation_name` Example: \"update_time desc\" \"create_time\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of results to return. If unspecified, defaults to 50. Max allowed value is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListConversations` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The data store resource name. Format: `projects/{project_number}/locations/{location_id}/collections/{collection}/dataStores/{data_store_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/conversations",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaListConversationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListConversationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.collections.engines.conversations.patch":
+
+type ProjectsLocationsCollectionsEnginesConversationsPatchCall struct {
+	s                                             *Service
+	name                                          string
+	googleclouddiscoveryenginev1alphaconversation *GoogleCloudDiscoveryengineV1alphaConversation
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Patch: Updates a Conversation. Conversation action type cannot be
+// changed. If the Conversation to update does not exist, a NOT_FOUND
+// error is returned.
+//
+//   - name: Immutable. Fully qualified name
+//     `project/*/locations/global/collections/{collection}/dataStore/*/con
+//     versations/*` or
+//     `project/*/locations/global/collections/{collection}/engines/*/conve
+//     rsations/*`.
+func (r *ProjectsLocationsCollectionsEnginesConversationsService) Patch(name string, googleclouddiscoveryenginev1alphaconversation *GoogleCloudDiscoveryengineV1alphaConversation) *ProjectsLocationsCollectionsEnginesConversationsPatchCall {
+	c := &ProjectsLocationsCollectionsEnginesConversationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphaconversation = googleclouddiscoveryenginev1alphaconversation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which
+// fields in the provided Conversation to update. The following are NOT
+// supported: * conversation.name If not set or empty, all supported
+// fields are updated.
+func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsEnginesConversationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesConversationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesConversationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaconversation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.conversations.patch" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaConversation or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaConversation.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaConversation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaConversation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Conversation. Conversation action type cannot be changed. If the Conversation to update does not exist, a NOT_FOUND error is returned.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/conversations/{conversationsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "discoveryengine.projects.locations.collections.engines.conversations.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Fully qualified name `project/*/locations/global/collections/{collection}/dataStore/*/conversations/*` or `project/*/locations/global/collections/{collection}/engines/*/conversations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Indicates which fields in the provided Conversation to update. The following are NOT supported: * conversation.name If not set or empty, all supported fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConversation"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaConversation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.collections.engines.operations.get":
 
 type ProjectsLocationsCollectionsEnginesOperationsGetCall struct {
@@ -18826,6 +22055,158 @@ func (c *ProjectsLocationsDataStoresGetCall) Do(opts ...googleapi.CallOption) (*
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDataStore"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.getSiteSearchEngine":
+
+type ProjectsLocationsDataStoresGetSiteSearchEngineCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSiteSearchEngine: Gets the SiteSearchEngine.
+//
+//   - name: Resource name of SiteSearchEngine, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`. If the caller does not
+//     have permission to access the [SiteSearchEngine], regardless of
+//     whether or not it exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsDataStoresService) GetSiteSearchEngine(name string) *ProjectsLocationsDataStoresGetSiteSearchEngineCall {
+	c := &ProjectsLocationsDataStoresGetSiteSearchEngineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresGetSiteSearchEngineCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresGetSiteSearchEngineCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) Context(ctx context.Context) *ProjectsLocationsDataStoresGetSiteSearchEngineCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.getSiteSearchEngine" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaSiteSearchEngine or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaSiteSearchEngine.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaSiteSearchEngine, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaSiteSearchEngine{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the SiteSearchEngine.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.dataStores.getSiteSearchEngine",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of SiteSearchEngine, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. If the caller does not have permission to access the [SiteSearchEngine], regardless of whether or not it exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaSiteSearchEngine"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -21517,7 +24898,9 @@ type ProjectsLocationsDataStoresConversationsPatchCall struct {
 //
 //   - name: Immutable. Fully qualified name
 //     `project/*/locations/global/collections/{collection}/dataStore/*/con
-//     versations/*`.
+//     versations/*` or
+//     `project/*/locations/global/collections/{collection}/engines/*/conve
+//     rsations/*`.
 func (r *ProjectsLocationsDataStoresConversationsService) Patch(name string, googleclouddiscoveryenginev1alphaconversation *GoogleCloudDiscoveryengineV1alphaConversation) *ProjectsLocationsDataStoresConversationsPatchCall {
 	c := &ProjectsLocationsDataStoresConversationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21636,7 +25019,7 @@ func (c *ProjectsLocationsDataStoresConversationsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Fully qualified name `project/*/locations/global/collections/{collection}/dataStore/*/conversations/*`",
+	//       "description": "Immutable. Fully qualified name `project/*/locations/global/collections/{collection}/dataStore/*/conversations/*` or `project/*/locations/global/collections/{collection}/engines/*/conversations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/conversations/[^/]+$",
 	//       "required": true,
@@ -23504,6 +26887,298 @@ func (c *ProjectsLocationsDataStoresServingConfigsSearchCall) Pages(ctx context.
 	}
 }
 
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.disableAdvancedSiteSearch":
+
+type ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall struct {
+	s                                                                 *Service
+	siteSearchEngine                                                  string
+	googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest
+	urlParams_                                                        gensupport.URLParams
+	ctx_                                                              context.Context
+	header_                                                           http.Header
+}
+
+// DisableAdvancedSiteSearch: Downgrade from advanced site search to
+// basic site search.
+//
+//   - siteSearchEngine: Full resource name of the SiteSearchEngine, such
+//     as
+//     `projects/{project}/locations/{location}/dataStores/{data_store_id}/
+//     siteSearchEngine`.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineService) DisableAdvancedSiteSearch(siteSearchEngine string, googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest) *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	c.googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest = googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphadisableadvancedsitesearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:disableAdvancedSiteSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.disableAdvancedSiteSearch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Downgrade from advanced site search to basic site search.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine:disableAdvancedSiteSearch",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.disableAdvancedSiteSearch",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "siteSearchEngine": {
+	//       "description": "Required. Full resource name of the SiteSearchEngine, such as `projects/{project}/locations/{location}/dataStores/{data_store_id}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:disableAdvancedSiteSearch",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.enableAdvancedSiteSearch":
+
+type ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall struct {
+	s                                                                *Service
+	siteSearchEngine                                                 string
+	googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest
+	urlParams_                                                       gensupport.URLParams
+	ctx_                                                             context.Context
+	header_                                                          http.Header
+}
+
+// EnableAdvancedSiteSearch: Upgrade from basic site search to advanced
+// site search.
+//
+//   - siteSearchEngine: Full resource name of the SiteSearchEngine, such
+//     as
+//     `projects/{project}/locations/{location}/dataStores/{data_store_id}/
+//     siteSearchEngine`.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineService) EnableAdvancedSiteSearch(siteSearchEngine string, googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest *GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest) *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteSearchEngine = siteSearchEngine
+	c.googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest = googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphaenableadvancedsitesearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+siteSearchEngine}:enableAdvancedSiteSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteSearchEngine": c.siteSearchEngine,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.enableAdvancedSiteSearch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Upgrade from basic site search to advanced site search.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine:enableAdvancedSiteSearch",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.enableAdvancedSiteSearch",
+	//   "parameterOrder": [
+	//     "siteSearchEngine"
+	//   ],
+	//   "parameters": {
+	//     "siteSearchEngine": {
+	//       "description": "Required. Full resource name of the SiteSearchEngine, such as `projects/{project}/locations/{location}/dataStores/{data_store_id}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+siteSearchEngine}:enableAdvancedSiteSearch",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaEnableAdvancedSiteSearchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.recrawlUris":
 
 type ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall struct {
@@ -23638,6 +27313,941 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) Do(opts ...
 	//   "path": "v1alpha/{+siteSearchEngine}:recrawlUris",
 	//   "request": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaRecrawlUrisRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.batchCreate":
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// BatchCreate: Creates TargetSite in a batch.
+//
+//   - parent: The parent resource shared by all TargetSites being
+//     created.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`. The parent field in the
+//     CreateBookRequest messages must either be empty or match this
+//     field.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService) BatchCreate(parent string, googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest *GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest = googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphabatchcreatetargetsitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/targetSites:batchCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.batchCreate" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates TargetSite in a batch.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites:batchCreate",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.batchCreate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource shared by all TargetSites being created. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. The parent field in the CreateBookRequest messages must either be empty or match this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/targetSites:batchCreate",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaBatchCreateTargetSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.create":
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall struct {
+	s                                           *Service
+	parent                                      string
+	googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Create: Creates a TargetSite.
+//
+//   - parent: Parent resource name of TargetSite, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService) Create(parent string, googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphatargetsite = googleclouddiscoveryenginev1alphatargetsite
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphatargetsite)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/targetSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites",
+	//   "httpMethod": "POST",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent resource name of TargetSite, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/targetSites",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaTargetSite"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.delete":
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a TargetSite.
+//
+//   - name: Full resource name of TargetSite, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine/targetSites/{target_site}`.
+//     If the caller does not have permission to access the TargetSite,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the requested TargetSite does not exist, a
+//     NOT_FOUND error is returned.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService) Delete(name string) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/{targetSitesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of TargetSite, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}`. If the caller does not have permission to access the TargetSite, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested TargetSite does not exist, a NOT_FOUND error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.get":
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a TargetSite.
+//
+//   - name: Full resource name of TargetSite, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine/targetSites/{target_site}`.
+//     If the caller does not have permission to access the TargetSite,
+//     regardless of whether or not it exists, a PERMISSION_DENIED error
+//     is returned. If the requested TargetSite does not exist, a
+//     NOT_FOUND error is returned.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService) Get(name string) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.get" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaTargetSite or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaTargetSite.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaTargetSite, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaTargetSite{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/{targetSitesId}",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of TargetSite, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}`. If the caller does not have permission to access the TargetSite, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested TargetSite does not exist, a NOT_FOUND error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaTargetSite"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.list":
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Gets a list of TargetSites.
+//
+//   - parent: The parent site search engine resource name, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine`. If the caller does not
+//     have permission to list TargetSites under this site search engine,
+//     regardless of whether or not this branch exists, a
+//     PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService) List(parent string) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default. The maximum value is 1000; values
+// above 1000 will be coerced to 1000. If this field is negative, an
+// INVALID_ARGUMENT error is returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) PageSize(pageSize int64) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListTargetSites` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListTargetSites` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) PageToken(pageToken string) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/targetSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.list" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a list of TargetSites.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListTargetSites` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTargetSites` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent site search engine resource name, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. If the caller does not have permission to list TargetSites under this site search engine, regardless of whether or not this branch exists, a PERMISSION_DENIED error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/targetSites",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1alphaListTargetSitesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.patch":
+
+type ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall struct {
+	s                                           *Service
+	name                                        string
+	googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Patch: Updates a TargetSite.
+//
+//   - name: Output only. The fully qualified resource name of the target
+//     site.
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/siteSearchEngine/targetSites/{target_site}`
+//     The `target_site_id` is system-generated.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService) Patch(name string, googleclouddiscoveryenginev1alphatargetsite *GoogleCloudDiscoveryengineV1alphaTargetSite) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphatargetsite = googleclouddiscoveryenginev1alphatargetsite
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphatargetsite)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.patch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a TargetSite.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine/targetSites/{targetSitesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The fully qualified resource name of the target site. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}` The `target_site_id` is system-generated.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/siteSearchEngine/targetSites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaTargetSite"
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"

@@ -930,7 +930,9 @@ type Drive struct {
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 
 	// Restrictions: A set of restrictions that apply to this shared drive
-	// or items inside this shared drive.
+	// or items inside this shared drive. Note that restrictions can't be
+	// set when creating a shared drive. To add a restriction, first create
+	// a shared drive and then use `drives.update` to add restrictions.
 	Restrictions *DriveRestrictions `json:"restrictions,omitempty"`
 
 	// ThemeId: The ID of the theme from which the background image and
@@ -1156,7 +1158,10 @@ func (s *DriveCapabilities) MarshalJSON() ([]byte, error) {
 }
 
 // DriveRestrictions: A set of restrictions that apply to this shared
-// drive or items inside this shared drive.
+// drive or items inside this shared drive. Note that restrictions can't
+// be set when creating a shared drive. To add a restriction, first
+// create a shared drive and then use `drives.update` to add
+// restrictions.
 type DriveRestrictions struct {
 	// AdminManagedRestrictions: Whether administrative privileges on this
 	// shared drive are required to modify restrictions.

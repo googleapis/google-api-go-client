@@ -1059,13 +1059,8 @@ func (s *GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 // detected. Note that no-speech event is not expected in this phase.
 // The client provides this configuration in terms of the durations of
 // those two phases. The durations are measured in terms of the audio
-// length fromt the the start of the input audio. The flow goes like
-// below: --> Time without speech detection | utterance only | utterance
-// or no-speech event | | +-------------+ | +------------+ |
-// +---------------+ ----------+ no barge-in +-|-+ barge-in +-|-+ normal
-// period +----------- +-------------+ | +------------+ |
-// +---------------+ No-speech event is a response with END_OF_UTTERANCE
-// without any transcript following up.
+// length from the the start of the input audio. No-speech event is a
+// response with END_OF_UTTERANCE without any transcript following up.
 type GoogleCloudDialogflowCxV3BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
 	// beginning of the input audio.
@@ -2739,19 +2734,8 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
 
 	// Model: Optional. Which Speech model to select for the given request.
-	// Select the model best suited to your domain to get best results. If a
-	// model is not explicitly specified, then we auto-select a model based
-	// on the parameters in the InputAudioConfig. If enhanced speech model
-	// is enabled for the agent and an enhanced version of the specified
-	// model for the language does not exist, then the speech is recognized
-	// using the standard version of the specified model. Refer to Cloud
-	// Speech API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -2760,9 +2744,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
 	// this case Dialogflow defaults to USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the Speech
-	// model that the caller is eligible for. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible for enhanced models.
+	// model that the caller is eligible for.
 	//   "USE_STANDARD" - Use standard model variant even if an enhanced
 	// model is available. See the [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
@@ -2771,11 +2753,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// variant does not exist for the given model and request language,
 	// Dialogflow falls back to the standard variant. The [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
-	// odels) describes which models have enhanced variants. * If the API
-	// caller isn't eligible for enhanced models, Dialogflow returns an
-	// error. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible.
+	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
@@ -5158,14 +5136,9 @@ func (s *GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error)
 // utterance has been detected. Note that no-speech event is not
 // expected in this phase. The client provides this configuration in
 // terms of the durations of those two phases. The durations are
-// measured in terms of the audio length fromt the the start of the
-// input audio. The flow goes like below: --> Time without speech
-// detection | utterance only | utterance or no-speech event | |
-// +-------------+ | +------------+ | +---------------+ ----------+ no
-// barge-in +-|-+ barge-in +-|-+ normal period +-----------
-// +-------------+ | +------------+ | +---------------+ No-speech event
-// is a response with END_OF_UTTERANCE without any transcript following
-// up.
+// measured in terms of the audio length from the the start of the input
+// audio. No-speech event is a response with END_OF_UTTERANCE without
+// any transcript following up.
 type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
 	// beginning of the input audio.
@@ -6842,19 +6815,8 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
 
 	// Model: Optional. Which Speech model to select for the given request.
-	// Select the model best suited to your domain to get best results. If a
-	// model is not explicitly specified, then we auto-select a model based
-	// on the parameters in the InputAudioConfig. If enhanced speech model
-	// is enabled for the agent and an enhanced version of the specified
-	// model for the language does not exist, then the speech is recognized
-	// using the standard version of the specified model. Refer to Cloud
-	// Speech API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -6863,9 +6825,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
 	// this case Dialogflow defaults to USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the Speech
-	// model that the caller is eligible for. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible for enhanced models.
+	// model that the caller is eligible for.
 	//   "USE_STANDARD" - Use standard model variant even if an enhanced
 	// model is available. See the [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
@@ -6874,11 +6834,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// variant does not exist for the given model and request language,
 	// Dialogflow falls back to the standard variant. The [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
-	// odels) describes which models have enhanced variants. * If the API
-	// caller isn't eligible for enhanced models, Dialogflow returns an
-	// error. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible.
+	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
@@ -13656,20 +13612,9 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Model: Which Speech model to select for the given request. Select the
-	// model best suited to your domain to get best results. If a model is
-	// not explicitly specified, then we auto-select a model based on the
-	// parameters in the InputAudioConfig. If enhanced speech model is
-	// enabled for the agent and an enhanced version of the specified model
-	// for the language does not exist, then the speech is recognized using
-	// the standard version of the specified model. Refer to Cloud Speech
-	// API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// Model: Optional. Which Speech model to select for the given request.
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/es/docs/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Which variant of the Speech model to use.
@@ -16811,8 +16756,9 @@ type GoogleCloudDialogflowV2SearchKnowledgeAnswer struct {
 	//
 	// Possible values:
 	//   "ANSWER_TYPE_UNSPECIFIED" - The answer has a unspecified type.
-	//   "FAQ" - The answer is from FAQ doucments.
+	//   "FAQ" - The answer is from FAQ documents.
 	//   "GENERATIVE" - The answer is from generative model.
+	//   "INTENT" - The answer is from intent matching.
 	AnswerType string `json:"answerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Answer") to
@@ -17519,10 +17465,20 @@ func (s *GoogleCloudDialogflowV2SpeechContext) UnmarshalJSON(data []byte) error 
 type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// Model: Which Speech model to select. Select the model best suited to
 	// your domain to get best results. If a model is not explicitly
-	// specified, then a default model is used. Refer to Cloud Speech API
-	// documentation
+	// specified, then Dialogflow auto-selects a model based on other
+	// parameters in the SpeechToTextConfig and Agent settings. If enhanced
+	// speech model is enabled for the agent and an enhanced version of the
+	// specified model for the language does not exist, then the speech is
+	// recognized using the standard version of the specified model. Refer
+	// to Cloud Speech API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details.
+	// for more details. If you specify a model, the following models
+	// typically have the best performance: - phone_call (best for Agent
+	// Assist and telephony) - latest_short (best for Dialogflow
+	// non-telephony) - command_and_search Leave this field unspecified to
+	// use Agent Speech settings
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/agent#settings-speech)
+	// for model selection.
 	Model string `json:"model,omitempty"`
 
 	// SpeechModelVariant: The speech model used in speech to text.

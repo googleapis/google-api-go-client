@@ -2797,9 +2797,9 @@ type GoogleCloudDatacatalogV1PolicyTag struct {
 	// and spaces, and be at most 200 bytes long when encoded in UTF-8.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this policy tag in the URL
-	// format. The policy tag manager generates unique taxonomy IDs and
-	// policy tag IDs.
+	// Name: Identifier. Resource name of this policy tag in the URL format.
+	// The policy tag manager generates unique taxonomy IDs and policy tag
+	// IDs.
 	Name string `json:"name,omitempty"`
 
 	// ParentPolicyTag: Resource name of this policy tag's parent policy
@@ -4115,8 +4115,8 @@ type GoogleCloudDatacatalogV1Taxonomy struct {
 	// within an organization.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this taxonomy in URL format.
-	// Note: Policy tag manager generates unique taxonomy IDs.
+	// Name: Identifier. Resource name of this taxonomy in URL format. Note:
+	// Policy tag manager generates unique taxonomy IDs.
 	Name string `json:"name,omitempty"`
 
 	// PolicyTagCount: Output only. Number of policy tags in this taxonomy.
@@ -13437,7 +13437,7 @@ type ProjectsLocationsTaxonomiesPatchCall struct {
 // Patch: Updates a taxonomy, including its display name, description,
 // and activated policy types.
 //
-//   - name: Output only. Resource name of this taxonomy in URL format.
+//   - name: Identifier. Resource name of this taxonomy in URL format.
 //     Note: Policy tag manager generates unique taxonomy IDs.
 func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatacatalogv1taxonomy *GoogleCloudDatacatalogV1Taxonomy) *ProjectsLocationsTaxonomiesPatchCall {
 	c := &ProjectsLocationsTaxonomiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13555,7 +13555,7 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.",
+	//       "description": "Identifier. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -14804,7 +14804,7 @@ type ProjectsLocationsTaxonomiesPolicyTagsPatchCall struct {
 // Patch: Updates a policy tag, including its display name, description,
 // and parent policy tag.
 //
-//   - name: Output only. Resource name of this policy tag in the URL
+//   - name: Identifier. Resource name of this policy tag in the URL
 //     format. The policy tag manager generates unique taxonomy IDs and
 //     policy tag IDs.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Patch(name string, googleclouddatacatalogv1policytag *GoogleCloudDatacatalogV1PolicyTag) *ProjectsLocationsTaxonomiesPolicyTagsPatchCall {
@@ -14925,7 +14925,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.",
+	//       "description": "Identifier. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,

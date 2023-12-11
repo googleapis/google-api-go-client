@@ -13733,8 +13733,7 @@ func (s *WebDetection) MarshalJSON() ([]byte, error) {
 
 // WebDetectionParams: Parameters for web detection request.
 type WebDetectionParams struct {
-	// IncludeGeoResults: Whether to include results derived from the geo
-	// information in the image.
+	// IncludeGeoResults: This field has no effect on results.
 	IncludeGeoResults bool `json:"includeGeoResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeGeoResults")

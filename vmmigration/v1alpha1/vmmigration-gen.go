@@ -10703,7 +10703,8 @@ type ProjectsLocationsSourcesMigratingVmsCloneJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists CloneJobs of a given migrating VM.
+// List: Lists the CloneJobs of a migrating VM. Only the 25 most recent
+// CloneJobs are returned.
 //
 // - parent: The parent, which owns this collection of source VMs.
 func (r *ProjectsLocationsSourcesMigratingVmsCloneJobsService) List(parent string) *ProjectsLocationsSourcesMigratingVmsCloneJobsListCall {
@@ -10843,7 +10844,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsListCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists CloneJobs of a given migrating VM.",
+	//   "description": "Lists the CloneJobs of a migrating VM. Only the 25 most recent CloneJobs are returned.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/cloneJobs",
 	//   "httpMethod": "GET",
 	//   "id": "vmmigration.projects.locations.sources.migratingVms.cloneJobs.list",
@@ -11389,7 +11390,8 @@ type ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists CutoverJobs of a given migrating VM.
+// List: Lists the CutoverJobs of a migrating VM. Only the 25 most
+// recent CutoverJobs are returned.
 //
 // - parent: The parent, which owns this collection of migrating VMs.
 func (r *ProjectsLocationsSourcesMigratingVmsCutoverJobsService) List(parent string) *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall {
@@ -11529,7 +11531,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists CutoverJobs of a given migrating VM.",
+	//   "description": "Lists the CutoverJobs of a migrating VM. Only the 25 most recent CutoverJobs are returned.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/cutoverJobs",
 	//   "httpMethod": "GET",
 	//   "id": "vmmigration.projects.locations.sources.migratingVms.cutoverJobs.list",

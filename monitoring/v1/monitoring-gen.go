@@ -959,7 +959,7 @@ type Dashboard struct {
 	// content widget occupying one or more grid blocks.
 	MosaicLayout *MosaicLayout `json:"mosaicLayout,omitempty"`
 
-	// Name: Immutable. The resource name of the dashboard.
+	// Name: Identifier. The resource name of the dashboard.
 	Name string `json:"name,omitempty"`
 
 	// RowLayout: The content is divided into equally spaced rows and the
@@ -4901,7 +4901,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "description": "Optional. If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4963,7 +4963,7 @@ type ProjectsDashboardsPatchCall struct {
 // permission on the specified dashboard. For more information, see
 // Cloud Identity and Access Management (https://cloud.google.com/iam).
 //
-// - name: Immutable. The resource name of the dashboard.
+// - name: Identifier. The resource name of the dashboard.
 func (r *ProjectsDashboardsService) Patch(name string, dashboard *Dashboard) *ProjectsDashboardsPatchCall {
 	c := &ProjectsDashboardsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5079,7 +5079,7 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of the dashboard.",
+	//       "description": "Identifier. The resource name of the dashboard.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,

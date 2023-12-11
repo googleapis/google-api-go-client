@@ -5983,8 +5983,7 @@ type Resource struct {
 	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
-	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
-	// third-party assets, this field may be set differently.
+	// `//cloudresourcemanager.googleapis.com/projects/my_project_123`
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceUrl: The REST URL for accessing the resource. An HTTP `GET`

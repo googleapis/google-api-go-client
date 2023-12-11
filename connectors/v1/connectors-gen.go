@@ -756,6 +756,16 @@ type ConfigVariableTemplate struct {
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
 
+	// LocationType: Optional. Location Tyep denotes where this value should
+	// be sent in BYOC connections.
+	//
+	// Possible values:
+	//   "LOCATION_TYPE_UNSPECIFIED" - Location type unspecified.
+	//   "HEADER" - Request header.
+	//   "PAYLOAD" - Request Payload.
+	//   "QUERY_PARAM" - Request query param.
+	LocationType string `json:"locationType,omitempty"`
+
 	// Required: Flag represents that this `ConfigVariable` must be provided
 	// for a connection.
 	Required bool `json:"required,omitempty"`
@@ -1299,6 +1309,16 @@ type ConnectorVersion struct {
 	// features supported by the Connector.
 	SupportedRuntimeFeatures *SupportedRuntimeFeatures `json:"supportedRuntimeFeatures,omitempty"`
 
+	// UnsupportedConnectionTypes: Output only. Unsupported connection
+	// types.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Connection type is unspecified.
+	//   "CONNECTION_WITH_EVENTING" - Connection with eventing.
+	//   "ONLY_CONNECTION" - Only connection.
+	//   "ONLY_EVENTING" - Only eventing.
+	UnsupportedConnectionTypes []string `json:"unsupportedConnectionTypes,omitempty"`
+
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1479,20 +1499,27 @@ func (s *CustomConnector) MarshalJSON() ([]byte, error) {
 // CustomConnectorVersion: CustomConnectorVersion indicates a specific
 // version of a connector.
 type CustomConnectorVersion struct {
-	// AuthConfig: Required. Configuration for establishing the
-	// authentication to the connector destination.
+	// AuthConfig: Optional. Authentication config for accessing connector
+	// facade/ proxy. This is used only when
+	// enable_backend_destination_config is true.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
+
+	// BackendVariableTemplates: Optional. Backend variables config
+	// templates. This translates to additional variable templates in
+	// connection.
+	BackendVariableTemplates []*ConfigVariableTemplate `json:"backendVariableTemplates,omitempty"`
 
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DestinationConfig: Required. Configuration of the customConnector's
-	// destination.
-	DestinationConfig *DestinationConfig `json:"destinationConfig,omitempty"`
+	// DestinationConfigs: Optional. Destination config(s) for accessing
+	// connector facade/ proxy. This is used only when
+	// enable_backend_destination_config is true.
+	DestinationConfigs []*DestinationConfig `json:"destinationConfigs,omitempty"`
 
-	// EnableBackendDestinationConfig: Optional. Whether to enable backend
-	// destination config. This is the backend server that the connector
-	// connects to.
+	// EnableBackendDestinationConfig: Optional. When enabled, the connector
+	// will be a facade/ proxy, and connects to the destination provided
+	// during connection creation.
 	EnableBackendDestinationConfig bool `json:"enableBackendDestinationConfig,omitempty"`
 
 	// Labels: Optional. Resource labels to represent user-provided
@@ -1505,8 +1532,8 @@ type CustomConnectorVersion struct {
 	// ctor}/customConnectorVersions/{custom_connector_version}
 	Name string `json:"name,omitempty"`
 
-	// ServiceAccount: Required. Service account needed for runtime plane to
-	// access Custom Connector secrets.
+	// ServiceAccount: Required. Service account used by runtime plane to
+	// access auth config secrets.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SpecLocation: Optional. Location of the custom connector spec.

@@ -1021,6 +1021,12 @@ type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
 	// SIGSEGV.
 	Type string `json:"type,omitempty"`
 
+	// VcsInformation: Version control system information from
+	// BUNDLE-METADATA/version-control-info.textproto or
+	// META-INF/version-control-info.textproto of the app bundle or APK,
+	// respectively.
+	VcsInformation string `json:"vcsInformation,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DeviceModel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

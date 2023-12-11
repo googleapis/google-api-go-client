@@ -1593,6 +1593,46 @@ func (s *GoogleCloudRetailV2alphaEnrollSolutionResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse: Response of
+// the ExportAnalyticsMetricsRequest. If the long running operation was
+// successful, then this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the
+	// request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// ErrorsConfig: This field is never set.
+	ErrorsConfig *GoogleCloudRetailV2alphaExportErrorsConfig `json:"errorsConfig,omitempty"`
+
+	// OutputResult: Output result indicating where the data were exported
+	// to.
+	OutputResult *GoogleCloudRetailV2alphaOutputResult `json:"outputResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaExportErrorsConfig: Configuration of
 // destination for Export related errors.
 type GoogleCloudRetailV2alphaExportErrorsConfig struct {
@@ -6413,12 +6453,13 @@ type GoogleCloudRetailV2betaProduct struct {
 	// "categories": [ "Shoes & Accessories > Shoes", "Sports & Fitness >
 	// Athletic Clothing > Shoes" ] Must be set for Type.PRIMARY Product
 	// otherwise an INVALID_ARGUMENT error is returned. At most 250 values
-	// are allowed per Product. Empty values are not allowed. Each value
-	// must be a UTF-8 encoded string with a length limit of 5,000
-	// characters. Otherwise, an INVALID_ARGUMENT error is returned.
-	// Corresponding properties: Google Merchant Center property
-	// google_product_category. Schema.org property [Product.category]
-	// (https://schema.org/category). [mc_google_product_category]:
+	// are allowed per Product unless overridden via pantheon UI. Empty
+	// values are not allowed. Each value must be a UTF-8 encoded string
+	// with a length limit of 5,000 characters. Otherwise, an
+	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
+	// Merchant Center property google_product_category. Schema.org property
+	// [Product.category] (https://schema.org/category).
+	// [mc_google_product_category]:
 	// https://support.google.com/merchants/answer/6324436
 	Categories []string `json:"categories,omitempty"`
 
@@ -6454,17 +6495,16 @@ type GoogleCloudRetailV2betaProduct struct {
 	// property Product.description (https://schema.org/description).
 	Description string `json:"description,omitempty"`
 
-	// ExpireTime: The timestamp when this product becomes unavailable for
-	// SearchService.Search. Note that this is only applicable to
-	// Type.PRIMARY and Type.COLLECTION, and ignored for Type.VARIANT. In
-	// general, we suggest the users to delete the stale products
-	// explicitly, instead of using this field to determine staleness. If it
-	// is set, the Product is not available for SearchService.Search after
-	// expire_time. However, the product can still be retrieved by
-	// ProductService.GetProduct and ProductService.ListProducts.
-	// expire_time must be later than available_time and publish_time,
-	// otherwise an INVALID_ARGUMENT error is thrown. Corresponding
-	// properties: Google Merchant Center property expiration_date
+	// ExpireTime: Note that this field is applied in the following ways: *
+	// If the Product is already expired when it is uploaded, this product
+	// is not indexed for search. * If the Product is not expired when it is
+	// uploaded, only the Type.PRIMARY's and Type.COLLECTION's expireTime is
+	// respected, and Type.VARIANT's expireTime is not used. In general, we
+	// suggest the users to delete the stale products explicitly, instead of
+	// using this field to determine staleness. expire_time must be later
+	// than available_time and publish_time, otherwise an INVALID_ARGUMENT
+	// error is thrown. Corresponding properties: Google Merchant Center
+	// property expiration_date
 	// (https://support.google.com/merchants/answer/6324499).
 	ExpireTime string `json:"expireTime,omitempty"`
 

@@ -1704,15 +1704,17 @@ func (s *GoogleCloudRunV2Probe) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2ResourceRequirements: ResourceRequirements describes
 // the compute resource requirements.
 type GoogleCloudRunV2ResourceRequirements struct {
-	// CpuIdle: Determines whether CPU should be throttled or not outside of
-	// requests.
+	// CpuIdle: Determines whether CPU is only allocated during requests
+	// (true by default). However, if ResourceRequirements is set, the
+	// caller must explicitly set this field to true to preserve the default
+	// behavior.
 	CpuIdle bool `json:"cpuIdle,omitempty"`
 
-	// Limits: Only ´memory´ and 'cpu' are supported. Notes: * The only
-	// supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU
-	// requires at least 2Gi of memory. For more information, go to
-	// https://cloud.google.com/run/docs/configuring/cpu. * For supported
-	// 'memory' values and syntax, go to
+	// Limits: Only `memory` and `cpu` keys in the map are supported. Notes:
+	// * The only supported values for CPU are '1', '2', '4', and '8'.
+	// Setting 4 CPU requires at least 2Gi of memory. For more information,
+	// go to https://cloud.google.com/run/docs/configuring/cpu. * For
+	// supported 'memory' values and syntax, go to
 	// https://cloud.google.com/run/docs/configuring/memory-limits
 	Limits map[string]string `json:"limits,omitempty"`
 

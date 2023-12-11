@@ -1770,9 +1770,15 @@ func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup) MarshalJSON() ([]b
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership: A
 // membership in a group of related accounts.
 type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
-	// HashedAccountId: The unique stable hashed user identifier of the
-	// member. The identifier corresponds to a `hashed_account_id` provided
-	// in a previous `CreateAssessment` or `AnnotateAssessment` call.
+	// AccountId: The unique stable account identifier of the member. The
+	// identifier corresponds to an `account_id` provided in a previous
+	// `CreateAssessment` or `AnnotateAssessment` call.
+	AccountId string `json:"accountId,omitempty"`
+
+	// HashedAccountId: Deprecated: use `account_id` instead. The unique
+	// stable hashed account identifier of the member. The identifier
+	// corresponds to a `hashed_account_id` provided in a previous
+	// `CreateAssessment` or `AnnotateAssessment` call.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// Name: Required. Identifier. The resource name for this membership in
@@ -1781,7 +1787,7 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 	// hips/{membership}`.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HashedAccountId") to
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1789,13 +1795,12 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HashedAccountId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1985,10 +1990,18 @@ func (s *GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, er
 // quest: The request message to search related account group
 // memberships.
 type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest struct {
-	// HashedAccountId: Optional. The unique stable hashed user identifier
-	// used to search connections. The identifier should correspond to a
-	// `hashed_account_id` provided in a previous `CreateAssessment` or
-	// `AnnotateAssessment` call.
+	// AccountId: Optional. The unique stable account identifier used to
+	// search connections. The identifier should correspond to an
+	// `account_id` provided in a previous `CreateAssessment` or
+	// `AnnotateAssessment` call. Either hashed_account_id or account_id
+	// must be set, but not both.
+	AccountId string `json:"accountId,omitempty"`
+
+	// HashedAccountId: Optional. Deprecated: use `account_id` instead. The
+	// unique stable hashed account identifier used to search connections.
+	// The identifier should correspond to a `hashed_account_id` provided in
+	// a previous `CreateAssessment` or `AnnotateAssessment` call. Either
+	// hashed_account_id or account_id must be set, but not both.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// PageSize: Optional. The maximum number of groups to return. The
@@ -2004,7 +2017,7 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
 	// provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HashedAccountId") to
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2012,13 +2025,12 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HashedAccountId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

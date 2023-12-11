@@ -4393,7 +4393,7 @@ func (s *SavedQuery) MarshalJSON() ([]byte, error) {
 }
 
 // Settings: Describes the settings associated with a project, folder,
-// organization, billing account, or flexible resource.
+// organization, or billing account.
 type Settings struct {
 	// DefaultSinkConfig: Optional. Overrides the built-in configuration for
 	// _Default sink.
@@ -4411,27 +4411,23 @@ type Settings struct {
 	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
 	// eys/[KEY]" For
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
-	// yptoKeys/my-key"To enable CMEK for the Log Router, set this field to
-	// a valid kms_key_name for which the associated service account has the
+	// yptoKeys/my-key"To enable CMEK, set this field to a valid
+	// kms_key_name for which the associated service account has the
 	// required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for
 	// the key.The Cloud KMS key used by the Log Router can be updated by
-	// changing the kms_key_name to a new valid key name. Encryption
-	// operations that are in progress will be completed with the key that
-	// was in use when they started. Decryption operations will be completed
-	// using the key that was used at the time of encryption unless access
-	// to that key has been revoked.To disable CMEK for the Log Router, set
-	// this field to an empty string.See Enabling CMEK for Log Router
+	// changing the kms_key_name to a new valid key name.To disable CMEK for
+	// the Log Router, set this field to an empty string.See Enabling CMEK
+	// for Log Router
 	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 	// for more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// KmsServiceAccountId: Output only. The service account that will be
 	// used by the Log Router to access your Cloud KMS key.Before enabling
-	// CMEK for Log Router, you must first assign the role
+	// CMEK, you must first assign the role
 	// roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account
-	// that the Log Router will use to access your Cloud KMS key. Use
-	// GetSettings to obtain the service account ID.See Enabling CMEK for
-	// Log Router
+	// that will be used to access your Cloud KMS key. Use GetSettings to
+	// obtain the service account ID.See Enabling CMEK for Log Router
 	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 	// for more information.
 	KmsServiceAccountId string `json:"kmsServiceAccountId,omitempty"`
@@ -4929,7 +4925,7 @@ type BillingAccountsGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -4943,7 +4939,7 @@ type BillingAccountsGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *BillingAccountsService) GetCmekSettings(name string) *BillingAccountsGetCmekSettingsCall {
@@ -5051,7 +5047,7 @@ func (c *BillingAccountsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.billingAccounts.getCmekSettings",
@@ -5060,7 +5056,7 @@ func (c *BillingAccountsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -5092,14 +5088,10 @@ type BillingAccountsGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -5107,11 +5099,9 @@ type BillingAccountsGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *BillingAccountsService) GetSettings(name string) *BillingAccountsGetSettingsCall {
 	c := &BillingAccountsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5217,7 +5207,7 @@ func (c *BillingAccountsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Sett
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.billingAccounts.getSettings",
@@ -5226,7 +5216,7 @@ func (c *BillingAccountsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Sett
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -13536,7 +13526,7 @@ type FoldersGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -13550,7 +13540,7 @@ type FoldersGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *FoldersService) GetCmekSettings(name string) *FoldersGetCmekSettingsCall {
@@ -13658,7 +13648,7 @@ func (c *FoldersGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSett
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.folders.getCmekSettings",
@@ -13667,7 +13657,7 @@ func (c *FoldersGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSett
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -13699,14 +13689,10 @@ type FoldersGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -13714,11 +13700,9 @@ type FoldersGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *FoldersService) GetSettings(name string) *FoldersGetSettingsCall {
 	c := &FoldersGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13824,7 +13808,7 @@ func (c *FoldersGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.folders.getSettings",
@@ -13833,7 +13817,7 @@ func (c *FoldersGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -13865,25 +13849,21 @@ type FoldersUpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Updates the Log Router settings for the given
-// resource.Note: Settings for the Log Router can currently only be
-// configured for Google Cloud organizations. Once configured, it
-// applies to all projects and folders in the Google Cloud
-// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
-// or 2) the associated service account does not have the required
+// UpdateSettings: Updates the settings for the given resource. This
+// method applies to all feature configurations for organization and
+// folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2)
+// the associated service account does not have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// or 3) access to the key is disabled. 4) location_id is not supported
-// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
-// Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// 3) access to the key is disabled, 4) storage_location is not
+// supported by Logging, 5) storage_location violates the location
+// OrgPolicy, or 6) default_sink_config is set but has an unspecified
+// filter write mode.See Configure default settings for organizations
+// and folders (https://cloud.google.com/logging/docs/default-settings)
 // for more information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+//     example:"organizations/12345/settings".
 func (r *FoldersService) UpdateSettings(name string, settings *Settings) *FoldersUpdateSettingsCall {
 	c := &FoldersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13992,7 +13972,7 @@ func (c *FoldersUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, 3) access to the key is disabled, 4) storage_location is not supported by Logging, 5) storage_location violates the location OrgPolicy, or 6) default_sink_config is set but has an unspecified filter write mode.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.updateSettings",
@@ -14001,7 +13981,7 @@ func (c *FoldersUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -25211,7 +25191,7 @@ type OrganizationsGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -25225,7 +25205,7 @@ type OrganizationsGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *OrganizationsService) GetCmekSettings(name string) *OrganizationsGetCmekSettingsCall {
@@ -25333,7 +25313,7 @@ func (c *OrganizationsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*Cm
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.organizations.getCmekSettings",
@@ -25342,7 +25322,7 @@ func (c *OrganizationsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*Cm
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -25374,14 +25354,10 @@ type OrganizationsGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -25389,11 +25365,9 @@ type OrganizationsGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *OrganizationsService) GetSettings(name string) *OrganizationsGetSettingsCall {
 	c := &OrganizationsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25499,7 +25473,7 @@ func (c *OrganizationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settin
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.organizations.getSettings",
@@ -25508,7 +25482,7 @@ func (c *OrganizationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settin
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -25717,25 +25691,21 @@ type OrganizationsUpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Updates the Log Router settings for the given
-// resource.Note: Settings for the Log Router can currently only be
-// configured for Google Cloud organizations. Once configured, it
-// applies to all projects and folders in the Google Cloud
-// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
-// or 2) the associated service account does not have the required
+// UpdateSettings: Updates the settings for the given resource. This
+// method applies to all feature configurations for organization and
+// folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2)
+// the associated service account does not have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// or 3) access to the key is disabled. 4) location_id is not supported
-// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
-// Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// 3) access to the key is disabled, 4) storage_location is not
+// supported by Logging, 5) storage_location violates the location
+// OrgPolicy, or 6) default_sink_config is set but has an unspecified
+// filter write mode.See Configure default settings for organizations
+// and folders (https://cloud.google.com/logging/docs/default-settings)
 // for more information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+//     example:"organizations/12345/settings".
 func (r *OrganizationsService) UpdateSettings(name string, settings *Settings) *OrganizationsUpdateSettingsCall {
 	c := &OrganizationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25844,7 +25814,7 @@ func (c *OrganizationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Set
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, 3) access to the key is disabled, 4) storage_location is not supported by Logging, 5) storage_location violates the location OrgPolicy, or 6) default_sink_config is set but has an unspecified filter write mode.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.updateSettings",
@@ -25853,7 +25823,7 @@ func (c *OrganizationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Set
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -32819,7 +32789,7 @@ type ProjectsGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -32833,7 +32803,7 @@ type ProjectsGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *ProjectsService) GetCmekSettings(name string) *ProjectsGetCmekSettingsCall {
@@ -32941,7 +32911,7 @@ func (c *ProjectsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSet
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/projects/{projectsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.getCmekSettings",
@@ -32950,7 +32920,7 @@ func (c *ProjectsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSet
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -32982,14 +32952,10 @@ type ProjectsGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -32997,11 +32963,9 @@ type ProjectsGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *ProjectsService) GetSettings(name string) *ProjectsGetSettingsCall {
 	c := &ProjectsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33107,7 +33071,7 @@ func (c *ProjectsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/projects/{projectsId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.getSettings",
@@ -33116,7 +33080,7 @@ func (c *ProjectsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -41749,7 +41713,7 @@ type V2GetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -41763,7 +41727,7 @@ type V2GetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *V2Service) GetCmekSettings(name string) *V2GetCmekSettingsCall {
@@ -41871,7 +41835,7 @@ func (c *V2GetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.getCmekSettings",
@@ -41880,7 +41844,7 @@ func (c *V2GetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettings,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -41912,14 +41876,10 @@ type V2GetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -41927,11 +41887,9 @@ type V2GetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *V2Service) GetSettings(name string) *V2GetSettingsCall {
 	c := &V2GetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -42037,7 +41995,7 @@ func (c *V2GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.getSettings",
@@ -42046,7 +42004,7 @@ func (c *V2GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -42255,25 +42213,21 @@ type V2UpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Updates the Log Router settings for the given
-// resource.Note: Settings for the Log Router can currently only be
-// configured for Google Cloud organizations. Once configured, it
-// applies to all projects and folders in the Google Cloud
-// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
-// or 2) the associated service account does not have the required
+// UpdateSettings: Updates the settings for the given resource. This
+// method applies to all feature configurations for organization and
+// folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2)
+// the associated service account does not have the required
 // roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// or 3) access to the key is disabled. 4) location_id is not supported
-// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
-// Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// 3) access to the key is disabled, 4) storage_location is not
+// supported by Logging, 5) storage_location violates the location
+// OrgPolicy, or 6) default_sink_config is set but has an unspecified
+// filter write mode.See Configure default settings for organizations
+// and folders (https://cloud.google.com/logging/docs/default-settings)
 // for more information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+//     example:"organizations/12345/settings".
 func (r *V2Service) UpdateSettings(name string, settings *Settings) *V2UpdateSettingsCall {
 	c := &V2UpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -42382,7 +42336,7 @@ func (c *V2UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, 3) access to the key is disabled, 4) storage_location is not supported by Logging, 5) storage_location violates the location OrgPolicy, or 6) default_sink_config is set but has an unspecified filter write mode.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.updateSettings",
@@ -42391,7 +42345,7 @@ func (c *V2UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

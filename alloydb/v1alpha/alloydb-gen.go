@@ -391,6 +391,9 @@ type Backup struct {
 	// maintenance.
 	Reconciling bool `json:"reconciling,omitempty"`
 
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
@@ -691,6 +694,9 @@ type Cluster struct {
 	// This can happen due to user-triggered updates or system actions like
 	// failover or maintenance.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -1472,6 +1478,9 @@ type Instance struct {
 	// This can happen due to user-triggered updates or system actions like
 	// failover or maintenance.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -2828,7 +2837,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// ResourceContainer: Closest parent container of this resource. In GCP,
 	// 'container' refers to a Cloud Resource Manager project. It must be
 	// resource name of a Cloud Resource Manager project with the format of
-	// "provider//", such as "gcp/projects/123". For GCP provided resources,
+	// "provider//", such as "projects/123". For GCP provided resources,
 	// number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
@@ -3140,10 +3149,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//
 	// Possible values:
 	//   "INSTANCE_TYPE_UNSPECIFIED"
+	//   "SUB_RESOURCE_TYPE_UNSPECIFIED" - For rest of the other categories.
 	//   "PRIMARY" - A regular primary database instance.
 	//   "SECONDARY" - A cluster or an instance acting as a secondary.
 	//   "READ_REPLICA" - An instance acting as a read-replica.
 	//   "OTHER" - For rest of the other categories.
+	//   "SUB_RESOURCE_TYPE_PRIMARY" - A regular primary database instance.
+	//   "SUB_RESOURCE_TYPE_SECONDARY" - A cluster or an instance acting as
+	// a secondary.
+	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a
+	// read-replica.
+	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// Location: The resource location. REQUIRED
@@ -3161,8 +3177,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 
 	// ResourceContainer: Closest parent Cloud Resource Manager container of
 	// this resource. It must be resource name of a Cloud Resource Manager
-	// project with the format of "provider//", such as "gcp/projects/123".
-	// For GCP provided resources, number should be project number.
+	// project with the format of "/", such as "projects/123". For GCP
+	// provided resources, number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceName: Required. Different from DatabaseResourceId.unique_id,
@@ -3287,12 +3303,22 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// Possible values:
 	//   "ENGINE_UNSPECIFIED" - UNSPECIFIED means engine type is not known
 	// or available.
+	//   "ENGINE_MYSQL" - MySQL binary running as an engine in the database
+	// instance.
 	//   "MYSQL" - MySQL binary running as engine in database instance.
+	//   "ENGINE_POSTGRES" - Postgres binary running as engine in database
+	// instance.
 	//   "POSTGRES" - Postgres binary running as engine in database
 	// instance.
+	//   "ENGINE_SQL_SERVER" - SQLServer binary running as engine in
+	// database instance.
 	//   "SQL_SERVER" - SQLServer binary running as engine in database
 	// instance.
+	//   "ENGINE_NATIVE" - Native database binary running as engine in
+	// instance.
 	//   "NATIVE" - Native database binary running as engine in instance.
+	//   "ENGINE_CLOUD_SPANNER_WITH_POSTGRES_DIALECT" - Cloud Spanner with
+	// Postgres dialect.
 	//   "SPANGRES" - Cloud Spanner with Postgres dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine.
 	// This is to be when engine is known, but it is not present in this
@@ -3305,9 +3331,13 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// Possible values:
 	//   "PRODUCT_TYPE_UNSPECIFIED" - UNSPECIFIED means product type is not
 	// known or available.
+	//   "PRODUCT_TYPE_CLOUD_SQL" - Cloud SQL product area in GCP
 	//   "CLOUD_SQL" - Cloud SQL product area in GCP
+	//   "PRODUCT_TYPE_ALLOYDB" - AlloyDB product area in GCP
 	//   "ALLOYDB" - AlloyDB product area in GCP
+	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in GCP
 	//   "SPANNER" - Spanner product area in GCP
+	//   "PRODUCT_TYPE_ON_PREM" - On premises database product.
 	//   "ON_PREM" - On premises database product.
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type.
 	// This is to be when product type is known, but it is not present in

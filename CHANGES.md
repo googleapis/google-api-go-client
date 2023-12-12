@@ -1,5 +1,18 @@
 # Changes
 
+## [0.154.0](https://github.com/googleapis/google-api-go-client/compare/v0.153.0...v0.154.0) (2023-12-12)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2293](https://github.com/googleapis/google-api-go-client/issues/2293)) ([cefa0cd](https://github.com/googleapis/google-api-go-client/commit/cefa0cd8aa84b07e3882be261fb790f4b6770528))
+* **all:** Auto-regenerate discovery clients ([#2294](https://github.com/googleapis/google-api-go-client/issues/2294)) ([c059038](https://github.com/googleapis/google-api-go-client/commit/c0590386a1c43d94137561502bf8dc42a6cd6833))
+* **all:** Auto-regenerate discovery clients ([#2295](https://github.com/googleapis/google-api-go-client/issues/2295)) ([161a8e5](https://github.com/googleapis/google-api-go-client/commit/161a8e529d513b43304f876b12944e4d13d65ada))
+* **all:** Auto-regenerate discovery clients ([#2297](https://github.com/googleapis/google-api-go-client/issues/2297)) ([e5e778a](https://github.com/googleapis/google-api-go-client/commit/e5e778aaffb6e54f263783b7a65525db0d067f9a))
+* **all:** Auto-regenerate discovery clients ([#2298](https://github.com/googleapis/google-api-go-client/issues/2298)) ([d27a8e0](https://github.com/googleapis/google-api-go-client/commit/d27a8e0093c32c77fd94e077e78bd825dc191b80))
+* **all:** Auto-regenerate discovery clients ([#2300](https://github.com/googleapis/google-api-go-client/issues/2300)) ([be0daf0](https://github.com/googleapis/google-api-go-client/commit/be0daf05c3f4597a99289d18ef54df112432cd13))
+* **transport:** Add OpenTelemetry context propagation ([#2127](https://github.com/googleapis/google-api-go-client/issues/2127)) ([46421d4](https://github.com/googleapis/google-api-go-client/commit/46421d477a0b93e0bf5894fc9cc3599b06f9f85c))
+
 ## [0.153.0](https://github.com/googleapis/google-api-go-client/compare/v0.152.0...v0.153.0) (2023-12-05)
 
 

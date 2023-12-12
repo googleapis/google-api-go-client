@@ -246,14 +246,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
-	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - User account closed.
+	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only,
+	// do not use in Cancel API. User account closed.
 	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
 	// only, do not use in Cancel API. Cancellation due to upgrade or
 	// downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
-	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
-	// unrecoverable system error.
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do
+	// not use in Cancel API. Cancellation due to an unrecoverable system
+	// error.
 	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
 	// do not use in Cancel API. The subscription is cancelled by Google
 	// automatically since it is no longer valid.
@@ -1369,14 +1371,16 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
-	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - User account closed.
+	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only,
+	// do not use in Cancel API. User account closed.
 	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
 	// only, do not use in Cancel API. Cancellation due to upgrade or
 	// downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
-	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
-	// unrecoverable system error.
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do
+	// not use in Cancel API. Cancellation due to an unrecoverable system
+	// error.
 	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
 	// do not use in Cancel API. The subscription is cancelled by Google
 	// automatically since it is no longer valid.

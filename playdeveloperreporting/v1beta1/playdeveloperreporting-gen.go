@@ -978,6 +978,10 @@ func (s *GooglePlayDeveloperReportingV1beta1ErrorIssue) MarshalJSON() ([]byte, e
 // resource, the calling user needs the _View app information
 // (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
+	// AppVersion: The app version on which an event in this error report
+	// occurred on.
+	AppVersion *GooglePlayDeveloperReportingV1beta1AppVersion `json:"appVersion,omitempty"`
+
 	// DeviceModel: A device model on which an event in this error report
 	// occurred on.
 	DeviceModel *GooglePlayDeveloperReportingV1beta1DeviceModelSummary `json:"deviceModel,omitempty"`
@@ -1027,7 +1031,7 @@ type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
 	// respectively.
 	VcsInformation string `json:"vcsInformation,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DeviceModel") to
+	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1035,10 +1039,10 @@ type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeviceModel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AppVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

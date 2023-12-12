@@ -553,6 +553,13 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// if it's enforced.
 	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
 
+	// Etag: Optional. An opaque tag indicating the current state of the
+	// policy, used for concurrency control. This 'etag' is computed by the
+	// server based on the value of other fields, and may be sent on update
+	// and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
+	Etag string `json:"etag,omitempty"`
+
 	// Name: Immutable. The resource name of the policy. Must be one of the
 	// following forms, where `constraint_name` is the name of the
 	// constraint which this policy configures: *

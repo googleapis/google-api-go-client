@@ -708,8 +708,8 @@ func (s *ClassificationModelOptions) MarshalJSON() ([]byte, error) {
 
 // ClassifyTextRequest: The document classification request message.
 type ClassifyTextRequest struct {
-	// ClassificationModelOptions: Model options to use for classification.
-	// Defaults to v1 options if not specified.
+	// ClassificationModelOptions: Optional. Model options to use for
+	// classification. Defaults to v1 options if not specified.
 	ClassificationModelOptions *ClassificationModelOptions `json:"classificationModelOptions,omitempty"`
 
 	// Document: Required. Input document.
@@ -1100,7 +1100,7 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 // analysis. Setting each one to true will enable that specific analysis
 // for the input.
 type Features struct {
-	// ClassificationModelOptions: The model options to use for
+	// ClassificationModelOptions: Optional. The model options to use for
 	// classification. Defaults to v1 options if not specified. Only used if
 	// `classify_text` is set to true.
 	ClassificationModelOptions *ClassificationModelOptions `json:"classificationModelOptions,omitempty"`

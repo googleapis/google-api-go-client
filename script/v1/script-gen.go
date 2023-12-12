@@ -288,6 +288,11 @@ type Content struct {
 	// include the manifest configurations for the project.
 	Files []*File `json:"files,omitempty"`
 
+	// RevertFlumeInvoked: Set to true if called from revert flume to allow
+	// deletion of system generated manifest file while validating content
+	// request. This value is false by default.
+	RevertFlumeInvoked bool `json:"revertFlumeInvoked,omitempty"`
+
 	// ScriptId: The script project's Drive ID.
 	ScriptId string `json:"scriptId,omitempty"`
 

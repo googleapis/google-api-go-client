@@ -4519,6 +4519,11 @@ type Publishing struct {
 	// https://cloud.google.com/pubsub/lite/docs/reference/rpc
 	ProtoReferenceDocumentationUri string `json:"protoReferenceDocumentationUri,omitempty"`
 
+	// RestReferenceDocumentationUri: Optional link to REST reference
+	// documentation. Example:
+	// https://cloud.google.com/pubsub/lite/docs/reference/rest
+	RestReferenceDocumentationUri string `json:"restReferenceDocumentationUri,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApiShortName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

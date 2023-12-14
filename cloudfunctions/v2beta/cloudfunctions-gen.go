@@ -986,6 +986,22 @@ type GoogleCloudFunctionsV2OperationMetadata struct {
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "OPERATIONTYPE_UNSPECIFIED" - Unspecified
+	//   "CREATE_FUNCTION" - CreateFunction
+	//   "UPDATE_FUNCTION" - UpdateFunction
+	//   "DELETE_FUNCTION" - DeleteFunction
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC" -
+	// RedirectFunctionUpgradeTraffic
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC" -
+	// RollbackFunctionUpgradeTraffic
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
+	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
+	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	OperationType string `json:"operationType,omitempty"`
+
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
 
@@ -1178,6 +1194,22 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "OPERATIONTYPE_UNSPECIFIED" - Unspecified
+	//   "CREATE_FUNCTION" - CreateFunction
+	//   "UPDATE_FUNCTION" - UpdateFunction
+	//   "DELETE_FUNCTION" - DeleteFunction
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC" -
+	// RedirectFunctionUpgradeTraffic
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC" -
+	// RollbackFunctionUpgradeTraffic
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
+	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
+	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	OperationType string `json:"operationType,omitempty"`
 
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
@@ -1372,6 +1404,22 @@ type GoogleCloudFunctionsV2betaOperationMetadata struct {
 
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "OPERATIONTYPE_UNSPECIFIED" - Unspecified
+	//   "CREATE_FUNCTION" - CreateFunction
+	//   "UPDATE_FUNCTION" - UpdateFunction
+	//   "DELETE_FUNCTION" - DeleteFunction
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC" -
+	// RedirectFunctionUpgradeTraffic
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC" -
+	// RollbackFunctionUpgradeTraffic
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
+	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
+	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	OperationType string `json:"operationType,omitempty"`
 
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`

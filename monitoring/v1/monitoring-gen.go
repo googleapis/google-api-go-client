@@ -1586,6 +1586,44 @@ func (s *IncidentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Interval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive).The start must be less
+// than or equal to the end. When the start equals the end, the interval
+// is empty (matches no time). When both start and end are unspecified,
+// the interval matches any time.
+type Interval struct {
+	// EndTime: Optional. Exclusive end of the interval.If specified, a
+	// Timestamp matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Optional. Inclusive start of the interval.If specified, a
+	// Timestamp matching this interval will have to be the same or after
+	// the start.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Interval) MarshalJSON() ([]byte, error) {
+	type NoMethod Interval
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDashboardsResponse: The ListDashboards request.
 type ListDashboardsResponse struct {
 	// Dashboards: The list of requested dashboards.
@@ -2146,6 +2184,10 @@ type PickTimeSeriesFilter struct {
 	//   "BOTTOM" - Pass the lowest num_time_series ranking inputs.
 	Direction string `json:"direction,omitempty"`
 
+	// Interval: Select the top N streams/time series within this time
+	// interval
+	Interval *Interval `json:"interval,omitempty"`
+
 	// NumTimeSeries: How many time series to allow to pass through the
 	// filter.
 	NumTimeSeries int64 `json:"numTimeSeries,omitempty"`
@@ -2671,6 +2713,12 @@ func (s *SectionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod SectionHeader
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SingleViewGroup: A widget that groups the other widgets by using a
+// dropdown menu. All widgets that are within the area spanned by the
+// grouping widget are considered member widgets.
+type SingleViewGroup struct {
 }
 
 // SourceContext: SourceContext represents information about the source
@@ -3504,6 +3552,10 @@ type Widget struct {
 	// SectionHeader: A widget that defines a section header for easier
 	// navigation of the dashboard.
 	SectionHeader *SectionHeader `json:"sectionHeader,omitempty"`
+
+	// SingleViewGroup: A widget that groups the other widgets by using a
+	// dropdown menu.
+	SingleViewGroup *SingleViewGroup `json:"singleViewGroup,omitempty"`
 
 	// Text: A raw string or markdown displaying textual content.
 	Text *Text `json:"text,omitempty"`

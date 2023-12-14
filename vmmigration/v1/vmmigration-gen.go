@@ -10516,8 +10516,8 @@ type ProjectsLocationsSourcesMigratingVmsCloneJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the CloneJobs of a migrating VM. Only the 25 most recent
-// CloneJobs are returned.
+// List: Lists the CloneJobs of a migrating VM. Only 25 most recent
+// CloneJobs are listed.
 //
 // - parent: The parent, which owns this collection of source VMs.
 func (r *ProjectsLocationsSourcesMigratingVmsCloneJobsService) List(parent string) *ProjectsLocationsSourcesMigratingVmsCloneJobsListCall {
@@ -10657,7 +10657,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCloneJobsListCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the CloneJobs of a migrating VM. Only the 25 most recent CloneJobs are returned.",
+	//   "description": "Lists the CloneJobs of a migrating VM. Only 25 most recent CloneJobs are listed.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/cloneJobs",
 	//   "httpMethod": "GET",
 	//   "id": "vmmigration.projects.locations.sources.migratingVms.cloneJobs.list",
@@ -11203,8 +11203,8 @@ type ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the CutoverJobs of a migrating VM. Only the 25 most
-// recent CutoverJobs are returned.
+// List: Lists the CutoverJobs of a migrating VM. Only 25 most recent
+// CutoverJobs are listed.
 //
 // - parent: The parent, which owns this collection of migrating VMs.
 func (r *ProjectsLocationsSourcesMigratingVmsCutoverJobsService) List(parent string) *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall {
@@ -11344,7 +11344,7 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the CutoverJobs of a migrating VM. Only the 25 most recent CutoverJobs are returned.",
+	//   "description": "Lists the CutoverJobs of a migrating VM. Only 25 most recent CutoverJobs are listed.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/cutoverJobs",
 	//   "httpMethod": "GET",
 	//   "id": "vmmigration.projects.locations.sources.migratingVms.cutoverJobs.list",

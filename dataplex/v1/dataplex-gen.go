@@ -2599,8 +2599,9 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 
 	// IgnoreNull: Optional. Rows with null values will automatically fail a
 	// rule, unless ignore_null is true. In that case, such null rows are
-	// trivially considered passing.This field is only valid for row-level
-	// type rules.
+	// trivially considered passing.This field is only valid for the
+	// following type of rules: RangeExpectation RegexExpectation
+	// SetExpectation UniquenessExpectation
 	IgnoreNull bool `json:"ignoreNull,omitempty"`
 
 	// Name: Optional. A mutable name for the rule. The name must contain

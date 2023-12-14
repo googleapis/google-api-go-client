@@ -9370,10 +9370,10 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 // contain optional inclusion operators on `labels` such as
 // `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
 // * Can contain an optional equality operator on `domain_name`. e.g.
-// `domain_name == 'abc.com'` * Can contain optional
+// `domain_name == 'examplepetstore.com'` * Can contain optional
 // `startsWith/contains/equality` operators on `group_key`, e.g.
 // `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key
-// == 'dev@abc.com'` * Can contain optional
+// == 'dev@examplepetstore.com'` * Can contain optional
 // `startsWith/contains/equality` operators on `display_name`, such as
 // `display_name.startsWith('dev')` , `display_name.contains('dev')`,
 // `display_name == 'dev'`
@@ -9513,7 +9513,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. * Must be specified in [Common Expression Language](https://opensource.google/projects/cel). * Must contain equality operators on the parent, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793) * Can contain optional inclusion operators on `labels` such as `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). * Can contain an optional equality operator on `domain_name`. e.g. `domain_name == 'abc.com'` * Can contain optional `startsWith/contains/equality` operators on `group_key`, e.g. `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key == 'dev@abc.com'` * Can contain optional `startsWith/contains/equality` operators on `display_name`, such as `display_name.startsWith('dev')` , `display_name.contains('dev')`, `display_name == 'dev'`",
+	//       "description": "Required. The search query. * Must be specified in [Common Expression Language](https://opensource.google/projects/cel). * Must contain equality operators on the parent, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793) * Can contain optional inclusion operators on `labels` such as `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). * Can contain an optional equality operator on `domain_name`. e.g. `domain_name == 'examplepetstore.com'` * Can contain optional `startsWith/contains/equality` operators on `group_key`, e.g. `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key == 'dev@examplepetstore.com'` * Can contain optional `startsWith/contains/equality` operators on `display_name`, such as `display_name.startsWith('dev')` , `display_name.contains('dev')`, `display_name == 'dev'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

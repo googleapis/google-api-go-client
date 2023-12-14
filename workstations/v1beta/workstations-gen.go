@@ -1905,6 +1905,12 @@ type Workstation struct {
 	// in the format `{port}-{host}`.
 	Host string `json:"host,omitempty"`
 
+	// KmsKey: Output only. The name of the Google Cloud KMS encryption key
+	// used to encrypt this workstation. The KMS key can only be configured
+	// in the WorkstationConfig. The expected format is
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	KmsKey string `json:"kmsKey,omitempty"`
+
 	// Labels: Optional. Labels
 	// (https://cloud.google.com/workstations/docs/label-resources) that are
 	// applied to the workstation and that are also propagated to the

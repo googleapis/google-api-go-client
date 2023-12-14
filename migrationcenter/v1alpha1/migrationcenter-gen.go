@@ -2434,6 +2434,9 @@ func (s *GuestConfigDetails) MarshalJSON() ([]byte, error) {
 
 // GuestInstalledApplication: Guest installed application information.
 type GuestInstalledApplication struct {
+	// Licenses: License strings associated with the installed application.
+	Licenses []string `json:"licenses,omitempty"`
+
 	// Name: Installed application name.
 	Name string `json:"name,omitempty"`
 
@@ -2449,7 +2452,7 @@ type GuestInstalledApplication struct {
 	// Version: Installed application version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Licenses") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2457,8 +2460,8 @@ type GuestInstalledApplication struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Licenses") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

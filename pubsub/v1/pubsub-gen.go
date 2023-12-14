@@ -345,8 +345,14 @@ type BigQueryConfig struct {
 	// form {projectId}.{datasetId}.{tableId}
 	Table string `json:"table,omitempty"`
 
+	// UseTableSchema: Optional. When true, use the BigQuery table's schema
+	// as the columns to write to in BigQuery. `use_table_schema` and
+	// `use_topic_schema` cannot be enabled at the same time.
+	UseTableSchema bool `json:"useTableSchema,omitempty"`
+
 	// UseTopicSchema: Optional. When true, use the topic's schema as the
-	// columns to write to in BigQuery, if it exists.
+	// columns to write to in BigQuery, if it exists. `use_topic_schema` and
+	// `use_table_schema` cannot be enabled at the same time.
 	UseTopicSchema bool `json:"useTopicSchema,omitempty"`
 
 	// WriteMetadata: Optional. When true, write the subscription name,

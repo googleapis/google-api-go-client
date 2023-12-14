@@ -244,6 +244,35 @@ type ProjectsLocationsSupportedDatabaseFlagsService struct {
 	s *Service
 }
 
+// AuthorizedNetwork: AuthorizedNetwork contains metadata for an
+// authorized network.
+type AuthorizedNetwork struct {
+	// CidrRange: CIDR range for one authorzied network of the instance.
+	CidrRange string `json:"cidrRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizedNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AutomatedBackupPolicy: Message describing the user-specified
 // automated backup policy. All fields in the automated backup policy
 // are optional. Defaults for each field are provided if they are not
@@ -773,6 +802,11 @@ type ConnectionInfo struct {
 	// used to verify the X.509 certificate. Expected to be in
 	// issuer-to-root order according to RFC 5246.
 	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
+
+	// PublicIpAddress: Output only. The public IP addresses for the
+	// Instance. This is available ONLY when enable_public_ip is set. This
+	// is the connection endpoint for an end-user application.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1445,6 +1479,9 @@ type Instance struct {
 	// projects/{project}/locations/{region}/clusters/{cluster_id}
 	Name string `json:"name,omitempty"`
 
+	// NetworkConfig: Optional. Instance level network configuration.
+	NetworkConfig *InstanceNetworkConfig `json:"networkConfig,omitempty"`
+
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
@@ -1529,6 +1566,41 @@ type Instance struct {
 
 func (s *Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceNetworkConfig: Metadata related to instance level network
+// configuration.
+type InstanceNetworkConfig struct {
+	// AuthorizedExternalNetworks: Optional. A list of external network
+	// authorized to access this instance.
+	AuthorizedExternalNetworks []*AuthorizedNetwork `json:"authorizedExternalNetworks,omitempty"`
+
+	// EnablePublicIp: Optional. Enabling public ip for the instance.
+	EnablePublicIp bool `json:"enablePublicIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizedExternalNetworks") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthorizedExternalNetworks") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceNetworkConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

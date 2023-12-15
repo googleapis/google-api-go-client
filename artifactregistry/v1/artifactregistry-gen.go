@@ -658,9 +658,6 @@ type CleanupPolicyCondition struct {
 	//   "ANY" - Applies to all versions.
 	TagState string `json:"tagState,omitempty"`
 
-	// VersionAge: DEPRECATED: Use older_than.
-	VersionAge string `json:"versionAge,omitempty"`
-
 	// VersionNamePrefixes: Match versions by version name prefix. Applied
 	// on any prefix match.
 	VersionNamePrefixes []string `json:"versionNamePrefixes,omitempty"`

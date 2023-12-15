@@ -266,6 +266,8 @@ type AbortInfo struct {
 	// PSC-based Cloud SQL instance as a source are not supported.
 	//   "SOURCE_FORWARDING_RULE_UNSUPPORTED" - Aborted because tests with a
 	// forwarding rule as a source are not supported.
+	//   "NON_ROUTABLE_IP_ADDRESS" - Aborted because one of the endpoints is
+	// a non-routable IP address (loopback, link-local, etc).
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -1010,6 +1012,9 @@ type DropInfo struct {
 	// the Private Service Connect endpoint over the peering, but [it's not
 	// supported](https://cloud.google.com/vpc/docs/configure-private-service
 	// -connect-services#on-premises).
+	//   "PSC_NEG_PRODUCER_ENDPOINT_NO_GLOBAL_ACCESS" - The packet is sent
+	// to the Private Service Connect backend (network endpoint group), but
+	// the producer PSC forwarding rule does not have global access enabled.
 	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run
 	// revision that is not ready.
 	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside
@@ -1355,7 +1360,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // firewall rule, an implied VPC firewall rule, or a hierarchical
 // firewall policy rule.
 type FirewallInfo struct {
-	// Action: Possible values: ALLOW, DENY
+	// Action: Possible values: ALLOW, DENY, APPLY_SECURITY_PROFILE_GROUP
 	Action string `json:"action,omitempty"`
 
 	// Direction: Possible values: INGRESS, EGRESS
@@ -1399,6 +1404,11 @@ type FirewallInfo struct {
 	// matched. Please see the [list of unsupported
 	// configurations](https://cloud.google.com/network-intelligence-center/d
 	// ocs/connectivity-tests/concepts/overview#unsupported-configs).
+	//   "TRACKING_STATE" - Tracking state for response traffic created when
+	// request traffic goes through allow firewall rule. For details, see
+	// [firewall rules
+	// specifications](https://cloud.google.com/firewall/docs/firewalls#speci
+	// fications)
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is
@@ -1468,6 +1478,7 @@ type ForwardInfo struct {
 	//   "CLOUD_SQL_INSTANCE" - Forwarded to a Cloud SQL instance.
 	//   "ANOTHER_PROJECT" - Forwarded to a VPC network in another project.
 	//   "NCC_HUB" - Forwarded to an NCC Hub.
+	//   "ROUTER_APPLIANCE" - Forwarded to a router appliance.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -1921,28 +1932,24 @@ func (s *LoadBalancerBackend) MarshalJSON() ([]byte, error) {
 // LoadBalancerBackendInfo: For display only. Metadata associated with
 // the load balancer backend.
 type LoadBalancerBackendInfo struct {
-	// BackendDisplayName: Display name of the backend. For example, it
-	// might be an instance name for the instance group backends, or an IP
-	// address and port for zonal network endpoint group backends.
-	BackendDisplayName string `json:"backendDisplayName,omitempty"`
-
 	// BackendServiceUri: URI of the backend service this backend belongs to
 	// (if applicable).
 	BackendServiceUri string `json:"backendServiceUri,omitempty"`
 
-	// HealthCheckConfigState: Output only. Health check configuration state
-	// for the backend. This is a result of the static firewall analysis
-	// (verifying that health check traffic from required IP ranges to the
-	// backend is allowed or not). The backend might still be unhealthy even
-	// if these firewalls are configured. Please refer to the documentation
-	// for more information:
+	// HealthCheckFirewallsConfigState: Output only. Health check firewalls
+	// configuration state for the backend. This is a result of the static
+	// firewall analysis (verifying that health check traffic from required
+	// IP ranges to the backend is allowed or not). The backend might still
+	// be unhealthy even if these firewalls are configured. Please refer to
+	// the documentation for more information:
 	// https://cloud.google.com/load-balancing/docs/firewall-rules
 	//
 	// Possible values:
-	//   "HEALTH_CHECK_CONFIG_STATE_UNSPECIFIED" - Configuration state
-	// unspecified. It usually means that the backend has no health check
-	// attached, or there was an unexpected configuration error preventing
-	// Connectivity tests from verifying health check configuration.
+	//   "HEALTH_CHECK_FIREWALLS_CONFIG_STATE_UNSPECIFIED" - Configuration
+	// state unspecified. It usually means that the backend has no health
+	// check attached, or there was an unexpected configuration error
+	// preventing Connectivity tests from verifying health check
+	// configuration.
 	//   "FIREWALLS_CONFIGURED" - Firewall rules (policies) allowing health
 	// check traffic from all required IP ranges to the backend are
 	// configured.
@@ -1955,7 +1962,7 @@ type LoadBalancerBackendInfo struct {
 	// health check configuration status. Please refer to the documentation
 	// for the list of unsupported configurations:
 	// https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview#unsupported-configs
-	HealthCheckConfigState string `json:"healthCheckConfigState,omitempty"`
+	HealthCheckFirewallsConfigState string `json:"healthCheckFirewallsConfigState,omitempty"`
 
 	// HealthCheckUri: URI of the health check attached to this backend (if
 	// applicable).
@@ -1969,11 +1976,16 @@ type LoadBalancerBackendInfo struct {
 	// for instance group backends, and zonal NEG backends.
 	InstanceUri string `json:"instanceUri,omitempty"`
 
+	// Name: Display name of the backend. For example, it might be an
+	// instance name for the instance group backends, or an IP address and
+	// port for zonal network endpoint group backends.
+	Name string `json:"name,omitempty"`
+
 	// NetworkEndpointGroupUri: URI of the network endpoint group this
 	// backend belongs to (if applicable).
 	NetworkEndpointGroupUri string `json:"networkEndpointGroupUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BackendDisplayName")
+	// ForceSendFields is a list of field names (e.g. "BackendServiceUri")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1981,7 +1993,7 @@ type LoadBalancerBackendInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BackendDisplayName") to
+	// NullFields is a list of field names (e.g. "BackendServiceUri") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

@@ -5397,7 +5397,8 @@ type PolicyControllerPolicyControllerDeploymentConfig struct {
 	// this deployment. Default for admissions deployment.
 	PodAffinity string `json:"podAffinity,omitempty"`
 
-	// PodAntiAffinity: Pod anti-affinity enablement.
+	// PodAntiAffinity: Pod anti-affinity enablement. Deprecated: use
+	// `pod_affinity` instead.
 	PodAntiAffinity bool `json:"podAntiAffinity,omitempty"`
 
 	// PodTolerations: Pod tolerations of node taints.

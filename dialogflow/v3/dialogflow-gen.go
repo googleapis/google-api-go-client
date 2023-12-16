@@ -4190,6 +4190,11 @@ type GoogleCloudDialogflowCxV3GenerativeSettingsKnowledgeConnectorSettings struc
 	// "a family company selling freshly roasted coffee beans".
 	BusinessDescription string `json:"businessDescription,omitempty"`
 
+	// DisableDataStoreFallback: Whether to disable fallback to Data Store
+	// search results (in case the LLM couldn't pick a proper answer). Per
+	// default the feature is enabled.
+	DisableDataStoreFallback bool `json:"disableDataStoreFallback,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

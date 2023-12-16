@@ -15970,6 +15970,11 @@ type GoogleCloudDialogflowV2beta1HumanAgentAssistantConfigSuggestionFeatureConfi
 	// stored at answer records. Supported features: KNOWLEDGE_SEARCH.
 	DisableAgentQueryLogging bool `json:"disableAgentQueryLogging,omitempty"`
 
+	// EnableConversationAugmentedQuery: Optional. Enable including
+	// conversation context during query answer generation. Supported
+	// features: KNOWLEDGE_SEARCH.
+	EnableConversationAugmentedQuery bool `json:"enableConversationAugmentedQuery,omitempty"`
+
 	// EnableEventBasedSuggestion: Automatically iterates all participants
 	// and tries to compile suggestions. Supported features:
 	// ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST, ENTITY_EXTRACTION,
@@ -20807,6 +20812,9 @@ type GoogleCloudDialogflowV2beta1SearchKnowledgeResponse struct {
 	// Answers: Most relevant snippets extracted from articles in the given
 	// knowledge base, ordered by confidence.
 	Answers []*GoogleCloudDialogflowV2beta1SearchKnowledgeAnswer `json:"answers,omitempty"`
+
+	// RewrittenQuery: The rewritten query used to search knowledge.
+	RewrittenQuery string `json:"rewrittenQuery,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

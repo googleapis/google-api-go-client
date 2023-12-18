@@ -367,7 +367,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 		name         string
 		ds           *DialSettings
 		wantEndpoint string
-		wantErr      string
+		wantErr      error
 	}{
 		{
 			name: "google default universe (GDU), no client cert",
@@ -377,7 +377,6 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 			},
 			wantEndpoint: testRegularEndpoint,
-			wantErr:      "",
 		},
 		{
 			name: "google default universe (GDU), client cert",
@@ -388,7 +387,6 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				ClientCertSource:        dummyClientCertSource,
 			},
 			wantEndpoint: testMTLSEndpoint,
-			wantErr:      "",
 		},
 		{
 			name: "UniverseDomain, no client cert",
@@ -399,7 +397,6 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				UniverseDomain:          testUniverseDomain,
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
-			wantErr:      "",
 		},
 		{
 			name: "UniverseDomain, client cert",
@@ -411,7 +408,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				ClientCertSource:        dummyClientCertSource,
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
-			wantErr:      "mTLS is not supported in any universe other than googleapis.com",
+			wantErr:      ErrUniverseNotSupportedMTLS,
 		},
 	}
 
@@ -423,7 +420,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 		}
 		_, _, endpoint, err := GetHTTPTransportConfigAndEndpoint(tc.ds)
 		if err != nil {
-			if err.Error() != tc.wantErr {
+			if err != tc.wantErr {
 				t.Fatalf("%s: err: %v", tc.name, err)
 			}
 		} else {
@@ -439,7 +436,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 		name         string
 		ds           *DialSettings
 		wantEndpoint string
-		wantErr      string
+		wantErr      error
 	}{
 		{
 			name: "google default universe (GDU), no client cert",
@@ -449,7 +446,6 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 			},
 			wantEndpoint: testRegularEndpoint,
-			wantErr:      "",
 		},
 		{
 			name: "google default universe (GDU), client cert",
@@ -460,7 +456,6 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				ClientCertSource:        dummyClientCertSource,
 			},
 			wantEndpoint: testMTLSEndpoint,
-			wantErr:      "",
 		},
 		{
 			name: "UniverseDomain, no client cert",
@@ -471,7 +466,6 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				UniverseDomain:          testUniverseDomain,
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
-			wantErr:      "",
 		},
 		{
 			name: "UniverseDomain, client cert",
@@ -483,7 +477,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				ClientCertSource:        dummyClientCertSource,
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
-			wantErr:      "mTLS is not supported in any universe other than googleapis.com",
+			wantErr:      ErrUniverseNotSupportedMTLS,
 		},
 	}
 
@@ -495,7 +489,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 		}
 		_, endpoint, err := GetGRPCTransportConfigAndEndpoint(tc.ds)
 		if err != nil {
-			if err.Error() != tc.wantErr {
+			if err != tc.wantErr {
 				t.Fatalf("%s: err: %v", tc.name, err)
 			}
 		} else {

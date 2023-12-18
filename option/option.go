@@ -29,7 +29,6 @@ type ClientOption interface {
 // universe domain against credentials is possible. For backward compatibility
 // if the end user does not configure WithUniverseDomain explicitly, the
 // universe domain must be assumed to be googleapis.com.
-// TODO(chrisdsmith): If possible, replace comment above with ability to set UniverseDomain on TokenSource, per CL-R8.
 // TODO(chrisdsmith): Refs: CL-R8 (remove this note before publication)
 func WithTokenSource(s oauth2.TokenSource) ClientOption {
 	return withTokenSource{s}

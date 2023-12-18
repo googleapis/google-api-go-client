@@ -1181,6 +1181,10 @@ type SapDiscovery struct {
 	// Metadata: Optional. The metadata for SAP system discovery data.
 	Metadata *SapDiscoveryMetadata `json:"metadata,omitempty"`
 
+	// ProjectNumber: Optional. The GCP project number that this SapSystem
+	// belongs to.
+	ProjectNumber string `json:"projectNumber,omitempty"`
+
 	// SystemId: Output only. A combination of database SID, database
 	// instance URI and tenant DB name to make a unique identifier
 	// per-system.
@@ -1222,6 +1226,11 @@ type SapDiscoveryComponent struct {
 	// DatabaseProperties: Optional. The component is a SAP database.
 	DatabaseProperties *SapDiscoveryComponentDatabaseProperties `json:"databaseProperties,omitempty"`
 
+	// HaHosts: Optional. A list of host URIs that are part of the HA
+	// configuration if present. An empty list indicates the component is
+	// not configured for HA.
+	HaHosts []string `json:"haHosts,omitempty"`
+
 	// HostProject: Required. Pantheon Project in which the resources
 	// reside.
 	HostProject string `json:"hostProject,omitempty"`
@@ -1232,6 +1241,14 @@ type SapDiscoveryComponent struct {
 	// Sid: Optional. The SAP identifier, used by the SAP software and helps
 	// differentiate systems for customers.
 	Sid string `json:"sid,omitempty"`
+
+	// TopologyType: Optional. The detected topology of the component.
+	//
+	// Possible values:
+	//   "TOPOLOGY_TYPE_UNSPECIFIED" - Unspecified topology.
+	//   "TOPOLOGY_SCALE_UP" - A scale-up single node system.
+	//   "TOPOLOGY_SCALE_OUT" - A scale-out multi-node system.
+	TopologyType string `json:"topologyType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ApplicationProperties") to unconditionally include in API requests.
@@ -1261,6 +1278,10 @@ func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
 // SapDiscoveryComponentApplicationProperties: A set of properties
 // describing an SAP Application layer.
 type SapDiscoveryComponentApplicationProperties struct {
+	// Abap: Optional. Indicates whether this is a Java or ABAP Netweaver
+	// instance. true means it is ABAP, false means it is Java.
+	Abap bool `json:"abap,omitempty"`
+
 	// ApplicationType: Required. Type of the application. Netweaver, etc.
 	//
 	// Possible values:
@@ -1272,12 +1293,16 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// application.
 	AscsUri string `json:"ascsUri,omitempty"`
 
+	// KernelVersion: Optional. Kernel version for Netweaver running in the
+	// system.
+	KernelVersion string `json:"kernelVersion,omitempty"`
+
 	// NfsUri: Optional. Resource URI of the recognized shared NFS of the
 	// application. May be empty if the application server has only a single
 	// node.
 	NfsUri string `json:"nfsUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
+	// ForceSendFields is a list of field names (e.g. "Abap") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1285,13 +1310,12 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ApplicationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Abap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1312,6 +1336,10 @@ type SapDiscoveryComponentDatabaseProperties struct {
 	//   "MAX_DB" - SAP MAX_DB
 	//   "DB2" - IBM DB2
 	DatabaseType string `json:"databaseType,omitempty"`
+
+	// DatabaseVersion: Optional. The version of the database software
+	// running in the system.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// PrimaryInstanceUri: Required. URI of the recognized primary instance
 	// of the database.
@@ -1388,6 +1416,10 @@ func (s *SapDiscoveryMetadata) MarshalJSON() ([]byte, error) {
 
 // SapDiscoveryResource: Message describing a resource.
 type SapDiscoveryResource struct {
+	// InstanceProperties: Optional. A set of properties only applying to
+	// instance type resources.
+	InstanceProperties *SapDiscoveryResourceInstanceProperties `json:"instanceProperties,omitempty"`
+
 	// RelatedResources: Optional. A list of resource URIs related to this
 	// resource.
 	RelatedResources []string `json:"relatedResources,omitempty"`
@@ -1430,15 +1462,15 @@ type SapDiscoveryResource struct {
 	// its discovery data updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RelatedResources") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "InstanceProperties")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RelatedResources") to
+	// NullFields is a list of field names (e.g. "InstanceProperties") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1450,6 +1482,41 @@ type SapDiscoveryResource struct {
 
 func (s *SapDiscoveryResource) MarshalJSON() ([]byte, error) {
 	type NoMethod SapDiscoveryResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryResourceInstanceProperties: A set of properties only
+// present for an instance type resource
+type SapDiscoveryResourceInstanceProperties struct {
+	// ClusterInstances: Optional. A list of instance URIs that are part of
+	// a cluster with this one.
+	ClusterInstances []string `json:"clusterInstances,omitempty"`
+
+	// VirtualHostname: Optional. A virtual hostname of the instance if it
+	// has one.
+	VirtualHostname string `json:"virtualHostname,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterInstances") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterInstances") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryResourceInstanceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryResourceInstanceProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

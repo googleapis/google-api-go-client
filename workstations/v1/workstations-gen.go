@@ -505,6 +505,34 @@ func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DomainConfig: Configuration options for a custom domain.
+type DomainConfig struct {
+	// Domain: Immutable. Domain used by Workstations for HTTP ingress.
+	Domain string `json:"domain,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DomainConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -1847,6 +1875,12 @@ type Workstation struct {
 	// in the format `{port}-{host}`.
 	Host string `json:"host,omitempty"`
 
+	// KmsKey: Output only. The name of the Google Cloud KMS encryption key
+	// used to encrypt this workstation. The KMS key can only be configured
+	// in the WorkstationConfig. The expected format is
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	KmsKey string `json:"kmsKey,omitempty"`
+
 	// Labels: Optional. Labels
 	// (https://cloud.google.com/workstations/docs/label-resources) that are
 	// applied to the workstation and that are also propagated to the
@@ -1945,6 +1979,9 @@ type WorkstationCluster struct {
 	// DisplayName: Optional. Human-readable name for this workstation
 	// cluster.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// DomainConfig: Optional. Configuration options for a custom domain.
+	DomainConfig *DomainConfig `json:"domainConfig,omitempty"`
 
 	// Etag: Optional. Checksum computed by the server. May be sent on
 	// update and delete requests to make sure that the client has an

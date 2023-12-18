@@ -2728,6 +2728,10 @@ type StepTemplate struct {
 	// Cannot be updated.
 	Env []*EnvVar `json:"env,omitempty"`
 
+	// VolumeMounts: Optional. Pod volumes to mount into the container's
+	// filesystem.
+	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Env") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

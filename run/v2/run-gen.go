@@ -1068,6 +1068,38 @@ func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2GCSVolumeSource: Represents a GCS Bucket mounted as a
+// volume.
+type GoogleCloudRunV2GCSVolumeSource struct {
+	// Bucket: GCS Bucket name
+	Bucket string `json:"bucket,omitempty"`
+
+	// ReadOnly: If true, mount the GCS bucket as read-only
+	ReadOnly bool `json:"readOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2GCSVolumeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2GCSVolumeSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2GRPCAction: GRPCAction describes an action involving
 // a GRPC port.
 type GoogleCloudRunV2GRPCAction struct {
@@ -1554,6 +1586,40 @@ type GoogleCloudRunV2ListTasksResponse struct {
 
 func (s *GoogleCloudRunV2ListTasksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ListTasksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2NFSVolumeSource: Represents an NFS mount.
+type GoogleCloudRunV2NFSVolumeSource struct {
+	// Path: Path that is exported by the NFS server.
+	Path string `json:"path,omitempty"`
+
+	// ReadOnly: If true, mount the NFS volume as read only
+	ReadOnly bool `json:"readOnly,omitempty"`
+
+	// Server: Hostname or IP address of the NFS server
+	Server string `json:"server,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2NFSVolumeSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2NFSVolumeSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3015,8 +3081,14 @@ type GoogleCloudRunV2Volume struct {
 	// EmptyDir: Ephemeral storage used as a shared volume.
 	EmptyDir *GoogleCloudRunV2EmptyDirVolumeSource `json:"emptyDir,omitempty"`
 
+	// Gcs: Persistent storage backed by a Google Cloud Storage bucket.
+	Gcs *GoogleCloudRunV2GCSVolumeSource `json:"gcs,omitempty"`
+
 	// Name: Required. Volume's name.
 	Name string `json:"name,omitempty"`
+
+	// Nfs: For NFS Voumes, contains the path to the nfs Volume
+	Nfs *GoogleCloudRunV2NFSVolumeSource `json:"nfs,omitempty"`
 
 	// Secret: Secret represents a secret that should populate this volume.
 	Secret *GoogleCloudRunV2SecretVolumeSource `json:"secret,omitempty"`

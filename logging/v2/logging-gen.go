@@ -1392,9 +1392,9 @@ type DefaultSinkConfig struct {
 	// only exported log entries are those that are in the resource owning
 	// the sink and that match the filter.For
 	// example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND
-	// severity>=ERRORCannot be empty or unset if mode == OVERWRITE. In
-	// order to match all logs, use the following line as the value of
-	// filter and do not use exclusions:logName:*
+	// severity>=ERRORTo match all logs, don't add exclusions and use the
+	// following line as the value of filter:logName:*Cannot be empty or
+	// unset when the value of mode is OVERWRITE.
 	Filter string `json:"filter,omitempty"`
 
 	// Mode: Required. Determines the behavior to apply to the built-in
@@ -3019,10 +3019,11 @@ func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 // Error Reporting error groups.
 type LogErrorGroup struct {
 	// Id: The id is a unique identifier for a particular error group; it is
-	// the last part of the error group resource name: /projects//errors/.
-	// Example: COShysOX0r_51QE The id is derived from key parts of the
-	// error-log content and is treated as Service Data. For information
-	// about how Service Data is handled, see Google Cloud Privacy Notice
+	// the last part of the error group resource name:
+	// /project/[PROJECT_ID]/errors/[ERROR_GROUP_ID]. Example:
+	// COShysOX0r_51QE. The id is derived from key parts of the error-log
+	// content and is treated as Service Data. For information about how
+	// Service Data is handled, see Google Cloud Privacy Notice
 	// (https://cloud.google.com/terms/cloud-privacy-notice).
 	Id string `json:"id,omitempty"`
 
@@ -3308,9 +3309,9 @@ func (s *LogMetric) MarshalJSON() ([]byte, error) {
 }
 
 // LogSink: Describes a sink used to export log entries to one of the
-// following destinations in any project: a Cloud Storage bucket, a
-// BigQuery dataset, a Pub/Sub topic or a Cloud Logging log bucket. A
-// logs filter controls which log entries are exported. The sink must be
+// following destinations: a Cloud Logging log bucket, a Cloud Storage
+// bucket, a BigQuery dataset, a Pub/Sub topic, a Cloud project.A logs
+// filter controls which log entries are exported. The sink must be
 // created within a project, organization, billing account, or folder.
 type LogSink struct {
 	// BigqueryOptions: Optional. Options that affect sinks exporting data
@@ -3371,11 +3372,10 @@ type LogSink struct {
 	IncludeChildren bool `json:"includeChildren,omitempty"`
 
 	// Name: Required. The client-assigned sink identifier, unique within
-	// the project.For example: "my-syslog-errors-to-pubsub". Sink
+	// the project.For example: "my-syslog-errors-to-pubsub".Sink
 	// identifiers are limited to 100 characters and can include only the
 	// following characters: upper and lower-case alphanumeric characters,
-	// underscores, hyphens, and periods. First character has to be
-	// alphanumeric.
+	// underscores, hyphens, periods.First character has to be alphanumeric.
 	Name string `json:"name,omitempty"`
 
 	// OutputVersionFormat: Deprecated. This field is unused.
@@ -3485,11 +3485,14 @@ type LogView struct {
 	Description string `json:"description,omitempty"`
 
 	// Filter: Filter that restricts which log entries in a bucket are
-	// visible in this view.Filters are restricted to be a logical AND of
-	// ==/!= of any of the following: originating
-	// project/folder/organization/billing account. resource type log idFor
+	// visible in this view.Filters must be logical conjunctions that use
+	// the AND operator, and they can use any of the following qualifiers:
+	// SOURCE(), which specifies a project, folder, organization, or billing
+	// account of origin. resource.type, which specifies the resource type.
+	// LOG_ID(), which identifies the log.They can also use the negations of
+	// these qualifiers with the NOT operator.For
 	// example:SOURCE("projects/myproject") AND resource.type =
-	// "gce_instance" AND LOG_ID("stdout")
+	// "gce_instance" AND NOT LOG_ID("stdout")
 	Filter string `json:"filter,omitempty"`
 
 	// Name: The resource name of the view.For
@@ -4442,13 +4445,12 @@ type Settings struct {
 	// Name: Output only. The resource name of the settings.
 	Name string `json:"name,omitempty"`
 
-	// StorageLocation: Optional. The storage location that Cloud Logging
-	// will use to create new resources when a location is needed but not
-	// explicitly provided. The use cases includes: The location of _Default
-	// and _Required log bucket for newly created projects and
-	// folders.Example value: europe-west1.Note: this setting does not
-	// affect the location of resources where a location is explicitly
-	// provided when created, such as custom log buckets.
+	// StorageLocation: Optional. The storage location for the _Default and
+	// _Required log buckets of newly created projects and folders, unless
+	// the storage location is explicitly provided.Example value:
+	// europe-west1.Note: this setting does not affect the location of
+	// resources where a location is explicitly provided when created, such
+	// as custom log buckets.
 	StorageLocation string `json:"storageLocation,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9063,11 +9065,11 @@ type BillingAccountsLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -9184,7 +9186,7 @@ func (c *BillingAccountsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.billingAccounts.locations.buckets.views.patch",
@@ -10201,8 +10203,7 @@ func (r *BillingAccountsLocationsSavedQueriesService) Create(parent string, save
 // the system will generate an alphanumeric ID.The saved_query_id is
 // limited to 100 characters and can include only the following
 // characters: upper and lower-case alphanumeric characters,
-// underscores, hyphens, and periods. First character has to be
-// alphanumeric.
+// underscores, hyphens, periods.First character has to be alphanumeric.
 func (c *BillingAccountsLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *BillingAccountsLocationsSavedQueriesCreateCall {
 	c.urlParams_.Set("savedQueryId", savedQueryId)
 	return c
@@ -10315,7 +10316,7 @@ func (c *BillingAccountsLocationsSavedQueriesCreateCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, and periods. First character has to be alphanumeric.",
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11753,10 +11754,10 @@ type BillingAccountsSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -11905,7 +11906,7 @@ func (c *BillingAccountsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSi
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.billingAccounts.sinks.patch",
@@ -11963,10 +11964,10 @@ type BillingAccountsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -12115,7 +12116,7 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.billingAccounts.sinks.update",
@@ -13851,15 +13852,16 @@ type FoldersUpdateSettingsCall struct {
 
 // UpdateSettings: Updates the settings for the given resource. This
 // method applies to all feature configurations for organization and
-// folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2)
-// the associated service account does not have the required
-// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// 3) access to the key is disabled, 4) storage_location is not
-// supported by Logging, 5) storage_location violates the location
-// OrgPolicy, or 6) default_sink_config is set but has an unspecified
-// filter write mode.See Configure default settings for organizations
-// and folders (https://cloud.google.com/logging/docs/default-settings)
-// for more information.
+// folders.UpdateSettings fails when any of the following are true: The
+// value of storage_location either isn't supported by Logging or
+// violates the location OrgPolicy. The default_sink_config field is
+// set, but it has an unspecified filter write mode. The value of
+// kms_key_name is invalid. The associated service account doesn't have
+// the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned
+// for the key. Access to the key is disabled.See Configure default
+// settings for organizations and folders
+// (https://cloud.google.com/logging/docs/default-settings) for more
+// information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
@@ -13972,7 +13974,7 @@ func (c *FoldersUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, 3) access to the key is disabled, 4) storage_location is not supported by Logging, 5) storage_location violates the location OrgPolicy, or 6) default_sink_config is set but has an unspecified filter write mode.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings fails when any of the following are true: The value of storage_location either isn't supported by Logging or violates the location OrgPolicy. The default_sink_config field is set, but it has an unspecified filter write mode. The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.updateSettings",
@@ -17835,11 +17837,11 @@ type FoldersLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -17956,7 +17958,7 @@ func (c *FoldersLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.locations.buckets.views.patch",
@@ -18973,8 +18975,7 @@ func (r *FoldersLocationsSavedQueriesService) Create(parent string, savedquery *
 // the system will generate an alphanumeric ID.The saved_query_id is
 // limited to 100 characters and can include only the following
 // characters: upper and lower-case alphanumeric characters,
-// underscores, hyphens, and periods. First character has to be
-// alphanumeric.
+// underscores, hyphens, periods.First character has to be alphanumeric.
 func (c *FoldersLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *FoldersLocationsSavedQueriesCreateCall {
 	c.urlParams_.Set("savedQueryId", savedQueryId)
 	return c
@@ -19087,7 +19088,7 @@ func (c *FoldersLocationsSavedQueriesCreateCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, and periods. First character has to be alphanumeric.",
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -20525,10 +20526,10 @@ type FoldersSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -20677,7 +20678,7 @@ func (c *FoldersSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.sinks.patch",
@@ -20735,10 +20736,10 @@ type FoldersSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -20887,7 +20888,7 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.folders.sinks.update",
@@ -23950,11 +23951,11 @@ type LocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -24071,7 +24072,7 @@ func (c *LocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogV
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.locations.buckets.views.patch",
@@ -25518,11 +25519,11 @@ type OrganizationsUpdateCmekSettingsCall struct {
 // given resource.Note: CMEK for the Log Router can currently only be
 // configured for Google Cloud organizations. Once configured, it
 // applies to all projects and folders in the Google Cloud
-// organization.UpdateCmekSettings will fail if 1) kms_key_name is
-// invalid, or 2) the associated service account does not have the
-// required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for
-// the key, or 3) access to the key is disabled.See Enabling CMEK for
-// Log Router
+// organization.UpdateCmekSettings fails when any of the following are
+// true: The value of kms_key_name is invalid. The associated service
+// account doesn't have the required
+// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.
+// Access to the key is disabled.See Enabling CMEK for Log Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
@@ -25643,7 +25644,7 @@ func (c *OrganizationsUpdateCmekSettingsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings fails when any of the following are true: The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.updateCmekSettings",
@@ -25693,15 +25694,16 @@ type OrganizationsUpdateSettingsCall struct {
 
 // UpdateSettings: Updates the settings for the given resource. This
 // method applies to all feature configurations for organization and
-// folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2)
-// the associated service account does not have the required
-// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// 3) access to the key is disabled, 4) storage_location is not
-// supported by Logging, 5) storage_location violates the location
-// OrgPolicy, or 6) default_sink_config is set but has an unspecified
-// filter write mode.See Configure default settings for organizations
-// and folders (https://cloud.google.com/logging/docs/default-settings)
-// for more information.
+// folders.UpdateSettings fails when any of the following are true: The
+// value of storage_location either isn't supported by Logging or
+// violates the location OrgPolicy. The default_sink_config field is
+// set, but it has an unspecified filter write mode. The value of
+// kms_key_name is invalid. The associated service account doesn't have
+// the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned
+// for the key. Access to the key is disabled.See Configure default
+// settings for organizations and folders
+// (https://cloud.google.com/logging/docs/default-settings) for more
+// information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
@@ -25814,7 +25816,7 @@ func (c *OrganizationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Set
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, 3) access to the key is disabled, 4) storage_location is not supported by Logging, 5) storage_location violates the location OrgPolicy, or 6) default_sink_config is set but has an unspecified filter write mode.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings fails when any of the following are true: The value of storage_location either isn't supported by Logging or violates the location OrgPolicy. The default_sink_config field is set, but it has an unspecified filter write mode. The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.updateSettings",
@@ -29677,11 +29679,11 @@ type OrganizationsLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -29798,7 +29800,7 @@ func (c *OrganizationsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.locations.buckets.views.patch",
@@ -30815,8 +30817,7 @@ func (r *OrganizationsLocationsSavedQueriesService) Create(parent string, savedq
 // the system will generate an alphanumeric ID.The saved_query_id is
 // limited to 100 characters and can include only the following
 // characters: upper and lower-case alphanumeric characters,
-// underscores, hyphens, and periods. First character has to be
-// alphanumeric.
+// underscores, hyphens, periods.First character has to be alphanumeric.
 func (c *OrganizationsLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *OrganizationsLocationsSavedQueriesCreateCall {
 	c.urlParams_.Set("savedQueryId", savedQueryId)
 	return c
@@ -30929,7 +30930,7 @@ func (c *OrganizationsLocationsSavedQueriesCreateCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, and periods. First character has to be alphanumeric.",
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -32367,10 +32368,10 @@ type OrganizationsSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -32519,7 +32520,7 @@ func (c *OrganizationsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.sinks.patch",
@@ -32577,10 +32578,10 @@ type OrganizationsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -32729,7 +32730,7 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.organizations.sinks.update",
@@ -36927,11 +36928,11 @@ type ProjectsLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -37048,7 +37049,7 @@ func (c *ProjectsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.projects.locations.buckets.views.patch",
@@ -38065,8 +38066,7 @@ func (r *ProjectsLocationsSavedQueriesService) Create(parent string, savedquery 
 // the system will generate an alphanumeric ID.The saved_query_id is
 // limited to 100 characters and can include only the following
 // characters: upper and lower-case alphanumeric characters,
-// underscores, hyphens, and periods. First character has to be
-// alphanumeric.
+// underscores, hyphens, periods.First character has to be alphanumeric.
 func (c *ProjectsLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *ProjectsLocationsSavedQueriesCreateCall {
 	c.urlParams_.Set("savedQueryId", savedQueryId)
 	return c
@@ -38179,7 +38179,7 @@ func (c *ProjectsLocationsSavedQueriesCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "savedQueryId": {
-	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, and periods. First character has to be alphanumeric.",
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -40397,10 +40397,10 @@ type ProjectsSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -40549,7 +40549,7 @@ func (c *ProjectsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.projects.sinks.patch",
@@ -40607,10 +40607,10 @@ type ProjectsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -40759,7 +40759,7 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.sinks.update",
@@ -41501,10 +41501,10 @@ type SinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -41653,7 +41653,7 @@ func (c *SinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.sinks.update",
@@ -42040,11 +42040,11 @@ type V2UpdateCmekSettingsCall struct {
 // given resource.Note: CMEK for the Log Router can currently only be
 // configured for Google Cloud organizations. Once configured, it
 // applies to all projects and folders in the Google Cloud
-// organization.UpdateCmekSettings will fail if 1) kms_key_name is
-// invalid, or 2) the associated service account does not have the
-// required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for
-// the key, or 3) access to the key is disabled.See Enabling CMEK for
-// Log Router
+// organization.UpdateCmekSettings fails when any of the following are
+// true: The value of kms_key_name is invalid. The associated service
+// account doesn't have the required
+// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.
+// Access to the key is disabled.See Enabling CMEK for Log Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
@@ -42165,7 +42165,7 @@ func (c *V2UpdateCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettin
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings fails when any of the following are true: The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.updateCmekSettings",
@@ -42215,15 +42215,16 @@ type V2UpdateSettingsCall struct {
 
 // UpdateSettings: Updates the settings for the given resource. This
 // method applies to all feature configurations for organization and
-// folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2)
-// the associated service account does not have the required
-// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// 3) access to the key is disabled, 4) storage_location is not
-// supported by Logging, 5) storage_location violates the location
-// OrgPolicy, or 6) default_sink_config is set but has an unspecified
-// filter write mode.See Configure default settings for organizations
-// and folders (https://cloud.google.com/logging/docs/default-settings)
-// for more information.
+// folders.UpdateSettings fails when any of the following are true: The
+// value of storage_location either isn't supported by Logging or
+// violates the location OrgPolicy. The default_sink_config field is
+// set, but it has an unspecified filter write mode. The value of
+// kms_key_name is invalid. The associated service account doesn't have
+// the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned
+// for the key. Access to the key is disabled.See Configure default
+// settings for organizations and folders
+// (https://cloud.google.com/logging/docs/default-settings) for more
+// information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
@@ -42336,7 +42337,7 @@ func (c *V2UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings will fail if 1) kms_key_name is invalid, 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, 3) access to the key is disabled, 4) storage_location is not supported by Logging, 5) storage_location violates the location OrgPolicy, or 6) default_sink_config is set but has an unspecified filter write mode.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings fails when any of the following are true: The value of storage_location either isn't supported by Logging or violates the location OrgPolicy. The default_sink_config field is set, but it has an unspecified filter write mode. The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.updateSettings",

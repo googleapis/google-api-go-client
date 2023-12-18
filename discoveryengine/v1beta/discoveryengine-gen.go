@@ -2324,6 +2324,71 @@ func (s *GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig) MarshalJSON(
 type GoogleCloudDiscoveryengineV1alphaEngineSimilarDocumentsEngineConfig struct {
 }
 
+// GoogleCloudDiscoveryengineV1alphaEstimateDataSizeMetadata: Metadata
+// related to the progress of the EstimateDataSize operation. This is
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaEstimateDataSizeMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaEstimateDataSizeMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEstimateDataSizeMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEstimateDataSizeResponse: Response
+// of the EstimateDataSize request. If the long running operation was
+// successful, then this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudDiscoveryengineV1alphaEstimateDataSizeResponse struct {
+	// DataSizeBytes: Data size in terms of bytes.
+	DataSizeBytes int64 `json:"dataSizeBytes,omitempty,string"`
+
+	// DocumentCount: Total number of documents.
+	DocumentCount int64 `json:"documentCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSizeBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSizeBytes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaEstimateDataSizeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEstimateDataSizeResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaFieldConfig: Configurations for
 // fields of a schema. For example, configuring a field is indexable, or
 // searchable.
@@ -3199,6 +3264,82 @@ func (s *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason) MarshalJSON()
 type GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure struct {
 }
 
+// GoogleCloudDiscoveryengineV1alphaTrainCustomModelMetadata: Metadata
+// related to the progress of the TrainCustomModel operation. This is
+// returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaTrainCustomModelMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// UpdateTime: Operation last update time. If the operation is done,
+	// this is also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaTrainCustomModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTrainCustomModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaTrainCustomModelResponse: Response
+// of the TrainCustomModelRequest. This message is returned by the
+// google.longrunning.Operations.response field.
+type GoogleCloudDiscoveryengineV1alphaTrainCustomModelResponse struct {
+	// ErrorConfig: Echoes the destination for the complete errors in the
+	// request if set.
+	ErrorConfig *GoogleCloudDiscoveryengineV1alphaImportErrorConfig `json:"errorConfig,omitempty"`
+
+	// ErrorSamples: A sample of errors encountered while processing the
+	// data.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// ModelStatus: The trained model status. Possible values are: *
+	// **bad-data**: The training data quality is bad. * **no-improvement**:
+	// Tuning didn't improve performance. Won't deploy. * **in-progress**:
+	// Model training is in progress. * **ready**: The model is ready for
+	// serving.
+	ModelStatus string `json:"modelStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaTrainCustomModelResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaTrainCustomModelResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaTuneEngineMetadata: Metadata
 // associated with a tune operation.
 type GoogleCloudDiscoveryengineV1alphaTuneEngineMetadata struct {
@@ -3612,6 +3753,21 @@ type GoogleCloudDiscoveryengineV1betaConverseConversationRequest struct {
 	// name field will be ignored as we automatically assign new name for
 	// the conversation in auto session.
 	Conversation *GoogleCloudDiscoveryengineV1betaConversation `json:"conversation,omitempty"`
+
+	// Filter: The filter syntax consists of an expression language for
+	// constructing a predicate from one or more fields of the documents
+	// being filtered. Filter expression is case-sensitive. This will be
+	// used to filter search results which may affect the summary response.
+	// If this field is unrecognizable, an `INVALID_ARGUMENT` is returned.
+	// Filtering in Vertex AI Search is done by mapping the LHS filter key
+	// to a key property defined in the Vertex AI Search backend -- this
+	// mapping is defined by the customer in their schema. For example a
+	// media customer might have a field 'name' in their schema. In this
+	// case the filter would look like this: filter --> name:'ANY("king
+	// kong")' For more information about filtering including syntax and
+	// filter operators, see Filter
+	// (https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)
+	Filter string `json:"filter,omitempty"`
 
 	// Query: Required. Current user input.
 	Query *GoogleCloudDiscoveryengineV1betaTextInput `json:"query,omitempty"`
@@ -5739,6 +5895,10 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpec s
 	// an experimental feature.
 	LanguageCode string `json:"languageCode,omitempty"`
 
+	// ModelPromptSpec: If specified, the spec will be used to modify the
+	// prompt provided to the LLM.
+	ModelPromptSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecModelPromptSpec `json:"modelPromptSpec,omitempty"`
+
 	// ModelSpec: If specified, the spec will be used to modify the model
 	// specification provided to the LLM.
 	ModelSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecModelSpec `json:"modelSpec,omitempty"`
@@ -5775,10 +5935,41 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySp
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummaryS
+// pecModelPromptSpec: Specification of the prompt to use with the
+// model.
+type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecModelPromptSpec struct {
+	// Preamble: Text at the beginning of the prompt that instructs the
+	// assistant. Examples are available in the user guide.
+	Preamble string `json:"preamble,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Preamble") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Preamble") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecModelPromptSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecModelPromptSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummaryS
 // pecModelSpec: Specification of the model.
 type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecModelSpec struct {
-	// Version: The string format of the model version. e.g. stable, latest,
-	// etc.
+	// Version: The string format of the model version. e.g. stable,
+	// preview, etc.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Version") to
@@ -6508,6 +6699,8 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
 
+	SummaryWithMetadata *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySummaryWithMetadata `json:"summaryWithMetadata,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "SafetyAttributes") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6528,6 +6721,142 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 
 func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitation:
+// Citation info for a segment.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitation struct {
+	// EndIndex: End of the attributed segment, exclusive.
+	EndIndex int64 `json:"endIndex,omitempty,string"`
+
+	// Sources: Citation sources for the attributed segment.
+	Sources []*GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationSource `json:"sources,omitempty"`
+
+	// StartIndex: Index indicates the start of the segment, measured in
+	// bytes/unicode.
+	StartIndex int64 `json:"startIndex,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndIndex") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationMetadata:
+//
+//	Citation metadata.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationMetadata struct {
+	// Citations: Citations for segments.
+	Citations []*GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitation `json:"citations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Citations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Citations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationSource:
+// Citation source.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationSource struct {
+	// ReferenceIndex: Document reference index from
+	// SummaryWithMetadata.references. It is 0-indexed and the value will be
+	// zero if the reference_index is not set explicitly.
+	ReferenceIndex int64 `json:"referenceIndex,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ReferenceIndex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReferenceIndex") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSummaryReference:
+// Document reference.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSummaryReference struct {
+	// Document: Required. Document.name of the document. Full resource name
+	// of the referenced document, in the format
+	// `projects/*/locations/*/collections/*/dataStores/*/branches/*/document
+	// s/*`.
+	Document string `json:"document,omitempty"`
+
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+
+	// Uri: GCS or HTTP uri for the document.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Document") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummaryReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummaryReference
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6582,6 +6911,42 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySafetyAttributes) 
 		s.Scores[i] = float64(s1.Scores[i])
 	}
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSummarySummaryWithMetada
+// ta: Summary with metadata information.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSummarySummaryWithMetadata struct {
+	// CitationMetadata: Citation metadata for given summary.
+	CitationMetadata *GoogleCloudDiscoveryengineV1betaSearchResponseSummaryCitationMetadata `json:"citationMetadata,omitempty"`
+
+	// References: Document References.
+	References []*GoogleCloudDiscoveryengineV1betaSearchResponseSummaryReference `json:"references,omitempty"`
+
+	// Summary: Summary text with no citation information.
+	Summary string `json:"summary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CitationMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySummaryWithMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSummarySummaryWithMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1betaTextInput: Defines text input.

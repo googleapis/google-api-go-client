@@ -288,19 +288,30 @@ func (s *GoogleChecksAccountV1alphaListAppsResponse) MarshalJSON() ([]byte, erro
 // GoogleChecksReportV1alphaAnalyzeUploadRequest: The request message
 // for ReportService.AnalyzeUpload.
 type GoogleChecksReportV1alphaAnalyzeUploadRequest struct {
+	// AppBinaryFileType: Optional. The type of the uploaded app binary. If
+	// not provided, the server assumes APK file for Android and IPA file
+	// for iOS.
+	//
+	// Possible values:
+	//   "APP_BINARY_FILE_TYPE_UNSPECIFIED" - Not specified.
+	//   "ANDROID_APK" - .apk file type.
+	//   "ANDROID_AAB" - .aab (app bundle) file type.
+	//   "IOS_IPA" - .ipa file type.
+	AppBinaryFileType string `json:"appBinaryFileType,omitempty"`
+
 	// CodeReferenceId: Optional. Git commit hash or changelist number
 	// associated with the upload.
 	CodeReferenceId string `json:"codeReferenceId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CodeReferenceId") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AppBinaryFileType")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CodeReferenceId") to
+	// NullFields is a list of field names (e.g. "AppBinaryFileType") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

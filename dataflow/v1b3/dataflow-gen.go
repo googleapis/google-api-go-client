@@ -7161,6 +7161,51 @@ func (s *StreamingConfigTask) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StreamingScalingReport: Contains per-user worker telemetry used in
+// streaming autoscaling.
+type StreamingScalingReport struct {
+	// ActiveBundleCount: Current acive bundle count.
+	ActiveBundleCount int64 `json:"activeBundleCount,omitempty"`
+
+	// ActiveThreadCount: Current acive thread count.
+	ActiveThreadCount int64 `json:"activeThreadCount,omitempty"`
+
+	// MaximumBundleCount: Maximum bundle count limit.
+	MaximumBundleCount int64 `json:"maximumBundleCount,omitempty"`
+
+	// MaximumBytesCount: Maximum bytes count limit.
+	MaximumBytesCount int64 `json:"maximumBytesCount,omitempty"`
+
+	// MaximumThreadCount: Maximum thread count limit.
+	MaximumThreadCount int64 `json:"maximumThreadCount,omitempty"`
+
+	// OutstandingBytesCount: Current outstanding bytes count.
+	OutstandingBytesCount int64 `json:"outstandingBytesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveBundleCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveBundleCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamingScalingReport) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamingScalingReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StreamingSetupTask: A task which initializes part of a streaming
 // Dataflow job.
 type StreamingSetupTask struct {
@@ -8143,6 +8188,10 @@ type WorkerMessage struct {
 	// development other strings can be used as tags. LABEL_UNSPECIFIED
 	// should not be used here.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// StreamingScalingReport: Contains per-user worker telemetry used in
+	// streaming autoscaling.
+	StreamingScalingReport *StreamingScalingReport `json:"streamingScalingReport,omitempty"`
 
 	// Time: The timestamp of the worker_message.
 	Time string `json:"time,omitempty"`

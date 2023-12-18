@@ -161,6 +161,7 @@ func NewFoldersService(s *Service) *FoldersService {
 	rs := &FoldersService{s: s}
 	rs.Assets = NewFoldersAssetsService(s)
 	rs.BigQueryExports = NewFoldersBigQueryExportsService(s)
+	rs.EventThreatDetectionSettings = NewFoldersEventThreatDetectionSettingsService(s)
 	rs.Findings = NewFoldersFindingsService(s)
 	rs.Locations = NewFoldersLocationsService(s)
 	rs.MuteConfigs = NewFoldersMuteConfigsService(s)
@@ -176,6 +177,8 @@ type FoldersService struct {
 	Assets *FoldersAssetsService
 
 	BigQueryExports *FoldersBigQueryExportsService
+
+	EventThreatDetectionSettings *FoldersEventThreatDetectionSettingsService
 
 	Findings *FoldersFindingsService
 
@@ -205,6 +208,39 @@ func NewFoldersBigQueryExportsService(s *Service) *FoldersBigQueryExportsService
 }
 
 type FoldersBigQueryExportsService struct {
+	s *Service
+}
+
+func NewFoldersEventThreatDetectionSettingsService(s *Service) *FoldersEventThreatDetectionSettingsService {
+	rs := &FoldersEventThreatDetectionSettingsService{s: s}
+	rs.CustomModules = NewFoldersEventThreatDetectionSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewFoldersEventThreatDetectionSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type FoldersEventThreatDetectionSettingsService struct {
+	s *Service
+
+	CustomModules *FoldersEventThreatDetectionSettingsCustomModulesService
+
+	EffectiveCustomModules *FoldersEventThreatDetectionSettingsEffectiveCustomModulesService
+}
+
+func NewFoldersEventThreatDetectionSettingsCustomModulesService(s *Service) *FoldersEventThreatDetectionSettingsCustomModulesService {
+	rs := &FoldersEventThreatDetectionSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type FoldersEventThreatDetectionSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewFoldersEventThreatDetectionSettingsEffectiveCustomModulesService(s *Service) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesService {
+	rs := &FoldersEventThreatDetectionSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type FoldersEventThreatDetectionSettingsEffectiveCustomModulesService struct {
 	s *Service
 }
 
@@ -388,6 +424,7 @@ type OrganizationsBigQueryExportsService struct {
 func NewOrganizationsEventThreatDetectionSettingsService(s *Service) *OrganizationsEventThreatDetectionSettingsService {
 	rs := &OrganizationsEventThreatDetectionSettingsService{s: s}
 	rs.CustomModules = NewOrganizationsEventThreatDetectionSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewOrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService(s)
 	return rs
 }
 
@@ -395,6 +432,8 @@ type OrganizationsEventThreatDetectionSettingsService struct {
 	s *Service
 
 	CustomModules *OrganizationsEventThreatDetectionSettingsCustomModulesService
+
+	EffectiveCustomModules *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService
 }
 
 func NewOrganizationsEventThreatDetectionSettingsCustomModulesService(s *Service) *OrganizationsEventThreatDetectionSettingsCustomModulesService {
@@ -403,6 +442,15 @@ func NewOrganizationsEventThreatDetectionSettingsCustomModulesService(s *Service
 }
 
 type OrganizationsEventThreatDetectionSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewOrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService(s *Service) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService {
+	rs := &OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService struct {
 	s *Service
 }
 
@@ -623,6 +671,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Assets = NewProjectsAssetsService(s)
 	rs.BigQueryExports = NewProjectsBigQueryExportsService(s)
+	rs.EventThreatDetectionSettings = NewProjectsEventThreatDetectionSettingsService(s)
 	rs.Findings = NewProjectsFindingsService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.MuteConfigs = NewProjectsMuteConfigsService(s)
@@ -638,6 +687,8 @@ type ProjectsService struct {
 	Assets *ProjectsAssetsService
 
 	BigQueryExports *ProjectsBigQueryExportsService
+
+	EventThreatDetectionSettings *ProjectsEventThreatDetectionSettingsService
 
 	Findings *ProjectsFindingsService
 
@@ -667,6 +718,39 @@ func NewProjectsBigQueryExportsService(s *Service) *ProjectsBigQueryExportsServi
 }
 
 type ProjectsBigQueryExportsService struct {
+	s *Service
+}
+
+func NewProjectsEventThreatDetectionSettingsService(s *Service) *ProjectsEventThreatDetectionSettingsService {
+	rs := &ProjectsEventThreatDetectionSettingsService{s: s}
+	rs.CustomModules = NewProjectsEventThreatDetectionSettingsCustomModulesService(s)
+	rs.EffectiveCustomModules = NewProjectsEventThreatDetectionSettingsEffectiveCustomModulesService(s)
+	return rs
+}
+
+type ProjectsEventThreatDetectionSettingsService struct {
+	s *Service
+
+	CustomModules *ProjectsEventThreatDetectionSettingsCustomModulesService
+
+	EffectiveCustomModules *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService
+}
+
+func NewProjectsEventThreatDetectionSettingsCustomModulesService(s *Service) *ProjectsEventThreatDetectionSettingsCustomModulesService {
+	rs := &ProjectsEventThreatDetectionSettingsCustomModulesService{s: s}
+	return rs
+}
+
+type ProjectsEventThreatDetectionSettingsCustomModulesService struct {
+	s *Service
+}
+
+func NewProjectsEventThreatDetectionSettingsEffectiveCustomModulesService(s *Service) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService {
+	rs := &ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService{s: s}
+	return rs
+}
+
+type ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService struct {
 	s *Service
 }
 
@@ -2478,6 +2562,78 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// EffectiveEventThreatDetectionCustomModule: An
+// EffectiveEventThreatDetectionCustomModule is the representation of an
+// Event Threat Detection custom module at a specified level of the
+// resource hierarchy: organization, folder, or project. If a custom
+// module is inherited from a parent organization or folder, the value
+// of the `enablement_state` property in
+// EffectiveEventThreatDetectionCustomModule is set to the value that is
+// effective in the parent, instead of `INHERITED`. For example, if the
+// module is enabled in a parent organization or folder, the effective
+// `enablement_state` for the module in all child folders or projects is
+// also `enabled`. EffectiveEventThreatDetectionCustomModule is
+// read-only.
+type EffectiveEventThreatDetectionCustomModule struct {
+	// Config: Output only. Config for the effective module.
+	Config googleapi.RawMessage `json:"config,omitempty"`
+
+	// Description: Output only. The description for the module.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Output only. The human readable name to be displayed for
+	// the module.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EnablementState: Output only. The effective state of enablement for
+	// the module at the given level of the hierarchy.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
+	//   "ENABLED" - The module is enabled at the given level.
+	//   "DISABLED" - The module is disabled at the given level.
+	EnablementState string `json:"enablementState,omitempty"`
+
+	// Name: Output only. The resource name of the effective ETD custom
+	// module. Its format is: *
+	// "organizations/{organization}/eventThreatDetectionSettings/effectiveCu
+	// stomModules/{module}". *
+	// "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/
+	// {module}". *
+	// "projects/{project}/eventThreatDetectionSettings/effectiveCustomModule
+	// s/{module}".
+	Name string `json:"name,omitempty"`
+
+	// Type: Output only. Type for the module. e.g. CONFIGURABLE_BAD_IP.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EffectiveEventThreatDetectionCustomModule) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveEventThreatDetectionCustomModule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -2524,8 +2680,15 @@ func (s *EnvironmentVariable) MarshalJSON() ([]byte, error) {
 // EventThreatDetectionCustomModule: Represents an instance of an Event
 // Threat Detection custom module, including its full module name,
 // display name, enablement state, and last updated time. You can create
-// a custom module at the organization level only.
+// a custom module at the organization, folder, or project level. Custom
+// modules that you create at the organization or folder level are
+// inherited by child folders and projects.
 type EventThreatDetectionCustomModule struct {
+	// AncestorModule: Output only. The closest ancestor module that this
+	// module inherits the enablement state from. The format is the same as
+	// the EventThreatDetectionCustomModule resource name.
+	AncestorModule string `json:"ancestorModule,omitempty"`
+
 	// Config: Config for the module. For the resident module, its config
 	// value is defined at this level. For the inherited module, its config
 	// value is inherited from the ancestor module.
@@ -2544,6 +2707,7 @@ type EventThreatDetectionCustomModule struct {
 	//   "ENABLEMENT_STATE_UNSPECIFIED" - Unspecified enablement state.
 	//   "ENABLED" - The module is enabled at the given level.
 	//   "DISABLED" - The module is disabled at the given level.
+	//   "INHERITED" - When the enablement state is inherited.
 	EnablementState string `json:"enablementState,omitempty"`
 
 	// LastEditor: Output only. The editor the module was last updated by.
@@ -2569,7 +2733,7 @@ type EventThreatDetectionCustomModule struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Config") to
+	// ForceSendFields is a list of field names (e.g. "AncestorModule") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2577,12 +2741,13 @@ type EventThreatDetectionCustomModule struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AncestorModule") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -8132,6 +8297,48 @@ func (s *ListBigQueryExportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListDescendantEventThreatDetectionCustomModulesResponse: Response for
+// listing current and descendant resident Event Threat Detection custom
+// modules.
+type ListDescendantEventThreatDetectionCustomModulesResponse struct {
+	// EventThreatDetectionCustomModules: Custom modules belonging to the
+	// requested parent.
+	EventThreatDetectionCustomModules []*EventThreatDetectionCustomModule `json:"eventThreatDetectionCustomModules,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EventThreatDetectionCustomModules") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EventThreatDetectionCustomModules") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDescendantEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDescendantEventThreatDetectionCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDescendantSecurityHealthAnalyticsCustomModulesResponse: Response
 // message for listing descendant Security Health Analytics custom
 // modules.
@@ -8167,6 +8374,47 @@ type ListDescendantSecurityHealthAnalyticsCustomModulesResponse struct {
 
 func (s *ListDescendantSecurityHealthAnalyticsCustomModulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDescendantSecurityHealthAnalyticsCustomModulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEffectiveEventThreatDetectionCustomModulesResponse: Response for
+// listing EffectiveEventThreatDetectionCustomModules.
+type ListEffectiveEventThreatDetectionCustomModulesResponse struct {
+	// EffectiveEventThreatDetectionCustomModules: Effective custom modules
+	// belonging to the requested parent.
+	EffectiveEventThreatDetectionCustomModules []*EffectiveEventThreatDetectionCustomModule `json:"effectiveEventThreatDetectionCustomModules,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveEventThreatDetectionCustomModules") to unconditionally
+	// include in API requests. By default, fields with empty or default
+	// values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EffectiveEventThreatDetectionCustomModules") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEffectiveEventThreatDetectionCustomModulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEffectiveEventThreatDetectionCustomModulesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12087,6 +12335,1536 @@ func (c *FoldersBigQueryExportsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 
 }
 
+// method id "securitycenter.folders.eventThreatDetectionSettings.validateCustomModule":
+
+type FoldersEventThreatDetectionSettingsValidateCustomModuleCall struct {
+	s                                               *Service
+	parent                                          string
+	validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// ValidateCustomModule: Validates the given Event Threat Detection
+// custom module.
+//
+//   - parent: Resource name of the parent to validate the Custom Module
+//     under. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings". *
+//     "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *FoldersEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *FoldersEventThreatDetectionSettingsValidateCustomModuleCall {
+	c := &FoldersEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.validateeventthreatdetectioncustommodulerequest = validateeventthreatdetectioncustommodulerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsValidateCustomModuleCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsValidateCustomModuleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsValidateCustomModuleCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsValidateCustomModuleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsValidateCustomModuleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsValidateCustomModuleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.validateeventthreatdetectioncustommodulerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:validateCustomModule")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.validateCustomModule" call.
+// Exactly one of *ValidateEventThreatDetectionCustomModuleResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ValidateEventThreatDetectionCustomModuleResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersEventThreatDetectionSettingsValidateCustomModuleCall) Do(opts ...googleapi.CallOption) (*ValidateEventThreatDetectionCustomModuleResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ValidateEventThreatDetectionCustomModuleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Validates the given Event Threat Detection custom module.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings:validateCustomModule",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.validateCustomModule",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the parent to validate the Custom Module under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:validateCustomModule",
+	//   "request": {
+	//     "$ref": "ValidateEventThreatDetectionCustomModuleRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ValidateEventThreatDetectionCustomModuleResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.customModules.create":
+
+type FoldersEventThreatDetectionSettingsCustomModulesCreateCall struct {
+	s                                *Service
+	parent                           string
+	eventthreatdetectioncustommodule *EventThreatDetectionCustomModule
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates a resident Event Threat Detection custom module at
+// the scope of the given Resource Manager parent, and also creates
+// inherited custom modules for all descendants of the given parent.
+// These modules are enabled by default.
+//
+//   - parent: The new custom module's parent. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings". *
+//     "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *FoldersEventThreatDetectionSettingsCustomModulesCreateCall {
+	c := &FoldersEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.eventthreatdetectioncustommodule = eventthreatdetectioncustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesCreateCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventthreatdetectioncustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.customModules.create" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The new custom module's parent. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.customModules.delete":
+
+type FoldersEventThreatDetectionSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified Event Threat Detection custom module
+// and all of its descendants in the Resource Manager hierarchy. This
+// method is only supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Delete(name string) *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c := &FoldersEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.customModules.get":
+
+type FoldersEventThreatDetectionSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Event Threat Detection custom module.
+//
+//   - name: Name of the custom module to get. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Get(name string) *FoldersEventThreatDetectionSettingsCustomModulesGetCall {
+	c := &FoldersEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *FoldersEventThreatDetectionSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesGetCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.customModules.get" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an Event Threat Detection custom module.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.customModules.list":
+
+type FoldersEventThreatDetectionSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Event Threat Detection custom modules for the given
+// Resource Manager parent. This includes resident modules defined at
+// the scope of the parent along with modules inherited from ancestors.
+//
+//   - parent: Name of the parent to list custom modules under. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *FoldersEventThreatDetectionSettingsCustomModulesService) List(parent string) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
+	c := &FoldersEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) PageSize(pageSize int64) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListEventThreatDetectionCustomModules`
+// call. Provide this to retrieve the subsequent page. When paginating,
+// all other parameters provided to
+// `ListEventThreatDetectionCustomModules` must match the call that
+// provided the page token.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) PageToken(pageToken string) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.customModules.list" call.
+// Exactly one of *ListEventThreatDetectionCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEventThreatDetectionCustomModulesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.customModules.listDescendant":
+
+type FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Lists all resident Event Threat Detection custom
+// modules under the given Resource Manager parent and its descendants.
+//
+//   - parent: Name of the parent to list custom modules under. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *FoldersEventThreatDetectionSettingsCustomModulesService) ListDescendant(parent string) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c := &FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous
+// `ListDescendantEventThreatDetectionCustomModules` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to
+// `ListDescendantEventThreatDetectionCustomModules` must match the call
+// that provided the page token.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantEventThreatDetectionCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantEventThreatDetectionCustomModulesResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all resident Event Threat Detection custom modules under the given Resource Manager parent and its descendants.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListDescendantEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDescendantEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.customModules.patch":
+
+type FoldersEventThreatDetectionSettingsCustomModulesPatchCall struct {
+	s                                *Service
+	name                             string
+	eventthreatdetectioncustommodule *EventThreatDetectionCustomModule
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Patch: Updates the Event Threat Detection custom module with the
+// given name based on the given update mask. Updating the enablement
+// state is supported for both resident and inherited modules (though
+// resident modules cannot have an enablement state of "inherited").
+// Updating the display name or configuration of a module is supported
+// for resident modules only. The type of a module cannot be changed.
+//
+//   - name: Immutable. The resource name of the Event Threat Detection
+//     custom module. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *FoldersEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *FoldersEventThreatDetectionSettingsCustomModulesPatchCall {
+	c := &FoldersEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.eventthreatdetectioncustommodule = eventthreatdetectioncustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. If empty all mutable fields will be updated.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *FoldersEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesPatchCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventthreatdetectioncustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.customModules.patch" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersEventThreatDetectionSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the Event Threat Detection custom module. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.effectiveCustomModules.get":
+
+type FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an effective Event Threat Detection custom module at the
+// given level.
+//
+//   - name: The resource name of the effective Event Threat Detection
+//     custom module. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/effective
+//     CustomModules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModule
+//     s/{module}". *
+//     "projects/{project}/eventThreatDetectionSettings/effectiveCustomModu
+//     les/{module}".
+func (r *FoldersEventThreatDetectionSettingsEffectiveCustomModulesService) Get(name string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c := &FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.effectiveCustomModules.get" call.
+// Exactly one of *EffectiveEventThreatDetectionCustomModule or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *EffectiveEventThreatDetectionCustomModule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*EffectiveEventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EffectiveEventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an effective Event Threat Detection custom module at the given level.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the effective Event Threat Detection custom module. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/effectiveCustomModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EffectiveEventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.eventThreatDetectionSettings.effectiveCustomModules.list":
+
+type FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all effective Event Threat Detection custom modules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent along with modules inherited from its ancestors.
+//
+//   - parent: Name of the parent to list custom modules for. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *FoldersEventThreatDetectionSettingsEffectiveCustomModulesService) List(parent string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c := &FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous
+// `ListEffectiveEventThreatDetectionCustomModules` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to
+// `ListEffectiveEventThreatDetectionCustomModules` must match the call
+// that provided the page token.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.eventThreatDetectionSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveEventThreatDetectionCustomModulesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListEffectiveEventThreatDetectionCustomModulesResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all effective Event Threat Detection custom modules for the given parent. This includes resident modules defined at the scope of the parent along with modules inherited from its ancestors.",
+	//   "flatPath": "v1/folders/{foldersId}/eventThreatDetectionSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.eventThreatDetectionSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEffectiveEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEffectiveEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules for. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersEventThreatDetectionSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "securitycenter.folders.findings.bulkMute":
 
 type FoldersFindingsBulkMuteCall struct {
@@ -15184,7 +16962,10 @@ func (r *FoldersSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name 
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update.
+// fields to be updated. The only fields that can be updated are
+// `enablement_state` and `custom_config`. If empty or set to the
+// wildcard value `*`, both `enablement_state` and `custom_config` are
+// updated.
 func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15300,7 +17081,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update.",
+	//       "description": "The list of fields to be updated. The only fields that can be updated are `enablement_state` and `custom_config`. If empty or set to the wildcard value `*`, both `enablement_state` and `custom_config` are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -19289,7 +21070,9 @@ type OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall struct {
 //
 //   - parent: Resource name of the parent to validate the Custom Module
 //     under. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings".
+//     "organizations/{organization}/eventThreatDetectionSettings". *
+//     "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
 func (r *OrganizationsEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall {
 	c := &OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19399,7 +21182,7 @@ func (c *OrganizationsEventThreatDetectionSettingsValidateCustomModuleCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent to validate the Custom Module under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\".",
+	//       "description": "Required. Resource name of the parent to validate the Custom Module under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
 	//       "required": true,
@@ -19431,10 +21214,15 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates an Event Threat Detection custom module.
+// Create: Creates a resident Event Threat Detection custom module at
+// the scope of the given Resource Manager parent, and also creates
+// inherited custom modules for all descendants of the given parent.
+// These modules are enabled by default.
 //
 //   - parent: The new custom module's parent. Its format is: *
-//     "organizations/{organization}/eventThreatDetectionSettings".
+//     "organizations/{organization}/eventThreatDetectionSettings". *
+//     "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19533,7 +21321,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an Event Threat Detection custom module.",
+	//   "description": "Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.",
 	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.create",
@@ -19542,7 +21330,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesCreateCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The new custom module's parent. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\".",
+	//       "description": "Required. The new custom module's parent. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
 	//       "required": true,
@@ -19573,11 +21361,17 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an Event Threat Detection custom module.
+// Delete: Deletes the specified Event Threat Detection custom module
+// and all of its descendants in the Resource Manager hierarchy. This
+// method is only supported for resident custom modules.
 //
 //   - name: Name of the custom module to delete. Its format is: *
 //     "organizations/{organization}/eventThreatDetectionSettings/customMod
-//     ules/{module}".
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Delete(name string) *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19670,7 +21464,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an Event Threat Detection custom module.",
+	//   "description": "Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.",
 	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.delete",
@@ -19679,7 +21473,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesDeleteCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the custom module to delete. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "description": "Required. Name of the custom module to delete. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
 	//       "required": true,
@@ -19712,7 +21506,11 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesGetCall struct {
 //
 //   - name: Name of the custom module to get. Its format is: *
 //     "organizations/{organization}/eventThreatDetectionSettings/customMod
-//     ules/{module}".
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) Get(name string) *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19827,7 +21625,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesGetCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the custom module to get. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "description": "Required. Name of the custom module to get. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
 	//       "required": true,
@@ -19856,10 +21654,14 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Event Threat Detection custom modules.
+// List: Lists all Event Threat Detection custom modules for the given
+// Resource Manager parent. This includes resident modules defined at
+// the scope of the parent along with modules inherited from ancestors.
 //
 //   - parent: Name of the parent to list custom modules under. Its format
 //     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
 func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) List(parent string) *OrganizationsEventThreatDetectionSettingsCustomModulesListCall {
 	c := &OrganizationsEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19987,7 +21789,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Event Threat Detection custom modules.",
+	//   "description": "Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.",
 	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.list",
@@ -20007,7 +21809,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Do(opts
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\".",
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
 	//       "required": true,
@@ -20046,6 +21848,212 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListCall) Pages(c
 	}
 }
 
+// method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.listDescendant":
+
+type OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Lists all resident Event Threat Detection custom
+// modules under the given Resource Manager parent and its descendants.
+//
+//   - parent: Name of the parent to list custom modules under. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *OrganizationsEventThreatDetectionSettingsCustomModulesService) ListDescendant(parent string) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c := &OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous
+// `ListDescendantEventThreatDetectionCustomModules` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to
+// `ListDescendantEventThreatDetectionCustomModules` must match the call
+// that provided the page token.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantEventThreatDetectionCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantEventThreatDetectionCustomModulesResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all resident Event Threat Detection custom modules under the given Resource Manager parent and its descendants.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListDescendantEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDescendantEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEventThreatDetectionSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "securitycenter.organizations.eventThreatDetectionSettings.customModules.patch":
 
 type OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall struct {
@@ -20057,7 +22065,12 @@ type OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall struct {
 	header_                          http.Header
 }
 
-// Patch: Updates an Event Threat Detection custom module.
+// Patch: Updates the Event Threat Detection custom module with the
+// given name based on the given update mask. Updating the enablement
+// state is supported for both resident and inherited modules (though
+// resident modules cannot have an enablement state of "inherited").
+// Updating the display name or configuration of a module is supported
+// for resident modules only. The type of a module cannot be changed.
 //
 //   - name: Immutable. The resource name of the Event Threat Detection
 //     custom module. Its format is: *
@@ -20172,7 +22185,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) Do(opt
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an Event Threat Detection custom module.",
+	//   "description": "Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.",
 	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.customModules.patch",
@@ -20206,6 +22219,369 @@ func (c *OrganizationsEventThreatDetectionSettingsCustomModulesPatchCall) Do(opt
 	//   ]
 	// }
 
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.effectiveCustomModules.get":
+
+type OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an effective Event Threat Detection custom module at the
+// given level.
+//
+//   - name: The resource name of the effective Event Threat Detection
+//     custom module. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/effective
+//     CustomModules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModule
+//     s/{module}". *
+//     "projects/{project}/eventThreatDetectionSettings/effectiveCustomModu
+//     les/{module}".
+func (r *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService) Get(name string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c := &OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.effectiveCustomModules.get" call.
+// Exactly one of *EffectiveEventThreatDetectionCustomModule or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *EffectiveEventThreatDetectionCustomModule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*EffectiveEventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EffectiveEventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an effective Event Threat Detection custom module at the given level.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the effective Event Threat Detection custom module. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/effectiveCustomModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EffectiveEventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.organizations.eventThreatDetectionSettings.effectiveCustomModules.list":
+
+type OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all effective Event Threat Detection custom modules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent along with modules inherited from its ancestors.
+//
+//   - parent: Name of the parent to list custom modules for. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesService) List(parent string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c := &OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous
+// `ListEffectiveEventThreatDetectionCustomModules` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to
+// `ListEffectiveEventThreatDetectionCustomModules` must match the call
+// that provided the page token.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.organizations.eventThreatDetectionSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveEventThreatDetectionCustomModulesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListEffectiveEventThreatDetectionCustomModulesResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all effective Event Threat Detection custom modules for the given parent. This includes resident modules defined at the scope of the parent along with modules inherited from its ancestors.",
+	//   "flatPath": "v1/organizations/{organizationsId}/eventThreatDetectionSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEffectiveEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEffectiveEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules for. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "securitycenter.organizations.findings.bulkMute":
@@ -24719,7 +27095,10 @@ func (r *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesService) Patch
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update.
+// fields to be updated. The only fields that can be updated are
+// `enablement_state` and `custom_config`. If empty or set to the
+// wildcard value `*`, both `enablement_state` and `custom_config` are
+// updated.
 func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -24835,7 +27214,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update.",
+	//       "description": "The list of fields to be updated. The only fields that can be updated are `enablement_state` and `custom_config`. If empty or set to the wildcard value `*`, both `enablement_state` and `custom_config` are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -30765,6 +33144,1536 @@ func (c *ProjectsBigQueryExportsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 
 }
 
+// method id "securitycenter.projects.eventThreatDetectionSettings.validateCustomModule":
+
+type ProjectsEventThreatDetectionSettingsValidateCustomModuleCall struct {
+	s                                               *Service
+	parent                                          string
+	validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// ValidateCustomModule: Validates the given Event Threat Detection
+// custom module.
+//
+//   - parent: Resource name of the parent to validate the Custom Module
+//     under. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings". *
+//     "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *ProjectsEventThreatDetectionSettingsService) ValidateCustomModule(parent string, validateeventthreatdetectioncustommodulerequest *ValidateEventThreatDetectionCustomModuleRequest) *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall {
+	c := &ProjectsEventThreatDetectionSettingsValidateCustomModuleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.validateeventthreatdetectioncustommodulerequest = validateeventthreatdetectioncustommodulerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.validateeventthreatdetectioncustommodulerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:validateCustomModule")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.validateCustomModule" call.
+// Exactly one of *ValidateEventThreatDetectionCustomModuleResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ValidateEventThreatDetectionCustomModuleResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsEventThreatDetectionSettingsValidateCustomModuleCall) Do(opts ...googleapi.CallOption) (*ValidateEventThreatDetectionCustomModuleResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ValidateEventThreatDetectionCustomModuleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Validates the given Event Threat Detection custom module.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings:validateCustomModule",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.validateCustomModule",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Resource name of the parent to validate the Custom Module under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:validateCustomModule",
+	//   "request": {
+	//     "$ref": "ValidateEventThreatDetectionCustomModuleRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ValidateEventThreatDetectionCustomModuleResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.customModules.create":
+
+type ProjectsEventThreatDetectionSettingsCustomModulesCreateCall struct {
+	s                                *Service
+	parent                           string
+	eventthreatdetectioncustommodule *EventThreatDetectionCustomModule
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates a resident Event Threat Detection custom module at
+// the scope of the given Resource Manager parent, and also creates
+// inherited custom modules for all descendants of the given parent.
+// These modules are enabled by default.
+//
+//   - parent: The new custom module's parent. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings". *
+//     "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Create(parent string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall {
+	c := &ProjectsEventThreatDetectionSettingsCustomModulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.eventthreatdetectioncustommodule = eventthreatdetectioncustommodule
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventthreatdetectioncustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.customModules.create" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesCreateCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a resident Event Threat Detection custom module at the scope of the given Resource Manager parent, and also creates inherited custom modules for all descendants of the given parent. These modules are enabled by default.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/customModules",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.customModules.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The new custom module's parent. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "request": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.customModules.delete":
+
+type ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified Event Threat Detection custom module
+// and all of its descendants in the Resource Manager hierarchy. This
+// method is only supported for resident custom modules.
+//
+//   - name: Name of the custom module to delete. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Delete(name string) *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c := &ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.customModules.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified Event Threat Detection custom module and all of its descendants in the Resource Manager hierarchy. This method is only supported for resident custom modules.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.customModules.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to delete. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.customModules.get":
+
+type ProjectsEventThreatDetectionSettingsCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Event Threat Detection custom module.
+//
+//   - name: Name of the custom module to get. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Get(name string) *ProjectsEventThreatDetectionSettingsCustomModulesGetCall {
+	c := &ProjectsEventThreatDetectionSettingsCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesGetCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesGetCall) IfNoneMatch(entityTag string) *ProjectsEventThreatDetectionSettingsCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesGetCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.customModules.get" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an Event Threat Detection custom module.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.customModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom module to get. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.customModules.list":
+
+type ProjectsEventThreatDetectionSettingsCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Event Threat Detection custom modules for the given
+// Resource Manager parent. This includes resident modules defined at
+// the scope of the parent along with modules inherited from ancestors.
+//
+//   - parent: Name of the parent to list custom modules under. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) List(parent string) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
+	c := &ProjectsEventThreatDetectionSettingsCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) PageSize(pageSize int64) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListEventThreatDetectionCustomModules`
+// call. Provide this to retrieve the subsequent page. When paginating,
+// all other parameters provided to
+// `ListEventThreatDetectionCustomModules` must match the call that
+// provided the page token.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) PageToken(pageToken string) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) IfNoneMatch(entityTag string) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.customModules.list" call.
+// Exactly one of *ListEventThreatDetectionCustomModulesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListEventThreatDetectionCustomModulesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all Event Threat Detection custom modules for the given Resource Manager parent. This includes resident modules defined at the scope of the parent along with modules inherited from ancestors.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/customModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.customModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules",
+	//   "response": {
+	//     "$ref": "ListEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListCall) Pages(ctx context.Context, f func(*ListEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.customModules.listDescendant":
+
+type ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDescendant: Lists all resident Event Threat Detection custom
+// modules under the given Resource Manager parent and its descendants.
+//
+//   - parent: Name of the parent to list custom modules under. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) ListDescendant(parent string) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c := &ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) PageSize(pageSize int64) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous
+// `ListDescendantEventThreatDetectionCustomModules` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to
+// `ListDescendantEventThreatDetectionCustomModules` must match the call
+// that provided the page token.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) PageToken(pageToken string) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) IfNoneMatch(entityTag string) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customModules:listDescendant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.customModules.listDescendant" call.
+// Exactly one of
+// *ListDescendantEventThreatDetectionCustomModulesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListDescendantEventThreatDetectionCustomModulesResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) Do(opts ...googleapi.CallOption) (*ListDescendantEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDescendantEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all resident Event Threat Detection custom modules under the given Resource Manager parent and its descendants.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/customModules:listDescendant",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.customModules.listDescendant",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListDescendantEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDescendantEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules under. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customModules:listDescendant",
+	//   "response": {
+	//     "$ref": "ListDescendantEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesListDescendantCall) Pages(ctx context.Context, f func(*ListDescendantEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.customModules.patch":
+
+type ProjectsEventThreatDetectionSettingsCustomModulesPatchCall struct {
+	s                                *Service
+	name                             string
+	eventthreatdetectioncustommodule *EventThreatDetectionCustomModule
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Patch: Updates the Event Threat Detection custom module with the
+// given name based on the given update mask. Updating the enablement
+// state is supported for both resident and inherited modules (though
+// resident modules cannot have an enablement state of "inherited").
+// Updating the display name or configuration of a module is supported
+// for resident modules only. The type of a module cannot be changed.
+//
+//   - name: Immutable. The resource name of the Event Threat Detection
+//     custom module. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/customMod
+//     ules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/customModules/{module
+//     }". *
+//     "projects/{project}/eventThreatDetectionSettings/customModules/{modu
+//     le}".
+func (r *ProjectsEventThreatDetectionSettingsCustomModulesService) Patch(name string, eventthreatdetectioncustommodule *EventThreatDetectionCustomModule) *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c := &ProjectsEventThreatDetectionSettingsCustomModulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.eventthreatdetectioncustommodule = eventthreatdetectioncustommodule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. If empty all mutable fields will be updated.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventthreatdetectioncustommodule)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.customModules.patch" call.
+// Exactly one of *EventThreatDetectionCustomModule or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *EventThreatDetectionCustomModule.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsEventThreatDetectionSettingsCustomModulesPatchCall) Do(opts ...googleapi.CallOption) (*EventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the Event Threat Detection custom module with the given name based on the given update mask. Updating the enablement state is supported for both resident and inherited modules (though resident modules cannot have an enablement state of \"inherited\"). Updating the display name or configuration of a module is supported for resident modules only. The type of a module cannot be changed.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/customModules/{customModulesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.customModules.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. The resource name of the Event Threat Detection custom module. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/customModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/customModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/customModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings/customModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "response": {
+	//     "$ref": "EventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.effectiveCustomModules.get":
+
+type ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an effective Event Threat Detection custom module at the
+// given level.
+//
+//   - name: The resource name of the effective Event Threat Detection
+//     custom module. Its format is: *
+//     "organizations/{organization}/eventThreatDetectionSettings/effective
+//     CustomModules/{module}". *
+//     "folders/{folder}/eventThreatDetectionSettings/effectiveCustomModule
+//     s/{module}". *
+//     "projects/{project}/eventThreatDetectionSettings/effectiveCustomModu
+//     les/{module}".
+func (r *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService) Get(name string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c := &ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) IfNoneMatch(entityTag string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.effectiveCustomModules.get" call.
+// Exactly one of *EffectiveEventThreatDetectionCustomModule or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *EffectiveEventThreatDetectionCustomModule.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesGetCall) Do(opts ...googleapi.CallOption) (*EffectiveEventThreatDetectionCustomModule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EffectiveEventThreatDetectionCustomModule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an effective Event Threat Detection custom module at the given level.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/effectiveCustomModules/{effectiveCustomModulesId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.effectiveCustomModules.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the effective Event Threat Detection custom module. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings/effectiveCustomModules/{module}\". * \"folders/{folder}/eventThreatDetectionSettings/effectiveCustomModules/{module}\". * \"projects/{project}/eventThreatDetectionSettings/effectiveCustomModules/{module}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings/effectiveCustomModules/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EffectiveEventThreatDetectionCustomModule"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.eventThreatDetectionSettings.effectiveCustomModules.list":
+
+type ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all effective Event Threat Detection custom modules for
+// the given parent. This includes resident modules defined at the scope
+// of the parent along with modules inherited from its ancestors.
+//
+//   - parent: Name of the parent to list custom modules for. Its format
+//     is: * "organizations/{organization}/eventThreatDetectionSettings".
+//   - "folders/{folder}/eventThreatDetectionSettings". *
+//     "projects/{project}/eventThreatDetectionSettings".
+func (r *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesService) List(parent string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c := &ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of modules to return. The service may return fewer than this value.
+// If unspecified, at most 10 configs will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) PageSize(pageSize int64) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous
+// `ListEffectiveEventThreatDetectionCustomModules` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to
+// `ListEffectiveEventThreatDetectionCustomModules` must match the call
+// that provided the page token.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) PageToken(pageToken string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Fields(s ...googleapi.Field) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) IfNoneMatch(entityTag string) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Context(ctx context.Context) *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/effectiveCustomModules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.eventThreatDetectionSettings.effectiveCustomModules.list" call.
+// Exactly one of
+// *ListEffectiveEventThreatDetectionCustomModulesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListEffectiveEventThreatDetectionCustomModulesResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Do(opts ...googleapi.CallOption) (*ListEffectiveEventThreatDetectionCustomModulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEffectiveEventThreatDetectionCustomModulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all effective Event Threat Detection custom modules for the given parent. This includes resident modules defined at the scope of the parent along with modules inherited from its ancestors.",
+	//   "flatPath": "v1/projects/{projectsId}/eventThreatDetectionSettings/effectiveCustomModules",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.eventThreatDetectionSettings.effectiveCustomModules.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of modules to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEffectiveEventThreatDetectionCustomModules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEffectiveEventThreatDetectionCustomModules` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent to list custom modules for. Its format is: * \"organizations/{organization}/eventThreatDetectionSettings\". * \"folders/{folder}/eventThreatDetectionSettings\". * \"projects/{project}/eventThreatDetectionSettings\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/eventThreatDetectionSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/effectiveCustomModules",
+	//   "response": {
+	//     "$ref": "ListEffectiveEventThreatDetectionCustomModulesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsEventThreatDetectionSettingsEffectiveCustomModulesListCall) Pages(ctx context.Context, f func(*ListEffectiveEventThreatDetectionCustomModulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "securitycenter.projects.findings.bulkMute":
 
 type ProjectsFindingsBulkMuteCall struct {
@@ -33862,7 +37771,10 @@ func (r *ProjectsSecurityHealthAnalyticsSettingsCustomModulesService) Patch(name
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update.
+// fields to be updated. The only fields that can be updated are
+// `enablement_state` and `custom_config`. If empty or set to the
+// wildcard value `*`, both `enablement_state` and `custom_config` are
+// updated.
 func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) UpdateMask(updateMask string) *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -33978,7 +37890,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCustomModulesPatchCall) Do(opts 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update.",
+	//       "description": "The list of fields to be updated. The only fields that can be updated are `enablement_state` and `custom_config`. If empty or set to the wildcard value `*`, both `enablement_state` and `custom_config` are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

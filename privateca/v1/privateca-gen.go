@@ -4249,8 +4249,8 @@ type ProjectsLocationsCaPoolsFetchCaCertsCall struct {
 }
 
 // FetchCaCerts: FetchCaCerts returns the current trust anchor for the
-// CaPool. This will include CA certificate chains for all ACTIVE
-// CertificateAuthority resources in the CaPool.
+// CaPool. This will include CA certificate chains for all Certificate
+// Authorities in the ENABLED, DISABLED, or STAGED states.
 //
 //   - caPool: The resource name for the CaPool in the format
 //     `projects/*/locations/*/caPools/*`.
@@ -4352,7 +4352,7 @@ func (c *ProjectsLocationsCaPoolsFetchCaCertsCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all ACTIVE CertificateAuthority resources in the CaPool.",
+	//   "description": "FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all Certificate Authorities in the ENABLED, DISABLED, or STAGED states.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/caPools/{caPoolsId}:fetchCaCerts",
 	//   "httpMethod": "POST",
 	//   "id": "privateca.projects.locations.caPools.fetchCaCerts",

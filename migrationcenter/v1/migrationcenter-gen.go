@@ -2264,6 +2264,9 @@ type GuestInstalledApplication struct {
 	// InstallTime: The time when the application was installed.
 	InstallTime string `json:"installTime,omitempty"`
 
+	// Licenses: License strings associated with the installed application.
+	Licenses []string `json:"licenses,omitempty"`
+
 	// Path: Source path.
 	Path string `json:"path,omitempty"`
 

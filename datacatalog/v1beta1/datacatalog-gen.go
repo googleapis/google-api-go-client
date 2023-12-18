@@ -3872,7 +3872,7 @@ type GoogleCloudDatacatalogV1beta1PolicyTag struct {
 	// spaces; and be at most 200 bytes long when encoded in UTF-8.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this policy tag, whose format is:
+	// Name: Identifier. Resource name of this policy tag, whose format is:
 	// "projects/{project_number}/locations/{location_id}/taxonomies/{taxonom
 	// y_id}/policyTags/{id}".
 	Name string `json:"name,omitempty"`
@@ -4702,7 +4702,7 @@ type GoogleCloudDatacatalogV1beta1Taxonomy struct {
 	// within an organization.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this taxonomy, whose format is:
+	// Name: Identifier. Resource name of this taxonomy, whose format is:
 	// "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
 	Name string `json:"name,omitempty"`
 
@@ -12242,7 +12242,7 @@ type ProjectsLocationsTaxonomiesPatchCall struct {
 
 // Patch: Updates a taxonomy.
 //
-//   - name: Output only. Resource name of this taxonomy, whose format is:
+//   - name: Identifier. Resource name of this taxonomy, whose format is:
 //     "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
 func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatacatalogv1beta1taxonomy *GoogleCloudDatacatalogV1beta1Taxonomy) *ProjectsLocationsTaxonomiesPatchCall {
 	c := &ProjectsLocationsTaxonomiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12361,7 +12361,7 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this taxonomy, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
+	//       "description": "Identifier. Resource name of this taxonomy, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -13458,7 +13458,7 @@ type ProjectsLocationsTaxonomiesPolicyTagsPatchCall struct {
 
 // Patch: Updates a policy tag.
 //
-//   - name: Output only. Resource name of this policy tag, whose format
+//   - name: Identifier. Resource name of this policy tag, whose format
 //     is:
 //     "projects/{project_number}/locations/{location_id}/taxonomies/{taxon
 //     omy_id}/policyTags/{id}".
@@ -13583,7 +13583,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this policy tag, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}\".",
+	//       "description": "Identifier. Resource name of this policy tag, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,

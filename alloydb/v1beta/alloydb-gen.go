@@ -244,6 +244,35 @@ type ProjectsLocationsSupportedDatabaseFlagsService struct {
 	s *Service
 }
 
+// AuthorizedNetwork: AuthorizedNetwork contains metadata for an
+// authorized network.
+type AuthorizedNetwork struct {
+	// CidrRange: CIDR range for one authorzied network of the instance.
+	CidrRange string `json:"cidrRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizedNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AutomatedBackupPolicy: Message describing the user-specified
 // automated backup policy. All fields in the automated backup policy
 // are optional. Defaults for each field are provided if they are not
@@ -390,6 +419,9 @@ type Backup struct {
 	// user-triggered updates or system actions like failover or
 	// maintenance.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// SizeBytes: Output only. The size of the backup in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
@@ -680,6 +712,9 @@ type Cluster struct {
 	// failover or maintenance.
 	Reconciling bool `json:"reconciling,omitempty"`
 
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
 	// SecondaryConfig: Cross Region replication config specific to
 	// SECONDARY cluster.
 	SecondaryConfig *SecondaryConfig `json:"secondaryConfig,omitempty"`
@@ -767,6 +802,11 @@ type ConnectionInfo struct {
 	// used to verify the X.509 certificate. Expected to be in
 	// issuer-to-root order according to RFC 5246.
 	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
+
+	// PublicIpAddress: Output only. The public IP addresses for the
+	// Instance. This is available ONLY when enable_public_ip is set. This
+	// is the connection endpoint for an end-user application.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1439,6 +1479,9 @@ type Instance struct {
 	// projects/{project}/locations/{region}/clusters/{cluster_id}
 	Name string `json:"name,omitempty"`
 
+	// NetworkConfig: Optional. Instance level network configuration.
+	NetworkConfig *InstanceNetworkConfig `json:"networkConfig,omitempty"`
+
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
@@ -1457,6 +1500,9 @@ type Instance struct {
 	// This can happen due to user-triggered updates or system actions like
 	// failover or maintenance.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// State: Output only. The current serving state of the instance.
 	//
@@ -1520,6 +1566,41 @@ type Instance struct {
 
 func (s *Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceNetworkConfig: Metadata related to instance level network
+// configuration.
+type InstanceNetworkConfig struct {
+	// AuthorizedExternalNetworks: Optional. A list of external network
+	// authorized to access this instance.
+	AuthorizedExternalNetworks []*AuthorizedNetwork `json:"authorizedExternalNetworks,omitempty"`
+
+	// EnablePublicIp: Optional. Enabling public ip for the instance.
+	EnablePublicIp bool `json:"enablePublicIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizedExternalNetworks") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthorizedExternalNetworks") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceNetworkConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2780,7 +2861,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// ResourceContainer: Closest parent container of this resource. In GCP,
 	// 'container' refers to a Cloud Resource Manager project. It must be
 	// resource name of a Cloud Resource Manager project with the format of
-	// "provider//", such as "gcp/projects/123". For GCP provided resources,
+	// "provider//", such as "projects/123". For GCP provided resources,
 	// number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
@@ -3092,10 +3173,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//
 	// Possible values:
 	//   "INSTANCE_TYPE_UNSPECIFIED"
+	//   "SUB_RESOURCE_TYPE_UNSPECIFIED" - For rest of the other categories.
 	//   "PRIMARY" - A regular primary database instance.
 	//   "SECONDARY" - A cluster or an instance acting as a secondary.
 	//   "READ_REPLICA" - An instance acting as a read-replica.
 	//   "OTHER" - For rest of the other categories.
+	//   "SUB_RESOURCE_TYPE_PRIMARY" - A regular primary database instance.
+	//   "SUB_RESOURCE_TYPE_SECONDARY" - A cluster or an instance acting as
+	// a secondary.
+	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a
+	// read-replica.
+	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
 
 	// Location: The resource location. REQUIRED
@@ -3113,8 +3201,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 
 	// ResourceContainer: Closest parent Cloud Resource Manager container of
 	// this resource. It must be resource name of a Cloud Resource Manager
-	// project with the format of "provider//", such as "gcp/projects/123".
-	// For GCP provided resources, number should be project number.
+	// project with the format of "/", such as "projects/123". For GCP
+	// provided resources, number should be project number.
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceName: Required. Different from DatabaseResourceId.unique_id,
@@ -3239,12 +3327,22 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// Possible values:
 	//   "ENGINE_UNSPECIFIED" - UNSPECIFIED means engine type is not known
 	// or available.
+	//   "ENGINE_MYSQL" - MySQL binary running as an engine in the database
+	// instance.
 	//   "MYSQL" - MySQL binary running as engine in database instance.
+	//   "ENGINE_POSTGRES" - Postgres binary running as engine in database
+	// instance.
 	//   "POSTGRES" - Postgres binary running as engine in database
 	// instance.
+	//   "ENGINE_SQL_SERVER" - SQLServer binary running as engine in
+	// database instance.
 	//   "SQL_SERVER" - SQLServer binary running as engine in database
 	// instance.
+	//   "ENGINE_NATIVE" - Native database binary running as engine in
+	// instance.
 	//   "NATIVE" - Native database binary running as engine in instance.
+	//   "ENGINE_CLOUD_SPANNER_WITH_POSTGRES_DIALECT" - Cloud Spanner with
+	// Postgres dialect.
 	//   "SPANGRES" - Cloud Spanner with Postgres dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine.
 	// This is to be when engine is known, but it is not present in this
@@ -3257,9 +3355,13 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// Possible values:
 	//   "PRODUCT_TYPE_UNSPECIFIED" - UNSPECIFIED means product type is not
 	// known or available.
+	//   "PRODUCT_TYPE_CLOUD_SQL" - Cloud SQL product area in GCP
 	//   "CLOUD_SQL" - Cloud SQL product area in GCP
+	//   "PRODUCT_TYPE_ALLOYDB" - AlloyDB product area in GCP
 	//   "ALLOYDB" - AlloyDB product area in GCP
+	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in GCP
 	//   "SPANNER" - Spanner product area in GCP
+	//   "PRODUCT_TYPE_ON_PREM" - On premises database product.
 	//   "ON_PREM" - On premises database product.
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type.
 	// This is to be when product type is known, but it is not present in

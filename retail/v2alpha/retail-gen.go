@@ -5247,6 +5247,14 @@ type GoogleCloudRetailV2alphaOutputConfigBigQueryDestination struct {
 	// DatasetId: Required. The ID of a BigQuery Dataset.
 	DatasetId string `json:"datasetId,omitempty"`
 
+	// TableIdPrefix: Required. The prefix of exported BigQuery tables.
+	TableIdPrefix string `json:"tableIdPrefix,omitempty"`
+
+	// TableType: Required. Describes the table type. The following values
+	// are supported: * `table`: A BigQuery native table. * `view`: A
+	// virtual table defined by a SQL query.
+	TableType string `json:"tableType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

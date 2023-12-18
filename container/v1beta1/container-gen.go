@@ -548,6 +548,9 @@ type AdvancedDatapathObservabilityConfig struct {
 	// EnableMetrics: Expose flow metrics on nodes
 	EnableMetrics bool `json:"enableMetrics,omitempty"`
 
+	// EnableRelay: Enable Relay component
+	EnableRelay bool `json:"enableRelay,omitempty"`
+
 	// RelayMode: Method used to make Relay available
 	//
 	// Possible values:
@@ -908,6 +911,12 @@ func (s *AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutoscaledRolloutPolicy: Autoscaled rollout policy uses cluster
+// autoscaler during blue-green upgrades to scale both the green and
+// blue pools.
+type AutoscaledRolloutPolicy struct {
+}
+
 // AvailableVersion: Deprecated.
 type AvailableVersion struct {
 	// Reason: Reason for availability.
@@ -1021,11 +1030,12 @@ type BinaryAuthorization struct {
 	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - Enforce Kubernetes admission
 	// requests with BinaryAuthorization using the project's singleton
 	// policy. This is equivalent to setting the enabled boolean to true.
-	//   "POLICY_BINDINGS" - Use Binary Authorization with the policies
-	// specified in policy_bindings.
+	//   "POLICY_BINDINGS" - Use Binary Authorization Continuous Validation
+	// with the policies specified in policy_bindings.
 	//   "POLICY_BINDINGS_AND_PROJECT_SINGLETON_POLICY_ENFORCE" - Use Binary
-	// Authorization with the policies specified in policy_bindings, and
-	// also with the project's singleton policy in enforcement mode.
+	// Authorization Continuous Validation with the policies specified in
+	// policy_bindings and enforce Kubernetes admission requests with Binary
+	// Authorization using the project's singleton policy.
 	EvaluationMode string `json:"evaluationMode,omitempty"`
 
 	// PolicyBindings: Optional. Binauthz policies that apply to this
@@ -1120,6 +1130,10 @@ func (s *BlueGreenInfo) MarshalJSON() ([]byte, error) {
 
 // BlueGreenSettings: Settings for blue-green upgrade.
 type BlueGreenSettings struct {
+	// AutoscaledRolloutPolicy: Autoscaled policy for cluster autoscaler
+	// enabled blue-green upgrade.
+	AutoscaledRolloutPolicy *AutoscaledRolloutPolicy `json:"autoscaledRolloutPolicy,omitempty"`
+
 	// NodePoolSoakDuration: Time needed after draining entire blue pool.
 	// After this period, blue pool will be cleaned up.
 	NodePoolSoakDuration string `json:"nodePoolSoakDuration,omitempty"`
@@ -1128,18 +1142,18 @@ type BlueGreenSettings struct {
 	StandardRolloutPolicy *StandardRolloutPolicy `json:"standardRolloutPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "NodePoolSoakDuration") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "AutoscaledRolloutPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NodePoolSoakDuration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AutoscaledRolloutPolicy")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.

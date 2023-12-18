@@ -201,9 +201,15 @@ type Connector struct {
 	// ConnectedProjects: Output only. List of projects using the connector.
 	ConnectedProjects []string `json:"connectedProjects,omitempty"`
 
+	// CreateTime: Output only. The creation time of the connector.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// IpCidrRange: The range of internal addresses that follows RFC 4632
 	// notation. Example: `10.132.0.0/28`.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// LastRestartTime: Output only. The last restart time of the connector.
+	LastRestartTime string `json:"lastRestartTime,omitempty"`
 
 	// MachineType: Machine type of VM Instance underlying connector.
 	// Default is e2-micro

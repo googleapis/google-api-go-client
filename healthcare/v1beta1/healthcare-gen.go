@@ -378,6 +378,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesService struct {
 
 func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService {
 	rs := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService{s: s}
+	rs.Bulkdata = NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService(s)
 	rs.Frames = NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService(s)
 	return rs
 }
@@ -385,7 +386,18 @@ func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService(s *Ser
 type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService struct {
 	s *Service
 
+	Bulkdata *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService
+
 	Frames *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService {
+	rs := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService(s *Service) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService {
@@ -4004,6 +4016,15 @@ type FhirStore struct {
 	// historical versions are kept. The server sends errors for attempts to
 	// read the historical versions.
 	DisableResourceVersioning bool `json:"disableResourceVersioning,omitempty"`
+
+	// EnableHistoryModifications: Optional. Whether to allow the
+	// [ImportResourcesHistory] and [ExecuteBundle] APIs to accept history
+	// bundles, and directly insert and overwrite historical resource
+	// versions into the FHIR store. Importing resource histories creates
+	// resource interactions that have occurred in the past that clients
+	// might not allow. If set to false, using history bundles fail with an
+	// error.
+	EnableHistoryModifications bool `json:"enableHistoryModifications,omitempty"`
 
 	// EnableUpdateCreate: Whether this FHIR store has the updateCreate
 	// capability
@@ -24608,6 +24629,142 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	//     },
 	//     "parent": {
 	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}",
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.bulkdata.retrieveBulkdata":
+
+type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall struct {
+	s            *Service
+	parent       string
+	dicomWebPath string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveBulkdata: Returns uncompressed, unencoded bytes representing
+// the referenced bulkdata tag from an instance. See [Retrieve
+// Transaction]
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4){:
+// .external}.
+//
+//   - dicomWebPath: The path for the `RetrieveBulkdata` DICOMweb request.
+//     For example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/bu
+//     kdata/{bulkdata_uri}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
+func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataService) RetrieveBulkdata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.dicomWebPath = dicomWebPath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"dicomWebPath": c.dicomWebPath,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.bulkdata.retrieveBulkdata" call.
+func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesBulkdataRetrieveBulkdataCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+	// {
+	//   "description": "Returns uncompressed, unencoded bytes representing the referenced bulkdata tag from an instance. See [Retrieve Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4){: .external}.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/bulkdata/{bulkdataId}/{bulkdataId1}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.bulkdata.retrieveBulkdata",
+	//   "parameterOrder": [
+	//     "parent",
+	//     "dicomWebPath"
+	//   ],
+	//   "parameters": {
+	//     "dicomWebPath": {
+	//       "description": "Required. The path for the `RetrieveBulkdata` DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/bukdata/{bulkdata_uri}`.",
+	//       "location": "path",
+	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/bulkdata/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,

@@ -330,7 +330,8 @@ type GooglePlayDeveloperReportingV1beta1Anomaly struct {
 	// MetricSet: Metric set resource where the anomaly was detected.
 	MetricSet string `json:"metricSet,omitempty"`
 
-	// Name: Name of the anomaly. Format: apps/{app}/anomalies/{anomaly}
+	// Name: Identifier. Name of the anomaly. Format:
+	// apps/{app}/anomalies/{anomaly}
 	Name string `json:"name,omitempty"`
 
 	// TimelineSpec: Timeline specification that covers the anomaly period.
@@ -433,7 +434,8 @@ type GooglePlayDeveloperReportingV1beta1AnrRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}/anrRateMetricSet
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/anrRateMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -471,7 +473,7 @@ type GooglePlayDeveloperReportingV1beta1App struct {
 	// the Play Store. Example: `Google Maps`.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}
+	// Name: Identifier. The resource name. Format: apps/{app}
 	Name string `json:"name,omitempty"`
 
 	// PackageName: Package name of the app. Example: `com.example.app123`.
@@ -608,7 +610,8 @@ type GooglePlayDeveloperReportingV1beta1CrashRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}/crashRateMetricSet
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/crashRateMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1113,7 +1116,7 @@ type GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format:
+	// Name: Identifier. The resource name. Format:
 	// apps/{app}/excessiveWakeupRateMetricSet
 	Name string `json:"name,omitempty"`
 
@@ -2735,7 +2738,7 @@ type GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format:
+	// Name: Identifier. The resource name. Format:
 	// apps/{app}/slowRenderingRateMetricSet
 	Name string `json:"name,omitempty"`
 
@@ -2825,7 +2828,8 @@ type GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}/slowStartRateMetricSet
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/slowStartRateMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2915,7 +2919,7 @@ type GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet str
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format:
+	// Name: Identifier. The resource name. Format:
 	// apps/{app}/stuckBackgroundWakelockRateMetricSet
 	Name string `json:"name,omitempty"`
 

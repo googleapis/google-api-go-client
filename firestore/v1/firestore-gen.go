@@ -1794,6 +1794,41 @@ func (s *GoogleFirestoreAdminV1Database) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1DatabaseSnapshot: A consistent snapshot of a
+// database at a specific point in time.
+type GoogleFirestoreAdminV1DatabaseSnapshot struct {
+	// Database: Required. A name of the form
+	// `projects/{project_id}/databases/{database_id}`
+	Database string `json:"database,omitempty"`
+
+	// SnapshotTime: Required. The timestamp at which the database snapshot
+	// is taken. The requested timestamp must be a whole minute within the
+	// PITR window.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1DatabaseSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1DatabaseSnapshot
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the
 // delete database operation.
 type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
@@ -2817,6 +2852,11 @@ type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
 	// database id is also valid.
 	DatabaseId string `json:"databaseId,omitempty"`
 
+	// DatabaseSnapshot: Database snapshot to restore from. The source
+	// database must exist and have enabled PITR. The restored database will
+	// be created in the same location as the source database.
+	DatabaseSnapshot *GoogleFirestoreAdminV1DatabaseSnapshot `json:"databaseSnapshot,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Backup") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3517,7 +3557,7 @@ type Order struct {
 	//   "DESCENDING" - Descending.
 	Direction string `json:"direction,omitempty"`
 
-	// Field: The field to order by.
+	// Field: Order based on the value referenced by this field.
 	Field *FieldReference `json:"field,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Direction") to

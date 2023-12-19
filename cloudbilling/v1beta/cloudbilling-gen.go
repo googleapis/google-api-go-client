@@ -387,7 +387,9 @@ type CloudCdnEgressWorkload struct {
 	CacheEgressDestination string `json:"cacheEgressDestination,omitempty"`
 
 	// CacheEgressRate: Cache data transfer usage. The rate of data cache
-	// transferred to the destination. Use units such as GiB/s or TiB/mo.
+	// transferred to the destination. Use units such as GiBy/s or TiBy/mo,
+	// based on The Unified Code for Units of Measure
+	// (https://ucum.org/ucum.html) standard.
 	CacheEgressRate *Usage `json:"cacheEgressRate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -472,7 +474,8 @@ func (s *CloudCdnWorkload) MarshalJSON() ([]byte, error) {
 type CloudInterconnectEgressWorkload struct {
 	// EgressRate: Outbound data transfer usage. This usage applies when you
 	// move or copy data from one Google Cloud service to another service.
-	// The units are "GiB/s, B/s, and so on."
+	// The units are GiBy/s, By/s, and so on, based on The Unified Code for
+	// Units of Measure (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// InterconnectConnectionLocation: Locations in the Interconnect
@@ -585,7 +588,9 @@ type CloudStorageEgressWorkload struct {
 	// EgressRate: Data transfer usage rate. This usage applies when you
 	// move or copy data from one Cloud Storage bucket to another or when
 	// another Google Cloud service accesses data in your Cloud Storage
-	// bucket. Expected units such as "GiB/s, B/s, ..."
+	// bucket. The expected units are GiBy/s, By/s, and so on, based on The
+	// Unified Code for Units of Measure (https://ucum.org/ucum.html)
+	// standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceContinent: Where the data comes from.
@@ -628,11 +633,12 @@ func (s *CloudStorageEgressWorkload) MarshalJSON() ([]byte, error) {
 type CloudStorageWorkload struct {
 	// DataRetrieval: Data retrieval usage. A retrieval cost applies when
 	// data or metadata is read, copied, or rewritten . For example: units
-	// such as "GiBy/s" or "By/s".
+	// such as "GiB/s" or "B/s".
 	DataRetrieval *Usage `json:"dataRetrieval,omitempty"`
 
 	// DataStored: Data storage usage. The amount of data stored in buckets.
-	// For example: units such as "GiBy/s" or "TBy/mo".
+	// For example: units such as GiBy/s or TiBy/mo, based on The Unified
+	// Code for Units of Measure (https://ucum.org/ucum.html) standard.
 	DataStored *Usage `json:"dataStored,omitempty"`
 
 	// DualRegion: Specify dual regions.
@@ -3176,7 +3182,7 @@ type InterRegionEgress struct {
 	DestinationRegion string `json:"destinationRegion,omitempty"`
 
 	// EgressRate: VM to VM data transfer usage. The expected units such are
-	// GiB/s, B/s, and so on.
+	// GiBy/s, By/s, and so on.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceRegion: Which region
@@ -3212,8 +3218,8 @@ func (s *InterRegionEgress) MarshalJSON() ([]byte, error) {
 // source region and destination region are in the same zone, using
 // internal IP addresses, there isn't any charge for data transfer.
 type IntraRegionEgress struct {
-	// EgressRate: VM to VM data transfer usage. The expected are GiB/s,
-	// B/s, and so on.
+	// EgressRate: VM to VM data transfer usage. The expected are GiBy/s,
+	// By/s, and so on.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EgressRate") to
@@ -3442,7 +3448,8 @@ type PremiumTierEgressWorkload struct {
 	DestinationContinent string `json:"destinationContinent,omitempty"`
 
 	// EgressRate: Premium Tier Data Transfer usage. The expected units are
-	// GiB/s, B/s, and so on.
+	// GiBy/s, By/s, and so on, based on The Unified Code for Units of
+	// Measure (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceRegion: Which region
@@ -3812,7 +3819,8 @@ func (s *SkuCostEstimate) UnmarshalJSON(data []byte) error {
 // Transfer.
 type StandardTierEgressWorkload struct {
 	// EgressRate: Standard Tier Data Transfer usage. The expected units are
-	// GiB/s, B/s, and so on.
+	// GiBy/s, By/s, and so on, based on the The Unified Code for Units of
+	// Measure (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceRegion: Which region

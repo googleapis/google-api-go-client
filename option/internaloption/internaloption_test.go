@@ -35,6 +35,7 @@ func TestWithCredentials(t *testing.T) {
 func TestDefaultApply(t *testing.T) {
 	opts := []option.ClientOption{
 		WithDefaultEndpoint("https://example.com:443"),
+		WithDefaultEndpointTemplate("https://foo.%s/"),
 		WithDefaultMTLSEndpoint("http://mtls.example.com:445"),
 		WithDefaultScopes("a"),
 		WithDefaultUniverseDomain("foo.com"),
@@ -45,11 +46,12 @@ func TestDefaultApply(t *testing.T) {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		DefaultScopes:         []string{"a"},
-		DefaultEndpoint:       "https://example.com:443",
-		DefaultUniverseDomain: "foo.com",
-		DefaultAudience:       "audience",
-		DefaultMTLSEndpoint:   "http://mtls.example.com:445",
+		DefaultScopes:           []string{"a"},
+		DefaultEndpoint:         "https://example.com:443",
+		DefaultEndpointTemplate: "https://foo.%s/",
+		DefaultUniverseDomain:   "foo.com",
+		DefaultAudience:         "audience",
+		DefaultMTLSEndpoint:     "http://mtls.example.com:445",
 	}
 	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")) {
 		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")))

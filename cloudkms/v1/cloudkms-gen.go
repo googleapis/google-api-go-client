@@ -655,11 +655,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -671,7 +694,12 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -2965,7 +2993,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PublicKey: The public key for a given CryptoKeyVersion. Obtained via
+// PublicKey: The public keys for a given CryptoKeyVersion. Obtained via
 // GetPublicKey.
 type PublicKey struct {
 	// Algorithm: The Algorithm associated with this key.
@@ -3040,25 +3068,26 @@ type PublicKey struct {
 	// verification. NOTE: This field is in Beta.
 	Name string `json:"name,omitempty"`
 
-	// Pem: The public key, encoded in PEM format. For more information, see
-	// the RFC 7468 (https://tools.ietf.org/html/rfc7468) sections for
-	// General Considerations
-	// (https://tools.ietf.org/html/rfc7468#section-2) and [Textual Encoding
-	// of Subject Public Key Info]
+	// Pem: A public key encoded in PEM format, populated only when
+	// GetPublicKey returns one key. For more information, see the RFC 7468
+	// (https://tools.ietf.org/html/rfc7468) sections for General
+	// Considerations (https://tools.ietf.org/html/rfc7468#section-2) and
+	// [Textual Encoding of Subject Public Key Info]
 	// (https://tools.ietf.org/html/rfc7468#section-13).
 	Pem string `json:"pem,omitempty"`
 
-	// PemCrc32c: Integrity verification field. A CRC32C checksum of the
-	// returned PublicKey.pem. An integrity check of PublicKey.pem can be
-	// performed by computing the CRC32C checksum of PublicKey.pem and
-	// comparing your results to this field. Discard the response in case of
-	// non-matching checksum values, and perform a limited number of
-	// retries. A persistent mismatch may indicate an issue in your
-	// computation of the CRC32C checksum. Note: This field is defined as
-	// int64 for reasons of compatibility across different languages.
-	// However, it is a non-negative integer, which will never exceed
-	// 2^32-1, and can be safely downconverted to uint32 in languages that
-	// support this type. NOTE: This field is in Beta.
+	// PemCrc32c: Integrity verification field: A CRC32C checksum of the
+	// returned PublicKey.pem. It is only populated when GetPublicKey
+	// returns one key. An integrity check of PublicKey.pem can be performed
+	// by computing the CRC32C checksum of PublicKey.pem and comparing your
+	// results to this field. Discard the response in case of non-matching
+	// checksum values, and perform a limited number of retries. A
+	// persistent mismatch may indicate an issue in your computation of the
+	// CRC32C checksum. Note: This field is defined as int64 for reasons of
+	// compatibility across different languages. However, it is a
+	// non-negative integer, which will never exceed 2^32-1, and can be
+	// safely downconverted to uint32 in languages that support this type.
+	// NOTE: This field is in Beta.
 	PemCrc32c int64 `json:"pemCrc32c,omitempty,string"`
 
 	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion public

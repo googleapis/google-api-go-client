@@ -208,8 +208,10 @@ type MediaService struct {
 	s *Service
 }
 
-// Actor: An object containing information about the effective user and
-// authenticated principal responsible for an action.
+// Actor: An Actor represents an entity that performed an action. For
+// example, an actor could be a user who posted a comment on a support
+// case, a user who uploaded an attachment, or a service account that
+// created a support case.
 type Actor struct {
 	// DisplayName: The name to display for the actor. If not provided, it
 	// is inferred from credentials supplied during case creation. When an
@@ -218,15 +220,22 @@ type Actor struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: The email address of the actor. If not provided, it is
-	// inferred from credentials supplied during case creation. If the
-	// authenticated principal does not have an email address, one must be
-	// provided. When a name is provided, an email must also be provided.
-	// This will be obfuscated if the user is a Google Support agent.
+	// inferred from the credentials supplied during case creation. When a
+	// name is provided, an email must also be provided. If the user is a
+	// Google Support agent, this is obfuscated. This field is deprecated.
+	// Use **username** field instead.
 	Email string `json:"email,omitempty"`
 
 	// GoogleSupport: Output only. Whether the actor is a Google support
 	// actor.
 	GoogleSupport bool `json:"googleSupport,omitempty"`
+
+	// Username: Output only. The username of the actor. It may look like an
+	// email or other format provided by the identity provider. If not
+	// provided, it is inferred from the credentials supplied. When a name
+	// is provided, a username must also be provided. If the user is a
+	// Google Support agent, this will not be set.
+	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -251,7 +260,12 @@ func (s *Actor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Attachment: Represents a file attached to a support case.
+// Attachment: An Attachment contains metadata about a file that was
+// uploaded to a case - it is NOT a file itself. That being said, the
+// name of an Attachment object can be used to download its accompanying
+// file through the `media.download` endpoint. While attachments can be
+// uploaded in the console at the same time as a comment, they're
+// associated on a "case" level, not a "comment" level.
 type Attachment struct {
 	// CreateTime: Output only. The time at which the attachment was
 	// created.
@@ -347,7 +361,17 @@ func (s *Blobstore2Info) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Case: A support case.
+// Case: A Case is an object that contains the details of a support
+// case. It contains fields for the time it was created, its priority,
+// its classification, and more. Cases can also have comments and
+// attachments that get added over time. A case is parented by a Google
+// Cloud organization or project. Organizations are identified by a
+// number, so the name of a case parented by an organization would look
+// like this: ``` organizations/123/cases/456 ``` Projects have two
+// unique identifiers, an ID and a number, and they look like this: ```
+// projects/abc/cases/456 ``` ``` projects/123/cases/456 ``` You can use
+// either of them when calling the API. To learn more about project
+// identifiers, see AIP-2510 (https://google.aip.dev/cloud/2510).
 type Case struct {
 	// Classification: The issue classification applicable to this case.
 	Classification *CaseClassification `json:"classification,omitempty"`
@@ -478,8 +502,11 @@ func (s *Case) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CaseClassification: A classification object with a product type and
-// value.
+// CaseClassification: A Case Classification represents the topic that a
+// case is about. It's very important to use accurate classifications,
+// because they're used to route your cases to specialists who can help
+// you. A classification always has an ID that is its unique identifier.
+// A valid ID is required when creating a case.
 type CaseClassification struct {
 	// DisplayName: A display name for the classification. The display name
 	// is not static and can change. To uniquely and consistently identify
@@ -522,7 +549,9 @@ func (s *CaseClassification) MarshalJSON() ([]byte, error) {
 type CloseCaseRequest struct {
 }
 
-// Comment: A comment associated with a support case.
+// Comment: Case comments are the main way Google Support communicates
+// with a user who has opened a case. When a user responds to Google
+// Support, the user's responses also appear as comments.
 type Comment struct {
 	// Body: The full comment body. Maximum of 12800 characters. This can
 	// contain rich text syntax.

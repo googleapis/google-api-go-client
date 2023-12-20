@@ -392,6 +392,129 @@ func (s *CheckStatusResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DailyCycle: Time window specified for daily operations.
+type DailyCycle struct {
+	// Duration: Output only. Duration of the time window, set by service
+	// producer.
+	Duration string `json:"duration,omitempty"`
+
+	// StartTime: Time within the day to start the operations.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DailyCycle) MarshalJSON() ([]byte, error) {
+	type NoMethod DailyCycle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DenyMaintenancePeriod: DenyMaintenancePeriod definition. Maintenance
+// is forbidden within the deny period. The start_date must be less than
+// the end_date.
+type DenyMaintenancePeriod struct {
+	// EndDate: Deny period end date. This can be: * A full date, with
+	// non-zero year, month and day values. * A month and day value, with a
+	// zero year. Allows recurring deny periods each year. Date matching
+	// this period will have to be before the end.
+	EndDate *Date `json:"endDate,omitempty"`
+
+	// StartDate: Deny period start date. This can be: * A full date, with
+	// non-zero year, month and day values. * A month and day value, with a
+	// zero year. Allows recurring deny periods each year. Date matching
+	// this period will have to be the same or after the start.
+	StartDate *Date `json:"startDate,omitempty"`
+
+	// Time: Time in UTC when the Blackout period starts on start_date and
+	// ends on end_date. This can be: * Full time. * All zeros for 00:00:00
+	// UTC
+	Time *TimeOfDay `json:"time,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod DenyMaintenancePeriod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -862,6 +985,155 @@ func (s *InputParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Instance: Instance represents the interface for SLM services to
+// actuate the state of control plane resources. Example Instance in
+// JSON, where consumer-project-number=123456,
+// producer-project-id=cloud-sql: ```json Instance: { "name":
+// "projects/123456/locations/us-east1/instances/prod-instance",
+// "create_time": { "seconds": 1526406431, }, "labels": { "env": "prod",
+// "foo": "bar" }, "state": READY, "software_versions": {
+// "software_update": "cloud-sql-09-28-2018", },
+// "maintenance_policy_names": { "UpdatePolicy":
+// "projects/123456/locations/us-east1/maintenancePolicies/prod-update-po
+// licy", } "tenant_project_id": "cloud-sql-test-tenant",
+// "producer_metadata": { "cloud-sql-tier": "basic",
+// "cloud-sql-instance-size": "1G", }, "provisioned_resources": [ {
+// "resource-type": "compute-instance", "resource-url":
+// "https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-eas
+// t1-b/instances/vm-1", } ], "maintenance_schedules": { "csa_rollout":
+// { "start_time": { "seconds": 1526406431, }, "end_time": { "seconds":
+// 1535406431, }, }, "ncsa_rollout": { "start_time": { "seconds":
+// 1526406431, }, "end_time": { "seconds": 1535406431, }, } },
+// "consumer_defined_name": "my-sql-instance1", } ``` LINT.IfChange
+type Instance struct {
+	// ConsumerDefinedName: consumer_defined_name is the name of the
+	// instance set by the service consumers. Generally this is different
+	// from the `name` field which reperesents the system-assigned id of the
+	// instance which the service consumers do not recognize. This is a
+	// required field for tenants onboarding to Maintenance Window
+	// notifications (go/slm-rollout-maintenance-policies#prerequisites).
+	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
+
+	// CreateTime: Output only. Timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// InstanceType: Optional. The instance_type of this instance of format:
+	// projects/{project_number}/locations/{location_id}/instanceTypes/{insta
+	// nce_type_id}. Instance Type represents a high-level tier or SKU of
+	// the service that this instance belong to. When enabled(eg:
+	// Maintenance Rollout), Rollout uses 'instance_type' along with
+	// 'software_versions' to determine whether instance needs an update or
+	// not.
+	InstanceType string `json:"instanceType,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user provided
+	// metadata. Each label is a key-value pair, where both the key and the
+	// value are arbitrary strings provided by the user.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MaintenancePolicyNames: Optional. The MaintenancePolicies that have
+	// been attached to the instance. The key must be of the type name of
+	// the oneof policy name defined in MaintenancePolicy, and the
+	// referenced policy must define the same policy type. For details,
+	// please refer to go/mr-user-guide. Should not be set if
+	// maintenance_settings.maintenance_policies is set.
+	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
+
+	// MaintenanceSchedules: The MaintenanceSchedule contains the scheduling
+	// information of published maintenance schedule with same key as
+	// software_versions.
+	MaintenanceSchedules map[string]MaintenanceSchedule `json:"maintenanceSchedules,omitempty"`
+
+	// MaintenanceSettings: Optional. The MaintenanceSettings associated
+	// with instance.
+	MaintenanceSettings *MaintenanceSettings `json:"maintenanceSettings,omitempty"`
+
+	// Name: Unique name of the resource. It uses the form:
+	// `projects/{project_number}/locations/{location_id}/instances/{instance
+	// _id}` Note: This name is passed, stored and logged across the rollout
+	// system. So use of consumer project_id or any other consumer PII in
+	// the name is strongly discouraged for wipeout (go/wipeout) compliance.
+	// See go/elysium/project_ids#storage-guidance for more details.
+	Name string `json:"name,omitempty"`
+
+	// NotificationParameters: Optional. notification_parameter are
+	// information that service producers may like to include that is not
+	// relevant to Rollout. This parameter will only be passed to Gamma and
+	// Cloud Logging for notification/logging purpose.
+	NotificationParameters map[string]NotificationParameter `json:"notificationParameters,omitempty"`
+
+	// ProducerMetadata: Output only. Custom string attributes used
+	// primarily to expose producer-specific information in monitoring
+	// dashboards. See go/get-instance-metadata.
+	ProducerMetadata map[string]string `json:"producerMetadata,omitempty"`
+
+	// ProvisionedResources: Output only. The list of data plane resources
+	// provisioned for this instance, e.g. compute VMs. See
+	// go/get-instance-metadata.
+	ProvisionedResources []*ProvisionedResource `json:"provisionedResources,omitempty"`
+
+	// SlmInstanceTemplate: Link to the SLM instance template. Only
+	// populated when updating SLM instances via SSA's Actuation service
+	// adaptor. Service producers with custom control plane (e.g. Cloud SQL)
+	// doesn't need to populate this field. Instead they should use
+	// software_versions.
+	SlmInstanceTemplate string `json:"slmInstanceTemplate,omitempty"`
+
+	// SloMetadata: Output only. SLO metadata for instance classification in
+	// the Standardized dataplane SLO platform. See
+	// go/cloud-ssa-standard-slo for feature description.
+	SloMetadata *SloMetadata `json:"sloMetadata,omitempty"`
+
+	// SoftwareVersions: Software versions that are used to deploy this
+	// instance. This can be mutated by rollout services.
+	SoftwareVersions map[string]string `json:"softwareVersions,omitempty"`
+
+	// State: Output only. Current lifecycle state of the resource (e.g. if
+	// it's being created or ready to use).
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CREATING" - Instance is being created.
+	//   "READY" - Instance has been created and is ready to use.
+	//   "UPDATING" - Instance is being updated.
+	//   "REPAIRING" - Instance is unheathy and under repair.
+	//   "DELETING" - Instance is being deleted.
+	//   "ERROR" - Instance encountered an error and is in indeterministic
+	// state.
+	State string `json:"state,omitempty"`
+
+	// TenantProjectId: Output only. ID of the associated GCP tenant
+	// project. See go/get-instance-metadata.
+	TenantProjectId string `json:"tenantProjectId,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the resource was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerDefinedName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumerDefinedName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Instance) MarshalJSON() ([]byte, error) {
+	type NoMethod Instance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // JsonSchema: JsonSchema representation of schema metadata
 type JsonSchema struct {
 	// AdditionalDetails: Additional details apart from standard json schema
@@ -1083,6 +1355,345 @@ type ListEntityTypesResponse struct {
 
 func (s *ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenancePolicy: LINT.IfChange Defines policies to service
+// maintenance events.
+type MaintenancePolicy struct {
+	// CreateTime: Output only. The time when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Description of what this policy is for.
+	// Create/Update methods return INVALID_ARGUMENT if the length is
+	// greater than 512.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user provided
+	// metadata. Each label is a key-value pair, where both the key and the
+	// value are arbitrary strings provided by the user.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Required. MaintenancePolicy name using the form:
+	// `projects/{project_id}/locations/{location_id}/maintenancePolicies/{ma
+	// intenance_policy_id}` where {project_id} refers to a GCP consumer
+	// project ID, {location_id} refers to a GCP region/zone,
+	// {maintenance_policy_id} must be 1-63 characters long and match the
+	// regular expression `[a-z0-9]([-a-z0-9]*[a-z0-9])?`.
+	Name string `json:"name,omitempty"`
+
+	// State: Optional. The state of the policy.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "READY" - Resource is ready to be used.
+	//   "DELETING" - Resource is being deleted. It can no longer be
+	// attached to instances.
+	State string `json:"state,omitempty"`
+
+	// UpdatePolicy: Maintenance policy applicable to instance update.
+	UpdatePolicy *UpdatePolicy `json:"updatePolicy,omitempty"`
+
+	// UpdateTime: Output only. The time when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenancePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenancePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceSchedule: Maintenance schedule which is exposed to
+// customer and potentially end user, indicating published upcoming
+// future maintenance schedule
+type MaintenanceSchedule struct {
+	// CanReschedule: This field is deprecated, and will be always set to
+	// true since reschedule can happen multiple times now. This field
+	// should not be removed until all service producers remove this for
+	// their customers.
+	CanReschedule bool `json:"canReschedule,omitempty"`
+
+	// EndTime: The scheduled end time for the maintenance.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RolloutManagementPolicy: The rollout management policy this
+	// maintenance schedule is associated with. When doing reschedule update
+	// request, the reschedule should be against this given policy.
+	RolloutManagementPolicy string `json:"rolloutManagementPolicy,omitempty"`
+
+	// ScheduleDeadlineTime: schedule_deadline_time is the time deadline any
+	// schedule start time cannot go beyond, including reschedule. It's
+	// normally the initial schedule start time plus maintenance window
+	// length (1 day or 1 week). Maintenance cannot be scheduled to start
+	// beyond this deadline.
+	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
+
+	// StartTime: The scheduled start time for the maintenance.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanReschedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanReschedule") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceSettings: Maintenance settings associated with instance.
+// Allows service producers and end users to assign settings that
+// controls maintenance on this instance.
+type MaintenanceSettings struct {
+	// Exclude: Optional. Exclude instance from maintenance. When true,
+	// rollout service will not attempt maintenance on the instance. Rollout
+	// service will include the instance in reported rollout progress as not
+	// attempted.
+	Exclude bool `json:"exclude,omitempty"`
+
+	// IsRollback: Optional. If the update call is triggered from rollback,
+	// set the value as true.
+	IsRollback bool `json:"isRollback,omitempty"`
+
+	// MaintenancePolicies: Optional. The MaintenancePolicies that have been
+	// attached to the instance. The key must be of the type name of the
+	// oneof policy name defined in MaintenancePolicy, and the embedded
+	// policy must define the same policy type. For details, please refer to
+	// go/mr-user-guide. Should not be set if maintenance_policy_names is
+	// set. If only the name is needed, then only populate
+	// MaintenancePolicy.name.
+	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exclude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exclude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceWindow: MaintenanceWindow definition.
+type MaintenanceWindow struct {
+	// DailyCycle: Daily cycle.
+	DailyCycle *DailyCycle `json:"dailyCycle,omitempty"`
+
+	// WeeklyCycle: Weekly cycle.
+	WeeklyCycle *WeeklyCycle `json:"weeklyCycle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DailyCycle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DailyCycle") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeSloMetadata: Node information for custom per-node SLO
+// implementations. SSA does not support per-node SLO, but producers can
+// populate per-node information in SloMetadata for custom
+// precomputations. SSA Eligibility Exporter will emit per-node metric
+// based on this information.
+type NodeSloMetadata struct {
+	// Location: The location of the node, if different from instance
+	// location.
+	Location string `json:"location,omitempty"`
+
+	// NodeId: The id of the node. This should be equal to
+	// SaasInstanceNode.node_id.
+	NodeId string `json:"nodeId,omitempty"`
+
+	// PerSliEligibility: If present, this will override eligibility for the
+	// node coming from instance or exclusions for specified SLIs.
+	PerSliEligibility *PerSliSloEligibility `json:"perSliEligibility,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeSloMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeSloMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NotificationParameter: Contains notification related data.
+type NotificationParameter struct {
+	// Values: Optional. Array of string values. e.g. instance's replica
+	// information.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotificationParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod NotificationParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerSliSloEligibility: PerSliSloEligibility is a mapping from an SLI
+// name to eligibility.
+type PerSliSloEligibility struct {
+	// Eligibilities: An entry in the eligibilities map specifies an
+	// eligibility for a particular SLI for the given instance. The SLI key
+	// in the name must be a valid SLI name specified in the Eligibility
+	// Exporter binary flags otherwise an error will be emitted by
+	// Eligibility Exporter and the oncaller will be alerted. If an SLI has
+	// been defined in the binary flags but the eligibilities map does not
+	// contain it, the corresponding SLI time series will not be emitted by
+	// the Eligibility Exporter. This ensures a smooth rollout and
+	// compatibility between the data produced by different versions of the
+	// Eligibility Exporters. If eligibilities map contains a key for an SLI
+	// which has not been declared in the binary flags, there will be an
+	// error message emitted in the Eligibility Exporter log and the metric
+	// for the SLI in question will not be emitted.
+	Eligibilities map[string]SloEligibility `json:"eligibilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligibilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligibilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod PerSliSloEligibility
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProvisionedResource: Describes provisioned dataplane resources.
+type ProvisionedResource struct {
+	// ResourceType: Type of the resource. This can be either a GCP resource
+	// or a custom one (e.g. another cloud provider's VM). For GCP compute
+	// resources use singular form of the names listed in GCP compute API
+	// documentation
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/), prefixed
+	// with 'compute-', for example: 'compute-instance', 'compute-disk',
+	// 'compute-autoscaler'.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceUrl: URL identifying the resource, e.g.
+	// "https://www.googleapis.com/compute/v1/projects/...)".
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProvisionedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ProvisionedResource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1359,6 +1970,173 @@ func (s *ResultMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Schedule: Configure the schedule.
+type Schedule struct {
+	// Day: Allows to define schedule that runs specified day of the week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+
+	// Duration: Output only. Duration of the time window, set by service
+	// producer.
+	Duration string `json:"duration,omitempty"`
+
+	// StartTime: Time within the window to start the operations.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Schedule) MarshalJSON() ([]byte, error) {
+	type NoMethod Schedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SloEligibility: SloEligibility is a tuple containing eligibility
+// value: true if an instance is eligible for SLO calculation or false
+// if it should be excluded from all SLO-related calculations along with
+// a user-defined reason.
+type SloEligibility struct {
+	// Eligible: Whether an instance is eligible or ineligible.
+	Eligible bool `json:"eligible,omitempty"`
+
+	// Reason: User-defined reason for the current value of instance
+	// eligibility. Usually, this can be directly mapped to the internal
+	// state. An empty reason is allowed.
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligible") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligible") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod SloEligibility
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SloMetadata: SloMetadata contains resources required for proper SLO
+// classification of the instance.
+type SloMetadata struct {
+	// Nodes: Optional. List of nodes. Some producers need to use per-node
+	// metadata to calculate SLO. This field allows such producers to
+	// publish per-node SLO meta data, which will be consumed by SSA
+	// Eligibility Exporter and published in the form of per node metric to
+	// Monarch.
+	Nodes []*NodeSloMetadata `json:"nodes,omitempty"`
+
+	// PerSliEligibility: Optional. Multiple per-instance SLI eligibilities
+	// which apply for individual SLIs.
+	PerSliEligibility *PerSliSloEligibility `json:"perSliEligibility,omitempty"`
+
+	// Tier: Name of the SLO tier the Instance belongs to. This name will be
+	// expected to match the tiers specified in the service SLO
+	// configuration. Field is mandatory and must not be empty.
+	Tier string `json:"tier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Nodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Nodes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SloMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SloMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateEntitiesWithConditionsResponse: Response message for
 // EntityService.UpdateEntitiesWithConditions
 type UpdateEntitiesWithConditionsResponse struct {
@@ -1388,6 +2166,92 @@ type UpdateEntitiesWithConditionsResponse struct {
 
 func (s *UpdateEntitiesWithConditionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateEntitiesWithConditionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdatePolicy: Maintenance policy applicable to instance updates.
+type UpdatePolicy struct {
+	// Channel: Optional. Relative scheduling channel applied to resource.
+	//
+	// Possible values:
+	//   "UPDATE_CHANNEL_UNSPECIFIED" - Unspecified channel.
+	//   "EARLIER" - Early channel within a customer project.
+	//   "LATER" - Later channel within a customer project.
+	//   "WEEK1" - ! ! The follow channels can ONLY be used if you adopt the
+	// new MW system! ! ! NOTE: all WEEK channels are assumed to be under a
+	// weekly window. ! There is currently no dedicated channel definitions
+	// for Daily windows. ! If you use Daily window, the system will assume
+	// a 1d (24Hours) advanced ! notification period b/w EARLY and LATER. !
+	// We may consider support more flexible daily channel specifications in
+	// ! the future. WEEK1 == EARLIER with minimum 7d advanced notification.
+	// {7d, 14d} The system will treat them equally and will use WEEK1
+	// whenever it can. New customers are encouraged to use this channel
+	// annotation.
+	//   "WEEK2" - WEEK2 == LATER with minimum 14d advanced notification
+	// {14d, 21d}.
+	//   "WEEK5" - WEEK5 == 40d support. minimum 35d advanced notification
+	// {35d, 42d}.
+	Channel string `json:"channel,omitempty"`
+
+	// DenyMaintenancePeriods: Deny Maintenance Period that is applied to
+	// resource to indicate when maintenance is forbidden. The protocol
+	// supports zero-to-many such periods, but the current SLM Rollout
+	// implementation only supports zero-to-one.
+	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
+
+	// Window: Optional. Maintenance window that is applied to resources
+	// covered by this policy.
+	Window *MaintenanceWindow `json:"window,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdatePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WeeklyCycle: Time window specified for weekly operations.
+type WeeklyCycle struct {
+	// Schedule: User can specify multiple windows in a week. Minimum of 1
+	// window.
+	Schedule []*Schedule `json:"schedule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schedule") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WeeklyCycle) MarshalJSON() ([]byte, error) {
+	type NoMethod WeeklyCycle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

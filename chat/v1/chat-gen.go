@@ -838,7 +838,8 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 // Google Chat message. Only Chat apps can create cards. If your Chat
 // app authenticates as a user
 // (https://developers.google.com/chat/api/guides/auth/users), the
-// message can't contain cards.
+// message can't contain cards. Card builder
+// (https://addons.gsuite.google.com/uikit/builder)
 type CardWithId struct {
 	// Card: A card. Maximum size is 32 KB.
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
@@ -1879,9 +1880,10 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // message or Google Workspace Add-on. Cards support a defined layout,
 // interactive UI elements like buttons, and rich media like images. Use
 // cards to present detailed information, gather information from users,
-// and guide users to take a next step. To learn how to build cards, see
-// the following documentation: * For Google Chat apps, see Design
-// dynamic, interactive, and consistent UIs with cards
+// and guide users to take a next step. Card builder
+// (https://addons.gsuite.google.com/uikit/builder) To learn how to
+// build cards, see the following documentation: * For Google Chat apps,
+// see Design dynamic, interactive, and consistent UIs with cards
 // (https://developers.google.com/chat/ui). * For Google Workspace
 // Add-ons, see Card-based interfaces
 // (https://developers.google.com/apps-script/add-ons/concepts/cards).
@@ -4139,7 +4141,8 @@ type Message struct {
 	// user (https://developers.google.com/chat/api/guides/auth/users), the
 	// messages can't contain cards. To learn about cards and how to create
 	// them, see Design dynamic, interactive, and consistent UIs with cards
-	// (https://developers.google.com/chat/ui).
+	// (https://developers.google.com/chat/ui). Card builder
+	// (https://addons.gsuite.google.com/uikit/builder)
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
 
 	// ClientAssignedMessageId: A custom name for a Chat message assigned at
@@ -4213,6 +4216,18 @@ type Message struct {
 	// Name: Resource name in the form `spaces/*/messages/*`. Example:
 	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
+
+	// PrivateMessageViewer: Immutable. Input for creating a message,
+	// otherwise output only. The user that can view the message. When set,
+	// the message is private and only visible to the specified user and the
+	// Chat app. Link previews and attachments aren't supported for private
+	// messages. Only Chat apps can send private messages. If your Chat app
+	// authenticates as a user
+	// (https://developers.google.com/chat/api/guides/auth/users) to send a
+	// message, the message can't be private and must omit this field. For
+	// details, see Send private messages to Google Chat users
+	// (https://developers.google.com/chat/api/guides/v1/messages/private).
+	PrivateMessageViewer *User `json:"privateMessageViewer,omitempty"`
 
 	// QuotedMessageMetadata: Output only. Information about a message
 	// that's quoted by a Google Chat user in a space. Google Chat users can
@@ -6349,9 +6364,7 @@ func (r *SpacesService) List() *SpacesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": A query filter. Requires
-// user authentication
-// (https://developers.google.com/chat/api/guides/auth/users). You can
+// Filter sets the optional parameter "filter": A query filter. You can
 // filter spaces by the space type (`space_type`
 // (https://developers.google.com/chat/api/reference/rest/v1/spaces#spacetype)).
 // To filter by space type, you must specify valid enum value, such as
@@ -6360,11 +6373,7 @@ func (r *SpacesService) List() *SpacesListCall {
 // `OR` operator. For example, the following queries are valid: ```
 // space_type = "SPACE" spaceType = "GROUP_CHAT" OR spaceType =
 // "DIRECT_MESSAGE" ``` Invalid queries are rejected by the server with
-// an `INVALID_ARGUMENT` error. With app authentication
-// (https://developers.google.com/chat/api/guides/auth/service-accounts),
-// this field is ignored and the query always returns all spaces. But
-// the Chat API still validates the query syntax, so invalid queries are
-// still rejected.
+// an `INVALID_ARGUMENT` error.
 func (c *SpacesListCall) Filter(filter string) *SpacesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6493,7 +6502,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A query filter. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). You can filter spaces by the space type ([`space_type`](https://developers.google.com/chat/api/reference/rest/v1/spaces#spacetype)). To filter by space type, you must specify valid enum value, such as `SPACE` or `GROUP_CHAT` (the `space_type` can't be `SPACE_TYPE_UNSPECIFIED`). To query for multiple space types, use the `OR` operator. For example, the following queries are valid: ``` space_type = \"SPACE\" spaceType = \"GROUP_CHAT\" OR spaceType = \"DIRECT_MESSAGE\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error. With [app authentication](https://developers.google.com/chat/api/guides/auth/service-accounts), this field is ignored and the query always returns all spaces. But the Chat API still validates the query syntax, so invalid queries are still rejected.",
+	//       "description": "Optional. A query filter. You can filter spaces by the space type ([`space_type`](https://developers.google.com/chat/api/reference/rest/v1/spaces#spacetype)). To filter by space type, you must specify valid enum value, such as `SPACE` or `GROUP_CHAT` (the `space_type` can't be `SPACE_TYPE_UNSPECIFIED`). To query for multiple space types, use the `OR` operator. For example, the following queries are valid: ``` space_type = \"SPACE\" spaceType = \"GROUP_CHAT\" OR spaceType = \"DIRECT_MESSAGE\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

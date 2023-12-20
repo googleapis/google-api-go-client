@@ -1820,8 +1820,8 @@ type ListSupportedServicesResponse struct {
 	// results. If the value is empty, no further results remain.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SupportedServices: List of services supported by
-	// {{vpcsvcctl_name_short}} instances.
+	// SupportedServices: List of services supported by VPC Service Controls
+	// instances.
 	SupportedServices []*SupportedService `json:"supportedServices,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2488,12 +2488,12 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SupportedService: `SupportedService` specifies
-// {{vpcsvcctl_name_short}} supported service and its properties.
+// SupportedService: `SupportedService` specifies VPC-SC supported
+// service and its properties.
 type SupportedService struct {
 	// AvailableOnRestrictedVip: True if the service is available on the
 	// restricted VIP. Services on the restricted VIP typically either
-	// support {{vpcsvcctl_name_short}} or are core infrastructure services
+	// support VPC Service Controls or are core infrastructure services
 	// required for the functioning of Google Cloud.
 	AvailableOnRestrictedVip bool `json:"availableOnRestrictedVip,omitempty"`
 

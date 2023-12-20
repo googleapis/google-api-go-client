@@ -1290,7 +1290,7 @@
       }
     }
   },
-  "revision": "20231213",
+  "revision": "20231218",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessContextManagerOperationMetadata": {
@@ -2081,7 +2081,7 @@
           "type": "string"
         },
         "supportedServices": {
-          "description": "List of services supported by {{vpcsvcctl_name_short}} instances.",
+          "description": "List of services supported by VPC Service Controls instances.",
           "items": {
             "$ref": "SupportedService"
           },
@@ -2405,11 +2405,11 @@
       "type": "object"
     },
     "SupportedService": {
-      "description": "`SupportedService` specifies {{vpcsvcctl_name_short}} supported service and its properties.",
+      "description": "`SupportedService` specifies VPC-SC supported service and its properties.",
       "id": "SupportedService",
       "properties": {
         "availableOnRestrictedVip": {
-          "description": "True if the service is available on the restricted VIP. Services on the restricted VIP typically either support {{vpcsvcctl_name_short}} or are core infrastructure services required for the functioning of Google Cloud.",
+          "description": "True if the service is available on the restricted VIP. Services on the restricted VIP typically either support VPC Service Controls or are core infrastructure services required for the functioning of Google Cloud.",
           "type": "boolean"
         },
         "knownLimitations": {

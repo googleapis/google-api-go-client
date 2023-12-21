@@ -8,20 +8,25 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"time"
 
 	"golang.org/x/oauth2"
+	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
 var (
-	iamCredentailsEndpoint = "https://iamcredentials.googleapis.com"
-	oauth2Endpoint         = "https://oauth2.googleapis.com"
+	iamCredentailsEndpoint                      = "https://iamcredentials.googleapis.com"
+	oauth2Endpoint                              = "https://oauth2.googleapis.com"
+	ErrUniverseNotSupportedDomainWideDelegation = errors.New(
+		"impersonate: service account user is configured for the credential. Domain-wide " +
+			"delegation is not supported in universes other than googleapis.com")
 )
 
 // CredentialsConfig for generating impersonated credentials.
@@ -86,9 +91,17 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 	if err != nil {
 		return nil, err
 	}
-	// If a subject is specified a different auth-flow is initiated to
-	// impersonate as the provided subject (user).
+	// If a subject is specified a domain-wide delegation auth-flow is initiated
+	// to impersonate as the provided subject (user).
 	if config.Subject != "" {
+		settings, err := newSettings(clientOpts)
+		if err != nil {
+			return nil, err
+		}
+		// TODO(chrisdsmith): Closes: AL-9 (remove this note before publication)
+		if settings.UniverseDomainNotGDU() {
+			return nil, ErrUniverseNotSupportedDomainWideDelegation
+		}
 		return user(ctx, config, client, lifetime, isStaticToken)
 	}
 
@@ -111,6 +124,18 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 		return oauth2.StaticTokenSource(tok), nil
 	}
 	return oauth2.ReuseTokenSource(nil, its), nil
+}
+
+func newSettings(opts []option.ClientOption) (*internal.DialSettings, error) {
+	var o internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&o)
+	}
+	if err := o.Validate(); err != nil {
+		return nil, err
+	}
+
+	return &o, nil
 }
 
 func formatIAMServiceAccountName(name string) string {

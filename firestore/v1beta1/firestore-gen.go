@@ -2362,7 +2362,7 @@ type Order struct {
 	//   "DESCENDING" - Descending.
 	Direction string `json:"direction,omitempty"`
 
-	// Field: The field to order by.
+	// Field: Order based on the value referenced by this field.
 	Field *FieldReference `json:"field,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Direction") to

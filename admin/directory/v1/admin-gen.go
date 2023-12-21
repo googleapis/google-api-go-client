@@ -867,6 +867,136 @@ func (s *AuxiliaryMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchChangeChromeOsDeviceStatusRequest: A request for changing the
+// status of a batch of ChromeOS devices.
+type BatchChangeChromeOsDeviceStatusRequest struct {
+	// ChangeChromeOsDeviceStatusAction: Required. The Action to take on the
+	// ChromeOS device in order to change its status.
+	//
+	// Possible values:
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_UNSPECIFIED" - Default
+	// value. Value is unused.
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION" - If you have
+	// ChromeOS devices that are no longer being used in your organization,
+	// you should deprovision them so that you’re no longer managing them.
+	// Deprovisioning the device removes all policies that were on the
+	// device as well as device-level printers and the ability to use the
+	// device as a kiosk. Depending on the upgrade that’s associated with
+	// the device this action might release the license back into the
+	// license pool; which allows you to use the license on a different
+	// device.
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DISABLE" - Use this action
+	// if a user loses their device or it’s stolen, this makes it such
+	// that the device is still managed, so it will still receive policies,
+	// but noone can use it. Depending on the upgrade that’s associated
+	// with the device this action might release the license back into the
+	// license pool; which allows you to use the license on a different
+	// device.
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_REENABLE" - Reenable the
+	// device once it's no longer lost or it's been recovered. This allows
+	// the device to be used again. Depending on the upgrade associated with
+	// the device this might consume one license from the license pool,
+	// meaning that if there aren't enough licenses available the operation
+	// will fail.
+	ChangeChromeOsDeviceStatusAction string `json:"changeChromeOsDeviceStatusAction,omitempty"`
+
+	// DeprovisionReason: Optional. The reason behind a device deprovision,
+	// must be provided for all deprovisions, otherwise it must not be
+	// provided. It must be one of the non-deprecated deprovision reasons.
+	//
+	// Possible values:
+	//   "DEPROVISION_REASON_UNSPECIFIED" - The deprovision reason is
+	// unknown.
+	//   "DEPROVISION_REASON_SAME_MODEL_REPLACEMENT" - Same model
+	// replacement. You have return materials authorization (RMA) or you are
+	// replacing a malfunctioning device under warranty with the same device
+	// model.
+	//   "DEPROVISION_REASON_UPGRADE" - The device was upgraded.
+	//   "DEPROVISION_REASON_DOMAIN_MOVE" - The device's domain was changed.
+	//   "DEPROVISION_REASON_SERVICE_EXPIRATION" - Service expired for the
+	// device.
+	//   "DEPROVISION_REASON_OTHER" - The device was deprovisioned for a
+	// legacy reason that is no longer supported.
+	//   "DEPROVISION_REASON_DIFFERENT_MODEL_REPLACEMENT" - Different model
+	// replacement. You are replacing this device with an upgraded or newer
+	// device model.
+	//   "DEPROVISION_REASON_RETIRING_DEVICE" - Retiring from fleet. You are
+	// donating, discarding, or otherwise removing the device from use.
+	//   "DEPROVISION_REASON_UPGRADE_TRANSFER" - ChromeOS Flex upgrade
+	// transfer. This is a ChromeOS Flex device that you are replacing with
+	// a Chromebook within a year.
+	//   "DEPROVISION_REASON_NOT_REQUIRED" - A reason was not required. For
+	// example, the licenses were returned to the customer's license pool.
+	//   "DEPROVISION_REASON_REPAIR_CENTER" - The device was deprovisioned
+	// by the Repair Service Center. Can only be set by Repair Service
+	// Center during RMA.
+	DeprovisionReason string `json:"deprovisionReason,omitempty"`
+
+	// DeviceIds: Required. List of the IDs of the ChromeOS devices to
+	// change.
+	DeviceIds []string `json:"deviceIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ChangeChromeOsDeviceStatusAction") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ChangeChromeOsDeviceStatusAction") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchChangeChromeOsDeviceStatusRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchChangeChromeOsDeviceStatusRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchChangeChromeOsDeviceStatusResponse: The response of changing the
+// status of a batch of ChromeOS devices.
+type BatchChangeChromeOsDeviceStatusResponse struct {
+	// ChangeChromeOsDeviceStatusResults: The results for each of the
+	// ChromeOS devices provided in the request.
+	ChangeChromeOsDeviceStatusResults []*ChangeChromeOsDeviceStatusResult `json:"changeChromeOsDeviceStatusResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ChangeChromeOsDeviceStatusResults") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ChangeChromeOsDeviceStatusResults") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchChangeChromeOsDeviceStatusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchChangeChromeOsDeviceStatusResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchCreatePrintServersRequest: Request to add multiple new print
 // servers in a batch.
 type BatchCreatePrintServersRequest struct {
@@ -1466,6 +1596,46 @@ func (s *CalendarResources) MarshalJSON() ([]byte, error) {
 	type NoMethod CalendarResources
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChangeChromeOsDeviceStatusResult: The result of a single ChromeOS
+// device for a Change state operation.
+type ChangeChromeOsDeviceStatusResult struct {
+	// DeviceId: The unique ID of the ChromeOS device.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// Error: The error result of the operation in case of failure.
+	Error *Status `json:"error,omitempty"`
+
+	// Response: The device could change its status successfully.
+	Response *ChangeChromeOsDeviceStatusSucceeded `json:"response,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChangeChromeOsDeviceStatusResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ChangeChromeOsDeviceStatusResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChangeChromeOsDeviceStatusSucceeded: Response for a successful
+// ChromeOS device status change.
+type ChangeChromeOsDeviceStatusSucceeded struct {
 }
 
 // Channel: An notification channel used to watch for resource changes.
@@ -5021,6 +5191,50 @@ func (s *Schemas) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Token: JSON template for token resource in Directory API.
 type Token struct {
 	// Anonymous: Whether the application is registered with Google. The
@@ -6955,17 +7169,17 @@ type ChromeosdevicesActionCall struct {
 	header_              http.Header
 }
 
-// Action: Takes an action that affects a Chrome OS Device. This
-// includes deprovisioning, disabling, and re-enabling devices.
-// *Warning:* * Deprovisioning a device will stop device policy syncing
-// and remove device-level printers. After a device is deprovisioned, it
-// must be wiped before it can be re-enrolled. * Lost or stolen devices
-// should use the disable action. * Re-enabling a disabled device will
-// consume a device license. If you do not have sufficient licenses
-// available when completing the re-enable action, you will receive an
-// error. For more information about deprovisioning and disabling
-// devices, visit the help center
-// (https://support.google.com/chrome/a/answer/3523633).
+// Action: DEPRECATED: Use BatchChangeChromeOsDeviceStatus instead.
+// Takes an action that affects a Chrome OS Device. This includes
+// deprovisioning, disabling, and re-enabling devices. *Warning:* *
+// Deprovisioning a device will stop device policy syncing and remove
+// device-level printers. After a device is deprovisioned, it must be
+// wiped before it can be re-enrolled. * Lost or stolen devices should
+// use the disable action. * Re-enabling a disabled device will consume
+// a device license. If you do not have sufficient licenses available
+// when completing the re-enable action, you will receive an error. For
+// more information about deprovisioning and disabling devices, visit
+// the help center (https://support.google.com/chrome/a/answer/3523633).
 //
 //   - customerId: The unique ID for the customer's Google Workspace
 //     account. As an account administrator, you can also use the
@@ -7050,7 +7264,8 @@ func (c *ChromeosdevicesActionCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Takes an action that affects a Chrome OS Device. This includes deprovisioning, disabling, and re-enabling devices. *Warning:* * Deprovisioning a device will stop device policy syncing and remove device-level printers. After a device is deprovisioned, it must be wiped before it can be re-enrolled. * Lost or stolen devices should use the disable action. * Re-enabling a disabled device will consume a device license. If you do not have sufficient licenses available when completing the re-enable action, you will receive an error. For more information about deprovisioning and disabling devices, visit the [help center](https://support.google.com/chrome/a/answer/3523633).",
+	//   "deprecated": true,
+	//   "description": "DEPRECATED: Use BatchChangeChromeOsDeviceStatus instead. Takes an action that affects a Chrome OS Device. This includes deprovisioning, disabling, and re-enabling devices. *Warning:* * Deprovisioning a device will stop device policy syncing and remove device-level printers. After a device is deprovisioned, it must be wiped before it can be re-enrolled. * Lost or stolen devices should use the disable action. * Re-enabling a disabled device will consume a device license. If you do not have sufficient licenses available when completing the re-enable action, you will receive an error. For more information about deprovisioning and disabling devices, visit the [help center](https://support.google.com/chrome/a/answer/3523633).",
 	//   "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/{resourceId}/action",
 	//   "httpMethod": "POST",
 	//   "id": "directory.chromeosdevices.action",
@@ -8110,6 +8325,148 @@ func (c *ChromeosdevicesUpdateCall) Do(opts ...googleapi.CallOption) (*ChromeOsD
 	//   },
 	//   "response": {
 	//     "$ref": "ChromeOsDevice"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.device.chromeos"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customer.devices.chromeos.batchChangeStatus":
+
+type CustomerDevicesChromeosBatchChangeStatusCall struct {
+	s                                      *Service
+	customerId                             string
+	batchchangechromeosdevicestatusrequest *BatchChangeChromeOsDeviceStatusRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// BatchChangeStatus: Changes the status of a batch of ChromeOS devices.
+//
+// - customerId: Immutable ID of the G Suite account.
+func (r *CustomerDevicesChromeosService) BatchChangeStatus(customerId string, batchchangechromeosdevicestatusrequest *BatchChangeChromeOsDeviceStatusRequest) *CustomerDevicesChromeosBatchChangeStatusCall {
+	c := &CustomerDevicesChromeosBatchChangeStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.batchchangechromeosdevicestatusrequest = batchchangechromeosdevicestatusrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomerDevicesChromeosBatchChangeStatusCall) Fields(s ...googleapi.Field) *CustomerDevicesChromeosBatchChangeStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomerDevicesChromeosBatchChangeStatusCall) Context(ctx context.Context) *CustomerDevicesChromeosBatchChangeStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomerDevicesChromeosBatchChangeStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomerDevicesChromeosBatchChangeStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchchangechromeosdevicestatusrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/customer/{customerId}/devices/chromeos:batchChangeStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customer.devices.chromeos.batchChangeStatus" call.
+// Exactly one of *BatchChangeChromeOsDeviceStatusResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *BatchChangeChromeOsDeviceStatusResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomerDevicesChromeosBatchChangeStatusCall) Do(opts ...googleapi.CallOption) (*BatchChangeChromeOsDeviceStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchChangeChromeOsDeviceStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the status of a batch of ChromeOS devices.",
+	//   "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos:batchChangeStatus",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customer.devices.chromeos.batchChangeStatus",
+	//   "parameterOrder": [
+	//     "customerId"
+	//   ],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Required. Immutable ID of the G Suite account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/customer/{customerId}/devices/chromeos:batchChangeStatus",
+	//   "request": {
+	//     "$ref": "BatchChangeChromeOsDeviceStatusRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchChangeChromeOsDeviceStatusResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.device.chromeos"

@@ -3684,6 +3684,8 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -5984,6 +5986,8 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -8420,6 +8424,8 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -11005,6 +11011,8 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -13403,6 +13411,8 @@ type SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.

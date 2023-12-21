@@ -2658,6 +2658,48 @@ func (s *GoogleCloudDiscoveryengineV1alphaDocumentInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig: A
+// singleton resource of DataStore. It's empty when DataStore is
+// created, which defaults to digital parser. The first call to
+// DataStoreService.UpdateDocumentProcessingConfig method will
+// initialize the config.
+type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
+	// Name: Output only. The full resource name of the Document Processing
+	// Config. Format:
+	// `projects/*/locations/*/collections/*/dataStores/*/documentProcessingC
+	// onfig`.
+	Name string `json:"name,omitempty"`
+
+	// OcrConfig: The OCR config. Currently it only applies to PDFs.
+	OcrConfig *GoogleCloudDiscoveryengineV1alphaOcrConfig `json:"ocrConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaDoubleList: Double list.
 type GoogleCloudDiscoveryengineV1alphaDoubleList struct {
 	// Values: Double values.
@@ -4495,6 +4537,45 @@ func (s *GoogleCloudDiscoveryengineV1alphaMediaInfo) UnmarshalJSON(data []byte) 
 	}
 	s.MediaProgressPercentage = float64(s1.MediaProgressPercentage)
 	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaOcrConfig: The OCR options for
+// parsing documents.
+type GoogleCloudDiscoveryengineV1alphaOcrConfig struct {
+	// Enabled: Required. If OCR is enabled or not. OCR must be enabled for
+	// other OcrConfig options to apply.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// EnhancedDocumentElements: Apply additional enhanced OCR processing to
+	// a list of document elements. Supported values: * `table`: advanced
+	// table parsing model.
+	EnhancedDocumentElements []string `json:"enhancedDocumentElements,omitempty"`
+
+	// UseNativeText: If true, will use native text instead of OCR text on
+	// pages containing native text.
+	UseNativeText bool `json:"useNativeText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaOcrConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaOcrConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDiscoveryengineV1alphaPageInfo: Detailed page information.
@@ -10603,6 +10684,157 @@ func (c *ProjectsLocationsCollectionsDataStoresGetCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "discoveryengine.projects.locations.collections.dataStores.getDocumentProcessingConfig":
+
+type ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDocumentProcessingConfig: Gets a DocumentProcessingConfig.
+//
+//   - name: Full DocumentProcessingConfig resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection_id}/dataStores/{data_store_id}/documentProcessingConfig`.
+func (r *ProjectsLocationsCollectionsDataStoresService) GetDocumentProcessingConfig(name string) *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall {
+	c := &ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.getDocumentProcessingConfig" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a DocumentProcessingConfig.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.getDocumentProcessingConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full DocumentProcessingConfig resource name. Format: `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/documentProcessingConfig`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.collections.dataStores.getSiteSearchEngine":
 
 type ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall struct {
@@ -11270,6 +11502,173 @@ func (c *ProjectsLocationsCollectionsDataStoresTrainCustomModelCall) Do(opts ...
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.updateDocumentProcessingConfig":
+
+type ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall struct {
+	s                                                         *Service
+	name                                                      string
+	googleclouddiscoveryenginev1alphadocumentprocessingconfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// UpdateDocumentProcessingConfig: Updates the DocumentProcessingConfig.
+// DocumentProcessingConfig is a singleon resource of DataStore. It's
+// empty when DataStore is created. The first call to this method will
+// set up DocumentProcessingConfig.
+//
+//   - name: Output only. The full resource name of the Document
+//     Processing Config. Format:
+//     `projects/*/locations/*/collections/*/dataStores/*/documentProcessin
+//     gConfig`.
+func (r *ProjectsLocationsCollectionsDataStoresService) UpdateDocumentProcessingConfig(name string, googleclouddiscoveryenginev1alphadocumentprocessingconfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig) *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall {
+	c := &ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphadocumentprocessingconfig = googleclouddiscoveryenginev1alphadocumentprocessingconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which
+// fields in the provided DocumentProcessingConfig to update. The
+// following are the only supported fields: *
+// DocumentProcessingConfig.orc_config If not set, all supported fields
+// are updated.
+func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphadocumentprocessingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.updateDocumentProcessingConfig" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the DocumentProcessingConfig. DocumentProcessingConfig is a singleon resource of DataStore. It's empty when DataStore is created. The first call to this method will set up DocumentProcessingConfig.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.updateDocumentProcessingConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The full resource name of the Document Processing Config. Format: `projects/*/locations/*/collections/*/dataStores/*/documentProcessingConfig`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.orc_config If not set, all supported fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -22948,6 +23347,157 @@ func (c *ProjectsLocationsDataStoresGetCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "discoveryengine.projects.locations.dataStores.getDocumentProcessingConfig":
+
+type ProjectsLocationsDataStoresGetDocumentProcessingConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDocumentProcessingConfig: Gets a DocumentProcessingConfig.
+//
+//   - name: Full DocumentProcessingConfig resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/collections/{coll
+//     ection_id}/dataStores/{data_store_id}/documentProcessingConfig`.
+func (r *ProjectsLocationsDataStoresService) GetDocumentProcessingConfig(name string) *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall {
+	c := &ProjectsLocationsDataStoresGetDocumentProcessingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) Context(ctx context.Context) *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.getDocumentProcessingConfig" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a DocumentProcessingConfig.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.dataStores.getDocumentProcessingConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full DocumentProcessingConfig resource name. Format: `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/documentProcessingConfig`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "discoveryengine.projects.locations.dataStores.getSiteSearchEngine":
 
 type ProjectsLocationsDataStoresGetSiteSearchEngineCall struct {
@@ -23470,6 +24020,173 @@ func (c *ProjectsLocationsDataStoresPatchCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDataStore"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.updateDocumentProcessingConfig":
+
+type ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall struct {
+	s                                                         *Service
+	name                                                      string
+	googleclouddiscoveryenginev1alphadocumentprocessingconfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// UpdateDocumentProcessingConfig: Updates the DocumentProcessingConfig.
+// DocumentProcessingConfig is a singleon resource of DataStore. It's
+// empty when DataStore is created. The first call to this method will
+// set up DocumentProcessingConfig.
+//
+//   - name: Output only. The full resource name of the Document
+//     Processing Config. Format:
+//     `projects/*/locations/*/collections/*/dataStores/*/documentProcessin
+//     gConfig`.
+func (r *ProjectsLocationsDataStoresService) UpdateDocumentProcessingConfig(name string, googleclouddiscoveryenginev1alphadocumentprocessingconfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig) *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall {
+	c := &ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphadocumentprocessingconfig = googleclouddiscoveryenginev1alphadocumentprocessingconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which
+// fields in the provided DocumentProcessingConfig to update. The
+// following are the only supported fields: *
+// DocumentProcessingConfig.orc_config If not set, all supported fields
+// are updated.
+func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) UpdateMask(updateMask string) *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) Context(ctx context.Context) *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphadocumentprocessingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.updateDocumentProcessingConfig" call.
+// Exactly one of
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the DocumentProcessingConfig. DocumentProcessingConfig is a singleon resource of DataStore. It's empty when DataStore is created. The first call to this method will set up DocumentProcessingConfig.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "discoveryengine.projects.locations.dataStores.updateDocumentProcessingConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The full resource name of the Document Processing Config. Format: `projects/*/locations/*/collections/*/dataStores/*/documentProcessingConfig`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.orc_config If not set, all supported fields are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

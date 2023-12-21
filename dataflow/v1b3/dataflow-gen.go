@@ -1876,6 +1876,23 @@ type Environment struct {
 	//   "SERVICE_BASED" - Shuffle is done on the service side.
 	ShuffleMode string `json:"shuffleMode,omitempty"`
 
+	// StreamingMode: Optional. Specifies the Streaming Engine message
+	// processing guarantees. Reduces cost and latency but might result in
+	// duplicate messages committed to storage. Designed to run simple
+	// mapping streaming ETL jobs at the lowest cost. For example, Change
+	// Data Capture (CDC) to BigQuery is a canonical use case.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
+	//   "STREAMING_MODE_EXACTLY_ONCE" - In this mode, message deduplication
+	// is performed against persistent state to make sure each message is
+	// processed and committed to storage exactly once.
+	//   "STREAMING_MODE_AT_LEAST_ONCE" - Message deduplication is not
+	// performed. Messages might be processed multiple times, and the
+	// results are applied multiple times. Note: Setting this value also
+	// enables Streaming Engine and Streaming Engine resource-based billing.
+	StreamingMode string `json:"streamingMode,omitempty"`
+
 	// TempStoragePrefix: The prefix of the resources the system should use
 	// for temporary storage. The system will append the suffix
 	// "/temp-{JOBNAME} to this resource prefix, where {JOBNAME} is the
@@ -1888,7 +1905,7 @@ type Environment struct {
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// UseStreamingEngineResourceBasedBilling: Output only. Whether the job
-	// uses the new streaming engine billing model based on resource usage.
+	// uses the Streaming Engine resource-based billing model.
 	UseStreamingEngineResourceBasedBilling bool `json:"useStreamingEngineResourceBasedBilling,omitempty"`
 
 	// UserAgent: A description of the process that generated the request.

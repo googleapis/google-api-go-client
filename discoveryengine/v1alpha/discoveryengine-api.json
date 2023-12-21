@@ -466,6 +466,31 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "getDocumentProcessingConfig": {
+                      "description": "Gets a DocumentProcessingConfig.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+                      "httpMethod": "GET",
+                      "id": "discoveryengine.projects.locations.collections.dataStores.getDocumentProcessingConfig",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Full DocumentProcessingConfig resource name. Format: `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/documentProcessingConfig`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "getSiteSearchEngine": {
                       "description": "Gets the SiteSearchEngine.",
                       "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/siteSearchEngine",
@@ -589,6 +614,40 @@
                       },
                       "response": {
                         "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "updateDocumentProcessingConfig": {
+                      "description": "Updates the DocumentProcessingConfig. DocumentProcessingConfig is a singleon resource of DataStore. It's empty when DataStore is created. The first call to this method will set up DocumentProcessingConfig.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+                      "httpMethod": "PATCH",
+                      "id": "discoveryengine.projects.locations.collections.dataStores.updateDocumentProcessingConfig",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Output only. The full resource name of the Document Processing Config. Format: `projects/*/locations/*/collections/*/dataStores/*/documentProcessingConfig`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.orc_config If not set, all supported fields are updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -2880,6 +2939,31 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "getDocumentProcessingConfig": {
+                  "description": "Gets a DocumentProcessingConfig.",
+                  "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+                  "httpMethod": "GET",
+                  "id": "discoveryengine.projects.locations.dataStores.getDocumentProcessingConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Full DocumentProcessingConfig resource name. Format: `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/documentProcessingConfig`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "getSiteSearchEngine": {
                   "description": "Gets the SiteSearchEngine.",
                   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/siteSearchEngine",
@@ -2975,6 +3059,40 @@
                   },
                   "response": {
                     "$ref": "GoogleCloudDiscoveryengineV1alphaDataStore"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "updateDocumentProcessingConfig": {
+                  "description": "Updates the DocumentProcessingConfig. DocumentProcessingConfig is a singleon resource of DataStore. It's empty when DataStore is created. The first call to this method will set up DocumentProcessingConfig.",
+                  "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/documentProcessingConfig",
+                  "httpMethod": "PATCH",
+                  "id": "discoveryengine.projects.locations.dataStores.updateDocumentProcessingConfig",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The full resource name of the Document Processing Config. Format: `projects/*/locations/*/collections/*/dataStores/*/documentProcessingConfig`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/documentProcessingConfig$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.orc_config If not set, all supported fields are updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -4358,7 +4476,7 @@
       }
     }
   },
-  "revision": "20231209",
+  "revision": "20231218",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5444,6 +5562,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig": {
+      "description": "A singleton resource of DataStore. It's empty when DataStore is created, which defaults to digital parser. The first call to DataStoreService.UpdateDocumentProcessingConfig method will initialize the config.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig",
+      "properties": {
+        "name": {
+          "description": "Output only. The full resource name of the Document Processing Config. Format: `projects/*/locations/*/collections/*/dataStores/*/documentProcessingConfig`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "ocrConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaOcrConfig",
+          "description": "The OCR config. Currently it only applies to PDFs."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaDoubleList": {
       "description": "Double list.",
       "id": "GoogleCloudDiscoveryengineV1alphaDoubleList",
@@ -6417,6 +6551,28 @@
           "description": "Media progress should be computed using only the media_progress_duration relative to the media total length. This value must be between `[0, 1.0]` inclusive. If this is not a playback or the progress cannot be computed (e.g. ongoing livestream), this field should be unset.",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaOcrConfig": {
+      "description": "The OCR options for parsing documents.",
+      "id": "GoogleCloudDiscoveryengineV1alphaOcrConfig",
+      "properties": {
+        "enabled": {
+          "description": "Required. If OCR is enabled or not. OCR must be enabled for other OcrConfig options to apply.",
+          "type": "boolean"
+        },
+        "enhancedDocumentElements": {
+          "description": "Apply additional enhanced OCR processing to a list of document elements. Supported values: * `table`: advanced table parsing model.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "useNativeText": {
+          "description": "If true, will use native text instead of OCR text on pages containing native text.",
+          "type": "boolean"
         }
       },
       "type": "object"

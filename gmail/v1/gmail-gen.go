@@ -1676,8 +1676,6 @@ type ListLabelsResponse struct {
 	// `type`. The labels.get method can fetch additional label details.
 	Labels []*Label `json:"labels,omitempty"`
 
-	ProductId int64 `json:"productId,omitempty"`
-
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

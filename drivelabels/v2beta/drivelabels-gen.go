@@ -944,9 +944,6 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest st
 	// IntegerOptions: Update field to Integer.
 	IntegerOptions *GoogleAppsDriveLabelsV2betaFieldIntegerOptions `json:"integerOptions,omitempty"`
 
-	// LongTextOptions: Update field to Long Text.
-	LongTextOptions *GoogleAppsDriveLabelsV2betaFieldLongTextOptions `json:"longTextOptions,omitempty"`
-
 	// SelectionOptions: Update field to Selection.
 	SelectionOptions *GoogleAppsDriveLabelsV2betaFieldSelectionOptions `json:"selectionOptions,omitempty"`
 
@@ -1756,40 +1753,6 @@ type GoogleAppsDriveLabelsV2betaFieldListOptions struct {
 
 func (s *GoogleAppsDriveLabelsV2betaFieldListOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldListOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAppsDriveLabelsV2betaFieldLongTextOptions: Options the Long
-// Text field type.
-type GoogleAppsDriveLabelsV2betaFieldLongTextOptions struct {
-	// MaxLength: Output only. The maximum valid length of values for the
-	// text field.
-	MaxLength int64 `json:"maxLength,omitempty"`
-
-	// MinLength: Output only. The minimum valid length of values for the
-	// text field.
-	MinLength int64 `json:"minLength,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MaxLength") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxLength") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsDriveLabelsV2betaFieldLongTextOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsDriveLabelsV2betaFieldLongTextOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -5109,7 +5109,8 @@ type GoogleCloudApigeeV1Environment struct {
 	// ForwardProxyUri: Optional. Url of the forward proxy to be applied to
 	// the runtime instances in this environment. Must be in the format of
 	// {scheme}://{hostname}:{port}. Note that scheme must be one of "http"
-	// or "https", and port must be supplied.
+	// or "https", and port must be supplied. To remove a forward proxy
+	// setting, update the field to an empty value.
 	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
 	HasAttachedFlowHooks bool `json:"hasAttachedFlowHooks,omitempty"`
@@ -5144,13 +5145,13 @@ type GoogleCloudApigeeV1Environment struct {
 	//
 	// Possible values:
 	//   "ENVIRONMENT_TYPE_UNSPECIFIED" - Environment type not specified.
-	//   "BASE" - Base environment has limited capacity and capabilities and
-	// are usually used when you are getting started with Apigee or while
-	// experimenting. Refer to Apigee's public documentation for more
-	// details.
-	//   "INTERMEDIATE" - This is the default type and it supports API
-	// management features and higher capacity than Base environment. Refer
-	// to Apigee's public documentation for more details.
+	//   "BASE" - This is the default type. Base environment has limited
+	// capacity and capabilities and are usually used when you are getting
+	// started with Apigee or while experimenting. Refer to Apigee's public
+	// documentation for more details.
+	//   "INTERMEDIATE" - Intermediate environment supports API management
+	// features and higher capacity than Base environment. Refer to Apigee's
+	// public documentation for more details.
 	//   "COMPREHENSIVE" - Comprehensive environment supports advanced
 	// capabilites and even higher capacity than Intermediate environment.
 	// Refer to Apigee's public documentation for more details.
@@ -11709,6 +11710,46 @@ func (s *GoogleCloudApigeeV1SecurityReportResultView) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1SecuritySettings: SecuritySettings reflects the
+// current state of the SecuritySettings feature.
+type GoogleCloudApigeeV1SecuritySettings struct {
+	// MlRetrainingFeedbackEnabled: Optional. If true the user consents to
+	// the use of ML models for Abuse detection.
+	MlRetrainingFeedbackEnabled bool `json:"mlRetrainingFeedbackEnabled,omitempty"`
+
+	// Name: Identifier. Full resource name is always
+	// `organizations/{org}/securitySettings`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MlRetrainingFeedbackEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MlRetrainingFeedbackEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecuritySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecuritySettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudApigeeV1ServiceIssuersMapping struct {
 	// EmailIds: List of trusted issuer email ids.
 	EmailIds []string `json:"emailIds,omitempty"`
@@ -12994,11 +13035,34 @@ type GoogleIamV1Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -13010,7 +13074,12 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -14718,6 +14787,155 @@ func (c *OrganizationsGetRuntimeConfigCall) Do(opts ...googleapi.CallOption) (*G
 
 }
 
+// method id "apigee.organizations.getSecuritySettings":
+
+type OrganizationsGetSecuritySettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSecuritySettings: GetSecuritySettings gets the security settings
+// for API Security.
+//
+//   - name: The name of the SecuritySettings to retrieve. This will
+//     always be: 'organizations/{org}/securitySettings'.
+func (r *OrganizationsService) GetSecuritySettings(name string) *OrganizationsGetSecuritySettingsCall {
+	c := &OrganizationsGetSecuritySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetSecuritySettingsCall) Fields(s ...googleapi.Field) *OrganizationsGetSecuritySettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsGetSecuritySettingsCall) IfNoneMatch(entityTag string) *OrganizationsGetSecuritySettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsGetSecuritySettingsCall) Context(ctx context.Context) *OrganizationsGetSecuritySettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsGetSecuritySettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.getSecuritySettings" call.
+// Exactly one of *GoogleCloudApigeeV1SecuritySettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecuritySettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsGetSecuritySettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetSecuritySettings gets the security settings for API Security.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securitySettings",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.getSecuritySettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecuritySettings to retrieve. This will always be: 'organizations/{org}/securitySettings'.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securitySettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecuritySettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.getSyncAuthorization":
 
 type OrganizationsGetSyncAuthorizationCall struct {
@@ -15458,6 +15676,165 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1Organization"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.updateSecuritySettings":
+
+type OrganizationsUpdateSecuritySettingsCall struct {
+	s                                   *Service
+	name                                string
+	googlecloudapigeev1securitysettings *GoogleCloudApigeeV1SecuritySettings
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateSecuritySettings: UpdateSecuritySettings updates the current
+// security settings for API Security.
+//
+//   - name: Identifier. Full resource name is always
+//     `organizations/{org}/securitySettings`.
+func (r *OrganizationsService) UpdateSecuritySettings(name string, googlecloudapigeev1securitysettings *GoogleCloudApigeeV1SecuritySettings) *OrganizationsUpdateSecuritySettingsCall {
+	c := &OrganizationsUpdateSecuritySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securitysettings = googlecloudapigeev1securitysettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update. Allowed fields are: -
+// ml_retraining_feedback_enabled
+func (c *OrganizationsUpdateSecuritySettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateSecuritySettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsUpdateSecuritySettingsCall) Fields(s ...googleapi.Field) *OrganizationsUpdateSecuritySettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsUpdateSecuritySettingsCall) Context(ctx context.Context) *OrganizationsUpdateSecuritySettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsUpdateSecuritySettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsUpdateSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securitysettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.updateSecuritySettings" call.
+// Exactly one of *GoogleCloudApigeeV1SecuritySettings or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1SecuritySettings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsUpdateSecuritySettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "UpdateSecuritySettings updates the current security settings for API Security.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securitySettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.updateSecuritySettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Identifier. Full resource name is always `organizations/{org}/securitySettings`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securitySettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The list of fields to update. Allowed fields are: - ml_retraining_feedback_enabled",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1SecuritySettings"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1SecuritySettings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

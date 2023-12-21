@@ -470,6 +470,109 @@ func (s *AddMatterPermissionsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CalendarExportOptions: The options for Calendar exports.
+type CalendarExportOptions struct {
+	// ExportFormat: The file format for exported text messages.
+	//
+	// Possible values:
+	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts
+	// and Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
+	// Voice and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
+	ExportFormat string `json:"exportFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExportFormat") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CalendarExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarExportOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CalendarOptions: Additional options for Calendar search
+type CalendarOptions struct {
+	// LocationQuery: Matches only those events whose location contains all
+	// of the words in the given set. If the string contains quoted phrases,
+	// this method only matches those events whose location contain the
+	// exact phrase. Entries in the set are considered in "and". Word
+	// splitting example: ["New Zealand"] vs ["New","Zealand"] "New
+	// Zealand": matched by both "New and better Zealand": only matched by
+	// the later
+	LocationQuery []string `json:"locationQuery,omitempty"`
+
+	// MinusWords: Matches only those events that do not contain any of the
+	// words in the given set in title, description, location, or attendees.
+	// Entries in the set are considered in "or".
+	MinusWords []string `json:"minusWords,omitempty"`
+
+	// PeopleQuery: Matches only those events whose attendees contain all of
+	// the words in the given set. Entries in the set are considered in
+	// "and".
+	PeopleQuery []string `json:"peopleQuery,omitempty"`
+
+	// ResponseStatuses: Matches only events for which the custodian gave
+	// one of these responses. If the set is empty or contains
+	// ATTENDEE_RESPONSE_UNSPECIFIED there will be no filtering on
+	// responses.
+	//
+	// Possible values:
+	//   "ATTENDEE_RESPONSE_UNSPECIFIED" - Attendee response unspecified. If
+	// this is set no filtering on responses will be done, all other
+	// attendee responses that are part of the query options are ignored.
+	//   "ATTENDEE_RESPONSE_NEEDS_ACTION" - The participant has been invited
+	// but has not responded yet.
+	//   "ATTENDEE_RESPONSE_ACCEPTED" - The participant plans to attend.
+	//   "ATTENDEE_RESPONSE_DECLINED" - The participant does not plan to
+	// attend.
+	//   "ATTENDEE_RESPONSE_TENTATIVE" - The participant expects to possibly
+	// attend.
+	ResponseStatuses []string `json:"responseStatuses,omitempty"`
+
+	// VersionDate: Search the current version of the Calendar event, but
+	// export the contents of the last version saved before 12:00 AM UTC on
+	// the specified date. Enter the date in UTC.
+	VersionDate string `json:"versionDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationQuery") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CalendarOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -869,6 +972,10 @@ type Export struct {
 	// the name, they can prevent you from downloading exports.
 	Name string `json:"name,omitempty"`
 
+	// ParentExportId: Output only. Identifies the parent export that
+	// spawned this child export. This is only set on child exports.
+	ParentExportId string `json:"parentExportId,omitempty"`
+
 	// Query: The query parameters used to create the export.
 	Query *Query `json:"query,omitempty"`
 
@@ -917,6 +1024,9 @@ func (s *Export) MarshalJSON() ([]byte, error) {
 
 // ExportOptions: Additional options for exports
 type ExportOptions struct {
+	// CalendarOptions: Option available for Calendar export.
+	CalendarOptions *CalendarExportOptions `json:"calendarOptions,omitempty"`
+
 	// DriveOptions: Options for Drive exports.
 	DriveOptions *DriveExportOptions `json:"driveOptions,omitempty"`
 
@@ -942,7 +1052,7 @@ type ExportOptions struct {
 	// VoiceOptions: Options for Voice exports.
 	VoiceOptions *VoiceExportOptions `json:"voiceOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DriveOptions") to
+	// ForceSendFields is a list of field names (e.g. "CalendarOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -950,12 +1060,13 @@ type ExportOptions struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DriveOptions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CalendarOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1058,6 +1169,7 @@ type GroupsExportOptions struct {
 	// and Voice.
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
 	// Voice and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1093,6 +1205,7 @@ type HangoutsChatExportOptions struct {
 	// and Voice.
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
 	// Voice and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
@@ -1463,6 +1576,7 @@ type Hold struct {
 	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
+	//   "CALENDAR" - Calendar.
 	Corpus string `json:"corpus,omitempty"`
 
 	// HoldId: The unique immutable ID of the hold. Assigned during
@@ -1783,7 +1897,12 @@ type MailExportOptions struct {
 	// and Voice.
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
 	// Voice and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
+
+	// ExportLinkedDriveFiles: Optional. To enable exporting linked Drive
+	// files, set to **true**.
+	ExportLinkedDriveFiles bool `json:"exportLinkedDriveFiles,omitempty"`
 
 	// ShowConfidentialModeContent: To export confidential mode content, set
 	// to **true**.
@@ -2060,6 +2179,9 @@ type Query struct {
 	// AccountInfo: Required when **SearchMethod** is **ACCOUNT**.
 	AccountInfo *AccountInfo `json:"accountInfo,omitempty"`
 
+	// CalendarOptions: Set Calendar search-specific options.
+	CalendarOptions *CalendarOptions `json:"calendarOptions,omitempty"`
+
 	// Corpus: The Google Workspace service to search.
 	//
 	// Possible values:
@@ -2071,6 +2193,7 @@ type Query struct {
 	//   "HANGOUTS_CHAT" - For export, Google Chat only. For holds, Google
 	// Chat and classic Hangouts.
 	//   "VOICE" - Google Voice.
+	//   "CALENDAR" - Calendar.
 	Corpus string `json:"corpus,omitempty"`
 
 	// DataScope: The data source to search.
@@ -2568,6 +2691,7 @@ type VoiceExportOptions struct {
 	// and Voice.
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts,
 	// Voice and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
 	ExportFormat string `json:"exportFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to

@@ -165,6 +165,10 @@ func (w withDefaultUniverseDomain) Apply(o *internal.DialSettings) {
 
 // EnableJwtWithScope returns a ClientOption that specifies if scope can be used
 // with self-signed JWT.
+//
+// EnableJwtWithScope is ignored when option.WithUniverseDomain is set
+// to a non-GDU universe domain. For non-GDU universe domains, token exchange is
+// impossible and services must support self-signed JWTs with scopes.
 func EnableJwtWithScope() option.ClientOption {
 	return enableJwtWithScope(true)
 }

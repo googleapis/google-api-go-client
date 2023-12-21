@@ -120,6 +120,34 @@ func TestJWTWithScope(t *testing.T) {
 	}
 }
 
+func TestJWTWithScopeAndUniverseDomain(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+		UniverseDomain:     "example.com",
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+		UniverseDomain:     "example.com",
+	}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
 func TestJWTWithDefaultScopes(t *testing.T) {
 	ctx := context.Background()
 
@@ -335,5 +363,52 @@ func TestCredsWithCredentials(t *testing.T) {
 				t.Fatalf("tok.AccessToken = %q, want %q", tok.AccessToken, tc.want)
 			}
 		})
+	}
+}
+
+func TestIsSelfSignedJWTFlow(t *testing.T) {
+	tests := []struct {
+		name string
+		ds   *DialSettings
+		want bool
+	}{
+		{
+			name: "EnableJwtWithScope true",
+			ds: &DialSettings{
+				CredentialsFile:    "testdata/service-account.json",
+				Scopes:             []string{"foo"},
+				EnableJwtWithScope: true,
+			},
+			want: true,
+		},
+		{
+			name: "EnableJwtWithScope false",
+			ds: &DialSettings{
+				CredentialsFile:    "testdata/service-account.json",
+				Scopes:             []string{"foo"},
+				EnableJwtWithScope: false,
+			},
+			want: false,
+		},
+		{
+			name: "UniverseDomain",
+			ds: &DialSettings{
+				CredentialsFile:    "testdata/service-account.json",
+				Scopes:             []string{"foo"},
+				EnableJwtWithScope: false,
+				UniverseDomain:     "example.com",
+			},
+			want: true,
+		},
+	}
+
+	for _, tc := range tests {
+		isSSJ, err := isSelfSignedJWTFlow([]byte(validServiceAccountJSON), tc.ds)
+		if err != nil {
+			t.Errorf("[%s]: got %v, wanted no error", tc.name, err)
+		}
+		if isSSJ != tc.want {
+			t.Errorf("[%s]: got %t, wanted %t", tc.name, isSSJ, tc.want)
+		}
 	}
 }

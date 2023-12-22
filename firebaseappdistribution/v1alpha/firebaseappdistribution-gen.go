@@ -226,6 +226,7 @@ type AppsUploadStatusService struct {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Apps = NewProjectsAppsService(s)
+	rs.Testers = NewProjectsTestersService(s)
 	return rs
 }
 
@@ -233,6 +234,8 @@ type ProjectsService struct {
 	s *Service
 
 	Apps *ProjectsAppsService
+
+	Testers *ProjectsTestersService
 }
 
 func NewProjectsAppsService(s *Service) *ProjectsAppsService {
@@ -265,6 +268,15 @@ func NewProjectsAppsReleasesTestsService(s *Service) *ProjectsAppsReleasesTestsS
 }
 
 type ProjectsAppsReleasesTestsService struct {
+	s *Service
+}
+
+func NewProjectsTestersService(s *Service) *ProjectsTestersService {
+	rs := &ProjectsTestersService{s: s}
+	return rs
+}
+
+type ProjectsTestersService struct {
 	s *Service
 }
 
@@ -2290,6 +2302,14 @@ func (r *AppsTestersService) GetTesterUdids(mobilesdkAppId string) *AppsTestersG
 	return c
 }
 
+// Project sets the optional parameter "project": The name of the
+// project, which is the parent of testers Format:
+// `projects/{project_number}`
+func (c *AppsTestersGetTesterUdidsCall) Project(project string) *AppsTestersGetTesterUdidsCall {
+	c.urlParams_.Set("project", project)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2403,6 +2423,11 @@ func (c *AppsTestersGetTesterUdidsCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The name of the project, which is the parent of testers Format: `projects/{project_number}`",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -3391,4 +3416,167 @@ func (c *ProjectsAppsReleasesTestsListCall) Pages(ctx context.Context, f func(*G
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "firebaseappdistribution.projects.testers.getUdids":
+
+type ProjectsTestersGetUdidsCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetUdids: Get UDIDs of tester iOS devices in a project
+//
+//   - project: The name of the project, which is the parent of testers
+//     Format: `projects/{project_number}`.
+func (r *ProjectsTestersService) GetUdids(project string) *ProjectsTestersGetUdidsCall {
+	c := &ProjectsTestersGetUdidsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// MobilesdkAppId sets the optional parameter "mobilesdkAppId": Unique
+// id for a Firebase app of the format:
+// {version}:{project_number}:{platform}:{hash(bundle_id)} Example:
+// 1:581234567376:android:aa0a3c7b135e90289
+func (c *ProjectsTestersGetUdidsCall) MobilesdkAppId(mobilesdkAppId string) *ProjectsTestersGetUdidsCall {
+	c.urlParams_.Set("mobilesdkAppId", mobilesdkAppId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTestersGetUdidsCall) Fields(s ...googleapi.Field) *ProjectsTestersGetUdidsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsTestersGetUdidsCall) IfNoneMatch(entityTag string) *ProjectsTestersGetUdidsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTestersGetUdidsCall) Context(ctx context.Context) *ProjectsTestersGetUdidsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTestersGetUdidsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTestersGetUdidsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+project}/testers:udids")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.testers.getUdids" call.
+// Exactly one of *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTestersGetUdidsCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get UDIDs of tester iOS devices in a project",
+	//   "flatPath": "v1alpha/projects/{projectsId}/testers:udids",
+	//   "httpMethod": "GET",
+	//   "id": "firebaseappdistribution.projects.testers.getUdids",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "mobilesdkAppId": {
+	//       "description": "Unique id for a Firebase app of the format: {version}:{project_number}:{platform}:{hash(bundle_id)} Example: 1:581234567376:android:aa0a3c7b135e90289",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The name of the project, which is the parent of testers Format: `projects/{project_number}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+project}/testers:udids",
+	//   "response": {
+	//     "$ref": "GoogleFirebaseAppdistroV1alphaGetTesterUdidsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }

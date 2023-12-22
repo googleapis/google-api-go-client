@@ -685,11 +685,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -701,7 +724,12 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -874,6 +902,8 @@ type CloudSqlSettings struct {
 	// minor version is 33.
 	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the
 	// minor version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the
+	// minor version is 35.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.

@@ -419,7 +419,10 @@ func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 // provenance attestations.
 type AttestationSource struct {
 	// ContainerAnalysisAttestationProjects: The IDs of the GCP projects
-	// storing the SLSA attestations as Container Analysis Occurrences.
+	// storing the SLSA attestations as Container Analysis Occurrences, in
+	// the format `projects/[PROJECT_ID]`. Maximum number of
+	// `container_analysis_attestation_projects` allowed in each
+	// `AttestationSource` is 10.
 	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -585,11 +588,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -601,7 +627,12 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -1558,13 +1589,16 @@ type SimpleSigningAttestationCheck struct {
 	AttestationAuthenticators []*AttestationAuthenticator `json:"attestationAuthenticators,omitempty"`
 
 	// ContainerAnalysisAttestationProjects: Optional. The projects where
-	// attestations are stored as Container Analysis Occurrences. Only one
-	// attestation needs to successfully verify an image for this check to
-	// pass, so a single verified attestation found in any of
+	// attestations are stored as Container Analysis Occurrences, in the
+	// format `projects/[PROJECT_ID]`. Only one attestation needs to
+	// successfully verify an image for this check to pass, so a single
+	// verified attestation found in any of
 	// `container_analysis_attestation_projects` is sufficient for the check
 	// to pass. When fetching Occurrences from Container Analysis, only
-	// 'AttestationOccurrence' kinds are considered. In the future,
-	// additional Occurrence kinds may be added to the query.
+	// `AttestationOccurrence` kinds are considered. In the future,
+	// additional Occurrence kinds may be added to the query. Maximum number
+	// of `container_analysis_attestation_projects` allowed in each
+	// `SimpleSigningAttestationCheck` is 10.
 	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1980,7 +2014,9 @@ type VulnerabilityCheck struct {
 	// will be made for each project to fetch vulnerabilities, and all valid
 	// vulnerabilities will be used to check against the vulnerability
 	// policy. If no valid scan is found in all projects configured here, an
-	// error will be returned for the check.
+	// error will be returned for the check. Maximum number of
+	// `container_analysis_vulnerability_projects` allowed in each
+	// `VulnerabilityCheck` is 10.
 	ContainerAnalysisVulnerabilityProjects []string `json:"containerAnalysisVulnerabilityProjects,omitempty"`
 
 	// MaximumFixableSeverity: Required. The threshold for severity for

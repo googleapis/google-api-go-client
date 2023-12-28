@@ -1373,10 +1373,8 @@ type Event struct {
 	// EventType: Specific type of the event. This cannot be modified after
 	// the event is created. Possible values are:
 	// - "default" - A regular event or not further specified.
-	// - "outOfOffice" - An out-of-office event. An outOfOfficeProperties
-	// parameter must be supplied to make a valid event (even if empty).
-	// - "focusTime" - A focus-time event. A focusTimeProperties parameter
-	// must be supplied to make a valid event (even if empty).
+	// - "outOfOffice" - An out-of-office event.
+	// - "focusTime" - A focus-time event.
 	// - "workingLocation" - A working location event.  Currently, only
 	// "default " and "workingLocation" events can be created using the API.
 	// Extended support for other event types will be made available in
@@ -1386,7 +1384,7 @@ type Event struct {
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
 
-	// FocusTimeProperties: Focus Time event data. Required if eventType is
+	// FocusTimeProperties: Focus Time event data. Used if eventType is
 	// focusTime.
 	FocusTimeProperties *EventFocusTimeProperties `json:"focusTimeProperties,omitempty"`
 
@@ -1476,8 +1474,8 @@ type Event struct {
 	// instance was moved to a different time. Immutable.
 	OriginalStartTime *EventDateTime `json:"originalStartTime,omitempty"`
 
-	// OutOfOfficeProperties: Out of office event data. Required if
-	// eventType is outOfOffice.
+	// OutOfOfficeProperties: Out of office event data. Used if eventType is
+	// outOfOffice.
 	OutOfOfficeProperties *EventOutOfOfficeProperties `json:"outOfOfficeProperties,omitempty"`
 
 	// PrivateCopy: If set to True, Event propagation is disabled. Note that

@@ -606,6 +606,15 @@ func (c *UsersImportSshPublicKeyCall) ProjectId(projectId string) *UsersImportSs
 	return c
 }
 
+// Regions sets the optional parameter "regions": The regions to which
+// to assert that the key was written. If unspecified, defaults to all
+// regions. Regions are listed at
+// https://cloud.google.com/about/locations#region.
+func (c *UsersImportSshPublicKeyCall) Regions(regions ...string) *UsersImportSshPublicKeyCall {
+	c.urlParams_.SetMulti("regions", append([]string{}, regions...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -715,6 +724,12 @@ func (c *UsersImportSshPublicKeyCall) Do(opts ...googleapi.CallOption) (*ImportS
 	//     "projectId": {
 	//       "description": "The project ID of the Google Cloud Platform project.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "regions": {
+	//       "description": "Optional. The regions to which to assert that the key was written. If unspecified, defaults to all regions. Regions are listed at https://cloud.google.com/about/locations#region.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },

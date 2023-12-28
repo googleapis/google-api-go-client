@@ -9797,8 +9797,8 @@ type GoogleCloudDialogflowV2AutomatedAgentConfig struct {
 	// used.
 	Agent string `json:"agent,omitempty"`
 
-	// SessionTtl: Optional. Sets Dialogflow CX session life time. By
-	// default, a Dialogflow CX session remains active and its data is
+	// SessionTtl: Optional. Configure lifetime of the Dialogflow session.
+	// By default, a Dialogflow CX session remains active and its data is
 	// stored for 30 minutes after the last request is sent for the session.
 	// This value should be no longer than 1 day.
 	SessionTtl string `json:"sessionTtl,omitempty"`

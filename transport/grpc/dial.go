@@ -49,24 +49,24 @@ var logRateLimiter = rate.Sometimes{Interval: 1 * time.Second}
 // Assign to var for unit test replacement
 var dialContext = grpc.DialContext
 
-// otelGRPCClientHandler is a singleton otelgrpc clientHandler to be used across
+// otelStatsHandler is a singleton otelgrpc.clientHandler to be used across
 // all dial connections to avoid the memory leak documented in
 // https://github.com/open-telemetry/opentelemetry-go-contrib/issues/4226
 //
 // TODO: If 4226 has been fixed in opentelemetry-go-contrib, replace this
 // singleton with inline usage for simplicity.
 var (
-	otelGRPCClientHandler stats.Handler
-	once                  sync.Once
+	initOtelStatsHandlerOnce sync.Once
+	otelStatsHandler         stats.Handler
 )
 
-// getOtelGRPCClientHandler returns singleton otelGRPCClientHandler for reuse
-// across all dial connections.
-func getOtelGRPCClientHandler() stats.Handler {
-	once.Do(func() {
-		otelGRPCClientHandler = otelgrpc.NewClientHandler()
+// otelGRPCStatsHandler returns singleton otelStatsHandler for reuse across all
+// dial connections.
+func otelGRPCStatsHandler() stats.Handler {
+	initOtelStatsHandlerOnce.Do(func() {
+		otelStatsHandler = otelgrpc.NewClientHandler()
 	})
-	return otelGRPCClientHandler
+	return otelStatsHandler
 }
 
 // Dial returns a GRPC connection for use communicating with a Google cloud
@@ -241,7 +241,7 @@ func addOpenTelemetryStatsHandler(opts []grpc.DialOption, settings *internal.Dia
 	if settings.TelemetryDisabled {
 		return opts
 	}
-	return append(opts, grpc.WithStatsHandler(getOtelGRPCClientHandler()))
+	return append(opts, grpc.WithStatsHandler(otelGRPCStatsHandler()))
 }
 
 // grpcTokenSource supplies PerRPCCredentials from an oauth.TokenSource.

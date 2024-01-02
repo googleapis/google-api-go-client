@@ -136,7 +136,7 @@ func TestLogDirectPathMisconfigNotOnGCE(t *testing.T) {
 	logDirectPathMisconfig(endpoint, creds.TokenSource, o)
 
 	if !metadata.OnGCE() {
-		wantedLog := "WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment.."
+		wantedLog := "WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment."
 		if !strings.Contains(buf.String(), wantedLog) {
 			t.Fatalf("got: %v, want: %v", buf.String(), wantedLog)
 		}

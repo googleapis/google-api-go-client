@@ -934,7 +934,7 @@ type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
 	// method name that caused the error.
 	Location string `json:"location,omitempty"`
 
-	// Name: The resource name of the issue. Format:
+	// Name: Identifier. The resource name of the issue. Format:
 	// apps/{app}/errorIssues/{issue}
 	Name string `json:"name,omitempty"`
 

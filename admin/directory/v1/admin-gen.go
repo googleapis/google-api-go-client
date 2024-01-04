@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -870,39 +870,41 @@ func (s *AuxiliaryMessage) MarshalJSON() ([]byte, error) {
 // BatchChangeChromeOsDeviceStatusRequest: A request for changing the
 // status of a batch of ChromeOS devices.
 type BatchChangeChromeOsDeviceStatusRequest struct {
-	// ChangeChromeOsDeviceStatusAction: Required. The Action to take on the
+	// ChangeChromeOsDeviceStatusAction: Required. The action to take on the
 	// ChromeOS device in order to change its status.
 	//
 	// Possible values:
 	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_UNSPECIFIED" - Default
 	// value. Value is unused.
-	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION" - If you have
-	// ChromeOS devices that are no longer being used in your organization,
-	// you should deprovision them so that you’re no longer managing them.
-	// Deprovisioning the device removes all policies that were on the
-	// device as well as device-level printers and the ability to use the
-	// device as a kiosk. Depending on the upgrade that’s associated with
-	// the device this action might release the license back into the
-	// license pool; which allows you to use the license on a different
-	// device.
-	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DISABLE" - Use this action
-	// if a user loses their device or it’s stolen, this makes it such
-	// that the device is still managed, so it will still receive policies,
-	// but noone can use it. Depending on the upgrade that’s associated
-	// with the device this action might release the license back into the
-	// license pool; which allows you to use the license on a different
-	// device.
-	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_REENABLE" - Reenable the
-	// device once it's no longer lost or it's been recovered. This allows
-	// the device to be used again. Depending on the upgrade associated with
-	// the device this might consume one license from the license pool,
-	// meaning that if there aren't enough licenses available the operation
-	// will fail.
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION" - Deprovisions
+	// a ChromeOS device. If you have ChromeOS devices that are no longer
+	// being used in your organization, you should deprovision them so that
+	// you’re no longer managing them. Deprovisioning the device removes
+	// all policies that were on the device as well as device-level printers
+	// and the ability to use the device as a kiosk. Depending on the
+	// upgrade that’s associated with the device this action might release
+	// the license back into the license pool; which allows you to use the
+	// license on a different device.
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DISABLE" - Disables a
+	// ChromeOS device. Use this action if a user loses their device or
+	// it’s stolen, this makes it such that the device is still managed,
+	// so it will still receive policies, but no one can use it. Depending
+	// on the upgrade that’s associated with the device this action might
+	// release the license back into the license pool; which allows you to
+	// use the license on a different device.
+	//   "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_REENABLE" - Reenables a
+	// ChromeOS device to be used after being disabled. Reenables the device
+	// once it's no longer lost or it's been recovered. This allows the
+	// device to be used again. Depending on the upgrade associated with the
+	// device this might consume one license from the license pool, meaning
+	// that if there aren't enough licenses available the operation will
+	// fail.
 	ChangeChromeOsDeviceStatusAction string `json:"changeChromeOsDeviceStatusAction,omitempty"`
 
-	// DeprovisionReason: Optional. The reason behind a device deprovision,
-	// must be provided for all deprovisions, otherwise it must not be
-	// provided. It must be one of the non-deprecated deprovision reasons.
+	// DeprovisionReason: Optional. The reason behind a device deprovision.
+	// Must be provided if 'changeChromeOsDeviceStatusAction' is set to
+	// 'CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION'. Otherwise, omit
+	// this field.
 	//
 	// Possible values:
 	//   "DEPROVISION_REASON_UNSPECIFIED" - The deprovision reason is
@@ -933,7 +935,7 @@ type BatchChangeChromeOsDeviceStatusRequest struct {
 	DeprovisionReason string `json:"deprovisionReason,omitempty"`
 
 	// DeviceIds: Required. List of the IDs of the ChromeOS devices to
-	// change.
+	// change. Maximum 50.
 	DeviceIds []string `json:"deviceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7169,17 +7171,19 @@ type ChromeosdevicesActionCall struct {
 	header_              http.Header
 }
 
-// Action: DEPRECATED: Use BatchChangeChromeOsDeviceStatus instead.
-// Takes an action that affects a Chrome OS Device. This includes
-// deprovisioning, disabling, and re-enabling devices. *Warning:* *
-// Deprovisioning a device will stop device policy syncing and remove
-// device-level printers. After a device is deprovisioned, it must be
-// wiped before it can be re-enrolled. * Lost or stolen devices should
-// use the disable action. * Re-enabling a disabled device will consume
-// a device license. If you do not have sufficient licenses available
-// when completing the re-enable action, you will receive an error. For
-// more information about deprovisioning and disabling devices, visit
-// the help center (https://support.google.com/chrome/a/answer/3523633).
+// Action: Use BatchChangeChromeOsDeviceStatus
+// (/admin-sdk/directory/reference/rest/v1/customer.devices.chromeos/batc
+// hChangeStatus) instead. Takes an action that affects a Chrome OS
+// Device. This includes deprovisioning, disabling, and re-enabling
+// devices. *Warning:* * Deprovisioning a device will stop device policy
+// syncing and remove device-level printers. After a device is
+// deprovisioned, it must be wiped before it can be re-enrolled. * Lost
+// or stolen devices should use the disable action. * Re-enabling a
+// disabled device will consume a device license. If you do not have
+// sufficient licenses available when completing the re-enable action,
+// you will receive an error. For more information about deprovisioning
+// and disabling devices, visit the help center
+// (https://support.google.com/chrome/a/answer/3523633).
 //
 //   - customerId: The unique ID for the customer's Google Workspace
 //     account. As an account administrator, you can also use the
@@ -7265,7 +7269,7 @@ func (c *ChromeosdevicesActionCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "deprecated": true,
-	//   "description": "DEPRECATED: Use BatchChangeChromeOsDeviceStatus instead. Takes an action that affects a Chrome OS Device. This includes deprovisioning, disabling, and re-enabling devices. *Warning:* * Deprovisioning a device will stop device policy syncing and remove device-level printers. After a device is deprovisioned, it must be wiped before it can be re-enrolled. * Lost or stolen devices should use the disable action. * Re-enabling a disabled device will consume a device license. If you do not have sufficient licenses available when completing the re-enable action, you will receive an error. For more information about deprovisioning and disabling devices, visit the [help center](https://support.google.com/chrome/a/answer/3523633).",
+	//   "description": "Use [BatchChangeChromeOsDeviceStatus](/admin-sdk/directory/reference/rest/v1/customer.devices.chromeos/batchChangeStatus) instead. Takes an action that affects a Chrome OS Device. This includes deprovisioning, disabling, and re-enabling devices. *Warning:* * Deprovisioning a device will stop device policy syncing and remove device-level printers. After a device is deprovisioned, it must be wiped before it can be re-enrolled. * Lost or stolen devices should use the disable action. * Re-enabling a disabled device will consume a device license. If you do not have sufficient licenses available when completing the re-enable action, you will receive an error. For more information about deprovisioning and disabling devices, visit the [help center](https://support.google.com/chrome/a/answer/3523633).",
 	//   "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/{resourceId}/action",
 	//   "httpMethod": "POST",
 	//   "id": "directory.chromeosdevices.action",
@@ -8345,8 +8349,11 @@ type CustomerDevicesChromeosBatchChangeStatusCall struct {
 }
 
 // BatchChangeStatus: Changes the status of a batch of ChromeOS devices.
+// For more information about changing a ChromeOS device state Repair,
+// repurpose, or retire ChromeOS devices
+// (https://support.google.com/chrome/a/answer/3523633).
 //
-// - customerId: Immutable ID of the G Suite account.
+// - customerId: Immutable ID of the Google Workspace account.
 func (r *CustomerDevicesChromeosService) BatchChangeStatus(customerId string, batchchangechromeosdevicestatusrequest *BatchChangeChromeOsDeviceStatusRequest) *CustomerDevicesChromeosBatchChangeStatusCall {
 	c := &CustomerDevicesChromeosBatchChangeStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -8446,7 +8453,7 @@ func (c *CustomerDevicesChromeosBatchChangeStatusCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes the status of a batch of ChromeOS devices.",
+	//   "description": "Changes the status of a batch of ChromeOS devices. For more information about changing a ChromeOS device state [Repair, repurpose, or retire ChromeOS devices](https://support.google.com/chrome/a/answer/3523633).",
 	//   "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos:batchChangeStatus",
 	//   "httpMethod": "POST",
 	//   "id": "admin.customer.devices.chromeos.batchChangeStatus",
@@ -8455,7 +8462,7 @@ func (c *CustomerDevicesChromeosBatchChangeStatusCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Required. Immutable ID of the G Suite account.",
+	//       "description": "Required. Immutable ID of the Google Workspace account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

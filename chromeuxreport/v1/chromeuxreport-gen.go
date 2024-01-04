@@ -284,6 +284,54 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FractionTimeseries: For enum metrics, provides fraction timeseries
+// which add up to approximately 1.0 per entry (k-th element into the
+// repeated fractions field for any k <= len) across
+// fraction_timeseries.
+type FractionTimeseries struct {
+	// Fractions: Values between 0.0 and 1.0 (inclusive) and NaN.
+	Fractions []float64 `json:"fractions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fractions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fractions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FractionTimeseries) MarshalJSON() ([]byte, error) {
+	type NoMethod FractionTimeseries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *FractionTimeseries) UnmarshalJSON(data []byte) error {
+	type NoMethod FractionTimeseries
+	var s1 struct {
+		Fractions []gensupport.JSONFloat64 `json:"fractions"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Fractions = make([]float64, len(s1.Fractions))
+	for i := range s1.Fractions {
+		s.Fractions[i] = float64(s1.Fractions[i])
+	}
+	return nil
+}
+
 // HistoryKey: Key defines all the dimensions that identify this record
 // as unique.
 type HistoryKey struct {
@@ -493,6 +541,10 @@ func (s *Metric) MarshalJSON() ([]byte, error) {
 // a series of `bins`, where each bin has density values for a
 // particular time period.
 type MetricTimeseries struct {
+	// FractionTimeseries: Mapping from labels to timeseries of fractions
+	// attributed to this label.
+	FractionTimeseries map[string]FractionTimeseries `json:"fractionTimeseries,omitempty"`
+
 	// HistogramTimeseries: The histogram of user experiences for a metric.
 	// The histogram will have at least one bin and the densities of all
 	// bins will add up to ~1, for each timeseries entry.
@@ -503,7 +555,7 @@ type MetricTimeseries struct {
 	// given for the Histogram bins.
 	PercentilesTimeseries *TimeseriesPercentiles `json:"percentilesTimeseries,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HistogramTimeseries")
+	// ForceSendFields is a list of field names (e.g. "FractionTimeseries")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -511,7 +563,7 @@ type MetricTimeseries struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HistogramTimeseries") to
+	// NullFields is a list of field names (e.g. "FractionTimeseries") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

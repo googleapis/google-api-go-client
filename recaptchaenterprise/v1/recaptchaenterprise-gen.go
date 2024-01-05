@@ -316,7 +316,8 @@ type GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo struct {
 	LatestVerificationResult string `json:"latestVerificationResult,omitempty"`
 
 	// Username: Username of the account that is being verified. Deprecated.
-	// Customers should now provide the hashed account ID field in Event.
+	// Customers should now provide the `account_id` field in
+	// `event.user_info`.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Endpoints") to

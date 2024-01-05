@@ -285,3 +285,75 @@ func TestAsComment_LongLink(t *testing.T) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
+
+func TestApiBaseURLTemplate(t *testing.T) {
+	tests := []struct {
+		name, want string
+	}{
+		{
+			name: "any.json",
+			want: "https://logging.%s/",
+		},
+		{
+			name: "blogger-3.json",
+			want: "https://www.%s/blogger/v3/",
+		},
+		{
+			name: "required-query.json",
+			want: "https://www.%s/_ah/api/tshealth/v1/",
+		},
+	}
+	for _, tt := range tests {
+		api, err := apiFromFile(filepath.Join("testdata", tt.name))
+		if err != nil {
+			t.Fatalf("Error loading API testdata/%s: %v", tt.name, err)
+		}
+		got, err := api.apiBaseURLTemplate()
+		if err != nil {
+			t.Fatalf("%s: apiBaseURLTemplate(): %v", tt.name, err)
+		}
+		if got != tt.want {
+			t.Errorf("%s: apiBaseURLTemplate() = %q; want %q", tt.name, got, tt.want)
+		}
+	}
+}
+
+func TestReplaceDomain(t *testing.T) {
+	tests := []struct {
+		url, want string
+	}{
+		{
+			url: "https://logging.googleapis.com/",
+			want: "https://logging.%s/",
+		},
+		{
+			url: "https://www.googleapis.com/blogger/v3/",
+			want: "https://www.%s/blogger/v3/",
+		},
+		{
+			url: "ths-prod.googleplex.com/_ah/api/tshealth/v1/",
+			want: "https://ths-prod.%s/_ah/api/tshealth/v1/",
+		},
+		{
+			url: "localhost:1234",
+			want: "https://%s:1234",
+		},
+		{
+			url: "localhost",
+			want: "https://%s",
+		},
+		{
+			url: "",
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		got, err := replaceDomain(tt.url, "%s")
+		if err != nil {
+			t.Fatalf("apiBaseURLTemplate(%s): %v", tt.url, err)
+		}
+		if got != tt.want {
+			t.Errorf("apiBaseURLTemplate(%s) = %q; want %q", tt.url, got, tt.want)
+		}
+	}
+}

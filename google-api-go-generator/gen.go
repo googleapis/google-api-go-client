@@ -498,6 +498,42 @@ func (a *API) apiBaseURL() string {
 	return resolveRelative(base, rel)
 }
 
+// apiBaseURLTemplate returns the value returned by apiBaseURL with the
+// following changes: 1) The hostname (excluding subdomains) is replaced with %s
+// for universe domain substitution. 2) If the value does not have a scheme,
+// https:// is prepended.
+func (a *API) apiBaseURLTemplate() (string, error) {
+	baseURL := a.apiBaseURL()
+	return replaceDomain(baseURL, "%s")
+}
+
+// replaceDomain detects the domain (excluding subdomains) in the provided
+// baseURL and replaces it with newDomain. If baseURL is empty, empty is
+// returned. If baseURL is an invalid URL, the error from url.Parse is returned.
+// If baseURL is valid but does not have a scheme, https:// is prepended to the
+// return value.
+func replaceDomain(baseURL, newDomain string) (string, error) {
+	if baseURL == "" {
+		return baseURL, nil
+	}
+	if !strings.Contains(baseURL, "://") {
+		// Prepend scheme if missing or url.Parse might fail to detect hostname.
+		baseURL = "https://" + baseURL
+	}
+	u, err := url.Parse(baseURL)
+	if err != nil {
+		return "", err
+	}
+	parts := strings.Split(u.Hostname(), ".")
+	var domain string
+	if len(parts) == 1 {
+		domain = parts[0]
+	} else {
+		domain = parts[len(parts)-2] + "." + parts[len(parts)-1]
+	}
+	return strings.Replace(baseURL, domain, newDomain, 1), nil
+}
+
 func (a *API) mtlsAPIBaseURL() string {
 	if a.doc.MTLSRootURL != "" {
 		return resolveRelative(a.doc.MTLSRootURL, a.doc.ServicePath)
@@ -760,9 +796,15 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("const apiName = %q", a.doc.Name)
 	pn("const apiVersion = %q", a.doc.Version)
 	pn("const basePath = %q", a.apiBaseURL())
+	basePathTemplate, err := a.apiBaseURLTemplate()
+	if err != nil {
+		return buf.Bytes(), err
+	}
+	pn("const basePathTemplate = %q", basePathTemplate)
 	if mtlsBase := a.mtlsAPIBaseURL(); mtlsBase != "" {
 		pn("const mtlsBasePath = %q", mtlsBase)
 	}
+	pn("const defaultUniverseDomain = \"googleapis.com\"")
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()
@@ -785,9 +827,11 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("opts = append([]option.ClientOption{scopesOption}, opts...)")
 	}
 	pn("opts = append(opts, internaloption.WithDefaultEndpoint(basePath))")
+	pn("opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))")
 	if a.mtlsAPIBaseURL() != "" {
 		pn("opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
 	}
+	pn("opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))")
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")

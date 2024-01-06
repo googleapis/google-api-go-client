@@ -155,7 +155,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.AnywhereCache = NewAnywhereCacheService(s)
+	s.AnywhereCaches = NewAnywhereCachesService(s)
 	s.BucketAccessControls = NewBucketAccessControlsService(s)
 	s.Buckets = NewBucketsService(s)
 	s.Channels = NewChannelsService(s)
@@ -174,7 +174,7 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	AnywhereCache *AnywhereCacheService
+	AnywhereCaches *AnywhereCachesService
 
 	BucketAccessControls *BucketAccessControlsService
 
@@ -204,12 +204,12 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewAnywhereCacheService(s *Service) *AnywhereCacheService {
-	rs := &AnywhereCacheService{s: s}
+func NewAnywhereCachesService(s *Service) *AnywhereCachesService {
+	rs := &AnywhereCachesService{s: s}
 	return rs
 }
 
-type AnywhereCacheService struct {
+type AnywhereCachesService struct {
 	s *Service
 }
 
@@ -366,6 +366,10 @@ type AnywhereCache struct {
 	// UpdateTime: The modification time of the cache instance metadata in
 	// RFC 3339 format.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Zone: The zone in which the cache instance is running. For example,
+	// us-central1-a.
+	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3067,7 +3071,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // method id "storage.anywhereCaches.disable":
 
-type AnywhereCacheDisableCall struct {
+type AnywhereCachesDisableCall struct {
 	s               *Service
 	bucket          string
 	anywhereCacheId string
@@ -3079,9 +3083,9 @@ type AnywhereCacheDisableCall struct {
 // Disable: Disables an Anywhere Cache instance.
 //
 // - anywhereCacheId: The ID of requested Anywhere Cache instance.
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) Disable(bucket string, anywhereCacheId string) *AnywhereCacheDisableCall {
-	c := &AnywhereCacheDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) Disable(bucket string, anywhereCacheId string) *AnywhereCachesDisableCall {
+	c := &AnywhereCachesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.anywhereCacheId = anywhereCacheId
 	return c
@@ -3090,7 +3094,7 @@ func (r *AnywhereCacheService) Disable(bucket string, anywhereCacheId string) *A
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCacheDisableCall) Fields(s ...googleapi.Field) *AnywhereCacheDisableCall {
+func (c *AnywhereCachesDisableCall) Fields(s ...googleapi.Field) *AnywhereCachesDisableCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3098,21 +3102,21 @@ func (c *AnywhereCacheDisableCall) Fields(s ...googleapi.Field) *AnywhereCacheDi
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCacheDisableCall) Context(ctx context.Context) *AnywhereCacheDisableCall {
+func (c *AnywhereCachesDisableCall) Context(ctx context.Context) *AnywhereCachesDisableCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCacheDisableCall) Header() http.Header {
+func (c *AnywhereCachesDisableCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCacheDisableCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3143,7 +3147,7 @@ func (c *AnywhereCacheDisableCall) doRequest(alt string) (*http.Response, error)
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCacheDisableCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
+func (c *AnywhereCachesDisableCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3189,7 +3193,7 @@ func (c *AnywhereCacheDisableCall) Do(opts ...googleapi.CallOption) (*AnywhereCa
 	//       "type": "string"
 	//     },
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3210,7 +3214,7 @@ func (c *AnywhereCacheDisableCall) Do(opts ...googleapi.CallOption) (*AnywhereCa
 
 // method id "storage.anywhereCaches.get":
 
-type AnywhereCacheGetCall struct {
+type AnywhereCachesGetCall struct {
 	s               *Service
 	bucket          string
 	anywhereCacheId string
@@ -3223,9 +3227,9 @@ type AnywhereCacheGetCall struct {
 // Get: Returns the metadata of an Anywhere Cache instance.
 //
 // - anywhereCacheId: The ID of requested Anywhere Cache instance.
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) Get(bucket string, anywhereCacheId string) *AnywhereCacheGetCall {
-	c := &AnywhereCacheGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) Get(bucket string, anywhereCacheId string) *AnywhereCachesGetCall {
+	c := &AnywhereCachesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.anywhereCacheId = anywhereCacheId
 	return c
@@ -3234,7 +3238,7 @@ func (r *AnywhereCacheService) Get(bucket string, anywhereCacheId string) *Anywh
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCacheGetCall) Fields(s ...googleapi.Field) *AnywhereCacheGetCall {
+func (c *AnywhereCachesGetCall) Fields(s ...googleapi.Field) *AnywhereCachesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3244,7 +3248,7 @@ func (c *AnywhereCacheGetCall) Fields(s ...googleapi.Field) *AnywhereCacheGetCal
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *AnywhereCacheGetCall) IfNoneMatch(entityTag string) *AnywhereCacheGetCall {
+func (c *AnywhereCachesGetCall) IfNoneMatch(entityTag string) *AnywhereCachesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3252,21 +3256,21 @@ func (c *AnywhereCacheGetCall) IfNoneMatch(entityTag string) *AnywhereCacheGetCa
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCacheGetCall) Context(ctx context.Context) *AnywhereCacheGetCall {
+func (c *AnywhereCachesGetCall) Context(ctx context.Context) *AnywhereCachesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCacheGetCall) Header() http.Header {
+func (c *AnywhereCachesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCacheGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3300,7 +3304,7 @@ func (c *AnywhereCacheGetCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCacheGetCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
+func (c *AnywhereCachesGetCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3346,7 +3350,7 @@ func (c *AnywhereCacheGetCall) Do(opts ...googleapi.CallOption) (*AnywhereCache,
 	//       "type": "string"
 	//     },
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3369,7 +3373,7 @@ func (c *AnywhereCacheGetCall) Do(opts ...googleapi.CallOption) (*AnywhereCache,
 
 // method id "storage.anywhereCaches.insert":
 
-type AnywhereCacheInsertCall struct {
+type AnywhereCachesInsertCall struct {
 	s             *Service
 	bucket        string
 	anywherecache *AnywhereCache
@@ -3380,9 +3384,9 @@ type AnywhereCacheInsertCall struct {
 
 // Insert: Creates an Anywhere Cache instance.
 //
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) Insert(bucket string, anywherecache *AnywhereCache) *AnywhereCacheInsertCall {
-	c := &AnywhereCacheInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) Insert(bucket string, anywherecache *AnywhereCache) *AnywhereCachesInsertCall {
+	c := &AnywhereCachesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.anywherecache = anywherecache
 	return c
@@ -3391,7 +3395,7 @@ func (r *AnywhereCacheService) Insert(bucket string, anywherecache *AnywhereCach
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCacheInsertCall) Fields(s ...googleapi.Field) *AnywhereCacheInsertCall {
+func (c *AnywhereCachesInsertCall) Fields(s ...googleapi.Field) *AnywhereCachesInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3399,21 +3403,21 @@ func (c *AnywhereCacheInsertCall) Fields(s ...googleapi.Field) *AnywhereCacheIns
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCacheInsertCall) Context(ctx context.Context) *AnywhereCacheInsertCall {
+func (c *AnywhereCachesInsertCall) Context(ctx context.Context) *AnywhereCachesInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCacheInsertCall) Header() http.Header {
+func (c *AnywhereCachesInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCacheInsertCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3448,7 +3452,7 @@ func (c *AnywhereCacheInsertCall) doRequest(alt string) (*http.Response, error) 
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCacheInsertCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+func (c *AnywhereCachesInsertCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3487,7 +3491,7 @@ func (c *AnywhereCacheInsertCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   ],
 	//   "parameters": {
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3511,7 +3515,7 @@ func (c *AnywhereCacheInsertCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 
 // method id "storage.anywhereCaches.list":
 
-type AnywhereCacheListCall struct {
+type AnywhereCachesListCall struct {
 	s            *Service
 	bucket       string
 	urlParams_   gensupport.URLParams
@@ -3523,16 +3527,16 @@ type AnywhereCacheListCall struct {
 // List: Returns a list of Anywhere Cache instances of the bucket
 // matching the criteria.
 //
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) List(bucket string) *AnywhereCacheListCall {
-	c := &AnywhereCacheListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) List(bucket string) *AnywhereCachesListCall {
+	c := &AnywhereCachesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // items return in a single page of responses. Maximum 1000.
-func (c *AnywhereCacheListCall) PageSize(pageSize int64) *AnywhereCacheListCall {
+func (c *AnywhereCachesListCall) PageSize(pageSize int64) *AnywhereCachesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
@@ -3540,7 +3544,7 @@ func (c *AnywhereCacheListCall) PageSize(pageSize int64) *AnywhereCacheListCall 
 // PageToken sets the optional parameter "pageToken": A
 // previously-returned page token representing part of the larger set of
 // results to view.
-func (c *AnywhereCacheListCall) PageToken(pageToken string) *AnywhereCacheListCall {
+func (c *AnywhereCachesListCall) PageToken(pageToken string) *AnywhereCachesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -3548,7 +3552,7 @@ func (c *AnywhereCacheListCall) PageToken(pageToken string) *AnywhereCacheListCa
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCacheListCall) Fields(s ...googleapi.Field) *AnywhereCacheListCall {
+func (c *AnywhereCachesListCall) Fields(s ...googleapi.Field) *AnywhereCachesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3558,7 +3562,7 @@ func (c *AnywhereCacheListCall) Fields(s ...googleapi.Field) *AnywhereCacheListC
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *AnywhereCacheListCall) IfNoneMatch(entityTag string) *AnywhereCacheListCall {
+func (c *AnywhereCachesListCall) IfNoneMatch(entityTag string) *AnywhereCachesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3566,21 +3570,21 @@ func (c *AnywhereCacheListCall) IfNoneMatch(entityTag string) *AnywhereCacheList
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCacheListCall) Context(ctx context.Context) *AnywhereCacheListCall {
+func (c *AnywhereCachesListCall) Context(ctx context.Context) *AnywhereCachesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCacheListCall) Header() http.Header {
+func (c *AnywhereCachesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCacheListCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3613,7 +3617,7 @@ func (c *AnywhereCacheListCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCacheListCall) Do(opts ...googleapi.CallOption) (*AnywhereCaches, error) {
+func (c *AnywhereCachesListCall) Do(opts ...googleapi.CallOption) (*AnywhereCaches, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3652,7 +3656,7 @@ func (c *AnywhereCacheListCall) Do(opts ...googleapi.CallOption) (*AnywhereCache
 	//   ],
 	//   "parameters": {
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3688,7 +3692,7 @@ func (c *AnywhereCacheListCall) Do(opts ...googleapi.CallOption) (*AnywhereCache
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *AnywhereCacheListCall) Pages(ctx context.Context, f func(*AnywhereCaches) error) error {
+func (c *AnywhereCachesListCall) Pages(ctx context.Context, f func(*AnywhereCaches) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -3708,7 +3712,7 @@ func (c *AnywhereCacheListCall) Pages(ctx context.Context, f func(*AnywhereCache
 
 // method id "storage.anywhereCaches.pause":
 
-type AnywhereCachePauseCall struct {
+type AnywhereCachesPauseCall struct {
 	s               *Service
 	bucket          string
 	anywhereCacheId string
@@ -3720,9 +3724,9 @@ type AnywhereCachePauseCall struct {
 // Pause: Pauses an Anywhere Cache instance.
 //
 // - anywhereCacheId: The ID of requested Anywhere Cache instance.
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) Pause(bucket string, anywhereCacheId string) *AnywhereCachePauseCall {
-	c := &AnywhereCachePauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) Pause(bucket string, anywhereCacheId string) *AnywhereCachesPauseCall {
+	c := &AnywhereCachesPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.anywhereCacheId = anywhereCacheId
 	return c
@@ -3731,7 +3735,7 @@ func (r *AnywhereCacheService) Pause(bucket string, anywhereCacheId string) *Any
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCachePauseCall) Fields(s ...googleapi.Field) *AnywhereCachePauseCall {
+func (c *AnywhereCachesPauseCall) Fields(s ...googleapi.Field) *AnywhereCachesPauseCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3739,21 +3743,21 @@ func (c *AnywhereCachePauseCall) Fields(s ...googleapi.Field) *AnywhereCachePaus
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCachePauseCall) Context(ctx context.Context) *AnywhereCachePauseCall {
+func (c *AnywhereCachesPauseCall) Context(ctx context.Context) *AnywhereCachesPauseCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCachePauseCall) Header() http.Header {
+func (c *AnywhereCachesPauseCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCachePauseCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3784,7 +3788,7 @@ func (c *AnywhereCachePauseCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCachePauseCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
+func (c *AnywhereCachesPauseCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3830,7 +3834,7 @@ func (c *AnywhereCachePauseCall) Do(opts ...googleapi.CallOption) (*AnywhereCach
 	//       "type": "string"
 	//     },
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3851,7 +3855,7 @@ func (c *AnywhereCachePauseCall) Do(opts ...googleapi.CallOption) (*AnywhereCach
 
 // method id "storage.anywhereCaches.resume":
 
-type AnywhereCacheResumeCall struct {
+type AnywhereCachesResumeCall struct {
 	s               *Service
 	bucket          string
 	anywhereCacheId string
@@ -3863,9 +3867,9 @@ type AnywhereCacheResumeCall struct {
 // Resume: Resumes a paused or disabled Anywhere Cache instance.
 //
 // - anywhereCacheId: The ID of requested Anywhere Cache instance.
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) Resume(bucket string, anywhereCacheId string) *AnywhereCacheResumeCall {
-	c := &AnywhereCacheResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) Resume(bucket string, anywhereCacheId string) *AnywhereCachesResumeCall {
+	c := &AnywhereCachesResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.anywhereCacheId = anywhereCacheId
 	return c
@@ -3874,7 +3878,7 @@ func (r *AnywhereCacheService) Resume(bucket string, anywhereCacheId string) *An
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCacheResumeCall) Fields(s ...googleapi.Field) *AnywhereCacheResumeCall {
+func (c *AnywhereCachesResumeCall) Fields(s ...googleapi.Field) *AnywhereCachesResumeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3882,21 +3886,21 @@ func (c *AnywhereCacheResumeCall) Fields(s ...googleapi.Field) *AnywhereCacheRes
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCacheResumeCall) Context(ctx context.Context) *AnywhereCacheResumeCall {
+func (c *AnywhereCachesResumeCall) Context(ctx context.Context) *AnywhereCachesResumeCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCacheResumeCall) Header() http.Header {
+func (c *AnywhereCachesResumeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCacheResumeCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -3927,7 +3931,7 @@ func (c *AnywhereCacheResumeCall) doRequest(alt string) (*http.Response, error) 
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCacheResumeCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
+func (c *AnywhereCachesResumeCall) Do(opts ...googleapi.CallOption) (*AnywhereCache, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3973,7 +3977,7 @@ func (c *AnywhereCacheResumeCall) Do(opts ...googleapi.CallOption) (*AnywhereCac
 	//       "type": "string"
 	//     },
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3994,7 +3998,7 @@ func (c *AnywhereCacheResumeCall) Do(opts ...googleapi.CallOption) (*AnywhereCac
 
 // method id "storage.anywhereCaches.update":
 
-type AnywhereCacheUpdateCall struct {
+type AnywhereCachesUpdateCall struct {
 	s               *Service
 	bucket          string
 	anywhereCacheId string
@@ -4008,9 +4012,9 @@ type AnywhereCacheUpdateCall struct {
 // Cache instance.
 //
 // - anywhereCacheId: The ID of requested Anywhere Cache instance.
-// - bucket: Name of the partent bucket.
-func (r *AnywhereCacheService) Update(bucket string, anywhereCacheId string, anywherecache *AnywhereCache) *AnywhereCacheUpdateCall {
-	c := &AnywhereCacheUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+// - bucket: Name of the parent bucket.
+func (r *AnywhereCachesService) Update(bucket string, anywhereCacheId string, anywherecache *AnywhereCache) *AnywhereCachesUpdateCall {
+	c := &AnywhereCachesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
 	c.anywhereCacheId = anywhereCacheId
 	c.anywherecache = anywherecache
@@ -4020,7 +4024,7 @@ func (r *AnywhereCacheService) Update(bucket string, anywhereCacheId string, any
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *AnywhereCacheUpdateCall) Fields(s ...googleapi.Field) *AnywhereCacheUpdateCall {
+func (c *AnywhereCachesUpdateCall) Fields(s ...googleapi.Field) *AnywhereCachesUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4028,21 +4032,21 @@ func (c *AnywhereCacheUpdateCall) Fields(s ...googleapi.Field) *AnywhereCacheUpd
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *AnywhereCacheUpdateCall) Context(ctx context.Context) *AnywhereCacheUpdateCall {
+func (c *AnywhereCachesUpdateCall) Context(ctx context.Context) *AnywhereCachesUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *AnywhereCacheUpdateCall) Header() http.Header {
+func (c *AnywhereCachesUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AnywhereCacheUpdateCall) doRequest(alt string) (*http.Response, error) {
+func (c *AnywhereCachesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -4078,7 +4082,7 @@ func (c *AnywhereCacheUpdateCall) doRequest(alt string) (*http.Response, error) 
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AnywhereCacheUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+func (c *AnywhereCachesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4124,7 +4128,7 @@ func (c *AnywhereCacheUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "type": "string"
 	//     },
 	//     "bucket": {
-	//       "description": "Name of the partent bucket",
+	//       "description": "Name of the parent bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

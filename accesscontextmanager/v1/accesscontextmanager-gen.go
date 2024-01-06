@@ -1854,13 +1854,13 @@ func (s *ListSupportedServicesResponse) MarshalJSON() ([]byte, error) {
 // MethodSelector: An allowed method or permission of a service
 // specified in ApiOperation.
 type MethodSelector struct {
-	// Method: Value for `method` should be a valid method name for the
-	// corresponding `service_name` in ApiOperation. If `*` used as value
-	// for `method`, then ALL methods and permissions are allowed.
+	// Method: A valid method name for the corresponding `service_name` in
+	// ApiOperation. If `*` is used as the value for the `method`, then ALL
+	// methods and permissions are allowed.
 	Method string `json:"method,omitempty"`
 
-	// Permission: Value for `permission` should be a valid Cloud IAM
-	// permission for the corresponding `service_name` in ApiOperation.
+	// Permission: A valid Cloud IAM permission for the corresponding
+	// `service_name` in ApiOperation.
 	Permission string `json:"permission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
@@ -2488,8 +2488,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SupportedService: `SupportedService` specifies VPC-SC supported
-// service and its properties.
+// SupportedService: `SupportedService` specifies the VPC Service
+// Controls and its properties.
 type SupportedService struct {
 	// AvailableOnRestrictedVip: True if the service is available on the
 	// restricted VIP. Services on the restricted VIP typically either
@@ -2498,7 +2498,9 @@ type SupportedService struct {
 	AvailableOnRestrictedVip bool `json:"availableOnRestrictedVip,omitempty"`
 
 	// KnownLimitations: True if the service is supported with some
-	// limitations. Check documentation for details.
+	// limitations. Check documentation
+	// (https://cloud.google.com/vpc-service-controls/docs/supported-products)
+	// for details.
 	KnownLimitations bool `json:"knownLimitations,omitempty"`
 
 	// Name: The service name or address of the supported service, such as
@@ -2542,11 +2544,12 @@ type SupportedService struct {
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
 	SupportStage string `json:"supportStage,omitempty"`
 
-	// SupportedMethods: The list of the supported methods. Field exist only
-	// in response on [GetSupportedService]
+	// SupportedMethods: The list of the supported methods. This field
+	// exists only in response to GetSupportedService
 	SupportedMethods []*MethodSelector `json:"supportedMethods,omitempty"`
 
-	// Title: The name of the supported product, such as 'Cloud Product API'
+	// Title: The name of the supported product, such as 'Cloud Product
+	// API'.
 	Title string `json:"title,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

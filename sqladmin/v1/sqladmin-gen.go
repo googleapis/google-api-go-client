@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3004,31 +3004,32 @@ type IpConfiguration struct {
 	// PscConfig: PSC settings for this instance.
 	PscConfig *PscConfig `json:"pscConfig,omitempty"`
 
-	// RequireSsl: Whether SSL/TLS connections over IP are enforced. If set
-	// to false, then allow both non-SSL/non-TLS and SSL/TLS connections.
-	// For SSL/TLS connections, the client certificate won't be verified. If
-	// set to true, then only allow connections encrypted with SSL/TLS and
-	// with valid client certificates. If you want to enforce SSL/TLS
-	// without enforcing the requirement for valid client certificates, then
-	// use the `ssl_mode` flag instead of the legacy `require_ssl` flag.
+	// RequireSsl: Use `ssl_mode` instead for MySQL and PostgreSQL. SQL
+	// Server uses this flag. Whether SSL/TLS connections over IP are
+	// enforced. If set to false, then allow both non-SSL/non-TLS and
+	// SSL/TLS connections. For SSL/TLS connections, the client certificate
+	// won't be verified. If set to true, then only allow connections
+	// encrypted with SSL/TLS and with valid client certificates. If you
+	// want to enforce SSL/TLS without enforcing the requirement for valid
+	// client certificates, then use the `ssl_mode` flag instead of the
+	// `require_ssl` flag.
 	RequireSsl bool `json:"requireSsl,omitempty"`
 
 	// SslMode: Specify how SSL/TLS is enforced in database connections.
-	// This flag is supported only for PostgreSQL. Use the legacy
-	// `require_ssl` flag for enforcing SSL/TLS in MySQL and SQL Server.
-	// But, for PostgreSQL, use the `ssl_mode` flag instead of the legacy
-	// `require_ssl` flag. To avoid the conflict between those flags in
-	// PostgreSQL, only the following value pairs are valid: *
+	// MySQL and PostgreSQL use the `ssl_mode` flag. If you must use the
+	// `require_ssl` flag for backward compatibility, then only the
+	// following value pairs are valid: *
 	// `ssl_mode=ALLOW_UNENCRYPTED_AND_ENCRYPTED` and `require_ssl=false` *
 	// `ssl_mode=ENCRYPTED_ONLY` and `require_ssl=false` *
 	// `ssl_mode=TRUSTED_CLIENT_CERTIFICATE_REQUIRED` and `require_ssl=true`
-	// Note that the value of `ssl_mode` gets priority over the value of the
-	// legacy `require_ssl`. For example, for the pair
-	// `ssl_mode=ENCRYPTED_ONLY, require_ssl=false`, the
-	// `ssl_mode=ENCRYPTED_ONLY` means "only accepts SSL connection", while
-	// the `require_ssl=false` means "both non-SSL and SSL connections are
-	// allowed". The database respects `ssl_mode` in this case and only
-	// accepts SSL connections.
+	// The value of `ssl_mode` gets priority over the value of
+	// `require_ssl`. For example, for the pair `ssl_mode=ENCRYPTED_ONLY`
+	// and `require_ssl=false`, the `ssl_mode=ENCRYPTED_ONLY` means only
+	// accept SSL connections, while the `require_ssl=false` means accept
+	// both non-SSL and SSL connections. MySQL and PostgreSQL databases
+	// respect `ssl_mode` in this case and accept only SSL connections. SQL
+	// Server uses the `require_ssl` flag. You can set the value for this
+	// flag to `true` or `false`.
 	//
 	// Possible values:
 	//   "SSL_MODE_UNSPECIFIED" - The SSL mode is unknown.
@@ -4353,6 +4354,13 @@ type SqlExternalSyncSettingError struct {
 	//   "TURN_ON_PITR_AFTER_PROMOTE" - This code instructs customers to
 	// turn on point-in-time recovery manually for the instance after
 	// promoting the Cloud SQL for PostgreSQL instance.
+	//   "INCOMPATIBLE_DATABASE_MINOR_VERSION" - The minor version of
+	// replica database is incompatible with the source.
+	//   "SOURCE_MAX_SUBSCRIPTIONS" - This warning message indicates that
+	// Cloud SQL uses the maximum number of subscriptions to migrate data
+	// from the source to the destination.
+	//   "UNABLE_TO_VERIFY_DEFINERS" - Unable to verify definers on the
+	// source for MySQL.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -5249,9 +5257,9 @@ type User struct {
 	//   "BUILT_IN" - The database's built-in user type.
 	//   "CLOUD_IAM_USER" - Cloud IAM user.
 	//   "CLOUD_IAM_SERVICE_ACCOUNT" - Cloud IAM service account.
-	//   "CLOUD_IAM_GROUP" - Cloud IAM Group non-login user.
-	//   "CLOUD_IAM_GROUP_USER" - Cloud IAM Group login user.
-	//   "CLOUD_IAM_GROUP_SERVICE_ACCOUNT" - Cloud IAM Group login service
+	//   "CLOUD_IAM_GROUP" - Cloud IAM group non-login user.
+	//   "CLOUD_IAM_GROUP_USER" - Cloud IAM group login user.
+	//   "CLOUD_IAM_GROUP_SERVICE_ACCOUNT" - Cloud IAM group login service
 	// account.
 	Type string `json:"type,omitempty"`
 

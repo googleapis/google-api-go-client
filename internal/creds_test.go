@@ -30,7 +30,7 @@ func TestTokenSource(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := &google.DefaultCredentials{TokenSource: ts}
-	if !cmp.Equal(got, want, cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")) {
+	if !cmp.Equal(got, want, cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain")) {
 		t.Error("did not get the same TokenSource back")
 	}
 
@@ -46,7 +46,7 @@ func TestTokenSource(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if cmp.Equal(got, want, cmpopts.IgnoreFields(google.Credentials{}, "universeDomain")) {
+	if cmp.Equal(got, want, cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain")) {
 		t.Error("got the same TokenSource back, wanted one from the JSON file")
 	}
 	// TODO(jba): find a way to test the call to google.DefaultTokenSource.

@@ -1390,7 +1390,7 @@ type GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue struct {
 	// CurrencyCode: When a conversion event for this event_name has no set
 	// currency, this currency will be applied as the default. Must be in
 	// ISO 4217 currency code format. See
-	// https://en.wikipedia.org/wiki/ISO_4217 for more.
+	// https://en.wikipedia.org/wiki/ISO_4217 for more information.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// Value: This value will be used to populate the value for all
@@ -2925,7 +2925,8 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Property: Optional. Resource name for a child property. If set, only
-	// return changes made to this property or its child resources.
+	// return changes made to this property or its child resources. Format:
+	// properties/{propertyId} Example: "properties/100"
 	Property string `json:"property,omitempty"`
 
 	// ResourceType: Optional. If set, only return changes if they are for a
@@ -4319,7 +4320,7 @@ type AccountsSearchChangeHistoryEventsCall struct {
 // or its children given the specified set of filters.
 //
 //   - account: The account resource for which to return change history
-//     resources.
+//     resources. Format: accounts/{account} Example: "accounts/100".
 func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyticsadminv1betasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest) *AccountsSearchChangeHistoryEventsCall {
 	c := &AccountsSearchChangeHistoryEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4430,7 +4431,7 @@ func (c *AccountsSearchChangeHistoryEventsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "account": {
-	//       "description": "Required. The account resource for which to return change history resources.",
+	//       "description": "Required. The account resource for which to return change history resources. Format: accounts/{account} Example: \"accounts/100\"",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,

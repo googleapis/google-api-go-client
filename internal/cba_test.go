@@ -15,7 +15,7 @@ import (
 const (
 	testMTLSEndpoint           = "https://test.mtls.googleapis.com/"
 	testRegularEndpoint        = "https://test.googleapis.com/"
-	testEndpointTemplate       = "https://test.%s/"
+	testEndpointTemplate       = "https://test.UNIVERSE_DOMAIN/"
 	testOverrideEndpoint       = "https://test.override.example.com/"
 	testUniverseDomain         = "example.com"
 	testUniverseDomainEndpoint = "https://test.example.com/"

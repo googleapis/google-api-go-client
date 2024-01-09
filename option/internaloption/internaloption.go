@@ -38,7 +38,10 @@ func (o defaultEndpointTemplateOption) Apply(settings *internal.DialSettings) {
 
 // WithDefaultEndpointTemplate provides a template for creating the endpoint
 // using a universe domain. See also WithDefaultUniverseDomain and
-// option.WithUniverseDomain.
+// option.WithUniverseDomain. The placeholder UNIVERSE_DOMAIN should be used
+// instead of a concrete universe domain such as "googleapis.com".
+//
+// Example: WithDefaultEndpointTemplate("https://logging.UNIVERSE_DOMAIN/")
 //
 // It should only be used internally by generated clients.
 //

@@ -36,7 +36,6 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
-	"fmt"
 	"net"
 	"net/url"
 	"os"
@@ -55,6 +54,8 @@ const (
 
 	// Experimental: if true, the code will try MTLS with S2A as the default for transport security. Default value is false.
 	googleAPIUseS2AEnv = "EXPERIMENTAL_GOOGLE_API_USE_S2A"
+
+	universeDomainPlaceholder = "UNIVERSE_DOMAIN"
 )
 
 var (
@@ -77,10 +78,7 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	// TODO(chrisdsmith): Closes: CL-R3 (remove this note before publication)
 	// TODO(chrisdsmith): Use this composed endpoint everywhere to replace DialSettings.DefaultEndpoint
 	if settings.Endpoint == "" && settings.UniverseDomainNotGDU() {
-		endpoint = fmt.Sprintf(settings.DefaultEndpointTemplate, settings.GetUniverseDomain())
-		if err != nil {
-			return nil, "", err
-		}
+		endpoint = strings.Replace(settings.DefaultEndpointTemplate, universeDomainPlaceholder, settings.GetUniverseDomain(), 1)
 	}
 	return clientCertSource, endpoint, nil
 }

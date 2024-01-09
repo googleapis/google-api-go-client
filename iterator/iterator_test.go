@@ -39,7 +39,7 @@ type service struct {
 func (s *service) List(pageSize int, pageToken string) ([]int, string, error) {
 	max := s.max
 	if max == 0 {
-		max = math.MaxInt64
+		max = math.MaxInt
 	}
 	// Never give back any more than s.max.
 	if pageSize <= 0 || pageSize > max {

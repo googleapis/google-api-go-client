@@ -88,7 +88,7 @@ const apiId = "tshealth:v1"
 const apiName = "tshealth"
 const apiVersion = ""
 const basePath = "https://www.googleapis.com/_ah/api/tshealth/v1/"
-const basePathTemplate = "https://www.%s/_ah/api/tshealth/v1/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/_ah/api/tshealth/v1/"
 const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.

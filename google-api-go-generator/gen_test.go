@@ -292,15 +292,15 @@ func TestApiBaseURLTemplate(t *testing.T) {
 	}{
 		{
 			name: "any.json",
-			want: "https://logging.%s/",
+			want: "https://logging.UNIVERSE_DOMAIN/",
 		},
 		{
 			name: "blogger-3.json",
-			want: "https://www.%s/blogger/v3/",
+			want: "https://www.UNIVERSE_DOMAIN/blogger/v3/",
 		},
 		{
 			name: "required-query.json",
-			want: "https://www.%s/_ah/api/tshealth/v1/",
+			want: "https://www.UNIVERSE_DOMAIN/_ah/api/tshealth/v1/",
 		},
 	}
 	for _, tt := range tests {
@@ -324,23 +324,23 @@ func TestReplaceDomain(t *testing.T) {
 	}{
 		{
 			url: "https://logging.googleapis.com/",
-			want: "https://logging.%s/",
+			want: "https://logging.UNIVERSE_DOMAIN/",
 		},
 		{
 			url: "https://www.googleapis.com/blogger/v3/",
-			want: "https://www.%s/blogger/v3/",
+			want: "https://www.UNIVERSE_DOMAIN/blogger/v3/",
 		},
 		{
 			url: "ths-prod.googleplex.com/_ah/api/tshealth/v1/",
-			want: "https://ths-prod.%s/_ah/api/tshealth/v1/",
+			want: "https://ths-prod.UNIVERSE_DOMAIN/_ah/api/tshealth/v1/",
 		},
 		{
 			url: "localhost:1234",
-			want: "https://%s:1234",
+			want: "https://UNIVERSE_DOMAIN:1234",
 		},
 		{
 			url: "localhost",
-			want: "https://%s",
+			want: "https://UNIVERSE_DOMAIN",
 		},
 		{
 			url: "",
@@ -348,7 +348,7 @@ func TestReplaceDomain(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		got, err := replaceDomain(tt.url, "%s")
+		got, err := replaceDomain(tt.url, "UNIVERSE_DOMAIN")
 		if err != nil {
 			t.Fatalf("apiBaseURLTemplate(%s): %v", tt.url, err)
 		}

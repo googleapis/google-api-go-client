@@ -499,12 +499,12 @@ func (a *API) apiBaseURL() string {
 }
 
 // apiBaseURLTemplate returns the value returned by apiBaseURL with the
-// following changes: 1) The hostname (excluding subdomains) is replaced with %s
-// for universe domain substitution. 2) If the value does not have a scheme,
-// https:// is prepended.
+// following changes: 1) The hostname (excluding subdomains) is replaced with
+// UNIVERSE_DOMAIN for universe domain substitution. 2) If the value does not
+// have a scheme, https:// is prepended.
 func (a *API) apiBaseURLTemplate() (string, error) {
 	baseURL := a.apiBaseURL()
-	return replaceDomain(baseURL, "%s")
+	return replaceDomain(baseURL, "UNIVERSE_DOMAIN")
 }
 
 // replaceDomain detects the domain (excluding subdomains) in the provided

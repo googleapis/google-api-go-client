@@ -90,7 +90,7 @@ const apiId = "appengine:v1"
 const apiName = "appengine"
 const apiVersion = "v1"
 const basePath = "https://appengine.googleapis.com/"
-const basePathTemplate = "https://appengine.%s/"
+const basePathTemplate = "https://appengine.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://appengine.mtls.googleapis.com/"
 const defaultUniverseDomain = "googleapis.com"
 

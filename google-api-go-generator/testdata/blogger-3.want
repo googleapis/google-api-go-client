@@ -95,7 +95,7 @@ const apiId = "blogger:v3"
 const apiName = "blogger"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/blogger/v3/"
-const basePathTemplate = "https://www.%s/blogger/v3/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/blogger/v3/"
 const mtlsBasePath = "https://www.mtls.googleapis.com/blogger/v3/"
 const defaultUniverseDomain = "googleapis.com"
 

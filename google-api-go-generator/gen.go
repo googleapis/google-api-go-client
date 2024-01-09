@@ -29,7 +29,9 @@ import (
 )
 
 const (
-	googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
+	googleDiscoveryURL        = "https://www.googleapis.com/discovery/v1/apis"
+	googleDefaultUniverse     = "googleapis.com"
+	universeDomainPlaceholder = "UNIVERSE_DOMAIN"
 )
 
 var (
@@ -499,39 +501,11 @@ func (a *API) apiBaseURL() string {
 }
 
 // apiBaseURLTemplate returns the value returned by apiBaseURL with the
-// following changes: 1) The hostname (excluding subdomains) is replaced with
-// UNIVERSE_DOMAIN for universe domain substitution. 2) If the value does not
-// have a scheme, https:// is prepended.
+// Google Default Universe (googleapis.com) replaced with the placeholder
+// UNIVERSE_DOMAIN for universe domain substitution.
 func (a *API) apiBaseURLTemplate() (string, error) {
-	baseURL := a.apiBaseURL()
-	return replaceDomain(baseURL, "UNIVERSE_DOMAIN")
-}
-
-// replaceDomain detects the domain (excluding subdomains) in the provided
-// baseURL and replaces it with newDomain. If baseURL is empty, empty is
-// returned. If baseURL is an invalid URL, the error from url.Parse is returned.
-// If baseURL is valid but does not have a scheme, https:// is prepended to the
-// return value.
-func replaceDomain(baseURL, newDomain string) (string, error) {
-	if baseURL == "" {
-		return baseURL, nil
-	}
-	if !strings.Contains(baseURL, "://") {
-		// Prepend scheme if missing or url.Parse might fail to detect hostname.
-		baseURL = "https://" + baseURL
-	}
-	u, err := url.Parse(baseURL)
-	if err != nil {
-		return "", err
-	}
-	parts := strings.Split(u.Hostname(), ".")
-	var domain string
-	if len(parts) == 1 {
-		domain = parts[0]
-	} else {
-		domain = parts[len(parts)-2] + "." + parts[len(parts)-1]
-	}
-	return strings.Replace(baseURL, domain, newDomain, 1), nil
+	base := a.apiBaseURL()
+	return strings.Replace(base, googleDefaultUniverse, universeDomainPlaceholder, 1), nil
 }
 
 func (a *API) mtlsAPIBaseURL() string {

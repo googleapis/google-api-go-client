@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -260,6 +260,7 @@ func (s *APIService) userAgent() string {
 
 func NewAccountsService(s *APIService) *AccountsService {
 	rs := &AccountsService{s: s}
+	rs.Businessmessageslinks = NewAccountsBusinessmessageslinksService(s)
 	rs.Credentials = NewAccountsCredentialsService(s)
 	rs.Labels = NewAccountsLabelsService(s)
 	rs.Returncarrier = NewAccountsReturncarrierService(s)
@@ -269,11 +270,22 @@ func NewAccountsService(s *APIService) *AccountsService {
 type AccountsService struct {
 	s *APIService
 
+	Businessmessageslinks *AccountsBusinessmessageslinksService
+
 	Credentials *AccountsCredentialsService
 
 	Labels *AccountsLabelsService
 
 	Returncarrier *AccountsReturncarrierService
+}
+
+func NewAccountsBusinessmessageslinksService(s *APIService) *AccountsBusinessmessageslinksService {
+	rs := &AccountsBusinessmessageslinksService{s: s}
+	return rs
+}
+
+type AccountsBusinessmessageslinksService struct {
+	s *APIService
 }
 
 func NewAccountsCredentialsService(s *APIService) *AccountsCredentialsService {
@@ -3611,6 +3623,51 @@ type BusinessDayConfig struct {
 
 func (s *BusinessDayConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessDayConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BusinessMessagesLink: A Link from a Business Messages
+// (https://businessmessages.google) Agent Id to the Merchant Center
+// account. You can create multiple `BusinessMessagesLink` to Merchant
+// Center Account. Only available to selected merchants. See Create
+// agents to manage brands
+// (https://developers.google.com/business-communications/business-messages/guides/how-to/agents)
+// for more information.
+type BusinessMessagesLink struct {
+	// AgentId: Required. Agent ID from Business Messages to link to the
+	// Merchant Center account. The Agent ID can be found in the Business
+	// Communications Developer Console
+	// (https://developers.google.com/business-communications/business-messages/guides/concepts/developer-console#agent_selection).
+	AgentId string `json:"agentId,omitempty"`
+
+	// BusinessMessagesLinkId: Output only. Immutable. The ID uniquely
+	// identifying each `BusinessMessagesLink`.
+	BusinessMessagesLinkId string `json:"businessMessagesLinkId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BusinessMessagesLink) MarshalJSON() ([]byte, error) {
+	type NoMethod BusinessMessagesLink
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7451,6 +7508,47 @@ type ListAccountReturnCarrierResponse struct {
 
 func (s *ListAccountReturnCarrierResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountReturnCarrierResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListBusinessMessagesLinksResponse: Response message for the
+// `ListBusinessMessagesLinks` method.
+type ListBusinessMessagesLinksResponse struct {
+	// BusinessMessagesLinks: The `BusinessMessagesLink` resources for the
+	// given Merchant Center account.
+	BusinessMessagesLinks []*BusinessMessagesLink `json:"businessMessagesLinks,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `pageToken` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BusinessMessagesLinks") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BusinessMessagesLinks") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBusinessMessagesLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBusinessMessagesLinksResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -23065,6 +23163,621 @@ func (c *AccountsVerifyphonenumberCall) Do(opts ...googleapi.CallOption) (*Verif
 
 }
 
+// method id "content.accounts.businessmessageslinks.create":
+
+type AccountsBusinessmessageslinksCreateCall struct {
+	s                    *APIService
+	accountId            int64
+	businessmessageslink *BusinessMessagesLink
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Creates a `BusinessMessagesLink` in Merchant Center account.
+//
+// - accountId: The ID of the Merchant Center account.
+func (r *AccountsBusinessmessageslinksService) Create(accountId int64, businessmessageslink *BusinessMessagesLink) *AccountsBusinessmessageslinksCreateCall {
+	c := &AccountsBusinessmessageslinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.businessmessageslink = businessmessageslink
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsBusinessmessageslinksCreateCall) Fields(s ...googleapi.Field) *AccountsBusinessmessageslinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsBusinessmessageslinksCreateCall) Context(ctx context.Context) *AccountsBusinessmessageslinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsBusinessmessageslinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessmessageslinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.businessmessageslink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/businessmessageslinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.accounts.businessmessageslinks.create" call.
+// Exactly one of *BusinessMessagesLink or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BusinessMessagesLink.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsBusinessmessageslinksCreateCall) Do(opts ...googleapi.CallOption) (*BusinessMessagesLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BusinessMessagesLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a `BusinessMessagesLink` in Merchant Center account.",
+	//   "flatPath": "accounts/{accountId}/businessmessageslinks",
+	//   "httpMethod": "POST",
+	//   "id": "content.accounts.businessmessageslinks.create",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Required. The ID of the Merchant Center account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/businessmessageslinks",
+	//   "request": {
+	//     "$ref": "BusinessMessagesLink"
+	//   },
+	//   "response": {
+	//     "$ref": "BusinessMessagesLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounts.businessmessageslinks.delete":
+
+type AccountsBusinessmessageslinksDeleteCall struct {
+	s                      *APIService
+	accountId              int64
+	businessMessagesLinkId string
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Delete: Deletes the specified `BusinessMessagesLink` resource from
+// Merchant Center account.
+//
+//   - accountId: The ID of the Merchant Center account.
+//   - businessMessagesLinkId: The identifier for the Business Messages
+//     Link.
+func (r *AccountsBusinessmessageslinksService) Delete(accountId int64, businessMessagesLinkId string) *AccountsBusinessmessageslinksDeleteCall {
+	c := &AccountsBusinessmessageslinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.businessMessagesLinkId = businessMessagesLinkId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsBusinessmessageslinksDeleteCall) Fields(s ...googleapi.Field) *AccountsBusinessmessageslinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsBusinessmessageslinksDeleteCall) Context(ctx context.Context) *AccountsBusinessmessageslinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsBusinessmessageslinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessmessageslinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/businessmessageslinks/{businessMessagesLinkId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":              strconv.FormatInt(c.accountId, 10),
+		"businessMessagesLinkId": c.businessMessagesLinkId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.accounts.businessmessageslinks.delete" call.
+func (c *AccountsBusinessmessageslinksDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Deletes the specified `BusinessMessagesLink` resource from Merchant Center account.",
+	//   "flatPath": "accounts/{accountId}/businessmessageslinks/{businessMessagesLinkId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "content.accounts.businessmessageslinks.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "businessMessagesLinkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Required. The ID of the Merchant Center account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "businessMessagesLinkId": {
+	//       "description": "Required. The identifier for the Business Messages Link.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/businessmessageslinks/{businessMessagesLinkId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounts.businessmessageslinks.get":
+
+type AccountsBusinessmessageslinksGetCall struct {
+	s                      *APIService
+	accountId              int64
+	businessMessagesLinkId string
+	urlParams_             gensupport.URLParams
+	ifNoneMatch_           string
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Get: Retrieves `BusinessMessagesLink` in Merchant Center account.
+//
+//   - accountId: The ID of the Merchant Center account.
+//   - businessMessagesLinkId: The identifier for the Business Messages
+//     Link.
+func (r *AccountsBusinessmessageslinksService) Get(accountId int64, businessMessagesLinkId string) *AccountsBusinessmessageslinksGetCall {
+	c := &AccountsBusinessmessageslinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.businessMessagesLinkId = businessMessagesLinkId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsBusinessmessageslinksGetCall) Fields(s ...googleapi.Field) *AccountsBusinessmessageslinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsBusinessmessageslinksGetCall) IfNoneMatch(entityTag string) *AccountsBusinessmessageslinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsBusinessmessageslinksGetCall) Context(ctx context.Context) *AccountsBusinessmessageslinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsBusinessmessageslinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessmessageslinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/businessmessageslinks/{businessMessagesLinkId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":              strconv.FormatInt(c.accountId, 10),
+		"businessMessagesLinkId": c.businessMessagesLinkId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.accounts.businessmessageslinks.get" call.
+// Exactly one of *BusinessMessagesLink or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BusinessMessagesLink.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsBusinessmessageslinksGetCall) Do(opts ...googleapi.CallOption) (*BusinessMessagesLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BusinessMessagesLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves `BusinessMessagesLink` in Merchant Center account.",
+	//   "flatPath": "accounts/{accountId}/businessmessageslinks/{businessMessagesLinkId}",
+	//   "httpMethod": "GET",
+	//   "id": "content.accounts.businessmessageslinks.get",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "businessMessagesLinkId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Required. The ID of the Merchant Center account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "businessMessagesLinkId": {
+	//       "description": "Required. The identifier for the Business Messages Link.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/businessmessageslinks/{businessMessagesLinkId}",
+	//   "response": {
+	//     "$ref": "BusinessMessagesLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.accounts.businessmessageslinks.list":
+
+type AccountsBusinessmessageslinksListCall struct {
+	s            *APIService
+	accountId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the `BusinessMessagesLink` resources for Merchant Center
+// account.
+//
+// - accountId: The ID of the account.
+func (r *AccountsBusinessmessageslinksService) List(accountId int64) *AccountsBusinessmessageslinksListCall {
+	c := &AccountsBusinessmessageslinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of `BusinessMessagesLink` resources for the Merchant Center account
+// to return. Defaults to 50; values above 1000 will be coerced to 1000.
+func (c *AccountsBusinessmessageslinksListCall) PageSize(pageSize int64) *AccountsBusinessmessageslinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListBusinessMessagesLinks` call. Provide
+// the page token to retrieve the subsequent page. When paginating, all
+// other parameters provided to `ListBusinessMessagesLinks` must match
+// the call that provided the page token.
+func (c *AccountsBusinessmessageslinksListCall) PageToken(pageToken string) *AccountsBusinessmessageslinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsBusinessmessageslinksListCall) Fields(s ...googleapi.Field) *AccountsBusinessmessageslinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsBusinessmessageslinksListCall) IfNoneMatch(entityTag string) *AccountsBusinessmessageslinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsBusinessmessageslinksListCall) Context(ctx context.Context) *AccountsBusinessmessageslinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsBusinessmessageslinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsBusinessmessageslinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/businessmessageslinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId": strconv.FormatInt(c.accountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.accounts.businessmessageslinks.list" call.
+// Exactly one of *ListBusinessMessagesLinksResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListBusinessMessagesLinksResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsBusinessmessageslinksListCall) Do(opts ...googleapi.CallOption) (*ListBusinessMessagesLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBusinessMessagesLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the `BusinessMessagesLink` resources for Merchant Center account.",
+	//   "flatPath": "accounts/{accountId}/businessmessageslinks",
+	//   "httpMethod": "GET",
+	//   "id": "content.accounts.businessmessageslinks.list",
+	//   "parameterOrder": [
+	//     "accountId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Required. The ID of the account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of `BusinessMessagesLink` resources for the Merchant Center account to return. Defaults to 50; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListBusinessMessagesLinks` call. Provide the page token to retrieve the subsequent page. When paginating, all other parameters provided to `ListBusinessMessagesLinks` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "accounts/{accountId}/businessmessageslinks",
+	//   "response": {
+	//     "$ref": "ListBusinessMessagesLinksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsBusinessmessageslinksListCall) Pages(ctx context.Context, f func(*ListBusinessMessagesLinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "content.accounts.credentials.create":
 
 type AccountsCredentialsCreateCall struct {
@@ -33179,7 +33892,7 @@ func (r *MerchantsupportService) Renderaccountissues(merchantId int64, renderacc
 // LanguageCode sets the optional parameter "languageCode": The IETF
 // BCP-47 (https://tools.ietf.org/html/bcp47) language code used to
 // localize support content. If not set, the result will be in default
-// language ('en-US').
+// language `en-US`.
 func (c *MerchantsupportRenderaccountissuesCall) LanguageCode(languageCode string) *MerchantsupportRenderaccountissuesCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -33294,7 +34007,7 @@ func (c *MerchantsupportRenderaccountissuesCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The [IETF BCP-47](https://tools.ietf.org/html/bcp47) language code used to localize support content. If not set, the result will be in default language ('en-US').",
+	//       "description": "Optional. The [IETF BCP-47](https://tools.ietf.org/html/bcp47) language code used to localize support content. If not set, the result will be in default language `en-US`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -33357,7 +34070,7 @@ func (r *MerchantsupportService) Renderproductissues(merchantId int64, productId
 // LanguageCode sets the optional parameter "languageCode": The IETF
 // BCP-47 (https://tools.ietf.org/html/bcp47) language code used to
 // localize support content. If not set, the result will be in default
-// language ('en-US').
+// language `en-US`.
 func (c *MerchantsupportRenderproductissuesCall) LanguageCode(languageCode string) *MerchantsupportRenderproductissuesCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -33474,7 +34187,7 @@ func (c *MerchantsupportRenderproductissuesCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The [IETF BCP-47](https://tools.ietf.org/html/bcp47) language code used to localize support content. If not set, the result will be in default language ('en-US').",
+	//       "description": "Optional. The [IETF BCP-47](https://tools.ietf.org/html/bcp47) language code used to localize support content. If not set, the result will be in default language `en-US`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

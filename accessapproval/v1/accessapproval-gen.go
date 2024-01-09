@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -433,11 +433,10 @@ type AccessReason struct {
 	// customer data in order to diagnose or resolve a suspected issue in
 	// services or a known outage.
 	//   "CLOUD_INITIATED_ACCESS" - Similar to 'GOOGLE_INITIATED_SERVICE' or
-	// 'GOOGLE_INITIATED_REVIEW', but meant to reflect when the cloud
-	// operator is not Google (namely, a TPC operator), and accessed
-	// customer data in order to diagnose or resolve a suspected issue in
-	// services or a known outage, or for security, fraud, abuse, or
-	// compliance review purposes.
+	// 'GOOGLE_INITIATED_REVIEW', but with universe agnostic naming. The
+	// principal accessed customer data in order to diagnose or resolve a
+	// suspected issue in services or a known outage, or for security,
+	// fraud, abuse, or compliance review purposes.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to

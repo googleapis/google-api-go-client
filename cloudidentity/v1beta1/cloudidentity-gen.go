@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1360,7 +1360,7 @@ func (s *DsaPublicKeyInfo) MarshalJSON() ([]byte, error) {
 type DynamicGroupMetadata struct {
 	// Queries: Memberships will be the union of all queries. Only one entry
 	// with USER resource is currently supported. Customers can create up to
-	// 100 dynamic groups.
+	// 500 dynamic groups.
 	Queries []*DynamicGroupQuery `json:"queries,omitempty"`
 
 	// Status: Output only. Status of the dynamic group.

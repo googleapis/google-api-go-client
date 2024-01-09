@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -316,7 +316,8 @@ type GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo struct {
 	LatestVerificationResult string `json:"latestVerificationResult,omitempty"`
 
 	// Username: Username of the account that is being verified. Deprecated.
-	// Customers should now provide the hashed account ID field in Event.
+	// Customers should now provide the `account_id` field in
+	// `event.user_info`.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Endpoints") to

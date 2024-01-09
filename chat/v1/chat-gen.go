@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1147,6 +1147,42 @@ type CommonEventObject struct {
 
 func (s *CommonEventObject) MarshalJSON() ([]byte, error) {
 	type NoMethod CommonEventObject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CompleteImportSpaceRequest: Request message for completing the import
+// process for a space.
+type CompleteImportSpaceRequest struct {
+}
+
+type CompleteImportSpaceResponse struct {
+	// Space: The import mode space.
+	Space *Space `json:"space,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Space") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompleteImportSpaceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CompleteImportSpaceResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4026,11 +4062,16 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 // space.
 type Membership struct {
 	// CreateTime: Optional. Immutable. The creation time of the membership,
-	// such as when a member joined or was invited to join a space.
-	// Developer Preview (https://developers.google.com/workspace/preview):
-	// This field is output only, except when used to import historical
+	// such as when a member joined or was invited to join a space. This
+	// field is output only, except when used to import historical
 	// memberships in import mode spaces.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Optional. Immutable. The deletion time of the membership,
+	// such as when a member left or was removed from a space. This field is
+	// output only, except when used to import historical memberships in
+	// import mode spaces.
+	DeleteTime string `json:"deleteTime,omitempty"`
 
 	// GroupMember: The Google Group the membership corresponds to. Only
 	// supports read operations. Other operations, like creating or updating
@@ -4161,13 +4202,11 @@ type Message struct {
 	// (https://developers.google.com/chat/api/guides/v1/messages/create#name_a_created_message).
 	ClientAssignedMessageId string `json:"clientAssignedMessageId,omitempty"`
 
-	// CreateTime: For spaces created in Chat, the time at which the message
-	// was created. This field is output only, except when used in imported
-	// spaces. Developer Preview
-	// (https://developers.google.com/workspace/preview): For imported
-	// spaces, set this field to the historical timestamp at which the
-	// message was created in the source in order to preserve the original
-	// creation time.
+	// CreateTime: Optional. Immutable. For spaces created in Chat, the time
+	// at which the message was created. This field is output only, except
+	// when used in import mode spaces. For import mode spaces, set this
+	// field to the historical timestamp at which the message was created in
+	// the source in order to preserve the original creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeleteTime: Output only. The time at which the message was deleted in
@@ -4656,6 +4695,14 @@ type Space struct {
 	// feature direct messaging.
 	AdminInstalled bool `json:"adminInstalled,omitempty"`
 
+	// CreateTime: Optional. Immutable. For spaces created in Chat, the time
+	// the space was created. This field is output only, except when used in
+	// import mode spaces. For import mode spaces, set this field to the
+	// historical timestamp at which the space was created in the source in
+	// order to preserve the original creation time. Only populated in the
+	// output when `spaceType` is `GROUP_CHAT` or `SPACE`.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DisplayName: The space's display name. Required when creating a space
 	// (https://developers.google.com/chat/api/reference/rest/v1/spaces/create).
 	// If you receive the error message `ALREADY_EXISTS` when creating a
@@ -4676,6 +4723,12 @@ type Space struct {
 	// Workspace organization. For existing spaces, this field is output
 	// only.
 	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
+
+	// ImportMode: Optional. Whether this space is created in `Import Mode`
+	// as part of a data migration into Google Workspace. While spaces are
+	// being imported, they aren't visible to users until the import is
+	// complete.
+	ImportMode bool `json:"importMode,omitempty"`
 
 	// Name: Resource name of the space. Format: `spaces/{space}`
 	Name string `json:"name,omitempty"`
@@ -5718,6 +5771,154 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*UploadAttachmentRes
 	//     "https://www.googleapis.com/auth/chat.messages.create"
 	//   ],
 	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "chat.spaces.completeImport":
+
+type SpacesCompleteImportCall struct {
+	s                          *Service
+	name                       string
+	completeimportspacerequest *CompleteImportSpaceRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// CompleteImport: Completes the import process
+// (https://developers.google.com/chat/api/guides/import-data) for the
+// specified space and makes it visible to users. Requires app
+// authentication and domain-wide delegation. For more information, see
+// Authorize Google Chat apps to import data
+// (https://developers.google.com/chat/api/guides/authorize-import).
+//
+//   - name: Resource name of the import mode space. Format:
+//     `spaces/{space}`.
+func (r *SpacesService) CompleteImport(name string, completeimportspacerequest *CompleteImportSpaceRequest) *SpacesCompleteImportCall {
+	c := &SpacesCompleteImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.completeimportspacerequest = completeimportspacerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpacesCompleteImportCall) Fields(s ...googleapi.Field) *SpacesCompleteImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpacesCompleteImportCall) Context(ctx context.Context) *SpacesCompleteImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpacesCompleteImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesCompleteImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.completeimportspacerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:completeImport")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.completeImport" call.
+// Exactly one of *CompleteImportSpaceResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *CompleteImportSpaceResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SpacesCompleteImportCall) Do(opts ...googleapi.CallOption) (*CompleteImportSpaceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CompleteImportSpaceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Completes the [import process](https://developers.google.com/chat/api/guides/import-data) for the specified space and makes it visible to users. Requires app authentication and domain-wide delegation. For more information, see [Authorize Google Chat apps to import data](https://developers.google.com/chat/api/guides/authorize-import).",
+	//   "flatPath": "v1/spaces/{spacesId}:completeImport",
+	//   "httpMethod": "POST",
+	//   "id": "chat.spaces.completeImport",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the import mode space. Format: `spaces/{space}`",
+	//       "location": "path",
+	//       "pattern": "^spaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:completeImport",
+	//   "request": {
+	//     "$ref": "CompleteImportSpaceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CompleteImportSpaceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import"
+	//   ]
 	// }
 
 }

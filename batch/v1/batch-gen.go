@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -879,6 +879,12 @@ type AllocationPolicy struct {
 
 	// ServiceAccount: Service account that VMs will run as.
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
+
+	// Tags: Optional. Tags applied to the VM instances. The tags identify
+	// valid sources or targets for network firewalls. Each tag must be 1-63
+	// characters long, and comply with RFC1035
+	// (https://www.ietf.org/rfc/rfc1035.txt).
+	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
 	// unconditionally include in API requests. By default, fields with

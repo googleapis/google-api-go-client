@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1218,6 +1218,17 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	// SupportUri: Output only. URI to related support article for this
 	// schema.
 	SupportUri string `json:"supportUri,omitempty"`
+
+	// SupportedPlatforms: Output only. List indicates that the policy will
+	// only apply to devices/users on these platforms.
+	//
+	// Possible values:
+	//   "PLATFORM_UNSPECIFIED" - Unspecified platform.
+	//   "CHROME_OS" - ChromeOS.
+	//   "CHROME_BROWSER" - Chrome Browser for OSX/Windows/Linux.
+	//   "CHROME_BROWSER_FOR_ANDROID" - Chrome Browser for Android.
+	//   "CHROME_BROWSER_FOR_IOS" - Chrome Browser for iOS.
+	SupportedPlatforms []string `json:"supportedPlatforms,omitempty"`
 
 	// ValidTargetResources: Output only. Information about applicable
 	// target resources for the policy.

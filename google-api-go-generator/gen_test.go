@@ -285,3 +285,35 @@ func TestAsComment_LongLink(t *testing.T) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
+
+func TestApiBaseURLTemplate(t *testing.T) {
+	tests := []struct {
+		name, want string
+	}{
+		{
+			name: "any.json",
+			want: "https://logging.UNIVERSE_DOMAIN/",
+		},
+		{
+			name: "blogger-3.json",
+			want: "https://www.UNIVERSE_DOMAIN/blogger/v3/",
+		},
+		{
+			name: "required-query.json",
+			want: "https://www.UNIVERSE_DOMAIN/_ah/api/tshealth/v1/",
+		},
+	}
+	for _, tt := range tests {
+		api, err := apiFromFile(filepath.Join("testdata", tt.name))
+		if err != nil {
+			t.Fatalf("Error loading API testdata/%s: %v", tt.name, err)
+		}
+		got, err := api.apiBaseURLTemplate()
+		if err != nil {
+			t.Fatalf("%s: apiBaseURLTemplate(): %v", tt.name, err)
+		}
+		if got != tt.want {
+			t.Errorf("%s: apiBaseURLTemplate() = %q; want %q", tt.name, got, tt.want)
+		}
+	}
+}

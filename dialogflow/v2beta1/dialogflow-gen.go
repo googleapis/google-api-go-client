@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3039,6 +3039,10 @@ type GoogleCloudDialogflowCxV3Page struct {
 	// the higher level.
 	AdvancedSettings *GoogleCloudDialogflowCxV3AdvancedSettings `json:"advancedSettings,omitempty"`
 
+	// Description: The description of the page. The maximum length is 500
+	// characters.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Required. The human-readable name of the page, unique
 	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
@@ -3253,7 +3257,8 @@ func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() (
 // can contain one of: 1. A conversational query in the form of text. 2.
 // An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
-// 5. DTMF digits to invoke an intent and fill in parameter value.
+// 5. DTMF digits to invoke an intent and fill in parameter value. 6.
+// The results of a tool executed by the client.
 type GoogleCloudDialogflowCxV3QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3AudioInput `json:"audio,omitempty"`
@@ -7121,6 +7126,10 @@ type GoogleCloudDialogflowCxV3beta1Page struct {
 	// the higher level.
 	AdvancedSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettings `json:"advancedSettings,omitempty"`
 
+	// Description: The description of the page. The maximum length is 500
+	// characters.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Required. The human-readable name of the page, unique
 	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
@@ -7335,7 +7344,8 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // It can contain one of: 1. A conversational query in the form of text.
 // 2. An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
-// 5. DTMF digits to invoke an intent and fill in parameter value.
+// 5. DTMF digits to invoke an intent and fill in parameter value. 6.
+// The results of a tool executed by the client.
 type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3beta1AudioInput `json:"audio,omitempty"`
@@ -13447,8 +13457,8 @@ func (s *GoogleCloudDialogflowV2beta1AutomatedAgentReply) UnmarshalJSON(data []b
 // utterance has been detected. Note that no-speech event is not
 // expected in this phase. The client provides this configuration in
 // terms of the durations of those two phases. The durations are
-// measured in terms of the audio length fromt the the start of the
-// input audio. The flow goes like below: ``` --> Time without speech
+// measured in terms of the audio length from the start of the input
+// audio. The flow goes like below: ``` --> Time without speech
 // detection | utterance only | utterance or no-speech event | |
 // +-------------+ | +------------+ | +---------------+ ----------+ no
 // barge-in +-|-+ barge-in +-|-+ normal period +-----------

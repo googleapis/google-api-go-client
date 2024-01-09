@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -736,7 +736,7 @@ func (r *ProjectsProfilesService) List(parent string) *ProjectsProfilesListCall 
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. Default page_size is 1000. Max limit is 10000.
+// of items to return. Default page_size is 1000. Max limit is 1000.
 func (c *ProjectsProfilesListCall) PageSize(pageSize int64) *ProjectsProfilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -859,7 +859,7 @@ func (c *ProjectsProfilesListCall) Do(opts ...googleapi.CallOption) (*ListProfil
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. Default page_size is 1000. Max limit is 10000.",
+	//       "description": "The maximum number of items to return. Default page_size is 1000. Max limit is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

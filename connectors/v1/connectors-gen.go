@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1387,6 +1387,15 @@ type ConnectorVersionInfraConfig struct {
 	// ratelimiting runtime requests to connections.
 	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
 
+	// DeploymentModel: Optional. Indicates whether connector is deployed on
+	// GKE/CloudRun
+	//
+	// Possible values:
+	//   "DEPLOYMENT_MODEL_UNSPECIFIED" - Deployment model is not specified.
+	//   "GKE_MST" - Default model gke mst.
+	//   "CLOUD_RUN_MST" - Cloud run mst.
+	DeploymentModel string `json:"deploymentModel,omitempty"`
+
 	// HpaConfig: Output only. HPA autoscaling config.
 	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
 
@@ -1673,6 +1682,38 @@ type Date struct {
 
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeadLetterConfig: Dead Letter configuration details provided by the
+// user.
+type DeadLetterConfig struct {
+	// ProjectId: Optional. Project which has the topic given.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Topic: Optional. Topic to push events which couldn't be processed.
+	Topic string `json:"topic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeadLetterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DeadLetterConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2307,6 +2348,10 @@ type EventingConfig struct {
 
 	// AuthConfig: Auth details for the webhook adapter.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
+
+	// DeadLetterConfig: Optional. Dead letter configuration for eventing of
+	// a connection.
+	DeadLetterConfig *DeadLetterConfig `json:"deadLetterConfig,omitempty"`
 
 	// EnrichmentEnabled: Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
@@ -12356,6 +12401,14 @@ func (r *ProjectsLocationsGlobalCustomConnectorsService) Delete(name string) *Pr
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, any
+// customConnectorVersion which is a child resource will also be
+// deleted. https://aip.dev/135#cascading-delete
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Force(force bool) *ProjectsLocationsGlobalCustomConnectorsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12450,6 +12503,11 @@ func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Do(opts ...googleapi
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. If set to true, any customConnectorVersion which is a child resource will also be deleted. https://aip.dev/135#cascading-delete",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Resource name of the form: `projects/{project}/locations/{location}/customConnectors/{connector}`",
 	//       "location": "path",

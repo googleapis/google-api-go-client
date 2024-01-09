@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1076,7 +1076,8 @@ func (s *ManifestsListResponse) MarshalJSON() ([]byte, error) {
 // use the `globalOperations` resource. - For regional operations, use
 // the `regionOperations` resource. - For zonal operations, use the
 // `zoneOperations` resource. For more information, read Global,
-// Regional, and Zonal Resources.
+// Regional, and Zonal Resources. Note that completed Operation
+// resources have a limited retention period.
 type Operation struct {
 	// ClientOperationId: [Output Only] The value of `requestId` if you
 	// provided it in the request. Not present otherwise.

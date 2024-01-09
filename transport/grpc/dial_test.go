@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"cloud.google.com/go/compute/metadata"
+	"github.com/google/go-cmp/cmp"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
 	"google.golang.org/grpc"
@@ -136,10 +137,38 @@ func TestLogDirectPathMisconfigNotOnGCE(t *testing.T) {
 	logDirectPathMisconfig(endpoint, creds.TokenSource, o)
 
 	if !metadata.OnGCE() {
-		wantedLog := "WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment.."
+		wantedLog := "WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment."
 		if !strings.Contains(buf.String(), wantedLog) {
 			t.Fatalf("got: %v, want: %v", buf.String(), wantedLog)
 		}
 	}
 
+}
+
+func TestGRPCAPIKey_GetRequestMetadata(t *testing.T) {
+	for _, test := range []struct {
+		apiKey string
+		reason string
+	}{
+		{
+			apiKey: "MY_API_KEY",
+			reason: "MY_REQUEST_REASON",
+		},
+	} {
+		ts := grpcAPIKey{
+			apiKey:        test.apiKey,
+			requestReason: test.reason,
+		}
+		got, err := ts.GetRequestMetadata(context.Background())
+		if err != nil {
+			t.Fatal(err)
+		}
+		want := map[string]string{
+			"X-goog-api-key":        ts.apiKey,
+			"X-goog-request-reason": ts.requestReason,
+		}
+		if diff := cmp.Diff(want, got); diff != "" {
+			t.Errorf("mismatch (-want +got):\n%s", diff)
+		}
+	}
 }

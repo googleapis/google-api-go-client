@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -287,11 +287,6 @@ type Content struct {
 	// manifest; it must be named "appsscript", must have type of JSON, and
 	// include the manifest configurations for the project.
 	Files []*File `json:"files,omitempty"`
-
-	// RevertFlumeInvoked: Set to true if called from revert flume to allow
-	// deletion of system generated manifest file while validating content
-	// request. This value is false by default.
-	RevertFlumeInvoked bool `json:"revertFlumeInvoked,omitempty"`
 
 	// ScriptId: The script project's Drive ID.
 	ScriptId string `json:"scriptId,omitempty"`

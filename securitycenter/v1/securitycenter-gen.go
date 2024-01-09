@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3695,6 +3695,18 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// system.
 	Assignees []string `json:"assignees,omitempty"`
 
+	// CasePriority: The priority of the finding's corresponding case in the
+	// external system.
+	CasePriority string `json:"casePriority,omitempty"`
+
+	// CaseSla: The SLA of the finding's corresponding case in the external
+	// system.
+	CaseSla string `json:"caseSla,omitempty"`
+
+	// CaseUri: The link to the finding's corresponding case in the external
+	// system.
+	CaseUri string `json:"caseUri,omitempty"`
+
 	// ExternalSystemUpdateTime: The time when the case was last updated, as
 	// reported by the external system.
 	ExternalSystemUpdateTime string `json:"externalSystemUpdateTime,omitempty"`
@@ -3712,6 +3724,11 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// Status: The most recent status of the finding's corresponding case,
 	// as reported by the external system.
 	Status string `json:"status,omitempty"`
+
+	// TicketInfo: Information about the ticket, if any, that is being used
+	// to track the resolution of the issue that is identified by this
+	// finding.
+	TicketInfo *TicketInfo `json:"ticketInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -7747,6 +7764,53 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TicketInfo: Information about the ticket, if any, that is being used
+// to track the resolution of the issue that is identified by this
+// finding.
+type TicketInfo struct {
+	// Assignee: The assignee of the ticket in the ticket system.
+	Assignee string `json:"assignee,omitempty"`
+
+	// Description: The description of the ticket in the ticket system.
+	Description string `json:"description,omitempty"`
+
+	// Id: The identifier of the ticket in the ticket system.
+	Id string `json:"id,omitempty"`
+
+	// Status: The latest status of the ticket, as reported by the ticket
+	// system.
+	Status string `json:"status,omitempty"`
+
+	// UpdateTime: The time when the ticket was last updated, as reported by
+	// the ticket system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Uri: The link to the ticket in the ticket system.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assignee") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assignee") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TicketInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TicketInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1616,9 +1616,7 @@ func (c *CseListCall) Q(q string) *CseListCall {
 	return c
 }
 
-// RelatedSite sets the optional parameter "relatedSite": Specifies that
-// all search results should be pages that are related to the specified
-// URL.
+// RelatedSite sets the optional parameter "relatedSite": Deprecated.
 func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
 	c.urlParams_.Set("relatedSite", relatedSite)
 	return c
@@ -2015,7 +2013,8 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "relatedSite": {
-	//       "description": "Specifies that all search results should be pages that are related to the specified URL.",
+	//       "deprecated": true,
+	//       "description": "Deprecated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2396,9 +2395,7 @@ func (c *CseSiterestrictListCall) Q(q string) *CseSiterestrictListCall {
 	return c
 }
 
-// RelatedSite sets the optional parameter "relatedSite": Specifies that
-// all search results should be pages that are related to the specified
-// URL.
+// RelatedSite sets the optional parameter "relatedSite": Deprecated.
 func (c *CseSiterestrictListCall) RelatedSite(relatedSite string) *CseSiterestrictListCall {
 	c.urlParams_.Set("relatedSite", relatedSite)
 	return c
@@ -2795,7 +2792,8 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "relatedSite": {
-	//       "description": "Specifies that all search results should be pages that are related to the specified URL.",
+	//       "deprecated": true,
+	//       "description": "Deprecated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

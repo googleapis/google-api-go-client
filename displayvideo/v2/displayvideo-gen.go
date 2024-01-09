@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -15172,14 +15172,17 @@ type PoiAssignedTargetingOptionDetails struct {
 
 	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_POI`. Accepted POI targeting
-	// option IDs can be retrieved using SearchTargetingOptions. If
-	// targeting a specific latitude/longitude coordinate removed from an
-	// address or POI name, you can generate the necessary targeting option
-	// ID by rounding the desired coordinate values to the 6th decimal
-	// place, removing the decimals, and concatenating the string values
-	// separated by a semicolon. For example, you can target the
-	// latitude/longitude pair of 40.7414691, -74.003387 using the targeting
-	// option ID "40741469;-74003387".
+	// option IDs can be retrieved using
+	// `targetingTypes.targetingOptions.search`. If targeting a specific
+	// latitude/longitude coordinate removed from an address or POI name,
+	// you can generate the necessary targeting option ID by rounding the
+	// desired coordinate values to the 6th decimal place, removing the
+	// decimals, and concatenating the string values separated by a
+	// semicolon. For example, you can target the latitude/longitude pair of
+	// 40.7414691, -74.003387 using the targeting option ID
+	// "40741469;-74003387". **Upon** **creation, this field value will be
+	// updated to append a semicolon and** **alphanumerical hash value if
+	// only latitude/longitude coordinates are** **provided.**
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -17346,6 +17349,10 @@ type User struct {
 	// Email: Required. Immutable. The email address used to identify the
 	// user.
 	Email string `json:"email,omitempty"`
+
+	// LastLoginTime: Output only. The timestamp when the user last logged
+	// in DV360 UI.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
 
 	// Name: Output only. The resource name of the user.
 	Name string `json:"name,omitempty"`
@@ -23622,7 +23629,9 @@ type AdvertisersCreativesCreateCall struct {
 }
 
 // Create: Creates a new creative. Returns the newly created creative if
-// successful.
+// successful. A "Standard" user role
+// (//support.google.com/displayvideo/answer/2723011) or greater for the
+// parent advertiser or partner is required to make this request.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the
 //     creative belongs to.
@@ -23724,7 +23733,7 @@ func (c *AdvertisersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Crea
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new creative. Returns the newly created creative if successful.",
+	//   "description": "Creates a new creative. Returns the newly created creative if successful. A [\"Standard\" user role](//support.google.com/displayvideo/answer/2723011) or greater for the parent advertiser or partner is required to make this request.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/creatives",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.creatives.create",
@@ -23769,7 +23778,9 @@ type AdvertisersCreativesDeleteCall struct {
 // Delete: Deletes a creative. Returns error code `NOT_FOUND` if the
 // creative does not exist. The creative should be archived first, i.e.
 // set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be
-// deleted.
+// deleted. A "Standard" user role
+// (//support.google.com/displayvideo/answer/2723011) or greater for the
+// parent advertiser or partner is required to make this request.
 //
 // - advertiserId: The ID of the advertiser this creative belongs to.
 // - creativeId: The ID of the creative to be deleted.
@@ -23867,7 +23878,7 @@ func (c *AdvertisersCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a creative. Returns error code `NOT_FOUND` if the creative does not exist. The creative should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be deleted.",
+	//   "description": "Deletes a creative. Returns error code `NOT_FOUND` if the creative does not exist. The creative should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be deleted. A [\"Standard\" user role](//support.google.com/displayvideo/answer/2723011) or greater for the parent advertiser or partner is required to make this request.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/creatives/{creativesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.creatives.delete",
@@ -24344,7 +24355,9 @@ type AdvertisersCreativesPatchCall struct {
 }
 
 // Patch: Updates an existing creative. Returns the updated creative if
-// successful.
+// successful. A "Standard" user role
+// (//support.google.com/displayvideo/answer/2723011) or greater for the
+// parent advertiser or partner is required to make this request.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the
 //     creative belongs to.
@@ -24457,7 +24470,7 @@ func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creat
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing creative. Returns the updated creative if successful.",
+	//   "description": "Updates an existing creative. Returns the updated creative if successful. A [\"Standard\" user role](//support.google.com/displayvideo/answer/2723011) or greater for the parent advertiser or partner is required to make this request.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/creatives/{creativesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.creatives.patch",
@@ -27383,6 +27396,8 @@ type AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall struct {
 // this endpoint cannot be made concurrently with the following requests
 // updating the same line item: * lineItems.bulkUpdate * lineItems.patch
 // * assignedTargetingOptions.create * assignedTargetingOptions.delete
+// YouTube & Partners line items cannot be created or updated using the
+// API.
 //
 // - advertiserId: The ID of the advertiser the line items belong to.
 func (r *AdvertisersLineItemsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditassignedtargetingoptionsrequest *BulkEditAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall {
@@ -27485,7 +27500,7 @@ func (c *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits targeting options under multiple line items. The operation will delete the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkUpdate * lineItems.patch * assignedTargetingOptions.create * assignedTargetingOptions.delete",
+	//   "description": "Bulk edits targeting options under multiple line items. The operation will delete the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkUpdate * lineItems.patch * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:bulkEditAssignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkEditAssignedTargetingOptions",
@@ -27792,6 +27807,8 @@ type AdvertisersLineItemsBulkUpdateCall struct {
 // cannot be made concurrently with the following requests updating the
 // same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem *
 // assignedTargetingOptions.create * assignedTargetingOptions.delete
+// YouTube & Partners line items cannot be created or updated using the
+// API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 func (r *AdvertisersLineItemsService) BulkUpdate(advertiserId int64, bulkupdatelineitemsrequest *BulkUpdateLineItemsRequest) *AdvertisersLineItemsBulkUpdateCall {
@@ -27892,7 +27909,7 @@ func (c *AdvertisersLineItemsBulkUpdateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates multiple line items. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem * assignedTargetingOptions.create * assignedTargetingOptions.delete",
+	//   "description": "Updates multiple line items. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:bulkUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkUpdate",
@@ -27935,7 +27952,8 @@ type AdvertisersLineItemsCreateCall struct {
 }
 
 // Create: Creates a new line item. Returns the newly created line item
-// if successful.
+// if successful. YouTube & Partners line items cannot be created or
+// updated using the API.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the line
 //     item belongs to.
@@ -28037,7 +28055,7 @@ func (c *AdvertisersLineItemsCreateCall) Do(opts ...googleapi.CallOption) (*Line
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new line item. Returns the newly created line item if successful.",
+	//   "description": "Creates a new line item. Returns the newly created line item if successful. YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.create",
@@ -28082,7 +28100,8 @@ type AdvertisersLineItemsDeleteCall struct {
 // Delete: Deletes a line item. Returns error code `NOT_FOUND` if the
 // line item does not exist. The line item should be archived first,
 // i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to
-// delete it.
+// delete it. YouTube & Partners line items cannot be created or updated
+// using the API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 // - lineItemId: The ID of the line item to delete.
@@ -28180,7 +28199,7 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a line item. Returns error code `NOT_FOUND` if the line item does not exist. The line item should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
+	//   "description": "Deletes a line item. Returns error code `NOT_FOUND` if the line item does not exist. The line item should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it. YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.delete",
@@ -28230,7 +28249,8 @@ type AdvertisersLineItemsDuplicateCall struct {
 }
 
 // Duplicate: Duplicates a line item. Returns the ID of the created line
-// item if successful.
+// item if successful. YouTube & Partners line items cannot be created
+// or updated using the API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 // - lineItemId: The ID of the line item to duplicate.
@@ -28334,7 +28354,7 @@ func (c *AdvertisersLineItemsDuplicateCall) Do(opts ...googleapi.CallOption) (*D
 	}
 	return ret, nil
 	// {
-	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful.",
+	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful. YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}:duplicate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.duplicate",
@@ -28390,7 +28410,8 @@ type AdvertisersLineItemsGenerateDefaultCall struct {
 // `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line
 // item if successful. There are default values based on the three
 // fields: * The insertion order's insertion_order_type * The insertion
-// order's automation_type * The given line_item_type
+// order's automation_type * The given line_item_type YouTube & Partners
+// line items cannot be created or updated using the API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 func (r *AdvertisersLineItemsService) GenerateDefault(advertiserId int64, generatedefaultlineitemrequest *GenerateDefaultLineItemRequest) *AdvertisersLineItemsGenerateDefaultCall {
@@ -28491,7 +28512,7 @@ func (c *AdvertisersLineItemsGenerateDefaultCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new line item with settings (including targeting) inherited from the insertion order and an `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line item if successful. There are default values based on the three fields: * The insertion order's insertion_order_type * The insertion order's automation_type * The given line_item_type",
+	//   "description": "Creates a new line item with settings (including targeting) inherited from the insertion order and an `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line item if successful. There are default values based on the three fields: * The insertion order's insertion_order_type * The insertion order's automation_type * The given line_item_type YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:generateDefault",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.generateDefault",
@@ -28948,6 +28969,8 @@ type AdvertisersLineItemsPatchCall struct {
 // with the following requests updating the same line item: *
 // BulkEditAssignedTargetingOptions * BulkUpdateLineItems *
 // assignedTargetingOptions.create * assignedTargetingOptions.delete
+// YouTube & Partners line items cannot be created or updated using the
+// API.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the line
 //     item belongs to.
@@ -29060,7 +29083,7 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete",
+	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.lineItems.patch",
@@ -29124,7 +29147,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 // cannot be made concurrently with the following requests updating the
 // same line item: * lineItems.bulkEditAssignedTargetingOptions *
 // lineItems.bulkUpdate * lineItems.patch *
-// DeleteLineItemAssignedTargetingOption
+// DeleteLineItemAssignedTargetingOption YouTube & Partners line items
+// cannot be created or updated using the API.
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - lineItemId: The ID of the line item the assigned targeting option
@@ -29265,7 +29289,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * DeleteLineItemAssignedTargetingOption YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create",
@@ -29432,7 +29456,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 // Requests to this endpoint cannot be made concurrently with the
 // following requests updating the same line item: *
 // lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate *
-// lineItems.patch * CreateLineItemAssignedTargetingOption
+// lineItems.patch * CreateLineItemAssignedTargetingOption YouTube &
+// Partners line items cannot be created or updated using the API.
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - assignedTargetingOptionId: The ID of the assigned targeting option
@@ -29571,7 +29596,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * CreateLineItemAssignedTargetingOption",
+	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * CreateLineItemAssignedTargetingOption YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete",

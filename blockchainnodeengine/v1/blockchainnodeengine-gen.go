@@ -90,7 +90,9 @@ const apiId = "blockchainnodeengine:v1"
 const apiName = "blockchainnodeengine"
 const apiVersion = "v1"
 const basePath = "https://blockchainnodeengine.googleapis.com/"
+const basePathTemplate = "https://blockchainnodeengine.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://blockchainnodeengine.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -224,12 +228,6 @@ type BlockchainNode struct {
 	// e.g.
 	// `projects/my-project/locations/us-central1/blockchainNodes/my-node`.
 	Name string `json:"name,omitempty"`
-
-	// PrivateServiceConnectEnabled: Optional. When true, the node is only
-	// accessible via Private Service Connect; no public endpoints are
-	// exposed. Otherwise, the node is only accessible via public endpoints.
-	// See https://cloud.google.com/vpc/docs/private-service-connect.
-	PrivateServiceConnectEnabled bool `json:"privateServiceConnectEnabled,omitempty"`
 
 	// State: Output only. A status representing the state of the node.
 	//
@@ -367,17 +365,6 @@ type EthereumDetails struct {
 	// ApiEnableDebug: Immutable. Enables JSON-RPC access to functions in
 	// the `debug` namespace. Defaults to `false`.
 	ApiEnableDebug bool `json:"apiEnableDebug,omitempty"`
-
-	// BeaconFeeRecipient: Deprecated: Use the same field in the
-	// ValidatorConfig message as replacement. An Ethereum address which the
-	// beacon client will send fee rewards to if no recipient is configured
-	// in the validator client. See
-	// https://lighthouse-book.sigmaprime.io/suggested-fee-recipient.html or
-	// https://docs.prylabs.network/docs/execution-node/fee-recipient for
-	// examples of how this is used. Note that while this is often described
-	// as "suggested", as we run the execution node we can trust the
-	// execution node, and therefore this is considered enforced.
-	BeaconFeeRecipient string `json:"beaconFeeRecipient,omitempty"`
 
 	// ConsensusClient: Immutable. The consensus client.
 	//

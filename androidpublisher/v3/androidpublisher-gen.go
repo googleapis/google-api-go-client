@@ -90,7 +90,9 @@ const apiId = "androidpublisher:v3"
 const apiName = "androidpublisher"
 const apiVersion = "v3"
 const basePath = "https://androidpublisher.googleapis.com/"
+const basePathTemplate = "https://androidpublisher.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://androidpublisher.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -132,6 +136,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Applications = NewApplicationsService(s)
+	s.Apprecovery = NewApprecoveryService(s)
 	s.Edits = NewEditsService(s)
 	s.Externaltransactions = NewExternaltransactionsService(s)
 	s.Generatedapks = NewGeneratedapksService(s)
@@ -153,6 +158,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Applications *ApplicationsService
+
+	Apprecovery *ApprecoveryService
 
 	Edits *EditsService
 
@@ -204,6 +211,15 @@ func NewApplicationsDeviceTierConfigsService(s *Service) *ApplicationsDeviceTier
 }
 
 type ApplicationsDeviceTierConfigsService struct {
+	s *Service
+}
+
+func NewApprecoveryService(s *Service) *ApprecoveryService {
+	rs := &ApprecoveryService{s: s}
+	return rs
+}
+
+type ApprecoveryService struct {
 	s *Service
 }
 
@@ -740,6 +756,105 @@ func (s *ActivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AddTargetingRequest: Request message for AddTargeting.
+type AddTargetingRequest struct {
+	// TargetingUpdate: Specifies targeting updates such as regions, android
+	// sdk versions etc.
+	TargetingUpdate *TargetingUpdate `json:"targetingUpdate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingUpdate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingUpdate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddTargetingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTargetingRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddTargetingResponse: Response message for AddTargeting.
+type AddTargetingResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// AllUsers: Object representation to describe all set of users.
+type AllUsers struct {
+	// IsAllUsersRequested: Required. Set to true if all set of users are
+	// needed.
+	IsAllUsersRequested bool `json:"isAllUsersRequested,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsAllUsersRequested")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsAllUsersRequested") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllUsers) MarshalJSON() ([]byte, error) {
+	type NoMethod AllUsers
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AndroidSdks: Android api level targeting data for app recovery action
+// targeting.
+type AndroidSdks struct {
+	// SdkLevels: Android api levels of devices targeted by recovery action.
+	// See
+	// https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels
+	// for different api levels in android.
+	SdkLevels googleapi.Int64s `json:"sdkLevels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SdkLevels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SdkLevels") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidSdks) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidSdks
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Apk: Information about an APK. The resource for ApksService.
 type Apk struct {
 	// Binary: Information about the binary payload of this APK.
@@ -1109,6 +1224,139 @@ type AppEdit struct {
 
 func (s *AppEdit) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEdit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppRecoveryAction: Information about an app recovery action.
+type AppRecoveryAction struct {
+	// AppRecoveryId: ID corresponding to the app recovery action.
+	AppRecoveryId int64 `json:"appRecoveryId,omitempty,string"`
+
+	// CancelTime: Timestamp of when the app recovery action is canceled by
+	// the developer. Only set if the recovery action has been canceled.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// CreateTime: Timestamp of when the app recovery action is created by
+	// the developer. It is always set after creation of the recovery
+	// action.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeployTime: Timestamp of when the app recovery action is deployed to
+	// the users. Only set if the recovery action has been deployed.
+	DeployTime string `json:"deployTime,omitempty"`
+
+	// LastUpdateTime: Timestamp of when the developer last updated recovery
+	// action. In case the action is cancelled, it corresponds to
+	// cancellation time. It is always set after creation of the recovery
+	// action.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// RemoteInAppUpdateData: Data about the remote in-app update action
+	// such as such as recovered user base, recoverable user base etc. Set
+	// only if the recovery action type is Remote In-App Update.
+	RemoteInAppUpdateData *RemoteInAppUpdateData `json:"remoteInAppUpdateData,omitempty"`
+
+	// Status: The status of the recovery action.
+	//
+	// Possible values:
+	//   "RECOVERY_STATUS_UNSPECIFIED" - RecoveryStatus is unspecified.
+	//   "RECOVERY_STATUS_ACTIVE" - The app recovery action has not been
+	// canceled since it has been created.
+	//   "RECOVERY_STATUS_CANCELED" - The recovery action has been canceled.
+	// The action cannot be resumed.
+	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
+	// and has not yet been deployed to users.
+	Status string `json:"status,omitempty"`
+
+	// Targeting: Specifies targeting criteria for the recovery action such
+	// as regions, android sdk versions, app versions etc.
+	Targeting *Targeting `json:"targeting,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppRecoveryId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppRecoveryId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppRecoveryAction) MarshalJSON() ([]byte, error) {
+	type NoMethod AppRecoveryAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppVersionList: Data format for a list of app versions. Only one app
+// version is supported for now.
+type AppVersionList struct {
+	// VersionCodes: List of app version codes.
+	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VersionCodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VersionCodes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersionList) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersionList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppVersionRange: Data format for a continuous range of app versions.
+type AppVersionRange struct {
+	// VersionCodeEnd: Highest app version in the range, inclusive.
+	VersionCodeEnd int64 `json:"versionCodeEnd,omitempty,string"`
+
+	// VersionCodeStart: Lowest app version in the range, inclusive.
+	VersionCodeStart int64 `json:"versionCodeStart,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "VersionCodeEnd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VersionCodeEnd") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersionRange) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersionRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1872,6 +2120,17 @@ func (s *BundlesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CancelAppRecoveryRequest: Request message for CancelAppRecovery.
+type CancelAppRecoveryRequest struct {
+}
+
+// CancelAppRecoveryResponse: Response message for CancelAppRecovery.
+type CancelAppRecoveryResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // CancelSurveyResult: Result of the cancel survey when the subscription
 // was canceled by the user.
 type CancelSurveyResult struct {
@@ -2162,6 +2421,42 @@ func (s *CountryTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateDraftAppRecoveryRequest: Request message for
+// CreateDraftAppRecovery.
+type CreateDraftAppRecoveryRequest struct {
+	// RemoteInAppUpdate: Action type is remote in-app update. As a
+	// consequence of this action, a downloadable recovery module is also
+	// created for testing purposes.
+	RemoteInAppUpdate *RemoteInAppUpdate `json:"remoteInAppUpdate,omitempty"`
+
+	// Targeting: Specifies targeting criteria for the recovery action such
+	// as regions, android sdk versions, app versions etc.
+	Targeting *Targeting `json:"targeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RemoteInAppUpdate")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RemoteInAppUpdate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateDraftAppRecoveryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateDraftAppRecoveryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeactivateBasePlanRequest: Request message for DeactivateBasePlan.
 type DeactivateBasePlanRequest struct {
 	// BasePlanId: Required. The unique base plan ID of the base plan to
@@ -2366,6 +2661,17 @@ func (s *DeobfuscationFilesUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeobfuscationFilesUploadResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeployAppRecoveryRequest: Request message for DeployAppRecovery.
+type DeployAppRecoveryRequest struct {
+}
+
+// DeployAppRecoveryResponse: Response message for DeployAppRecovery.
+type DeployAppRecoveryResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // DeveloperComment: Developer entry from conversation between user and
@@ -3256,6 +3562,13 @@ type GeneratedApksPerSigningKey struct {
 	// certificate_sha256_hash.
 	GeneratedAssetPackSlices []*GeneratedAssetPackSlice `json:"generatedAssetPackSlices,omitempty"`
 
+	// GeneratedRecoveryModules: Generated recovery apks for recovery
+	// actions signed with a key corresponding to certificate_sha256_hash.
+	// This includes all generated recovery APKs, also those in draft or
+	// cancelled state. This field is not set if no recovery actions were
+	// created for this signing key.
+	GeneratedRecoveryModules []*GeneratedRecoveryApk `json:"generatedRecoveryModules,omitempty"`
+
 	// GeneratedSplitApks: List of generated split APKs, signed with a key
 	// corresponding to certificate_sha256_hash.
 	GeneratedSplitApks []*GeneratedSplitApk `json:"generatedSplitApks,omitempty"`
@@ -3332,6 +3645,54 @@ type GeneratedAssetPackSlice struct {
 
 func (s *GeneratedAssetPackSlice) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedAssetPackSlice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedRecoveryApk: Download metadata for an app recovery module.
+type GeneratedRecoveryApk struct {
+	// DownloadId: Download ID, which uniquely identifies the APK to
+	// download. Should be supplied to `generatedapks.download` method.
+	DownloadId string `json:"downloadId,omitempty"`
+
+	// ModuleName: Name of the module which recovery apk belongs to.
+	ModuleName string `json:"moduleName,omitempty"`
+
+	// RecoveryId: ID of the recovery action.
+	RecoveryId int64 `json:"recoveryId,omitempty,string"`
+
+	// RecoveryStatus: The status of the recovery action corresponding to
+	// the recovery apk.
+	//
+	// Possible values:
+	//   "RECOVERY_STATUS_UNSPECIFIED" - RecoveryStatus is unspecified.
+	//   "RECOVERY_STATUS_ACTIVE" - The app recovery action has not been
+	// canceled since it has been created.
+	//   "RECOVERY_STATUS_CANCELED" - The recovery action has been canceled.
+	// The action cannot be resumed.
+	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
+	// and has not yet been deployed to users.
+	RecoveryStatus string `json:"recoveryStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedRecoveryApk) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedRecoveryApk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4209,6 +4570,41 @@ type LanguageTargeting struct {
 
 func (s *LanguageTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAppRecoveriesResponse: Response message for ListAppRecoveries. --
+// api-linter: core::0158::response-next-page-token-field=disabled
+type ListAppRecoveriesResponse struct {
+	// RecoveryActions: List of recovery actions associated with the
+	// requested package name.
+	RecoveryActions []*AppRecoveryAction `json:"recoveryActions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "RecoveryActions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecoveryActions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAppRecoveriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAppRecoveriesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5778,6 +6174,38 @@ func (s *RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Regions: Region targeting data for app recovery action targeting.
+type Regions struct {
+	// RegionCode: Regions targeted by the recovery action. Region codes are
+	// ISO 3166 Alpha-2 country codes. For example, US stands for United
+	// States of America. See
+	// https://www.iso.org/iso-3166-country-codes.html for the complete list
+	// of country codes.
+	RegionCode []string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RegionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RegionCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Regions) MarshalJSON() ([]byte, error) {
+	type NoMethod Regions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RegionsVersion: The version of the available regions being used for
 // the specified resource.
 type RegionsVersion struct {
@@ -5812,6 +6240,109 @@ type RegionsVersion struct {
 
 func (s *RegionsVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionsVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteInAppUpdate: Object representation for Remote in-app update
+// action type.
+type RemoteInAppUpdate struct {
+	// IsRemoteInAppUpdateRequested: Required. Set to true if Remote In-App
+	// Update action type is needed.
+	IsRemoteInAppUpdateRequested bool `json:"isRemoteInAppUpdateRequested,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IsRemoteInAppUpdateRequested") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "IsRemoteInAppUpdateRequested") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteInAppUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteInAppUpdate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteInAppUpdateData: Data related to Remote In-App Update action
+// such as recovered user count, affected user count etc.
+type RemoteInAppUpdateData struct {
+	// RemoteAppUpdateDataPerBundle: Data related to the recovery action at
+	// bundle level.
+	RemoteAppUpdateDataPerBundle []*RemoteInAppUpdateDataPerBundle `json:"remoteAppUpdateDataPerBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RemoteAppUpdateDataPerBundle") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RemoteAppUpdateDataPerBundle") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteInAppUpdateData) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteInAppUpdateData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteInAppUpdateDataPerBundle: Data related to the recovery action
+// at bundle level.
+type RemoteInAppUpdateDataPerBundle struct {
+	// RecoveredDeviceCount: Total number of devices which have been
+	// rescued.
+	RecoveredDeviceCount int64 `json:"recoveredDeviceCount,omitempty,string"`
+
+	// TotalDeviceCount: Total number of devices affected by this recovery
+	// action associated with bundle of the app.
+	TotalDeviceCount int64 `json:"totalDeviceCount,omitempty,string"`
+
+	// VersionCode: Version Code corresponding to the target bundle.
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecoveredDeviceCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecoveredDeviceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteInAppUpdateDataPerBundle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7327,6 +7858,47 @@ func (s *SystemFeature) MarshalJSON() ([]byte, error) {
 type SystemInitiatedCancellation struct {
 }
 
+// Targeting: Targeting details for a recovery action such as regions,
+// android sdk levels, app versions etc.
+type Targeting struct {
+	// AllUsers: All users are targeted.
+	AllUsers *AllUsers `json:"allUsers,omitempty"`
+
+	// AndroidSdks: Targeting is based on android api levels of devices.
+	AndroidSdks *AndroidSdks `json:"androidSdks,omitempty"`
+
+	// Regions: Targeting is based on the user account region.
+	Regions *Regions `json:"regions,omitempty"`
+
+	// VersionList: Target version codes as a list.
+	VersionList *AppVersionList `json:"versionList,omitempty"`
+
+	// VersionRange: Target version codes as a range.
+	VersionRange *AppVersionRange `json:"versionRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllUsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllUsers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Targeting) MarshalJSON() ([]byte, error) {
+	type NoMethod Targeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TargetingInfo: Targeting information about the generated apks.
 type TargetingInfo struct {
 	// AssetSliceSet: List of created asset slices.
@@ -7391,6 +7963,42 @@ type TargetingRuleScope struct {
 
 func (s *TargetingRuleScope) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingRuleScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetingUpdate: Update type for targeting. Note it is always a
+// subset Targeting.
+type TargetingUpdate struct {
+	// AllUsers: All users are targeted.
+	AllUsers *AllUsers `json:"allUsers,omitempty"`
+
+	// AndroidSdks: Additional android sdk levels are targeted by the
+	// recovery action.
+	AndroidSdks *AndroidSdks `json:"androidSdks,omitempty"`
+
+	// Regions: Additional regions are targeted by the recovery action.
+	Regions *Regions `json:"regions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllUsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllUsers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetingUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetingUpdate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9097,6 +9705,763 @@ func (c *ApplicationsDeviceTierConfigsListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "androidpublisher.apprecovery.addTargeting":
+
+type ApprecoveryAddTargetingCall struct {
+	s                   *Service
+	packageName         string
+	appRecoveryId       int64
+	addtargetingrequest *AddTargetingRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// AddTargeting: Incrementally update targeting for a recovery action.
+// Note that only the criteria selected during the creation of recovery
+// action can be expanded.
+//
+//   - appRecoveryId: ID corresponding to the app recovery action.
+//   - packageName: Package name of the app for which recovery action is
+//     to be updated.
+func (r *ApprecoveryService) AddTargeting(packageName string, appRecoveryId int64, addtargetingrequest *AddTargetingRequest) *ApprecoveryAddTargetingCall {
+	c := &ApprecoveryAddTargetingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.appRecoveryId = appRecoveryId
+	c.addtargetingrequest = addtargetingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryAddTargetingCall) Fields(s ...googleapi.Field) *ApprecoveryAddTargetingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryAddTargetingCall) Context(ctx context.Context) *ApprecoveryAddTargetingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryAddTargetingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryAddTargetingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addtargetingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:addTargeting")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.addTargeting" call.
+// Exactly one of *AddTargetingResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AddTargetingResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryAddTargetingCall) Do(opts ...googleapi.CallOption) (*AddTargetingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AddTargetingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Incrementally update targeting for a recovery action. Note that only the criteria selected during the creation of recovery action can be expanded.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:addTargeting",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.addTargeting",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "appRecoveryId"
+	//   ],
+	//   "parameters": {
+	//     "appRecoveryId": {
+	//       "description": "Required. ID corresponding to the app recovery action.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which recovery action is to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:addTargeting",
+	//   "request": {
+	//     "$ref": "AddTargetingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AddTargetingResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.appRecoveries":
+
+type ApprecoveryAppRecoveriesCall struct {
+	s           *Service
+	packageName string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// AppRecoveries: List all app recovery action resources associated with
+// a particular package name and app version.
+//
+//   - packageName: Package name of the app for which list of recovery
+//     actions is requested.
+func (r *ApprecoveryService) AppRecoveries(packageName string) *ApprecoveryAppRecoveriesCall {
+	c := &ApprecoveryAppRecoveriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// VersionCode sets the optional parameter "versionCode": Required.
+// Version code targeted by the list of recovery actions.
+func (c *ApprecoveryAppRecoveriesCall) VersionCode(versionCode int64) *ApprecoveryAppRecoveriesCall {
+	c.urlParams_.Set("versionCode", fmt.Sprint(versionCode))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryAppRecoveriesCall) Fields(s ...googleapi.Field) *ApprecoveryAppRecoveriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryAppRecoveriesCall) Context(ctx context.Context) *ApprecoveryAppRecoveriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryAppRecoveriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryAppRecoveriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.appRecoveries" call.
+// Exactly one of *ListAppRecoveriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAppRecoveriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryAppRecoveriesCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAppRecoveriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all app recovery action resources associated with a particular package name and app version.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.appRecoveries",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which list of recovery actions is requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionCode": {
+	//       "description": "Required. Version code targeted by the list of recovery actions.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "response": {
+	//     "$ref": "ListAppRecoveriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.cancel":
+
+type ApprecoveryCancelCall struct {
+	s                        *Service
+	packageName              string
+	appRecoveryId            int64
+	cancelapprecoveryrequest *CancelAppRecoveryRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Cancel: Cancel an already executing app recovery action. Note that
+// this action changes status of the recovery action to CANCELED.
+//
+//   - appRecoveryId: ID corresponding to the app recovery action.
+//   - packageName: Package name of the app for which recovery action
+//     cancellation is requested.
+func (r *ApprecoveryService) Cancel(packageName string, appRecoveryId int64, cancelapprecoveryrequest *CancelAppRecoveryRequest) *ApprecoveryCancelCall {
+	c := &ApprecoveryCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.appRecoveryId = appRecoveryId
+	c.cancelapprecoveryrequest = cancelapprecoveryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryCancelCall) Fields(s ...googleapi.Field) *ApprecoveryCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryCancelCall) Context(ctx context.Context) *ApprecoveryCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelapprecoveryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.cancel" call.
+// Exactly one of *CancelAppRecoveryResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelAppRecoveryResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryCancelCall) Do(opts ...googleapi.CallOption) (*CancelAppRecoveryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelAppRecoveryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancel an already executing app recovery action. Note that this action changes status of the recovery action to CANCELED.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.cancel",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "appRecoveryId"
+	//   ],
+	//   "parameters": {
+	//     "appRecoveryId": {
+	//       "description": "Required. ID corresponding to the app recovery action.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which recovery action cancellation is requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:cancel",
+	//   "request": {
+	//     "$ref": "CancelAppRecoveryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CancelAppRecoveryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.create":
+
+type ApprecoveryCreateCall struct {
+	s                             *Service
+	packageName                   string
+	createdraftapprecoveryrequest *CreateDraftAppRecoveryRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Create: Create an app recovery action with recovery status as DRAFT.
+// Note that this action does not execute the recovery action.
+//
+//   - packageName: Package name of the app on which recovery action is
+//     performed.
+func (r *ApprecoveryService) Create(packageName string, createdraftapprecoveryrequest *CreateDraftAppRecoveryRequest) *ApprecoveryCreateCall {
+	c := &ApprecoveryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.createdraftapprecoveryrequest = createdraftapprecoveryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryCreateCall) Fields(s ...googleapi.Field) *ApprecoveryCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryCreateCall) Context(ctx context.Context) *ApprecoveryCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createdraftapprecoveryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.create" call.
+// Exactly one of *AppRecoveryAction or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AppRecoveryAction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryCreateCall) Do(opts ...googleapi.CallOption) (*AppRecoveryAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AppRecoveryAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an app recovery action with recovery status as DRAFT. Note that this action does not execute the recovery action.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.create",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. Package name of the app on which recovery action is performed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "request": {
+	//     "$ref": "CreateDraftAppRecoveryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AppRecoveryAction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.deploy":
+
+type ApprecoveryDeployCall struct {
+	s                        *Service
+	packageName              string
+	appRecoveryId            int64
+	deployapprecoveryrequest *DeployAppRecoveryRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Deploy: Deploy an already created app recovery action with recovery
+// status DRAFT. Note that this action activates the recovery action for
+// all targeted users and changes its status to ACTIVE.
+//
+//   - appRecoveryId: ID corresponding to the app recovery action to
+//     deploy.
+//   - packageName: Package name of the app for which recovery action is
+//     deployed.
+func (r *ApprecoveryService) Deploy(packageName string, appRecoveryId int64, deployapprecoveryrequest *DeployAppRecoveryRequest) *ApprecoveryDeployCall {
+	c := &ApprecoveryDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.appRecoveryId = appRecoveryId
+	c.deployapprecoveryrequest = deployapprecoveryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryDeployCall) Fields(s ...googleapi.Field) *ApprecoveryDeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryDeployCall) Context(ctx context.Context) *ApprecoveryDeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryDeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryDeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deployapprecoveryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:deploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.deploy" call.
+// Exactly one of *DeployAppRecoveryResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeployAppRecoveryResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryDeployCall) Do(opts ...googleapi.CallOption) (*DeployAppRecoveryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeployAppRecoveryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploy an already created app recovery action with recovery status DRAFT. Note that this action activates the recovery action for all targeted users and changes its status to ACTIVE.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:deploy",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.deploy",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "appRecoveryId"
+	//   ],
+	//   "parameters": {
+	//     "appRecoveryId": {
+	//       "description": "Required. ID corresponding to the app recovery action to deploy.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which recovery action is deployed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:deploy",
+	//   "request": {
+	//     "$ref": "DeployAppRecoveryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DeployAppRecoveryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
 }
 
 // method id "androidpublisher.edits.commit":

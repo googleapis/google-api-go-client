@@ -90,7 +90,9 @@ const apiId = "gamesConfiguration:v1configuration"
 const apiName = "gamesConfiguration"
 const apiVersion = "v1configuration"
 const basePath = "https://gamesconfiguration.googleapis.com/"
+const basePathTemplate = "https://gamesconfiguration.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://gamesconfiguration.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

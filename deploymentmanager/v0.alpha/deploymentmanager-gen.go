@@ -95,7 +95,9 @@ const apiId = "deploymentmanager:alpha"
 const apiName = "deploymentmanager"
 const apiVersion = "alpha"
 const basePath = "https://deploymentmanager.googleapis.com/"
+const basePathTemplate = "https://deploymentmanager.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://deploymentmanager.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -127,7 +129,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1587,7 +1591,8 @@ func (s *MethodMap) MarshalJSON() ([]byte, error) {
 // use the `globalOperations` resource. - For regional operations, use
 // the `regionOperations` resource. - For zonal operations, use the
 // `zoneOperations` resource. For more information, read Global,
-// Regional, and Zonal Resources.
+// Regional, and Zonal Resources. Note that completed Operation
+// resources have a limited retention period.
 type Operation struct {
 	// ClientOperationId: [Output Only] The value of `requestId` if you
 	// provided it in the request. Not present otherwise.

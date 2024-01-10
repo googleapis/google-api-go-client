@@ -90,12 +90,16 @@ const apiId = "civicinfo:v2"
 const apiName = "civicinfo"
 const apiVersion = "v2"
 const basePath = "https://civicinfo.googleapis.com/"
+const basePathTemplate = "https://civicinfo.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://civicinfo.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

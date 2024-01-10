@@ -90,6 +90,8 @@ const apiId = "adsensehost:v4.1"
 const apiName = "adsensehost"
 const apiVersion = "v4.1"
 const basePath = "https://www.googleapis.com/adsensehost/v4.1/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/adsensehost/v4.1/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -105,6 +107,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

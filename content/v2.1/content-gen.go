@@ -90,7 +90,9 @@ const apiId = "content:v2.1"
 const apiName = "content"
 const apiVersion = "v2.1"
 const basePath = "https://shoppingcontent.googleapis.com/content/v2.1/"
+const basePathTemplate = "https://shoppingcontent.UNIVERSE_DOMAIN/content/v2.1/"
 const mtlsBasePath = "https://shoppingcontent.mtls.googleapis.com/content/v2.1/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

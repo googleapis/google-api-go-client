@@ -90,7 +90,9 @@ const apiId = "androidmanagement:v1"
 const apiName = "androidmanagement"
 const apiVersion = "v1"
 const basePath = "https://androidmanagement.googleapis.com/"
+const basePathTemplate = "https://androidmanagement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://androidmanagement.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -2460,6 +2464,27 @@ type DeviceRadioState struct {
 	// nonComplianceDetail with API_LEVEL is reported if the Android version
 	// is less than 14.
 	CellularTwoGState string `json:"cellularTwoGState,omitempty"`
+
+	// MinimumWifiSecurityLevel: The minimum required security level of
+	// Wi-Fi networks that the device can connect to.
+	//
+	// Possible values:
+	//   "MINIMUM_WIFI_SECURITY_LEVEL_UNSPECIFIED" - Defaults to
+	// OPEN_NETWORK_SECURITY, which means the device will be able to connect
+	// to all types of Wi-Fi networks.
+	//   "OPEN_NETWORK_SECURITY" - The device will be able to connect to all
+	// types of Wi-Fi networks.
+	//   "PERSONAL_NETWORK_SECURITY" - A personal network such as WEP,
+	// WPA2-PSK is the minimum required security. The device will not be
+	// able to connect to open wifi networks. This is stricter than
+	// OPEN_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 13.
+	//   "ENTERPRISE_NETWORK_SECURITY" - An enterprise EAP network is the
+	// minimum required security level. The device will not be able to
+	// connect to Wi-Fi network below this security level. This is stricter
+	// than PERSONAL_NETWORK_SECURITY A nonComplianceDetail with API_LEVEL
+	// is reported if the Android version is less than 13.
+	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
 
 	// UltraWidebandState: Controls the state of the ultra wideband setting
 	// and whether the user can toggle it on or off.

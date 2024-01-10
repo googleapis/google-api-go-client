@@ -90,7 +90,9 @@ const apiId = "contactcenteraiplatform:v1alpha1"
 const apiName = "contactcenteraiplatform"
 const apiVersion = "v1alpha1"
 const basePath = "https://contactcenteraiplatform.googleapis.com/"
+const basePathTemplate = "https://contactcenteraiplatform.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://contactcenteraiplatform.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -233,7 +237,7 @@ func (s *AdminUser) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// ContactCenter: Message describing ContactCenter object Next ID: 16
+// ContactCenter: Message describing ContactCenter object Next ID: 18
 type ContactCenter struct {
 	// AdminUser: Optional. Info about the first admin user, such as given
 	// name and family name.
@@ -267,6 +271,14 @@ type ContactCenter struct {
 
 	// Name: name of resource
 	Name string `json:"name,omitempty"`
+
+	// PrivateComponents: Output only. A list of UJET components that should
+	// be privately accessed. This field is set by reading settings from the
+	// data plane. For more information about the format of the component
+	// please refer to go/ccaip-vpc-sc-org-policy. This field is must be
+	// fully populated only for Create/Update resource operations. The main
+	// use case for this field is OrgPolicy checks via CPE.
+	PrivateComponents []string `json:"privateComponents,omitempty"`
 
 	// SamlParams: Optional. Params that sets up Google as IdP.
 	SamlParams *SAMLParams `json:"samlParams,omitempty"`

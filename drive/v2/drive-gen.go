@@ -95,7 +95,9 @@ const apiId = "drive:v2"
 const apiName = "drive"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/drive/v2/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/drive/v2/"
 const mtlsBasePath = "https://www.mtls.googleapis.com/drive/v2/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -145,7 +147,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

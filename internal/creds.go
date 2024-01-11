@@ -129,21 +129,24 @@ func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
 	// must support self-signed JWTs with scopes.
 	// TODO(chrisdsmith): closes: AL-8 (remove this note before publication)
 	if ds.UniverseDomainNotGDU() {
-		return true, nil
+		return typeServiceAccount(data)
 	}
-	if (ds.EnableJwtWithScope || ds.HasCustomAudience()) &&
-		ds.ImpersonationConfig == nil {
-		// Check if JSON is a service account and if so create a self-signed JWT.
-		var f struct {
-			Type string `json:"type"`
-			// The rest JSON fields are omitted because they are not used.
-		}
-		if err := json.Unmarshal(data, &f); err != nil {
-			return false, err
-		}
-		return f.Type == serviceAccountKey, nil
+	if (ds.EnableJwtWithScope || ds.HasCustomAudience()) && ds.ImpersonationConfig == nil {
+		return typeServiceAccount(data)
 	}
 	return false, nil
+}
+
+// typeServiceAccount checks if JSON data is for a service account.
+func typeServiceAccount(data []byte) (bool, error) {
+	var f struct {
+		Type string `json:"type"`
+		// The remaining JSON fields are omitted because they are not used.
+	}
+	if err := json.Unmarshal(data, &f); err != nil {
+		return false, err
+	}
+	return f.Type == serviceAccountKey, nil
 }
 
 func selfSignedJWTTokenSource(data []byte, ds *DialSettings) (oauth2.TokenSource, error) {

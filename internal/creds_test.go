@@ -400,10 +400,25 @@ func TestIsSelfSignedJWTFlow(t *testing.T) {
 			},
 			want: true,
 		},
+		{
+			name: "UniverseDomainUserAccount",
+			ds: &DialSettings{
+				CredentialsFile:    "testdata/user-account.json",
+				Scopes:             []string{"foo"},
+				EnableJwtWithScope: false,
+				UniverseDomain:     "example.com",
+			},
+			want: false,
+		},
 	}
 
 	for _, tc := range tests {
-		isSSJ, err := isSelfSignedJWTFlow([]byte(validServiceAccountJSON), tc.ds)
+
+		bytes, err := os.ReadFile(tc.ds.CredentialsFile)
+		if err != nil {
+			t.Fatal(err)
+		}
+		isSSJ, err := isSelfSignedJWTFlow(bytes, tc.ds)
 		if err != nil {
 			t.Errorf("[%s]: got %v, wanted no error", tc.name, err)
 		}

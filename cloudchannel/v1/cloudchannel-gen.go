@@ -864,7 +864,7 @@ func (s *GoogleCloudChannelV1ChannelPartnerRepricingConfig) MarshalJSON() ([]byt
 // message for CloudChannelService.CheckCloudIdentityAccountsExist.
 type GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest struct {
 	// Domain: Required. Domain to fetch for Cloud Identity account
-	// customer.
+	// customers, including domained and domainless.
 	Domain string `json:"domain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to

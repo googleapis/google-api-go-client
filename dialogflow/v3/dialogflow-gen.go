@@ -28973,6 +28973,168 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall) Do(opts ...
 
 }
 
+// method id "dialogflow.projects.locations.agents.environments.sessions.serverStreamingDetectIntent":
+
+type ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall struct {
+	s                                            *Service
+	sessionid                                    string
+	googleclouddialogflowcxv3detectintentrequest *GoogleCloudDialogflowCxV3DetectIntentRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// ServerStreamingDetectIntent: Processes a natural language query and
+// returns structured, actionable data as a result through server-side
+// streaming. Server-side streaming allows Dialogflow to send partial
+// responses
+// (https://cloud.google.com/dialogflow/cx/docs/concept/fulfillment#partial-response)
+// earlier in a single request.
+//
+//   - session: The name of the session this query is sent to. Format:
+//     `projects//locations//agents//sessions/` or
+//     `projects//locations//agents//environments//sessions/`. If
+//     `Environment ID` is not specified, we assume default 'draft'
+//     environment. It's up to the API caller to choose an appropriate
+//     `Session ID`. It can be a random number or some type of session
+//     identifiers (preferably hashed). The length of the `Session ID`
+//     must not exceed 36 characters. For more information, see the
+//     sessions guide
+//     (https://cloud.google.com/dialogflow/cx/docs/concept/session).
+//     Note: Always use agent versions for production traffic. See
+//     Versions and environments
+//     (https://cloud.google.com/dialogflow/cx/docs/concept/version).
+func (r *ProjectsLocationsAgentsEnvironmentsSessionsService) ServerStreamingDetectIntent(sessionid string, googleclouddialogflowcxv3detectintentrequest *GoogleCloudDialogflowCxV3DetectIntentRequest) *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall {
+	c := &ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sessionid = sessionid
+	c.googleclouddialogflowcxv3detectintentrequest = googleclouddialogflowcxv3detectintentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3detectintentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+session}:serverStreamingDetectIntent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"session": c.sessionid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.environments.sessions.serverStreamingDetectIntent" call.
+// Exactly one of *GoogleCloudDialogflowCxV3DetectIntentResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3DetectIntentResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsEnvironmentsSessionsServerStreamingDetectIntentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3DetectIntentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3DetectIntentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Processes a natural language query and returns structured, actionable data as a result through server-side streaming. Server-side streaming allows Dialogflow to send [partial responses](https://cloud.google.com/dialogflow/cx/docs/concept/fulfillment#partial-response) earlier in a single request.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/sessions/{sessionsId}:serverStreamingDetectIntent",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.environments.sessions.serverStreamingDetectIntent",
+	//   "parameterOrder": [
+	//     "session"
+	//   ],
+	//   "parameters": {
+	//     "session": {
+	//       "description": "Required. The name of the session this query is sent to. Format: `projects//locations//agents//sessions/` or `projects//locations//agents//environments//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. It's up to the API caller to choose an appropriate `Session ID`. It can be a random number or some type of session identifiers (preferably hashed). The length of the `Session ID` must not exceed 36 characters. For more information, see the [sessions guide](https://cloud.google.com/dialogflow/cx/docs/concept/session). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/cx/docs/concept/version).",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+session}:serverStreamingDetectIntent",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3DetectIntentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3DetectIntentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.locations.agents.environments.sessions.entityTypes.create":
 
 type ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall struct {
@@ -36842,6 +37004,168 @@ func (c *ProjectsLocationsAgentsSessionsMatchIntentCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowCxV3MatchIntentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.sessions.serverStreamingDetectIntent":
+
+type ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall struct {
+	s                                            *Service
+	sessionid                                    string
+	googleclouddialogflowcxv3detectintentrequest *GoogleCloudDialogflowCxV3DetectIntentRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// ServerStreamingDetectIntent: Processes a natural language query and
+// returns structured, actionable data as a result through server-side
+// streaming. Server-side streaming allows Dialogflow to send partial
+// responses
+// (https://cloud.google.com/dialogflow/cx/docs/concept/fulfillment#partial-response)
+// earlier in a single request.
+//
+//   - session: The name of the session this query is sent to. Format:
+//     `projects//locations//agents//sessions/` or
+//     `projects//locations//agents//environments//sessions/`. If
+//     `Environment ID` is not specified, we assume default 'draft'
+//     environment. It's up to the API caller to choose an appropriate
+//     `Session ID`. It can be a random number or some type of session
+//     identifiers (preferably hashed). The length of the `Session ID`
+//     must not exceed 36 characters. For more information, see the
+//     sessions guide
+//     (https://cloud.google.com/dialogflow/cx/docs/concept/session).
+//     Note: Always use agent versions for production traffic. See
+//     Versions and environments
+//     (https://cloud.google.com/dialogflow/cx/docs/concept/version).
+func (r *ProjectsLocationsAgentsSessionsService) ServerStreamingDetectIntent(sessionid string, googleclouddialogflowcxv3detectintentrequest *GoogleCloudDialogflowCxV3DetectIntentRequest) *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall {
+	c := &ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.sessionid = sessionid
+	c.googleclouddialogflowcxv3detectintentrequest = googleclouddialogflowcxv3detectintentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall) Context(ctx context.Context) *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3detectintentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+session}:serverStreamingDetectIntent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"session": c.sessionid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.sessions.serverStreamingDetectIntent" call.
+// Exactly one of *GoogleCloudDialogflowCxV3DetectIntentResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3DetectIntentResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsSessionsServerStreamingDetectIntentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3DetectIntentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowCxV3DetectIntentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Processes a natural language query and returns structured, actionable data as a result through server-side streaming. Server-side streaming allows Dialogflow to send [partial responses](https://cloud.google.com/dialogflow/cx/docs/concept/fulfillment#partial-response) earlier in a single request.",
+	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/sessions/{sessionsId}:serverStreamingDetectIntent",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.sessions.serverStreamingDetectIntent",
+	//   "parameterOrder": [
+	//     "session"
+	//   ],
+	//   "parameters": {
+	//     "session": {
+	//       "description": "Required. The name of the session this query is sent to. Format: `projects//locations//agents//sessions/` or `projects//locations//agents//environments//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. It's up to the API caller to choose an appropriate `Session ID`. It can be a random number or some type of session identifiers (preferably hashed). The length of the `Session ID` must not exceed 36 characters. For more information, see the [sessions guide](https://cloud.google.com/dialogflow/cx/docs/concept/session). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/cx/docs/concept/version).",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+session}:serverStreamingDetectIntent",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3DetectIntentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3DetectIntentResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

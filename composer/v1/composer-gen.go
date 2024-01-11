@@ -332,6 +332,68 @@ func (s *CidrBlock) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudDataLineageIntegration: Configuration for Cloud Data Lineage
+// integration.
+type CloudDataLineageIntegration struct {
+	// Enabled: Optional. Whether or not Cloud Data Lineage integration is
+	// enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudDataLineageIntegration) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudDataLineageIntegration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataRetentionConfig: The configuration setting for Airflow database
+// data retention mechanism.
+type DataRetentionConfig struct {
+	// TaskLogsRetentionConfig: Optional. The configuration settings for
+	// task logs retention
+	TaskLogsRetentionConfig *TaskLogsRetentionConfig `json:"taskLogsRetentionConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TaskLogsRetentionConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TaskLogsRetentionConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataRetentionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataRetentionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
 // by the Apache Airflow software.
 type DatabaseConfig struct {
@@ -576,6 +638,10 @@ type EnvironmentConfig struct {
 	// "/"-delimited object name prefixes. DAG objects for this environment
 	// reside in a simulated directory with the given prefix.
 	DagGcsPrefix string `json:"dagGcsPrefix,omitempty"`
+
+	// DataRetentionConfig: Optional. The configuration setting for Airflow
+	// database data retention mechanism.
+	DataRetentionConfig *DataRetentionConfig `json:"dataRetentionConfig,omitempty"`
 
 	// DatabaseConfig: Optional. The configuration settings for Cloud SQL
 	// instance used internally by Apache Airflow software.
@@ -1952,6 +2018,10 @@ type SoftwareConfig struct {
 	// be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
 
+	// CloudDataLineageIntegration: Optional. The configuration for Cloud
+	// Data Lineage integration.
+	CloudDataLineageIntegration *CloudDataLineageIntegration `json:"cloudDataLineageIntegration,omitempty"`
+
 	// EnvVariables: Optional. Additional environment variables to provide
 	// to the Apache Airflow scheduler, worker, and webserver processes.
 	// Environment variable names must match the regular expression
@@ -2177,6 +2247,43 @@ type StorageConfig struct {
 
 func (s *StorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TaskLogsRetentionConfig: The configuration setting for Task Logs.
+type TaskLogsRetentionConfig struct {
+	// StorageMode: Optional. The mode of storage for Airflow workers task
+	// logs. For details, see
+	// go/composer-store-task-logs-in-cloud-logging-only-design-doc
+	//
+	// Possible values:
+	//   "TASK_LOGS_STORAGE_MODE_UNSPECIFIED" - This configuration is not
+	// specified by the user.
+	//   "CLOUD_LOGGING_AND_CLOUD_STORAGE" - Store task logs in Cloud
+	// Logging and in the environment's Cloud Storage bucket.
+	//   "CLOUD_LOGGING_ONLY" - Store task logs in Cloud Logging only.
+	StorageMode string `json:"storageMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StorageMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StorageMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TaskLogsRetentionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TaskLogsRetentionConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

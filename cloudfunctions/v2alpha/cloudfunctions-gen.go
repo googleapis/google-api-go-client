@@ -309,6 +309,11 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutomaticUpdatePolicy: Security patches are applied automatically to
+// the runtime without requiring the function to be redeployed.
+type AutomaticUpdatePolicy struct {
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -341,11 +346,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -357,7 +385,12 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -390,6 +423,10 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // BuildConfig: Describes the Build step of the function that builds a
 // container from the given source.
 type BuildConfig struct {
+	// AutomaticUpdatePolicy: See the comment next to this message for more
+	// details.
+	AutomaticUpdatePolicy *AutomaticUpdatePolicy `json:"automaticUpdatePolicy,omitempty"`
+
 	// Build: Output only. The Cloud Build name of the latest successful
 	// deployment of the function.
 	Build string `json:"build,omitempty"`
@@ -413,12 +450,12 @@ type BuildConfig struct {
 	// by the user using the `docker_repository` field.
 	DockerRegistry string `json:"dockerRegistry,omitempty"`
 
-	// DockerRepository: User managed repository created in Artifact
-	// Registry optionally with a customer managed encryption key. This is
-	// the repository to which the function docker image will be pushed
-	// after it is built by Cloud Build. If unspecified, GCF will create and
-	// use a repository named 'gcf-artifacts' for every deployed region. It
-	// must match the pattern
+	// DockerRepository: Repository in Artifact Registry to which the
+	// function docker image will be pushed after it is built by Cloud
+	// Build. If specified by user, it is created and managed by user with a
+	// customer managed encryption key. Otherwise, GCF will create and use a
+	// repository named 'gcf-artifacts' for every deployed region. It must
+	// match the pattern
 	// `projects/{project}/locations/{location}/repositories/{repository}`.
 	// Cross-project repositories are not supported. Cross-location
 	// repositories are not supported. Repository format must be 'DOCKER'.
@@ -436,12 +473,20 @@ type BuildConfig struct {
 	// for the function
 	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
 
+	// OnDeployUpdatePolicy: See the comment next to this message for more
+	// details.
+	OnDeployUpdatePolicy *OnDeployUpdatePolicy `json:"onDeployUpdatePolicy,omitempty"`
+
 	// Runtime: The runtime in which to run the function. Required when
 	// deploying a new function, optional when updating an existing
 	// function. For a complete list of possible choices, see the `gcloud`
 	// command reference
 	// (https://cloud.google.com/sdk/gcloud/reference/functions/deploy#--runtime).
 	Runtime string `json:"runtime,omitempty"`
+
+	// ServiceAccount: [Preview] Service account to be used for building the
+	// container
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Source: The location of the function source code.
 	Source *Source `json:"source,omitempty"`
@@ -466,20 +511,22 @@ type BuildConfig struct {
 	// (roles/cloudbuild.customworkers.builder) in the project.
 	WorkerPool string `json:"workerPool,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Build") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticUpdatePolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Build") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutomaticUpdatePolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -857,6 +904,17 @@ func (s *GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 // GenerateUploadUrlRequest: Request of `GenerateSourceUploadUrl`
 // method.
 type GenerateUploadUrlRequest struct {
+	// Environment: The function environment the generated upload url will
+	// be used for. The upload url for 2nd Gen functions can also be used
+	// for 1st gen functions, but not vice versa. If not specified, 2nd
+	// generation-style upload URLs are generated.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Unspecified
+	//   "GEN_1" - Gen 1
+	//   "GEN_2" - Gen 2
+	Environment string `json:"environment,omitempty"`
+
 	// KmsKeyName: [Preview] Resource name of a KMS crypto key (managed by
 	// the user) used to encrypt/decrypt function source code objects in
 	// intermediate Cloud Storage buckets. When you generate an upload url
@@ -872,7 +930,7 @@ type GenerateUploadUrlRequest struct {
 	// Key/KeyRing/Project/Organization (least access preferred).
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -880,10 +938,10 @@ type GenerateUploadUrlRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1755,6 +1813,37 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnDeployUpdatePolicy: Security patches are only applied when a
+// function is redeployed.
+type OnDeployUpdatePolicy struct {
+	// RuntimeVersion: Output only. contains the runtime version which was
+	// used during latest function deployment.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RuntimeVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RuntimeVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnDeployUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod OnDeployUpdatePolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

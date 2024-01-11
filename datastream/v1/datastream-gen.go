@@ -1956,6 +1956,34 @@ func (s *OracleSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OracleScnPosition: Oracle SCN position
+type OracleScnPosition struct {
+	// Scn: Required. SCN number from where Logs will be read
+	Scn int64 `json:"scn,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Scn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleScnPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleScnPosition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OracleSourceConfig: Oracle data source configuration
 type OracleSourceConfig struct {
 	// DropLargeObjects: Drop large object values.
@@ -2652,6 +2680,10 @@ type SpecificStartPosition struct {
 	// MysqlLogPosition: MySQL specific log position to start replicating
 	// from.
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
+
+	// OracleScnPosition: Oracle specific log position to start replicating
+	// from.
+	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to
 	// unconditionally include in API requests. By default, fields with

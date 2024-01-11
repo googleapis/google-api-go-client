@@ -3969,18 +3969,29 @@ type PullRequestFilter struct {
 	// https://github.com/google/re2/wiki/Syntax
 	Branch string `json:"branch,omitempty"`
 
-	// CommentControl: Configure builds to run whether a repository owner or
-	// collaborator need to comment `/gcbrun`.
+	// CommentControl: If CommentControl is enabled, depending on the
+	// setting, builds may not fire until a repository writer comments
+	// `/gcbrun` on a pull request or `/gcbrun` is in the pull request
+	// description. Only PR comments that contain `/gcbrun` will trigger
+	// builds. If CommentControl is set to disabled, comments with `/gcbrun`
+	// from a user with repository write permission or above will still
+	// trigger builds to run.
 	//
 	// Possible values:
-	//   "COMMENTS_DISABLED" - Do not require comments on Pull Requests
-	// before builds are triggered.
-	//   "COMMENTS_ENABLED" - Enforce that repository owners or
-	// collaborators must comment on Pull Requests before builds are
-	// triggered.
-	//   "COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY" - Enforce that
-	// repository owners or collaborators must comment on external
-	// contributors' Pull Requests before builds are triggered.
+	//   "COMMENTS_DISABLED" - Do not require `/gcbrun` comments from a user
+	// with repository write permission or above on pull requests before
+	// builds are triggered. Comments that contain `/gcbrun` will still fire
+	// builds so this should be thought of as comments not required.
+	//   "COMMENTS_ENABLED" - Builds will only fire in response to pull
+	// requests if: 1. The pull request author has repository write
+	// permission or above and `/gcbrun` is in the PR description. 2. A user
+	// with repository writer permissions or above comments `/gcbrun` on a
+	// pull request authored by any user.
+	//   "COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY" - Builds will
+	// only fire in response to pull requests if: 1. The pull request author
+	// is a repository writer or above. 2. If the author does not have write
+	// permissions, a user with write permissions or above must comment
+	// `/gcbrun` in order to fire a build.
 	CommentControl string `json:"commentControl,omitempty"`
 
 	// InvertRegex: If true, branches that do NOT match the git_ref will

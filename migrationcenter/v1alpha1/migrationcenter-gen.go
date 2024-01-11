@@ -4596,8 +4596,8 @@ func (s *ReportConfigGroupPreferenceSetAssignment) MarshalJSON() ([]byte, error)
 // aggregated values for all the groups and preference sets included in
 // this Report.
 type ReportSummary struct {
-	// AllAssetsStats: Aggregate statistics for all the assets across all
-	// the groups.
+	// AllAssetsStats: Aggregate statistics for unique assets across all the
+	// groups.
 	AllAssetsStats *ReportSummaryAssetAggregateStats `json:"allAssetsStats,omitempty"`
 
 	// GroupFindings: Findings for each Group included in this report.
@@ -4648,7 +4648,7 @@ type ReportSummaryAssetAggregateStats struct {
 	MemoryUtilizationChart *ReportSummaryUtilizationChartData `json:"memoryUtilizationChart,omitempty"`
 
 	// OperatingSystem: Count of assets grouped by Operating System
-	// families.
+	// families. Only present for virtual machines.
 	OperatingSystem *ReportSummaryChartData `json:"operatingSystem,omitempty"`
 
 	// StorageBytesHistogram: Histogram showing a distribution of storage
@@ -4782,10 +4782,10 @@ type ReportSummaryGroupFinding struct {
 	// group.
 	AssetAggregateStats *ReportSummaryAssetAggregateStats `json:"assetAggregateStats,omitempty"`
 
-	// Description: Description for the Group.
+	// Description: Description for this group finding.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Display Name for the Group.
+	// DisplayName: Display Name for this group finding.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// OverlappingAssetCount: This field is deprecated, do not rely on it
@@ -4829,8 +4829,8 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// DisplayName: Display Name of the Preference Set
 	DisplayName string `json:"displayName,omitempty"`
 
-	// MachineFinding: A set of findings that applies to all machines in the
-	// input.
+	// MachineFinding: Output only. A set of findings that applies to all
+	// virtual machines in the input. Only present for virtual machines.
 	MachineFinding *ReportSummaryMachineFinding `json:"machineFinding,omitempty"`
 
 	// MachinePreferences: A set of preferences that applies to all machines
@@ -4841,10 +4841,11 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	MonthlyCostCompute *Money `json:"monthlyCostCompute,omitempty"`
 
 	// MonthlyCostNetworkEgress: Network Egress monthly cost for this
-	// preference set.
+	// preference set. Only present for virtual machines.
 	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
 
-	// MonthlyCostOsLicense: Licensing monthly cost for this preference set.
+	// MonthlyCostOsLicense: Operating system licensing monthly cost for
+	// this preference set. Only present for virtual machines.
 	MonthlyCostOsLicense *Money `json:"monthlyCostOsLicense,omitempty"`
 
 	// MonthlyCostOther: Miscellaneous monthly cost for this preference set.
@@ -4864,7 +4865,7 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	PricingTrack string `json:"pricingTrack,omitempty"`
 
 	// SoleTenantFinding: A set of findings that applies to Stole-Tenant
-	// machines in the input.
+	// machines in the input. Only present for virtual machines.
 	SoleTenantFinding *ReportSummarySoleTenantFinding `json:"soleTenantFinding,omitempty"`
 
 	// TopPriority: Text describing the business priority specified for this
@@ -4872,7 +4873,7 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	TopPriority string `json:"topPriority,omitempty"`
 
 	// VmwareEngineFinding: A set of findings that applies to VMWare
-	// machines in the input.
+	// machines in the input. Only present for virtual machines.
 	VmwareEngineFinding *ReportSummaryVMWareEngineFinding `json:"vmwareEngineFinding,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to

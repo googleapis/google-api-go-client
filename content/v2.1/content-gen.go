@@ -2296,7 +2296,7 @@ type AccountsCustomBatchRequestEntryLinkRequest struct {
 
 	// LinkType: Type of the link between the two accounts. Acceptable
 	// values are: - "channelPartner" - "eCommercePlatform" -
-	// "paymentServiceProvider"
+	// "paymentServiceProvider" - "localProductManager"
 	LinkType string `json:"linkType,omitempty"`
 
 	// LinkedAccountId: The ID of the linked account.
@@ -2305,7 +2305,8 @@ type AccountsCustomBatchRequestEntryLinkRequest struct {
 	// Services: Provided services. Acceptable values are: -
 	// "shoppingAdsProductManagement" -
 	// "shoppingActionsProductManagement" -
-	// "shoppingActionsOrderManagement" - "paymentProcessing"
+	// "shoppingActionsOrderManagement" - "paymentProcessing" -
+	// "localProductManagement"
 	Services []string `json:"services,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to

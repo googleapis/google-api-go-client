@@ -4194,6 +4194,40 @@
               "scopes": [
                 "https://www.googleapis.com/auth/androidpublisher"
               ]
+            },
+            "revoke": {
+              "description": "Revoke a subscription purchase for the user.",
+              "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke",
+              "httpMethod": "POST",
+              "id": "androidpublisher.purchases.subscriptionsv2.revoke",
+              "parameterOrder": [
+                "packageName",
+                "token"
+              ],
+              "parameters": {
+                "packageName": {
+                  "description": "Required. The package of the application for which this subscription was purchased (for example, 'com.some.thing').",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "token": {
+                  "description": "Required. The token provided to the user's device when the subscription was purchased.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke",
+              "request": {
+                "$ref": "RevokeSubscriptionPurchaseRequest"
+              },
+              "response": {
+                "$ref": "RevokeSubscriptionPurchaseResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
             }
           }
         },
@@ -4661,7 +4695,7 @@
       }
     }
   },
-  "revision": "20240109",
+  "revision": "20240111",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7999,6 +8033,34 @@
       },
       "type": "object"
     },
+    "RevocationContext": {
+      "description": "Revocation context of the purchases.subscriptionsv2.revoke API.",
+      "id": "RevocationContext",
+      "properties": {
+        "proratedRefund": {
+          "$ref": "UNDEFINED_packageNameRevocationContextProratedRefund",
+          "description": "Optional. Used when users should be refunded a prorated amount they paid for their subscription based on the amount of time remaining in a subscription. Not supported for subscriptions with multiple items."
+        }
+      },
+      "type": "object"
+    },
+    "RevokeSubscriptionPurchaseRequest": {
+      "description": "Request for the purchases.subscriptionsv2.revoke API.",
+      "id": "RevokeSubscriptionPurchaseRequest",
+      "properties": {
+        "revocationContext": {
+          "$ref": "RevocationContext",
+          "description": "Required. Additional details around the subscription revocation."
+        }
+      },
+      "type": "object"
+    },
+    "RevokeSubscriptionPurchaseResponse": {
+      "description": "Response for the purchases.subscriptionsv2.revoke API.",
+      "id": "RevokeSubscriptionPurchaseResponse",
+      "properties": {},
+      "type": "object"
+    },
     "ScreenDensity": {
       "description": "Represents a screen density.",
       "id": "ScreenDensity",
@@ -9171,6 +9233,12 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "UNDEFINED_packageNameRevocationContextProratedRefund": {
+      "description": "Used to determine if the refund type in the RevocationContext is a prorated refund.",
+      "id": "UNDEFINED_packageNameRevocationContextProratedRefund",
+      "properties": {},
       "type": "object"
     },
     "UpdateBasePlanStateRequest": {

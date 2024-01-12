@@ -2039,7 +2039,8 @@ func (s *GoogleAppsCardV1Card) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1CardAction: A card action is the action associated
 // with the card. For example, an invoice card might include actions
 // such as delete invoice, email invoice, or open the invoice in a
-// browser. Not supported by Chat apps.
+// browser. Google Workspace Add-ons
+// (https://developers.google.com/workspace/add-ons):
 type GoogleAppsCardV1CardAction struct {
 	// ActionLabel: The label that displays as the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -2075,10 +2076,11 @@ func (s *GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
 // apps, see Card footer
 // (https://developers.google.com/chat/ui/widgets/card-fixed-footer).
 // Setting `fixedFooter` without specifying a `primaryButton` or a
-// `secondaryButton` causes an error. Supported by Google Workspace
-// Add-ons and Chat apps. For Chat apps, you can use fixed footers in
-// dialogs (https://developers.google.com/chat/how-tos/dialogs), but not
-// card messages
+// `secondaryButton` causes an error. Google Workspace Add-ons and Chat
+// apps (https://developers.google.com/workspace/extend): For Chat apps,
+// you can use fixed footers in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs), but not card
+// messages
 // (https://developers.google.com/chat/api/guides/v1/messages/create#create).
 type GoogleAppsCardV1CardFixedFooter struct {
 	// PrimaryButton: The primary button of the fixed footer. The button
@@ -3271,8 +3273,8 @@ type GoogleAppsCardV1TextInput struct {
 
 	// PlaceholderText: Text that appears in the text input field when the
 	// field is empty. Use this text to prompt users to enter a value. For
-	// example, `Enter a number from 0 to 100`. Supported by Google Chat
-	// apps, but not Google Workspace Add-ons.
+	// example, `Enter a number from 0 to 100`. Google Chat apps
+	// (https://developers.google.com/chat):
 	PlaceholderText string `json:"placeholderText,omitempty"`
 
 	// Type: How a text input field appears in the user interface. For

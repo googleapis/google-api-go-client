@@ -2652,7 +2652,7 @@
       }
     }
   },
-  "revision": "20231220",
+  "revision": "20240109",
   "rootUrl": "https://sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2809,7 +2809,7 @@
           "type": "string"
         },
         "fccId": {
-          "description": "The FCC identifier of the device.",
+          "description": "The FCC identifier of the device. Refer to https://www.fcc.gov/oet/ea/fccid for FccID format.",
           "type": "string"
         },
         "grantRangeAllowlists": {

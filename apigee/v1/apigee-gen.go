@@ -5110,11 +5110,15 @@ type GoogleCloudApigeeV1Environment struct {
 	// DisplayName: Optional. Display name for this environment.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// ForwardProxyUri: Optional. Url of the forward proxy to be applied to
+	// ForwardProxyUri: Optional. URI of the forward proxy to be applied to
 	// the runtime instances in this environment. Must be in the format of
-	// {scheme}://{hostname}:{port}. Note that scheme must be one of "http"
-	// or "https", and port must be supplied. To remove a forward proxy
-	// setting, update the field to an empty value.
+	// {scheme}://{hostname}:{port}. Note that the scheme must be one of
+	// "http" or "https", and the port must be supplied. To remove a forward
+	// proxy setting, update the field to an empty value. Note: At this
+	// time, PUT operations to add forwardProxyUri to an existing
+	// environment fail if the environment has nodeConfig set up. To
+	// successfully add the forwardProxyUri setting in this case, include
+	// the NodeConfig details with the request.
 	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
 	HasAttachedFlowHooks bool `json:"hasAttachedFlowHooks,omitempty"`

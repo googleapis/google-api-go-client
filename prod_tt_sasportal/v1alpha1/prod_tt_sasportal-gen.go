@@ -1447,14 +1447,14 @@ func (s *SasPortalListDevicesResponse) MarshalJSON() ([]byte, error) {
 // [ListLegacyOrganizations].
 // [spectrum.sas.portal.v1alpha1.Provisioning.ListLegacyOrganizations].
 type SasPortalListLegacyOrganizationsResponse struct {
-	// OrganizationIds: Optional. IDs of legacy SAS organizations.
-	OrganizationIds googleapi.Int64s `json:"organizationIds,omitempty"`
+	// Organizations: Optional. Legacy SAS organizations.
+	Organizations []*SasPortalOrganization `json:"organizations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "OrganizationIds") to
+	// ForceSendFields is a list of field names (e.g. "Organizations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1462,13 +1462,12 @@ type SasPortalListLegacyOrganizationsResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OrganizationIds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Organizations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1865,6 +1864,37 @@ type SasPortalOperation struct {
 
 func (s *SasPortalOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SasPortalOrganization: Organization details.
+type SasPortalOrganization struct {
+	// DisplayName: Name of organization
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Id of organization
+	Id int64 `json:"id,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalOrganization) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalOrganization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

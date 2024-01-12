@@ -6315,7 +6315,7 @@
       }
     }
   },
-  "revision": "20240103",
+  "revision": "20240110",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7233,7 +7233,7 @@
           "type": "string"
         },
         "linkType": {
-          "description": "Type of the link between the two accounts. Acceptable values are: - \"`channelPartner`\" - \"`eCommercePlatform`\" - \"`paymentServiceProvider`\" ",
+          "description": "Type of the link between the two accounts. Acceptable values are: - \"`channelPartner`\" - \"`eCommercePlatform`\" - \"`paymentServiceProvider`\" - \"`localProductManager`\" ",
           "type": "string"
         },
         "linkedAccountId": {
@@ -7241,7 +7241,7 @@
           "type": "string"
         },
         "services": {
-          "description": "Provided services. Acceptable values are: - \"`shoppingAdsProductManagement`\" - \"`shoppingActionsProductManagement`\" - \"`shoppingActionsOrderManagement`\" - \"`paymentProcessing`\" ",
+          "description": "Provided services. Acceptable values are: - \"`shoppingAdsProductManagement`\" - \"`shoppingActionsProductManagement`\" - \"`shoppingActionsOrderManagement`\" - \"`paymentProcessing`\" - \"`localProductManagement`\" ",
           "items": {
             "type": "string"
           },

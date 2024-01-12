@@ -18270,7 +18270,7 @@ func (s *YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) 
 }
 
 // YoutubeAndPartnersSettings: Settings for YouTube and Partners line
-// items.
+// items. Next ID: 15
 type YoutubeAndPartnersSettings struct {
 	// BiddingStrategy: Required. The bidding strategy of the YouTube and
 	// Partners line item.

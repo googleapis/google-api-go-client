@@ -19010,7 +19010,7 @@ func (s *YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) 
 }
 
 // YoutubeAndPartnersSettings: Settings for YouTube and Partners line
-// items.
+// items. Next ID: 15
 type YoutubeAndPartnersSettings struct {
 	// ContentCategory: The kind of content on which the YouTube and
 	// Partners ads will be shown.

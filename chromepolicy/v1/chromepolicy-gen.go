@@ -665,6 +665,11 @@ type GoogleChromePolicyVersionsV1FieldConstraints struct {
 	// NumericRangeConstraint: The allowed range for numeric fields.
 	NumericRangeConstraint *GoogleChromePolicyVersionsV1NumericRangeConstraint `json:"numericRangeConstraint,omitempty"`
 
+	// UploadedFileConstraints: Constraints on the uploaded file of a file
+	// policy. If present, this policy requires a URL that can be fetched by
+	// uploading a file with the constraints specified in this proto.
+	UploadedFileConstraints *GoogleChromePolicyVersionsV1UploadedFileConstraints `json:"uploadedFileConstraints,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "NumericRangeConstraint") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -1923,6 +1928,54 @@ type GoogleChromePolicyVersionsV1UploadPolicyFileResponse struct {
 
 func (s *GoogleChromePolicyVersionsV1UploadPolicyFileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyVersionsV1UploadedFileConstraints: Constraints on
+// the uploaded file of a file policy.
+type GoogleChromePolicyVersionsV1UploadedFileConstraints struct {
+	// SizeLimitBytes: The size limit of uploaded files for a setting, in
+	// bytes.
+	SizeLimitBytes int64 `json:"sizeLimitBytes,omitempty,string"`
+
+	// SupportedContentTypes: File types that can be uploaded for a setting.
+	//
+	// Possible values:
+	//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
+	//   "CONTENT_TYPE_PLAIN_TEXT" - Plain text.
+	//   "CONTENT_TYPE_HTML" - HTML.
+	//   "CONTENT_TYPE_IMAGE_JPEG" - JPEG.
+	//   "CONTENT_TYPE_IMAGE_GIF" - GIF.
+	//   "CONTENT_TYPE_IMAGE_PNG" - PNG.
+	//   "CONTENT_TYPE_JSON" - JSON.
+	//   "CONTENT_TYPE_ZIP" - ZIP.
+	//   "CONTENT_TYPE_GZIP" - GZIP.
+	//   "CONTENT_TYPE_CSV" - CSV.
+	//   "CONTENT_TYPE_YAML" - YAML.
+	//   "CONTENT_TYPE_IMAGE_WEBP" - WEBP.
+	SupportedContentTypes []string `json:"supportedContentTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeLimitBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeLimitBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1UploadedFileConstraints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1UploadedFileConstraints
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

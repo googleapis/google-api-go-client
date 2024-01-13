@@ -988,7 +988,7 @@ type BucketMetadata struct {
 	// StartTime: The create time of an operation.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of an operation.
+	// State: Output only. State of an operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
@@ -1001,6 +1001,7 @@ type BucketMetadata struct {
 	//   "OPERATION_STATE_FAILED" - The operation failed.
 	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
 	// user.
+	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
 
 	// UpdateBucketRequest: LongRunningUpdateBucket RPC request.
@@ -1093,8 +1094,8 @@ type CancelOperationRequest struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 type CmekSettings struct {
-	// KmsKeyName: The resource name for the configured Cloud KMS key.KMS
-	// key name format:
+	// KmsKeyName: Optional. The resource name for the configured Cloud KMS
+	// key.KMS key name format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
 	// eys/[KEY]" For
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
@@ -1113,8 +1114,8 @@ type CmekSettings struct {
 	// for more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// KmsKeyVersionName: The CryptoKeyVersion resource name for the
-	// configured Cloud KMS key.KMS key name format:
+	// KmsKeyVersionName: Output only. The CryptoKeyVersion resource name
+	// for the configured Cloud KMS key.KMS key name format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
 	// eys/[KEY]/cryptoKeyVersions/[VERSION]" For
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
@@ -1185,7 +1186,7 @@ type CopyLogEntriesMetadata struct {
 	// StartTime: The create time of an operation.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of an operation.
+	// State: Output only. State of an operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
@@ -1198,6 +1199,7 @@ type CopyLogEntriesMetadata struct {
 	//   "OPERATION_STATE_FAILED" - The operation failed.
 	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
 	// user.
+	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
 
 	// WriterIdentity: The IAM identity of a service account that must be
@@ -1827,16 +1829,17 @@ func (s *Linear) UnmarshalJSON(data []byte) error {
 
 // Link: Describes a link connected to an analytics enabled bucket.
 type Link struct {
-	// BigqueryDataset: The information of a BigQuery Dataset. When a link
-	// is created, a BigQuery dataset is created along with it, in the same
-	// project as the LogBucket it's linked to. This dataset will also have
-	// BigQuery Views corresponding to the LogViews in the bucket.
+	// BigqueryDataset: Optional. The information of a BigQuery Dataset.
+	// When a link is created, a BigQuery dataset is created along with it,
+	// in the same project as the LogBucket it's linked to. This dataset
+	// will also have BigQuery Views corresponding to the LogViews in the
+	// bucket.
 	BigqueryDataset *BigQueryDataset `json:"bigqueryDataset,omitempty"`
 
 	// CreateTime: Output only. The creation timestamp of the link.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Describes this link.The maximum length of the
+	// Description: Optional. Describes this link.The maximum length of the
 	// description is 8000 characters.
 	Description string `json:"description,omitempty"`
 
@@ -1856,9 +1859,9 @@ type Link struct {
 	//   "FAILED" - The resource is in an INTERNAL error state.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: The resource name of the link. The name can have up to 100
-	// characters. A valid link id (at the end of the link name) must only
-	// have alphanumeric characters and underscores within it.
+	// Name: Output only. The resource name of the link. The name can have
+	// up to 100 characters. A valid link id (at the end of the link name)
+	// must only have alphanumeric characters and underscores within it.
 	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
 	// ks/[LINK_ID]"
 	// "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCK
@@ -1913,7 +1916,7 @@ type LinkMetadata struct {
 	// StartTime: The start time of an operation.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of an operation.
+	// State: Output only. State of an operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
@@ -1926,6 +1929,7 @@ type LinkMetadata struct {
 	//   "OPERATION_STATE_FAILED" - The operation failed.
 	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
 	// user.
+	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateLinkRequest")
@@ -2640,26 +2644,26 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 
 // LogBucket: Describes a repository in which log entries are stored.
 type LogBucket struct {
-	// AnalyticsEnabled: Whether log analytics is enabled for this
+	// AnalyticsEnabled: Optional. Whether log analytics is enabled for this
 	// bucket.Once enabled, log analytics features cannot be disabled.
 	AnalyticsEnabled bool `json:"analyticsEnabled,omitempty"`
 
-	// CmekSettings: The CMEK settings of the log bucket. If present, new
-	// log entries written to this log bucket are encrypted using the CMEK
-	// key provided in this configuration. If a log bucket has CMEK
-	// settings, the CMEK settings cannot be disabled later by updating the
-	// log bucket. Changing the KMS key is allowed.
+	// CmekSettings: Optional. The CMEK settings of the log bucket. If
+	// present, new log entries written to this log bucket are encrypted
+	// using the CMEK key provided in this configuration. If a log bucket
+	// has CMEK settings, the CMEK settings cannot be disabled later by
+	// updating the log bucket. Changing the KMS key is allowed.
 	CmekSettings *CmekSettings `json:"cmekSettings,omitempty"`
 
 	// CreateTime: Output only. The creation timestamp of the bucket. This
 	// is not set for any of the default buckets.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Describes this bucket.
+	// Description: Optional. Describes this bucket.
 	Description string `json:"description,omitempty"`
 
-	// IndexConfigs: A list of indexed fields and related configuration
-	// data.
+	// IndexConfigs: Optional. A list of indexed fields and related
+	// configuration data.
 	IndexConfigs []*IndexConfig `json:"indexConfigs,omitempty"`
 
 	// LifecycleState: Output only. The bucket lifecycle state.
@@ -2678,9 +2682,9 @@ type LogBucket struct {
 	//   "FAILED" - The resource is in an INTERNAL error state.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Locked: Whether the bucket is locked.The retention period on a locked
-	// bucket cannot be changed. Locked buckets may only be deleted if they
-	// are empty.
+	// Locked: Optional. Whether the bucket is locked.The retention period
+	// on a locked bucket cannot be changed. Locked buckets may only be
+	// deleted if they are empty.
 	Locked bool `json:"locked,omitempty"`
 
 	// Name: Output only. The resource name of the bucket.For
@@ -2692,18 +2696,18 @@ type LogBucket struct {
 	// changed.
 	Name string `json:"name,omitempty"`
 
-	// RestrictedFields: Log entry field paths that are denied access in
-	// this bucket.The following fields and their children are eligible:
-	// textPayload, jsonPayload, protoPayload, httpRequest, labels,
-	// sourceLocation.Restricting a repeated field will restrict all values.
-	// Adding a parent will block all child fields. (e.g. foo.bar will block
-	// foo.bar.baz)
+	// RestrictedFields: Optional. Log entry field paths that are denied
+	// access in this bucket.The following fields and their children are
+	// eligible: textPayload, jsonPayload, protoPayload, httpRequest,
+	// labels, sourceLocation.Restricting a repeated field will restrict all
+	// values. Adding a parent will block all child fields. (e.g. foo.bar
+	// will block foo.bar.baz)
 	RestrictedFields []string `json:"restrictedFields,omitempty"`
 
-	// RetentionDays: Logs will be retained by default for this amount of
-	// time, after which they will automatically be deleted. The minimum
-	// retention period is 1 day. If this value is set to zero at bucket
-	// creation time, the default time of 30 days will be used.
+	// RetentionDays: Optional. Logs will be retained by default for this
+	// amount of time, after which they will automatically be deleted. The
+	// minimum retention period is 1 day. If this value is set to zero at
+	// bucket creation time, the default time of 30 days will be used.
 	RetentionDays int64 `json:"retentionDays,omitempty"`
 
 	// UpdateTime: Output only. The last update timestamp of the bucket.
@@ -3083,7 +3087,7 @@ type LogExclusion struct {
 	// severity<ERROR sample(insertId, 0.99)
 	Filter string `json:"filter,omitempty"`
 
-	// Name: Required. A client-assigned identifier, such as
+	// Name: Output only. A client-assigned identifier, such as
 	// "load-balancer-exclusion". Identifiers are limited to 100 characters
 	// and can include only letters, digits, underscores, hyphens, and
 	// periods. First character has to be alphanumeric.
@@ -3375,7 +3379,7 @@ type LogSink struct {
 	// "projects/test-project2/") AND resource.type=gce_instance
 	IncludeChildren bool `json:"includeChildren,omitempty"`
 
-	// Name: Required. The client-assigned sink identifier, unique within
+	// Name: Output only. The client-assigned sink identifier, unique within
 	// the project.For example: "my-syslog-errors-to-pubsub".Sink
 	// identifiers are limited to 100 characters and can include only the
 	// following characters: upper and lower-case alphanumeric characters,
@@ -3485,21 +3489,21 @@ type LogView struct {
 	// CreateTime: Output only. The creation timestamp of the view.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Describes this view.
+	// Description: Optional. Describes this view.
 	Description string `json:"description,omitempty"`
 
-	// Filter: Filter that restricts which log entries in a bucket are
-	// visible in this view.Filters must be logical conjunctions that use
-	// the AND operator, and they can use any of the following qualifiers:
-	// SOURCE(), which specifies a project, folder, organization, or billing
-	// account of origin. resource.type, which specifies the resource type.
-	// LOG_ID(), which identifies the log.They can also use the negations of
-	// these qualifiers with the NOT operator.For
-	// example:SOURCE("projects/myproject") AND resource.type =
+	// Filter: Optional. Filter that restricts which log entries in a bucket
+	// are visible in this view.Filters must be logical conjunctions that
+	// use the AND operator, and they can use any of the following
+	// qualifiers: SOURCE(), which specifies a project, folder,
+	// organization, or billing account of origin. resource.type, which
+	// specifies the resource type. LOG_ID(), which identifies the log.They
+	// can also use the negations of these qualifiers with the NOT
+	// operator.For example:SOURCE("projects/myproject") AND resource.type =
 	// "gce_instance" AND NOT LOG_ID("stdout")
 	Filter string `json:"filter,omitempty"`
 
-	// Name: The resource name of the view.For
+	// Name: Output only. The resource name of the view.For
 	// example:projects/my-project/locations/global/buckets/my-bucket/views/m
 	// y-view
 	Name string `json:"name,omitempty"`
@@ -3540,7 +3544,7 @@ func (s *LogView) MarshalJSON() ([]byte, error) {
 // configuration and other UI state used in association with analysis of
 // query results.
 type LoggingQuery struct {
-	// Filter: An advanced query using the Logging Query Language
+	// Filter: Required. An advanced query using the Logging Query Language
 	// (https://cloud.google.com/logging/docs/view/logging-query-language).
 	// The maximum length of the filter is 20000 characters.
 	Filter string `json:"filter,omitempty"`
@@ -3553,8 +3557,8 @@ type LoggingQuery struct {
 	// string.
 	SummaryFieldStart int64 `json:"summaryFieldStart,omitempty"`
 
-	// SummaryFields: The set of summary fields to display for this saved
-	// query.
+	// SummaryFields: Optional. The set of summary fields to display for
+	// this saved query.
 	SummaryFields []*SummaryField `json:"summaryFields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -3964,7 +3968,7 @@ type MonitoredResourceDescriptor struct {
 
 	// Type: Required. The monitored resource type. For example, the type
 	// "cloudsql_database" represents databases in Google Cloud SQL. For a
-	// list of types, see Monitoring resource types
+	// list of types, see Monitored resource types
 	// (https://cloud.google.com/monitoring/api/resources) and Logging
 	// resource types
 	// (https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -4130,7 +4134,7 @@ func (s *OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
 // RecentQuery: Describes a recent query executed on the Logs Explorer
 // or Log Analytics page within the last ~ 30 days.
 type RecentQuery struct {
-	// LastRunTime: The timestamp when this query was last run.
+	// LastRunTime: Output only. The timestamp when this query was last run.
 	LastRunTime string `json:"lastRunTime,omitempty"`
 
 	// LoggingQuery: Logging query that can be executed in Logs Explorer or
@@ -4345,10 +4349,11 @@ type SavedQuery struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: A human readable description of the saved query.
+	// Description: Optional. A human readable description of the saved
+	// query.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: The user specified title for the SavedQuery.
+	// DisplayName: Optional. The user specified title for the SavedQuery.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LoggingQuery: Logging query that can be executed in Logs Explorer or
@@ -4608,8 +4613,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/logging/docs/view/logs-explorer-interface#add-summary-fields)
 // for a query in the Logs Explorer.
 type SummaryField struct {
-	// Field: The field from the LogEntry to include in the summary line,
-	// for example resource.type or jsonPayload.name.
+	// Field: Optional. The field from the LogEntry to include in the
+	// summary line, for example resource.type or jsonPayload.name.
 	Field string `json:"field,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Field") to

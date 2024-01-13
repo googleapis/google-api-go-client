@@ -1167,6 +1167,18 @@ type ComputeEnginePreferences struct {
 	// consider on Compute Engine.
 	MachinePreferences *MachinePreferences `json:"machinePreferences,omitempty"`
 
+	// PersistentDiskType: Persistent disk type to use. If unspecified
+	// (default), all types are considered, based on available usage data.
+	//
+	// Possible values:
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
+	// Selecting this value allows the system to use any disk type according
+	// to reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
+	PersistentDiskType string `json:"persistentDiskType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "LicenseType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

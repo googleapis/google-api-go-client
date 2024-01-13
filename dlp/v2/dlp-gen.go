@@ -3061,6 +3061,37 @@ func (s *GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DataSourceType: Message used to identify the type
+// of resource being profiled.
+type GooglePrivacyDlpV2DataSourceType struct {
+	// DataSource: Output only. An identifying string to the type of
+	// resource being profiled. Current values: google/bigquery/table,
+	// google/project
+	DataSource string `json:"dataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DataSourceType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DataSourceType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DatastoreKey: Record key for a finding in Cloud
 // Datastore.
 type GooglePrivacyDlpV2DatastoreKey struct {
@@ -9589,6 +9620,9 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 
 	// DataRiskLevel: The data risk level of this table.
 	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+
+	// DataSourceType: The resource type that was profiled.
+	DataSourceType *GooglePrivacyDlpV2DataSourceType `json:"dataSourceType,omitempty"`
 
 	// DatasetId: The BigQuery dataset ID.
 	DatasetId string `json:"datasetId,omitempty"`

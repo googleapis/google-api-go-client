@@ -1539,8 +1539,7 @@ func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *Billing
 }
 
 // Parent sets the optional parameter "parent": The parent to create a
-// billing account from. Format: - `organizations/{organization_id}`,
-// for example, `organizations/12345678` -
+// billing account from. Format: -
 // `billingAccounts/{billing_account_id}`, for example,
 // `billingAccounts/012345-567890-ABCDEF`
 func (c *BillingAccountsCreateCall) Parent(parent string) *BillingAccountsCreateCall {
@@ -1643,7 +1642,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3042,9 +3041,8 @@ type BillingAccountsSubAccountsCreateCall struct {
 // provisioned for subaccounts.
 //
 //   - parent: Optional. The parent to create a billing account from.
-//     Format: - `organizations/{organization_id}`, for example,
-//     `organizations/12345678` - `billingAccounts/{billing_account_id}`,
-//     for example, `billingAccounts/012345-567890-ABCDEF`.
+//     Format: - `billingAccounts/{billing_account_id}`, for example,
+//     `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsSubAccountsService) Create(parent string, billingaccount *BillingAccount) *BillingAccountsSubAccountsCreateCall {
 	c := &BillingAccountsSubAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3152,7 +3150,7 @@ func (c *BillingAccountsSubAccountsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -3418,9 +3416,8 @@ type OrganizationsBillingAccountsCreateCall struct {
 // provisioned for subaccounts.
 //
 //   - parent: Optional. The parent to create a billing account from.
-//     Format: - `organizations/{organization_id}`, for example,
-//     `organizations/12345678` - `billingAccounts/{billing_account_id}`,
-//     for example, `billingAccounts/012345-567890-ABCDEF`.
+//     Format: - `billingAccounts/{billing_account_id}`, for example,
+//     `billingAccounts/012345-567890-ABCDEF`.
 func (r *OrganizationsBillingAccountsService) Create(parent string, billingaccount *BillingAccount) *OrganizationsBillingAccountsCreateCall {
 	c := &OrganizationsBillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3528,7 +3525,7 @@ func (c *OrganizationsBillingAccountsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,

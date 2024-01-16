@@ -2311,6 +2311,37 @@ func (s *Query) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryPlan: Plan for the query.
+type QueryPlan struct {
+	// PlanInfo: Planning phase information for the query. It will include:
+	// { "indexes_used": [ {"query_scope": "Collection", "properties": "(foo
+	// ASC, __name__ ASC)"}, {"query_scope": "Collection", "properties":
+	// "(bar ASC, __name__ ASC)"} ] }
+	PlanInfo googleapi.RawMessage `json:"planInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PlanInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlanInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryPlan) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryPlan
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryResultBatch: A batch of results produced by a query.
 type QueryResultBatch struct {
 	// EndCursor: A cursor that points to the position after the last result
@@ -2546,6 +2577,42 @@ type ReserveIdsResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ResultSetStats: Planning and execution statistics for the query.
+type ResultSetStats struct {
+	// QueryPlan: Plan for the query.
+	QueryPlan *QueryPlan `json:"queryPlan,omitempty"`
+
+	// QueryStats: Aggregated statistics from the execution of the query.
+	// This will only be present when the request specifies `PROFILE` mode.
+	// For example, a query will return the statistics including: {
+	// "results_returned": "20", "documents_scanned": "20",
+	// "indexes_entries_scanned": "10050", "total_execution_time": "100.7
+	// msecs" }
+	QueryStats googleapi.RawMessage `json:"queryStats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryPlan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryPlan") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultSetStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ResultSetStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RollbackRequest: The request for Datastore.Rollback.
 type RollbackRequest struct {
 	// Transaction: Required. The transaction identifier, returned by a call
@@ -2593,6 +2660,19 @@ type RunAggregationQueryRequest struct {
 	// query.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
 
+	// Mode: Optional. The mode in which the query request is processed.
+	// This field is optional, and when not provided, it defaults to
+	// `NORMAL` mode where no additional statistics will be returned with
+	// the query results.
+	//
+	// Possible values:
+	//   "NORMAL" - The default mode. Only the query results are returned.
+	//   "PLAN" - This mode returns only the query plan, without any results
+	// or execution statistics information.
+	//   "PROFILE" - This mode returns both the query plan and the execution
+	// statistics along with the results.
+	Mode string `json:"mode,omitempty"`
+
 	// PartitionId: Entities are partitioned into subsets, identified by a
 	// partition ID. Queries are scoped to a single partition. This
 	// partition ID is normalized with the standard default context
@@ -2636,6 +2716,11 @@ type RunAggregationQueryResponse struct {
 	// set.
 	Query *AggregationQuery `json:"query,omitempty"`
 
+	// Stats: Query plan and execution statistics. Note that the returned
+	// stats are subject to change as Firestore evolves. This is only
+	// present when the request specifies a mode other than `NORMAL`.
+	Stats *ResultSetStats `json:"stats,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2668,6 +2753,19 @@ type RunQueryRequest struct {
 	// GqlQuery: The GQL query to run. This query must be a non-aggregation
 	// query.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
+
+	// Mode: Optional. The mode in which the query request is processed.
+	// This field is optional, and when not provided, it defaults to
+	// `NORMAL` mode where no additional statistics will be returned with
+	// the query results.
+	//
+	// Possible values:
+	//   "NORMAL" - The default mode. Only the query results are returned.
+	//   "PLAN" - This mode returns only the query plan, without any results
+	// or execution statistics information.
+	//   "PROFILE" - This mode returns both the query plan and the execution
+	// statistics along with the results.
+	Mode string `json:"mode,omitempty"`
 
 	// PartitionId: Entities are partitioned into subsets, identified by a
 	// partition ID. Queries are scoped to a single partition. This
@@ -2712,6 +2810,11 @@ type RunQueryResponse struct {
 	// Query: The parsed form of the `GqlQuery` from the request, if it was
 	// set.
 	Query *Query `json:"query,omitempty"`
+
+	// Stats: Query plan and execution statistics. Note that the returned
+	// stats are subject to change as Firestore evolves. This is only
+	// present when the request specifies a mode other than `NORMAL`.
+	Stats *ResultSetStats `json:"stats,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

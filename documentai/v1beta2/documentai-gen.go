@@ -7663,8 +7663,8 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
 // Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
-	// DocumentWarehouseConfig: Optional. Derepcated. Warehouse-based
-	// dataset configuration is not supported today.
+	// DocumentWarehouseConfig: Optional. Deprecated. Warehouse-based
+	// dataset configuration is not supported.
 	DocumentWarehouseConfig *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig `json:"documentWarehouseConfig,omitempty"`
 
 	// GcsManagedConfig: Optional. User-managed Cloud Storage dataset

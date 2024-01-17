@@ -11,7 +11,6 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
-	"fmt"
 	"net"
 	"net/http"
 	"time"
@@ -89,11 +88,6 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 		if err != nil {
 			return nil, err
 		}
-		// TODO(chrisdsmith): Closes: CL-R5 for HTTP (remove this note before publication)
-		// TODO(chrisdsmith): Closes: CL-R5.2 (remove this note before publication)
-		if settings.GetUniverseDomain() != creds.UniverseDomain() {
-			return nil, errUniverseNotMatch(settings.GetUniverseDomain(), creds.UniverseDomain())
-		}
 		paramTransport.quotaProject = internal.GetQuotaProject(creds, settings.QuotaProject)
 		ts := creds.TokenSource
 		if settings.ImpersonationConfig == nil && settings.TokenSource != nil {
@@ -105,15 +99,6 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 		}
 	}
 	return trans, nil
-}
-
-func errUniverseNotMatch(settingsUD, credsUD string) error {
-	return fmt.Errorf(
-		"the configured universe domain (%s) does not match the universe "+
-			"domain found in the credentials (%s). If you haven't configured "+
-			"WithUniverseDomain explicitly, googleapis.com is the default",
-		settingsUD,
-		credsUD)
 }
 
 func newSettings(opts []option.ClientOption) (*internal.DialSettings, error) {

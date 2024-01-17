@@ -44,6 +44,8 @@ func (o defaultEndpointTemplateOption) Apply(settings *internal.DialSettings) {
 // Example: WithDefaultEndpointTemplate("https://logging.UNIVERSE_DOMAIN/")
 //
 // It should only be used internally by generated clients.
+//
+// TODO(chrisdsmith): Refs: CL-R3 (remove this note before publication)
 func WithDefaultEndpointTemplate(url string) option.ClientOption {
 	return defaultEndpointTemplateOption(url)
 }

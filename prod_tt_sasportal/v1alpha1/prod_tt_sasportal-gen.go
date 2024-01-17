@@ -683,7 +683,8 @@ type SasPortalDevice struct {
 	// DisplayName: Device display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// FccId: The FCC identifier of the device.
+	// FccId: The FCC identifier of the device. Refer to
+	// https://www.fcc.gov/oet/ea/fccid for FccID format.
 	FccId string `json:"fccId,omitempty"`
 
 	// GrantRangeAllowlists: Only ranges that are within the allowlists are
@@ -1132,6 +1133,38 @@ func (s *SasPortalFrequencyRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SasPortalGcpProjectDeployment: Deployment associated with the GCP
+// project. Includes whether SAS analytics has been enabled or not.
+type SasPortalGcpProjectDeployment struct {
+	// Deployment: Deployment associated with the GCP project.
+	Deployment *SasPortalDeployment `json:"deployment,omitempty"`
+
+	// HasEnabledAnalytics: Whether SAS analytics has been enabled.
+	HasEnabledAnalytics bool `json:"hasEnabledAnalytics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Deployment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Deployment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalGcpProjectDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalGcpProjectDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SasPortalGenerateSecretRequest: Request for GenerateSecret.
 type SasPortalGenerateSecretRequest struct {
 }
@@ -1442,18 +1475,17 @@ func (s *SasPortalListDevicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalListLegacyOrganizationsResponse: Response for
-// [ListLegacyOrganizations].
-// [spectrum.sas.portal.v1alpha1.Provisioning.ListLegacyOrganizations].
-type SasPortalListLegacyOrganizationsResponse struct {
-	// OrganizationIds: Optional. IDs of legacy SAS organizations.
-	OrganizationIds googleapi.Int64s `json:"organizationIds,omitempty"`
+// SasPortalListGcpProjectDeploymentsResponse: Response for
+// [ListGcpProjectDeployments].
+type SasPortalListGcpProjectDeploymentsResponse struct {
+	// Deployments: Optional. Deployments associated with the GCP project
+	Deployments []*SasPortalGcpProjectDeployment `json:"deployments,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "OrganizationIds") to
+	// ForceSendFields is a list of field names (e.g. "Deployments") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1461,13 +1493,46 @@ type SasPortalListLegacyOrganizationsResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OrganizationIds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Deployments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalListGcpProjectDeploymentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalListGcpProjectDeploymentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SasPortalListLegacyOrganizationsResponse: Response for
+// [ListLegacyOrganizations].
+// [spectrum.sas.portal.v1alpha1.Provisioning.ListLegacyOrganizations].
+type SasPortalListLegacyOrganizationsResponse struct {
+	// Organizations: Optional. Legacy SAS organizations.
+	Organizations []*SasPortalOrganization `json:"organizations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Organizations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Organizations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1864,6 +1929,37 @@ type SasPortalOperation struct {
 
 func (s *SasPortalOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod SasPortalOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SasPortalOrganization: Organization details.
+type SasPortalOrganization struct {
+	// DisplayName: Name of organization
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Id of organization
+	Id int64 `json:"id,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalOrganization) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalOrganization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2743,6 +2839,140 @@ func (c *CustomersListCall) Pages(ctx context.Context, f func(*SasPortalListCust
 	}
 }
 
+// method id "prod_tt_sasportal.customers.listGcpProjectDeployments":
+
+type CustomersListGcpProjectDeploymentsCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListGcpProjectDeployments: Returns a list of SAS deployments
+// associated with current GCP project. Includes whether SAS analytics
+// has been enabled or not.
+func (r *CustomersService) ListGcpProjectDeployments() *CustomersListGcpProjectDeploymentsCall {
+	c := &CustomersListGcpProjectDeploymentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersListGcpProjectDeploymentsCall) Fields(s ...googleapi.Field) *CustomersListGcpProjectDeploymentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersListGcpProjectDeploymentsCall) IfNoneMatch(entityTag string) *CustomersListGcpProjectDeploymentsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersListGcpProjectDeploymentsCall) Context(ctx context.Context) *CustomersListGcpProjectDeploymentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersListGcpProjectDeploymentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersListGcpProjectDeploymentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/customers:listGcpProjectDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "prod_tt_sasportal.customers.listGcpProjectDeployments" call.
+// Exactly one of *SasPortalListGcpProjectDeploymentsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *SasPortalListGcpProjectDeploymentsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersListGcpProjectDeploymentsCall) Do(opts ...googleapi.CallOption) (*SasPortalListGcpProjectDeploymentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SasPortalListGcpProjectDeploymentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of SAS deployments associated with current GCP project. Includes whether SAS analytics has been enabled or not.",
+	//   "flatPath": "v1alpha1/customers:listGcpProjectDeployments",
+	//   "httpMethod": "GET",
+	//   "id": "prod_tt_sasportal.customers.listGcpProjectDeployments",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1alpha1/customers:listGcpProjectDeployments",
+	//   "response": {
+	//     "$ref": "SasPortalListGcpProjectDeploymentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sasportal"
+	//   ]
+	// }
+
+}
+
 // method id "prod_tt_sasportal.customers.listLegacyOrganizations":
 
 type CustomersListLegacyOrganizationsCall struct {
@@ -2753,7 +2983,7 @@ type CustomersListLegacyOrganizationsCall struct {
 	header_      http.Header
 }
 
-// ListLegacyOrganizations: Checks whether account is legacy.
+// ListLegacyOrganizations: Returns a list of legacy organizations.
 func (r *CustomersService) ListLegacyOrganizations() *CustomersListLegacyOrganizationsCall {
 	c := &CustomersListLegacyOrganizationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2857,7 +3087,7 @@ func (c *CustomersListLegacyOrganizationsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks whether account is legacy.",
+	//   "description": "Returns a list of legacy organizations.",
 	//   "flatPath": "v1alpha1/customers:listLegacyOrganizations",
 	//   "httpMethod": "GET",
 	//   "id": "prod_tt_sasportal.customers.listLegacyOrganizations",

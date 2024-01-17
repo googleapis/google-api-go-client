@@ -1509,6 +1509,11 @@ type Instance struct {
 	// Connect (PSC) for the instance.
 	PscInstanceConfig *PscInstanceConfig `json:"pscInstanceConfig,omitempty"`
 
+	// PublicIpAddress: Output only. The public IP addresses for the
+	// Instance. This is available ONLY when enable_public_ip is set. This
+	// is the connection endpoint for an end-user application.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
+
 	// QueryInsightsConfig: Configuration for query insights.
 	QueryInsightsConfig *QueryInsightsInstanceConfig `json:"queryInsightsConfig,omitempty"`
 
@@ -2245,7 +2250,7 @@ func (s *PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 }
 
 // PscConfig: PscConfig contains PSC related configuration at a cluster
-// level. NEXT ID: 2
+// level.
 type PscConfig struct {
 	// PscEnabled: Optional. Create an instance that allows connections from
 	// Private Service Connect endpoints to the instance.
@@ -2275,7 +2280,7 @@ func (s *PscConfig) MarshalJSON() ([]byte, error) {
 }
 
 // PscInstanceConfig: PscInstanceConfig contains PSC related
-// configuration at an instance level. NEXT ID: 7
+// configuration at an instance level.
 type PscInstanceConfig struct {
 	// AllowedConsumerNetworks: Optional. List of consumer networks that are
 	// allowed to create PSC endpoints to service-attachments to this
@@ -2918,6 +2923,80 @@ func (s *StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainCustomMetadataData: Any custom
+// metadata associated with the resource. i.e. A spanner instance can
+// have multiple databases with its own unique metadata. Information for
+// these individual databases can be captured in custom metadata data
+type StorageDatabasecenterPartnerapiV1mainCustomMetadataData struct {
+	DatabaseMetadata []*StorageDatabasecenterPartnerapiV1mainDatabaseMetadata `json:"databaseMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainCustomMetadataData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainDatabaseMetadata: Metadata for
+// individual databases created in an instance. i.e. spanner instance
+// can have multiple databases with unique configuration settings.
+type StorageDatabasecenterPartnerapiV1mainDatabaseMetadata struct {
+	// BackupConfiguration: Backup configuration for this database
+	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
+
+	// BackupRun: Information about the last backup attempt for this
+	// database
+	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
+
+	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
+
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+
+	// ResourceName: Required. Database name. Resource name to follow CAIS
+	// resource_name format as noted here go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
 // DatabaseResourceFeed is the top level proto to be used to ingest
 // different database resource level events into Condor platform.
@@ -3092,9 +3171,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// violates ISO-27001.
 	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource
 	// violates PCI-DSS v3.2.1.
-	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" -
-	// LINT.IfChange(scc_signals) Represents if log_checkpoints database
-	// flag for a Cloud SQL for PostgreSQL instance is not set to on.
+	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents
+	// if log_checkpoints database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
 	//   "SIGNAL_TYPE_QUERY_DURATIONS_NOT_LOGGED" - Represents if the
 	// log_duration database flag for a Cloud SQL for PostgreSQL instance is
 	// not set to on.
@@ -3183,8 +3262,6 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// instance is not set to on.
 	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
 	// enabled.
-	// LINT.ThenChange(//depot/google3/storage/databasecenter/ingestion/borgj
-	// ob/message_adapter/health_signal_feed/health_signal_mapping.h)
 	SignalType string `json:"signalType,omitempty"`
 
 	// Possible values:
@@ -3308,9 +3385,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "STATE_OTHER" - For rest of the other category
 	CurrentState string `json:"currentState,omitempty"`
 
-	// CustomMetadata: Any custom metadata associated with the resource (a
-	// JSON field)
-	CustomMetadata googleapi.RawMessage `json:"customMetadata,omitempty"`
+	// CustomMetadata: Any custom metadata associated with the resource
+	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
 
 	// ExpectedState: The state that the instance is expected to be in. For
 	// example, an instance state can transition to UNHEALTHY due to wrong
@@ -3502,8 +3578,9 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// instance.
 	//   "NATIVE" - Native database binary running as engine in instance.
 	//   "ENGINE_CLOUD_SPANNER_WITH_POSTGRES_DIALECT" - Cloud Spanner with
-	// Postgres dialect.
-	//   "SPANGRES" - Cloud Spanner with Postgres dialect.
+	// PostgreSQL dialect.
+	//   "ENGINE_CLOUD_SPANNER_WITH_GOOGLESQL_DIALECT" - Cloud Spanner with
+	// Google SQL dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine.
 	// This is to be when engine is known, but it is not present in this
 	// enum.
@@ -3520,7 +3597,6 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_ALLOYDB" - AlloyDB product area in GCP
 	//   "ALLOYDB" - AlloyDB product area in GCP
 	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in GCP
-	//   "SPANNER" - Spanner product area in GCP
 	//   "PRODUCT_TYPE_ON_PREM" - On premises database product.
 	//   "ON_PREM" - On premises database product.
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type.

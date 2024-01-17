@@ -5110,11 +5110,15 @@ type GoogleCloudApigeeV1Environment struct {
 	// DisplayName: Optional. Display name for this environment.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// ForwardProxyUri: Optional. Url of the forward proxy to be applied to
+	// ForwardProxyUri: Optional. URI of the forward proxy to be applied to
 	// the runtime instances in this environment. Must be in the format of
-	// {scheme}://{hostname}:{port}. Note that scheme must be one of "http"
-	// or "https", and port must be supplied. To remove a forward proxy
-	// setting, update the field to an empty value.
+	// {scheme}://{hostname}:{port}. Note that the scheme must be one of
+	// "http" or "https", and the port must be supplied. To remove a forward
+	// proxy setting, update the field to an empty value. Note: At this
+	// time, PUT operations to add forwardProxyUri to an existing
+	// environment fail if the environment has nodeConfig set up. To
+	// successfully add the forwardProxyUri setting in this case, include
+	// the NodeConfig details with the request.
 	ForwardProxyUri string `json:"forwardProxyUri,omitempty"`
 
 	HasAttachedFlowHooks bool `json:"hasAttachedFlowHooks,omitempty"`
@@ -10937,12 +10941,13 @@ type GoogleCloudApigeeV1SecurityActionAllow struct {
 // the following: api_keys: ["key1", "key2"] and developers: ["dev1",
 // "dev2"] then this is interpreted as: enforce the action if the
 // incoming request has ((api_key = "key1" OR api_key="key") AND
-// (developer="dev1" OR developer="dev2"))
+// (developer="dev1" OR developer="dev2")).
 type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
 	// BotReasons: Optional. A list of Bot Reasons. Current options:
 	// Flooder, Brute Guessor, Static Content Scraper, OAuth Abuser, Robot
-	// Abuser, TorListRule, Advanced Anomaly Detection and Advanced API
-	// Scraper.
+	// Abuser, TorListRule, Advanced Anomaly Detection, Advanced API
+	// Scraper, Search Engine Crawlers, Public Cloud, Public Cloud AWS,
+	// Public Cloud Azure, and Public Cloud GCP.
 	BotReasons []string `json:"botReasons,omitempty"`
 
 	// IpAddressRanges: Optional. A list of IP addresses. This could be
@@ -13998,9 +14003,15 @@ type OrganizationsDeleteCall struct {
 
 // Delete: Delete an Apigee organization. For organizations with
 // BillingType EVALUATION, an immediate deletion is performed. For paid
-// organizations, a soft-deletion is performed. The organization can be
-// restored within the soft-deletion period which can be controlled
-// using the retention field in the request.
+// organizations (Subscription or Pay-as-you-go), a soft-deletion is
+// performed. The organization can be restored within the soft-deletion
+// period, which is specified using the `retention` field in the request
+// or by filing a support ticket with Apigee. During the data retention
+// period specified in the request, the Apigee organization cannot be
+// recreated in the same Google Cloud project. **IMPORTANT: The default
+// data retention setting for this operation is 7 days. To permanently
+// delete the organization in 24 hours, set the retention parameter to
+// `MINIMUM`.**
 //
 //   - name: Name of the organization. Use the following structure in your
 //     request: `organizations/{org}`.
@@ -14016,7 +14027,9 @@ func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 // data will be retained after the initial delete operation completes.
 // During this period, the Organization may be restored to its last
 // known state. After this period, the Organization will no longer be
-// able to be restored.
+// able to be restored. **Note: During the data retention period
+// specified using this field, the Apigee organization cannot be
+// recreated in the same GCP project.**
 //
 // Possible values:
 //
@@ -14118,7 +14131,7 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations, a soft-deletion is performed. The organization can be restored within the soft-deletion period which can be controlled using the retention field in the request.",
+	//   "description": "Delete an Apigee organization. For organizations with BillingType EVALUATION, an immediate deletion is performed. For paid organizations (Subscription or Pay-as-you-go), a soft-deletion is performed. The organization can be restored within the soft-deletion period, which is specified using the `retention` field in the request or by filing a support ticket with Apigee. During the data retention period specified in the request, the Apigee organization cannot be recreated in the same Google Cloud project. **IMPORTANT: The default data retention setting for this operation is 7 days. To permanently delete the organization in 24 hours, set the retention parameter to `MINIMUM`.**",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.delete",
@@ -14134,7 +14147,7 @@ func (c *OrganizationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "type": "string"
 	//     },
 	//     "retention": {
-	//       "description": "Optional. This setting is applicable only for organizations that are soft-deleted (i.e., BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored.",
+	//       "description": "Optional. This setting is applicable only for organizations that are soft-deleted (i.e., BillingType is not EVALUATION). It controls how long Organization data will be retained after the initial delete operation completes. During this period, the Organization may be restored to its last known state. After this period, the Organization will no longer be able to be restored. **Note: During the data retention period specified using this field, the Apigee organization cannot be recreated in the same GCP project.**",
 	//       "enum": [
 	//         "DELETION_RETENTION_UNSPECIFIED",
 	//         "MINIMUM"
@@ -20993,6 +21006,156 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apigee.organizations.apis.keyvaluemaps.entries.update":
+
+type OrganizationsApisKeyvaluemapsEntriesUpdateCall struct {
+	s                                *Service
+	name                             string
+	googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Update: Update key value entry scoped to an organization,
+// environment, or API proxy for an existing key.
+//
+//   - name: Scope as indicated by the URI in which to create the key
+//     value map entry. Use **one** of the following structures in your
+//     request: *
+//     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//     . *
+//     `organizations/{organization}/environments/{environment}/keyvaluemap
+//     s/{keyvaluemap}` *
+//     `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsApisKeyvaluemapsEntriesService) Update(name string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsApisKeyvaluemapsEntriesUpdateCall {
+	c := &OrganizationsApisKeyvaluemapsEntriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1keyvalueentry = googlecloudapigeev1keyvalueentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) Fields(s ...googleapi.Field) *OrganizationsApisKeyvaluemapsEntriesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) Context(ctx context.Context) *OrganizationsApisKeyvaluemapsEntriesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1keyvalueentry)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.apis.keyvaluemaps.entries.update" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsApisKeyvaluemapsEntriesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update key value entry scoped to an organization, environment, or API proxy for an existing key.",
+	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/apis/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apigee.organizations.apis.revisions.delete":
@@ -28892,7 +29055,7 @@ type OrganizationsDevelopersAppsKeysCreateCall struct {
 //
 //   - parent: Parent of the developer app key. Use the following
 //     structure in your request:
-//     `organizations/{org}/developers/{developer_email}/apps`.
+//     'organizations/{org}/developers/{developerEmail}/apps/{appName}'.
 func (r *OrganizationsDevelopersAppsKeysService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29001,7 +29164,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent of the developer app key. Use the following structure in your request: `organizations/{org}/developers/{developer_email}/apps`",
+	//       "description": "Parent of the developer app key. Use the following structure in your request: 'organizations/{org}/developers/{developerEmail}/apps/{appName}'",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -29956,7 +30119,7 @@ type OrganizationsDevelopersAppsKeysCreateCreateCall struct {
 //
 //   - parent: Parent of the developer app key. Use the following
 //     structure in your request:
-//     `organizations/{org}/developers/{developer_email}/apps`.
+//     'organizations/{org}/developers/{developerEmail}/apps/{appName}'.
 func (r *OrganizationsDevelopersAppsKeysCreateService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30065,7 +30228,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent of the developer app key. Use the following structure in your request: `organizations/{org}/developers/{developer_email}/apps`",
+	//       "description": "Parent of the developer app key. Use the following structure in your request: 'organizations/{org}/developers/{developerEmail}/apps/{appName}'",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -32353,7 +32516,7 @@ func (c *OrganizationsEnvgroupsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "ID of the environment group. Overrides any ID in the environment_group resource.",
+	//       "description": "Optional. ID of the environment group. Overrides any ID in the environment_group resource.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -33182,7 +33345,7 @@ func (c *OrganizationsEnvgroupsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "List of fields to be updated.",
+	//       "description": "Optional. List of fields to be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -43576,6 +43739,156 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apigee.organizations.environments.keyvaluemaps.entries.update":
+
+type OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall struct {
+	s                                *Service
+	name                             string
+	googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Update: Update key value entry scoped to an organization,
+// environment, or API proxy for an existing key.
+//
+//   - name: Scope as indicated by the URI in which to create the key
+//     value map entry. Use **one** of the following structures in your
+//     request: *
+//     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//     . *
+//     `organizations/{organization}/environments/{environment}/keyvaluemap
+//     s/{keyvaluemap}` *
+//     `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsEnvironmentsKeyvaluemapsEntriesService) Update(name string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall {
+	c := &OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1keyvalueentry = googlecloudapigeev1keyvalueentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1keyvalueentry)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.keyvaluemaps.entries.update" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update key value entry scoped to an organization, environment, or API proxy for an existing key.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apigee.organizations.environments.optimizedStats.get":
@@ -56935,6 +57248,156 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apigee.organizations.keyvaluemaps.entries.update":
+
+type OrganizationsKeyvaluemapsEntriesUpdateCall struct {
+	s                                *Service
+	name                             string
+	googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Update: Update key value entry scoped to an organization,
+// environment, or API proxy for an existing key.
+//
+//   - name: Scope as indicated by the URI in which to create the key
+//     value map entry. Use **one** of the following structures in your
+//     request: *
+//     `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`
+//     . *
+//     `organizations/{organization}/environments/{environment}/keyvaluemap
+//     s/{keyvaluemap}` *
+//     `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.
+func (r *OrganizationsKeyvaluemapsEntriesService) Update(name string, googlecloudapigeev1keyvalueentry *GoogleCloudApigeeV1KeyValueEntry) *OrganizationsKeyvaluemapsEntriesUpdateCall {
+	c := &OrganizationsKeyvaluemapsEntriesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1keyvalueentry = googlecloudapigeev1keyvalueentry
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) Fields(s ...googleapi.Field) *OrganizationsKeyvaluemapsEntriesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) Context(ctx context.Context) *OrganizationsKeyvaluemapsEntriesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1keyvalueentry)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.keyvaluemaps.entries.update" call.
+// Exactly one of *GoogleCloudApigeeV1KeyValueEntry or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1KeyValueEntry.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsKeyvaluemapsEntriesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1KeyValueEntry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1KeyValueEntry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update key value entry scoped to an organization, environment, or API proxy for an existing key.",
+	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.keyvaluemaps.entries.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Scope as indicated by the URI in which to create the key value map entry. Use **one** of the following structures in your request: * `organizations/{organization}/apis/{api}/keyvaluemaps/{keyvaluemap}`. * `organizations/{organization}/environments/{environment}/keyvaluemaps/{keyvaluemap}` * `organizations/{organization}/keyvaluemaps/{keyvaluemap}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/keyvaluemaps/[^/]+/entries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1KeyValueEntry"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apigee.organizations.operations.get":

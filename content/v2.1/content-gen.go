@@ -2296,7 +2296,7 @@ type AccountsCustomBatchRequestEntryLinkRequest struct {
 
 	// LinkType: Type of the link between the two accounts. Acceptable
 	// values are: - "channelPartner" - "eCommercePlatform" -
-	// "paymentServiceProvider"
+	// "paymentServiceProvider" - "localProductManager"
 	LinkType string `json:"linkType,omitempty"`
 
 	// LinkedAccountId: The ID of the linked account.
@@ -2305,7 +2305,8 @@ type AccountsCustomBatchRequestEntryLinkRequest struct {
 	// Services: Provided services. Acceptable values are: -
 	// "shoppingAdsProductManagement" -
 	// "shoppingActionsProductManagement" -
-	// "shoppingActionsOrderManagement" - "paymentProcessing"
+	// "shoppingActionsOrderManagement" - "paymentProcessing" -
+	// "localProductManagement"
 	Services []string `json:"services,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -16131,10 +16132,10 @@ type Promotion struct {
 	// promotion.
 	GetThisQuantityDiscounted int64 `json:"getThisQuantityDiscounted,omitempty"`
 
-	// Id: Required. Output only. The REST promotion ID to uniquely identify
-	// the promotion. Content API methods that operate on promotions take
-	// this as their `promotionId` parameter. The REST ID for a promotion is
-	// of the form channel:contentLanguage:targetCountry:promotionId The
+	// Id: Output only. The REST promotion ID to uniquely identify the
+	// promotion. Content API methods that operate on promotions take this
+	// as their `promotionId` parameter. The REST ID for a promotion is of
+	// the form channel:contentLanguage:targetCountry:promotionId The
 	// `channel` field has a value of "online", "in_store", or
 	// "online_in_store".
 	Id string `json:"id,omitempty"`
@@ -45246,7 +45247,7 @@ type ReportsSearchCall struct {
 	header_       http.Header
 }
 
-// Search: Retrieves merchant performance mertrics matching the search
+// Search: Retrieves merchant performance metrics matching the search
 // query and optionally segmented by selected dimensions.
 //
 //   - merchantId: Id of the merchant making the call. Must be a
@@ -45349,7 +45350,7 @@ func (c *ReportsSearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves merchant performance mertrics matching the search query and optionally segmented by selected dimensions.",
+	//   "description": "Retrieves merchant performance metrics matching the search query and optionally segmented by selected dimensions.",
 	//   "flatPath": "{merchantId}/reports/search",
 	//   "httpMethod": "POST",
 	//   "id": "content.reports.search",

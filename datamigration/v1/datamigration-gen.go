@@ -11922,8 +11922,8 @@ type ProjectsLocationsMigrationJobsDemoteDestinationCall struct {
 
 // DemoteDestination: Demotes the destination database to become a read
 // replica of the source. This is applicable for the following
-// migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud
-// SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.
+// migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud
+// SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.
 //
 // - name: Name of the migration job resource to demote its destination.
 func (r *ProjectsLocationsMigrationJobsService) DemoteDestination(name string, demotedestinationrequest *DemoteDestinationRequest) *ProjectsLocationsMigrationJobsDemoteDestinationCall {
@@ -12024,7 +12024,7 @@ func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.",
+	//   "description": "Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/migrationJobs/{migrationJobsId}:demoteDestination",
 	//   "httpMethod": "POST",
 	//   "id": "datamigration.projects.locations.migrationJobs.demoteDestination",

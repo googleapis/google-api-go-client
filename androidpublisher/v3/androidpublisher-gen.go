@@ -6523,6 +6523,83 @@ func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RevocationContext: Revocation context of the
+// purchases.subscriptionsv2.revoke API.
+type RevocationContext struct {
+	// ProratedRefund: Optional. Used when users should be refunded a
+	// prorated amount they paid for their subscription based on the amount
+	// of time remaining in a subscription. Not supported for subscriptions
+	// with multiple items.
+	ProratedRefund *RevocationContextProratedRefund `json:"proratedRefund,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProratedRefund") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProratedRefund") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevocationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod RevocationContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevocationContextProratedRefund: Used to determine if the refund type
+// in the RevocationContext is a prorated refund.
+type RevocationContextProratedRefund struct {
+}
+
+// RevokeSubscriptionPurchaseRequest: Request for the
+// purchases.subscriptionsv2.revoke API.
+type RevokeSubscriptionPurchaseRequest struct {
+	// RevocationContext: Required. Additional details around the
+	// subscription revocation.
+	RevocationContext *RevocationContext `json:"revocationContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RevocationContext")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RevocationContext") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevokeSubscriptionPurchaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RevokeSubscriptionPurchaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevokeSubscriptionPurchaseResponse: Response for the
+// purchases.subscriptionsv2.revoke API.
+type RevokeSubscriptionPurchaseResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // ScreenDensity: Represents a screen density.
 type ScreenDensity struct {
 	// DensityAlias: Alias for a screen density.
@@ -25970,6 +26047,161 @@ func (c *PurchasesSubscriptionsv2GetCall) Do(opts ...googleapi.CallOption) (*Sub
 	//   "path": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}",
 	//   "response": {
 	//     "$ref": "SubscriptionPurchaseV2"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.purchases.subscriptionsv2.revoke":
+
+type PurchasesSubscriptionsv2RevokeCall struct {
+	s                                 *Service
+	packageName                       string
+	token                             string
+	revokesubscriptionpurchaserequest *RevokeSubscriptionPurchaseRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Revoke: Revoke a subscription purchase for the user.
+//
+//   - packageName: The package of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
+func (r *PurchasesSubscriptionsv2Service) Revoke(packageName string, token string, revokesubscriptionpurchaserequest *RevokeSubscriptionPurchaseRequest) *PurchasesSubscriptionsv2RevokeCall {
+	c := &PurchasesSubscriptionsv2RevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	c.revokesubscriptionpurchaserequest = revokesubscriptionpurchaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PurchasesSubscriptionsv2RevokeCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2RevokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PurchasesSubscriptionsv2RevokeCall) Context(ctx context.Context) *PurchasesSubscriptionsv2RevokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PurchasesSubscriptionsv2RevokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2RevokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revokesubscriptionpurchaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.revoke" call.
+// Exactly one of *RevokeSubscriptionPurchaseResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RevokeSubscriptionPurchaseResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PurchasesSubscriptionsv2RevokeCall) Do(opts ...googleapi.CallOption) (*RevokeSubscriptionPurchaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RevokeSubscriptionPurchaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revoke a subscription purchase for the user.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.purchases.subscriptionsv2.revoke",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "token"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. The package of the application for which this subscription was purchased (for example, 'com.some.thing').",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "token": {
+	//       "description": "Required. The token provided to the user's device when the subscription was purchased.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke",
+	//   "request": {
+	//     "$ref": "RevokeSubscriptionPurchaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RevokeSubscriptionPurchaseResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"

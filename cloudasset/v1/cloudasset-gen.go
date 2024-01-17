@@ -3940,13 +3940,13 @@ func (s *GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, e
 // GoogleIdentityAccesscontextmanagerV1MethodSelector: An allowed method
 // or permission of a service specified in ApiOperation.
 type GoogleIdentityAccesscontextmanagerV1MethodSelector struct {
-	// Method: Value for `method` should be a valid method name for the
-	// corresponding `service_name` in ApiOperation. If `*` used as value
-	// for `method`, then ALL methods and permissions are allowed.
+	// Method: A valid method name for the corresponding `service_name` in
+	// ApiOperation. If `*` is used as the value for the `method`, then ALL
+	// methods and permissions are allowed.
 	Method string `json:"method,omitempty"`
 
-	// Permission: Value for `permission` should be a valid Cloud IAM
-	// permission for the corresponding `service_name` in ApiOperation.
+	// Permission: A valid Cloud IAM permission for the corresponding
+	// `service_name` in ApiOperation.
 	Permission string `json:"permission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Method") to

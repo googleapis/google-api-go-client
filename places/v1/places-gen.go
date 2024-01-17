@@ -754,8 +754,8 @@ type GoogleMapsPlacesV1Place struct {
 	// MenuForChildren: Place has a children's menu.
 	MenuForChildren bool `json:"menuForChildren,omitempty"`
 
-	// Name: An ID representing this place which may be used to look up this
-	// place again (a.k.a. the API "resource" name: places/place_id).
+	// Name: This Place's resource name, in `places/{place_id}` format. Can
+	// be used to look up the Place.
 	Name string `json:"name,omitempty"`
 
 	// NationalPhoneNumber: A human-readable phone number for the place, in
@@ -2071,11 +2071,11 @@ type PlacesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get place details with a place id (in a name) string.
+// Get: Get the details of a place based on its resource name, which is
+// a string in the `places/{place_id}` format.
 //
-//   - name: A place ID returned in a Place (with "places/" prefix), or
-//     equivalently the name in the same Place. Format:
-//     `places/{place_id}`.
+//   - name: The resource name of a place, in the `places/{place_id}`
+//     format.
 func (r *PlacesService) Get(name string) *PlacesGetCall {
 	c := &PlacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2202,7 +2202,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	}
 	return ret, nil
 	// {
-	//   "description": "Get place details with a place id (in a name) string.",
+	//   "description": "Get the details of a place based on its resource name, which is a string in the `places/{place_id}` format.",
 	//   "flatPath": "v1/places/{placesId}",
 	//   "httpMethod": "GET",
 	//   "id": "places.places.get",
@@ -2216,7 +2216,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: `places/{place_id}`.",
+	//       "description": "Required. The resource name of a place, in the `places/{place_id}` format.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+$",
 	//       "required": true,

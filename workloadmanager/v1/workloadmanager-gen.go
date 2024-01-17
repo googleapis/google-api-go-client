@@ -260,6 +260,41 @@ type ProjectsLocationsRulesService struct {
 	s *Service
 }
 
+// BigQueryDestination: Message describing big query destination
+type BigQueryDestination struct {
+	// CreateNewResultsTable: Optional. determine if results will be saved
+	// in a new table
+	CreateNewResultsTable bool `json:"createNewResultsTable,omitempty"`
+
+	// DestinationDataset: Optional. destination dataset to save evaluation
+	// results
+	DestinationDataset string `json:"destinationDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreateNewResultsTable") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateNewResultsTable") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -278,6 +313,9 @@ type Empty struct {
 
 // Evaluation: LINT.IfChange Message describing Evaluation object
 type Evaluation struct {
+	// BigQueryDestination: Optional. BigQuery destination
+	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
+
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -321,20 +359,21 @@ type Evaluation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BigQueryDestination")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BigQueryDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

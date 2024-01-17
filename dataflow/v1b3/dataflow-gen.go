@@ -665,6 +665,42 @@ func (s *AutoscalingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Base2Exponent: Exponential buckets where the growth factor between
+// buckets is `2**(2**-scale)`. e.g. for `scale=1` growth factor is
+// `2**(2**(-1))=sqrt(2)`. `n` buckets will have the following
+// boundaries. - 0th: [0, gf) - i in [1, n-1]: [gf^(i), gf^(i+1))
+type Base2Exponent struct {
+	// NumberOfBuckets: Must be greater than 0.
+	NumberOfBuckets int64 `json:"numberOfBuckets,omitempty"`
+
+	// Scale: Must be between -3 and 3. This forces the growth factor of the
+	// bucket boundaries to be between `2^(1/8)` and `256`.
+	Scale int64 `json:"scale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumberOfBuckets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumberOfBuckets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Base2Exponent) MarshalJSON() ([]byte, error) {
+	type NoMethod Base2Exponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryIODetails: Metadata for a BigQuery connector used by the job.
 type BigQueryIODetails struct {
 	// Dataset: Dataset accessed in the connection.
@@ -733,6 +769,38 @@ type BigTableIODetails struct {
 
 func (s *BigTableIODetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BigTableIODetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BucketOptions: `BucketOptions` describes the bucket boundaries used
+// in the histogram.
+type BucketOptions struct {
+	// Exponential: Bucket boundaries grow exponentially.
+	Exponential *Base2Exponent `json:"exponential,omitempty"`
+
+	// Linear: Bucket boundaries grow linearly.
+	Linear *Linear `json:"linear,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exponential") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exponential") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BucketOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod BucketOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1460,6 +1528,52 @@ type DataSamplingReport struct {
 
 func (s *DataSamplingReport) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSamplingReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataflowHistogramValue: Summary statistics for a population of
+// values. HistogramValue contains a sequence of buckets and gives a
+// count of values that fall into each bucket. Bucket boundares are
+// defined by a formula and bucket widths are either fixed or
+// exponentially increasing.
+type DataflowHistogramValue struct {
+	// BucketCounts: Optional. The number of values in each bucket of the
+	// histogram, as described in `bucket_options`. `bucket_counts` should
+	// contain N values, where N is the number of buckets specified in
+	// `bucket_options`. If `bucket_counts` has fewer than N values, the
+	// remaining values are assumed to be 0.
+	BucketCounts googleapi.Int64s `json:"bucketCounts,omitempty"`
+
+	// BucketOptions: Describes the bucket boundaries used in the histogram.
+	BucketOptions *BucketOptions `json:"bucketOptions,omitempty"`
+
+	// Count: Number of values recorded in this histogram.
+	Count int64 `json:"count,omitempty,string"`
+
+	// OutlierStats: Statistics on the values recorded in the histogram that
+	// fall out of the bucket boundaries.
+	OutlierStats *OutlierStats `json:"outlierStats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BucketCounts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataflowHistogramValue) MarshalJSON() ([]byte, error) {
+	type NoMethod DataflowHistogramValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3853,6 +3967,58 @@ func (s *LeaseWorkItemResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Linear: Linear buckets with the following boundaries for indices in 0
+// to n-1. - i in [0, n-1]: [start + (i)*width, start + (i+1)*width)
+type Linear struct {
+	// NumberOfBuckets: Must be greater than 0.
+	NumberOfBuckets int64 `json:"numberOfBuckets,omitempty"`
+
+	// Start: Lower bound of the first bucket.
+	Start float64 `json:"start,omitempty"`
+
+	// Width: Distance between bucket boundaries. Must be greater than 0.
+	Width float64 `json:"width,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumberOfBuckets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumberOfBuckets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Linear) MarshalJSON() ([]byte, error) {
+	type NoMethod Linear
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Linear) UnmarshalJSON(data []byte) error {
+	type NoMethod Linear
+	var s1 struct {
+		Start gensupport.JSONFloat64 `json:"start"`
+		Width gensupport.JSONFloat64 `json:"width"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Start = float64(s1.Start)
+	s.Width = float64(s1.Width)
+	return nil
+}
+
 // ListJobMessagesResponse: Response to a request to list job messages.
 type ListJobMessagesResponse struct {
 	// AutoscalingEvents: Autoscaling events in ascending timestamp order.
@@ -4215,6 +4381,43 @@ func (s *MetricUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MetricValue: The value of a metric along with its name and labels.
+type MetricValue struct {
+	// Metric: Base name for this metric.
+	Metric string `json:"metric,omitempty"`
+
+	// MetricLabels: Optional. Set of metric labels for this metric.
+	MetricLabels map[string]string `json:"metricLabels,omitempty"`
+
+	// ValueHistogram: Histogram value of this metric.
+	ValueHistogram *DataflowHistogramValue `json:"valueHistogram,omitempty"`
+
+	// ValueInt64: Integer value of this metric.
+	ValueInt64 int64 `json:"valueInt64,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Metric") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metric") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricValue) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MountedDataDisk: Describes mounted data disk.
 type MountedDataDisk struct {
 	// DataDisk: The name of the data disk. This name is local to the Google
@@ -4319,6 +4522,61 @@ func (s *NameAndKind) MarshalJSON() ([]byte, error) {
 	type NoMethod NameAndKind
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OutlierStats: Statistics for the underflow and overflow bucket.
+type OutlierStats struct {
+	// OverflowCount: Number of values that are larger than the upper bound
+	// of the largest bucket.
+	OverflowCount int64 `json:"overflowCount,omitempty,string"`
+
+	// OverflowMean: Mean of values in the overflow bucket.
+	OverflowMean float64 `json:"overflowMean,omitempty"`
+
+	// UnderflowCount: Number of values that are smaller than the lower
+	// bound of the smallest bucket.
+	UnderflowCount int64 `json:"underflowCount,omitempty,string"`
+
+	// UnderflowMean: Mean of values in the undeflow bucket.
+	UnderflowMean float64 `json:"underflowMean,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OverflowCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OverflowCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OutlierStats) MarshalJSON() ([]byte, error) {
+	type NoMethod OutlierStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *OutlierStats) UnmarshalJSON(data []byte) error {
+	type NoMethod OutlierStats
+	var s1 struct {
+		OverflowMean  gensupport.JSONFloat64 `json:"overflowMean"`
+		UnderflowMean gensupport.JSONFloat64 `json:"underflowMean"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.OverflowMean = float64(s1.OverflowMean)
+	s.UnderflowMean = float64(s1.UnderflowMean)
+	return nil
 }
 
 // Package: The packages that must be installed in order for a worker to
@@ -4681,6 +4939,76 @@ type PartialGroupByKeyInstruction struct {
 
 func (s *PartialGroupByKeyInstruction) MarshalJSON() ([]byte, error) {
 	type NoMethod PartialGroupByKeyInstruction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerStepNamespaceMetrics: Metrics for a particular unfused step and
+// namespace. A metric is uniquely identified by the
+// `metrics_namespace`, `original_step`, `metric name` and
+// `metric_labels`.
+type PerStepNamespaceMetrics struct {
+	// MetricValues: Optional. Metrics that are recorded for this namespace
+	// and unfused step.
+	MetricValues []*MetricValue `json:"metricValues,omitempty"`
+
+	// MetricsNamespace: The namespace of these metrics on the worker.
+	MetricsNamespace string `json:"metricsNamespace,omitempty"`
+
+	// OriginalStep: The original system name of the unfused step that these
+	// metrics are reported from.
+	OriginalStep string `json:"originalStep,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerStepNamespaceMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod PerStepNamespaceMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerWorkerMetrics: Per worker metrics.
+type PerWorkerMetrics struct {
+	// PerStepNamespaceMetrics: Optional. Metrics for a particular unfused
+	// step and namespace.
+	PerStepNamespaceMetrics []*PerStepNamespaceMetrics `json:"perStepNamespaceMetrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PerStepNamespaceMetrics") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PerStepNamespaceMetrics")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerWorkerMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod PerWorkerMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8209,6 +8537,9 @@ type WorkerMessage struct {
 	// development other strings can be used as tags. LABEL_UNSPECIFIED
 	// should not be used here.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// PerWorkerMetrics: System defined metrics for this worker.
+	PerWorkerMetrics *PerWorkerMetrics `json:"perWorkerMetrics,omitempty"`
 
 	// StreamingScalingReport: Contains per-user worker telemetry used in
 	// streaming autoscaling.

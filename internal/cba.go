@@ -77,7 +77,12 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	// TODO(chrisdsmith): Closes: CL-R1 (remove this note before publication)
 	// TODO(chrisdsmith): Closes: CL-R3 (remove this note before publication)
 	// TODO(chrisdsmith): Use this composed endpoint everywhere to replace DialSettings.DefaultEndpoint
-	if settings.Endpoint == "" && settings.UniverseDomainNotGDU() {
+	// TODO(chrisdsmith): Remove settings.DefaultEndpointTemplate != "" condition after rollout of WithDefaultEndpointTemplate is complete.
+	if settings.Endpoint == "" && settings.UniverseDomainNotGDU() && settings.DefaultEndpointTemplate != "" {
+		// TODO(chrisdsmith): Uncomment error check below after rollout of WithDefaultEndpointTemplate is complete.
+		// if settings.DefaultEndpointTemplate == "" {
+		// 	return nil, "", errors.New("internaloption.WithDefaultEndpointTemplate is required if option.WithUniverseDomain is not googleapis.com")
+		// }
 		endpoint = strings.Replace(settings.DefaultEndpointTemplate, universeDomainPlaceholder, settings.GetUniverseDomain(), 1)
 	}
 	return clientCertSource, endpoint, nil

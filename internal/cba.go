@@ -74,8 +74,6 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	if err != nil {
 		return nil, "", err
 	}
-	// TODO(chrisdsmith): Closes: CL-R1 (remove this note before publication)
-	// TODO(chrisdsmith): Closes: CL-R3 (remove this note before publication)
 	// TODO(chrisdsmith): Use this composed endpoint everywhere to replace DialSettings.DefaultEndpoint
 	// TODO(chrisdsmith): Remove settings.DefaultEndpointTemplate != "" condition after rollout of WithDefaultEndpointTemplate is complete.
 	if settings.Endpoint == "" && settings.UniverseDomainNotGDU() && settings.DefaultEndpointTemplate != "" {
@@ -112,7 +110,6 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 	if !shouldUseS2A(clientCertSource, settings) {
 		return &defaultTransportConfig, nil
 	}
-	// TODO(chrisdsmith): Closes: CL-R10 (remove this note before publication)
 	if settings.UniverseDomainNotGDU() {
 		return &transportConfig{
 			clientCertSource: nil, endpoint: "", s2aAddress: "", s2aMTLSEndpoint: "",
@@ -179,7 +176,6 @@ func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, 
 	if settings.Endpoint == "" {
 		mtlsMode := getMTLSMode()
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
-			// TODO(chrisdsmith): Closes: CL-R10 (remove this note before publication)
 			if settings.UniverseDomainNotGDU() {
 				return "", ErrUniverseNotSupportedMTLS
 			}

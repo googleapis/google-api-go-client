@@ -127,7 +127,6 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
 	// For non-GDU universe domains, token exchange is impossible and services
 	// must support self-signed JWTs with scopes.
-	// TODO(chrisdsmith): closes: AL-8 (remove this note before publication)
 	if ds.UniverseDomainNotGDU() {
 		return typeServiceAccount(data)
 	}

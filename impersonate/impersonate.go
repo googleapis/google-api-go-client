@@ -98,7 +98,6 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 		if err != nil {
 			return nil, err
 		}
-		// TODO(chrisdsmith): Closes: AL-9 (remove this note before publication)
 		if settings.UniverseDomainNotGDU() {
 			return nil, ErrUniverseNotSupportedDomainWideDelegation
 		}

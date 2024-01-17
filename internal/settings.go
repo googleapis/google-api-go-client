@@ -165,7 +165,6 @@ func (ds *DialSettings) Validate() error {
 
 // UniverseDomain returns the default service domain for a given Cloud universe.
 // The default value is "googleapis.com".
-// TODO(chrisdsmith): Refs: CL-R5.1 (remove this note before publication)
 func (ds *DialSettings) GetUniverseDomain() string {
 	if ds.UniverseDomain == "" {
 		return universeDomainDefault

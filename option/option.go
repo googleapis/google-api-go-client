@@ -23,8 +23,6 @@ type ClientOption interface {
 
 // WithTokenSource returns a ClientOption that specifies an OAuth2 token
 // source to be used as the basis for authentication.
-//
-// TODO(chrisdsmith): Refs: CL-R8 (remove this note before publication)
 func WithTokenSource(s oauth2.TokenSource) ClientOption {
 	return withTokenSource{s}
 }
@@ -167,8 +165,6 @@ func (w withGRPCConnectionPool) Apply(o *internal.DialSettings) {
 //
 // API Keys can only be used for JSON-over-HTTP APIs, including those under
 // the import path google.golang.org/api/....
-//
-// TODO(chrisdsmith): Refs: CL-R8 (remove this note before publication)
 func WithAPIKey(apiKey string) ClientOption {
 	return withAPIKey(apiKey)
 }
@@ -351,7 +347,6 @@ func WithCredentials(creds *google.Credentials) ClientOption {
 // WithUniverseDomain returns a ClientOption that sets the universe domain.
 //
 // This is an EXPERIMENTAL API and may be changed or removed in the future.
-// TODO(chrisdsmith): Closes: CL-R7 (remove this note before publication)
 func WithUniverseDomain(ud string) ClientOption {
 	return withUniverseDomain(ud)
 }

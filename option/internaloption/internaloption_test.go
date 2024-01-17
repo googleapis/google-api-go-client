@@ -35,7 +35,7 @@ func TestWithCredentials(t *testing.T) {
 func TestDefaultApply(t *testing.T) {
 	opts := []option.ClientOption{
 		WithDefaultEndpoint("https://example.com:443"),
-		WithDefaultEndpointTemplate("https://foo.UNIVERSE_DOMAIN/"),
+		WithDefaultEndpointTemplate("https://foo.%s/"),
 		WithDefaultMTLSEndpoint("http://mtls.example.com:445"),
 		WithDefaultScopes("a"),
 		WithDefaultUniverseDomain("foo.com"),
@@ -48,7 +48,7 @@ func TestDefaultApply(t *testing.T) {
 	want := internal.DialSettings{
 		DefaultScopes:           []string{"a"},
 		DefaultEndpoint:         "https://example.com:443",
-		DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/",
+		DefaultEndpointTemplate: "https://foo.%s/",
 		DefaultUniverseDomain:   "foo.com",
 		DefaultAudience:         "audience",
 		DefaultMTLSEndpoint:     "http://mtls.example.com:445",

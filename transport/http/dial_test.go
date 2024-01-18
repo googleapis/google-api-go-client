@@ -11,6 +11,7 @@ import (
 
 	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/oauth2"
+	"google.golang.org/api/option"
 )
 
 func TestNewClient(t *testing.T) {
@@ -35,5 +36,16 @@ func TestNewClient(t *testing.T) {
 	t2 := t1.Base.(*ochttp.Transport)
 	if got, want := fmt.Sprintf("%T", t2.Base), "*otelhttp.Transport"; got != want {
 		t.Fatalf("got %s, want: %s", got, want)
+	}
+}
+
+func TestNewClient_UniverseDomain(t *testing.T) {
+	universeDomain := "example.com"
+	universeDomainDefault := "googleapis.com"
+	wantErr := errUniverseNotMatch(universeDomain, universeDomainDefault)
+	_, _, err := NewClient(context.Background(), option.WithUniverseDomain(universeDomain))
+
+	if err.Error() != wantErr.Error() {
+		t.Fatalf("got: %v, want: %v", err, wantErr)
 	}
 }

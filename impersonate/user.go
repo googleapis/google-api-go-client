@@ -19,7 +19,7 @@ import (
 )
 
 // user provides an auth flow for domain-wide delegation, setting
-// CredentialsConfig.Subject to be the  the impersonated user.
+// CredentialsConfig.Subject to be the impersonated user.
 func user(ctx context.Context, c CredentialsConfig, client *http.Client, lifetime time.Duration, isStaticToken bool) (oauth2.TokenSource, error) {
 	u := userTokenSource{
 		client:          client,

@@ -96,9 +96,7 @@ type transportConfig struct {
 func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 	clientCertSource, endpoint, err := getClientCertificateSourceAndEndpoint(settings)
 	if err != nil {
-		return &transportConfig{
-			clientCertSource: nil, endpoint: "", s2aAddress: "", s2aMTLSEndpoint: "",
-		}, err
+		return nil, err
 	}
 	defaultTransportConfig := transportConfig{
 		clientCertSource: clientCertSource,
@@ -111,9 +109,7 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 		return &defaultTransportConfig, nil
 	}
 	if settings.UniverseDomainNotGDU() {
-		return &transportConfig{
-			clientCertSource: nil, endpoint: "", s2aAddress: "", s2aMTLSEndpoint: "",
-		}, ErrUniverseNotSupportedMTLS
+		return nil, ErrUniverseNotSupportedMTLS
 	}
 
 	s2aMTLSEndpoint := settings.DefaultMTLSEndpoint

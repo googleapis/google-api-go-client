@@ -448,6 +448,16 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 			wantEndpoint: testRegularEndpoint,
 		},
 		{
+			name: "google default universe (GDU), no client cert, endpoint",
+			ds: &DialSettings{
+				DefaultEndpoint:         testRegularEndpoint,
+				DefaultEndpointTemplate: testEndpointTemplate,
+				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				Endpoint:                testOverrideEndpoint,
+			},
+			wantEndpoint: testOverrideEndpoint,
+		},
+		{
 			name: "google default universe (GDU), client cert",
 			ds: &DialSettings{
 				DefaultEndpoint:         testRegularEndpoint,
@@ -456,6 +466,17 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				ClientCertSource:        dummyClientCertSource,
 			},
 			wantEndpoint: testMTLSEndpoint,
+		},
+		{
+			name: "google default universe (GDU), client cert, endpoint",
+			ds: &DialSettings{
+				DefaultEndpoint:         testRegularEndpoint,
+				DefaultEndpointTemplate: testEndpointTemplate,
+				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				ClientCertSource:        dummyClientCertSource,
+				Endpoint:                testOverrideEndpoint,
+			},
+			wantEndpoint: testOverrideEndpoint,
 		},
 		{
 			name: "UniverseDomain, no client cert",
@@ -468,6 +489,17 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 			wantEndpoint: testUniverseDomainEndpoint,
 		},
 		{
+			name: "UniverseDomain, no client cert, endpoint",
+			ds: &DialSettings{
+				DefaultEndpoint:         testRegularEndpoint,
+				DefaultEndpointTemplate: testEndpointTemplate,
+				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				UniverseDomain:          testUniverseDomain,
+				Endpoint:                testOverrideEndpoint,
+			},
+			wantEndpoint: testOverrideEndpoint,
+		},
+		{
 			name: "UniverseDomain, client cert",
 			ds: &DialSettings{
 				DefaultEndpoint:         testRegularEndpoint,
@@ -476,8 +508,19 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				UniverseDomain:          testUniverseDomain,
 				ClientCertSource:        dummyClientCertSource,
 			},
-			wantEndpoint: testUniverseDomainEndpoint,
-			wantErr:      ErrUniverseNotSupportedMTLS,
+			wantErr: ErrUniverseNotSupportedMTLS,
+		},
+		{
+			name: "UniverseDomain, client cert, endpoint",
+			ds: &DialSettings{
+				DefaultEndpoint:         testRegularEndpoint,
+				DefaultEndpointTemplate: testEndpointTemplate,
+				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				UniverseDomain:          testUniverseDomain,
+				ClientCertSource:        dummyClientCertSource,
+				Endpoint:                testOverrideEndpoint,
+			},
+			wantEndpoint: testOverrideEndpoint,
 		},
 	}
 

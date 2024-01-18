@@ -20,33 +20,48 @@ import (
 func TestTokenSource_serviceAccount(t *testing.T) {
 	ctx := context.Background()
 	tests := []struct {
-		name            string
-		targetPrincipal string
-		scopes          []string
-		lifetime        time.Duration
-		wantErr         error
+		name    string
+		config  CredentialsConfig
+		opts    option.ClientOption
+		wantErr error
 	}{
 		{
 			name:    "missing targetPrincipal",
 			wantErr: errMissingTargetPrincipal,
 		},
 		{
-			name:            "missing scopes",
-			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
-			wantErr:         errMissingScopes,
+			name: "missing scopes",
+			config: CredentialsConfig{
+				TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
+			},
+			wantErr: errMissingScopes,
 		},
 		{
-			name:            "lifetime over max",
-			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
-			scopes:          []string{"scope"},
-			lifetime:        13 * time.Hour,
-			wantErr:         errLifetimeOverMax,
+			name: "lifetime over max",
+			config: CredentialsConfig{
+				TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
+				Scopes:          []string{"scope"},
+				Lifetime:        13 * time.Hour,
+			},
+			wantErr: errLifetimeOverMax,
 		},
 		{
-			name:            "works",
-			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
-			scopes:          []string{"scope"},
-			wantErr:         nil,
+			name: "works",
+			config: CredentialsConfig{
+				TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
+				Scopes:          []string{"scope"},
+			},
+			wantErr: nil,
+		},
+		{
+			name: "universe domain",
+			config: CredentialsConfig{
+				TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
+				Scopes:          []string{"scope"},
+				Subject:         "admin@example.com",
+			},
+			opts:    option.WithUniverseDomain("example.com"),
+			wantErr: errUniverseNotSupportedDomainWideDelegation,
 		},
 	}
 
@@ -74,11 +89,13 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 					return nil
 				}),
 			}
-			ts, err := CredentialsTokenSource(ctx, CredentialsConfig{
-				TargetPrincipal: tt.targetPrincipal,
-				Scopes:          tt.scopes,
-				Lifetime:        tt.lifetime,
-			}, option.WithHTTPClient(client))
+			opts := []option.ClientOption{
+				option.WithHTTPClient(client),
+			}
+			if tt.opts != nil {
+				opts = append(opts, tt.opts)
+			}
+			ts, err := CredentialsTokenSource(ctx, tt.config, opts...)
 
 			if err != nil {
 				if err != tt.wantErr {

@@ -1171,7 +1171,8 @@ func (s *AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 type AttackExposure struct {
 	// AttackExposureResult: The resource name of the attack path simulation
 	// result that contains the details regarding this attack exposure
-	// score. Example: organizations/123/attackExposureResults/456
+	// score. Example:
+	// organizations/123/simulations/456/attackExposureResults/789
 	AttackExposureResult string `json:"attackExposureResult,omitempty"`
 
 	// ExposedHighValueResourcesCount: The number of high value resources
@@ -6685,6 +6686,45 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyDriftDetails: The policy field that violates the deployed
+// posture and its expected and and detected values.
+type PolicyDriftDetails struct {
+	// DetectedValue: The detected value that violates the deployed posture,
+	// for example, `false` or `allowed_values={"projects/22831892”}`.
+	DetectedValue string `json:"detectedValue,omitempty"`
+
+	// ExpectedValue: The value of this field that was configured in a
+	// posture, for example, `true` or
+	// `allowed_values={"projects/29831892”}`.
+	ExpectedValue string `json:"expectedValue,omitempty"`
+
+	// Field: The name of the updated field, for example
+	// constraint.implementation.policy_rules[0].enforce
+	Field string `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyDriftDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyDriftDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Position: A position in the uploaded text version of a module.
 type Position struct {
 	ColumnNumber int64 `json:"columnNumber,omitempty"`
@@ -7147,20 +7187,32 @@ func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
 // posture contains one or more policy sets. A policy set is a group of
 // policies that enforce a set of security rules on Google Cloud.
 type SecurityPosture struct {
-	// ChangedPolicy: The name of the policy that has been updated, for
-	// example, `projects/{project_id}/policies/{constraint_name}`.
+	// ChangedPolicy: The name of the updated policy, for example,
+	// `projects/{project_id}/policies/{constraint_name}`.
 	ChangedPolicy string `json:"changedPolicy,omitempty"`
 
-	// Name: Name of the posture, for example,
-	// `organizations/{org_id}/locations/{location}/postures/{posture_name}`.
+	// Name: Name of the posture, for example, `CIS-Posture`.
 	Name string `json:"name,omitempty"`
 
+	// Policy: The ID of the updated policy, for example,
+	// `compute-policy-1`.
+	Policy string `json:"policy,omitempty"`
+
+	// PolicyDriftDetails: The details about a change in an updated policy
+	// that violates the deployed posture.
+	PolicyDriftDetails []*PolicyDriftDetails `json:"policyDriftDetails,omitempty"`
+
+	// PolicySet: The name of the updated policyset, for example,
+	// `cis-policyset`.
+	PolicySet string `json:"policySet,omitempty"`
+
 	// PostureDeployment: The name of the posture deployment, for example,
-	// `projects/{project_id}/posturedeployments/{posture_deployment_id}`.
+	// `organizations/{org_id}/posturedeployments/{posture_deployment_id}`.
 	PostureDeployment string `json:"postureDeployment,omitempty"`
 
 	// PostureDeploymentResource: The project, folder, or organization on
-	// which the posture is deployed, for example, `projects/{project_id}`.
+	// which the posture is deployed, for example,
+	// `projects/{project_number}`.
 	PostureDeploymentResource string `json:"postureDeploymentResource,omitempty"`
 
 	// RevisionId: The version of the posture, for example, `c7cfa2a8`.

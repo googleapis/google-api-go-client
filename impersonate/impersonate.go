@@ -98,7 +98,7 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 		if err != nil {
 			return nil, err
 		}
-		if settings.UniverseDomainNotGDU() {
+		if !settings.IsUniverseDomainGDU() {
 			return nil, ErrUniverseNotSupportedDomainWideDelegation
 		}
 		return user(ctx, config, client, lifetime, isStaticToken)

@@ -172,6 +172,6 @@ func (ds *DialSettings) GetUniverseDomain() string {
 	return ds.UniverseDomain
 }
 
-func (ds *DialSettings) UniverseDomainNotGDU() bool {
-	return ds.GetUniverseDomain() != universeDomainDefault
+func (ds *DialSettings) IsUniverseDomainGDU() bool {
+	return ds.GetUniverseDomain() == universeDomainDefault
 }

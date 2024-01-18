@@ -76,7 +76,7 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	}
 	// TODO(chrisdsmith): Use this composed endpoint everywhere to replace DialSettings.DefaultEndpoint
 	// TODO(chrisdsmith): Remove settings.DefaultEndpointTemplate != "" condition after rollout of WithDefaultEndpointTemplate is complete.
-	if settings.Endpoint == "" && settings.UniverseDomainNotGDU() && settings.DefaultEndpointTemplate != "" {
+	if settings.Endpoint == "" && !settings.IsUniverseDomainGDU() && settings.DefaultEndpointTemplate != "" {
 		// TODO(chrisdsmith): Uncomment error check below after rollout of WithDefaultEndpointTemplate is complete.
 		// if settings.DefaultEndpointTemplate == "" {
 		// 	return nil, "", errors.New("internaloption.WithDefaultEndpointTemplate is required if option.WithUniverseDomain is not googleapis.com")
@@ -108,7 +108,7 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 	if !shouldUseS2A(clientCertSource, settings) {
 		return &defaultTransportConfig, nil
 	}
-	if settings.UniverseDomainNotGDU() {
+	if !settings.IsUniverseDomainGDU() {
 		return nil, ErrUniverseNotSupportedMTLS
 	}
 
@@ -172,7 +172,7 @@ func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, 
 	if settings.Endpoint == "" {
 		mtlsMode := getMTLSMode()
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
-			if settings.UniverseDomainNotGDU() {
+			if !settings.IsUniverseDomainGDU() {
 				return "", ErrUniverseNotSupportedMTLS
 			}
 			return settings.DefaultMTLSEndpoint, nil

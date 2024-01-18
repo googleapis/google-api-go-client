@@ -11,6 +11,7 @@ import (
 
 	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 )
 
@@ -40,10 +41,13 @@ func TestNewClient(t *testing.T) {
 }
 
 func TestNewClient_UniverseDomain(t *testing.T) {
+	rootTokenScope := "https://www.googleapis.com/auth/cloud-platform"
 	universeDomain := "example.com"
 	universeDomainDefault := "googleapis.com"
+	creds := &google.Credentials{} // universeDomainDefault
 	wantErr := errUniverseNotMatch(universeDomain, universeDomainDefault)
-	_, _, err := NewClient(context.Background(), option.WithUniverseDomain(universeDomain))
+	_, _, err := NewClient(context.Background(), option.WithUniverseDomain(universeDomain),
+		option.WithCredentials(creds), option.WithScopes(rootTokenScope))
 
 	if err.Error() != wantErr.Error() {
 		t.Fatalf("got: %v, want: %v", err, wantErr)

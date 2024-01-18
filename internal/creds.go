@@ -125,19 +125,27 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 }
 
 func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
-	if (ds.EnableJwtWithScope || ds.HasCustomAudience()) &&
-		ds.ImpersonationConfig == nil {
-		// Check if JSON is a service account and if so create a self-signed JWT.
-		var f struct {
-			Type string `json:"type"`
-			// The rest JSON fields are omitted because they are not used.
-		}
-		if err := json.Unmarshal(data, &f); err != nil {
-			return false, err
-		}
-		return f.Type == serviceAccountKey, nil
+	// For non-GDU universe domains, token exchange is impossible and services
+	// must support self-signed JWTs with scopes.
+	if !ds.IsUniverseDomainGDU() {
+		return typeServiceAccount(data)
+	}
+	if (ds.EnableJwtWithScope || ds.HasCustomAudience()) && ds.ImpersonationConfig == nil {
+		return typeServiceAccount(data)
 	}
 	return false, nil
+}
+
+// typeServiceAccount checks if JSON data is for a service account.
+func typeServiceAccount(data []byte) (bool, error) {
+	var f struct {
+		Type string `json:"type"`
+		// The remaining JSON fields are omitted because they are not used.
+	}
+	if err := json.Unmarshal(data, &f); err != nil {
+		return false, err
+	}
+	return f.Type == serviceAccountKey, nil
 }
 
 func selfSignedJWTTokenSource(data []byte, ds *DialSettings) (oauth2.TokenSource, error) {

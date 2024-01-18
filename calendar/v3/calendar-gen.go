@@ -7176,23 +7176,23 @@ func (r *EventsService) List(calendarId string) *EventsListCall {
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Deprecated and ignored. A value will always be returned in the email
-// field for the organizer, creator and attendees, even if no real email
-// address is available (i.e. a generated, non-working value will be
-// provided).
+// Deprecated and ignored.
 func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsListCall {
 	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
-// return.  Possible values are:
-// - "default"
-// - "focusTime"
-// - "outOfOffice"
-// - "workingLocation"This parameter can be repeated multiple times to
-// return events of different types. The default is ["default",
-// "focusTime", "outOfOffice"].
+// return.  This parameter can be repeated multiple times to return
+// events of different types. The default is ["default", "focusTime",
+// "outOfOffice"].
+//
+// Possible values:
+//
+//	"default" - Regular events.
+//	"focusTime" - Focus time events.
+//	"outOfOffice" - Out of office events.
+//	"workingLocation" - Working location events.
 func (c *EventsListCall) EventTypes(eventTypes ...string) *EventsListCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -7269,6 +7269,8 @@ func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty ...stri
 // - location
 // - attendee's displayName
 // - attendee's email
+// - organizer's displayName
+// - organizer's email
 // - workingLocationProperties.officeLocation.buildingId
 // - workingLocationProperties.officeLocation.deskId
 // - workingLocationProperties.officeLocation.label
@@ -7498,7 +7500,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Deprecated and ignored. A value will always be returned in the email field for the organizer, creator and attendees, even if no real email address is available (i.e. a generated, non-working value will be provided).",
+	//       "description": "Deprecated and ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7509,7 +7511,19 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\" \n- \"workingLocation\"This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
+	//       "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
+	//       "enum": [
+	//         "default",
+	//         "focusTime",
+	//         "outOfOffice",
+	//         "workingLocation"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Regular events.",
+	//         "Focus time events.",
+	//         "Out of office events.",
+	//         "Working location events."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -7559,7 +7573,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Free text search terms to find events that match these terms in the following fields:\n\n- summary \n- description \n- location \n- attendee's displayName \n- attendee's email \n- workingLocationProperties.officeLocation.buildingId \n- workingLocationProperties.officeLocation.deskId \n- workingLocationProperties.officeLocation.label \n- workingLocationProperties.customLocation.label \nThese search terms also match predefined keywords against all display title translations of working location, out-of-office, and focus-time events. For example, searching for \"Office\" or \"Bureau\" returns working location events of type officeLocation, whereas searching for \"Out of office\" or \"Abwesend\" returns out-of-office events. Optional.",
+	//       "description": "Free text search terms to find events that match these terms in the following fields:\n\n- summary \n- description \n- location \n- attendee's displayName \n- attendee's email \n- organizer's displayName \n- organizer's email \n- workingLocationProperties.officeLocation.buildingId \n- workingLocationProperties.officeLocation.deskId \n- workingLocationProperties.officeLocation.label \n- workingLocationProperties.customLocation.label \nThese search terms also match predefined keywords against all display title translations of working location, out-of-office, and focus-time events. For example, searching for \"Office\" or \"Bureau\" returns working location events of type officeLocation, whereas searching for \"Out of office\" or \"Abwesend\" returns out-of-office events. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8609,23 +8623,23 @@ func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchC
 }
 
 // AlwaysIncludeEmail sets the optional parameter "alwaysIncludeEmail":
-// Deprecated and ignored. A value will always be returned in the email
-// field for the organizer, creator and attendees, even if no real email
-// address is available (i.e. a generated, non-working value will be
-// provided).
+// Deprecated and ignored.
 func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWatchCall {
 	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
-// return.  Possible values are:
-// - "default"
-// - "focusTime"
-// - "outOfOffice"
-// - "workingLocation"This parameter can be repeated multiple times to
-// return events of different types. The default is ["default",
-// "focusTime", "outOfOffice"].
+// return.  This parameter can be repeated multiple times to return
+// events of different types. The default is ["default", "focusTime",
+// "outOfOffice"].
+//
+// Possible values:
+//
+//	"default" - Regular events.
+//	"focusTime" - Focus time events.
+//	"outOfOffice" - Out of office events.
+//	"workingLocation" - Working location events.
 func (c *EventsWatchCall) EventTypes(eventTypes ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("eventTypes", append([]string{}, eventTypes...))
 	return c
@@ -8702,6 +8716,8 @@ func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty ...str
 // - location
 // - attendee's displayName
 // - attendee's email
+// - organizer's displayName
+// - organizer's email
 // - workingLocationProperties.officeLocation.buildingId
 // - workingLocationProperties.officeLocation.deskId
 // - workingLocationProperties.officeLocation.label
@@ -8923,7 +8939,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//   ],
 	//   "parameters": {
 	//     "alwaysIncludeEmail": {
-	//       "description": "Deprecated and ignored. A value will always be returned in the email field for the organizer, creator and attendees, even if no real email address is available (i.e. a generated, non-working value will be provided).",
+	//       "description": "Deprecated and ignored.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8934,7 +8950,19 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. Possible values are: \n- \"default\" \n- \"focusTime\" \n- \"outOfOffice\" \n- \"workingLocation\"This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
+	//       "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
+	//       "enum": [
+	//         "default",
+	//         "focusTime",
+	//         "outOfOffice",
+	//         "workingLocation"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Regular events.",
+	//         "Focus time events.",
+	//         "Out of office events.",
+	//         "Working location events."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -8984,7 +9012,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "q": {
-	//       "description": "Free text search terms to find events that match these terms in the following fields:\n\n- summary \n- description \n- location \n- attendee's displayName \n- attendee's email \n- workingLocationProperties.officeLocation.buildingId \n- workingLocationProperties.officeLocation.deskId \n- workingLocationProperties.officeLocation.label \n- workingLocationProperties.customLocation.label \nThese search terms also match predefined keywords against all display title translations of working location, out-of-office, and focus-time events. For example, searching for \"Office\" or \"Bureau\" returns working location events of type officeLocation, whereas searching for \"Out of office\" or \"Abwesend\" returns out-of-office events. Optional.",
+	//       "description": "Free text search terms to find events that match these terms in the following fields:\n\n- summary \n- description \n- location \n- attendee's displayName \n- attendee's email \n- organizer's displayName \n- organizer's email \n- workingLocationProperties.officeLocation.buildingId \n- workingLocationProperties.officeLocation.deskId \n- workingLocationProperties.officeLocation.label \n- workingLocationProperties.customLocation.label \nThese search terms also match predefined keywords against all display title translations of working location, out-of-office, and focus-time events. For example, searching for \"Office\" or \"Bureau\" returns working location events of type officeLocation, whereas searching for \"Out of office\" or \"Abwesend\" returns out-of-office events. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

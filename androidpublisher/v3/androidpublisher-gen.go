@@ -6528,8 +6528,7 @@ func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 type RevocationContext struct {
 	// ProratedRefund: Optional. Used when users should be refunded a
 	// prorated amount they paid for their subscription based on the amount
-	// of time remaining in a subscription. Not supported for subscriptions
-	// with multiple items.
+	// of time remaining in a subscription.
 	ProratedRefund *RevocationContextProratedRefund `json:"proratedRefund,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProratedRefund") to

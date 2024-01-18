@@ -2429,6 +2429,23 @@ type FlexTemplateRuntimeEnvironment struct {
 	// be a valid Cloud Storage URL, beginning with `gs://`.
 	StagingLocation string `json:"stagingLocation,omitempty"`
 
+	// StreamingMode: Optional. Specifies the Streaming Engine message
+	// processing guarantees. Reduces cost and latency but might result in
+	// duplicate messages committed to storage. Designed to run simple
+	// mapping streaming ETL jobs at the lowest cost. For example, Change
+	// Data Capture (CDC) to BigQuery is a canonical use case.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
+	//   "STREAMING_MODE_EXACTLY_ONCE" - In this mode, message deduplication
+	// is performed against persistent state to make sure each message is
+	// processed and committed to storage exactly once.
+	//   "STREAMING_MODE_AT_LEAST_ONCE" - Message deduplication is not
+	// performed. Messages might be processed multiple times, and the
+	// results are applied multiple times. Note: Setting this value also
+	// enables Streaming Engine and Streaming Engine resource-based billing.
+	StreamingMode string `json:"streamingMode,omitempty"`
+
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You
 	// can specify a subnetwork using either a complete URL or an
 	// abbreviated path. Expected to be of the form
@@ -5595,6 +5612,23 @@ type RuntimeEnvironment struct {
 	// account to run the job as.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
+	// StreamingMode: Optional. Specifies the Streaming Engine message
+	// processing guarantees. Reduces cost and latency but might result in
+	// duplicate messages committed to storage. Designed to run simple
+	// mapping streaming ETL jobs at the lowest cost. For example, Change
+	// Data Capture (CDC) to BigQuery is a canonical use case.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
+	//   "STREAMING_MODE_EXACTLY_ONCE" - In this mode, message deduplication
+	// is performed against persistent state to make sure each message is
+	// processed and committed to storage exactly once.
+	//   "STREAMING_MODE_AT_LEAST_ONCE" - Message deduplication is not
+	// performed. Messages might be processed multiple times, and the
+	// results are applied multiple times. Note: Setting this value also
+	// enables Streaming Engine and Streaming Engine resource-based billing.
+	StreamingMode string `json:"streamingMode,omitempty"`
+
 	// Subnetwork: Optional. Subnetwork to which VMs will be assigned, if
 	// desired. You can specify a subnetwork using either a complete URL or
 	// an abbreviated path. Expected to be of the form
@@ -7513,22 +7547,28 @@ func (s *StreamingConfigTask) MarshalJSON() ([]byte, error) {
 // StreamingScalingReport: Contains per-user worker telemetry used in
 // streaming autoscaling.
 type StreamingScalingReport struct {
-	// ActiveBundleCount: Current acive bundle count.
 	ActiveBundleCount int64 `json:"activeBundleCount,omitempty"`
 
 	// ActiveThreadCount: Current acive thread count.
 	ActiveThreadCount int64 `json:"activeThreadCount,omitempty"`
 
-	// MaximumBundleCount: Maximum bundle count limit.
+	// MaximumBundleCount: Maximum bundle count.
 	MaximumBundleCount int64 `json:"maximumBundleCount,omitempty"`
 
-	// MaximumBytesCount: Maximum bytes count limit.
+	// MaximumBytes: Maximum bytes.
+	MaximumBytes int64 `json:"maximumBytes,omitempty,string"`
+
 	MaximumBytesCount int64 `json:"maximumBytesCount,omitempty"`
 
 	// MaximumThreadCount: Maximum thread count limit.
 	MaximumThreadCount int64 `json:"maximumThreadCount,omitempty"`
 
-	// OutstandingBytesCount: Current outstanding bytes count.
+	// OutstandingBundleCount: Current outstanding bundle count.
+	OutstandingBundleCount int64 `json:"outstandingBundleCount,omitempty"`
+
+	// OutstandingBytes: Current outstanding bytes.
+	OutstandingBytes int64 `json:"outstandingBytes,omitempty,string"`
+
 	OutstandingBytesCount int64 `json:"outstandingBytesCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActiveBundleCount")

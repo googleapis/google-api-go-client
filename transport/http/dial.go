@@ -111,8 +111,8 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 
 func errUniverseNotMatch(settingsUD, credsUD string) error {
 	return fmt.Errorf(
-		"the configured universe domain (%s) does not match the universe "+
-			"domain found in the credentials (%s). If you haven't configured "+
+		"the configured universe domain (%q) does not match the universe "+
+			"domain found in the credentials (%q). If you haven't configured "+
 			"WithUniverseDomain explicitly, googleapis.com is the default",
 		settingsUD,
 		credsUD)

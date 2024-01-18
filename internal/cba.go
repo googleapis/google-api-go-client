@@ -74,10 +74,9 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	if err != nil {
 		return nil, "", err
 	}
-	// TODO(chrisdsmith): Use this composed endpoint everywhere to replace DialSettings.DefaultEndpoint
-	// TODO(chrisdsmith): Remove settings.DefaultEndpointTemplate != "" condition after rollout of WithDefaultEndpointTemplate is complete.
+	// TODO(chrisdsmith): https://github.com/googleapis/google-api-go-client/issues/2359
 	if settings.Endpoint == "" && !settings.IsUniverseDomainGDU() && settings.DefaultEndpointTemplate != "" {
-		// TODO(chrisdsmith): Uncomment error check below after rollout of WithDefaultEndpointTemplate is complete.
+		// TODO(chrisdsmith): https://github.com/googleapis/google-api-go-client/issues/2359
 		// if settings.DefaultEndpointTemplate == "" {
 		// 	return nil, "", errors.New("internaloption.WithDefaultEndpointTemplate is required if option.WithUniverseDomain is not googleapis.com")
 		// }

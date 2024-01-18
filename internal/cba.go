@@ -59,7 +59,7 @@ const (
 )
 
 var (
-	ErrUniverseNotSupportedMTLS = errors.New("mTLS is not supported in any universe other than googleapis.com")
+	errUniverseNotSupportedMTLS = errors.New("mTLS is not supported in any universe other than googleapis.com")
 )
 
 // getClientCertificateSourceAndEndpoint is a convenience function that invokes
@@ -109,7 +109,7 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 		return &defaultTransportConfig, nil
 	}
 	if !settings.IsUniverseDomainGDU() {
-		return nil, ErrUniverseNotSupportedMTLS
+		return nil, errUniverseNotSupportedMTLS
 	}
 
 	s2aMTLSEndpoint := settings.DefaultMTLSEndpoint
@@ -173,7 +173,7 @@ func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, 
 		mtlsMode := getMTLSMode()
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
 			if !settings.IsUniverseDomainGDU() {
-				return "", ErrUniverseNotSupportedMTLS
+				return "", errUniverseNotSupportedMTLS
 			}
 			return settings.DefaultMTLSEndpoint, nil
 		}

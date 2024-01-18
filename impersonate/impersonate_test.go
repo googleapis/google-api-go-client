@@ -24,29 +24,29 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 		targetPrincipal string
 		scopes          []string
 		lifetime        time.Duration
-		wantErr         bool
+		wantErr         error
 	}{
 		{
 			name:    "missing targetPrincipal",
-			wantErr: true,
+			wantErr: errMissingTargetPrincipal,
 		},
 		{
 			name:            "missing scopes",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
-			wantErr:         true,
+			wantErr:         errMissingScopes,
 		},
 		{
 			name:            "lifetime over max",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 			scopes:          []string{"scope"},
 			lifetime:        13 * time.Hour,
-			wantErr:         true,
+			wantErr:         errLifetimeOverMax,
 		},
 		{
 			name:            "works",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 			scopes:          []string{"scope"},
-			wantErr:         false,
+			wantErr:         nil,
 		},
 	}
 
@@ -79,18 +79,19 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 				Scopes:          tt.scopes,
 				Lifetime:        tt.lifetime,
 			}, option.WithHTTPClient(client))
-			if tt.wantErr && err != nil {
-				return
-			}
+
 			if err != nil {
-				t.Fatal(err)
-			}
-			tok, err := ts.Token()
-			if err != nil {
-				t.Fatal(err)
-			}
-			if tok.AccessToken != saTok {
-				t.Fatalf("got %q, want %q", tok.AccessToken, saTok)
+				if err != tt.wantErr {
+					t.Fatalf("%s: err: %v", tt.name, err)
+				}
+			} else {
+				tok, err := ts.Token()
+				if err != nil {
+					t.Fatal(err)
+				}
+				if tok.AccessToken != saTok {
+					t.Fatalf("got %q, want %q", tok.AccessToken, saTok)
+				}
 			}
 		})
 	}

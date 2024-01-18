@@ -408,7 +408,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				ClientCertSource:        dummyClientCertSource,
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
-			wantErr:      ErrUniverseNotSupportedMTLS,
+			wantErr:      errUniverseNotSupportedMTLS,
 		},
 	}
 
@@ -508,7 +508,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				UniverseDomain:          testUniverseDomain,
 				ClientCertSource:        dummyClientCertSource,
 			},
-			wantErr: ErrUniverseNotSupportedMTLS,
+			wantErr: errUniverseNotSupportedMTLS,
 		},
 		{
 			name: "UniverseDomain, client cert, endpoint",

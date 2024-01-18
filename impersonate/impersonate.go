@@ -24,9 +24,11 @@ import (
 var (
 	iamCredentailsEndpoint                      = "https://iamcredentials.googleapis.com"
 	oauth2Endpoint                              = "https://oauth2.googleapis.com"
-	ErrUniverseNotSupportedDomainWideDelegation = errors.New(
-		"impersonate: service account user is configured for the credential. Domain-wide " +
-			"delegation is not supported in universes other than googleapis.com")
+	errMissingTargetPrincipal                   = errors.New("impersonate: a target service account must be provided")
+	errMissingScopes                            = errors.New("impersonate: scopes must be provided")
+	errLifetimeOverMax                          = errors.New("impersonate: max lifetime is 12 hours")
+	errUniverseNotSupportedDomainWideDelegation = errors.New("impersonate: service account user is configured for the credential. " +
+		"Domain-wide delegation is not supported in universes other than googleapis.com")
 )
 
 // CredentialsConfig for generating impersonated credentials.
@@ -67,13 +69,13 @@ func defaultClientOptions() []option.ClientOption {
 // the base credentials.
 func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts ...option.ClientOption) (oauth2.TokenSource, error) {
 	if config.TargetPrincipal == "" {
-		return nil, fmt.Errorf("impersonate: a target service account must be provided")
+		return nil, errMissingTargetPrincipal
 	}
 	if len(config.Scopes) == 0 {
-		return nil, fmt.Errorf("impersonate: scopes must be provided")
+		return nil, errMissingScopes
 	}
 	if config.Lifetime.Hours() > 12 {
-		return nil, fmt.Errorf("impersonate: max lifetime is 12 hours")
+		return nil, errLifetimeOverMax
 	}
 
 	var isStaticToken bool
@@ -99,7 +101,7 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 			return nil, err
 		}
 		if !settings.IsUniverseDomainGDU() {
-			return nil, ErrUniverseNotSupportedDomainWideDelegation
+			return nil, errUniverseNotSupportedDomainWideDelegation
 		}
 		return user(ctx, config, client, lifetime, isStaticToken)
 	}

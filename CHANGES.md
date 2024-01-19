@@ -1,5 +1,13 @@
 # Changes
 
+## [0.158.0](https://github.com/googleapis/google-api-go-client/compare/v0.157.0...v0.158.0) (2024-01-19)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2361](https://github.com/googleapis/google-api-go-client/issues/2361)) ([6c3b622](https://github.com/googleapis/google-api-go-client/commit/6c3b622e2a358e940307026b3b10ed25f825b5d2))
+* **impersonate:** Add universe domain support ([#2296](https://github.com/googleapis/google-api-go-client/issues/2296)) ([6ef1144](https://github.com/googleapis/google-api-go-client/commit/6ef1144a79d93982b56c81cf0116965a7c0bf93a))
+
 ## [0.157.0](https://github.com/googleapis/google-api-go-client/compare/v0.156.0...v0.157.0) (2024-01-18)
 
 

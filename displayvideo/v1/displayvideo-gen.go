@@ -4323,7 +4323,8 @@ type Consent struct {
 	// AdPersonalization: Represents consent for ad personalization.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdPersonalization string `json:"adPersonalization,omitempty"`
@@ -4331,7 +4332,8 @@ type Consent struct {
 	// AdUserData: Represents consent for ad user data.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdUserData string `json:"adUserData,omitempty"`
@@ -4422,7 +4424,9 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type ContactInfoList struct {
 	// Consent: Input only. The consent setting for the users in
-	// contact_infos.
+	// contact_infos. Leaving this field unset indicates that consent is not
+	// specified. If ad_user_data or ad_personalization fields are set to
+	// `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// ContactInfos: A list of ContactInfo objects defining Customer Match
@@ -12530,7 +12534,9 @@ func (s *MobileApp) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type MobileDeviceIdList struct {
 	// Consent: Input only. The consent setting for the users in
-	// mobile_device_ids.
+	// mobile_device_ids. Leaving this field unset indicates that consent is
+	// not specified. If ad_user_data or ad_personalization fields are set
+	// to `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// MobileDeviceIds: A list of mobile device IDs defining Customer Match

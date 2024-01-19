@@ -1178,7 +1178,8 @@ type Advertiser struct {
 	// by the system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// BillingConfig: Required. Billing related settings of the advertiser.
+	// BillingConfig: Optional. Required. Billing related settings of the
+	// advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 
 	// CreativeConfig: Required. Creative related settings of the
@@ -1313,8 +1314,8 @@ func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: The ID of a billing profile assigned to the
-	// advertiser.
+	// BillingProfileId: Optional. The ID of a billing profile assigned to
+	// the advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
@@ -1701,500 +1702,6 @@ func (s *AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AgeRangeTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AlgorithmRules: Rule-based algorithm.
-type AlgorithmRules struct {
-	// ImpressionSignalRuleset: Rules for the impression signals.
-	ImpressionSignalRuleset *AlgorithmRulesRuleset `json:"impressionSignalRuleset,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ImpressionSignalRuleset") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImpressionSignalRuleset")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRules) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRules
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AlgorithmRulesComparisonValue: A value to compare the signal to.
-type AlgorithmRulesComparisonValue struct {
-	// BoolValue: Boolean value.
-	BoolValue bool `json:"boolValue,omitempty"`
-
-	// CreativeDimensionValue: Creative dimension value.
-	CreativeDimensionValue *Dimensions `json:"creativeDimensionValue,omitempty"`
-
-	// DayAndTimeValue: Day and time value. Only
-	// `TIME_ZONE_RESOLUTION_END_USER` is supported.
-	DayAndTimeValue *DayAndTime `json:"dayAndTimeValue,omitempty"`
-
-	// DeviceTypeValue: Device type value.
-	//
-	// Possible values:
-	//   "RULE_DEVICE_TYPE_UNSPECIFIED" - Default value when device type is
-	// not specified in this version. This enum is a placeholder for default
-	// value and does not represent a real device type option.
-	//   "RULE_DEVICE_TYPE_COMPUTER" - Computer.
-	//   "RULE_DEVICE_TYPE_CONNECTED_TV" - Connected TV.
-	//   "RULE_DEVICE_TYPE_SMART_PHONE" - Smart phone.
-	//   "RULE_DEVICE_TYPE_TABLET" - Tablet.
-	//   "RULE_DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
-	//   "RULE_DEVICE_TYPE_SET_TOP_BOX" - Set top box.
-	DeviceTypeValue string `json:"deviceTypeValue,omitempty"`
-
-	// DoubleValue: Double value.
-	DoubleValue float64 `json:"doubleValue,omitempty"`
-
-	// EnvironmentValue: Environment value.
-	//
-	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
-	// specified in this version. This enum is a placeholder for default
-	// value and does not represent a real environment option.
-	//   "ENVIRONMENT_WEB_OPTIMIZED" - Target inventory displayed in
-	// browsers. This includes inventory that was designed for the device it
-	// was viewed on, such as mobile websites viewed on a mobile device.
-	// ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should be deleted prior
-	// to the deletion of this targeting option.
-	//   "ENVIRONMENT_WEB_NOT_OPTIMIZED" - Target inventory displayed in
-	// browsers. This includes inventory that was not designed for the
-	// device but viewed on it, such as websites optimized for desktop but
-	// viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED should be
-	// targeted prior to the addition of this targeting option.
-	//   "ENVIRONMENT_APP" - Target inventory displayed in apps.
-	EnvironmentValue string `json:"environmentValue,omitempty"`
-
-	// ExchangeValue: Exchange value.
-	//
-	// Possible values:
-	//   "EXCHANGE_UNSPECIFIED" - Exchange is not specified or is unknown in
-	// this version.
-	//   "EXCHANGE_GOOGLE_AD_MANAGER" - Google Ad Manager.
-	//   "EXCHANGE_APPNEXUS" - AppNexus.
-	//   "EXCHANGE_BRIGHTROLL" - BrightRoll Exchange for Video from Yahoo!.
-	//   "EXCHANGE_ADFORM" - Adform.
-	//   "EXCHANGE_ADMETA" - Admeta.
-	//   "EXCHANGE_ADMIXER" - Admixer.
-	//   "EXCHANGE_ADSMOGO" - AdsMogo.
-	//   "EXCHANGE_ADSWIZZ" - AdsWizz.
-	//   "EXCHANGE_BIDSWITCH" - BidSwitch.
-	//   "EXCHANGE_BRIGHTROLL_DISPLAY" - BrightRoll Exchange for Display
-	// from Yahoo!.
-	//   "EXCHANGE_CADREON" - Cadreon.
-	//   "EXCHANGE_DAILYMOTION" - Dailymotion.
-	//   "EXCHANGE_FIVE" - Five.
-	//   "EXCHANGE_FLUCT" - Fluct.
-	//   "EXCHANGE_FREEWHEEL" - FreeWheel SSP.
-	//   "EXCHANGE_GENIEE" - Geniee.
-	//   "EXCHANGE_GUMGUM" - GumGum.
-	//   "EXCHANGE_IMOBILE" - i-mobile.
-	//   "EXCHANGE_IBILLBOARD" - iBILLBOARD.
-	//   "EXCHANGE_IMPROVE_DIGITAL" - Improve Digital.
-	//   "EXCHANGE_INDEX" - Index Exchange.
-	//   "EXCHANGE_KARGO" - Kargo.
-	//   "EXCHANGE_MICROAD" - MicroAd.
-	//   "EXCHANGE_MOPUB" - MoPub.
-	//   "EXCHANGE_NEND" - Nend.
-	//   "EXCHANGE_ONE_BY_AOL_DISPLAY" - ONE by AOL: Display Market Place.
-	//   "EXCHANGE_ONE_BY_AOL_MOBILE" - ONE by AOL: Mobile.
-	//   "EXCHANGE_ONE_BY_AOL_VIDEO" - ONE by AOL: Video.
-	//   "EXCHANGE_OOYALA" - Ooyala.
-	//   "EXCHANGE_OPENX" - OpenX.
-	//   "EXCHANGE_PERMODO" - Permodo.
-	//   "EXCHANGE_PLATFORMONE" - Platform One.
-	//   "EXCHANGE_PLATFORMID" - PlatformId.
-	//   "EXCHANGE_PUBMATIC" - PubMatic.
-	//   "EXCHANGE_PULSEPOINT" - PulsePoint.
-	//   "EXCHANGE_REVENUEMAX" - RevenueMax.
-	//   "EXCHANGE_RUBICON" - Rubicon.
-	//   "EXCHANGE_SMARTCLIP" - SmartClip.
-	//   "EXCHANGE_SMARTRTB" - SmartRTB+.
-	//   "EXCHANGE_SMARTSTREAMTV" - SmartstreamTv.
-	//   "EXCHANGE_SOVRN" - Sovrn.
-	//   "EXCHANGE_SPOTXCHANGE" - SpotXchange.
-	//   "EXCHANGE_STROER" - Ströer SSP.
-	//   "EXCHANGE_TEADSTV" - TeadsTv.
-	//   "EXCHANGE_TELARIA" - Telaria.
-	//   "EXCHANGE_TVN" - TVN.
-	//   "EXCHANGE_UNITED" - United.
-	//   "EXCHANGE_YIELDLAB" - Yieldlab.
-	//   "EXCHANGE_YIELDMO" - Yieldmo.
-	//   "EXCHANGE_UNRULYX" - UnrulyX.
-	//   "EXCHANGE_OPEN8" - Open8.
-	//   "EXCHANGE_TRITON" - Triton.
-	//   "EXCHANGE_TRIPLELIFT" - TripleLift.
-	//   "EXCHANGE_TABOOLA" - Taboola.
-	//   "EXCHANGE_INMOBI" - InMobi.
-	//   "EXCHANGE_SMAATO" - Smaato.
-	//   "EXCHANGE_AJA" - Aja.
-	//   "EXCHANGE_SUPERSHIP" - Supership.
-	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
-	//   "EXCHANGE_WAZE" - Waze.
-	//   "EXCHANGE_SOUNDCAST" - SoundCast.
-	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
-	//   "EXCHANGE_FYBER" - Fyber.
-	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
-	//   "EXCHANGE_MEDIANET" - Media.net.
-	//   "EXCHANGE_TAPJOY" - Tapjoy.
-	//   "EXCHANGE_VISTAR" - Vistar.
-	//   "EXCHANGE_DAX" - DAX.
-	//   "EXCHANGE_JCD" - JCD.
-	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
-	//   "EXCHANGE_APPLOVIN" - AppLovin.
-	//   "EXCHANGE_CONNATIX" - Connatix.
-	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
-	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	ExchangeValue string `json:"exchangeValue,omitempty"`
-
-	// Int64Value: Integer value.
-	Int64Value int64 `json:"int64Value,omitempty,string"`
-
-	// OnScreenPositionValue: Ad position value.
-	//
-	// Possible values:
-	//   "ON_SCREEN_POSITION_UNSPECIFIED" - On screen position is not
-	// specified in this version. This enum is a place holder for a default
-	// value and does not represent a real on screen position.
-	//   "ON_SCREEN_POSITION_UNKNOWN" - The ad position is unknown on the
-	// screen.
-	//   "ON_SCREEN_POSITION_ABOVE_THE_FOLD" - The ad is located above the
-	// fold.
-	//   "ON_SCREEN_POSITION_BELOW_THE_FOLD" - The ad is located below the
-	// fold.
-	OnScreenPositionValue string `json:"onScreenPositionValue,omitempty"`
-
-	// StringValue: String value.
-	StringValue string `json:"stringValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesComparisonValue) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesComparisonValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *AlgorithmRulesComparisonValue) UnmarshalJSON(data []byte) error {
-	type NoMethod AlgorithmRulesComparisonValue
-	var s1 struct {
-		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.DoubleValue = float64(s1.DoubleValue)
-	return nil
-}
-
-// AlgorithmRulesRule: Set of conditions. The return value of the rule
-// is either: * The return value for single met condition or * The
-// defined default return value if no conditions are met.
-type AlgorithmRulesRule struct {
-	// Conditions: List of conditions in this rule. The criteria among
-	// conditions should be mutually exclusive.
-	Conditions []*AlgorithmRulesRuleCondition `json:"conditions,omitempty"`
-
-	// DefaultReturnValue: The default return value applied when none of the
-	// conditions are met.
-	DefaultReturnValue *AlgorithmRulesSignalValue `json:"defaultReturnValue,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Conditions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Conditions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesRule) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AlgorithmRulesRuleCondition: Set of signal comparisons. Equivalent of
-// an `if` statement.
-type AlgorithmRulesRuleCondition struct {
-	// ReturnValue: The value returned if the `signalComparisons` condition
-	// evaluates to `TRUE`.
-	ReturnValue *AlgorithmRulesSignalValue `json:"returnValue,omitempty"`
-
-	// SignalComparisons: List of comparisons that build `if` statement
-	// condition. The comparisons are combined into a single condition with
-	// `AND` logical operators.
-	SignalComparisons []*AlgorithmRulesSignalComparison `json:"signalComparisons,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ReturnValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReturnValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesRuleCondition) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesRuleCondition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AlgorithmRulesRuleset: A ruleset consisting of a list of rules and
-// how to aggregate the resulting values.
-type AlgorithmRulesRuleset struct {
-	// AggregationType: How to aggregate values of evaluated rules.
-	//
-	// Possible values:
-	//   "RULE_AGGREGATION_TYPE_UNSPECIFIED" - Unknown aggregation type.
-	//   "SUM_OF_VALUES" - The sum of rule values.
-	//   "PRODUCT_OF_VALUES" - The product of rule values.
-	//   "MAXIMUM_VALUE" - The maximum rule value.
-	AggregationType string `json:"aggregationType,omitempty"`
-
-	// MaxValue: Maximum value the ruleset can evaluate to.
-	MaxValue float64 `json:"maxValue,omitempty"`
-
-	// Rules: List of rules to generate the impression value.
-	Rules []*AlgorithmRulesRule `json:"rules,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AggregationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesRuleset) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesRuleset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *AlgorithmRulesRuleset) UnmarshalJSON(data []byte) error {
-	type NoMethod AlgorithmRulesRuleset
-	var s1 struct {
-		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.MaxValue = float64(s1.MaxValue)
-	return nil
-}
-
-// AlgorithmRulesSignal: Signal used to evaluate rules.
-type AlgorithmRulesSignal struct {
-	// ImpressionSignal: Signal based on impressions.
-	//
-	// Possible values:
-	//   "IMPRESSION_SIGNAL_UNSPECIFIED" - Unknown signal.
-	//   "DAY_AND_TIME" - The day of the week and hour of day the impression
-	// was made using browser's local time zone. Value is stored in the
-	// dayAndTimeValue field of the comparison value.
-	//   "DEVICE_TYPE" - Device type. Value is stored in the deviceTypeValue
-	// field of the comparison value.
-	//   "AD_POSITION" - Ad position. Value is stored in the
-	// onScreenPositionValue field of the comparison value.
-	//   "OPERATING_SYSTEM_ID" - The operating system identifier. Value is
-	// stored in the int64Value field of the comparison value.
-	//   "MOBILE_MODEL_ID" - The mobile model identifier. Value is stored in
-	// the int64Value field of the comparison value.
-	//   "EXCHANGE" - Exchange. Value is stored in the exchangeValue field
-	// of the comparison value.
-	//   "ENVIRONMENT" - Serving environment. Value is stored in the
-	// environmentValue field of the comparison value.
-	//   "COUNTRY_ID" - The country or region identifier. Value is stored in
-	// the int64Value field of the comparison value.
-	//   "CITY_ID" - The city identifier. Value is stored in the int64Value
-	// field of the comparison value.
-	//   "BROWSER_ID" - The browser identifier. Value is stored in the
-	// int64Value field of the comparison value.
-	//   "CREATIVE_DIMENSION" - Creative height and width in pixels. Value
-	// is stored in the creativeDimensionValue field of the comparison
-	// value.
-	ImpressionSignal string `json:"impressionSignal,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImpressionSignal") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImpressionSignal") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesSignal) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesSignal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AlgorithmRulesSignalComparison: A single comparison. The comparison
-// compares the `signal` to the `comparisonValue`. The comparison of
-// `siteId==123` is represented with the following field values: *
-// `signal` has an `impressionSignal` of `SITE_ID`. *
-// `comparisonOperator` is set to `EQUAL`. * `comparisonValue` is set to
-// 123.
-type AlgorithmRulesSignalComparison struct {
-	// ComparisonOperator: Operator used to compare the two values. In the
-	// resulting experession, the `signal` will be the first value and the
-	// `comparisonValue will be the second.
-	//
-	// Possible values:
-	//   "COMPARISON_OPERATOR_UNSPECIFIED" - Unknown operator.
-	//   "EQUAL" - Values are equal.
-	//   "GREATER_THAN" - First value is greater than the comparison value.
-	//   "LESS_THAN" - First value is less than the second.
-	//   "GREATER_THAN_OR_EQUAL_TO" - First value is greater than or equal
-	// to the second.
-	//   "LESS_THAN_OR_EQUAL_TO" - First value is less or equals to the
-	// comparison value.
-	ComparisonOperator string `json:"comparisonOperator,omitempty"`
-
-	// ComparisonValue: Value to compare signal to.
-	ComparisonValue *AlgorithmRulesComparisonValue `json:"comparisonValue,omitempty"`
-
-	// Signal: Signal to compare.
-	Signal *AlgorithmRulesSignal `json:"signal,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ComparisonOperator")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ComparisonOperator") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesSignalComparison) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesSignalComparison
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AlgorithmRulesSignalValue: Adjusted value of the signal used for rule
-// evaluation.
-type AlgorithmRulesSignalValue struct {
-	// Number: Value to use as result.
-	Number float64 `json:"number,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Number") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Number") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AlgorithmRulesSignalValue) MarshalJSON() ([]byte, error) {
-	type NoMethod AlgorithmRulesSignalValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *AlgorithmRulesSignalValue) UnmarshalJSON(data []byte) error {
-	type NoMethod AlgorithmRulesSignalValue
-	var s1 struct {
-		Number gensupport.JSONFloat64 `json:"number"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Number = float64(s1.Number)
-	return nil
 }
 
 // AppAssignedTargetingOptionDetails: Details for assigned app targeting
@@ -5585,7 +5092,8 @@ type Consent struct {
 	// AdPersonalization: Represents consent for ad personalization.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdPersonalization string `json:"adPersonalization,omitempty"`
@@ -5593,7 +5101,8 @@ type Consent struct {
 	// AdUserData: Represents consent for ad user data.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdUserData string `json:"adUserData,omitempty"`
@@ -5684,7 +5193,9 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type ContactInfoList struct {
 	// Consent: Input only. The consent setting for the users in
-	// contact_infos.
+	// contact_infos. Leaving this field unset indicates that consent is not
+	// specified. If ad_user_data or ad_personalization fields are set to
+	// `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// ContactInfos: A list of ContactInfo objects defining Customer Match
@@ -7709,60 +7220,6 @@ type DateRange struct {
 
 func (s *DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DayAndTime: Representation of time defined by day of the week and
-// hour of the day.
-type DayAndTime struct {
-	// DayOfWeek: Required. Day of the week.
-	//
-	// Possible values:
-	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
-	//   "MONDAY" - Monday
-	//   "TUESDAY" - Tuesday
-	//   "WEDNESDAY" - Wednesday
-	//   "THURSDAY" - Thursday
-	//   "FRIDAY" - Friday
-	//   "SATURDAY" - Saturday
-	//   "SUNDAY" - Sunday
-	DayOfWeek string `json:"dayOfWeek,omitempty"`
-
-	// HourOfDay: Required. Hour of the day.
-	HourOfDay int64 `json:"hourOfDay,omitempty"`
-
-	// TimeZoneResolution: Required. The mechanism used to determine the
-	// relevant timezone.
-	//
-	// Possible values:
-	//   "TIME_ZONE_RESOLUTION_UNSPECIFIED" - Time zone resolution is either
-	// unspecific or unknown.
-	//   "TIME_ZONE_RESOLUTION_END_USER" - Times are resolved in the time
-	// zone of the user that saw the ad.
-	//   "TIME_ZONE_RESOLUTION_ADVERTISER" - Times are resolved in the time
-	// zone of the advertiser that served the ad.
-	TimeZoneResolution string `json:"timeZoneResolution,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DayAndTime) MarshalJSON() ([]byte, error) {
-	type NoMethod DayAndTime
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10032,11 +9489,11 @@ type FrequencyCap struct {
 	// unlimited is `false` and max_views is not set.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
-	// MaxViews: The maximum number of times a user may click-through or
-	// fully view an ad during this period until it is no longer served to
-	// them. Must be greater than 0. Only applicable to YouTube and Partners
-	// resources. Required when unlimited is `false` and max_impressions is
-	// not set.
+	// MaxViews: Optional. The maximum number of times a user may
+	// click-through or fully view an ad during this period until it is no
+	// longer served to them. Must be greater than 0. Only applicable to
+	// YouTube and Partners resources. Required when unlimited is `false`
+	// and max_impressions is not set.
 	MaxViews int64 `json:"maxViews,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -14572,7 +14029,9 @@ func (s *MobileApp) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type MobileDeviceIdList struct {
 	// Consent: Input only. The consent setting for the users in
-	// mobile_device_ids.
+	// mobile_device_ids. Leaving this field unset indicates that consent is
+	// not specified. If ad_user_data or ad_personalization fields are set
+	// to `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// MobileDeviceIds: A list of mobile device IDs defining Customer Match
@@ -16923,93 +16382,6 @@ func (s *SdfConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SdfDownloadTask: Type for the response returned by
-// [SdfDownloadTaskService.CreateSdfDownloadTask].
-type SdfDownloadTask struct {
-	// ResourceName: A resource name to be used in media.download to
-	// Download the prepared files. Resource names have the format
-	// `download/sdfdownloadtasks/media/{media_id}`. `media_id` will be made
-	// available by the long running operation service once the task status
-	// is done.
-	ResourceName string `json:"resourceName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResourceName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SdfDownloadTask) MarshalJSON() ([]byte, error) {
-	type NoMethod SdfDownloadTask
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SdfDownloadTaskMetadata: Type for the metadata returned by
-// [SdfDownloadTaskService.CreateSdfDownloadTask].
-type SdfDownloadTaskMetadata struct {
-	// CreateTime: The time when the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EndTime: The time when execution was completed.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Version: The SDF version used to execute this download task.
-	//
-	// Possible values:
-	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or
-	// is unknown in this version.
-	//   "SDF_VERSION_3_1" - SDF version 3.1
-	//   "SDF_VERSION_4" - SDF version 4
-	//   "SDF_VERSION_4_1" - SDF version 4.1
-	//   "SDF_VERSION_4_2" - SDF version 4.2
-	//   "SDF_VERSION_5" - SDF version 5.
-	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2
-	//   "SDF_VERSION_5_3" - SDF version 5.3
-	//   "SDF_VERSION_5_4" - SDF version 5.4
-	//   "SDF_VERSION_5_5" - SDF version 5.5
-	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
-	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SdfDownloadTaskMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod SdfDownloadTaskMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // SearchTargetingOptionsRequest: Request message for
 // SearchTargetingOptions.
 type SearchTargetingOptionsRequest struct {
@@ -18976,8 +18348,12 @@ func (s *YoutubeAndPartnersBiddingStrategy) MarshalJSON() ([]byte, error) {
 // YouTube related inventories the YouTube and Partners line item will
 // target.
 type YoutubeAndPartnersInventorySourceConfig struct {
-	// IncludeYoutube: Whether to target inventory on YouTube. This includes
-	// both search, channels and videos.
+	// IncludeGoogleTv: Optional. Whether to target inventory in video apps
+	// available with Google TV.
+	IncludeGoogleTv bool `json:"includeGoogleTv,omitempty"`
+
+	// IncludeYoutube: Optional. Whether to target inventory on YouTube.
+	// This includes both search, channels and videos.
 	IncludeYoutube bool `json:"includeYoutube,omitempty"`
 
 	// IncludeYoutubeVideoPartners: Whether to target inventory on a
@@ -18985,7 +18361,7 @@ type YoutubeAndPartnersInventorySourceConfig struct {
 	// safety standards as YouTube.
 	IncludeYoutubeVideoPartners bool `json:"includeYoutubeVideoPartners,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IncludeYoutube") to
+	// ForceSendFields is a list of field names (e.g. "IncludeGoogleTv") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -18993,7 +18369,7 @@ type YoutubeAndPartnersInventorySourceConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IncludeYoutube") to
+	// NullFields is a list of field names (e.g. "IncludeGoogleTv") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -19010,7 +18386,7 @@ func (s *YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) 
 }
 
 // YoutubeAndPartnersSettings: Settings for YouTube and Partners line
-// items. Next ID: 15
+// items.
 type YoutubeAndPartnersSettings struct {
 	// ContentCategory: The kind of content on which the YouTube and
 	// Partners ads will be shown.
@@ -19056,26 +18432,29 @@ type YoutubeAndPartnersSettings struct {
 	// Partners inventories the line item will target.
 	InventorySourceSettings *YoutubeAndPartnersInventorySourceConfig `json:"inventorySourceSettings,omitempty"`
 
-	// LeadFormId: The ID of the form to generate leads.
+	// LeadFormId: Optional. The ID of the form to generate leads.
 	LeadFormId int64 `json:"leadFormId,omitempty,string"`
 
-	// LinkedMerchantId: The ID of the merchant which is linked to the line
-	// item for product feed.
+	// LinkedMerchantId: Optional. The ID of the merchant which is linked to
+	// the line item for product feed.
 	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
 
-	// RelatedVideoIds: The IDs of the videos appear below the primary video
-	// ad when the ad is playing in the YouTube app on mobile devices.
+	// RelatedVideoIds: Optional. The IDs of the videos appear below the
+	// primary video ad when the ad is playing in the YouTube app on mobile
+	// devices.
 	RelatedVideoIds []string `json:"relatedVideoIds,omitempty"`
 
-	// TargetFrequency: The average number of times you want ads from this
-	// line item to show to the same person over a certain period of time.
+	// TargetFrequency: Optional. The average number of times you want ads
+	// from this line item to show to the same person over a certain period
+	// of time.
 	TargetFrequency *TargetFrequency `json:"targetFrequency,omitempty"`
 
 	// ThirdPartyMeasurementConfigs: Optional. The third-party measurement
 	// configs of the line item.
 	ThirdPartyMeasurementConfigs *ThirdPartyMeasurementConfigs `json:"thirdPartyMeasurementConfigs,omitempty"`
 
-	// VideoAdSequenceSettings: The settings related to VideoAdSequence.
+	// VideoAdSequenceSettings: Optional. The settings related to
+	// VideoAdSequence.
 	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 
 	// ViewFrequencyCap: The view frequency cap settings of the line item.

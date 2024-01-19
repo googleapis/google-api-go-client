@@ -1174,6 +1174,10 @@ type CopyLogEntriesMetadata struct {
 	// cancellation of the operation.
 	CancellationRequested bool `json:"cancellationRequested,omitempty"`
 
+	// Destination: Destination to which to copy log entries.For example, a
+	// Cloud Storage bucket:"storage.googleapis.com/my-cloud-storage-bucket"
+	Destination string `json:"destination,omitempty"`
+
 	// EndTime: The end time of an operation.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -1182,6 +1186,10 @@ type CopyLogEntriesMetadata struct {
 
 	// Request: CopyLogEntries RPC request.
 	Request *CopyLogEntriesRequest `json:"request,omitempty"`
+
+	// Source: Source from which to copy log entries.For example, a log
+	// bucket:"projects/my-project/locations/global/buckets/my-source-bucket"
+	Source string `json:"source,omitempty"`
 
 	// StartTime: The create time of an operation.
 	StartTime string `json:"startTime,omitempty"`
@@ -1201,6 +1209,9 @@ type CopyLogEntriesMetadata struct {
 	// user.
 	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
+
+	// Verb: Name of the verb executed by the operation.For example,"copy"
+	Verb string `json:"verb,omitempty"`
 
 	// WriterIdentity: The IAM identity of a service account that must be
 	// granted access to the destination.If the service account is not

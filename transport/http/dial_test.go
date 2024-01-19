@@ -40,7 +40,7 @@ func TestNewClient(t *testing.T) {
 	}
 }
 
-func TestNewClient_UniverseDomain(t *testing.T) {
+func TestNewClient_MismatchedUniverseDomainCreds(t *testing.T) {
 	rootTokenScope := "https://www.googleapis.com/auth/cloud-platform"
 	universeDomain := "example.com"
 	universeDomainDefault := "googleapis.com"

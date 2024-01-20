@@ -25116,7 +25116,7 @@ type ProjectsLocationsDlpJobsFinishCall struct {
 // Finish: Finish a running hybrid DlpJob. Triggers the finalization
 // steps and running of any enabled actions that have not yet run.
 //
-// - name: The name of the DlpJob resource to be cancelled.
+// - name: The name of the DlpJob resource to be finished.
 func (r *ProjectsLocationsDlpJobsService) Finish(name string, googleprivacydlpv2finishdlpjobrequest *GooglePrivacyDlpV2FinishDlpJobRequest) *ProjectsLocationsDlpJobsFinishCall {
 	c := &ProjectsLocationsDlpJobsFinishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25224,7 +25224,7 @@ func (c *ProjectsLocationsDlpJobsFinishCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the DlpJob resource to be cancelled.",
+	//       "description": "Required. The name of the DlpJob resource to be finished.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dlpJobs/[^/]+$",
 	//       "required": true,

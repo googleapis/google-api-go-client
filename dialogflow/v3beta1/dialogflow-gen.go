@@ -2352,6 +2352,11 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
+	// OptOutConformerModelMigration: If `true`, the request will opt out
+	// for STT conformer model migration. This field will be deprecated once
+	// force migration takes place in June 2024.
+	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
+
 	// PhraseHints: Optional. A list of strings containing words and phrases
 	// that the speech recognizer should recognize with higher likelihood.
 	// See the Cloud Speech documentation
@@ -3815,7 +3820,7 @@ func (s *GoogleCloudDialogflowCxV3TestRunDifference) MarshalJSON() ([]byte, erro
 // text to be processed.
 type GoogleCloudDialogflowCxV3TextInput struct {
 	// Text: Required. The UTF-8 encoded natural language text to be
-	// processed. Text length must not exceed 256 characters.
+	// processed.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to
@@ -8944,6 +8949,11 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
+	// OptOutConformerModelMigration: If `true`, the request will opt out
+	// for STT conformer model migration. This field will be deprecated once
+	// force migration takes place in June 2024.
+	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
+
 	// PhraseHints: Optional. A list of strings containing words and phrases
 	// that the speech recognizer should recognize with higher likelihood.
 	// See the Cloud Speech documentation
@@ -12738,7 +12748,7 @@ func (s *GoogleCloudDialogflowCxV3beta1TestRunDifference) MarshalJSON() ([]byte,
 // language text to be processed.
 type GoogleCloudDialogflowCxV3beta1TextInput struct {
 	// Text: Required. The UTF-8 encoded natural language text to be
-	// processed. Text length must not exceed 256 characters.
+	// processed.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to

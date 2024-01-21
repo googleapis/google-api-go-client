@@ -2214,10 +2214,11 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 
 // RestoreServiceRequest: Request message for DataprocMetastore.Restore.
 type RestoreServiceRequest struct {
-	// Backup: Required. The relative resource name of the metastore service
+	// Backup: Optional. The relative resource name of the metastore service
 	// backup to restore from, in the following
 	// form:projects/{project_id}/locations/{location_id}/services/{service_i
-	// d}/backups/{backup_id}.
+	// d}/backups/{backup_id}. Mutually exclusive with backup_location, and
+	// exactly one of the two must be set.
 	Backup string `json:"backup,omitempty"`
 
 	// RequestId: Optional. A request ID. Specify a unique request ID to

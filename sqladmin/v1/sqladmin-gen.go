@@ -1340,9 +1340,10 @@ type DatabaseInstance struct {
 
 	// Possible values:
 	//   "SQL_NETWORK_ARCHITECTURE_UNSPECIFIED"
-	//   "NEW_NETWORK_ARCHITECTURE" - Instance is a Tenancy Unit (TU)
-	// instance.
-	//   "OLD_NETWORK_ARCHITECTURE" - Instance is an Umbrella instance.
+	//   "NEW_NETWORK_ARCHITECTURE" - The instance uses the new network
+	// architecture.
+	//   "OLD_NETWORK_ARCHITECTURE" - The instance uses the old network
+	// architecture.
 	SqlNetworkArchitecture string `json:"sqlNetworkArchitecture,omitempty"`
 
 	// State: The current serving state of the Cloud SQL instance.
@@ -1948,6 +1949,9 @@ type ExportContextSqlExportOptions struct {
 	// MysqlExportOptions: Options for exporting from MySQL.
 	MysqlExportOptions *ExportContextSqlExportOptionsMysqlExportOptions `json:"mysqlExportOptions,omitempty"`
 
+	// Parallel: Optional. Whether or not the export should be parallel.
+	Parallel bool `json:"parallel,omitempty"`
+
 	// SchemaOnly: Export only schemas.
 	SchemaOnly bool `json:"schemaOnly,omitempty"`
 
@@ -1955,6 +1959,9 @@ type ExportContextSqlExportOptions struct {
 	// database. If you specify tables, specify one and only one database.
 	// For PostgreSQL instances, you can specify only one table.
 	Tables []string `json:"tables,omitempty"`
+
+	// Threads: Optional. The number of threads to use for parallel export.
+	Threads int64 `json:"threads,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MysqlExportOptions")
 	// to unconditionally include in API requests. By default, fields with
@@ -4365,6 +4372,9 @@ type SqlExternalSyncSettingError struct {
 	// from the source to the destination.
 	//   "UNABLE_TO_VERIFY_DEFINERS" - Unable to verify definers on the
 	// source for MySQL.
+	//   "SUBSCRIPTION_CALCULATION_STATUS" - If a time out occurs while the
+	// subscription counts are calculated, then this value is set to 1.
+	// Otherwise, this value is set to 2.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to

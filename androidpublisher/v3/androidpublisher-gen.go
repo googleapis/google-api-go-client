@@ -6528,9 +6528,8 @@ func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 type RevocationContext struct {
 	// ProratedRefund: Optional. Used when users should be refunded a
 	// prorated amount they paid for their subscription based on the amount
-	// of time remaining in a subscription. Not supported for subscriptions
-	// with multiple items.
-	ProratedRefund *UNDEFINEDPackageNameRevocationContextProratedRefund `json:"proratedRefund,omitempty"`
+	// of time remaining in a subscription.
+	ProratedRefund *RevocationContextProratedRefund `json:"proratedRefund,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProratedRefund") to
 	// unconditionally include in API requests. By default, fields with
@@ -6554,6 +6553,11 @@ func (s *RevocationContext) MarshalJSON() ([]byte, error) {
 	type NoMethod RevocationContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevocationContextProratedRefund: Used to determine if the refund type
+// in the RevocationContext is a prorated refund.
+type RevocationContextProratedRefund struct {
 }
 
 // RevokeSubscriptionPurchaseRequest: Request for the
@@ -8546,12 +8550,6 @@ func (s *TracksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TracksListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UNDEFINEDPackageNameRevocationContextProratedRefund: Used to
-// determine if the refund type in the RevocationContext is a prorated
-// refund.
-type UNDEFINEDPackageNameRevocationContextProratedRefund struct {
 }
 
 // UpdateBasePlanStateRequest: Request message to update the state of a

@@ -7483,6 +7483,14 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	// method.
 	InputDocuments *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig `json:"inputDocuments,omitempty"`
 
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// OutputConfig: The overall output config for batch process.
 	OutputConfig *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig `json:"outputConfig,omitempty"`
 
@@ -7677,8 +7685,8 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
 // Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
-	// DocumentWarehouseConfig: Optional. Derepcated. Warehouse-based
-	// dataset configuration is not supported today.
+	// DocumentWarehouseConfig: Optional. Deprecated. Warehouse-based
+	// dataset configuration is not supported.
 	DocumentWarehouseConfig *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig `json:"documentWarehouseConfig,omitempty"`
 
 	// GcsManagedConfig: Optional. User-managed Cloud Storage dataset
@@ -11859,8 +11867,9 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 	// IndividualPageSelector: Which pages to process (1-indexed).
 	IndividualPageSelector *GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector `json:"individualPageSelector,omitempty"`
 
-	// OcrConfig: Only applicable to `OCR_PROCESSOR`. Returns error if set
-	// on other processor types.
+	// OcrConfig: Only applicable to `OCR_PROCESSOR` and
+	// `FORM_PARSER_PROCESSOR`. Returns error if set on other processor
+	// types.
 	OcrConfig *GoogleCloudDocumentaiV1beta3OcrConfig `json:"ocrConfig,omitempty"`
 
 	// SchemaOverride: Optional. Override the schema of the
@@ -11939,6 +11948,14 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
+
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// ProcessOptions: Inference-time options for the process API
 	ProcessOptions *GoogleCloudDocumentaiV1beta3ProcessOptions `json:"processOptions,omitempty"`
@@ -12934,13 +12951,13 @@ func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentE
 // processor.
 type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions struct {
 	// LearningRateMultiplier: Optional. The multiplier to apply to the
-	// recommended learning rate. Valid values are between [0.1, 10]. If not
-	// provided, recommended learning rate will be used.
+	// recommended learning rate. Valid values are between 0.1 and 10. If
+	// not provided, recommended learning rate will be used.
 	LearningRateMultiplier float64 `json:"learningRateMultiplier,omitempty"`
 
 	// TrainSteps: Optional. The number of steps to run for model tuning.
-	// Valid values are between [1, 400]. If not provided, recommended steps
-	// will be used.
+	// Valid values are between 1 and 400. If not provided, recommended
+	// steps will be used.
 	TrainSteps int64 `json:"trainSteps,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

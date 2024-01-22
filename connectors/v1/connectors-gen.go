@@ -1574,7 +1574,7 @@ type CustomConnectorVersion struct {
 	// ctor}/customConnectorVersions/{custom_connector_version}
 	Name string `json:"name,omitempty"`
 
-	// ServiceAccount: Required. Service account used by runtime plane to
+	// ServiceAccount: Optional. Service account used by runtime plane to
 	// access auth config secrets.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
@@ -2371,6 +2371,10 @@ type EventingConfig struct {
 	// PrivateConnectivityEnabled: Optional. Private Connectivity Enabled.
 	PrivateConnectivityEnabled bool `json:"privateConnectivityEnabled,omitempty"`
 
+	// ProxyDestinationConfig: Optional. Proxy for Eventing
+	// auto-registration.
+	ProxyDestinationConfig *DestinationConfig `json:"proxyDestinationConfig,omitempty"`
+
 	// RegistrationDestinationConfig: Registration endpoint for auto
 	// registration.
 	RegistrationDestinationConfig *DestinationConfig `json:"registrationDestinationConfig,omitempty"`
@@ -2438,6 +2442,9 @@ type EventingConfigTemplate struct {
 	// ListenerAuthConfigTemplates: ListenerAuthConfigTemplates represents
 	// the auth values for the event listener.
 	ListenerAuthConfigTemplates []*AuthConfigTemplate `json:"listenerAuthConfigTemplates,omitempty"`
+
+	// ProxyDestinationConfig: Proxy destination config template.
+	ProxyDestinationConfig *DestinationConfigTemplate `json:"proxyDestinationConfig,omitempty"`
 
 	// RegistrationDestinationConfig: Registration host destination config
 	// template.
@@ -5042,6 +5049,10 @@ type RegionalSettings struct {
 
 	// NetworkConfig: Optional. Regional network config.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
+
+	// Provisioned: Output only. Specifies whether the region is
+	// provisioned.
+	Provisioned bool `json:"provisioned,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

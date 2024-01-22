@@ -3773,6 +3773,7 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	//   "INTEGER" - Field value type is Integer.
 	//   "BOOLEAN" - Field value type is Boolean.
 	//   "GEOLOCATION" - Field value type is Geolocation.
+	//   "DATETIME" - Field value type is Datetime.
 	FieldType string `json:"fieldType,omitempty"`
 
 	// IndexableOption: If indexable_option is INDEXABLE_ENABLED, field

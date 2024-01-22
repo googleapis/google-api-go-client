@@ -9456,7 +9456,10 @@ type ProjectsInstancesTablesDropRowRangeCall struct {
 
 // DropRowRange: Permanently drop/delete a row range from a specified
 // table. The request can specify whether to delete all rows in a table,
-// or only those that match a particular prefix.
+// or only those that match a particular prefix. Note that row key
+// prefixes used here are treated as service data. For more information
+// about how service data is handled, see the Google Cloud Privacy
+// Notice (https://cloud.google.com/terms/cloud-privacy-notice).
 //
 //   - name: The unique name of the table on which to drop a range of
 //     rows. Values are of the form
@@ -9559,7 +9562,7 @@ func (c *ProjectsInstancesTablesDropRowRangeCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently drop/delete a row range from a specified table. The request can specify whether to delete all rows in a table, or only those that match a particular prefix.",
+	//   "description": "Permanently drop/delete a row range from a specified table. The request can specify whether to delete all rows in a table, or only those that match a particular prefix. Note that row key prefixes used here are treated as service data. For more information about how service data is handled, see the [Google Cloud Privacy Notice](https://cloud.google.com/terms/cloud-privacy-notice).",
 	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}:dropRowRange",
 	//   "httpMethod": "POST",
 	//   "id": "bigtableadmin.projects.instances.tables.dropRowRange",

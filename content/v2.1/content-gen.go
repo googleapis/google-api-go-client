@@ -13520,6 +13520,14 @@ type PosStore struct {
 	// Google Business Profile, but POS store location address does not
 	// match with Google Business Profile stores' addresses. Update POS
 	// store address or Google Business Profile store address to match
+	// correctly. - "store-match-unverified": The provided POS store
+	// couldn't be matched to any of the connected Google Business Profile
+	// stores, as the matched Google Business Profile store is unverified.
+	// Go through the Google Business Profile verification process to match
+	// correctly. - "store-match-unavailable": The provided POS store
+	// couldn't be matched to any of the connected Google Business Profile
+	// stores, as the matched Google Business Profile store is in an invalid
+	// state. Fix any issues on your Google Business Profile store to match
 	// correctly.
 	MatchingStatusHint string `json:"matchingStatusHint,omitempty"`
 
@@ -16132,10 +16140,10 @@ type Promotion struct {
 	// promotion.
 	GetThisQuantityDiscounted int64 `json:"getThisQuantityDiscounted,omitempty"`
 
-	// Id: Required. Output only. The REST promotion ID to uniquely identify
-	// the promotion. Content API methods that operate on promotions take
-	// this as their `promotionId` parameter. The REST ID for a promotion is
-	// of the form channel:contentLanguage:targetCountry:promotionId The
+	// Id: Output only. The REST promotion ID to uniquely identify the
+	// promotion. Content API methods that operate on promotions take this
+	// as their `promotionId` parameter. The REST ID for a promotion is of
+	// the form channel:contentLanguage:targetCountry:promotionId The
 	// `channel` field has a value of "online", "in_store", or
 	// "online_in_store".
 	Id string `json:"id,omitempty"`
@@ -45247,7 +45255,7 @@ type ReportsSearchCall struct {
 	header_       http.Header
 }
 
-// Search: Retrieves merchant performance mertrics matching the search
+// Search: Retrieves merchant performance metrics matching the search
 // query and optionally segmented by selected dimensions.
 //
 //   - merchantId: Id of the merchant making the call. Must be a
@@ -45350,7 +45358,7 @@ func (c *ReportsSearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves merchant performance mertrics matching the search query and optionally segmented by selected dimensions.",
+	//   "description": "Retrieves merchant performance metrics matching the search query and optionally segmented by selected dimensions.",
 	//   "flatPath": "{merchantId}/reports/search",
 	//   "httpMethod": "POST",
 	//   "id": "content.reports.search",

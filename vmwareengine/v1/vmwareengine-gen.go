@@ -169,7 +169,8 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
-	rs.Global = NewProjectsLocationsGlobalService(s)
+	rs.DnsBindPermission = NewProjectsLocationsDnsBindPermissionService(s)
+	rs.NetworkPeerings = NewProjectsLocationsNetworkPeeringsService(s)
 	rs.NetworkPolicies = NewProjectsLocationsNetworkPoliciesService(s)
 	rs.NodeTypes = NewProjectsLocationsNodeTypesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -182,7 +183,9 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
-	Global *ProjectsLocationsGlobalService
+	DnsBindPermission *ProjectsLocationsDnsBindPermissionService
+
+	NetworkPeerings *ProjectsLocationsNetworkPeeringsService
 
 	NetworkPolicies *ProjectsLocationsNetworkPoliciesService
 
@@ -197,48 +200,33 @@ type ProjectsLocationsService struct {
 	VmwareEngineNetworks *ProjectsLocationsVmwareEngineNetworksService
 }
 
-func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
-	rs := &ProjectsLocationsGlobalService{s: s}
-	rs.DnsBindPermission = NewProjectsLocationsGlobalDnsBindPermissionService(s)
-	rs.NetworkPeerings = NewProjectsLocationsGlobalNetworkPeeringsService(s)
+func NewProjectsLocationsDnsBindPermissionService(s *Service) *ProjectsLocationsDnsBindPermissionService {
+	rs := &ProjectsLocationsDnsBindPermissionService{s: s}
 	return rs
 }
 
-type ProjectsLocationsGlobalService struct {
-	s *Service
-
-	DnsBindPermission *ProjectsLocationsGlobalDnsBindPermissionService
-
-	NetworkPeerings *ProjectsLocationsGlobalNetworkPeeringsService
-}
-
-func NewProjectsLocationsGlobalDnsBindPermissionService(s *Service) *ProjectsLocationsGlobalDnsBindPermissionService {
-	rs := &ProjectsLocationsGlobalDnsBindPermissionService{s: s}
-	return rs
-}
-
-type ProjectsLocationsGlobalDnsBindPermissionService struct {
+type ProjectsLocationsDnsBindPermissionService struct {
 	s *Service
 }
 
-func NewProjectsLocationsGlobalNetworkPeeringsService(s *Service) *ProjectsLocationsGlobalNetworkPeeringsService {
-	rs := &ProjectsLocationsGlobalNetworkPeeringsService{s: s}
-	rs.PeeringRoutes = NewProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService(s)
+func NewProjectsLocationsNetworkPeeringsService(s *Service) *ProjectsLocationsNetworkPeeringsService {
+	rs := &ProjectsLocationsNetworkPeeringsService{s: s}
+	rs.PeeringRoutes = NewProjectsLocationsNetworkPeeringsPeeringRoutesService(s)
 	return rs
 }
 
-type ProjectsLocationsGlobalNetworkPeeringsService struct {
+type ProjectsLocationsNetworkPeeringsService struct {
 	s *Service
 
-	PeeringRoutes *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService
+	PeeringRoutes *ProjectsLocationsNetworkPeeringsPeeringRoutesService
 }
 
-func NewProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService(s *Service) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService {
-	rs := &ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService{s: s}
+func NewProjectsLocationsNetworkPeeringsPeeringRoutesService(s *Service) *ProjectsLocationsNetworkPeeringsPeeringRoutesService {
+	rs := &ProjectsLocationsNetworkPeeringsPeeringRoutesService{s: s}
 	return rs
 }
 
-type ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService struct {
+type ProjectsLocationsNetworkPeeringsPeeringRoutesService struct {
 	s *Service
 }
 
@@ -724,8 +712,8 @@ type DnsBindPermission struct {
 	// Name: Required. Output only. The name of the resource which stores
 	// the users/service accounts having the permission to bind to the
 	// corresponding intranet VPC of the consumer project. DnsBindPermission
-	// is a global resource. Resource names are schemeless URIs that follow
-	// the conventions in
+	// is a global resource and location can only be global. Resource names
+	// are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/global/dnsBindPermission`
 	Name string `json:"name,omitempty"`
@@ -2446,8 +2434,9 @@ type NetworkPeering struct {
 	// imported to peers and are not controlled by this field.
 	ImportCustomRoutesWithPublicIp bool `json:"importCustomRoutesWithPublicIp,omitempty"`
 
-	// Name: Output only. The resource name of the network peering. Resource
-	// names are scheme-less URIs that follow the conventions in
+	// Name: Output only. The resource name of the network peering.
+	// NetworkPeering is a global resource and location can only be global.
+	// Resource names are scheme-less URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/global/networkPeerings/my-peering`
 	Name string `json:"name,omitempty"`
@@ -4262,6 +4251,161 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 
 }
 
+// method id "vmwareengine.projects.locations.getDnsBindPermission":
+
+type ProjectsLocationsGetDnsBindPermissionCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDnsBindPermission: Gets all the principals having bind permission
+// on the intranet VPC associated with the consumer project granted by
+// the Grant API. DnsBindPermission is a global resource and location
+// can only be global.
+//
+//   - name: The name of the resource which stores the users/service
+//     accounts having the permission to bind to the corresponding
+//     intranet VPC of the consumer project. DnsBindPermission is a global
+//     resource. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
+//     `projects/my-project/locations/global/dnsBindPermission`.
+func (r *ProjectsLocationsService) GetDnsBindPermission(name string) *ProjectsLocationsGetDnsBindPermissionCall {
+	c := &ProjectsLocationsGetDnsBindPermissionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetDnsBindPermissionCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetDnsBindPermissionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetDnsBindPermissionCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetDnsBindPermissionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetDnsBindPermissionCall) Context(ctx context.Context) *ProjectsLocationsGetDnsBindPermissionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetDnsBindPermissionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetDnsBindPermissionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.getDnsBindPermission" call.
+// Exactly one of *DnsBindPermission or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DnsBindPermission.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetDnsBindPermissionCall) Do(opts ...googleapi.CallOption) (*DnsBindPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DnsBindPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets all the principals having bind permission on the intranet VPC associated with the consumer project granted by the Grant API. DnsBindPermission is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsBindPermission",
+	//   "httpMethod": "GET",
+	//   "id": "vmwareengine.projects.locations.getDnsBindPermission",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dnsBindPermission$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "DnsBindPermission"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "vmwareengine.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -4471,163 +4615,9 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-// method id "vmwareengine.projects.locations.global.getDnsBindPermission":
+// method id "vmwareengine.projects.locations.dnsBindPermission.grant":
 
-type ProjectsLocationsGlobalGetDnsBindPermissionCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetDnsBindPermission: Gets all the principals having bind permission
-// on the intranet VPC associated with the consumer project granted by
-// the Grant API.
-//
-//   - name: The name of the resource which stores the users/service
-//     accounts having the permission to bind to the corresponding
-//     intranet VPC of the consumer project. DnsBindPermission is a global
-//     resource. Resource names are schemeless URIs that follow the
-//     conventions in https://cloud.google.com/apis/design/resource_names.
-//     For example:
-//     `projects/my-project/locations/global/dnsBindPermission`.
-func (r *ProjectsLocationsGlobalService) GetDnsBindPermission(name string) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
-	c := &ProjectsLocationsGlobalGetDnsBindPermissionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Context(ctx context.Context) *ProjectsLocationsGlobalGetDnsBindPermissionCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "vmwareengine.projects.locations.global.getDnsBindPermission" call.
-// Exactly one of *DnsBindPermission or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DnsBindPermission.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalGetDnsBindPermissionCall) Do(opts ...googleapi.CallOption) (*DnsBindPermission, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &DnsBindPermission{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets all the principals having bind permission on the intranet VPC associated with the consumer project granted by the Grant API.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/dnsBindPermission",
-	//   "httpMethod": "GET",
-	//   "id": "vmwareengine.projects.locations.global.getDnsBindPermission",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/dnsBindPermission$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "DnsBindPermission"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "vmwareengine.projects.locations.global.dnsBindPermission.grant":
-
-type ProjectsLocationsGlobalDnsBindPermissionGrantCall struct {
+type ProjectsLocationsDnsBindPermissionGrantCall struct {
 	s                             *Service
 	name                          string
 	grantdnsbindpermissionrequest *GrantDnsBindPermissionRequest
@@ -4638,7 +4628,8 @@ type ProjectsLocationsGlobalDnsBindPermissionGrantCall struct {
 
 // Grant: Grants the bind permission to the customer provided
 // principal(user / service account) to bind their DNS zone with the
-// intranet VPC associated with the project.
+// intranet VPC associated with the project. DnsBindPermission is a
+// global resource and location can only be global.
 //
 //   - name: The name of the resource which stores the users/service
 //     accounts having the permission to bind to the corresponding
@@ -4647,8 +4638,8 @@ type ProjectsLocationsGlobalDnsBindPermissionGrantCall struct {
 //     conventions in https://cloud.google.com/apis/design/resource_names.
 //     For example:
 //     `projects/my-project/locations/global/dnsBindPermission`.
-func (r *ProjectsLocationsGlobalDnsBindPermissionService) Grant(name string, grantdnsbindpermissionrequest *GrantDnsBindPermissionRequest) *ProjectsLocationsGlobalDnsBindPermissionGrantCall {
-	c := &ProjectsLocationsGlobalDnsBindPermissionGrantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsDnsBindPermissionService) Grant(name string, grantdnsbindpermissionrequest *GrantDnsBindPermissionRequest) *ProjectsLocationsDnsBindPermissionGrantCall {
+	c := &ProjectsLocationsDnsBindPermissionGrantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.grantdnsbindpermissionrequest = grantdnsbindpermissionrequest
 	return c
@@ -4657,7 +4648,7 @@ func (r *ProjectsLocationsGlobalDnsBindPermissionService) Grant(name string, gra
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDnsBindPermissionGrantCall {
+func (c *ProjectsLocationsDnsBindPermissionGrantCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsBindPermissionGrantCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4665,21 +4656,21 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Fields(s ...googleap
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Context(ctx context.Context) *ProjectsLocationsGlobalDnsBindPermissionGrantCall {
+func (c *ProjectsLocationsDnsBindPermissionGrantCall) Context(ctx context.Context) *ProjectsLocationsDnsBindPermissionGrantCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Header() http.Header {
+func (c *ProjectsLocationsDnsBindPermissionGrantCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsDnsBindPermissionGrantCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -4707,14 +4698,14 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) doRequest(alt string
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.dnsBindPermission.grant" call.
+// Do executes the "vmwareengine.projects.locations.dnsBindPermission.grant" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsLocationsDnsBindPermissionGrantCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4745,10 +4736,10 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Grants the bind permission to the customer provided principal(user / service account) to bind their DNS zone with the intranet VPC associated with the project.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/dnsBindPermission:grant",
+	//   "description": "Grants the bind permission to the customer provided principal(user / service account) to bind their DNS zone with the intranet VPC associated with the project. DnsBindPermission is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsBindPermission:grant",
 	//   "httpMethod": "POST",
-	//   "id": "vmwareengine.projects.locations.global.dnsBindPermission.grant",
+	//   "id": "vmwareengine.projects.locations.dnsBindPermission.grant",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -4756,7 +4747,7 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Do(opts ...googleapi
 	//     "name": {
 	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/dnsBindPermission$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dnsBindPermission$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4775,9 +4766,9 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionGrantCall) Do(opts ...googleapi
 
 }
 
-// method id "vmwareengine.projects.locations.global.dnsBindPermission.revoke":
+// method id "vmwareengine.projects.locations.dnsBindPermission.revoke":
 
-type ProjectsLocationsGlobalDnsBindPermissionRevokeCall struct {
+type ProjectsLocationsDnsBindPermissionRevokeCall struct {
 	s                              *Service
 	name                           string
 	revokednsbindpermissionrequest *RevokeDnsBindPermissionRequest
@@ -4788,7 +4779,8 @@ type ProjectsLocationsGlobalDnsBindPermissionRevokeCall struct {
 
 // Revoke: Revokes the bind permission from the customer provided
 // principal(user / service account) on the intranet VPC associated with
-// the consumer project.
+// the consumer project. DnsBindPermission is a global resource and
+// location can only be global.
 //
 //   - name: The name of the resource which stores the users/service
 //     accounts having the permission to bind to the corresponding
@@ -4797,8 +4789,8 @@ type ProjectsLocationsGlobalDnsBindPermissionRevokeCall struct {
 //     conventions in https://cloud.google.com/apis/design/resource_names.
 //     For example:
 //     `projects/my-project/locations/global/dnsBindPermission`.
-func (r *ProjectsLocationsGlobalDnsBindPermissionService) Revoke(name string, revokednsbindpermissionrequest *RevokeDnsBindPermissionRequest) *ProjectsLocationsGlobalDnsBindPermissionRevokeCall {
-	c := &ProjectsLocationsGlobalDnsBindPermissionRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsDnsBindPermissionService) Revoke(name string, revokednsbindpermissionrequest *RevokeDnsBindPermissionRequest) *ProjectsLocationsDnsBindPermissionRevokeCall {
+	c := &ProjectsLocationsDnsBindPermissionRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.revokednsbindpermissionrequest = revokednsbindpermissionrequest
 	return c
@@ -4807,7 +4799,7 @@ func (r *ProjectsLocationsGlobalDnsBindPermissionService) Revoke(name string, re
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDnsBindPermissionRevokeCall {
+func (c *ProjectsLocationsDnsBindPermissionRevokeCall) Fields(s ...googleapi.Field) *ProjectsLocationsDnsBindPermissionRevokeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4815,21 +4807,21 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Fields(s ...googlea
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Context(ctx context.Context) *ProjectsLocationsGlobalDnsBindPermissionRevokeCall {
+func (c *ProjectsLocationsDnsBindPermissionRevokeCall) Context(ctx context.Context) *ProjectsLocationsDnsBindPermissionRevokeCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Header() http.Header {
+func (c *ProjectsLocationsDnsBindPermissionRevokeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsDnsBindPermissionRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -4857,14 +4849,14 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) doRequest(alt strin
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.dnsBindPermission.revoke" call.
+// Do executes the "vmwareengine.projects.locations.dnsBindPermission.revoke" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsLocationsDnsBindPermissionRevokeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4895,10 +4887,10 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Revokes the bind permission from the customer provided principal(user / service account) on the intranet VPC associated with the consumer project.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/dnsBindPermission:revoke",
+	//   "description": "Revokes the bind permission from the customer provided principal(user / service account) on the intranet VPC associated with the consumer project. DnsBindPermission is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dnsBindPermission:revoke",
 	//   "httpMethod": "POST",
-	//   "id": "vmwareengine.projects.locations.global.dnsBindPermission.revoke",
+	//   "id": "vmwareengine.projects.locations.dnsBindPermission.revoke",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -4906,7 +4898,7 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Do(opts ...googleap
 	//     "name": {
 	//       "description": "Required. The name of the resource which stores the users/service accounts having the permission to bind to the corresponding intranet VPC of the consumer project. DnsBindPermission is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/dnsBindPermission`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/dnsBindPermission$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dnsBindPermission$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4925,9 +4917,9 @@ func (c *ProjectsLocationsGlobalDnsBindPermissionRevokeCall) Do(opts ...googleap
 
 }
 
-// method id "vmwareengine.projects.locations.global.networkPeerings.create":
+// method id "vmwareengine.projects.locations.networkPeerings.create":
 
-type ProjectsLocationsGlobalNetworkPeeringsCreateCall struct {
+type ProjectsLocationsNetworkPeeringsCreateCall struct {
 	s              *Service
 	parent         string
 	networkpeering *NetworkPeering
@@ -4938,6 +4930,7 @@ type ProjectsLocationsGlobalNetworkPeeringsCreateCall struct {
 
 // Create: Creates a new network peering between the peer network and
 // VMware Engine network provided in a `NetworkPeering` resource.
+// NetworkPeering is a global resource and location can only be global.
 //
 //   - parent: The resource name of the location to create the new network
 //     peering in. This value is always `global`, because `NetworkPeering`
@@ -4945,8 +4938,8 @@ type ProjectsLocationsGlobalNetworkPeeringsCreateCall struct {
 //     follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/global`.
-func (r *ProjectsLocationsGlobalNetworkPeeringsService) Create(parent string, networkpeering *NetworkPeering) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
-	c := &ProjectsLocationsGlobalNetworkPeeringsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNetworkPeeringsService) Create(parent string, networkpeering *NetworkPeering) *ProjectsLocationsNetworkPeeringsCreateCall {
+	c := &ProjectsLocationsNetworkPeeringsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.networkpeering = networkpeering
 	return c
@@ -4961,7 +4954,7 @@ func (r *ProjectsLocationsGlobalNetworkPeeringsService) Create(parent string, ne
 // character * Ends with a non-hyphen character * Not formatted as a
 // UUID * Complies with RFC 1034
 // (https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) NetworkPeeringId(networkPeeringId string) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) NetworkPeeringId(networkPeeringId string) *ProjectsLocationsNetworkPeeringsCreateCall {
 	c.urlParams_.Set("networkPeeringId", networkPeeringId)
 	return c
 }
@@ -4979,7 +4972,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) NetworkPeeringId(netw
 // commitments. The request ID must be a valid UUID with the exception
 // that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) RequestId(requestId string) *ProjectsLocationsNetworkPeeringsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
@@ -4987,7 +4980,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) RequestId(requestId s
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPeeringsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4995,21 +4988,21 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Fields(s ...googleapi
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsCreateCall {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) Context(ctx context.Context) *ProjectsLocationsNetworkPeeringsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Header() http.Header {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5037,14 +5030,14 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) doRequest(alt string)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.networkPeerings.create" call.
+// Do executes the "vmwareengine.projects.locations.networkPeerings.create" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsLocationsNetworkPeeringsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5075,10 +5068,10 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new network peering between the peer network and VMware Engine network provided in a `NetworkPeering` resource.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings",
+	//   "description": "Creates a new network peering between the peer network and VMware Engine network provided in a `NetworkPeering` resource. NetworkPeering is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPeerings",
 	//   "httpMethod": "POST",
-	//   "id": "vmwareengine.projects.locations.global.networkPeerings.create",
+	//   "id": "vmwareengine.projects.locations.networkPeerings.create",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -5091,7 +5084,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Do(opts ...googleapi.
 	//     "parent": {
 	//       "description": "Required. The resource name of the location to create the new network peering in. This value is always `global`, because `NetworkPeering` is a global resource. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -5115,9 +5108,9 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsCreateCall) Do(opts ...googleapi.
 
 }
 
-// method id "vmwareengine.projects.locations.global.networkPeerings.delete":
+// method id "vmwareengine.projects.locations.networkPeerings.delete":
 
-type ProjectsLocationsGlobalNetworkPeeringsDeleteCall struct {
+type ProjectsLocationsNetworkPeeringsDeleteCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -5127,14 +5120,15 @@ type ProjectsLocationsGlobalNetworkPeeringsDeleteCall struct {
 
 // Delete: Deletes a `NetworkPeering` resource. When a network peering
 // is deleted for a VMware Engine network, the peer network becomes
-// inaccessible to that VMware Engine network.
+// inaccessible to that VMware Engine network. NetworkPeering is a
+// global resource and location can only be global.
 //
 //   - name: The resource name of the network peering to be deleted.
 //     Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/global/networkPeerings/my-peering`.
-func (r *ProjectsLocationsGlobalNetworkPeeringsService) Delete(name string) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
-	c := &ProjectsLocationsGlobalNetworkPeeringsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNetworkPeeringsService) Delete(name string) *ProjectsLocationsNetworkPeeringsDeleteCall {
+	c := &ProjectsLocationsNetworkPeeringsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -5152,7 +5146,7 @@ func (r *ProjectsLocationsGlobalNetworkPeeringsService) Delete(name string) *Pro
 // commitments. The request ID must be a valid UUID with the exception
 // that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+func (c *ProjectsLocationsNetworkPeeringsDeleteCall) RequestId(requestId string) *ProjectsLocationsNetworkPeeringsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
@@ -5160,7 +5154,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) RequestId(requestId s
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+func (c *ProjectsLocationsNetworkPeeringsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPeeringsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5168,21 +5162,21 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Fields(s ...googleapi
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsDeleteCall {
+func (c *ProjectsLocationsNetworkPeeringsDeleteCall) Context(ctx context.Context) *ProjectsLocationsNetworkPeeringsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Header() http.Header {
+func (c *ProjectsLocationsNetworkPeeringsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNetworkPeeringsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5205,14 +5199,14 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) doRequest(alt string)
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.networkPeerings.delete" call.
+// Do executes the "vmwareengine.projects.locations.networkPeerings.delete" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsLocationsNetworkPeeringsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5243,10 +5237,10 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a `NetworkPeering` resource. When a network peering is deleted for a VMware Engine network, the peer network becomes inaccessible to that VMware Engine network.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}",
+	//   "description": "Deletes a `NetworkPeering` resource. When a network peering is deleted for a VMware Engine network, the peer network becomes inaccessible to that VMware Engine network. NetworkPeering is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPeerings/{networkPeeringsId}",
 	//   "httpMethod": "DELETE",
-	//   "id": "vmwareengine.projects.locations.global.networkPeerings.delete",
+	//   "id": "vmwareengine.projects.locations.networkPeerings.delete",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -5254,7 +5248,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Do(opts ...googleapi.
 	//     "name": {
 	//       "description": "Required. The resource name of the network peering to be deleted. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPeerings/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -5275,9 +5269,9 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsDeleteCall) Do(opts ...googleapi.
 
 }
 
-// method id "vmwareengine.projects.locations.global.networkPeerings.get":
+// method id "vmwareengine.projects.locations.networkPeerings.get":
 
-type ProjectsLocationsGlobalNetworkPeeringsGetCall struct {
+type ProjectsLocationsNetworkPeeringsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -5289,14 +5283,15 @@ type ProjectsLocationsGlobalNetworkPeeringsGetCall struct {
 // Get: Retrieves a `NetworkPeering` resource by its resource name. The
 // resource contains details of the network peering, such as peered
 // networks, import and export custom route configurations, and peering
-// state.
+// state. NetworkPeering is a global resource and location can only be
+// global.
 //
 //   - name: The resource name of the network peering to retrieve.
 //     Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/global/networkPeerings/my-peering`.
-func (r *ProjectsLocationsGlobalNetworkPeeringsService) Get(name string) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
-	c := &ProjectsLocationsGlobalNetworkPeeringsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNetworkPeeringsService) Get(name string) *ProjectsLocationsNetworkPeeringsGetCall {
+	c := &ProjectsLocationsNetworkPeeringsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -5304,7 +5299,7 @@ func (r *ProjectsLocationsGlobalNetworkPeeringsService) Get(name string) *Projec
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+func (c *ProjectsLocationsNetworkPeeringsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPeeringsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5314,7 +5309,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Fields(s ...googleapi.Fi
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+func (c *ProjectsLocationsNetworkPeeringsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkPeeringsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -5322,21 +5317,21 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) IfNoneMatch(entityTag st
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsGetCall {
+func (c *ProjectsLocationsNetworkPeeringsGetCall) Context(ctx context.Context) *ProjectsLocationsNetworkPeeringsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Header() http.Header {
+func (c *ProjectsLocationsNetworkPeeringsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNetworkPeeringsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5362,14 +5357,14 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) doRequest(alt string) (*
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.networkPeerings.get" call.
+// Do executes the "vmwareengine.projects.locations.networkPeerings.get" call.
 // Exactly one of *NetworkPeering or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *NetworkPeering.ServerResponse.Header or (if a response was returned
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Do(opts ...googleapi.CallOption) (*NetworkPeering, error) {
+func (c *ProjectsLocationsNetworkPeeringsGetCall) Do(opts ...googleapi.CallOption) (*NetworkPeering, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5400,10 +5395,10 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a `NetworkPeering` resource by its resource name. The resource contains details of the network peering, such as peered networks, import and export custom route configurations, and peering state.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}",
+	//   "description": "Retrieves a `NetworkPeering` resource by its resource name. The resource contains details of the network peering, such as peered networks, import and export custom route configurations, and peering state. NetworkPeering is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPeerings/{networkPeeringsId}",
 	//   "httpMethod": "GET",
-	//   "id": "vmwareengine.projects.locations.global.networkPeerings.get",
+	//   "id": "vmwareengine.projects.locations.networkPeerings.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -5411,7 +5406,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Do(opts ...googleapi.Cal
 	//     "name": {
 	//       "description": "Required. The resource name of the network peering to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPeerings/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5427,9 +5422,9 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsGetCall) Do(opts ...googleapi.Cal
 
 }
 
-// method id "vmwareengine.projects.locations.global.networkPeerings.list":
+// method id "vmwareengine.projects.locations.networkPeerings.list":
 
-type ProjectsLocationsGlobalNetworkPeeringsListCall struct {
+type ProjectsLocationsNetworkPeeringsListCall struct {
 	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
@@ -5439,14 +5434,15 @@ type ProjectsLocationsGlobalNetworkPeeringsListCall struct {
 }
 
 // List: Lists `NetworkPeering` resources in a given project.
+// NetworkPeering is a global resource and location can only be global.
 //
 //   - parent: The resource name of the location (global) to query for
 //     network peerings. Resource names are schemeless URIs that follow
 //     the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/global`.
-func (r *ProjectsLocationsGlobalNetworkPeeringsService) List(parent string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
-	c := &ProjectsLocationsGlobalNetworkPeeringsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNetworkPeeringsService) List(parent string) *ProjectsLocationsNetworkPeeringsListCall {
+	c := &ProjectsLocationsNetworkPeeringsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
@@ -5465,7 +5461,7 @@ func (r *ProjectsLocationsGlobalNetworkPeeringsService) List(parent string) *Pro
 // include `AND` and `OR` expressions explicitly. For example: ``` (name
 // = "example-peering-1") AND (createTime > "2021-04-12T08:15:10.40Z")
 // OR (name = "example-peering-2") ```
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Filter(filter string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) Filter(filter string) *ProjectsLocationsNetworkPeeringsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
@@ -5475,7 +5471,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Filter(filter string) *
 // in ascending order. You can also sort results in descending order
 // based on the `name` value using `orderBy="name desc". Currently,
 // only ordering by `name` is supported.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) OrderBy(orderBy string) *ProjectsLocationsNetworkPeeringsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
@@ -5483,7 +5479,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) OrderBy(orderBy string)
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of network peerings to return in one page. The maximum value is
 // coerced to 1000. The default value of this field is 500.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkPeeringsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
@@ -5493,7 +5489,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) PageSize(pageSize int64
 // retrieve the subsequent page. When paginating, all other parameters
 // provided to `ListNetworkPeerings` must match the call that provided
 // the page token.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) PageToken(pageToken string) *ProjectsLocationsNetworkPeeringsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -5501,7 +5497,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) PageToken(pageToken str
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPeeringsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5511,7 +5507,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Fields(s ...googleapi.F
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkPeeringsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -5519,21 +5515,21 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) IfNoneMatch(entityTag s
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsListCall {
+func (c *ProjectsLocationsNetworkPeeringsListCall) Context(ctx context.Context) *ProjectsLocationsNetworkPeeringsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Header() http.Header {
+func (c *ProjectsLocationsNetworkPeeringsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNetworkPeeringsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5559,14 +5555,14 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) doRequest(alt string) (
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.networkPeerings.list" call.
+// Do executes the "vmwareengine.projects.locations.networkPeerings.list" call.
 // Exactly one of *ListNetworkPeeringsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListNetworkPeeringsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Do(opts ...googleapi.CallOption) (*ListNetworkPeeringsResponse, error) {
+func (c *ProjectsLocationsNetworkPeeringsListCall) Do(opts ...googleapi.CallOption) (*ListNetworkPeeringsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5597,10 +5593,10 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists `NetworkPeering` resources in a given project.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings",
+	//   "description": "Lists `NetworkPeering` resources in a given project. NetworkPeering is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPeerings",
 	//   "httpMethod": "GET",
-	//   "id": "vmwareengine.projects.locations.global.networkPeerings.list",
+	//   "id": "vmwareengine.projects.locations.networkPeerings.list",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -5629,7 +5625,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Do(opts ...googleapi.Ca
 	//     "parent": {
 	//       "description": "Required. The resource name of the location (global) to query for network peerings. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5648,7 +5644,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Do(opts ...googleapi.Ca
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Pages(ctx context.Context, f func(*ListNetworkPeeringsResponse) error) error {
+func (c *ProjectsLocationsNetworkPeeringsListCall) Pages(ctx context.Context, f func(*ListNetworkPeeringsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -5666,9 +5662,9 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsListCall) Pages(ctx context.Conte
 	}
 }
 
-// method id "vmwareengine.projects.locations.global.networkPeerings.patch":
+// method id "vmwareengine.projects.locations.networkPeerings.patch":
 
-type ProjectsLocationsGlobalNetworkPeeringsPatchCall struct {
+type ProjectsLocationsNetworkPeeringsPatchCall struct {
 	s              *Service
 	name           string
 	networkpeering *NetworkPeering
@@ -5679,14 +5675,17 @@ type ProjectsLocationsGlobalNetworkPeeringsPatchCall struct {
 
 // Patch: Modifies a `NetworkPeering` resource. Only the `description`
 // field can be updated. Only fields specified in `updateMask` are
-// applied.
+// applied. NetworkPeering is a global resource and location can only be
+// global.
 //
 //   - name: Output only. The resource name of the network peering.
-//     Resource names are scheme-less URIs that follow the conventions in
-//     https://cloud.google.com/apis/design/resource_names. For example:
+//     NetworkPeering is a global resource and location can only be
+//     global. Resource names are scheme-less URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names.
+//     For example:
 //     `projects/my-project/locations/global/networkPeerings/my-peering`.
-func (r *ProjectsLocationsGlobalNetworkPeeringsService) Patch(name string, networkpeering *NetworkPeering) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
-	c := &ProjectsLocationsGlobalNetworkPeeringsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNetworkPeeringsService) Patch(name string, networkpeering *NetworkPeering) *ProjectsLocationsNetworkPeeringsPatchCall {
+	c := &ProjectsLocationsNetworkPeeringsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.networkpeering = networkpeering
 	return c
@@ -5705,7 +5704,7 @@ func (r *ProjectsLocationsGlobalNetworkPeeringsService) Patch(name string, netwo
 // commitments. The request ID must be a valid UUID with the exception
 // that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) RequestId(requestId string) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) RequestId(requestId string) *ProjectsLocationsNetworkPeeringsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
@@ -5716,7 +5715,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) RequestId(requestId st
 // `update_mask` are relative to the resource, not the full request. A
 // field will be overwritten if it is in the mask. If the user does not
 // provide a mask then all fields will be overwritten.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsNetworkPeeringsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
@@ -5724,7 +5723,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) UpdateMask(updateMask 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPeeringsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5732,21 +5731,21 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Fields(s ...googleapi.
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsPatchCall {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) Context(ctx context.Context) *ProjectsLocationsNetworkPeeringsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Header() http.Header {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5774,14 +5773,14 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) doRequest(alt string) 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.networkPeerings.patch" call.
+// Do executes the "vmwareengine.projects.locations.networkPeerings.patch" call.
 // Exactly one of *Operation or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
 // *Operation.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+func (c *ProjectsLocationsNetworkPeeringsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5812,18 +5811,18 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies a `NetworkPeering` resource. Only the `description` field can be updated. Only fields specified in `updateMask` are applied.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}",
+	//   "description": "Modifies a `NetworkPeering` resource. Only the `description` field can be updated. Only fields specified in `updateMask` are applied. NetworkPeering is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPeerings/{networkPeeringsId}",
 	//   "httpMethod": "PATCH",
-	//   "id": "vmwareengine.projects.locations.global.networkPeerings.patch",
+	//   "id": "vmwareengine.projects.locations.networkPeerings.patch",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the network peering. Resource names are scheme-less URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
+	//       "description": "Output only. The resource name of the network peering. NetworkPeering is a global resource and location can only be global. Resource names are scheme-less URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPeerings/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -5853,9 +5852,9 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPatchCall) Do(opts ...googleapi.C
 
 }
 
-// method id "vmwareengine.projects.locations.global.networkPeerings.peeringRoutes.list":
+// method id "vmwareengine.projects.locations.networkPeerings.peeringRoutes.list":
 
-type ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall struct {
+type ProjectsLocationsNetworkPeeringsPeeringRoutesListCall struct {
 	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
@@ -5865,15 +5864,16 @@ type ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall struct {
 }
 
 // List: Lists the network peering routes exchanged over a peering
-// connection.
+// connection. NetworkPeering is a global resource and location can only
+// be global.
 //
 //   - parent: The resource name of the network peering to retrieve
 //     peering routes from. Resource names are schemeless URIs that follow
 //     the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/global/networkPeerings/my-peering`.
-func (r *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService) List(parent string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
-	c := &ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsNetworkPeeringsPeeringRoutesService) List(parent string) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
+	c := &ProjectsLocationsNetworkPeeringsPeeringRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
@@ -5884,7 +5884,7 @@ func (r *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesService) List(parent
 // the peer network, provide "direction=INCOMING". To return routes
 // exported from the VMware Engine network, provide
 // "direction=OUTGOING". Other filter expressions return an error.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Filter(filter string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) Filter(filter string) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
@@ -5893,7 +5893,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Filter(fil
 // of peering routes to return in one page. The service may return fewer
 // than this value. The maximum value is coerced to 1000. The default
 // value of this field is 500.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
@@ -5903,7 +5903,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) PageSize(p
 // retrieve the subsequent page. When paginating, all other parameters
 // provided to `ListPeeringRoutes` must match the call that provided the
 // page token.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) PageToken(pageToken string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) PageToken(pageToken string) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -5911,7 +5911,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) PageToken(
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5921,7 +5921,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Fields(s .
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -5929,21 +5929,21 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) IfNoneMatc
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Context(ctx context.Context) *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) Context(ctx context.Context) *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Header() http.Header {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5969,14 +5969,14 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) doRequest(
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "vmwareengine.projects.locations.global.networkPeerings.peeringRoutes.list" call.
+// Do executes the "vmwareengine.projects.locations.networkPeerings.peeringRoutes.list" call.
 // Exactly one of *ListPeeringRoutesResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListPeeringRoutesResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Do(opts ...googleapi.CallOption) (*ListPeeringRoutesResponse, error) {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) Do(opts ...googleapi.CallOption) (*ListPeeringRoutesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6007,10 +6007,10 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the network peering routes exchanged over a peering connection.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/networkPeerings/{networkPeeringsId}/peeringRoutes",
+	//   "description": "Lists the network peering routes exchanged over a peering connection. NetworkPeering is a global resource and location can only be global.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/networkPeerings/{networkPeeringsId}/peeringRoutes",
 	//   "httpMethod": "GET",
-	//   "id": "vmwareengine.projects.locations.global.networkPeerings.peeringRoutes.list",
+	//   "id": "vmwareengine.projects.locations.networkPeerings.peeringRoutes.list",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -6034,7 +6034,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Do(opts ..
 	//     "parent": {
 	//       "description": "Required. The resource name of the network peering to retrieve peering routes from. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/global/networkPeerings/my-peering`",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/networkPeerings/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/networkPeerings/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -6053,7 +6053,7 @@ func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Do(opts ..
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsGlobalNetworkPeeringsPeeringRoutesListCall) Pages(ctx context.Context, f func(*ListPeeringRoutesResponse) error) error {
+func (c *ProjectsLocationsNetworkPeeringsPeeringRoutesListCall) Pages(ctx context.Context, f func(*ListPeeringRoutesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

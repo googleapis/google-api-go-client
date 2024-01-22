@@ -947,7 +947,8 @@ type Advertiser struct {
 	// by the system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// BillingConfig: Required. Billing related settings of the advertiser.
+	// BillingConfig: Optional. Required. Billing related settings of the
+	// advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 
 	// CreativeConfig: Required. Creative related settings of the
@@ -1082,8 +1083,8 @@ func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: The ID of a billing profile assigned to the
-	// advertiser.
+	// BillingProfileId: Optional. The ID of a billing profile assigned to
+	// the advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
@@ -4853,7 +4854,8 @@ type Consent struct {
 	// AdPersonalization: Represents consent for ad personalization.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdPersonalization string `json:"adPersonalization,omitempty"`
@@ -4861,7 +4863,8 @@ type Consent struct {
 	// AdUserData: Represents consent for ad user data.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdUserData string `json:"adUserData,omitempty"`
@@ -4952,7 +4955,9 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type ContactInfoList struct {
 	// Consent: Input only. The consent setting for the users in
-	// contact_infos.
+	// contact_infos. Leaving this field unset indicates that consent is not
+	// specified. If ad_user_data or ad_personalization fields are set to
+	// `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// ContactInfos: A list of ContactInfo objects defining Customer Match
@@ -9102,11 +9107,11 @@ type FrequencyCap struct {
 	// unlimited is `false` and max_views is not set.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
-	// MaxViews: The maximum number of times a user may click-through or
-	// fully view an ad during this period until it is no longer served to
-	// them. Must be greater than 0. Only applicable to YouTube and Partners
-	// resources. Required when unlimited is `false` and max_impressions is
-	// not set.
+	// MaxViews: Optional. The maximum number of times a user may
+	// click-through or fully view an ad during this period until it is no
+	// longer served to them. Must be greater than 0. Only applicable to
+	// YouTube and Partners resources. Required when unlimited is `false`
+	// and max_impressions is not set.
 	MaxViews int64 `json:"maxViews,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -13653,7 +13658,9 @@ func (s *MobileApp) MarshalJSON() ([]byte, error) {
 // defining Customer Match audience members.
 type MobileDeviceIdList struct {
 	// Consent: Input only. The consent setting for the users in
-	// mobile_device_ids.
+	// mobile_device_ids. Leaving this field unset indicates that consent is
+	// not specified. If ad_user_data or ad_personalization fields are set
+	// to `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// MobileDeviceIds: A list of mobile device IDs defining Customer Match
@@ -18231,6 +18238,10 @@ func (s *YoutubeAndPartnersBiddingStrategy) MarshalJSON() ([]byte, error) {
 // YouTube related inventories the YouTube and Partners line item will
 // target.
 type YoutubeAndPartnersInventorySourceConfig struct {
+	// IncludeGoogleTv: Optional. Whether to target inventory in video apps
+	// available with Google TV.
+	IncludeGoogleTv bool `json:"includeGoogleTv,omitempty"`
+
 	// IncludeYoutubeSearch: Whether to target inventory on the YouTube
 	// search results page.
 	IncludeYoutubeSearch bool `json:"includeYoutubeSearch,omitempty"`
@@ -18244,16 +18255,15 @@ type YoutubeAndPartnersInventorySourceConfig struct {
 	// videos on YouTube and YouTube videos embedded on other sites.
 	IncludeYoutubeVideos bool `json:"includeYoutubeVideos,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "IncludeYoutubeSearch") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IncludeGoogleTv") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IncludeYoutubeSearch") to
+	// NullFields is a list of field names (e.g. "IncludeGoogleTv") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -18270,7 +18280,7 @@ func (s *YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) 
 }
 
 // YoutubeAndPartnersSettings: Settings for YouTube and Partners line
-// items. Next ID: 15
+// items.
 type YoutubeAndPartnersSettings struct {
 	// BiddingStrategy: Required. The bidding strategy of the YouTube and
 	// Partners line item.
@@ -18320,26 +18330,29 @@ type YoutubeAndPartnersSettings struct {
 	// Partners inventories the line item will target.
 	InventorySourceSettings *YoutubeAndPartnersInventorySourceConfig `json:"inventorySourceSettings,omitempty"`
 
-	// LeadFormId: The ID of the form to generate leads.
+	// LeadFormId: Optional. The ID of the form to generate leads.
 	LeadFormId int64 `json:"leadFormId,omitempty,string"`
 
-	// LinkedMerchantId: The ID of the merchant which is linked to the line
-	// item for product feed.
+	// LinkedMerchantId: Optional. The ID of the merchant which is linked to
+	// the line item for product feed.
 	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
 
-	// RelatedVideoIds: The IDs of the videos appear below the primary video
-	// ad when the ad is playing in the YouTube app on mobile devices.
+	// RelatedVideoIds: Optional. The IDs of the videos appear below the
+	// primary video ad when the ad is playing in the YouTube app on mobile
+	// devices.
 	RelatedVideoIds []string `json:"relatedVideoIds,omitempty"`
 
-	// TargetFrequency: The average number of times you want ads from this
-	// line item to show to the same person over a certain period of time.
+	// TargetFrequency: Optional. The average number of times you want ads
+	// from this line item to show to the same person over a certain period
+	// of time.
 	TargetFrequency *TargetFrequency `json:"targetFrequency,omitempty"`
 
 	// ThirdPartyMeasurementSettings: Optional. The third-party measurement
 	// settings of the line item.
 	ThirdPartyMeasurementSettings *YoutubeAndPartnersThirdPartyMeasurementSettings `json:"thirdPartyMeasurementSettings,omitempty"`
 
-	// VideoAdSequenceSettings: The settings related to VideoAdSequence.
+	// VideoAdSequenceSettings: Optional. The settings related to
+	// VideoAdSequence.
 	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 
 	// ViewFrequencyCap: The view frequency cap settings of the line item.

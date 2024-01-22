@@ -2125,6 +2125,14 @@ type GoogleCloudDocumentaiV1BatchProcessRequest struct {
 	// method.
 	InputDocuments *GoogleCloudDocumentaiV1BatchDocumentsInputConfig `json:"inputDocuments,omitempty"`
 
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// ProcessOptions: Inference-time options for the process API
 	ProcessOptions *GoogleCloudDocumentaiV1ProcessOptions `json:"processOptions,omitempty"`
 
@@ -5512,8 +5520,9 @@ type GoogleCloudDocumentaiV1ProcessOptions struct {
 	// IndividualPageSelector: Which pages to process (1-indexed).
 	IndividualPageSelector *GoogleCloudDocumentaiV1ProcessOptionsIndividualPageSelector `json:"individualPageSelector,omitempty"`
 
-	// OcrConfig: Only applicable to `OCR_PROCESSOR`. Returns error if set
-	// on other processor types.
+	// OcrConfig: Only applicable to `OCR_PROCESSOR` and
+	// `FORM_PARSER_PROCESSOR`. Returns error if set on other processor
+	// types.
 	OcrConfig *GoogleCloudDocumentaiV1OcrConfig `json:"ocrConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FromEnd") to
@@ -5582,6 +5591,14 @@ type GoogleCloudDocumentaiV1ProcessRequest struct {
 
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1Document `json:"inlineDocument,omitempty"`
+
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// ProcessOptions: Inference-time options for the process API
 	ProcessOptions *GoogleCloudDocumentaiV1ProcessOptions `json:"processOptions,omitempty"`
@@ -11281,8 +11298,8 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
 // Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
-	// DocumentWarehouseConfig: Optional. Derepcated. Warehouse-based
-	// dataset configuration is not supported today.
+	// DocumentWarehouseConfig: Optional. Deprecated. Warehouse-based
+	// dataset configuration is not supported.
 	DocumentWarehouseConfig *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig `json:"documentWarehouseConfig,omitempty"`
 
 	// GcsManagedConfig: Optional. User-managed Cloud Storage dataset

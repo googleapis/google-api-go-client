@@ -2482,7 +2482,7 @@ type DeviceRadioState struct {
 	//   "ENTERPRISE_NETWORK_SECURITY" - An enterprise EAP network is the
 	// minimum required security level. The device will not be able to
 	// connect to Wi-Fi network below this security level. This is stricter
-	// than PERSONAL_NETWORK_SECURITY A nonComplianceDetail with API_LEVEL
+	// than PERSONAL_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL
 	// is reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
 

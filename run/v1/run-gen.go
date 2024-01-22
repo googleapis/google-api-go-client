@@ -2951,7 +2951,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
 	// `run.googleapis.com/client-name`: All resources. *
 	// `run.googleapis.com/cloudsql-instances`: Revision, Execution. *
-	// `run.googleapis.com/container-dependencies`: Revision. *
+	// `run.googleapis.com/container-dependencies`: Revision . *
 	// `run.googleapis.com/cpu-throttling`: Revision. *
 	// `run.googleapis.com/custom-audiences`: Service. *
 	// `run.googleapis.com/description`: Service. *
@@ -3456,10 +3456,11 @@ type RevisionSpec struct {
 	// Revision. If not specified, defaults to 80.
 	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
 
-	// Containers: Containers holds the single container that defines the
-	// unit of execution for this Revision. In the context of a Revision, we
-	// disallow a number of fields on this Container, including: name and
-	// lifecycle. In Cloud Run, only a single container may be provided.
+	// Containers: Required. Containers holds the single container that
+	// defines the unit of execution for this Revision. In the context of a
+	// Revision, we disallow a number of fields on this Container,
+	// including: name and lifecycle. In Cloud Run, only a single container
+	// may be provided.
 	Containers []*Container `json:"containers,omitempty"`
 
 	// EnableServiceLinks: Not supported by Cloud Run.

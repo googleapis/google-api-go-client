@@ -894,6 +894,23 @@ type Document struct {
 	// the `read_time` of a query.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Fields: The document's fields. The map keys represent field names.
+	// Field names matching the regular expression `__.*__` are reserved.
+	// Reserved field names are forbidden except in certain documented
+	// contexts. The field names, represented as UTF-8, must not exceed
+	// 1,500 bytes and cannot be empty. Field paths may be used in other
+	// contexts to refer to structured fields defined here. For `map_value`,
+	// the field path is represented by a dot-delimited (`.`) string of
+	// segments. Each segment is either a simple field name (defined below)
+	// or a quoted field name. For example, the structured field "foo" : {
+	// map_value: { "x&y" : { string_value: "hello" }}}` would be
+	// represented by the field path `` foo.`x&y` ``. A simple field name
+	// contains only characters `a` to `z`, `A` to `Z`, `0` to `9`, or `_`,
+	// and must not start with `0` to `9`. For example, `foo_bar_17`. A
+	// quoted field name starts and ends with `` ` `` and may contain any
+	// character. Some characters, including `` ` ``, must be escaped using
+	// a `\`. For example, `` `x&y` `` represents `x&y` and `` `bak\`tik` ``
+	// represents `` bak`tik ``.
 	Fields map[string]Value `json:"fields,omitempty"`
 
 	// Name: The resource name of the document, for example
@@ -2366,7 +2383,7 @@ type Order struct {
 	//   "DESCENDING" - Descending.
 	Direction string `json:"direction,omitempty"`
 
-	// Field: Order based on the value referenced by this field.
+	// Field: The field to order by.
 	Field *FieldReference `json:"field,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Direction") to
@@ -2566,6 +2583,37 @@ func (s *Projection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryPlan: Plan for the query.
+type QueryPlan struct {
+	// PlanInfo: Planning phase information for the query. It will include:
+	// { "indexes_used": [ {"query_scope": "Collection", "properties": "(foo
+	// ASC, __name__ ASC)"}, {"query_scope": "Collection", "properties":
+	// "(bar ASC, __name__ ASC)"} ] }
+	PlanInfo googleapi.RawMessage `json:"planInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PlanInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlanInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryPlan) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryPlan
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryTarget: A target specified by a query.
 type QueryTarget struct {
 	// Parent: The parent resource name. In the format:
@@ -2666,6 +2714,42 @@ func (s *ReadWrite) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResultSetStats: Planning and execution statistics for the query.
+type ResultSetStats struct {
+	// QueryPlan: Plan for the query.
+	QueryPlan *QueryPlan `json:"queryPlan,omitempty"`
+
+	// QueryStats: Aggregated statistics from the execution of the query.
+	// This will only be present when the request specifies `PROFILE` mode.
+	// For example, a query will return the statistics including: {
+	// "results_returned": "20", "documents_scanned": "20",
+	// "indexes_entries_scanned": "10050", "total_execution_time": "100.7
+	// msecs" }
+	QueryStats googleapi.RawMessage `json:"queryStats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryPlan") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryPlan") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultSetStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ResultSetStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RollbackRequest: The request for Firestore.Rollback.
 type RollbackRequest struct {
 	// Transaction: Required. The transaction to roll back.
@@ -2697,6 +2781,19 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 // RunAggregationQueryRequest: The request for
 // Firestore.RunAggregationQuery.
 type RunAggregationQueryRequest struct {
+	// Mode: Optional. The mode in which the query request is processed.
+	// This field is optional, and when not provided, it defaults to
+	// `NORMAL` mode where no additional statistics will be returned with
+	// the query results.
+	//
+	// Possible values:
+	//   "NORMAL" - The default mode. Only the query results are returned.
+	//   "PLAN" - This mode returns only the query plan, without any results
+	// or execution statistics information.
+	//   "PROFILE" - This mode returns both the query plan and the execution
+	// statistics along with the results.
+	Mode string `json:"mode,omitempty"`
+
 	// NewTransaction: Starts a new transaction as part of the query,
 	// defaulting to read-only. The new transaction ID will be returned as
 	// the first response in the stream.
@@ -2716,7 +2813,7 @@ type RunAggregationQueryRequest struct {
 	// the query in.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "Mode") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2724,13 +2821,12 @@ type RunAggregationQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewTransaction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2754,6 +2850,12 @@ type RunAggregationQueryResponse struct {
 	// Result: A single aggregation result. Not present when reporting
 	// partial progress.
 	Result *AggregationResult `json:"result,omitempty"`
+
+	// Stats: Query plan and execution statistics. Note that the returned
+	// stats are subject to change as Firestore evolves. This is only
+	// present when the request specifies a mode other than `NORMAL` and is
+	// sent only once with the last response in the stream.
+	Stats *ResultSetStats `json:"stats,omitempty"`
 
 	// Transaction: The transaction that was started as part of this
 	// request. Only present on the first response when the request
@@ -2789,6 +2891,19 @@ func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
 
 // RunQueryRequest: The request for Firestore.RunQuery.
 type RunQueryRequest struct {
+	// Mode: Optional. The mode in which the query request is processed.
+	// This field is optional, and when not provided, it defaults to
+	// `NORMAL` mode where no additional statistics will be returned with
+	// the query results.
+	//
+	// Possible values:
+	//   "NORMAL" - The default mode. Only the query results are returned.
+	//   "PLAN" - This mode returns only the query plan, without any results
+	// or execution statistics information.
+	//   "PROFILE" - This mode returns both the query plan and the execution
+	// statistics along with the results.
+	Mode string `json:"mode,omitempty"`
+
 	// NewTransaction: Starts a new transaction and reads the documents.
 	// Defaults to a read-only transaction. The new transaction ID will be
 	// returned as the first response in the stream.
@@ -2807,7 +2922,7 @@ type RunQueryRequest struct {
 	// value here is the opaque transaction ID to execute the query in.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "Mode") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2815,13 +2930,12 @@ type RunQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewTransaction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Mode") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2851,6 +2965,12 @@ type RunQueryResponse struct {
 	// SkippedResults: The number of results that have been skipped due to
 	// an offset between the last response and the current response.
 	SkippedResults int64 `json:"skippedResults,omitempty"`
+
+	// Stats: Query plan and execution statistics. Note that the returned
+	// stats are subject to change as Firestore evolves. This is only
+	// present when the request specifies a mode other than `NORMAL` and is
+	// sent only once with the last response in the stream.
+	Stats *ResultSetStats `json:"stats,omitempty"`
 
 	// Transaction: The transaction that was started as part of this
 	// request. Can only be set in the first response, and only if
@@ -2963,7 +3083,9 @@ func (s *StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StructuredQuery: A Firestore query.
+// StructuredQuery: A Firestore query. The query stages are executed in
+// the following order: 1. from 2. where 3. select 4. order_by +
+// start_at + end_at 5. offset 6. limit
 type StructuredQuery struct {
 	// EndAt: A potential prefix of a position in the result set to end the
 	// query at. This is similar to `START_AT` but with it controlling the

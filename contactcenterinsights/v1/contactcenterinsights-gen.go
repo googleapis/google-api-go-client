@@ -2648,20 +2648,18 @@ func (s *GoogleCloudContactcenterinsightsV1IngestConversationsRequest) MarshalJS
 // GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversati
 // onConfig: Configuration that applies to all conversations.
 type GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig struct {
-	// AgentChannel: Optional. For audio conversations, this field indicates
-	// which of the channels, 1 or 2, contains the agent. Note that this
-	// must be set for audio conversations to be properly displayed and
-	// analyzed.
+	// AgentChannel: Optional. Indicates which of the channels, 1 or 2,
+	// contains the agent. Note that this must be set for conversations to
+	// be properly displayed and analyzed.
 	AgentChannel int64 `json:"agentChannel,omitempty"`
 
 	// AgentId: An opaque, user-specified string representing the human
 	// agent who handled the conversations.
 	AgentId string `json:"agentId,omitempty"`
 
-	// CustomerChannel: Optional. For audio conversations, this field
-	// indicates which of the channels, 1 or 2, contains the customer. Note
-	// that this must be set for audio conversations to be properly
-	// displayed and analyzed.
+	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2,
+	// contains the agent. Note that this must be set for conversations to
+	// be properly displayed and analyzed.
 	CustomerChannel int64 `json:"customerChannel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentChannel") to
@@ -6472,20 +6470,18 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest) Mar
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConv
 // ersationConfig: Configuration that applies to all conversations.
 type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig struct {
-	// AgentChannel: Optional. For audio conversations, this field indicates
-	// which of the channels, 1 or 2, contains the agent. Note that this
-	// must be set for audio conversations to be properly displayed and
-	// analyzed.
+	// AgentChannel: Optional. Indicates which of the channels, 1 or 2,
+	// contains the agent. Note that this must be set for conversations to
+	// be properly displayed and analyzed.
 	AgentChannel int64 `json:"agentChannel,omitempty"`
 
 	// AgentId: An opaque, user-specified string representing the human
 	// agent who handled the conversations.
 	AgentId string `json:"agentId,omitempty"`
 
-	// CustomerChannel: Optional. For audio conversations, this field
-	// indicates which of the channels, 1 or 2, contains the customer. Note
-	// that this must be set for audio conversations to be properly
-	// displayed and analyzed.
+	// CustomerChannel: Optional. Indicates which of the channels, 1 or 2,
+	// contains the agent. Note that this must be set for conversations to
+	// be properly displayed and analyzed.
 	CustomerChannel int64 `json:"customerChannel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentChannel") to

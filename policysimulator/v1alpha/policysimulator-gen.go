@@ -1579,18 +1579,18 @@ func (s *GoogleCloudPolicysimulatorV1alphaListReplaysResponse) MarshalJSON() ([]
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay: The proposed
 // changes to OrgPolicy.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay struct {
-	// CustomConstraints: The OrgPolicy CustomConstraint changes to preview
-	// violations for. Any existing CustomConstraints with the same name
-	// will be overridden in the simulation. That is, violations will be
-	// determined as if all custom constraints in the overlay were
+	// CustomConstraints: Optional. The OrgPolicy CustomConstraint changes
+	// to preview violations for. Any existing CustomConstraints with the
+	// same name will be overridden in the simulation. That is, violations
+	// will be determined as if all custom constraints in the overlay were
 	// instantiated. Only a single custom_constraint is supported in the
 	// overlay at a time. For evaluating multiple constraints, multiple
 	// `GenerateOrgPolicyViolationsPreview` requests are made, where each
 	// request evaluates a single constraint.
 	CustomConstraints []*GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
 
-	// Policies: The OrgPolicy changes to preview violations for. Any
-	// existing OrgPolicies with the same name will be overridden in the
+	// Policies: Optional. The OrgPolicy changes to preview violations for.
+	// Any existing OrgPolicies with the same name will be overridden in the
 	// simulation. That is, violations will be determined as if all policies
 	// in the overlay were created or updated.
 	Policies []*GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay `json:"policies,omitempty"`
@@ -1622,11 +1622,11 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay) MarshalJSON() ([]byt
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverl
 // ay: A change to an OrgPolicy custom constraint.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay struct {
-	// CustomConstraint: The new or updated custom constraint.
+	// CustomConstraint: Optional. The new or updated custom constraint.
 	CustomConstraint *GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraint,omitempty"`
 
-	// CustomConstraintParent: Resource the constraint is attached to.
-	// Example: "organization/987654"
+	// CustomConstraintParent: Optional. Resource the constraint is attached
+	// to. Example: "organization/987654"
 	CustomConstraintParent string `json:"customConstraintParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
@@ -1656,11 +1656,11 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverla
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay: A
 // change to an OrgPolicy.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay struct {
-	// Policy: The new or updated OrgPolicy.
+	// Policy: Optional. The new or updated OrgPolicy.
 	Policy *GoogleCloudOrgpolicyV2Policy `json:"policy,omitempty"`
 
-	// PolicyParent: The parent of the policy we are attaching to. Example:
-	// "projects/123456"
+	// PolicyParent: Optional. The parent of the policy we are attaching to.
+	// Example: "projects/123456"
 	PolicyParent string `json:"policyParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1820,22 +1820,25 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview) MarshalJSO
 // nts: A summary of the state of all resources scanned for compliance
 // with the changed OrgPolicy.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts struct {
-	// Compliant: Number of scanned resources with zero violations.
+	// Compliant: Output only. Number of scanned resources with zero
+	// violations.
 	Compliant int64 `json:"compliant,omitempty"`
 
-	// Errors: Number of resources that returned an error when scanned.
+	// Errors: Output only. Number of resources that returned an error when
+	// scanned.
 	Errors int64 `json:"errors,omitempty"`
 
-	// Noncompliant: Number of scanned resources with at least one
-	// violation.
+	// Noncompliant: Output only. Number of scanned resources with at least
+	// one violation.
 	Noncompliant int64 `json:"noncompliant,omitempty"`
 
-	// Scanned: Number of resources checked for compliance. Must equal:
-	// unenforced + noncompliant + compliant + error
+	// Scanned: Output only. Number of resources checked for compliance.
+	// Must equal: unenforced + noncompliant + compliant + error
 	Scanned int64 `json:"scanned,omitempty"`
 
-	// Unenforced: Number of resources where the constraint was not
-	// enforced, i.e. the Policy set `enforced: false` for that resource.
+	// Unenforced: Output only. Number of resources where the constraint was
+	// not enforced, i.e. the Policy set `enforced: false` for that
+	// resource.
 	Unenforced int64 `json:"unenforced,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compliant") to
@@ -2219,18 +2222,18 @@ func (s *GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOpera
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay: The proposed
 // changes to OrgPolicy.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay struct {
-	// CustomConstraints: The OrgPolicy CustomConstraint changes to preview
-	// violations for. Any existing CustomConstraints with the same name
-	// will be overridden in the simulation. That is, violations will be
-	// determined as if all custom constraints in the overlay were
+	// CustomConstraints: Optional. The OrgPolicy CustomConstraint changes
+	// to preview violations for. Any existing CustomConstraints with the
+	// same name will be overridden in the simulation. That is, violations
+	// will be determined as if all custom constraints in the overlay were
 	// instantiated. Only a single custom_constraint is supported in the
 	// overlay at a time. For evaluating multiple constraints, multiple
 	// `GenerateOrgPolicyViolationsPreview` requests are made, where each
 	// request evaluates a single constraint.
 	CustomConstraints []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
 
-	// Policies: The OrgPolicy changes to preview violations for. Any
-	// existing OrgPolicies with the same name will be overridden in the
+	// Policies: Optional. The OrgPolicy changes to preview violations for.
+	// Any existing OrgPolicies with the same name will be overridden in the
 	// simulation. That is, violations will be determined as if all policies
 	// in the overlay were created or updated.
 	Policies []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay `json:"policies,omitempty"`
@@ -2262,11 +2265,11 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay) MarshalJSON() ([]byte
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverla
 // y: A change to an OrgPolicy custom constraint.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay struct {
-	// CustomConstraint: The new or updated custom constraint.
+	// CustomConstraint: Optional. The new or updated custom constraint.
 	CustomConstraint *GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraint,omitempty"`
 
-	// CustomConstraintParent: Resource the constraint is attached to.
-	// Example: "organization/987654"
+	// CustomConstraintParent: Optional. Resource the constraint is attached
+	// to. Example: "organization/987654"
 	CustomConstraintParent string `json:"customConstraintParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
@@ -2296,11 +2299,11 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay: A
 // change to an OrgPolicy.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay struct {
-	// Policy: The new or updated OrgPolicy.
+	// Policy: Optional. The new or updated OrgPolicy.
 	Policy *GoogleCloudOrgpolicyV2Policy `json:"policy,omitempty"`
 
-	// PolicyParent: The parent of the policy we are attaching to. Example:
-	// "projects/123456"
+	// PolicyParent: Optional. The parent of the policy we are attaching to.
+	// Example: "projects/123456"
 	PolicyParent string `json:"policyParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -2414,22 +2417,25 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview) MarshalJSON
 // ts: A summary of the state of all resources scanned for compliance
 // with the changed OrgPolicy.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts struct {
-	// Compliant: Number of scanned resources with zero violations.
+	// Compliant: Output only. Number of scanned resources with zero
+	// violations.
 	Compliant int64 `json:"compliant,omitempty"`
 
-	// Errors: Number of resources that returned an error when scanned.
+	// Errors: Output only. Number of resources that returned an error when
+	// scanned.
 	Errors int64 `json:"errors,omitempty"`
 
-	// Noncompliant: Number of scanned resources with at least one
-	// violation.
+	// Noncompliant: Output only. Number of scanned resources with at least
+	// one violation.
 	Noncompliant int64 `json:"noncompliant,omitempty"`
 
-	// Scanned: Number of resources checked for compliance. Must equal:
-	// unenforced + noncompliant + compliant + error
+	// Scanned: Output only. Number of resources checked for compliance.
+	// Must equal: unenforced + noncompliant + compliant + error
 	Scanned int64 `json:"scanned,omitempty"`
 
-	// Unenforced: Number of resources where the constraint was not
-	// enforced, i.e. the Policy set `enforced: false` for that resource.
+	// Unenforced: Output only. Number of resources where the constraint was
+	// not enforced, i.e. the Policy set `enforced: false` for that
+	// resource.
 	Unenforced int64 `json:"unenforced,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compliant") to
@@ -2633,7 +2639,11 @@ type GoogleIamV1Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -4728,6 +4738,154 @@ func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsCall) Do(opts ...googl
 
 }
 
+// method id "policysimulator.organizations.locations.orgPolicyViolationsPreviews.generate":
+
+type OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googlecloudpolicysimulatorv1alphaorgpolicyviolationspreview *GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Generate: GenerateOrgPolicyViolationsPreview generates an
+// OrgPolicyViolationsPreview for the proposed changes in the provided
+// OrgPolicyViolationsPreview.OrgPolicyOverlay. The changes to OrgPolicy
+// are specified by this `OrgPolicyOverlay`. The resources to scan are
+// inferred from these specified changes.
+//
+//   - parent: The organization under which this
+//     OrgPolicyViolationsPreview will be created. Example:
+//     `organizations/my-example-org/locations/global`.
+func (r *OrganizationsLocationsOrgPolicyViolationsPreviewsService) Generate(parent string, googlecloudpolicysimulatorv1alphaorgpolicyviolationspreview *GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview) *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall {
+	c := &OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudpolicysimulatorv1alphaorgpolicyviolationspreview = googlecloudpolicysimulatorv1alphaorgpolicyviolationspreview
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall) Context(ctx context.Context) *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpolicysimulatorv1alphaorgpolicyviolationspreview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/orgPolicyViolationsPreviews:generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "policysimulator.organizations.locations.orgPolicyViolationsPreviews.generate" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsGenerateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GenerateOrgPolicyViolationsPreview generates an OrgPolicyViolationsPreview for the proposed changes in the provided OrgPolicyViolationsPreview.OrgPolicyOverlay. The changes to OrgPolicy are specified by this `OrgPolicyOverlay`. The resources to scan are inferred from these specified changes.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/orgPolicyViolationsPreviews:generate",
+	//   "httpMethod": "POST",
+	//   "id": "policysimulator.organizations.locations.orgPolicyViolationsPreviews.generate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The organization under which this OrgPolicyViolationsPreview will be created. Example: `organizations/my-example-org/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/orgPolicyViolationsPreviews:generate",
+	//   "request": {
+	//     "$ref": "GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "policysimulator.organizations.locations.orgPolicyViolationsPreviews.get":
 
 type OrganizationsLocationsOrgPolicyViolationsPreviewsGetCall struct {
@@ -5032,13 +5190,13 @@ func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsListCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. The service may return fewer than this value. If unspecified, at most 5 items will be returned. The maximum value is 10; values above 10 will be coerced to 10.",
+	//       "description": "Optional. The maximum number of items to return. The service may return fewer than this value. If unspecified, at most 5 items will be returned. The maximum value is 10; values above 10 will be coerced to 10.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous call. Provide this to retrieve the subsequent page. When paginating, all other parameters must match the call that provided the page token.",
+	//       "description": "Optional. A page token, received from a previous call. Provide this to retrieve the subsequent page. When paginating, all other parameters must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5383,13 +5541,13 @@ func (c *OrganizationsLocationsOrgPolicyViolationsPreviewsOrgPolicyViolationsLis
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. The service may return fewer than this value. If unspecified, at most 50 items will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. The maximum number of items to return. The service may return fewer than this value. If unspecified, at most 50 items will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous call. Provide this to retrieve the subsequent page. When paginating, all other parameters must match the call that provided the page token.",
+	//       "description": "Optional. A page token, received from a previous call. Provide this to retrieve the subsequent page. When paginating, all other parameters must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

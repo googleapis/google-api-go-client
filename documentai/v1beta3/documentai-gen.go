@@ -12278,6 +12278,16 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// processor version.
 	LatestEvaluation *GoogleCloudDocumentaiV1beta3EvaluationReference `json:"latestEvaluation,omitempty"`
 
+	// ModelType: Output only. The model type of this processor version.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - The processor version has unspecified
+	// model type.
+	//   "MODEL_TYPE_GENERATIVE" - The processor version has generative
+	// model type.
+	//   "MODEL_TYPE_CUSTOM" - The processor version has custom model type.
+	ModelType string `json:"modelType,omitempty"`
+
 	// Name: The resource name of the processor version. Format:
 	// `projects/{project}/locations/{location}/processors/{processor}/proces
 	// sorVersions/{processor_version}`

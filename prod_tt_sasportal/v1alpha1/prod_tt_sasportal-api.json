@@ -110,22 +110,6 @@
   "resources": {
     "customers": {
       "methods": {
-        "checkHasProvisionedDeployment": {
-          "description": "Checks whether a SAS deployment for the authentication context exists.",
-          "flatPath": "v1alpha1/customers:checkHasProvisionedDeployment",
-          "httpMethod": "GET",
-          "id": "prod_tt_sasportal.customers.checkHasProvisionedDeployment",
-          "parameterOrder": [],
-          "parameters": {},
-          "path": "v1alpha1/customers:checkHasProvisionedDeployment",
-          "response": {
-            "$ref": "SasPortalCheckHasProvisionedDeploymentResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/sasportal"
-          ]
-        },
         "get": {
           "description": "Returns a requested customer.",
           "flatPath": "v1alpha1/customers/{customersId}",
@@ -2669,7 +2653,7 @@
       }
     }
   },
-  "revision": "20240115",
+  "revision": "20240120",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2702,17 +2686,6 @@
           "description": "The channel score, normalized to be in the range [0,100].",
           "format": "double",
           "type": "number"
-        }
-      },
-      "type": "object"
-    },
-    "SasPortalCheckHasProvisionedDeploymentResponse": {
-      "description": "Response for [CheckHasProvisionedDeployment]. [spectrum.sas.portal.v1alpha1.Provisioning.CheckHasProvisionedDeployment].",
-      "id": "SasPortalCheckHasProvisionedDeploymentResponse",
-      "properties": {
-        "hasProvisionedDeployment": {
-          "description": "Whether a SAS deployment for the authentication context exists.",
-          "type": "boolean"
         }
       },
       "type": "object"

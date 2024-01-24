@@ -19,8 +19,7 @@ import (
 )
 
 const (
-	newAuthLibEnVar       = "GOOGLE_API_GO_EXPERIMENTAL_USE_NEW_AUTH_LIB"
-	universeDomainDefault = "googleapis.com"
+	newAuthLibEnVar = "GOOGLE_API_GO_EXPERIMENTAL_USE_NEW_AUTH_LIB"
 )
 
 // DialSettings holds information needed to establish a connection with a
@@ -167,11 +166,11 @@ func (ds *DialSettings) Validate() error {
 // The default value is "googleapis.com".
 func (ds *DialSettings) GetUniverseDomain() string {
 	if ds.UniverseDomain == "" {
-		return universeDomainDefault
+		return ds.DefaultUniverseDomain
 	}
 	return ds.UniverseDomain
 }
 
 func (ds *DialSettings) IsUniverseDomainGDU() bool {
-	return ds.GetUniverseDomain() == universeDomainDefault
+	return ds.GetUniverseDomain() == ds.DefaultUniverseDomain
 }

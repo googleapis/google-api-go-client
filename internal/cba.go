@@ -80,7 +80,7 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 		// if settings.DefaultEndpointTemplate == "" {
 		// 	return nil, "", errors.New("internaloption.WithDefaultEndpointTemplate is required if option.WithUniverseDomain is not googleapis.com")
 		// }
-		endpoint = strings.Replace(settings.DefaultEndpointTemplate, universeDomainPlaceholder, settings.GetUniverseDomain(), 1)
+		endpoint = resolvedDefaultEndpoint(settings)
 	}
 	return clientCertSource, endpoint, nil
 }
@@ -164,27 +164,41 @@ func isClientCertificateEnabled() bool {
 // WithDefaultEndpoint("https://foo.com/bar/baz") will return "https://myhost:8080/bar/baz"
 func getEndpoint(settings *DialSettings, clientCertSource cert.Source) (string, error) {
 	if settings.Endpoint == "" {
-		mtlsMode := getMTLSMode()
-		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {
+		if isMTLS(clientCertSource) {
 			if !settings.IsUniverseDomainGDU() {
 				return "", errUniverseNotSupportedMTLS
 			}
 			return settings.DefaultMTLSEndpoint, nil
 		}
-		return settings.DefaultEndpoint, nil
+		return resolvedDefaultEndpoint(settings), nil
 	}
 	if strings.Contains(settings.Endpoint, "://") {
 		// User passed in a full URL path, use it verbatim.
 		return settings.Endpoint, nil
 	}
-	if settings.DefaultEndpoint == "" {
+	if resolvedDefaultEndpoint(settings) == "" {
 		// If DefaultEndpoint is not configured, use the user provided endpoint verbatim.
 		// This allows a naked "host[:port]" URL to be used with GRPC Direct Path.
 		return settings.Endpoint, nil
 	}
 
 	// Assume user-provided endpoint is host[:port], merge it with the default endpoint.
-	return mergeEndpoints(settings.DefaultEndpoint, settings.Endpoint)
+	return mergeEndpoints(resolvedDefaultEndpoint(settings), settings.Endpoint)
+}
+
+func isMTLS(clientCertSource cert.Source) bool {
+	mtlsMode := getMTLSMode()
+	return mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto)
+}
+
+// resolvedDefaultEndpoint returns the DefaultEndpointTemplate merged with the
+// Universe Domain if the DefaultEndpointTemplate is set, otherwise returns the
+// deprecated DefaultEndpoint value.
+func resolvedDefaultEndpoint(settings *DialSettings) string {
+	if settings.DefaultEndpointTemplate == "" {
+		return settings.DefaultEndpoint
+	}
+	return strings.Replace(settings.DefaultEndpointTemplate, universeDomainPlaceholder, settings.GetUniverseDomain(), 1)
 }
 
 func getMTLSMode() string {

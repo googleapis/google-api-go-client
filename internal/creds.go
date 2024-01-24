@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"golang.org/x/oauth2"
+	"google.golang.org/api/internal/cert"
 	"google.golang.org/api/internal/impersonate"
 
 	"golang.org/x/oauth2/google"
@@ -90,11 +91,11 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 
 	// Determine configurations for the OAuth2 transport, which is separate from the API transport.
 	// The OAuth2 transport and endpoint will be configured for mTLS if applicable.
-	clientCertSource, oauth2Endpoint, err := getClientCertificateSourceAndEndpoint(oauth2DialSettings(ds))
+	clientCertSource, err := getClientCertificateSource(ds)
 	if err != nil {
 		return nil, err
 	}
-	params.TokenURL = oauth2Endpoint
+	params.TokenURL = oAuth2Endpoint(clientCertSource)
 	if clientCertSource != nil {
 		tlsConfig := &tls.Config{
 			GetClientCertificate: clientCertSource,
@@ -122,6 +123,13 @@ func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*g
 	}
 
 	return cred, err
+}
+
+func oAuth2Endpoint(clientCertSource cert.Source) string {
+	if isMTLS(clientCertSource) {
+		return google.MTLSTokenURL
+	}
+	return google.Endpoint.TokenURL
 }
 
 func isSelfSignedJWTFlow(data []byte, ds *DialSettings) (bool, error) {
@@ -194,15 +202,6 @@ func impersonateCredentials(ctx context.Context, creds *google.Credentials, ds *
 		TokenSource: ts,
 		ProjectID:   creds.ProjectID,
 	}, nil
-}
-
-// oauth2DialSettings returns the settings to be used by the OAuth2 transport, which is separate from the API transport.
-func oauth2DialSettings(ds *DialSettings) *DialSettings {
-	var ods DialSettings
-	ods.DefaultEndpoint = google.Endpoint.TokenURL
-	ods.DefaultMTLSEndpoint = google.MTLSTokenURL
-	ods.ClientCertSource = ds.ClientCertSource
-	return &ods
 }
 
 // customHTTPClient constructs an HTTPClient using the provided tlsConfig, to support mTLS.

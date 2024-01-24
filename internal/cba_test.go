@@ -141,19 +141,8 @@ func TestGetGRPCTransportConfigAndEndpoint(t *testing.T) {
 		Desc          string
 		InputSettings *DialSettings
 		S2ARespFunc   func() (string, error)
-		MTLSEnabled   func() bool
 		WantEndpoint  string
 	}{
-		{
-			"no client cert, endpoint is MTLS enabled, S2A address not empty",
-			&DialSettings{
-				DefaultMTLSEndpoint: testMTLSEndpoint,
-				DefaultEndpoint:     testRegularEndpoint,
-			},
-			validConfigResp,
-			func() bool { return true },
-			testMTLSEndpoint,
-		},
 		{
 			"has client cert",
 			&DialSettings{
@@ -162,46 +151,50 @@ func TestGetGRPCTransportConfigAndEndpoint(t *testing.T) {
 				ClientCertSource:    dummyClientCertSource,
 			},
 			validConfigResp,
-			func() bool { return true },
 			testMTLSEndpoint,
 		},
 		{
-			"no client cert, endpoint is not MTLS enabled",
+			"no client cert, S2A address not empty",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 			},
 			validConfigResp,
-			func() bool { return false },
-			testRegularEndpoint,
+			testMTLSEndpoint,
 		},
 		{
-			"no client cert, endpoint is MTLS enabled, S2A address empty",
+			"no client cert, S2A address empty",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 			},
 			invalidConfigResp,
-			func() bool { return true },
 			testRegularEndpoint,
 		},
 		{
-			"no client cert, endpoint is MTLS enabled, S2A address not empty, override endpoint",
+			"no client cert, S2A address not empty, override endpoint",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 				Endpoint:            testOverrideEndpoint,
 			},
 			validConfigResp,
-			func() bool { return true },
 			testOverrideEndpoint,
+		},
+		{
+			"no client cert, S2A address not empty, DefaultMTLSEndpoint not set",
+			&DialSettings{
+				DefaultMTLSEndpoint: "",
+				DefaultEndpoint:     testRegularEndpoint,
+			},
+			validConfigResp,
+			testRegularEndpoint,
 		},
 	}
 	defer setupTest()()
 
 	for _, tc := range testCases {
 		httpGetMetadataMTLSConfig = tc.S2ARespFunc
-		mtlsEndpointEnabledForS2A = tc.MTLSEnabled
 		if tc.InputSettings.ClientCertSource != nil {
 			os.Setenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "true")
 		} else {
@@ -221,21 +214,9 @@ func TestGetHTTPTransportConfigAndEndpoint_s2a(t *testing.T) {
 		Desc          string
 		InputSettings *DialSettings
 		S2ARespFunc   func() (string, error)
-		MTLSEnabled   func() bool
 		WantEndpoint  string
 		DialFuncNil   bool
 	}{
-		{
-			"no client cert, endpoint is MTLS enabled, S2A address not empty",
-			&DialSettings{
-				DefaultMTLSEndpoint: testMTLSEndpoint,
-				DefaultEndpoint:     testRegularEndpoint,
-			},
-			validConfigResp,
-			func() bool { return true },
-			testMTLSEndpoint,
-			false,
-		},
 		{
 			"has client cert",
 			&DialSettings{
@@ -244,43 +225,39 @@ func TestGetHTTPTransportConfigAndEndpoint_s2a(t *testing.T) {
 				ClientCertSource:    dummyClientCertSource,
 			},
 			validConfigResp,
-			func() bool { return true },
 			testMTLSEndpoint,
 			true,
 		},
 		{
-			"no client cert, endpoint is not MTLS enabled",
+			"no client cert, S2A address not empty",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 			},
 			validConfigResp,
-			func() bool { return false },
-			testRegularEndpoint,
-			true,
+			testMTLSEndpoint,
+			false,
 		},
 		{
-			"no client cert, endpoint is MTLS enabled, S2A address empty",
+			"no client cert, S2A address empty",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 			},
 			invalidConfigResp,
-			func() bool { return true },
 			testRegularEndpoint,
 			true,
 		},
 		{
-			"no client cert, endpoint is MTLS enabled, S2A address not empty, override endpoint",
+			"no client cert, S2A address not empty, override endpoint",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 				Endpoint:            testOverrideEndpoint,
 			},
 			validConfigResp,
-			func() bool { return true },
 			testOverrideEndpoint,
-			false,
+			true,
 		},
 		{
 			"no client cert, S2A address not empty, but DefaultMTLSEndpoint is not set",
@@ -289,30 +266,17 @@ func TestGetHTTPTransportConfigAndEndpoint_s2a(t *testing.T) {
 				DefaultEndpoint:     testRegularEndpoint,
 			},
 			validConfigResp,
-			func() bool { return true },
 			testRegularEndpoint,
 			true,
 		},
 		{
-			"no client cert, S2A address not empty, override endpoint is set",
-			&DialSettings{
-				DefaultMTLSEndpoint: "",
-				Endpoint:            testOverrideEndpoint,
-			},
-			validConfigResp,
-			func() bool { return true },
-			testOverrideEndpoint,
-			false,
-		},
-		{
-			"no client cert, endpoint is MTLS enabled, S2A address not empty, custom HTTP client",
+			"no client cert, S2A address not empty, custom HTTP client",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
 				DefaultEndpoint:     testRegularEndpoint,
 				HTTPClient:          http.DefaultClient,
 			},
 			validConfigResp,
-			func() bool { return true },
 			testRegularEndpoint,
 			true,
 		},
@@ -322,7 +286,6 @@ func TestGetHTTPTransportConfigAndEndpoint_s2a(t *testing.T) {
 
 	for _, tc := range testCases {
 		httpGetMetadataMTLSConfig = tc.S2ARespFunc
-		mtlsEndpointEnabledForS2A = tc.MTLSEnabled
 		if tc.InputSettings.ClientCertSource != nil {
 			os.Setenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "true")
 		} else {
@@ -344,7 +307,6 @@ func TestGetHTTPTransportConfigAndEndpoint_s2a(t *testing.T) {
 }
 
 func setupTest() func() {
-	oldDefaultMTLSEnabled := mtlsEndpointEnabledForS2A
 	oldHTTPGet := httpGetMetadataMTLSConfig
 	oldExpiry := configExpiry
 	oldUseS2A := os.Getenv(googleAPIUseS2AEnv)
@@ -355,7 +317,6 @@ func setupTest() func() {
 
 	return func() {
 		httpGetMetadataMTLSConfig = oldHTTPGet
-		mtlsEndpointEnabledForS2A = oldDefaultMTLSEnabled
 		configExpiry = oldExpiry
 		os.Setenv(googleAPIUseS2AEnv, oldUseS2A)
 		os.Setenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", oldUseClientCert)

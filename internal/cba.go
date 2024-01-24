@@ -111,11 +111,6 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 		return nil, errUniverseNotSupportedMTLS
 	}
 
-	s2aMTLSEndpoint := settings.DefaultMTLSEndpoint
-	// If there is endpoint override, honor it.
-	if settings.Endpoint != "" {
-		s2aMTLSEndpoint = endpoint
-	}
 	s2aAddress := GetS2AAddress()
 	if s2aAddress == "" {
 		return &defaultTransportConfig, nil
@@ -124,7 +119,7 @@ func getTransportConfig(settings *DialSettings) (*transportConfig, error) {
 		clientCertSource: clientCertSource,
 		endpoint:         endpoint,
 		s2aAddress:       s2aAddress,
-		s2aMTLSEndpoint:  s2aMTLSEndpoint,
+		s2aMTLSEndpoint:  settings.DefaultMTLSEndpoint,
 	}, nil
 }
 
@@ -293,24 +288,14 @@ func shouldUseS2A(clientCertSource cert.Source, settings *DialSettings) bool {
 	if !isGoogleS2AEnabled() {
 		return false
 	}
-	// If DefaultMTLSEndpoint is not set and no endpoint override, skip S2A.
-	if settings.DefaultMTLSEndpoint == "" && settings.Endpoint == "" {
-		return false
-	}
-	// If MTLS is not enabled for this endpoint, skip S2A.
-	if !mtlsEndpointEnabledForS2A() {
+	// If DefaultMTLSEndpoint is not set or has endpoint override, skip S2A.
+	if settings.DefaultMTLSEndpoint == "" || settings.Endpoint != "" {
 		return false
 	}
 	// If custom HTTP client is provided, skip S2A.
 	if settings.HTTPClient != nil {
 		return false
 	}
-	return true
-}
-
-// mtlsEndpointEnabledForS2A checks if the endpoint is indeed MTLS-enabled, so that we can use S2A for MTLS connection.
-var mtlsEndpointEnabledForS2A = func() bool {
-	// TODO(xmenxk): determine this via discovery config.
 	return true
 }
 

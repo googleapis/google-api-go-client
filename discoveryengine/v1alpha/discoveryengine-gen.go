@@ -6865,7 +6865,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// embedding that is provided in
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.field_path. If
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.field_path is not
-	// provided, it will use ServingConfig.EmbeddingConfig.field_paths.
+	// provided, it will use ServingConfig.EmbeddingConfig.field_path.
 	EmbeddingSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestEmbeddingSpec `json:"embeddingSpec,omitempty"`
 
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
@@ -12055,7 +12055,7 @@ type ProjectsLocationsEstimateDataSizeCall struct {
 
 // EstimateDataSize: Estimates the data size to be used by a customer.
 //
-//   - location: Full resource name of the Location, such as
+//   - location: Full resource name of the location, such as
 //     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsService) EstimateDataSize(location string, googleclouddiscoveryenginev1alphaestimatedatasizerequest *GoogleCloudDiscoveryengineV1alphaEstimateDataSizeRequest) *ProjectsLocationsEstimateDataSizeCall {
 	c := &ProjectsLocationsEstimateDataSizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12164,7 +12164,7 @@ func (c *ProjectsLocationsEstimateDataSizeCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "Required. Full resource name of the Location, such as `projects/{project}/locations/{location}`.",
+	//       "description": "Required. Full resource name of the location, such as `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -14083,7 +14083,7 @@ func (r *ProjectsLocationsCollectionsDataStoresService) UpdateDocumentProcessing
 // UpdateMask sets the optional parameter "updateMask": Indicates which
 // fields in the provided DocumentProcessingConfig to update. The
 // following are the only supported fields: *
-// DocumentProcessingConfig.orc_config If not set, all supported fields
+// DocumentProcessingConfig.ocr_config If not set, all supported fields
 // are updated.
 func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall) UpdateMask(updateMask string) *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -14200,7 +14200,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCal
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.orc_config If not set, all supported fields are updated.",
+	//       "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.ocr_config If not set, all supported fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -26893,7 +26893,7 @@ func (r *ProjectsLocationsDataStoresService) UpdateDocumentProcessingConfig(name
 // UpdateMask sets the optional parameter "updateMask": Indicates which
 // fields in the provided DocumentProcessingConfig to update. The
 // following are the only supported fields: *
-// DocumentProcessingConfig.orc_config If not set, all supported fields
+// DocumentProcessingConfig.ocr_config If not set, all supported fields
 // are updated.
 func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) UpdateMask(updateMask string) *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -27010,7 +27010,7 @@ func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) Do(opts 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.orc_config If not set, all supported fields are updated.",
+	//       "description": "Indicates which fields in the provided DocumentProcessingConfig to update. The following are the only supported fields: * DocumentProcessingConfig.ocr_config If not set, all supported fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

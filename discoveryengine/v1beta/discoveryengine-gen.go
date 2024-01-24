@@ -8111,7 +8111,7 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// embedding that is provided in
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.field_path. If
 	// SearchRequest.EmbeddingSpec.EmbeddingVector.field_path is not
-	// provided, it will use ServingConfig.EmbeddingConfig.field_paths.
+	// provided, it will use ServingConfig.EmbeddingConfig.field_path.
 	EmbeddingSpec *GoogleCloudDiscoveryengineV1betaSearchRequestEmbeddingSpec `json:"embeddingSpec,omitempty"`
 
 	// FacetSpecs: Facet specifications for faceted search. If empty, no

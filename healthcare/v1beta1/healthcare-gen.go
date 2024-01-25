@@ -1249,7 +1249,8 @@ type AttributeDefinition struct {
 	// Description: Optional. A description of the attribute.
 	Description string `json:"description,omitempty"`
 
-	// Name: Resource name of the Attribute definition, of the form
+	// Name: Identifier. Resource name of the Attribute definition, of the
+	// form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/attributeDefinitions/{attribute_defini
 	// tion_id}`. Cannot be changed after creation.
@@ -1993,7 +1994,7 @@ type ConsentArtifact struct {
 	// For example, the consent locale or user agent version.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// Name: Resource name of the Consent artifact, of the form
+	// Name: Identifier. Resource name of the Consent artifact, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
 	// `. Cannot be changed after creation.
@@ -2568,11 +2569,11 @@ type DeidentifyDatasetRequest struct {
 	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
-	// DestinationDataset: The name of the dataset resource to create and
-	// write the redacted data to. * The destination dataset must not exist.
-	// * The destination dataset must be in the same location as the source
-	// dataset. De-identifying data across multiple locations is not
-	// supported.
+	// DestinationDataset: Required. The name of the dataset resource to
+	// create and write the redacted data to. * The destination dataset must
+	// not exist. * The destination dataset must be in the same location as
+	// the source dataset. De-identifying data across multiple locations is
+	// not supported.
 	DestinationDataset string `json:"destinationDataset,omitempty"`
 
 	// GcsConfigUri: Cloud Storage location to read the JSON
@@ -2614,8 +2615,8 @@ type DeidentifyDicomStoreRequest struct {
 	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
-	// DestinationStore: The name of the DICOM store to create and write the
-	// redacted data to. For example,
+	// DestinationStore: Required. The name of the DICOM store to create and
+	// write the redacted data to. For example,
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
 	// icomStores/{dicom_store_id}`. * The destination dataset must exist. *
 	// The source dataset and destination dataset must both reside in the
@@ -2667,8 +2668,8 @@ type DeidentifyFhirStoreRequest struct {
 	// `gcs_config_uri` can be specified.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
-	// DestinationStore: The name of the FHIR store to create and write the
-	// redacted data to. For example,
+	// DestinationStore: Required. The name of the FHIR store to create and
+	// write the redacted data to. For example,
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
 	// hirStores/{fhir_store_id}`. * The destination dataset must exist. *
 	// The source dataset and destination dataset must both reside in the
@@ -2896,7 +2897,7 @@ type DicomStore struct {
 	// associated with a given store.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Resource name of the DICOM store, of the form
+	// Name: Identifier. Resource name of the DICOM store, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/d
 	// icomStores/{dicom_store_id}`.
 	Name string `json:"name,omitempty"`
@@ -4082,7 +4083,8 @@ type FhirStore struct {
 	// associated with a given store.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. Resource name of the FHIR store, of the form
+	// Name: Output only. Identifier. Resource name of the FHIR store, of
+	// the form
 	// `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id
 	// }`.
 	Name string `json:"name,omitempty"`
@@ -4120,10 +4122,10 @@ type FhirStore struct {
 	// resources against configured profiles.
 	ValidationConfig *ValidationConfig `json:"validationConfig,omitempty"`
 
-	// Version: Immutable. The FHIR specification version that this FHIR
-	// store supports natively. This field is immutable after store
-	// creation. Requests are rejected if they contain FHIR resources of a
-	// different version. Version is required for every FHIR store.
+	// Version: Required. Immutable. The FHIR specification version that
+	// this FHIR store supports natively. This field is immutable after
+	// store creation. Requests are rejected if they contain FHIR resources
+	// of a different version. Version is required for every FHIR store.
 	//
 	// Possible values:
 	//   "VERSION_UNSPECIFIED" - VERSION_UNSPECIFIED is treated as STU3 to
@@ -8125,8 +8127,9 @@ func (s *SearchParameter) MarshalJSON() ([]byte, error) {
 // SearchResourcesRequest: Request to search the resources in the
 // specified FHIR store.
 type SearchResourcesRequest struct {
-	// ResourceType: The FHIR resource type to search, such as Patient or
-	// Observation. For a complete list, see the FHIR Resource Index (DSTU2
+	// ResourceType: Required. The FHIR resource type to search, such as
+	// Patient or Observation. For a complete list, see the FHIR Resource
+	// Index (DSTU2
 	// (https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
 	// STU3
 	// (https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), R4
@@ -9820,7 +9823,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "sourceDataset": {
-	//       "description": "Source dataset resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+	//       "description": "Required. Source dataset resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -16039,7 +16042,8 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall struct 
 
 // Patch: Updates the specified Attribute definition.
 //
-//   - name: Resource name of the Attribute definition, of the form
+//   - name: Identifier. Resource name of the Attribute definition, of the
+//     form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /consentStores/{consent_store_id}/attributeDefinitions/{attribute_de
 //     finition_id}`. Cannot be changed after creation.
@@ -16163,7 +16167,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Do
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
+	//       "description": "Identifier. Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
 	//       "required": true,
@@ -19504,9 +19508,9 @@ func (r *ProjectsLocationsDatasetsDicomStoresService) Create(parent string, dico
 	return c
 }
 
-// DicomStoreId sets the optional parameter "dicomStoreId": The ID of
-// the DICOM store that is being created. Any string value up to 256
-// characters in length.
+// DicomStoreId sets the optional parameter "dicomStoreId": Required.
+// The ID of the DICOM store that is being created. Any string value up
+// to 256 characters in length.
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) DicomStoreId(dicomStoreId string) *ProjectsLocationsDatasetsDicomStoresCreateCall {
 	c.urlParams_.Set("dicomStoreId", dicomStoreId)
 	return c
@@ -19612,12 +19616,12 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "dicomStoreId": {
-	//       "description": "The ID of the DICOM store that is being created. Any string value up to 256 characters in length.",
+	//       "description": "Required. The ID of the DICOM store that is being created. Any string value up to 256 characters in length.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the dataset this DICOM store belongs to.",
+	//       "description": "Required. The name of the dataset this DICOM store belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -19771,7 +19775,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "sourceStore": {
-	//       "description": "Source DICOM store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. Source DICOM store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -19908,7 +19912,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the DICOM store to delete.",
+	//       "description": "Required. The resource name of the DICOM store to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -20055,7 +20059,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The DICOM store resource name from which to export the data. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The DICOM store resource name from which to export the data. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -20205,7 +20209,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the DICOM store to get.",
+	//       "description": "Required. The resource name of the DICOM store to get.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -20352,7 +20356,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetDICOMStoreMetricsCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the DICOM store to get metrics for.",
+	//       "description": "Required. The resource name of the DICOM store to get metrics for.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -20675,7 +20679,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the DICOM store resource into which the data is imported. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store resource into which the data is imported. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -20888,7 +20892,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the dataset.",
+	//       "description": "Required. Name of the dataset.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -20941,7 +20945,7 @@ type ProjectsLocationsDatasetsDicomStoresPatchCall struct {
 
 // Patch: Updates the specified DICOM store.
 //
-//   - name: Resource name of the DICOM store, of the form
+//   - name: Identifier. Resource name of the DICOM store, of the form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Patch(name string, dicomstore *DicomStore) *ProjectsLocationsDatasetsDicomStoresPatchCall {
@@ -21059,7 +21063,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the DICOM store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Identifier. Resource name of the DICOM store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -21200,14 +21204,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
+	//       "description": "Required. The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
 	//       "location": "path",
 	//       "pattern": "^instances$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -21338,14 +21342,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
+	//       "description": "Required. The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
 	//       "location": "path",
 	//       "pattern": "^series$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -21476,14 +21480,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForStudies DICOMweb request. For example, `studies`.",
+	//       "description": "Required. The path of the SearchForStudies DICOMweb request. For example, `studies`.",
 	//       "location": "path",
 	//       "pattern": "^studies$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -21905,14 +21909,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
+	//       "description": "Required. The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
 	//       "location": "path",
 	//       "pattern": "^studies$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -22215,7 +22219,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall)
 	//   ],
 	//   "parameters": {
 	//     "study": {
-	//       "description": "The study resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.",
+	//       "description": "Required. The study resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+$",
 	//       "required": true,
@@ -22520,7 +22524,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetri
 	//   ],
 	//   "parameters": {
 	//     "series": {
-	//       "description": "The series resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{series_uid}`.",
+	//       "description": "Required. The series resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{series_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+/series/[^/]+$",
 	//       "required": true,
@@ -22817,7 +22821,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DeleteStudy request. For example, `studies/{study_uid}`.",
+	//       "description": "Required. The path of the DeleteStudy request. For example, `studies/{study_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
@@ -22955,14 +22959,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveStudyMetadata DICOMweb request. For example, `studies/{study_uid}/metadata`.",
+	//       "description": "Required. The path of the RetrieveStudyMetadata DICOMweb request. For example, `studies/{study_uid}/metadata`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/metadata$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23093,14 +23097,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveStudy DICOMweb request. For example, `studies/{study_uid}`.",
+	//       "description": "Required. The path of the RetrieveStudy DICOMweb request. For example, `studies/{study_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23232,14 +23236,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
+	//       "description": "Required. The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/instances$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23370,14 +23374,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
+	//       "description": "Required. The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23496,14 +23500,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
+	//       "description": "Required. The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23655,14 +23659,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DeleteSeries request. For example, `studies/{study_uid}/series/{series_uid}`.",
+	//       "description": "Required. The path of the DeleteSeries request. For example, `studies/{study_uid}/series/{series_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23795,14 +23799,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveSeriesMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/metadata`.",
+	//       "description": "Required. The path of the RetrieveSeriesMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/metadata`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/metadata$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -23933,14 +23937,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) Do
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveSeries DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}`.",
+	//       "description": "Required. The path of the RetrieveSeries DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -24072,14 +24076,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
+	//       "description": "Required. The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -24227,14 +24231,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DeleteInstance request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
+	//       "description": "Required. The path of the DeleteInstance request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -24369,14 +24373,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
+	//       "description": "Required. The path of the RetrieveInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -24511,14 +24515,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveInstanceMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`.",
+	//       "description": "Required. The path of the RetrieveInstanceMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/metadata$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -24653,14 +24657,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveRenderedInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`.",
+	//       "description": "Required. The path of the RetrieveRenderedInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/rendered$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -24934,14 +24938,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`.",
+	//       "description": "Required. The path of the RetrieveFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -25076,14 +25080,14 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the RetrieveRenderedFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`.",
+	//       "description": "Required. The path of the RetrieveRenderedFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+/rendered$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+	//       "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -25242,7 +25246,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresApplyAdminConsentsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "description": "Required. The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -25553,7 +25557,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresConfigureSearchCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the FHIR store to configure, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "description": "Required. The name of the FHIR store to configure, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -25596,9 +25600,9 @@ func (r *ProjectsLocationsDatasetsFhirStoresService) Create(parent string, fhirs
 	return c
 }
 
-// FhirStoreId sets the optional parameter "fhirStoreId": The ID of the
-// FHIR store that is being created. The string must match the following
-// regex: `[\p{L}\p{N}_\-\.]{1,256}`.
+// FhirStoreId sets the optional parameter "fhirStoreId": Required. The
+// ID of the FHIR store that is being created. The string must match the
+// following regex: `[\p{L}\p{N}_\-\.]{1,256}`.
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) FhirStoreId(fhirStoreId string) *ProjectsLocationsDatasetsFhirStoresCreateCall {
 	c.urlParams_.Set("fhirStoreId", fhirStoreId)
 	return c
@@ -25704,12 +25708,12 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "fhirStoreId": {
-	//       "description": "The ID of the FHIR store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+	//       "description": "Required. The ID of the FHIR store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the dataset this FHIR store belongs to.",
+	//       "description": "Required. The name of the dataset this FHIR store belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -25860,7 +25864,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "sourceStore": {
-	//       "description": "Source FHIR store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "description": "Required. Source FHIR store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -25997,7 +26001,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the FHIR store to delete.",
+	//       "description": "Required. The resource name of the FHIR store to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -26148,7 +26152,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the FHIR store to export resource from, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "description": "Required. The name of the FHIR store to export resource from, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -26298,7 +26302,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the FHIR store to get.",
+	//       "description": "Required. The resource name of the FHIR store to get.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -26445,7 +26449,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetFHIRStoreMetricsCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the FHIR store to get metrics for.",
+	//       "description": "Required. The resource name of the FHIR store to get metrics for.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -26824,7 +26828,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the FHIR store to import FHIR resources to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "description": "Required. The name of the FHIR store to import FHIR resources to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -27037,7 +27041,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the dataset.",
+	//       "description": "Required. Name of the dataset.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -27090,7 +27094,8 @@ type ProjectsLocationsDatasetsFhirStoresPatchCall struct {
 
 // Patch: Updates the configuration of the specified FHIR store.
 //
-//   - name: Output only. Resource name of the FHIR store, of the form
+//   - name: Output only. Identifier. Resource name of the FHIR store, of
+//     the form
 //     `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_
 //     id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Patch(name string, fhirstore *FhirStore) *ProjectsLocationsDatasetsFhirStoresPatchCall {
@@ -27100,8 +27105,9 @@ func (r *ProjectsLocationsDatasetsFhirStoresService) Patch(name string, fhirstor
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask applies to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsFhirStoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -27208,14 +27214,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of the FHIR store, of the form `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "description": "Output only. Identifier. Resource name of the FHIR store, of the form `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -27722,7 +27728,8 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConceptMapSearchTransla
 	return c
 }
 
-// Code sets the optional parameter "code": The code to translate.
+// Code sets the optional parameter "code": Required. The code to
+// translate.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) Code(code string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
 	c.urlParams_.Set("code", code)
 	return c
@@ -27744,8 +27751,8 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) S
 	return c
 }
 
-// System sets the optional parameter "system": The system for the code
-// to be translated.
+// System sets the optional parameter "system": Required. The system for
+// the code to be translated.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) System(system string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall {
 	c.urlParams_.Set("system", system)
 	return c
@@ -27842,7 +27849,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) D
 	//   ],
 	//   "parameters": {
 	//     "code": {
-	//       "description": "The code to translate.",
+	//       "description": "Required. The code to translate.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27852,7 +27859,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) D
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name for the FHIR store containing the concept map(s) to use for the translation.",
+	//       "description": "Required. The name for the FHIR store containing the concept map(s) to use for the translation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -27864,7 +27871,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) D
 	//       "type": "string"
 	//     },
 	//     "system": {
-	//       "description": "The system for the code to be translated.",
+	//       "description": "Required. The system for the code to be translated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27925,7 +27932,8 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ConceptMapTranslate(nam
 	return c
 }
 
-// Code sets the optional parameter "code": The code to translate.
+// Code sets the optional parameter "code": Required. The code to
+// translate.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Code(code string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
 	c.urlParams_.Set("code", code)
 	return c
@@ -27939,8 +27947,8 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Concept
 	return c
 }
 
-// System sets the optional parameter "system": The system for the code
-// to be translated.
+// System sets the optional parameter "system": Required. The system for
+// the code to be translated.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) System(system string) *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall {
 	c.urlParams_.Set("system", system)
 	return c
@@ -28021,7 +28029,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "code": {
-	//       "description": "The code to translate.",
+	//       "description": "Required. The code to translate.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -28031,14 +28039,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Do(opts
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The URL for the concept map to use for the translation.",
+	//       "description": "Required. The URL for the concept map to use for the translation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/ConceptMap/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "system": {
-	//       "description": "The system for the code to be translated.",
+	//       "description": "Required. The system for the code to be translated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -28297,7 +28305,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the FHIR store to retrieve resources from.",
+	//       "description": "Required. Name of the FHIR store to retrieve resources from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -28674,7 +28682,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Name of the `Patient` resource for which the information is required.",
+	//       "description": "Required. Name of the `Patient` resource for which the information is required.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/Patient/[^/]+$",
 	//       "required": true,
@@ -29014,7 +29022,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the resource to purge.",
+	//       "description": "Required. The name of the resource to purge.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
 	//       "required": true,
@@ -29082,10 +29090,10 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent
 	return c
 }
 
-// Profile sets the optional parameter "profile": The canonical URL of a
-// profile that this resource should be validated against. For example,
-// to validate a Patient resource against the US Core Patient profile
-// this parameter would be
+// Profile sets the optional parameter "profile": Required. The
+// canonical URL of a profile that this resource should be validated
+// against. For example, to validate a Patient resource against the US
+// Core Patient profile this parameter would be
 // `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A
 // StructureDefinition with this canonical URL must exist in the FHIR
 // store.
@@ -29157,19 +29165,19 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the FHIR store that holds the profiles being used for validation.",
+	//       "description": "Required. The name of the FHIR store that holds the profiles being used for validation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profile": {
-	//       "description": "The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
+	//       "description": "Required. The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The FHIR resource type of the resource being validated. For a complete list, see the FHIR Resource Index ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), or [R4](http://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+	//       "description": "Required. The FHIR resource type of the resource being validated. For a complete list, see the FHIR Resource Index ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), or [R4](http://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -29301,7 +29309,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the FHIR store to retrieve the capabilities for.",
+	//       "description": "Required. Name of the FHIR store to retrieve the capabilities for.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -29470,14 +29478,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "description": "Required. The name of the FHIR store this resource belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The FHIR resource type to delete, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+	//       "description": "Required. The FHIR resource type to delete, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -29614,14 +29622,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "description": "Required. The name of the FHIR store this resource belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+	//       "description": "Required. The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -29773,14 +29781,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "description": "Required. The name of the FHIR store this resource belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+	//       "description": "Required. The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -29922,14 +29930,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the FHIR store this resource belongs to.",
+	//       "description": "Required. The name of the FHIR store this resource belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The FHIR resource type to create, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+	//       "description": "Required. The FHIR resource type to create, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -30044,7 +30052,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the resource to delete.",
+	//       "description": "Required. The name of the resource to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
 	//       "required": true,
@@ -30187,7 +30195,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the FHIR store in which this bundle will be executed.",
+	//       "description": "Required. Name of the FHIR store in which this bundle will be executed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -30382,7 +30390,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name of the resource to retrieve.",
+	//       "description": "Required. The name of the resource to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
 	//       "required": true,
@@ -30499,7 +30507,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the resource to update.",
+	//       "description": "Required. The name of the resource to update.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
 	//       "required": true,
@@ -30633,7 +30641,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the resource to retrieve.",
+	//       "description": "Required. The name of the resource to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
 	//       "required": true,
@@ -30812,7 +30820,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the FHIR store to retrieve resources from.",
+	//       "description": "Required. Name of the FHIR store to retrieve resources from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
@@ -31006,14 +31014,14 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the FHIR store to retrieve resources from.",
+	//       "description": "Required. Name of the FHIR store to retrieve resources from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceType": {
-	//       "description": "The FHIR resource type to search, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+	//       "description": "Required. The FHIR resource type to search, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -31140,7 +31148,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the resource to update.",
+	//       "description": "Required. The name of the resource to update.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
 	//       "required": true,
@@ -31270,7 +31278,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the resource version to retrieve.",
+	//       "description": "Required. The name of the resource version to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+/_history/[^/]+$",
 	//       "required": true,

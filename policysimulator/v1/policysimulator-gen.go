@@ -1478,18 +1478,18 @@ func (s *GoogleCloudPolicysimulatorV1alphaGenerateOrgPolicyViolationsPreviewOper
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay: The proposed
 // changes to OrgPolicy.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay struct {
-	// CustomConstraints: The OrgPolicy CustomConstraint changes to preview
-	// violations for. Any existing CustomConstraints with the same name
-	// will be overridden in the simulation. That is, violations will be
-	// determined as if all custom constraints in the overlay were
+	// CustomConstraints: Optional. The OrgPolicy CustomConstraint changes
+	// to preview violations for. Any existing CustomConstraints with the
+	// same name will be overridden in the simulation. That is, violations
+	// will be determined as if all custom constraints in the overlay were
 	// instantiated. Only a single custom_constraint is supported in the
 	// overlay at a time. For evaluating multiple constraints, multiple
 	// `GenerateOrgPolicyViolationsPreview` requests are made, where each
 	// request evaluates a single constraint.
 	CustomConstraints []*GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
 
-	// Policies: The OrgPolicy changes to preview violations for. Any
-	// existing OrgPolicies with the same name will be overridden in the
+	// Policies: Optional. The OrgPolicy changes to preview violations for.
+	// Any existing OrgPolicies with the same name will be overridden in the
 	// simulation. That is, violations will be determined as if all policies
 	// in the overlay were created or updated.
 	Policies []*GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay `json:"policies,omitempty"`
@@ -1521,11 +1521,11 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay) MarshalJSON() ([]byt
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverl
 // ay: A change to an OrgPolicy custom constraint.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay struct {
-	// CustomConstraint: The new or updated custom constraint.
+	// CustomConstraint: Optional. The new or updated custom constraint.
 	CustomConstraint *GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraint,omitempty"`
 
-	// CustomConstraintParent: Resource the constraint is attached to.
-	// Example: "organization/987654"
+	// CustomConstraintParent: Optional. Resource the constraint is attached
+	// to. Example: "organization/987654"
 	CustomConstraintParent string `json:"customConstraintParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
@@ -1555,11 +1555,11 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverla
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay: A
 // change to an OrgPolicy.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay struct {
-	// Policy: The new or updated OrgPolicy.
+	// Policy: Optional. The new or updated OrgPolicy.
 	Policy *GoogleCloudOrgpolicyV2Policy `json:"policy,omitempty"`
 
-	// PolicyParent: The parent of the policy we are attaching to. Example:
-	// "projects/123456"
+	// PolicyParent: Optional. The parent of the policy we are attaching to.
+	// Example: "projects/123456"
 	PolicyParent string `json:"policyParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1673,22 +1673,25 @@ func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview) MarshalJSO
 // nts: A summary of the state of all resources scanned for compliance
 // with the changed OrgPolicy.
 type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts struct {
-	// Compliant: Number of scanned resources with zero violations.
+	// Compliant: Output only. Number of scanned resources with zero
+	// violations.
 	Compliant int64 `json:"compliant,omitempty"`
 
-	// Errors: Number of resources that returned an error when scanned.
+	// Errors: Output only. Number of resources that returned an error when
+	// scanned.
 	Errors int64 `json:"errors,omitempty"`
 
-	// Noncompliant: Number of scanned resources with at least one
-	// violation.
+	// Noncompliant: Output only. Number of scanned resources with at least
+	// one violation.
 	Noncompliant int64 `json:"noncompliant,omitempty"`
 
-	// Scanned: Number of resources checked for compliance. Must equal:
-	// unenforced + noncompliant + compliant + error
+	// Scanned: Output only. Number of resources checked for compliance.
+	// Must equal: unenforced + noncompliant + compliant + error
 	Scanned int64 `json:"scanned,omitempty"`
 
-	// Unenforced: Number of resources where the constraint was not
-	// enforced, i.e. the Policy set `enforced: false` for that resource.
+	// Unenforced: Output only. Number of resources where the constraint was
+	// not enforced, i.e. the Policy set `enforced: false` for that
+	// resource.
 	Unenforced int64 `json:"unenforced,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compliant") to
@@ -1775,18 +1778,18 @@ func (s *GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOpera
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay: The proposed
 // changes to OrgPolicy.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay struct {
-	// CustomConstraints: The OrgPolicy CustomConstraint changes to preview
-	// violations for. Any existing CustomConstraints with the same name
-	// will be overridden in the simulation. That is, violations will be
-	// determined as if all custom constraints in the overlay were
+	// CustomConstraints: Optional. The OrgPolicy CustomConstraint changes
+	// to preview violations for. Any existing CustomConstraints with the
+	// same name will be overridden in the simulation. That is, violations
+	// will be determined as if all custom constraints in the overlay were
 	// instantiated. Only a single custom_constraint is supported in the
 	// overlay at a time. For evaluating multiple constraints, multiple
 	// `GenerateOrgPolicyViolationsPreview` requests are made, where each
 	// request evaluates a single constraint.
 	CustomConstraints []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay `json:"customConstraints,omitempty"`
 
-	// Policies: The OrgPolicy changes to preview violations for. Any
-	// existing OrgPolicies with the same name will be overridden in the
+	// Policies: Optional. The OrgPolicy changes to preview violations for.
+	// Any existing OrgPolicies with the same name will be overridden in the
 	// simulation. That is, violations will be determined as if all policies
 	// in the overlay were created or updated.
 	Policies []*GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay `json:"policies,omitempty"`
@@ -1818,11 +1821,11 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay) MarshalJSON() ([]byte
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverla
 // y: A change to an OrgPolicy custom constraint.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay struct {
-	// CustomConstraint: The new or updated custom constraint.
+	// CustomConstraint: Optional. The new or updated custom constraint.
 	CustomConstraint *GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraint,omitempty"`
 
-	// CustomConstraintParent: Resource the constraint is attached to.
-	// Example: "organization/987654"
+	// CustomConstraintParent: Optional. Resource the constraint is attached
+	// to. Example: "organization/987654"
 	CustomConstraintParent string `json:"customConstraintParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
@@ -1852,11 +1855,11 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay: A
 // change to an OrgPolicy.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay struct {
-	// Policy: The new or updated OrgPolicy.
+	// Policy: Optional. The new or updated OrgPolicy.
 	Policy *GoogleCloudOrgpolicyV2Policy `json:"policy,omitempty"`
 
-	// PolicyParent: The parent of the policy we are attaching to. Example:
-	// "projects/123456"
+	// PolicyParent: Optional. The parent of the policy we are attaching to.
+	// Example: "projects/123456"
 	PolicyParent string `json:"policyParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1970,22 +1973,25 @@ func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview) MarshalJSON
 // ts: A summary of the state of all resources scanned for compliance
 // with the changed OrgPolicy.
 type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts struct {
-	// Compliant: Number of scanned resources with zero violations.
+	// Compliant: Output only. Number of scanned resources with zero
+	// violations.
 	Compliant int64 `json:"compliant,omitempty"`
 
-	// Errors: Number of resources that returned an error when scanned.
+	// Errors: Output only. Number of resources that returned an error when
+	// scanned.
 	Errors int64 `json:"errors,omitempty"`
 
-	// Noncompliant: Number of scanned resources with at least one
-	// violation.
+	// Noncompliant: Output only. Number of scanned resources with at least
+	// one violation.
 	Noncompliant int64 `json:"noncompliant,omitempty"`
 
-	// Scanned: Number of resources checked for compliance. Must equal:
-	// unenforced + noncompliant + compliant + error
+	// Scanned: Output only. Number of resources checked for compliance.
+	// Must equal: unenforced + noncompliant + compliant + error
 	Scanned int64 `json:"scanned,omitempty"`
 
-	// Unenforced: Number of resources where the constraint was not
-	// enforced, i.e. the Policy set `enforced: false` for that resource.
+	// Unenforced: Output only. Number of resources where the constraint was
+	// not enforced, i.e. the Policy set `enforced: false` for that
+	// resource.
 	Unenforced int64 `json:"unenforced,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compliant") to
@@ -2189,7 +2195,11 @@ type GoogleIamV1Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to

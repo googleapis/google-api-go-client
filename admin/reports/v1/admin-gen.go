@@ -368,11 +368,9 @@ type ActivityEvents struct {
 	// types of events. For `eventName` request parameters in general: - If
 	// no `eventName` is given, the report returns all possible instances of
 	// an `eventName`. - When you request an `eventName`, the API's response
-	// returns all activities which contain that `eventName`. It is possible
-	// that the returned activities will have other `eventName` properties
-	// in addition to the one requested. For more information about
-	// `eventName` properties, see the list of event names for various
-	// applications above in `applicationName`.
+	// returns all activities which contain that `eventName`. For more
+	// information about `eventName` properties, see the list of event names
+	// for various applications above in `applicationName`.
 	Name string `json:"name,omitempty"`
 
 	// Parameters: Parameter value pairs for various applications. For more

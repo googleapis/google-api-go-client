@@ -1740,7 +1740,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -25379,6 +25383,19 @@ func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) F
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The fields by which to
+// order the valued resources response. Supported fields: *
+// `exposed_score` * `resource_value` * `resource_type` * `resource` *
+// `display_name` Values should be a comma separated list of fields. For
+// example: `exposed_score,resource_value`. The default sorting order is
+// descending. To specify ascending or descending order for a field,
+// append a " ASC" or a " DESC" suffix, respectively; for example:
+// `exposed_score DESC`.
+func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) OrderBy(orderBy string) *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return in a single response. Default is 10, minimum is
 // 1, maximum is 1000.
@@ -25505,6 +25522,11 @@ func (c *OrganizationsSimulationsAttackExposureResultsValuedResourcesListCall) D
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "The filter expression that filters the valued resources in the response. Supported fields: * `resource_value` supports = * `resource_type` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The fields by which to order the valued resources response. Supported fields: * `exposed_score` * `resource_value` * `resource_type` * `resource` * `display_name` Values should be a comma separated list of fields. For example: `exposed_score,resource_value`. The default sorting order is descending. To specify ascending or descending order for a field, append a \" ASC\" or a \" DESC\" suffix, respectively; for example: `exposed_score DESC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25955,6 +25977,19 @@ func (c *OrganizationsSimulationsValuedResourcesListCall) Filter(filter string) 
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The fields by which to
+// order the valued resources response. Supported fields: *
+// `exposed_score` * `resource_value` * `resource_type` * `resource` *
+// `display_name` Values should be a comma separated list of fields. For
+// example: `exposed_score,resource_value`. The default sorting order is
+// descending. To specify ascending or descending order for a field,
+// append a " ASC" or a " DESC" suffix, respectively; for example:
+// `exposed_score DESC`.
+func (c *OrganizationsSimulationsValuedResourcesListCall) OrderBy(orderBy string) *OrganizationsSimulationsValuedResourcesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return in a single response. Default is 10, minimum is
 // 1, maximum is 1000.
@@ -26081,6 +26116,11 @@ func (c *OrganizationsSimulationsValuedResourcesListCall) Do(opts ...googleapi.C
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "The filter expression that filters the valued resources in the response. Supported fields: * `resource_value` supports = * `resource_type` supports =",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The fields by which to order the valued resources response. Supported fields: * `exposed_score` * `resource_value` * `resource_type` * `resource` * `display_name` Values should be a comma separated list of fields. For example: `exposed_score,resource_value`. The default sorting order is descending. To specify ascending or descending order for a field, append a \" ASC\" or a \" DESC\" suffix, respectively; for example: `exposed_score DESC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

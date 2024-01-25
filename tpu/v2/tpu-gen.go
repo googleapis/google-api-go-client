@@ -834,6 +834,10 @@ type NetworkConfig struct {
 	// "default" will be used.
 	Network string `json:"network,omitempty"`
 
+	// QueueCount: Optional. Specifies networking queue count for TPU VM
+	// instance's network interface.
+	QueueCount int64 `json:"queueCount,omitempty"`
+
 	// Subnetwork: The name of the subnetwork for the TPU node. It must be a
 	// preexisting Google Compute Engine subnetwork. If none is provided,
 	// "default" will be used.

@@ -163,15 +163,27 @@ func (ds *DialSettings) Validate() error {
 	return nil
 }
 
-// UniverseDomain returns the default service domain for a given Cloud universe.
+// GetDefaultUniverseDomain returns the default service domain for a given Cloud
+// universe, as configured with internaloption.WithDefaultUniverseDomain.
 // The default value is "googleapis.com".
+func (ds *DialSettings) GetDefaultUniverseDomain() string {
+	if ds.DefaultUniverseDomain == "" {
+		return universeDomainDefault
+	}
+	return ds.DefaultUniverseDomain
+}
+
+// GetUniverseDomain returns the default service domain for a given Cloud
+// universe, as configured with option.WithUniverseDomain.
+// The default value is the value of GetDefaultUniverseDomain, as configured
+// with internaloption.WithDefaultUniverseDomain.
 func (ds *DialSettings) GetUniverseDomain() string {
 	if ds.UniverseDomain == "" {
-		return universeDomainDefault
+		return ds.GetDefaultUniverseDomain()
 	}
 	return ds.UniverseDomain
 }
 
 func (ds *DialSettings) IsUniverseDomainGDU() bool {
-	return ds.GetUniverseDomain() == universeDomainDefault
+	return ds.GetUniverseDomain() == ds.GetDefaultUniverseDomain()
 }

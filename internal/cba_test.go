@@ -25,24 +25,25 @@ var dummyClientCertSource = func(info *tls.CertificateRequestInfo) (*tls.Certifi
 
 func TestGetEndpoint(t *testing.T) {
 	testCases := []struct {
-		UserEndpoint    string
-		DefaultEndpoint string
-		Want            string
-		WantErr         bool
+		UserEndpoint            string
+		DefaultEndpoint         string
+		DefaultEndpointTemplate string
+		Want                    string
+		WantErr                 bool
 	}{
 		{
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://foo.googleapis.com/bar/baz",
+			DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/bar/baz",
+			Want:                    "https://foo.googleapis.com/bar/baz",
 		},
 		{
-			UserEndpoint:    "myhost:3999",
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://myhost:3999/bar/baz",
+			UserEndpoint:            "myhost:3999",
+			DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/bar/baz",
+			Want:                    "https://myhost:3999/bar/baz",
 		},
 		{
-			UserEndpoint:    "https://host/path/to/bar",
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://host/path/to/bar",
+			UserEndpoint:            "https://host/path/to/bar",
+			DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/bar/baz",
+			Want:                    "https://host/path/to/bar",
 		},
 		{
 			UserEndpoint:    "host:123",
@@ -63,8 +64,10 @@ func TestGetEndpoint(t *testing.T) {
 
 	for _, tc := range testCases {
 		got, err := getEndpoint(&DialSettings{
-			Endpoint:        tc.UserEndpoint,
-			DefaultEndpoint: tc.DefaultEndpoint,
+			Endpoint:                tc.UserEndpoint,
+			DefaultEndpoint:         tc.DefaultEndpoint,
+			DefaultEndpointTemplate: tc.DefaultEndpointTemplate,
+			DefaultUniverseDomain:   "googleapis.com",
 		}, nil)
 		if tc.WantErr && err == nil {
 			t.Errorf("want err, got nil err")
@@ -75,7 +78,7 @@ func TestGetEndpoint(t *testing.T) {
 			continue
 		}
 		if tc.Want != got {
-			t.Errorf("getEndpoint(%q, %q): got %v; want %v", tc.UserEndpoint, tc.DefaultEndpoint, got, tc.Want)
+			t.Errorf("getEndpoint(%q, %q): got %v; want %v", tc.UserEndpoint, tc.DefaultEndpointTemplate, got, tc.Want)
 		}
 	}
 }
@@ -118,9 +121,10 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 
 	for _, tc := range testCases {
 		got, err := getEndpoint(&DialSettings{
-			Endpoint:            tc.UserEndpoint,
-			DefaultEndpoint:     tc.DefaultEndpoint,
-			DefaultMTLSEndpoint: tc.DefaultMTLSEndpoint,
+			Endpoint:              tc.UserEndpoint,
+			DefaultEndpoint:       tc.DefaultEndpoint,
+			DefaultMTLSEndpoint:   tc.DefaultMTLSEndpoint,
+			DefaultUniverseDomain: "googleapis.com",
 		}, dummyClientCertSource)
 		if tc.WantErr && err == nil {
 			t.Errorf("want err, got nil err")
@@ -174,9 +178,10 @@ func TestGetGRPCTransportConfigAndEndpoint(t *testing.T) {
 		{
 			"no client cert, S2A address not empty, override endpoint",
 			&DialSettings{
-				DefaultMTLSEndpoint: testMTLSEndpoint,
-				DefaultEndpoint:     testRegularEndpoint,
-				Endpoint:            testOverrideEndpoint,
+				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				DefaultEndpointTemplate: testEndpointTemplate,
+				Endpoint:                testOverrideEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			validConfigResp,
 			testOverrideEndpoint,
@@ -184,8 +189,9 @@ func TestGetGRPCTransportConfigAndEndpoint(t *testing.T) {
 		{
 			"no client cert, S2A address not empty, DefaultMTLSEndpoint not set",
 			&DialSettings{
-				DefaultMTLSEndpoint: "",
-				DefaultEndpoint:     testRegularEndpoint,
+				DefaultMTLSEndpoint:     "",
+				DefaultEndpointTemplate: testEndpointTemplate,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			validConfigResp,
 			testRegularEndpoint,
@@ -336,6 +342,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpoint:         testRegularEndpoint,
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testRegularEndpoint,
 		},
@@ -346,6 +353,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				ClientCertSource:        dummyClientCertSource,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testMTLSEndpoint,
 		},
@@ -356,6 +364,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				UniverseDomain:          testUniverseDomain,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
 		},
@@ -367,6 +376,7 @@ func TestGetHTTPTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				UniverseDomain:          testUniverseDomain,
 				ClientCertSource:        dummyClientCertSource,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
 			wantErr:      errUniverseNotSupportedMTLS,
@@ -405,6 +415,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpoint:         testRegularEndpoint,
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testRegularEndpoint,
 		},
@@ -415,6 +426,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				Endpoint:                testOverrideEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testOverrideEndpoint,
 		},
@@ -425,6 +437,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				ClientCertSource:        dummyClientCertSource,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testMTLSEndpoint,
 		},
@@ -436,6 +449,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				ClientCertSource:        dummyClientCertSource,
 				Endpoint:                testOverrideEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testOverrideEndpoint,
 		},
@@ -446,6 +460,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultEndpointTemplate: testEndpointTemplate,
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				UniverseDomain:          testUniverseDomain,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testUniverseDomainEndpoint,
 		},
@@ -457,6 +472,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				UniverseDomain:          testUniverseDomain,
 				Endpoint:                testOverrideEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testOverrideEndpoint,
 		},
@@ -468,6 +484,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				DefaultMTLSEndpoint:     testMTLSEndpoint,
 				UniverseDomain:          testUniverseDomain,
 				ClientCertSource:        dummyClientCertSource,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantErr: errUniverseNotSupportedMTLS,
 		},
@@ -480,6 +497,7 @@ func TestGetGRPCTransportConfigAndEndpoint_UniverseDomain(t *testing.T) {
 				UniverseDomain:          testUniverseDomain,
 				ClientCertSource:        dummyClientCertSource,
 				Endpoint:                testOverrideEndpoint,
+				DefaultUniverseDomain:   "googleapis.com",
 			},
 			wantEndpoint: testOverrideEndpoint,
 		},

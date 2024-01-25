@@ -1,5 +1,26 @@
 # Changes
 
+## [0.158.0](https://github.com/googleapis/google-api-go-client/compare/v0.157.0...v0.158.0) (2024-01-25)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2361](https://github.com/googleapis/google-api-go-client/issues/2361)) ([6c3b622](https://github.com/googleapis/google-api-go-client/commit/6c3b622e2a358e940307026b3b10ed25f825b5d2))
+* **all:** Auto-regenerate discovery clients ([#2365](https://github.com/googleapis/google-api-go-client/issues/2365)) ([f40db7f](https://github.com/googleapis/google-api-go-client/commit/f40db7f9a7ae2dd4a1945c236f5ff792901ed67b))
+* **all:** Auto-regenerate discovery clients ([#2366](https://github.com/googleapis/google-api-go-client/issues/2366)) ([e0db6a5](https://github.com/googleapis/google-api-go-client/commit/e0db6a56333968b548ede1aafe64ca58953db492))
+* **all:** Auto-regenerate discovery clients ([#2369](https://github.com/googleapis/google-api-go-client/issues/2369)) ([45c097f](https://github.com/googleapis/google-api-go-client/commit/45c097f28a29428d00c4bfb9baee6ac19429e9ee))
+* **all:** Auto-regenerate discovery clients ([#2372](https://github.com/googleapis/google-api-go-client/issues/2372)) ([2d69d97](https://github.com/googleapis/google-api-go-client/commit/2d69d972d4c8a20e9247bfcb12beafe38416075a))
+* **all:** Auto-regenerate discovery clients ([#2374](https://github.com/googleapis/google-api-go-client/issues/2374)) ([d266978](https://github.com/googleapis/google-api-go-client/commit/d2669784ef23e304318cc449fd578b22c508c0a8))
+* **impersonate:** Add universe domain support ([#2296](https://github.com/googleapis/google-api-go-client/issues/2296)) ([6ef1144](https://github.com/googleapis/google-api-go-client/commit/6ef1144a79d93982b56c81cf0116965a7c0bf93a))
+* **transport:** Add universe domain support ([#2355](https://github.com/googleapis/google-api-go-client/issues/2355)) ([69626e3](https://github.com/googleapis/google-api-go-client/commit/69626e37973a7f1e7974d7dd0e6e0fee3c0ebe6f))
+
+
+### Bug Fixes
+
+* **internal:** Support internaloption.WithDefaultUniverseDomain ([#2373](https://github.com/googleapis/google-api-go-client/issues/2373)) ([b21a1fa](https://github.com/googleapis/google-api-go-client/commit/b21a1fa29bb072f7063dfe6e2fe81ac7b8bb5932))
+* **transport/grpc:** Add universe domain verification ([#2375](https://github.com/googleapis/google-api-go-client/issues/2375)) ([df17254](https://github.com/googleapis/google-api-go-client/commit/df1725443e664d0bb3985ce05cad40535122bcff))
+* **transport:** Not enable s2a when there is endpoint override ([#2368](https://github.com/googleapis/google-api-go-client/issues/2368)) ([73fc7fd](https://github.com/googleapis/google-api-go-client/commit/73fc7fd7fafe625f8c2efb621ff852289a5b5a06))
+
 ## [0.157.0](https://github.com/googleapis/google-api-go-client/compare/v0.156.0...v0.157.0) (2024-01-18)
 
 

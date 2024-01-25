@@ -9359,6 +9359,46 @@ func (s *GoogleCloudRetailV2betaCreateModelMetadata) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaExportAnalyticsMetricsResponse: Response of
+// the ExportAnalyticsMetricsRequest. If the long running operation was
+// successful, then this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudRetailV2betaExportAnalyticsMetricsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the
+	// request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// ErrorsConfig: This field is never set.
+	ErrorsConfig *GoogleCloudRetailV2betaExportErrorsConfig `json:"errorsConfig,omitempty"`
+
+	// OutputResult: Output result indicating where the data were exported
+	// to.
+	OutputResult *GoogleCloudRetailV2betaOutputResult `json:"outputResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaExportAnalyticsMetricsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaExportErrorsConfig: Configuration of
 // destination for Export related errors.
 type GoogleCloudRetailV2betaExportErrorsConfig struct {

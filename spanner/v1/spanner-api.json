@@ -2729,7 +2729,7 @@
       }
     }
   },
-  "revision": "20240106",
+  "revision": "20240120",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "AutoscalingConfig": {
@@ -4143,6 +4143,12 @@
             "The instance config is still being created.",
             "The instance config is fully created and ready to be used to create instances."
           ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "storageLimitPerProcessingUnit": {
+          "description": "Output only. The storage limit in bytes per processing unit.",
+          "format": "int64",
           "readOnly": true,
           "type": "string"
         }

@@ -4546,6 +4546,88 @@ func (s *GoogleCloudRetailV2betaExperimentInfoServingConfigExperiment) MarshalJS
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaExportAnalyticsMetricsRequest: Request message
+// for the `ExportAnalyticsMetrics` method.
+type GoogleCloudRetailV2betaExportAnalyticsMetricsRequest struct {
+	// Filter: A filtering expression to specify restrictions on returned
+	// metrics. The expression is a sequence of terms. Each term applies a
+	// restriction to the returned metrics. Use this expression to restrict
+	// results to a specific time range. Currently we expect only one types
+	// of fields: * `timestamp`: This can be specified twice, once with a
+	// less than operator and once with a greater than operator. The
+	// `timestamp` restriction should result in one, contiguous, valid,
+	// `timestamp` range. Some examples of valid filters expressions: *
+	// Example 1: `timestamp > "2012-04-23T18:25:43.511Z" timestamp <
+	// "2012-04-23T18:30:43.511Z" * Example 2: `timestamp >
+	// "2012-04-23T18:25:43.511Z"
+	Filter string `json:"filter,omitempty"`
+
+	// OutputConfig: Required. The output location of the data.
+	OutputConfig *GoogleCloudRetailV2betaOutputConfig `json:"outputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaExportAnalyticsMetricsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaExportAnalyticsMetricsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaExportAnalyticsMetricsResponse: Response of
+// the ExportAnalyticsMetricsRequest. If the long running operation was
+// successful, then this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudRetailV2betaExportAnalyticsMetricsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the
+	// request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// ErrorsConfig: This field is never set.
+	ErrorsConfig *GoogleCloudRetailV2betaExportErrorsConfig `json:"errorsConfig,omitempty"`
+
+	// OutputResult: Output result indicating where the data were exported
+	// to.
+	OutputResult *GoogleCloudRetailV2betaOutputResult `json:"outputResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaExportAnalyticsMetricsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaExportErrorsConfig: Configuration of
 // destination for Export related errors.
 type GoogleCloudRetailV2betaExportErrorsConfig struct {
@@ -6060,6 +6142,114 @@ type GoogleCloudRetailV2betaModelServingConfigList struct {
 
 func (s *GoogleCloudRetailV2betaModelServingConfigList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaModelServingConfigList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaOutputConfig: The output configuration
+// setting.
+type GoogleCloudRetailV2betaOutputConfig struct {
+	// BigqueryDestination: The BigQuery location where the output is to be
+	// written to.
+	BigqueryDestination *GoogleCloudRetailV2betaOutputConfigBigQueryDestination `json:"bigqueryDestination,omitempty"`
+
+	// GcsDestination: The Google Cloud Storage location where the output is
+	// to be written to.
+	GcsDestination *GoogleCloudRetailV2betaOutputConfigGcsDestination `json:"gcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaOutputConfigBigQueryDestination: The BigQuery
+// output destination configuration.
+type GoogleCloudRetailV2betaOutputConfigBigQueryDestination struct {
+	// DatasetId: Required. The ID of a BigQuery Dataset.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// TableIdPrefix: Required. The prefix of exported BigQuery tables.
+	TableIdPrefix string `json:"tableIdPrefix,omitempty"`
+
+	// TableType: Required. Describes the table type. The following values
+	// are supported: * `table`: A BigQuery native table. * `view`: A
+	// virtual table defined by a SQL query.
+	TableType string `json:"tableType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaOutputConfigBigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaOutputConfigBigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaOutputConfigGcsDestination: The Google Cloud
+// Storage output destination configuration.
+type GoogleCloudRetailV2betaOutputConfigGcsDestination struct {
+	// OutputUriPrefix: Required. The output uri prefix for saving output
+	// data to json files. Some mapping examples are as follows:
+	// output_uri_prefix sample output(assuming the object is foo.json)
+	// ========================
+	// ============================================= gs://bucket/
+	// gs://bucket/foo.json gs://bucket/folder/ gs://bucket/folder/foo.json
+	// gs://bucket/folder/item_ gs://bucket/folder/item_foo.json
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaOutputConfigGcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaOutputConfigGcsDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10299,6 +10489,151 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//   "path": "v2beta/{+catalog}:completeQuery",
 	//   "response": {
 	//     "$ref": "GoogleCloudRetailV2betaCompleteQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "retail.projects.locations.catalogs.exportAnalyticsMetrics":
+
+type ProjectsLocationsCatalogsExportAnalyticsMetricsCall struct {
+	s                                                    *Service
+	catalog                                              string
+	googlecloudretailv2betaexportanalyticsmetricsrequest *GoogleCloudRetailV2betaExportAnalyticsMetricsRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// ExportAnalyticsMetrics: Exports analytics metrics.
+// `Operation.response` is of type `ExportAnalyticsMetricsResponse`.
+// `Operation.metadata` is of type `ExportMetadata`.
+//
+//   - catalog: Full resource name of the parent catalog. Expected format:
+//     `projects/*/locations/*/catalogs/*`.
+func (r *ProjectsLocationsCatalogsService) ExportAnalyticsMetrics(catalog string, googlecloudretailv2betaexportanalyticsmetricsrequest *GoogleCloudRetailV2betaExportAnalyticsMetricsRequest) *ProjectsLocationsCatalogsExportAnalyticsMetricsCall {
+	c := &ProjectsLocationsCatalogsExportAnalyticsMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.catalog = catalog
+	c.googlecloudretailv2betaexportanalyticsmetricsrequest = googlecloudretailv2betaexportanalyticsmetricsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsExportAnalyticsMetricsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) Context(ctx context.Context) *ProjectsLocationsCatalogsExportAnalyticsMetricsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2betaexportanalyticsmetricsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+catalog}:exportAnalyticsMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"catalog": c.catalog,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.exportAnalyticsMetrics" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exports analytics metrics. `Operation.response` is of type `ExportAnalyticsMetricsResponse`. `Operation.metadata` is of type `ExportMetadata`.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:exportAnalyticsMetrics",
+	//   "httpMethod": "POST",
+	//   "id": "retail.projects.locations.catalogs.exportAnalyticsMetrics",
+	//   "parameterOrder": [
+	//     "catalog"
+	//   ],
+	//   "parameters": {
+	//     "catalog": {
+	//       "description": "Required. Full resource name of the parent catalog. Expected format: `projects/*/locations/*/catalogs/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+catalog}:exportAnalyticsMetrics",
+	//   "request": {
+	//     "$ref": "GoogleCloudRetailV2betaExportAnalyticsMetricsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -10876,8 +10876,7 @@ type ProjectsLocationsClustersGetJwksCall struct {
 }
 
 // GetJwks: Gets the public component of the cluster signing keys in
-// JSON Web Key format. This API is not yet intended for general use,
-// and is not available for all clusters.
+// JSON Web Key format.
 //
 //   - parent: The cluster (project, location, cluster name) to get keys
 //     for. Specified in the format `projects/*/locations/*/clusters/*`.
@@ -10986,7 +10985,7 @@ func (c *ProjectsLocationsClustersGetJwksCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.getJwks",
@@ -14549,8 +14548,7 @@ type ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall struct {
 // GetOpenidConfiguration: Gets the OIDC discovery document for the
 // cluster. See the OpenID Connect Discovery 1.0 specification
 // (https://openid.net/specs/openid-connect-discovery-1_0.html) for
-// details. This API is not yet intended for general use, and is not
-// available for all clusters.
+// details.
 //
 //   - parent: The cluster (project, location, cluster name) to get the
 //     discovery document for. Specified in the format
@@ -14660,7 +14658,7 @@ func (c *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",

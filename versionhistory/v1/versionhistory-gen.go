@@ -204,6 +204,8 @@ type Channel struct {
 	//   "CANARY_ASAN"
 	//   "ALL"
 	//   "EXTENDED"
+	//   "LTS" - The Long-term support channel for ChromeOS.
+	//   "LTC" - The Long-term support candidate channel for ChromeOS.
 	ChannelType string `json:"channelType,omitempty"`
 
 	// Name: Channel name. Format is

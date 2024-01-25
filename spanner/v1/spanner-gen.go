@@ -2992,6 +2992,10 @@ type InstanceConfig struct {
 	// to create instances.
 	State string `json:"state,omitempty"`
 
+	// StorageLimitPerProcessingUnit: Output only. The storage limit in
+	// bytes per processing unit.
+	StorageLimitPerProcessingUnit int64 `json:"storageLimitPerProcessingUnit,omitempty,string"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

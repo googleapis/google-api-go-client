@@ -177,6 +177,13 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			if err != nil {
 				return nil, err
 			}
+			credsUniverseDomain, err := creds.GetUniverseDomain()
+			if err != nil {
+				return nil, err
+			}
+			if o.GetUniverseDomain() != credsUniverseDomain {
+				return nil, internal.ErrUniverseNotMatch(o.GetUniverseDomain(), credsUniverseDomain)
+			}
 			grpcOpts = append(grpcOpts, grpc.WithPerRPCCredentials(grpcTokenSource{
 				TokenSource:   oauth.TokenSource{TokenSource: creds.TokenSource},
 				quotaProject:  internal.GetQuotaProject(creds, o.QuotaProject),

@@ -12,6 +12,7 @@ import (
 	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 )
 
@@ -45,7 +46,7 @@ func TestNewClient_MismatchedUniverseDomainCreds(t *testing.T) {
 	universeDomain := "example.com"
 	universeDomainDefault := "googleapis.com"
 	creds := &google.Credentials{} // universeDomainDefault
-	wantErr := errUniverseNotMatch(universeDomain, universeDomainDefault)
+	wantErr := internal.ErrUniverseNotMatch(universeDomain, universeDomainDefault)
 	_, _, err := NewClient(context.Background(), option.WithUniverseDomain(universeDomain),
 		option.WithCredentials(creds), option.WithScopes(rootTokenScope))
 

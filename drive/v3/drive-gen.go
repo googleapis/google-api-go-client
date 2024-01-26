@@ -108,6 +108,9 @@ const (
 	// Drive
 	DriveAppdataScope = "https://www.googleapis.com/auth/drive.appdata"
 
+	// View your Google Drive apps
+	DriveAppsReadonlyScope = "https://www.googleapis.com/auth/drive.apps.readonly"
+
 	// See, edit, create, and delete only the specific Google Drive files
 	// you use with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
@@ -133,6 +136,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/drive",
 		"https://www.googleapis.com/auth/drive.appdata",
+		"https://www.googleapis.com/auth/drive.apps.readonly",
 		"https://www.googleapis.com/auth/drive.file",
 		"https://www.googleapis.com/auth/drive.metadata",
 		"https://www.googleapis.com/auth/drive.metadata.readonly",
@@ -171,6 +175,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.About = NewAboutService(s)
+	s.Apps = NewAppsService(s)
 	s.Changes = NewChangesService(s)
 	s.Channels = NewChannelsService(s)
 	s.Comments = NewCommentsService(s)
@@ -189,6 +194,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	About *AboutService
+
+	Apps *AppsService
 
 	Changes *ChangesService
 
@@ -222,6 +229,15 @@ func NewAboutService(s *Service) *AboutService {
 }
 
 type AboutService struct {
+	s *Service
+}
+
+func NewAppsService(s *Service) *AppsService {
+	rs := &AppsService{s: s}
+	return rs
+}
+
+type AppsService struct {
 	s *Service
 }
 
@@ -484,6 +500,205 @@ type AboutTeamDriveThemes struct {
 
 func (s *AboutTeamDriveThemes) MarshalJSON() ([]byte, error) {
 	type NoMethod AboutTeamDriveThemes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// App: The `apps` resource provides a list of apps that a user has
+// installed, with information about each app's supported MIME types,
+// file extensions, and other details. Some resource methods (such as
+// `apps.get`) require an `appId`. Use the `apps.list` method to
+// retrieve the ID for an installed application.
+type App struct {
+	// Authorized: Whether the app is authorized to access data on the
+	// user's Drive.
+	Authorized bool `json:"authorized,omitempty"`
+
+	// CreateInFolderTemplate: The template URL to create a file with this
+	// app in a given folder. The template contains the {folderId} to be
+	// replaced by the folder ID house the new file.
+	CreateInFolderTemplate string `json:"createInFolderTemplate,omitempty"`
+
+	// CreateUrl: The URL to create a file with this app.
+	CreateUrl string `json:"createUrl,omitempty"`
+
+	// HasDriveWideScope: Whether the app has Drive-wide scope. An app with
+	// Drive-wide scope can access all files in the user's Drive.
+	HasDriveWideScope bool `json:"hasDriveWideScope,omitempty"`
+
+	// Icons: The various icons for the app.
+	Icons []*AppIcons `json:"icons,omitempty"`
+
+	// Id: The ID of the app.
+	Id string `json:"id,omitempty"`
+
+	// Installed: Whether the app is installed.
+	Installed bool `json:"installed,omitempty"`
+
+	// Kind: Output only. Identifies what kind of resource this is. Value:
+	// the fixed string "drive#app".
+	Kind string `json:"kind,omitempty"`
+
+	// LongDescription: A long description of the app.
+	LongDescription string `json:"longDescription,omitempty"`
+
+	// Name: The name of the app.
+	Name string `json:"name,omitempty"`
+
+	// ObjectType: The type of object this app creates such as a Chart. If
+	// empty, the app name should be used instead.
+	ObjectType string `json:"objectType,omitempty"`
+
+	// OpenUrlTemplate: The template URL for opening files with this app.
+	// The template contains {ids} or {exportIds} to be replaced by the
+	// actual file IDs. For more information, see Open Files for the full
+	// documentation.
+	OpenUrlTemplate string `json:"openUrlTemplate,omitempty"`
+
+	// PrimaryFileExtensions: The list of primary file extensions.
+	PrimaryFileExtensions []string `json:"primaryFileExtensions,omitempty"`
+
+	// PrimaryMimeTypes: The list of primary MIME types.
+	PrimaryMimeTypes []string `json:"primaryMimeTypes,omitempty"`
+
+	// ProductId: The ID of the product listing for this app.
+	ProductId string `json:"productId,omitempty"`
+
+	// ProductUrl: A link to the product listing for this app.
+	ProductUrl string `json:"productUrl,omitempty"`
+
+	// SecondaryFileExtensions: The list of secondary file extensions.
+	SecondaryFileExtensions []string `json:"secondaryFileExtensions,omitempty"`
+
+	// SecondaryMimeTypes: The list of secondary MIME types.
+	SecondaryMimeTypes []string `json:"secondaryMimeTypes,omitempty"`
+
+	// ShortDescription: A short description of the app.
+	ShortDescription string `json:"shortDescription,omitempty"`
+
+	// SupportsCreate: Whether this app supports creating objects.
+	SupportsCreate bool `json:"supportsCreate,omitempty"`
+
+	// SupportsImport: Whether this app supports importing from Google Docs.
+	SupportsImport bool `json:"supportsImport,omitempty"`
+
+	// SupportsMultiOpen: Whether this app supports opening more than one
+	// file.
+	SupportsMultiOpen bool `json:"supportsMultiOpen,omitempty"`
+
+	// SupportsOfflineCreate: Whether this app supports creating files when
+	// offline.
+	SupportsOfflineCreate bool `json:"supportsOfflineCreate,omitempty"`
+
+	// UseByDefault: Whether the app is selected as the default handler for
+	// the types it supports.
+	UseByDefault bool `json:"useByDefault,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Authorized") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Authorized") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *App) MarshalJSON() ([]byte, error) {
+	type NoMethod App
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppIcons struct {
+	// Category: Category of the icon. Allowed values are: * `application` -
+	// The icon for the application. * `document` - The icon for a file
+	// associated with the app. * `documentShared` - The icon for a shared
+	// file associated with the app.
+	Category string `json:"category,omitempty"`
+
+	// IconUrl: URL for the icon.
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// Size: Size of the icon. Represented as the maximum of the width and
+	// height.
+	Size int64 `json:"size,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppIcons) MarshalJSON() ([]byte, error) {
+	type NoMethod AppIcons
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppList: A list of third-party applications which the user has
+// installed or given access to Google Drive.
+type AppList struct {
+	// DefaultAppIds: The list of app IDs that the user has specified to use
+	// by default. The list is in reverse-priority order (lowest to
+	// highest).
+	DefaultAppIds []string `json:"defaultAppIds,omitempty"`
+
+	// Items: The list of apps.
+	Items []*App `json:"items,omitempty"`
+
+	// Kind: Output only. Identifies what kind of resource this is. Value:
+	// the fixed string "drive#appList".
+	Kind string `json:"kind,omitempty"`
+
+	// SelfLink: A link back to this list.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultAppIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultAppIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppList) MarshalJSON() ([]byte, error) {
+	type NoMethod AppList
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3654,6 +3869,334 @@ func (c *AboutGetCall) Do(opts ...googleapi.CallOption) (*About, error) {
 	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
 	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.apps.get":
+
+type AppsGetCall struct {
+	s            *Service
+	appId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a specific app.
+//
+// - appId: The ID of the app.
+func (r *AppsService) Get(appId string) *AppsGetCall {
+	c := &AppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appId = appId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsGetCall) IfNoneMatch(entityTag string) *AppsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/{appId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"appId": c.appId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.apps.get" call.
+// Exactly one of *App or error will be non-nil. Any non-2xx status code
+// is an error. Response headers are in either
+// *App.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*App, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &App{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a specific app.",
+	//   "flatPath": "apps/{appId}",
+	//   "httpMethod": "GET",
+	//   "id": "drive.apps.get",
+	//   "parameterOrder": [
+	//     "appId"
+	//   ],
+	//   "parameters": {
+	//     "appId": {
+	//       "description": "The ID of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "apps/{appId}",
+	//   "response": {
+	//     "$ref": "App"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.apps.readonly",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "drive.apps.list":
+
+type AppsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists a user's installed apps.
+func (r *AppsService) List() *AppsListCall {
+	c := &AppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AppFilterExtensions sets the optional parameter
+// "appFilterExtensions": A comma-separated list of file extensions to
+// limit returned results. All results within the given app query scope
+// which can open any of the given file extensions are included in the
+// response. If `appFilterMimeTypes` are provided as well, the result is
+// a union of the two resulting app lists.
+func (c *AppsListCall) AppFilterExtensions(appFilterExtensions string) *AppsListCall {
+	c.urlParams_.Set("appFilterExtensions", appFilterExtensions)
+	return c
+}
+
+// AppFilterMimeTypes sets the optional parameter "appFilterMimeTypes":
+// A comma-separated list of file extensions to limit returned results.
+// All results within the given app query scope which can open any of
+// the given MIME types will be included in the response. If
+// `appFilterExtensions` are provided as well, the result is a union of
+// the two resulting app lists.
+func (c *AppsListCall) AppFilterMimeTypes(appFilterMimeTypes string) *AppsListCall {
+	c.urlParams_.Set("appFilterMimeTypes", appFilterMimeTypes)
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": A language
+// or locale code, as defined by BCP 47, with some extensions from
+// Unicode's LDML format (http://www.unicode.org/reports/tr35/).
+func (c *AppsListCall) LanguageCode(languageCode string) *AppsListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AppsListCall) Fields(s ...googleapi.Field) *AppsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AppsListCall) IfNoneMatch(entityTag string) *AppsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AppsListCall) Context(ctx context.Context) *AppsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AppsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.apps.list" call.
+// Exactly one of *AppList or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *AppList.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AppsListCall) Do(opts ...googleapi.CallOption) (*AppList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AppList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists a user's installed apps.",
+	//   "flatPath": "apps",
+	//   "httpMethod": "GET",
+	//   "id": "drive.apps.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "appFilterExtensions": {
+	//       "default": "",
+	//       "description": "A comma-separated list of file extensions to limit returned results. All results within the given app query scope which can open any of the given file extensions are included in the response. If `appFilterMimeTypes` are provided as well, the result is a union of the two resulting app lists.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "appFilterMimeTypes": {
+	//       "default": "",
+	//       "description": "A comma-separated list of file extensions to limit returned results. All results within the given app query scope which can open any of the given MIME types will be included in the response. If `appFilterExtensions` are provided as well, the result is a union of the two resulting app lists.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "languageCode": {
+	//       "description": "A language or locale code, as defined by BCP 47, with some extensions from Unicode's LDML format (http://www.unicode.org/reports/tr35/).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "apps",
+	//   "response": {
+	//     "$ref": "AppList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive.apps.readonly"
 	//   ]
 	// }
 

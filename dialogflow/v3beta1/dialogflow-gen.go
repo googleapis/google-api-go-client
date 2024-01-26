@@ -2354,7 +2354,9 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 
 	// OptOutConformerModelMigration: If `true`, the request will opt out
 	// for STT conformer model migration. This field will be deprecated once
-	// force migration takes place in June 2024.
+	// force migration takes place in June 2024. Please refer to Dialogflow
+	// CX Speech model migration
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-model-migration).
 	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
@@ -8951,7 +8953,9 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 
 	// OptOutConformerModelMigration: If `true`, the request will opt out
 	// for STT conformer model migration. This field will be deprecated once
-	// force migration takes place in June 2024.
+	// force migration takes place in June 2024. Please refer to Dialogflow
+	// CX Speech model migration
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-model-migration).
 	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases

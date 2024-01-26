@@ -575,10 +575,22 @@ type FirstAndThirdPartyAudiencesService struct {
 
 func NewFloodlightGroupsService(s *Service) *FloodlightGroupsService {
 	rs := &FloodlightGroupsService{s: s}
+	rs.FloodlightActivities = NewFloodlightGroupsFloodlightActivitiesService(s)
 	return rs
 }
 
 type FloodlightGroupsService struct {
+	s *Service
+
+	FloodlightActivities *FloodlightGroupsFloodlightActivitiesService
+}
+
+func NewFloodlightGroupsFloodlightActivitiesService(s *Service) *FloodlightGroupsFloodlightActivitiesService {
+	rs := &FloodlightGroupsFloodlightActivitiesService{s: s}
+	return rs
+}
+
+type FloodlightGroupsFloodlightActivitiesService struct {
 	s *Service
 }
 
@@ -4609,6 +4621,10 @@ type CmHybridConfig struct {
 	// CmAccountId: Required. Immutable. Account ID of the CM360 Floodlight
 	// configuration linked with the DV360 advertiser.
 	CmAccountId int64 `json:"cmAccountId,omitempty,string"`
+
+	// CmAdvertiserIds: Output only. The set of CM360 Advertiser IDs sharing
+	// the CM360 Floodlight configuration.
+	CmAdvertiserIds googleapi.Int64s `json:"cmAdvertiserIds,omitempty"`
 
 	// CmFloodlightConfigId: Required. Immutable. ID of the CM360 Floodlight
 	// configuration linked with the DV360 advertiser.
@@ -9022,6 +9038,73 @@ func (s *FixedBidStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FloodlightActivity: A single Floodlight activity.
+type FloodlightActivity struct {
+	// AdvertiserIds: Output only. IDs of the advertisers that have access
+	// to the parent Floodlight group. Only advertisers under the provided
+	// partner ID will be listed in this field.
+	AdvertiserIds googleapi.Int64s `json:"advertiserIds,omitempty"`
+
+	// DisplayName: Required. The display name of the Floodlight activity.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FloodlightActivityId: Output only. The unique ID of the Floodlight
+	// activity. Assigned by the system.
+	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
+
+	// FloodlightGroupId: Required. Immutable. The ID of the parent
+	// Floodlight group.
+	FloodlightGroupId int64 `json:"floodlightGroupId,omitempty,string"`
+
+	// Name: Output only. The resource name of the Floodlight activity.
+	Name string `json:"name,omitempty"`
+
+	// RemarketingConfigs: Output only. A list of configuration objects
+	// designating whether remarketing for this Floodlight Activity is
+	// enabled and available for a specifc advertiser. If enabled, this
+	// Floodlight Activity generates a remarketing user list that is able to
+	// be used in targeting under the advertiser.
+	RemarketingConfigs []*RemarketingConfig `json:"remarketingConfigs,omitempty"`
+
+	// ServingStatus: Optional. Whether the Floodlight activity is served.
+	//
+	// Possible values:
+	//   "FLOODLIGHT_ACTIVITY_SERVING_STATUS_UNSPECIFIED" - Type value is
+	// not specified or is unknown in this version.
+	//   "FLOODLIGHT_ACTIVITY_SERVING_STATUS_ENABLED" - Enabled.
+	//   "FLOODLIGHT_ACTIVITY_SERVING_STATUS_DISABLED" - Disabled.
+	ServingStatus string `json:"servingStatus,omitempty"`
+
+	// SslRequired: Output only. Whether tags are required to be compliant.
+	SslRequired bool `json:"sslRequired,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FloodlightActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod FloodlightActivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FloodlightGroup: A single Floodlight group.
 type FloodlightGroup struct {
 	// ActiveViewConfig: The Active View video viewability metric
@@ -12429,6 +12512,46 @@ func (s *ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListFloodlightActivitiesResponse struct {
+	// FloodlightActivities: The list of Floodlight activities. This list
+	// will be absent if empty.
+	FloodlightActivities []*FloodlightActivity `json:"floodlightActivities,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListFloodlightActivities` method to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FloodlightActivities") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FloodlightActivities") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListFloodlightActivitiesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFloodlightActivitiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListGoogleAudiencesResponse struct {
 	// GoogleAudiences: The list of Google audiences. This list will be
 	// absent if empty.
@@ -15672,6 +15795,39 @@ type RegionalLocationListAssignedTargetingOptionDetails struct {
 
 func (s *RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalLocationListAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemarketingConfig: Settings that control the whether remarketing is
+// enabled for the given identified advertiser.
+type RemarketingConfig struct {
+	// AdvertiserId: Output only. The ID of the advertiser.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// RemarketingEnabled: Output only. Whether the Floodlight activity
+	// remarketing user list is available to the identified advertiser.
+	RemarketingEnabled bool `json:"remarketingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemarketingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RemarketingConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -41106,6 +41262,409 @@ func (c *FloodlightGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Floodligh
 	//   ]
 	// }
 
+}
+
+// method id "displayvideo.floodlightGroups.floodlightActivities.get":
+
+type FloodlightGroupsFloodlightActivitiesGetCall struct {
+	s                    *Service
+	floodlightGroupId    int64
+	floodlightActivityId int64
+	urlParams_           gensupport.URLParams
+	ifNoneMatch_         string
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Get: Gets a Floodlight activity.
+//
+//   - floodlightActivityId: The ID of the Floodlight activity to fetch.
+//   - floodlightGroupId: The ID of the parent Floodlight group to which
+//     the requested Floodlight activity belongs.
+func (r *FloodlightGroupsFloodlightActivitiesService) Get(floodlightGroupId int64, floodlightActivityId int64) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c := &FloodlightGroupsFloodlightActivitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.floodlightGroupId = floodlightGroupId
+	c.floodlightActivityId = floodlightActivityId
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The ID
+// of the partner through which the Floodlight activity is being
+// accessed.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) PartnerId(partnerId int64) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Fields(s ...googleapi.Field) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) IfNoneMatch(entityTag string) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Context(ctx context.Context) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities/{+floodlightActivityId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"floodlightGroupId":    strconv.FormatInt(c.floodlightGroupId, 10),
+		"floodlightActivityId": strconv.FormatInt(c.floodlightActivityId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.floodlightGroups.floodlightActivities.get" call.
+// Exactly one of *FloodlightActivity or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *FloodlightActivity.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Do(opts ...googleapi.CallOption) (*FloodlightActivity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FloodlightActivity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Floodlight activity.",
+	//   "flatPath": "v2/floodlightGroups/{floodlightGroupsId}/floodlightActivities/{floodlightActivitiesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.floodlightGroups.floodlightActivities.get",
+	//   "parameterOrder": [
+	//     "floodlightGroupId",
+	//     "floodlightActivityId"
+	//   ],
+	//   "parameters": {
+	//     "floodlightActivityId": {
+	//       "description": "Required. The ID of the Floodlight activity to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "floodlightGroupId": {
+	//       "description": "Required. The ID of the parent Floodlight group to which the requested Floodlight activity belongs.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner through which the Floodlight activity is being accessed.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities/{+floodlightActivityId}",
+	//   "response": {
+	//     "$ref": "FloodlightActivity"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.floodlightGroups.floodlightActivities.list":
+
+type FloodlightGroupsFloodlightActivitiesListCall struct {
+	s                 *Service
+	floodlightGroupId int64
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// List: Lists Floodlight activities in a Floodlight group.
+//
+//   - floodlightGroupId: The ID of the parent Floodlight group to which
+//     the requested Floodlight activities belong.
+func (r *FloodlightGroupsFloodlightActivitiesService) List(floodlightGroupId int64) *FloodlightGroupsFloodlightActivitiesListCall {
+	c := &FloodlightGroupsFloodlightActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.floodlightGroupId = floodlightGroupId
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) *
+// `floodlightActivityId` The default sorting order is ascending. To
+// specify descending order for a field, a suffix "desc" should be added
+// to the field name. Example: `displayName desc`.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) OrderBy(orderBy string) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) PageSize(pageSize int64) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListFloodlightActivities` method. If not specified, the first
+// page of results will be returned.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) PageToken(pageToken string) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The ID
+// of the partner through which the Floodlight activities are being
+// accessed.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) PartnerId(partnerId int64) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Fields(s ...googleapi.Field) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) IfNoneMatch(entityTag string) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Context(ctx context.Context) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FloodlightGroupsFloodlightActivitiesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.floodlightGroups.floodlightActivities.list" call.
+// Exactly one of *ListFloodlightActivitiesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListFloodlightActivitiesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Do(opts ...googleapi.CallOption) (*ListFloodlightActivitiesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFloodlightActivitiesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Floodlight activities in a Floodlight group.",
+	//   "flatPath": "v2/floodlightGroups/{floodlightGroupsId}/floodlightActivities",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.floodlightGroups.floodlightActivities.list",
+	//   "parameterOrder": [
+	//     "floodlightGroupId"
+	//   ],
+	//   "parameters": {
+	//     "floodlightGroupId": {
+	//       "description": "Required. The ID of the parent Floodlight group to which the requested Floodlight activities belong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field by which to sort the list. Acceptable values are: * `displayName` (default) * `floodlightActivityId` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListFloodlightActivities` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner through which the Floodlight activities are being accessed.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities",
+	//   "response": {
+	//     "$ref": "ListFloodlightActivitiesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Pages(ctx context.Context, f func(*ListFloodlightActivitiesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "displayvideo.googleAudiences.get":

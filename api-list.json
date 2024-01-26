@@ -6444,6 +6444,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "workspaceevents:v1",
+      "name": "workspaceevents",
+      "version": "v1",
+      "title": "Google Workspace Events API",
+      "description": "The Google Workspace Events API lets you subscribe to events and manage change notifications across Google Workspace applications.",
+      "discoveryRestUrl": "https://workspaceevents.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/workspace/events",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "workstations:v1beta",
       "name": "workstations",
       "version": "v1beta",

@@ -1803,6 +1803,18 @@ type ClusterUpdate struct {
 	// the "desired_node_pool" field as well.
 	DesiredImageType string `json:"desiredImageType,omitempty"`
 
+	// DesiredInTransitEncryptionConfig: Specify the details of in-transit
+	// encryption.
+	//
+	// Possible values:
+	//   "IN_TRANSIT_ENCRYPTION_CONFIG_UNSPECIFIED" - Unspecified, will be
+	// inferred as default - IN_TRANSIT_ENCRYPTION_UNSPECIFIED.
+	//   "IN_TRANSIT_ENCRYPTION_DISABLED" - In-transit encryption is
+	// disabled.
+	//   "IN_TRANSIT_ENCRYPTION_INTER_NODE_TRANSPARENT" - Data in-transit is
+	// encrypted using inter-node transparent encryption.
+	DesiredInTransitEncryptionConfig string `json:"desiredInTransitEncryptionConfig,omitempty"`
+
 	// DesiredIntraNodeVisibilityConfig: The desired config of Intra-node
 	// visibility.
 	DesiredIntraNodeVisibilityConfig *IntraNodeVisibilityConfig `json:"desiredIntraNodeVisibilityConfig,omitempty"`
@@ -4374,6 +4386,18 @@ type NetworkConfig struct {
 	// GatewayApiConfig: GatewayAPIConfig contains the desired config of
 	// Gateway API on this cluster.
 	GatewayApiConfig *GatewayAPIConfig `json:"gatewayApiConfig,omitempty"`
+
+	// InTransitEncryptionConfig: Specify the details of in-transit
+	// encryption.
+	//
+	// Possible values:
+	//   "IN_TRANSIT_ENCRYPTION_CONFIG_UNSPECIFIED" - Unspecified, will be
+	// inferred as default - IN_TRANSIT_ENCRYPTION_UNSPECIFIED.
+	//   "IN_TRANSIT_ENCRYPTION_DISABLED" - In-transit encryption is
+	// disabled.
+	//   "IN_TRANSIT_ENCRYPTION_INTER_NODE_TRANSPARENT" - Data in-transit is
+	// encrypted using inter-node transparent encryption.
+	InTransitEncryptionConfig string `json:"inTransitEncryptionConfig,omitempty"`
 
 	// Network: Output only. The relative name of the Google Compute Engine
 	// network(https://cloud.google.com/compute/docs/networks-and-firewalls#n
@@ -9752,8 +9776,7 @@ type ProjectsLocationsClustersGetJwksCall struct {
 }
 
 // GetJwks: Gets the public component of the cluster signing keys in
-// JSON Web Key format. This API is not yet intended for general use,
-// and is not available for all clusters.
+// JSON Web Key format.
 //
 //   - parent: The cluster (project, location, cluster name) to get keys
 //     for. Specified in the format `projects/*/locations/*/clusters/*`.
@@ -9862,7 +9885,7 @@ func (c *ProjectsLocationsClustersGetJwksCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.getJwks",
@@ -13421,8 +13444,7 @@ type ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall struct {
 // GetOpenidConfiguration: Gets the OIDC discovery document for the
 // cluster. See the OpenID Connect Discovery 1.0 specification
 // (https://openid.net/specs/openid-connect-discovery-1_0.html) for
-// details. This API is not yet intended for general use, and is not
-// available for all clusters.
+// details.
 //
 //   - parent: The cluster (project, location, cluster name) to get the
 //     discovery document for. Specified in the format
@@ -13532,7 +13554,7 @@ func (c *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",

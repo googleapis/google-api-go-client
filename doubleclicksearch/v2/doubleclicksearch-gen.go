@@ -248,7 +248,11 @@ type Conversion struct {
 	// AdId: DS ad ID.
 	AdId int64 `json:"adId,omitempty,string"`
 
-	// AdUserDataConsent: Ad user data consent for this conversion.
+	// AdUserDataConsent: Represents consent for core platform services
+	// (CPS) preferences in settings. No default value. Acceptable values
+	// are: GRANTED: The desired consent status is to grant. Read the CPS
+	// preferences from GTE settings. DENIED: The desired consent status is
+	// to deny; CPS list is empty.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Not specified.

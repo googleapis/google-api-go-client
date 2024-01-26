@@ -382,7 +382,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -964,12 +968,12 @@ func (s *GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 // method.
 type GenerateUploadUrlRequest struct {
 	// KmsKeyName: Resource name of a KMS crypto key (managed by the user)
-	// used to encrypt/decrypt function source code objects in staging Cloud
-	// Storage buckets. When you generate an upload url and upload your
-	// source code, it gets copied to a staging Cloud Storage bucket in an
-	// internal regional project. The source code is then copied to a
-	// versioned directory in the sources bucket in the consumer project
-	// during the function deployment. It must match the pattern
+	// used to encrypt/decrypt function source code objects in intermediate
+	// Cloud Storage buckets. When you generate an upload url and upload
+	// your source code, it gets copied to an intermediate Cloud Storage
+	// bucket. The source code is then copied to a versioned directory in
+	// the sources bucket in the consumer project during the function
+	// deployment. It must match the pattern
 	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKey
 	// s/{crypto_key}`. The Google Cloud Functions service account
 	// (service-{project_number}@gcf-admin-robot.iam.gserviceaccount.com)

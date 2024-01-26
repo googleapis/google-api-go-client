@@ -1,5 +1,17 @@
 # Changes
 
+## [0.159.0](https://github.com/googleapis/google-api-go-client/compare/v0.158.0...v0.159.0) (2024-01-26)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2377](https://github.com/googleapis/google-api-go-client/issues/2377)) ([a8d9414](https://github.com/googleapis/google-api-go-client/commit/a8d941461d22e8ef16843883e66afe33f5605553))
+
+
+### Bug Fixes
+
+* **transport:** Relax universe checks ([#2376](https://github.com/googleapis/google-api-go-client/issues/2376)) ([55b0516](https://github.com/googleapis/google-api-go-client/commit/55b0516fab1d2c2b3e508b310ec98c9691ad161c))
+
 ## [0.158.0](https://github.com/googleapis/google-api-go-client/compare/v0.157.0...v0.158.0) (2024-01-25)
 
 

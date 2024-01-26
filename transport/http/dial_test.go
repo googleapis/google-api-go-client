@@ -7,12 +7,12 @@ package http
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 
 	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 )
 
@@ -41,16 +41,88 @@ func TestNewClient(t *testing.T) {
 	}
 }
 
-func TestNewClient_MismatchedUniverseDomainCreds(t *testing.T) {
-	rootTokenScope := "https://www.googleapis.com/auth/cloud-platform"
-	universeDomain := "example.com"
-	universeDomainDefault := "googleapis.com"
-	creds := &google.Credentials{} // universeDomainDefault
-	wantErr := internal.ErrUniverseNotMatch(universeDomain, universeDomainDefault)
-	_, _, err := NewClient(context.Background(), option.WithUniverseDomain(universeDomain),
-		option.WithCredentials(creds), option.WithScopes(rootTokenScope))
+func TestNewClient_MismatchedUniverseChecks(t *testing.T) {
 
-	if err.Error() != wantErr.Error() {
-		t.Fatalf("got: %v, want: %v", err, wantErr)
+	rootTokenScope := "https://www.googleapis.com/auth/cloud-platform"
+	otherUniverse := "example.com"
+	defaultUniverse := "googleapis.com"
+	fakeCreds := `
+	{"type": "service_account",
+     "project_id": "some-project",
+     "universe_domain": "UNIVERSE"}`
+
+	// utility function to make a fake credential quickly
+	makeFakeCredF := func(universe string) option.ClientOption {
+		data := []byte(strings.ReplaceAll(fakeCreds, "UNIVERSE", universe))
+		creds, _ := google.CredentialsFromJSON(context.Background(), data, rootTokenScope)
+		return option.WithCredentials(creds)
+	}
+
+	testCases := []struct {
+		description string
+		opts        []option.ClientOption
+		wantErr     bool
+	}{
+		{
+			description: "default creds and no universe",
+			opts: []option.ClientOption{
+				option.WithCredentials(&google.Credentials{}),
+			},
+			wantErr: false,
+		},
+		{
+			description: "default creds and default universe",
+			opts: []option.ClientOption{
+				option.WithCredentials(&google.Credentials{}),
+				option.WithUniverseDomain(defaultUniverse),
+			},
+			wantErr: false,
+		},
+		{
+			description: "default creds and mismatched universe",
+			opts: []option.ClientOption{
+				option.WithCredentials(&google.Credentials{}),
+				option.WithUniverseDomain(otherUniverse),
+			},
+			wantErr: true,
+		},
+		{
+			description: "foreign universe creds and default universe",
+			opts: []option.ClientOption{
+				makeFakeCredF(otherUniverse),
+				option.WithUniverseDomain(defaultUniverse),
+			},
+			wantErr: true,
+		},
+		{
+			description: "foreign universe creds and foreign universe",
+			opts: []option.ClientOption{
+				makeFakeCredF(otherUniverse),
+				option.WithUniverseDomain(otherUniverse),
+			},
+			wantErr: false,
+		},
+		{
+			description: "tokensource + mismatched universe",
+			opts: []option.ClientOption{
+				option.WithTokenSource(oauth2.StaticTokenSource(&oauth2.Token{})),
+				option.WithUniverseDomain(otherUniverse),
+			},
+			wantErr: false,
+		},
+	}
+
+	for _, tc := range testCases {
+		opts := []option.ClientOption{
+			option.WithScopes(rootTokenScope),
+		}
+		opts = append(opts, tc.opts...)
+		_, _, gotErr := NewClient(context.Background(), opts...)
+		if tc.wantErr && gotErr == nil {
+			t.Errorf("%q: wanted error, got none", tc.description)
+		}
+		if !tc.wantErr && gotErr != nil {
+			t.Errorf("%q: wanted success, got err: %v", tc.description, gotErr)
+		}
 	}
 }

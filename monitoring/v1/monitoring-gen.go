@@ -1130,9 +1130,8 @@ func (s *DataSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Dimension: Preview: A chart dimension for an SQL query. This is
-// applied over the x-axis. This is a preview feature and may be subject
-// to change before final release.
+// Dimension: A chart dimension. Dimensions are a structured label,
+// class, or category for a set of measurements in your data.
 type Dimension struct {
 	// Column: Required. The name of the column in the source SQL query that
 	// is used to chart the dimension.
@@ -1737,9 +1736,9 @@ func (s *LogsPanel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Measure: Preview: A chart measure for an SQL query. This is applied
-// over the y-axis. This is a preview feature and may be subject to
-// change before final release.
+// Measure: A chart measure. Measures represent a measured property in
+// your chart data such as rainfall in inches, number of units sold,
+// revenue gained, etc.
 type Measure struct {
 	// AggregationFunction: Required. The aggregation function applied to
 	// the input column. This must not be set to "none" unless binning is
@@ -2278,6 +2277,15 @@ func (s *PieChart) MarshalJSON() ([]byte, error) {
 
 // PieChartDataSet: Groups a time series query definition.
 type PieChartDataSet struct {
+	// Dimensions: A dimension is a structured label, class, or category for
+	// a set of measurements in your data.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+
+	// Measures: A measure is a measured value of a property in your data.
+	// For example, rainfall in inches, number of units sold, revenue
+	// gained, etc.
+	Measures []*Measure `json:"measures,omitempty"`
+
 	// MinAlignmentPeriod: Optional. The lower bound on data point frequency
 	// for this data set, implemented by specifying the minimum alignment
 	// period to use in a time series query. For example, if the data is
@@ -2297,21 +2305,20 @@ type PieChartDataSet struct {
 	// google.monitoring.dashboard.v1.TimeSeriesQuery.
 	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MinAlignmentPeriod")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MinAlignmentPeriod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

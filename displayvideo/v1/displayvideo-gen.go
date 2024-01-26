@@ -4129,6 +4129,10 @@ type CmHybridConfig struct {
 	// configuration linked with the DV360 advertiser.
 	CmAccountId int64 `json:"cmAccountId,omitempty,string"`
 
+	// CmAdvertiserIds: Output only. The set of CM360 Advertiser IDs sharing
+	// the CM360 Floodlight configuration.
+	CmAdvertiserIds googleapi.Int64s `json:"cmAdvertiserIds,omitempty"`
+
 	// CmFloodlightConfigId: Required. Immutable. ID of the CM360 Floodlight
 	// configuration linked with the DV360 advertiser.
 	CmFloodlightConfigId int64 `json:"cmFloodlightConfigId,omitempty,string"`

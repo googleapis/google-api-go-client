@@ -942,7 +942,7 @@ func (s *AzureSourceVmDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AzureVmDetails: AwsVmDetails describes a VM in AWS.
+// AzureVmDetails: AzureVmDetails describes a VM in Azure.
 type AzureVmDetails struct {
 	// BootOption: The VM Boot Option.
 	//

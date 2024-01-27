@@ -2675,7 +2675,7 @@
       }
     }
   },
-  "revision": "20240118",
+  "revision": "20240126",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -4478,7 +4478,7 @@
       "properties": {
         "airlineAllianceLogo": {
           "$ref": "Image",
-          "description": "A logo for the airline alliance, displayed above the QR code that the passenger scans to board."
+          "description": "A logo for the airline alliance, displayed below the QR code that the passenger scans to board."
         },
         "airlineLogo": {
           "$ref": "Image",

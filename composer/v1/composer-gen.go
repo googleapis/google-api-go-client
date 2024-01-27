@@ -187,10 +187,22 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsEnvironmentsService(s *Service) *ProjectsLocationsEnvironmentsService {
 	rs := &ProjectsLocationsEnvironmentsService{s: s}
+	rs.Workloads = NewProjectsLocationsEnvironmentsWorkloadsService(s)
 	return rs
 }
 
 type ProjectsLocationsEnvironmentsService struct {
+	s *Service
+
+	Workloads *ProjectsLocationsEnvironmentsWorkloadsService
+}
+
+func NewProjectsLocationsEnvironmentsWorkloadsService(s *Service) *ProjectsLocationsEnvironmentsWorkloadsService {
+	rs := &ProjectsLocationsEnvironmentsWorkloadsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEnvironmentsWorkloadsService struct {
 	s *Service
 }
 
@@ -360,6 +372,160 @@ func (s *CloudDataLineageIntegration) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudDataLineageIntegration
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComposerWorkload: Information about a single workload.
+type ComposerWorkload struct {
+	// Name: Name of a workload.
+	Name string `json:"name,omitempty"`
+
+	// Status: Output only. Status of a workload.
+	Status *ComposerWorkloadStatus `json:"status,omitempty"`
+
+	// Type: Type of a workload.
+	//
+	// Possible values:
+	//   "COMPOSER_WORKLOAD_TYPE_UNSPECIFIED" - Not able to determine the
+	// type of the workload.
+	//   "CELERY_WORKER" - Celery worker.
+	//   "KUBERNETES_WORKER" - Kubernetes worker.
+	//   "KUBERNETES_OPERATOR_POD" - Workload created by Kubernetes Pod
+	// Operator.
+	//   "SCHEDULER" - Airflow scheduler.
+	//   "DAG_PROCESSOR" - Airflow Dag processor.
+	//   "TRIGGERER" - Airflow triggerer.
+	//   "WEB_SERVER" - Airflow web server UI.
+	//   "REDIS" - Redis.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComposerWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod ComposerWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComposerWorkloadStatus: Workload status.
+type ComposerWorkloadStatus struct {
+	// DetailedStatusMessage: Output only. Detailed message of the status.
+	DetailedStatusMessage string `json:"detailedStatusMessage,omitempty"`
+
+	// State: Output only. Workload state.
+	//
+	// Possible values:
+	//   "COMPOSER_WORKLOAD_STATE_UNSPECIFIED" - Not able to determine the
+	// status of the workload.
+	//   "PENDING" - Workload is in pending state and has not yet started.
+	//   "OK" - Workload is running fine.
+	//   "WARNING" - Workload is running but there are some non-critical
+	// problems.
+	//   "ERROR" - Workload is not running due to an error.
+	//   "SUCCEEDED" - Workload has finished execution with success.
+	//   "FAILED" - Workload has finished execution with failure.
+	State string `json:"state,omitempty"`
+
+	// StatusMessage: Output only. Text to provide more descriptive status.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DetailedStatusMessage") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetailedStatusMessage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComposerWorkloadStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ComposerWorkloadStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DagProcessorResource: Configuration for resources used by Airflow DAG
+// processors.
+type DagProcessorResource struct {
+	// Count: Optional. The number of DAG processors. If not provided or set
+	// to 0, a single DAG processor instance will be created.
+	Count int64 `json:"count,omitempty"`
+
+	// Cpu: Optional. CPU request and limit for a single Airflow DAG
+	// processor replica.
+	Cpu float64 `json:"cpu,omitempty"`
+
+	// MemoryGb: Optional. Memory (GB) request and limit for a single
+	// Airflow DAG processor replica.
+	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// StorageGb: Optional. Storage (GB) request and limit for a single
+	// Airflow DAG processor replica.
+	StorageGb float64 `json:"storageGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DagProcessorResource) MarshalJSON() ([]byte, error) {
+	type NoMethod DagProcessorResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DagProcessorResource) UnmarshalJSON(data []byte) error {
+	type NoMethod DagProcessorResource
+	var s1 struct {
+		Cpu       gensupport.JSONFloat64 `json:"cpu"`
+		MemoryGb  gensupport.JSONFloat64 `json:"memoryGb"`
+		StorageGb gensupport.JSONFloat64 `json:"storageGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.MemoryGb = float64(s1.MemoryGb)
+	s.StorageGb = float64(s1.StorageGb)
+	return nil
 }
 
 // DataRetentionConfig: The configuration setting for Airflow database
@@ -1175,6 +1341,42 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListWorkloadsResponse: Response to ListWorkloadsRequest.
+type ListWorkloadsResponse struct {
+	// NextPageToken: The page token used to query for the next page if one
+	// exists.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Workloads: The list of environment workloads.
+	Workloads []*ComposerWorkload `json:"workloads,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWorkloadsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LoadSnapshotRequest: Request to load a snapshot into a Cloud Composer
 // environment.
 type LoadSnapshotRequest struct {
@@ -1354,6 +1556,29 @@ func (s *NetworkingConfig) MarshalJSON() ([]byte, error) {
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
+	// ComposerInternalIpv4CidrBlock: Optional. The IP range in CIDR
+	// notation to use internally by Cloud Composer. IP addresses are not
+	// reserved - and the same range can be used by multiple Cloud Composer
+	// environments. In case of overlap, IPs from this range will not be
+	// accessible in the user's VPC network. Cannot be updated. If not
+	// specified, the default value of '100.64.128.0/20' is used. This field
+	// is supported for Cloud Composer environments in versions
+	// composer-3.*.*-airflow-*.*.* and newer.
+	ComposerInternalIpv4CidrBlock string `json:"composerInternalIpv4CidrBlock,omitempty"`
+
+	// ComposerNetworkAttachment: Optional. Network Attachment that Cloud
+	// Composer environment is connected to, which provides connectivity
+	// with a user's VPC network. Takes precedence over network and
+	// subnetwork settings. If not provided, but network and subnetwork are
+	// defined during environment, it will be provisioned. If not provided
+	// and network and subnetwork are also empty, then connectivity to
+	// user's VPC network is disabled. Network attachment must be provided
+	// in format
+	// projects/{project}/regions/{region}/networkAttachments/{networkAttachm
+	// ent}. This field is supported for Cloud Composer environments in
+	// versions composer-3.*.*-airflow-*.*.* and newer.
+	ComposerNetworkAttachment string `json:"composerNetworkAttachment,omitempty"`
+
 	// DiskSizeGb: Optional. The disk size in GB used for node VMs. Minimum
 	// size is 30GB. If unspecified, defaults to 100GB. Cannot be updated.
 	// This field is supported for Cloud Composer environments in versions
@@ -1446,20 +1671,22 @@ type NodeConfig struct {
 	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
 	Tags []string `json:"tags,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ComposerInternalIpv4CidrBlock") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ComposerInternalIpv4CidrBlock") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1747,6 +1974,16 @@ type PrivateEnvironmentConfig struct {
 	// in tenant project will be reserved for Cloud SQL. Needs to be
 	// disjoint from `web_server_ipv4_cidr_block`.
 	CloudSqlIpv4CidrBlock string `json:"cloudSqlIpv4CidrBlock,omitempty"`
+
+	// EnablePrivateBuildsOnly: Optional. If `true`, builds performed during
+	// operations that install Python packages have only private
+	// connectivity to Google services (including Artifact Registry) and VPC
+	// network (if either `NodeConfig.network` and `NodeConfig.subnetwork`
+	// fields or `NodeConfig.composer_network_attachment` field are
+	// specified). If `false`, the builds also have access to the internet.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-3.*.*-airflow-*.*.* and newer.
+	EnablePrivateBuildsOnly bool `json:"enablePrivateBuildsOnly,omitempty"`
 
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
 	// Composer environment is created. If this field is set to true,
@@ -2078,6 +2315,17 @@ type SoftwareConfig struct {
 	// field is supported for Cloud Composer environments in versions
 	// composer-1.*.*-airflow-2.*.*.
 	SchedulerCount int64 `json:"schedulerCount,omitempty"`
+
+	// WebServerPluginsMode: Optional. Whether or not the web server uses
+	// custom plugins. If unspecified, the field defaults to
+	// `PLUGINS_ENABLED`. This field is supported for Cloud Composer
+	// environments in versions composer-3.*.*-airflow-*.*.* and newer.
+	//
+	// Possible values:
+	//   "WEB_SERVER_PLUGINS_MODE_UNSPECIFIED" - Default mode.
+	//   "PLUGINS_DISABLED" - Web server plugins are not supported.
+	//   "PLUGINS_ENABLED" - Web server plugins are supported.
+	WebServerPluginsMode string `json:"webServerPluginsMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AirflowConfigOverrides") to unconditionally include in API requests.
@@ -2527,6 +2775,11 @@ func (s *WorkerResource) UnmarshalJSON(data []byte) error {
 // Cloud Composer environments in versions composer-2.*.*-airflow-*.*.*
 // and newer.
 type WorkloadsConfig struct {
+	// DagProcessor: Optional. Resources used by Airflow DAG processors.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-3.*.*-airflow-*.*.* and newer.
+	DagProcessor *DagProcessorResource `json:"dagProcessor,omitempty"`
+
 	// Scheduler: Optional. Resources used by Airflow schedulers.
 	Scheduler *SchedulerResource `json:"scheduler,omitempty"`
 
@@ -2539,7 +2792,7 @@ type WorkloadsConfig struct {
 	// Worker: Optional. Resources used by Airflow workers.
 	Worker *WorkerResource `json:"worker,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Scheduler") to
+	// ForceSendFields is a list of field names (e.g. "DagProcessor") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2547,10 +2800,10 @@ type WorkloadsConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Scheduler") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DagProcessor") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4437,6 +4690,219 @@ func (c *ProjectsLocationsEnvironmentsStopAirflowCommandCall) Do(opts ...googlea
 	//   ]
 	// }
 
+}
+
+// method id "composer.projects.locations.environments.workloads.list":
+
+type ProjectsLocationsEnvironmentsWorkloadsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists workloads in a Cloud Composer environment. Workload is a
+// unit that runs a single Composer component. This method is supported
+// for Cloud Composer environments in versions
+// composer-3.*.*-airflow-*.*.* and newer.
+//
+//   - parent: The environment name to get workloads for, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsWorkloadsService) List(parent string) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c := &ProjectsLocationsEnvironmentsWorkloadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The list filter.
+// Currently only supports equality on the type field. The value of a
+// field specified in the filter expression must be one
+// ComposerWorkloadType enum option. It's possible to get multiple types
+// using "OR" operator, e.g.: "type=SCHEDULER OR type=CELERY_WORKER". If
+// not specified, all items are returned.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) Filter(filter string) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of environments to return.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) PageSize(pageSize int64) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous List request, if any.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) PageToken(pageToken string) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsWorkloadsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/workloads")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.workloads.list" call.
+// Exactly one of *ListWorkloadsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListWorkloadsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) Do(opts ...googleapi.CallOption) (*ListWorkloadsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWorkloadsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists workloads in a Cloud Composer environment. Workload is a unit that runs a single Composer component. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/workloads",
+	//   "httpMethod": "GET",
+	//   "id": "composer.projects.locations.environments.workloads.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The list filter. Currently only supports equality on the type field. The value of a field specified in the filter expression must be one ComposerWorkloadType enum option. It's possible to get multiple types using \"OR\" operator, e.g.: \"type=SCHEDULER OR type=CELERY_WORKER\". If not specified, all items are returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of environments to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The environment name to get workloads for, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/workloads",
+	//   "response": {
+	//     "$ref": "ListWorkloadsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) Pages(ctx context.Context, f func(*ListWorkloadsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "composer.projects.locations.imageVersions.list":

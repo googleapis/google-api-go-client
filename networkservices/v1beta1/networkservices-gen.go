@@ -497,7 +497,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -2578,8 +2582,8 @@ type LbRouteExtension struct {
 	// Managed HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 
-	// Name: Required. Name of the `LbRouteExtension` resource in the
-	// following format:
+	// Name: Required. Identifier. Name of the `LbRouteExtension` resource
+	// in the following format:
 	// `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_e
 	// xtension}`.
 	Name string `json:"name,omitempty"`
@@ -2659,8 +2663,8 @@ type LbTrafficExtension struct {
 	// Managed HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 
-	// Name: Required. Name of the `LbTrafficExtension` resource in the
-	// following format:
+	// Name: Required. Identifier. Name of the `LbTrafficExtension` resource
+	// in the following format:
 	// `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traff
 	// ic_extension}`.
 	Name string `json:"name,omitempty"`
@@ -3342,7 +3346,8 @@ type MetadataLabelMatcher struct {
 	// with label connects, the config from P2 will be selected. If a client
 	// with label connects, the config from P3 will be selected. If there is
 	// more than one best match, (for example, if a config P4 with selector
-	// exists and if a client with label connects), an error will be thrown.
+	// exists and if a client with label connects), pick up the one with
+	// older creation time.
 	//
 	// Possible values:
 	//   "METADATA_LABEL_MATCH_CRITERIA_UNSPECIFIED" - Default value. Should
@@ -9663,8 +9668,8 @@ type ProjectsLocationsLbRouteExtensionsPatchCall struct {
 // Patch: Updates the parameters of the specified `LbRouteExtension`
 // resource.
 //
-//   - name: Name of the `LbRouteExtension` resource in the following
-//     format:
+//   - name: Identifier. Name of the `LbRouteExtension` resource in the
+//     following format:
 //     `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route
 //     _extension}`.
 func (r *ProjectsLocationsLbRouteExtensionsService) Patch(name string, lbrouteextension *LbRouteExtension) *ProjectsLocationsLbRouteExtensionsPatchCall {
@@ -9802,7 +9807,7 @@ func (c *ProjectsLocationsLbRouteExtensionsPatchCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `LbRouteExtension` resource in the following format: `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_extension}`.",
+	//       "description": "Required. Identifier. Name of the `LbRouteExtension` resource in the following format: `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_extension}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lbRouteExtensions/[^/]+$",
 	//       "required": true,
@@ -10552,8 +10557,8 @@ type ProjectsLocationsLbTrafficExtensionsPatchCall struct {
 // Patch: Updates the parameters of the specified `LbTrafficExtension`
 // resource.
 //
-//   - name: Name of the `LbTrafficExtension` resource in the following
-//     format:
+//   - name: Identifier. Name of the `LbTrafficExtension` resource in the
+//     following format:
 //     `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_tra
 //     ffic_extension}`.
 func (r *ProjectsLocationsLbTrafficExtensionsService) Patch(name string, lbtrafficextension *LbTrafficExtension) *ProjectsLocationsLbTrafficExtensionsPatchCall {
@@ -10691,7 +10696,7 @@ func (c *ProjectsLocationsLbTrafficExtensionsPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `LbTrafficExtension` resource in the following format: `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traffic_extension}`.",
+	//       "description": "Required. Identifier. Name of the `LbTrafficExtension` resource in the following format: `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traffic_extension}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lbTrafficExtensions/[^/]+$",
 	//       "required": true,

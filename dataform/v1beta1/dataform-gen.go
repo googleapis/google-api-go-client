@@ -418,7 +418,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -7031,6 +7035,13 @@ func (r *ProjectsLocationsRepositoriesCompilationResultsService) List(parent str
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filter for the returned
+// list.
+func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) Filter(filter string) *ProjectsLocationsRepositoriesCompilationResultsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // compilation results to return. The server may return fewer items than
 // requested. If unspecified, the server will pick an appropriate
@@ -7157,6 +7168,11 @@ func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) Do(opts ...goo
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter for the returned list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. Maximum number of compilation results to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.",
 	//       "format": "int32",

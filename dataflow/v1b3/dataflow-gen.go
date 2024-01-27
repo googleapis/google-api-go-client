@@ -4790,6 +4790,9 @@ type ParameterMetadata struct {
 	// HelpText: Required. The help text to display for the parameter.
 	HelpText string `json:"helpText,omitempty"`
 
+	// HiddenUi: Optional. Whether the parameter should be hidden in the UI.
+	HiddenUi bool `json:"hiddenUi,omitempty"`
+
 	// IsOptional: Optional. Whether the parameter is optional. Defaults to
 	// false.
 	IsOptional bool `json:"isOptional,omitempty"`
@@ -7924,6 +7927,17 @@ type TemplateMetadata struct {
 
 	// Parameters: The parameters for the template.
 	Parameters []*ParameterMetadata `json:"parameters,omitempty"`
+
+	// Streaming: Optional. Indicates if the template is streaming or not.
+	Streaming bool `json:"streaming,omitempty"`
+
+	// SupportsAtLeastOnce: Optional. Indicates if the streaming template
+	// supports at least once mode.
+	SupportsAtLeastOnce bool `json:"supportsAtLeastOnce,omitempty"`
+
+	// SupportsExactlyOnce: Optional. Indicates if the streaming template
+	// supports exactly once mode.
+	SupportsExactlyOnce bool `json:"supportsExactlyOnce,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with

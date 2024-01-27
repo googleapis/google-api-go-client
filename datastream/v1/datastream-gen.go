@@ -2005,8 +2005,7 @@ type OracleSourceConfig struct {
 	// default value is used.
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
 
-	// StreamLargeObjects: Stream large object values. NOTE: This feature is
-	// currently experimental.
+	// StreamLargeObjects: Stream large object values.
 	StreamLargeObjects *StreamLargeObjects `json:"streamLargeObjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
@@ -2681,8 +2680,7 @@ type SpecificStartPosition struct {
 	// from.
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
 
-	// OracleScnPosition: Oracle specific log position to start replicating
-	// from.
+	// OracleScnPosition: Oracle SCN to start replicating from.
 	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to

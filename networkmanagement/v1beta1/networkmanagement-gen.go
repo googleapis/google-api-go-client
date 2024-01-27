@@ -898,6 +898,14 @@ type DeliverInfo struct {
 	// onnect-apis).
 	//   "SERVERLESS_NEG" - Target is a serverless network endpoint group.
 	//   "STORAGE_BUCKET" - Target is a Cloud Storage bucket.
+	//   "PRIVATE_NETWORK" - Target is a private network. Used only for
+	// return traces.
+	//   "CLOUD_FUNCTION" - Target is a Cloud Function. Used only for return
+	// traces.
+	//   "APP_ENGINE_VERSION" - Target is a App Engine service version. Used
+	// only for return traces.
+	//   "CLOUD_RUN_REVISION" - Target is a Cloud Run revision. Used only
+	// for return traces.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -948,6 +956,17 @@ type DropInfo struct {
 	// address cannot be resolved to a GCP resource.
 	//   "ROUTE_NEXT_HOP_RESOURCE_NOT_FOUND" - Route's next hop resource is
 	// not found.
+	//   "ROUTE_NEXT_HOP_INSTANCE_WRONG_NETWORK" - Route's next hop instance
+	// doesn't hace a NIC in the route's network.
+	//   "ROUTE_NEXT_HOP_INSTANCE_NON_PRIMARY_IP" - Route's next hop IP
+	// address is not a primary IP address of the next hop instance.
+	//   "ROUTE_NEXT_HOP_FORWARDING_RULE_IP_MISMATCH" - Route's next hop
+	// forwarding rule doesn't match next hop IP address.
+	//   "ROUTE_NEXT_HOP_VPN_TUNNEL_NOT_ESTABLISHED" - Route's next hop VPN
+	// tunnel is down (does not have valid IKE SAs).
+	//   "ROUTE_NEXT_HOP_FORWARDING_RULE_TYPE_INVALID" - Route's next hop
+	// forwarding rule type is invalid (it's not a forwarding rule of the
+	// internal passthrough load balancer).
 	//   "NO_ROUTE_FROM_INTERNET_TO_PRIVATE_IPV6_ADDRESS" - Packet is sent
 	// from the Internet to the private IPv6 address.
 	//   "VPN_TUNNEL_LOCAL_SELECTOR_MISMATCH" - The packet does not match a
@@ -3011,6 +3030,12 @@ type Step struct {
 	//   "START_FROM_CLOUD_RUN_REVISION" - Initial state: packet originating
 	// from a Cloud Run revision. A CloudRunRevisionInfo is populated with
 	// starting revision information.
+	//   "START_FROM_STORAGE_BUCKET" - Initial state: packet originating
+	// from a Storage Bucket. Used only for return traces. The
+	// storage_bucket information is populated.
+	//   "START_FROM_PSC_PUBLISHED_SERVICE" - Initial state: packet
+	// originating from a published service that uses Private Service
+	// Connect. Used only for return traces.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify
 	// ingress firewall rule.
 	//   "APPLY_EGRESS_FIREWALL_RULE" - Config checking state: verify egress
@@ -3047,6 +3072,10 @@ type Step struct {
 	// step.
 	State string `json:"state,omitempty"`
 
+	// StorageBucket: Display information of a Storage Bucket. Used only for
+	// return traces.
+	StorageBucket *StorageBucketInfo `json:"storageBucket,omitempty"`
+
 	// VpcConnector: Display information of a VPC connector.
 	VpcConnector *VpcConnectorInfo `json:"vpcConnector,omitempty"`
 
@@ -3075,6 +3104,35 @@ type Step struct {
 
 func (s *Step) MarshalJSON() ([]byte, error) {
 	type NoMethod Step
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageBucketInfo: For display only. Metadata associated with Storage
+// Bucket.
+type StorageBucketInfo struct {
+	// Bucket: Cloud Storage Bucket name.
+	Bucket string `json:"bucket,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageBucketInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageBucketInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

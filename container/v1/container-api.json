@@ -2540,7 +2540,7 @@
       }
     }
   },
-  "revision": "20240109",
+  "revision": "20240116",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2675,6 +2675,10 @@
         "networkPolicyConfig": {
           "$ref": "NetworkPolicyConfig",
           "description": "Configuration for NetworkPolicy. This only tracks whether the addon is enabled or not on the Master, it does not track whether network policy is enabled for the nodes."
+        },
+        "statefulHaConfig": {
+          "$ref": "StatefulHAConfig",
+          "description": "Optional. Configuration for the StatefulHA add-on."
         }
       },
       "type": "object"
@@ -6905,6 +6909,17 @@
           "deprecated": true,
           "description": "Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the name field.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StatefulHAConfig": {
+      "description": "Configuration for the Stateful HA add-on.",
+      "id": "StatefulHAConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Stateful HA add-on is enabled for this cluster.",
+          "type": "boolean"
         }
       },
       "type": "object"

@@ -356,6 +356,15 @@ type Execution struct {
 	//   "LOG_NONE" - Explicitly log nothing.
 	CallLogLevel string `json:"callLogLevel,omitempty"`
 
+	// CreateTime: Output only. Marks the creation of the execution.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisableConcurrencyQuotaOverflowBuffering: Optional. If set to true,
+	// the execution will not be backlogged when the concurrency quota is
+	// exhausted. The backlog execution starts when the concurrency quota
+	// becomes available.
+	DisableConcurrencyQuotaOverflowBuffering bool `json:"disableConcurrencyQuotaOverflowBuffering,omitempty"`
+
 	// Duration: Output only. Measures the duration of the execution.
 	Duration string `json:"duration,omitempty"`
 

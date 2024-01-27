@@ -3015,7 +3015,7 @@ func (s *FirstRowOption) MarshalJSON() ([]byte, error) {
 }
 
 type FlightCarrier struct {
-	// AirlineAllianceLogo: A logo for the airline alliance, displayed above
+	// AirlineAllianceLogo: A logo for the airline alliance, displayed below
 	// the QR code that the passenger scans to board.
 	AirlineAllianceLogo *Image `json:"airlineAllianceLogo,omitempty"`
 

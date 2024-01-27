@@ -429,16 +429,19 @@ type ProjectsProfilesCreateCall struct {
 }
 
 // Create: CreateProfile creates a new profile resource in the online
-// mode. The server ensures that the new profiles are created at a
-// constant rate per deployment, so the creation request may hang for
-// some time until the next profile session is available. The request
-// may fail with ABORTED error if the creation is not available within
-// ~1m, the response will indicate the duration of the backoff the
-// client should take before attempting creating a profile again. The
-// backoff duration is returned in google.rpc.RetryInfo extension on the
-// response status. To a gRPC client, the extension will be return as a
-// binary-serialized proto in the trailing metadata item named
-// "google.rpc.retryinfo-bin".
+// mode. _Direct use of this API is discouraged, please use a supported
+// profiler agent
+// (https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+// instead for profile collection._ The server ensures that the new
+// profiles are created at a constant rate per deployment, so the
+// creation request may hang for some time until the next profile
+// session is available. The request may fail with ABORTED error if the
+// creation is not available within ~1m, the response will indicate the
+// duration of the backoff the client should take before attempting
+// creating a profile again. The backoff duration is returned in
+// google.rpc.RetryInfo extension on the response status. To a gRPC
+// client, the extension will be return as a binary-serialized proto in
+// the trailing metadata item named "google.rpc.retryinfo-bin".
 //
 // - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) Create(parent string, createprofilerequest *CreateProfileRequest) *ProjectsProfilesCreateCall {
@@ -539,7 +542,7 @@ func (c *ProjectsProfilesCreateCall) Do(opts ...googleapi.CallOption) (*Profile,
 	}
 	return ret, nil
 	// {
-	//   "description": "CreateProfile creates a new profile resource in the online mode. The server ensures that the new profiles are created at a constant rate per deployment, so the creation request may hang for some time until the next profile session is available. The request may fail with ABORTED error if the creation is not available within ~1m, the response will indicate the duration of the backoff the client should take before attempting creating a profile again. The backoff duration is returned in google.rpc.RetryInfo extension on the response status. To a gRPC client, the extension will be return as a binary-serialized proto in the trailing metadata item named \"google.rpc.retryinfo-bin\". ",
+	//   "description": "CreateProfile creates a new profile resource in the online mode. _Direct use of this API is discouraged, please use a [supported profiler agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent) instead for profile collection._ The server ensures that the new profiles are created at a constant rate per deployment, so the creation request may hang for some time until the next profile session is available. The request may fail with ABORTED error if the creation is not available within ~1m, the response will indicate the duration of the backoff the client should take before attempting creating a profile again. The backoff duration is returned in google.rpc.RetryInfo extension on the response status. To a gRPC client, the extension will be return as a binary-serialized proto in the trailing metadata item named \"google.rpc.retryinfo-bin\". ",
 	//   "flatPath": "v2/projects/{projectsId}/profiles",
 	//   "httpMethod": "POST",
 	//   "id": "cloudprofiler.projects.profiles.create",
@@ -584,7 +587,10 @@ type ProjectsProfilesCreateOfflineCall struct {
 
 // CreateOffline: CreateOfflineProfile creates a new profile resource in
 // the offline mode. The client provides the profile to create along
-// with the profile bytes, the server records it.
+// with the profile bytes, the server records it. _Direct use of this
+// API is discouraged, please use a supported profiler agent
+// (https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+// instead for profile collection._
 //
 // - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) CreateOffline(parent string, profile *Profile) *ProjectsProfilesCreateOfflineCall {
@@ -685,7 +691,7 @@ func (c *ProjectsProfilesCreateOfflineCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "CreateOfflineProfile creates a new profile resource in the offline mode. The client provides the profile to create along with the profile bytes, the server records it.",
+	//   "description": "CreateOfflineProfile creates a new profile resource in the offline mode. The client provides the profile to create along with the profile bytes, the server records it. _Direct use of this API is discouraged, please use a [supported profiler agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent) instead for profile collection._",
 	//   "flatPath": "v2/projects/{projectsId}/profiles:createOffline",
 	//   "httpMethod": "POST",
 	//   "id": "cloudprofiler.projects.profiles.createOffline",
@@ -930,6 +936,10 @@ type ProjectsProfilesPatchCall struct {
 // profile resource created in the online mode. Updating the bytes for
 // profiles created in the offline mode is currently not supported: the
 // profile content must be provided at the time of the profile creation.
+// _Direct use of this API is discouraged, please use a supported
+// profiler agent
+// (https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+// instead for profile collection._
 //
 //   - name: Output only. Opaque, server-assigned, unique ID for this
 //     profile.
@@ -1041,7 +1051,7 @@ func (c *ProjectsProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Profile, 
 	}
 	return ret, nil
 	// {
-	//   "description": "UpdateProfile updates the profile bytes and labels on the profile resource created in the online mode. Updating the bytes for profiles created in the offline mode is currently not supported: the profile content must be provided at the time of the profile creation.",
+	//   "description": "UpdateProfile updates the profile bytes and labels on the profile resource created in the online mode. Updating the bytes for profiles created in the offline mode is currently not supported: the profile content must be provided at the time of the profile creation. _Direct use of this API is discouraged, please use a [supported profiler agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent) instead for profile collection._",
 	//   "flatPath": "v2/projects/{projectsId}/profiles/{profilesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudprofiler.projects.profiles.patch",

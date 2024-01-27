@@ -874,15 +874,10 @@ type Instance struct {
 	// READ_REPLICAS_ENABLED the default block size is /28.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
-	// SatisfiesPzi: Optional. Output only. Reserved for future use. Zone
-	// Isolation compliance state of the instance. Field name and
-	// documentation is obfuscated according to
-	// go/per-resource-zi-bit-semantics.
+	// SatisfiesPzi: Optional. Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 
-	// SatisfiesPzs: Optional. Output only. Reserved for future use. Zone
-	// Separation compliance state of the instance. Field name and
-	// documentation is obfuscated according to go/zs-resource-status.
+	// SatisfiesPzs: Optional. Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// SecondaryIpRange: Optional. Additional IP range for node placement.
@@ -2910,7 +2905,7 @@ func (c *ProjectsLocationsClustersGetCertificateAuthorityCall) doRequest(alt str
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/certificateAuthority")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2972,12 +2967,12 @@ func (c *ProjectsLocationsClustersGetCertificateAuthorityCall) Do(opts ...google
 	//     "name": {
 	//       "description": "Required. Redis cluster certificate authority resource name using the form: `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}/certificateAuthority` where `location_id` refers to a GCP region.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/certificateAuthority$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+name}/certificateAuthority",
+	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "CertificateAuthority"
 	//   },

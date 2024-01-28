@@ -2512,13 +2512,17 @@ func (s *Modification) MarshalJSON() ([]byte, error) {
 // ModifyColumnFamiliesRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies
 type ModifyColumnFamiliesRequest struct {
+	// IgnoreWarnings: Optional. If true, ignore safety checks when
+	// modifying the column families.
+	IgnoreWarnings bool `json:"ignoreWarnings,omitempty"`
+
 	// Modifications: Required. Modifications to be atomically applied to
 	// the specified table's families. Entries are applied in order, meaning
 	// that earlier modifications can be masked by later ones (in the case
 	// of repeated updates to the same family, for example).
 	Modifications []*Modification `json:"modifications,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Modifications") to
+	// ForceSendFields is a list of field names (e.g. "IgnoreWarnings") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2526,12 +2530,13 @@ type ModifyColumnFamiliesRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Modifications") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IgnoreWarnings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

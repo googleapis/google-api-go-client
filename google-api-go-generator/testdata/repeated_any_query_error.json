@@ -315,7 +315,7 @@
               "location": "path"
              },
              "extras": {
-               "description": "Any extra details to send along with the logs.",
+               "description": "THIS IS AN INVALID QUERY PARAM",
                "location": "query",
                "repeated": true,
                "type": "object",

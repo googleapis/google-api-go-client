@@ -6,7 +6,7 @@
 
 // Package bigqueryconnection provides access to the BigQuery Connection API.
 //
-// For product documentation, see: https://cloud.google.com/bigquery/
+// For product documentation, see: https://cloud.google.com/bigquery/docs/connections-api-intro
 //
 // # Library status
 //
@@ -495,7 +495,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -719,6 +723,9 @@ type Connection struct {
 	// CloudSql: Cloud SQL properties.
 	CloudSql *CloudSqlProperties `json:"cloudSql,omitempty"`
 
+	// Configuration: Optional. Connector configuration.
+	Configuration *ConnectorConfiguration `json:"configuration,omitempty"`
+
 	// CreationTime: Output only. The creation timestamp of the connection.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
@@ -779,6 +786,171 @@ type Connection struct {
 
 func (s *Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod Connection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfiguration: Represents concrete parameter values for
+// Connector Configuration.
+type ConnectorConfiguration struct {
+	// Authentication: Client authentication.
+	Authentication *ConnectorConfigurationAuthentication `json:"authentication,omitempty"`
+
+	// ConnectorId: Required. Immutable. The ID of the Connector these
+	// parameters are configured for.
+	ConnectorId string `json:"connectorId,omitempty"`
+
+	// Endpoint: Specifies how to reach the remote system this connection is
+	// pointing to.
+	Endpoint *ConnectorConfigurationEndpoint `json:"endpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Authentication") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Authentication") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationAuthentication: Client authentication.
+type ConnectorConfigurationAuthentication struct {
+	// UsernamePassword: Username/password authentication.
+	UsernamePassword *ConnectorConfigurationUsernamePassword `json:"usernamePassword,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UsernamePassword") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UsernamePassword") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationAuthentication) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationAuthentication
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationEndpoint: Remote endpoint specification.
+type ConnectorConfigurationEndpoint struct {
+	// HostPort: Host and port in a format of `hostname:port` as defined in
+	// https://www.ietf.org/rfc/rfc3986.html#section-3.2.2 and
+	// https://www.ietf.org/rfc/rfc3986.html#section-3.2.3.
+	HostPort string `json:"hostPort,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HostPort") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HostPort") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationSecret: Secret value parameter.
+type ConnectorConfigurationSecret struct {
+	// Plaintext: Input only. Secret as plaintext.
+	Plaintext string `json:"plaintext,omitempty"`
+
+	// SecretType: Output only. Indicates type of secret. Can be used to
+	// check type of stored secret value even if it's `INPUT_ONLY`.
+	//
+	// Possible values:
+	//   "SECRET_TYPE_UNSPECIFIED"
+	//   "PLAINTEXT"
+	SecretType string `json:"secretType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Plaintext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Plaintext") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationSecret) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationSecret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationUsernamePassword: Username and Password
+// authentication.
+type ConnectorConfigurationUsernamePassword struct {
+	// Password: Required. Password.
+	Password *ConnectorConfigurationSecret `json:"password,omitempty"`
+
+	// Username: Required. Username.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Password") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationUsernamePassword) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationUsernamePassword
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

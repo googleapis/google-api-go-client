@@ -167,6 +167,26 @@ func TestGetGRPCTransportConfigAndEndpoint(t *testing.T) {
 			testMTLSEndpoint,
 		},
 		{
+			"no client cert, S2A address not empty, EnableDirectPath == true",
+			&DialSettings{
+				DefaultMTLSEndpoint: testMTLSEndpoint,
+				DefaultEndpoint:     testRegularEndpoint,
+				EnableDirectPath:    true,
+			},
+			validConfigResp,
+			testRegularEndpoint,
+		},
+		{
+			"no client cert, S2A address not empty, EnableDirectPathXds == true",
+			&DialSettings{
+				DefaultMTLSEndpoint: testMTLSEndpoint,
+				DefaultEndpoint:     testRegularEndpoint,
+				EnableDirectPathXds: true,
+			},
+			validConfigResp,
+			testRegularEndpoint,
+		},
+		{
 			"no client cert, S2A address empty",
 			&DialSettings{
 				DefaultMTLSEndpoint: testMTLSEndpoint,
@@ -243,6 +263,28 @@ func TestGetHTTPTransportConfigAndEndpoint_s2a(t *testing.T) {
 			validConfigResp,
 			testMTLSEndpoint,
 			false,
+		},
+		{
+			"no client cert, S2A address not empty, EnableDirectPath == true",
+			&DialSettings{
+				DefaultMTLSEndpoint: testMTLSEndpoint,
+				DefaultEndpoint:     testRegularEndpoint,
+				EnableDirectPath:    true,
+			},
+			validConfigResp,
+			testRegularEndpoint,
+			true,
+		},
+		{
+			"no client cert, S2A address not empty, EnableDirectPathXds == true",
+			&DialSettings{
+				DefaultMTLSEndpoint: testMTLSEndpoint,
+				DefaultEndpoint:     testRegularEndpoint,
+				EnableDirectPathXds: true,
+			},
+			validConfigResp,
+			testRegularEndpoint,
+			true,
 		},
 		{
 			"no client cert, S2A address empty",

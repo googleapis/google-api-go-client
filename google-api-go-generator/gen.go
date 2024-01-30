@@ -1967,6 +1967,9 @@ func (meth *Method) generateCode() {
 		if opt.p.Location != "query" {
 			panicf("optional parameter has unsupported location %q", opt.p.Location)
 		}
+		if opt.p.Repeated && opt.p.Type == "object" {
+			panic(fmt.Sprintf("field %q: repeated fields of type message are prohibited as query parameters", opt.p.Name))
+		}
 		setter := initialCap(opt.p.Name)
 		des := opt.p.Description
 		des = strings.Replace(des, "Optional.", "", 1)

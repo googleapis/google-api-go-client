@@ -2188,6 +2188,10 @@ type GoogleCloudRetailV2alphaCatalogAttributeFacetConfig struct {
 	// maximum number of instances per CatalogAttribute is 25.
 	IgnoredFacetValues []*GoogleCloudRetailV2alphaCatalogAttributeFacetConfigIgnoredFacetValues `json:"ignoredFacetValues,omitempty"`
 
+	// MergedFacet: Use this field only if you want to merge a facet key
+	// into another facet key.
+	MergedFacet *GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacet `json:"mergedFacet,omitempty"`
+
 	// MergedFacetValues: Each instance replaces a list of facet values by a
 	// merged facet value. If a facet value is not in any list, then it will
 	// stay the same. To avoid conflicts, only paths of length 1 are
@@ -2270,6 +2274,51 @@ type GoogleCloudRetailV2alphaCatalogAttributeFacetConfigIgnoredFacetValues struc
 
 func (s *GoogleCloudRetailV2alphaCatalogAttributeFacetConfigIgnoredFacetValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaCatalogAttributeFacetConfigIgnoredFacetValues
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacet: The
+// current facet key (i.e. attribute config) maps into the
+// merged_facet_key. A facet key can have at most one child. The current
+// facet key and the merged facet key need both to be textual custom
+// attributes or both numerical custom attributes (same type).
+type GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacet struct {
+	// MergedFacetKey: The merged facet key should be a valid facet key that
+	// is different than the facet key of the current catalog attribute. We
+	// refer this is merged facet key as the child of the current catalog
+	// attribute. This merged facet key can't be a parent of another facet
+	// key (i.e. no directed path of length 2). This merged facet key needs
+	// to be either a textual custom attribute or a numerical custom
+	// attribute.
+	MergedFacetKey string `json:"mergedFacetKey,omitempty"`
+
+	// MergedFacetValues: Each instance is a list of facet values that map
+	// into the same (possibly different) merged facet value. For the
+	// current attribute config, each facet value should map to at most one
+	// merged facet value.
+	MergedFacetValues []*GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacetValue `json:"mergedFacetValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MergedFacetKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MergedFacetKey") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaCatalogAttributeFacetConfigMergedFacet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3866,7 +3915,9 @@ type GoogleCloudRetailV2alphaImportProductsRequest struct {
 	SkipDefaultBranchProtection bool `json:"skipDefaultBranchProtection,omitempty"`
 
 	// UpdateMask: Indicates which fields in the provided imported
-	// `products` to update. If not set, all fields are updated.
+	// `products` to update. If not set, all fields are updated. If
+	// provided, only the existing product fields are updated. Missing
+	// products will not be created.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorsConfig") to

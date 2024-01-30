@@ -2901,6 +2901,11 @@ func (s *GoogleCloudDiscoveryengineV1alphaDeleteTargetSiteMetadata) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaDigitalParsingConfig: The digital
+// parsing configurations for documents.
+type GoogleCloudDiscoveryengineV1alphaDigitalParsingConfig struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchMetadata:
 // Metadata related to the progress of the
 // SiteSearchEngineService.DisableAdvancedSiteSearch operation. This
@@ -2948,34 +2953,92 @@ type GoogleCloudDiscoveryengineV1alphaDisableAdvancedSiteSearchResponse struct {
 // DataStoreService.UpdateDocumentProcessingConfig method will
 // initialize the config.
 type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
-	// Name: Output only. The full resource name of the Document Processing
-	// Config. Format:
+	// DefaultParsingConfig: Configurations for default Document parser. If
+	// not specified, we will configure it as default DigitalParsingConfig,
+	// and the default parsing config will be applied to all file types for
+	// Document parsing.
+	DefaultParsingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig `json:"defaultParsingConfig,omitempty"`
+
+	// Name: The full resource name of the Document Processing Config.
+	// Format:
 	// `projects/*/locations/*/collections/*/dataStores/*/documentProcessingC
 	// onfig`.
 	Name string `json:"name,omitempty"`
 
-	// OcrConfig: The OCR config. Currently it only applies to PDFs.
+	// OcrConfig: [DEPRECATED] This field is deprecated. To specify OCR
+	// parsing config, please specify `ocr_parsing_config` in
+	// `default_parsing_config` field The OCR config. Currently it only
+	// applies to PDFs.
 	OcrConfig *GoogleCloudDiscoveryengineV1alphaOcrConfig `json:"ocrConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ParsingConfigOverrides: Map from file type to override the default
+	// parsing configuration based on the file type. Supported keys: *
+	// `pdf`: Override parsing config for PDF files, either digital parsing,
+	// ocr parsing or layout parsing is supported. * `html`: Override
+	// parsing config for HTML files, only digital parsing and or layout
+	// parsing are supported.
+	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultParsingConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultParsingConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig
+// : Related configurations applied to a specific type of document
+// parser.
+type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig struct {
+	// DigitalParsingConfig: Configurations applied to digital parser.
+	DigitalParsingConfig *GoogleCloudDiscoveryengineV1alphaDigitalParsingConfig `json:"digitalParsingConfig,omitempty"`
+
+	// LayoutParsingConfig: Configurations applied to layout parser.
+	LayoutParsingConfig *GoogleCloudDiscoveryengineV1alphaLayoutParsingConfig `json:"layoutParsingConfig,omitempty"`
+
+	// OcrParsingConfig: Configurations applied to OCR parser. Currently it
+	// only applies to PDFs.
+	OcrParsingConfig *GoogleCloudDiscoveryengineV1alphaOcrParsingConfig `json:"ocrParsingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DigitalParsingConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DigitalParsingConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4022,6 +4085,11 @@ func (s *GoogleCloudDiscoveryengineV1alphaImportUserEventsResponse) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaLayoutParsingConfig: The layout
+// parsing configurations for documents.
+type GoogleCloudDiscoveryengineV1alphaLayoutParsingConfig struct {
+}
+
 // GoogleCloudDiscoveryengineV1alphaOcrConfig: The OCR options for
 // parsing documents.
 type GoogleCloudDiscoveryengineV1alphaOcrConfig struct {
@@ -4058,6 +4126,43 @@ type GoogleCloudDiscoveryengineV1alphaOcrConfig struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaOcrConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaOcrConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaOcrParsingConfig: The OCR parsing
+// configurations for documents.
+type GoogleCloudDiscoveryengineV1alphaOcrParsingConfig struct {
+	// EnhancedDocumentElements: Apply additional enhanced OCR processing to
+	// a list of document elements. Supported values: * `table`: advanced
+	// table parsing model.
+	EnhancedDocumentElements []string `json:"enhancedDocumentElements,omitempty"`
+
+	// UseNativeText: If true, will use native text instead of OCR text on
+	// pages containing native text.
+	UseNativeText bool `json:"useNativeText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnhancedDocumentElements") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnhancedDocumentElements")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaOcrParsingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaOcrParsingConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

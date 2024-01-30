@@ -6599,6 +6599,46 @@ type RevokeSubscriptionPurchaseResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// SafetyLabelsUpdateRequest: Request to update Safety Labels of an app.
+type SafetyLabelsUpdateRequest struct {
+	// SafetyLabels: Required. Contents of the CSV file containing Data
+	// Safety responses. For the format of this file, see the Help Center
+	// documentation at
+	// https://support.google.com/googleplay/android-developer/answer/10787469?hl=en#zippy=%2Cunderstand-the-csv-format
+	// To download an up to date template, follow the steps at
+	// https://support.google.com/googleplay/android-developer/answer/10787469?hl=en#zippy=%2Cexport-to-a-csv-file
+	SafetyLabels string `json:"safetyLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SafetyLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SafetyLabels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SafetyLabelsUpdateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SafetyLabelsUpdateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SafetyLabelsUpdateResponse: Response for SafetyLabelsUpdate rpc.
+type SafetyLabelsUpdateResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // ScreenDensity: Represents a screen density.
 type ScreenDensity struct {
 	// DensityAlias: Alias for a screen density.
@@ -9273,6 +9313,147 @@ func (s *VoidedPurchasesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VoidedPurchasesListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "androidpublisher.applications.dataSafety":
+
+type ApplicationsDataSafetyCall struct {
+	s                         *Service
+	packageName               string
+	safetylabelsupdaterequest *SafetyLabelsUpdateRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// DataSafety: Writes the Safety Labels declaration of an app.
+//
+// - packageName: Package name of the app.
+func (r *ApplicationsService) DataSafety(packageName string, safetylabelsupdaterequest *SafetyLabelsUpdateRequest) *ApplicationsDataSafetyCall {
+	c := &ApplicationsDataSafetyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.safetylabelsupdaterequest = safetylabelsupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApplicationsDataSafetyCall) Fields(s ...googleapi.Field) *ApplicationsDataSafetyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApplicationsDataSafetyCall) Context(ctx context.Context) *ApplicationsDataSafetyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApplicationsDataSafetyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApplicationsDataSafetyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.safetylabelsupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/dataSafety")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.applications.dataSafety" call.
+// Exactly one of *SafetyLabelsUpdateResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SafetyLabelsUpdateResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApplicationsDataSafetyCall) Do(opts ...googleapi.CallOption) (*SafetyLabelsUpdateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SafetyLabelsUpdateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Writes the Safety Labels declaration of an app.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/dataSafety",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.applications.dataSafety",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/dataSafety",
+	//   "request": {
+	//     "$ref": "SafetyLabelsUpdateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SafetyLabelsUpdateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
 }
 
 // method id "androidpublisher.applications.deviceTierConfigs.create":

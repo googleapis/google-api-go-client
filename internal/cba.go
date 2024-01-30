@@ -310,10 +310,7 @@ func shouldUseS2A(clientCertSource cert.Source, settings *DialSettings) bool {
 	if settings.HTTPClient != nil {
 		return false
 	}
-	if settings.EnableDirectPath == true || settings.EnableDirectPathXds == true {
-		return false
-	}
-	return true
+	return !settings.EnableDirectPath && !settings.EnableDirectPathXds
 }
 
 func isGoogleS2AEnabled() bool {

@@ -375,7 +375,7 @@ type AdaptiveMtFile struct {
 
 	// Name: Required. The resource name of the file, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
-	// asets/{dataset}/files/{file}`
+	// asets/{dataset}/adaptiveMtFiles/{file}`
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. Timestamp when this file was last updated.
@@ -415,7 +415,7 @@ type AdaptiveMtSentence struct {
 
 	// Name: Required. The resource name of the file, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
-	// asets/{dataset}/files/{file}/sentences/{sentence}`
+	// asets/{dataset}/adaptiveMtFiles/{file}/adaptiveMtSentences/{sentence}`
 	Name string `json:"name,omitempty"`
 
 	// SourceSentence: Required. The source sentence.
@@ -6264,7 +6264,7 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall struct {
 //
 //   - name: The resource name of the file to delete, in form of
 //     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
-//     atasets/{dataset}/files/{file}`.
+//     atasets/{dataset}/adaptiveMtFiles/{file}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Delete(name string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6366,7 +6366,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the file to delete, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/files/{file}`",
+	//       "description": "Required. The resource name of the file to delete, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
 	//       "required": true,
@@ -6400,7 +6400,7 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall struct {
 //
 //   - name: The resource name of the file, in form of
 //     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
-//     atasets/{dataset}/files/{file}`.
+//     atasets/{dataset}/adaptiveMtFiles/{file}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Get(name string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6515,7 +6515,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/files/{file}`",
+	//       "description": "Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
 	//       "required": true,

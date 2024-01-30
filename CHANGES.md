@@ -1,5 +1,18 @@
 # Changes
 
+## [0.161.0](https://github.com/googleapis/google-api-go-client/compare/v0.160.0...v0.161.0) (2024-01-30)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2386](https://github.com/googleapis/google-api-go-client/issues/2386)) ([03042ec](https://github.com/googleapis/google-api-go-client/commit/03042ec3c59aee67bc19c0c4749d94c41aea21fe))
+
+
+### Bug Fixes
+
+* **gen:** Reject repeated object query params ([#2383](https://github.com/googleapis/google-api-go-client/issues/2383)) ([f29f327](https://github.com/googleapis/google-api-go-client/commit/f29f32764830b4ef0beaf3c8dcb5af0a02798146)), refs [#2379](https://github.com/googleapis/google-api-go-client/issues/2379)
+* **transport:** Skip s2a for now if service has direct path enabled ([#2385](https://github.com/googleapis/google-api-go-client/issues/2385)) ([54c764a](https://github.com/googleapis/google-api-go-client/commit/54c764a3f7f409b13a6ed115576d9b1a5c390972))
+
 ## [0.160.0](https://github.com/googleapis/google-api-go-client/compare/v0.159.0...v0.160.0) (2024-01-29)
 
 

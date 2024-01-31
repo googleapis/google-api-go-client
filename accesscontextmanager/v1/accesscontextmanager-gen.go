@@ -714,7 +714,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1003,8 +1007,8 @@ func (s *DevicePolicy) MarshalJSON() ([]byte, error) {
 // succeed.
 type EgressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// [EgressPolicy]. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// [EgressPolicy], in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -1416,8 +1420,8 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // `sources` AND identity related fields in order to match.
 type IngressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// ingress policy. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// ingress policy, in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed

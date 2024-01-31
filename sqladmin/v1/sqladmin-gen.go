@@ -1292,11 +1292,11 @@ type DatabaseInstance struct {
 	// of PSC instance.
 	PscServiceAttachmentLink string `json:"pscServiceAttachmentLink,omitempty"`
 
-	// Region: The geographical region. Can be: * `us-central` (`FIRST_GEN`
-	// instances only) * `us-central1` (`SECOND_GEN` instances only) *
-	// `asia-east1` or `europe-west1`. Defaults to `us-central` or
-	// `us-central1` depending on the instance type. The region cannot be
-	// changed after instance creation.
+	// Region: The geographical region of the Cloud SQL instance. It can be
+	// one of the regions
+	// (https://cloud.google.com/sql/docs/mysql/locations#location-r) where
+	// Cloud SQL operates: For example, `asia-east1`, `europe-west1`, and
+	// `us-central1`. The default value is `us-central1`.
 	Region string `json:"region,omitempty"`
 
 	// ReplicaConfiguration: Configuration specific to failover replicas and
@@ -3750,8 +3750,8 @@ type PasswordValidationPolicy struct {
 	// numeric, and non-alphanumeric characters.
 	Complexity string `json:"complexity,omitempty"`
 
-	// DisallowCompromisedCredentials: Disallow credentials that have been
-	// previously compromised by a public data breach.
+	// DisallowCompromisedCredentials: This field is deprecated and will be
+	// removed in a future version of the API.
 	DisallowCompromisedCredentials bool `json:"disallowCompromisedCredentials,omitempty"`
 
 	// DisallowUsernameSubstring: Disallow username as a part of the

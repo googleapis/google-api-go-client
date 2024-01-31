@@ -1139,6 +1139,9 @@ type Rule struct {
 	// Severity: the severity of the rule
 	Severity string `json:"severity,omitempty"`
 
+	// Tags: List of user-defined tags
+	Tags []string `json:"tags,omitempty"`
+
 	// Uri: the docuement url for the rule
 	Uri string `json:"uri,omitempty"`
 
@@ -1665,6 +1668,9 @@ func (s *SapValidationValidationDetail) MarshalJSON() ([]byte, error) {
 type ScannedResource struct {
 	// Resource: resource name
 	Resource string `json:"resource,omitempty"`
+
+	// Type: resource type
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with

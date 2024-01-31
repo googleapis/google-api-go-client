@@ -312,6 +312,74 @@ func (s *AvroConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AwsKinesis: Ingestion settings for Amazon Kinesis Data Streams.
+type AwsKinesis struct {
+	// AwsRoleArn: Required. AWS role ARN to be used for Federated Identity
+	// authentication with Kinesis. Check the Pub/Sub docs for how to set up
+	// this role and the required permissions that need to be attached to
+	// it.
+	AwsRoleArn string `json:"awsRoleArn,omitempty"`
+
+	// ConsumerArn: Required. The Kinesis consumer ARN to used for ingestion
+	// in Enhanced Fan-Out mode. The consumer must be already created and
+	// ready to be used.
+	ConsumerArn string `json:"consumerArn,omitempty"`
+
+	// GcpServiceAccount: Required. The GCP service account to be used for
+	// Federated Identity authentication with Kinesis (via a
+	// `AssumeRoleWithWebIdentity` call for the provided role). The
+	// `aws_role_arn` must be set up with `accounts.google.com:sub` equals
+	// to this service account number.
+	GcpServiceAccount string `json:"gcpServiceAccount,omitempty"`
+
+	// State: Output only. An output-only field that indicates the state of
+	// the Kinesis ingestion source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Ingestion is active.
+	//   "KINESIS_PERMISSION_DENIED" - Permission denied encountered while
+	// consuming data from Kinesis. This can happen if: - The provided
+	// `aws_role_arn` does not exist or does not have the appropriate
+	// permissions attached. - The provided `aws_role_arn` is not set up
+	// properly for Identity Federation using `gcp_service_account`. - The
+	// Pub/Sub SA is not granted the `iam.serviceAccounts.getOpenIdToken`
+	// permission on `gcp_service_account`.
+	//   "PUBLISH_PERMISSION_DENIED" - Permission denied encountered while
+	// publishing to the topic. This can happen due to Pub/Sub SA has not
+	// been granted the [appropriate publish
+	// permissions](https://cloud.google.com/pubsub/docs/access-control#pubsu
+	// b.publisher)
+	//   "STREAM_NOT_FOUND" - The Kinesis stream does not exist.
+	//   "CONSUMER_NOT_FOUND" - The Kinesis consumer does not exist.
+	State string `json:"state,omitempty"`
+
+	// StreamArn: Required. The Kinesis stream ARN to ingest data from.
+	StreamArn string `json:"streamArn,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AwsRoleArn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AwsRoleArn") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsKinesis) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsKinesis
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryConfig: Configuration for a BigQuery subscription.
 type BigQueryConfig struct {
 	// DropUnknownFields: Optional. When true and use_topic_schema is true,
@@ -471,7 +539,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -805,6 +877,35 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IngestionDataSourceSettings: Settings for an ingestion data source on
+// a topic.
+type IngestionDataSourceSettings struct {
+	// AwsKinesis: Optional. Amazon Kinesis Data Streams.
+	AwsKinesis *AwsKinesis `json:"awsKinesis,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AwsKinesis") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AwsKinesis") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IngestionDataSourceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestionDataSourceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSchemaRevisionsResponse: Response for the `ListSchemaRevisions`
 // method.
 type ListSchemaRevisionsResponse struct {
@@ -1123,8 +1224,8 @@ type ModifyAckDeadlineRequest struct {
 	// immediately make the message available for delivery to another
 	// subscriber client. This typically results in an increase in the rate
 	// of message redeliveries (that is, duplicates). The minimum deadline
-	// you can specify is 0 seconds. The maximum deadline you can specify is
-	// 600 seconds (10 minutes).
+	// you can specify is 0 seconds. The maximum deadline you can specify in
+	// a single request is 600 seconds (10 minutes).
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// AckIds: Required. List of acknowledgment IDs.
@@ -1446,11 +1547,11 @@ type PubsubMessage struct {
 	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: Optional. ID of this message, assigned by the server when
-	// the message is published. Guaranteed to be unique within the topic.
-	// This value may be read by a subscriber that receives a
-	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
-	// populated by the publisher in a `Publish` call.
+	// MessageId: ID of this message, assigned by the server when the
+	// message is published. Guaranteed to be unique within the topic. This
+	// value may be read by a subscriber that receives a `PubsubMessage` via
+	// a `Pull` call or a push delivery. It must not be populated by the
+	// publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
 	// OrderingKey: Optional. If non-empty, identifies related messages for
@@ -1463,9 +1564,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: Optional. The time at which the message was published,
-	// populated by the server when it receives the `Publish` call. It must
-	// not be populated by the publisher in a `Publish` call.
+	// PublishTime: The time at which the message was published, populated
+	// by the server when it receives the `Publish` call. It must not be
+	// populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -2250,6 +2351,10 @@ type TextConfig struct {
 
 // Topic: A topic resource.
 type Topic struct {
+	// IngestionDataSourceSettings: Optional. Settings for managed ingestion
+	// from a data source into this topic.
+	IngestionDataSourceSettings *IngestionDataSourceSettings `json:"ingestionDataSourceSettings,omitempty"`
+
 	// KmsKeyName: Optional. The resource name of the Cloud KMS CryptoKey to
 	// be used to protect access to messages published on this topic. The
 	// expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
@@ -2292,24 +2397,37 @@ type Topic struct {
 	// against a schema.
 	SchemaSettings *SchemaSettings `json:"schemaSettings,omitempty"`
 
+	// State: Output only. An output-only field indicating the state of the
+	// topic.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - The topic does not have any persistent errors.
+	//   "INGESTION_RESOURCE_ERROR" - Ingestion from the data source has
+	// encountered a permanent error. See the more detailed error state in
+	// the corresponding ingestion source configuration.
+	State string `json:"state,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "IngestionDataSourceSettings") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "IngestionDataSourceSettings") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5490,7 +5608,8 @@ type ProjectsSnapshotsPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Updates an existing snapshot. Snapshots are used in Seek
+// Patch: Updates an existing snapshot by updating the fields specified
+// in the update mask. Snapshots are used in Seek
 // (https://cloud.google.com/pubsub/docs/replay-overview) operations,
 // which allow you to manage message acknowledgments in bulk. That is,
 // you can set the acknowledgment state of messages in an existing
@@ -5595,7 +5714,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
+	//   "description": "Updates an existing snapshot by updating the fields specified in the update mask. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",
@@ -7340,8 +7459,9 @@ type ProjectsSubscriptionsPatchCall struct {
 	header_                   http.Header
 }
 
-// Patch: Updates an existing subscription. Note that certain properties
-// of a subscription, such as its topic, are not modifiable.
+// Patch: Updates an existing subscription by updating the fields
+// specified in the update mask. Note that certain properties of a
+// subscription, such as its topic, are not modifiable.
 //
 //   - name: The name of the subscription. It must have the format
 //     "projects/{project}/subscriptions/{subscription}".
@@ -7448,7 +7568,7 @@ func (c *ProjectsSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Subs
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing subscription. Note that certain properties of a subscription, such as its topic, are not modifiable.",
+	//   "description": "Updates an existing subscription by updating the fields specified in the update mask. Note that certain properties of a subscription, such as its topic, are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.subscriptions.patch",
@@ -8891,8 +9011,9 @@ type ProjectsTopicsPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates an existing topic. Note that certain properties of a
-// topic are not modifiable.
+// Patch: Updates an existing topic by updating the fields specified in
+// the update mask. Note that certain properties of a topic are not
+// modifiable.
 //
 //   - name: The name of the topic. It must have the format
 //     "projects/{project}/topics/{topic}". `{topic}` must start with a
@@ -8998,7 +9119,7 @@ func (c *ProjectsTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing topic. Note that certain properties of a topic are not modifiable.",
+	//   "description": "Updates an existing topic by updating the fields specified in the update mask. Note that certain properties of a topic are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.topics.patch",

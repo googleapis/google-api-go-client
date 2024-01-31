@@ -1553,6 +1553,27 @@ func (c *CaseClassificationsSearchCall) PageToken(pageToken string) *CaseClassif
 	return c
 }
 
+// ProductProductLine sets the optional parameter "product.productLine":
+// The Product Line of the Product.
+//
+// Possible values:
+//
+//	"PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
+//	"GOOGLE_CLOUD" - Google Cloud
+//	"GOOGLE_MAPS" - Google Maps
+func (c *CaseClassificationsSearchCall) ProductProductLine(productProductLine string) *CaseClassificationsSearchCall {
+	c.urlParams_.Set("product.productLine", productProductLine)
+	return c
+}
+
+// ProductProductSubline sets the optional parameter
+// "product.productSubline": The Product Subline of the Product, such as
+// "Maps Billing".
+func (c *CaseClassificationsSearchCall) ProductProductSubline(productProductSubline string) *CaseClassificationsSearchCall {
+	c.urlParams_.Set("product.productSubline", productProductSubline)
+	return c
+}
+
 // Query sets the optional parameter "query": An expression used to
 // filter case classifications. If it's an empty string, then no
 // filtering happens. Otherwise, case classifications will be returned
@@ -1673,6 +1694,26 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product.productLine": {
+	//       "description": "The Product Line of the Product.",
+	//       "enum": [
+	//         "PRODUCT_LINE_UNSPECIFIED",
+	//         "GOOGLE_CLOUD",
+	//         "GOOGLE_MAPS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unknown product type.",
+	//         "Google Cloud",
+	//         "Google Maps"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product.productSubline": {
+	//       "description": "The Product Subline of the Product, such as \"Maps Billing\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

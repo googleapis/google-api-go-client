@@ -888,25 +888,31 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // ValidatorConfig: Configuration for validator-related parameters on
 // the beacon client, and for any GCP-managed validator client.
 type ValidatorConfig struct {
+	// ManagedValidatorClient: Immutable. When true, deploys a GCP-managed
+	// validator client alongside the beacon client.
+	ManagedValidatorClient bool `json:"managedValidatorClient,omitempty"`
+
 	// MevRelayUrls: URLs for MEV-relay services to use for block building.
 	// When set, a GCP-managed MEV-boost service is configured on the beacon
 	// client.
 	MevRelayUrls []string `json:"mevRelayUrls,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MevRelayUrls") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedValidatorClient") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MevRelayUrls") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ManagedValidatorClient")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

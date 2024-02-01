@@ -1207,8 +1207,9 @@ func (s *ContainerThreatDetectionSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Cve: CVE stands for Common Vulnerabilities and Exposures. More
-// information: https://cve.mitre.org
+// Cve: CVE stands for Common Vulnerabilities and Exposures. Information
+// from the CVE record (https://www.cve.org/ResourcesSupport/Glossary)
+// that describes this vulnerability.
 type Cve struct {
 	// Cvssv3: Describe Common Vulnerability Scoring System specified at
 	// https://www.first.org/cvss/v3.1/specification-document
@@ -2853,6 +2854,12 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// "project/456" scope will be checked with "AND" of other resources.
 	Scope string `json:"scope,omitempty"`
 
+	// SensitiveDataProtectionMapping: A mapping of the sensitivity on
+	// Sensitive Data Protection finding to resource values. This mapping
+	// can only be used in combination with a resource_type that is related
+	// to BigQuery, e.g. "bigquery.googleapis.com/Dataset".
+	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
+
 	// TagValues: Required. Tag values combined with AND to check against.
 	// Values in the form "tagValues/123" E.g. [ "tagValues/123",
 	// "tagValues/456", "tagValues/789" ]
@@ -3001,6 +3008,58 @@ type GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule struct {
 
 func (s *GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping: Resource
+// value mapping for Sensitive Data Protection findings. If any of these
+// mappings have a resource value that is not unspecified, the
+// resource_value field will be ignored when reading this configuration.
+type GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping struct {
+	// HighSensitivityMapping: Resource value mapping for high-sensitivity
+	// Sensitive Data Protection findings
+	//
+	// Possible values:
+	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
+	//   "HIGH" - High resource value
+	//   "MEDIUM" - Medium resource value
+	//   "LOW" - Low resource value
+	//   "NONE" - No resource value, e.g. ignore these resources
+	HighSensitivityMapping string `json:"highSensitivityMapping,omitempty"`
+
+	// MediumSensitivityMapping: Resource value mapping for
+	// medium-sensitivity Sensitive Data Protection findings
+	//
+	// Possible values:
+	//   "RESOURCE_VALUE_UNSPECIFIED" - Unspecific value
+	//   "HIGH" - High resource value
+	//   "MEDIUM" - Medium resource value
+	//   "LOW" - Low resource value
+	//   "NONE" - No resource value, e.g. ignore these resources
+	MediumSensitivityMapping string `json:"mediumSensitivityMapping,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HighSensitivityMapping") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HighSensitivityMapping")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

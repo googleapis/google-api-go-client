@@ -13426,10 +13426,6 @@ type PosStore struct {
 	// couldn't be matched to any of the connected Google Business Profile
 	// stores, as the matched Google Business Profile store is unverified.
 	// Go through the Google Business Profile verification process to match
-	// correctly. - "store-match-unavailable": The provided POS store
-	// couldn't be matched to any of the connected Google Business Profile
-	// stores, as the matched Google Business Profile store is in an invalid
-	// state. Fix any issues on your Google Business Profile store to match
 	// correctly.
 	MatchingStatusHint string `json:"matchingStatusHint,omitempty"`
 

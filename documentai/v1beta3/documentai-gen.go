@@ -7485,8 +7485,8 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 
 	// Labels: Optional. The labels with user-defined metadata for the
 	// request. Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
+	// (Unicode codepoints) and can only contain lowercase letters, numeric
+	// characters, underscores, and dashes. International characters are
 	// allowed. Label values are optional. Label keys must start with a
 	// letter.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -11951,8 +11951,8 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 
 	// Labels: Optional. The labels with user-defined metadata for the
 	// request. Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
+	// (Unicode codepoints) and can only contain lowercase letters, numeric
+	// characters, underscores, and dashes. International characters are
 	// allowed. Label values are optional. Label keys must start with a
 	// letter.
 	Labels map[string]string `json:"labels,omitempty"`

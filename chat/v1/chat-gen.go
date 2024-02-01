@@ -1099,6 +1099,8 @@ type CommonEventObject struct {
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
 	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
+	//   "CHAT_IN_GMAIL" - The add-on or appfinder widget launches from
+	// Chat-in-Gmail
 	HostApp string `json:"hostApp,omitempty"`
 
 	// InvokedFunction: Name of the invoked function associated with the

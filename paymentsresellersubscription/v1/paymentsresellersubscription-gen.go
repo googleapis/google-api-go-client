@@ -1731,6 +1731,21 @@ type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
 	// applicable for the line item.
 	PartnerEligibilityIds []string `json:"partnerEligibilityIds,omitempty"`
 
+	// PartnerPlanType: Optional. Specifies the plan type offered to the end
+	// user by the partner.
+	//
+	// Possible values:
+	//   "PARTNER_PLAN_TYPE_UNSPECIFIED" - Unspecified. Should not use,
+	// reserved as an invalid value.
+	//   "PARTNER_PLAN_TYPE_STANDALONE" - This item is offered as a
+	// standalone product to the user.
+	//   "PARTNER_PLAN_TYPE_HARD_BUNDLE" - This item is bundled with another
+	// partner offering, the item is provisioned at purchase time.
+	//   "PARTNER_PLAN_TYPE_SOFT_BUNDLE" - This item is bundled with another
+	// partner offering, the item is provisioned after puchase, when the
+	// user opts in this Google service.
+	PartnerPlanType string `json:"partnerPlanType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessEndTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

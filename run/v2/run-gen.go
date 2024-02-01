@@ -2374,6 +2374,10 @@ type GoogleCloudRunV2Service struct {
 	// https://cloud.google.com/run/docs/configuring/custom-audiences.
 	CustomAudiences []string `json:"customAudiences,omitempty"`
 
+	// DefaultUriDisabled: Optional. Disables public resolution of the
+	// default URI of this service.
+	DefaultUriDisabled bool `json:"defaultUriDisabled,omitempty"`
+
 	// DeleteTime: Output only. The deletion time.
 	DeleteTime string `json:"deleteTime,omitempty"`
 

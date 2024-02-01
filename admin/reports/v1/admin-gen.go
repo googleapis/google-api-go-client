@@ -1243,7 +1243,8 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "context_aware_access",
 	//         "chrome",
 	//         "data_studio",
-	//         "keep"
+	//         "keep",
+	//         "vault"
 	//       ],
 	//       "enumDescriptions": [
 	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
@@ -1266,10 +1267,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
 	//         "The Chrome activity reports return information about Chrome browser and Chrome OS events.",
 	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
-	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
+	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers.",
+	//         "The Vault activity reports return information about various types of Vault activity events."
 	//       ],
 	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
+	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)|(vault)",
 	//       "required": true,
 	//       "type": "string"
 	//     },

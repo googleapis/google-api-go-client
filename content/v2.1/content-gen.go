@@ -3887,6 +3887,8 @@ type CheckoutSettings struct {
 	//   "INACTIVE" - Merchant has not enrolled into the feature.
 	//   "ENROLLED" - Merchant has enrolled into the feature by providing
 	// either an account level URL or checkout URLs as part of their feed.
+	//   "OPT_OUT" - Merchant has previously enrolled but opted out of the
+	// feature.
 	EffectiveEnrollmentState string `json:"effectiveEnrollmentState,omitempty"`
 
 	// EffectiveReviewState: Output only. The effective value of review
@@ -3920,6 +3922,8 @@ type CheckoutSettings struct {
 	//   "INACTIVE" - Merchant has not enrolled into the feature.
 	//   "ENROLLED" - Merchant has enrolled into the feature by providing
 	// either an account level URL or checkout URLs as part of their feed.
+	//   "OPT_OUT" - Merchant has previously enrolled but opted out of the
+	// feature.
 	EnrollmentState string `json:"enrollmentState,omitempty"`
 
 	// MerchantId: Required. The ID of the account.

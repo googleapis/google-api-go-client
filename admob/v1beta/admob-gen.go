@@ -1624,6 +1624,12 @@ type MediationAbExperiment struct {
 	// use.
 	//   "CONTROL" - The control leading the experiment.
 	//   "TREATMENT" - The treatment leading the experiment.
+	//   "INSUFFICIENT_DATA" - Collected data (impressions) are insufficient
+	// to determine a leader.
+	//   "TOO_EARLY_TO_CALL" - Experiment hasn't run long enough to
+	// determine a leader.
+	//   "NO_VARIANT_LEADER" - Neither variant is a decisive winner in the
+	// observed data.
 	VariantLeader string `json:"variantLeader,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

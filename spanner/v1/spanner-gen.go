@@ -925,7 +925,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -997,6 +1001,13 @@ func (s *ChildLink) MarshalJSON() ([]byte, error) {
 
 // CommitRequest: The request for Commit.
 type CommitRequest struct {
+	// MaxCommitDelay: Optional. The amount of latency this request is
+	// willing to incur in order to improve throughput. If this field is not
+	// set, Spanner assumes requests are relatively latency sensitive and
+	// automatically determines an appropriate delay time. You can specify a
+	// batching delay value between 0 and 500 ms.
+	MaxCommitDelay string `json:"maxCommitDelay,omitempty"`
+
 	// Mutations: The mutations to be executed when this transaction
 	// commits. All mutations are applied atomically, in the order they
 	// appear in this list.
@@ -1023,7 +1034,7 @@ type CommitRequest struct {
 	// TransactionId: Commit a previously-started transaction.
 	TransactionId string `json:"transactionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Mutations") to
+	// ForceSendFields is a list of field names (e.g. "MaxCommitDelay") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1031,12 +1042,13 @@ type CommitRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Mutations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MaxCommitDelay") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5020,7 +5032,7 @@ type ReplicaInfo struct {
 	// more details.
 	DefaultLeaderLocation bool `json:"defaultLeaderLocation,omitempty"`
 
-	// Location: The location of the serving resources, e.g. "us-central1".
+	// Location: The location of the serving resources, e.g., "us-central1".
 	Location string `json:"location,omitempty"`
 
 	// Type: The type of replica.
@@ -6283,6 +6295,8 @@ type Type struct {
 	//   "BOOL" - Encoded as JSON `true` or `false`.
 	//   "INT64" - Encoded as `string`, in decimal format.
 	//   "FLOAT64" - Encoded as `number`, or the strings "NaN",
+	// "Infinity", or "-Infinity".
+	//   "FLOAT32" - Encoded as `number`, or the strings "NaN",
 	// "Infinity", or "-Infinity".
 	//   "TIMESTAMP" - Encoded as `string` in RFC 3339 timestamp format. The
 	// time zone must be present, and must be "Z". If the schema has the

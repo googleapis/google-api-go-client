@@ -1464,6 +1464,37 @@ func (s *TransferRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UnenrollDataSourcesRequest: A request to unenroll a set of data
+// sources so they are no longer visible in the BigQuery UI's `Transfer`
+// tab.
+type UnenrollDataSourcesRequest struct {
+	// DataSourceIds: Data sources that are unenrolled. It is required to
+	// provide at least one data source id.
+	DataSourceIds []string `json:"dataSourceIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSourceIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UnenrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UnenrollDataSourcesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserInfo: Information about a user.
 type UserInfo struct {
 	// Email: E-mail address of the user.
@@ -2650,6 +2681,154 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "bigquerydatatransfer.projects.locations.unenrollDataSources":
+
+type ProjectsLocationsUnenrollDataSourcesCall struct {
+	s                          *Service
+	name                       string
+	unenrolldatasourcesrequest *UnenrollDataSourcesRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// UnenrollDataSources: Unenroll data sources in a user project. This
+// allows users to remove transfer configurations for these data
+// sources. They will no longer appear in the ListDataSources RPC and
+// will also no longer appear in the BigQuery UI
+// (https://console.cloud.google.com/bigquery).
+//
+//   - name: The name of the project resource in the form:
+//     `projects/{project_id}`.
+func (r *ProjectsLocationsService) UnenrollDataSources(name string, unenrolldatasourcesrequest *UnenrollDataSourcesRequest) *ProjectsLocationsUnenrollDataSourcesCall {
+	c := &ProjectsLocationsUnenrollDataSourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.unenrolldatasourcesrequest = unenrolldatasourcesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUnenrollDataSourcesCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnenrollDataSourcesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUnenrollDataSourcesCall) Context(ctx context.Context) *ProjectsLocationsUnenrollDataSourcesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUnenrollDataSourcesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUnenrollDataSourcesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unenrolldatasourcesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:unenrollDataSources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquerydatatransfer.projects.locations.unenrollDataSources" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsUnenrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Unenroll data sources in a user project. This allows users to remove transfer configurations for these data sources. They will no longer appear in the ListDataSources RPC and will also no longer appear in the [BigQuery UI](https://console.cloud.google.com/bigquery).",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:unenrollDataSources",
+	//   "httpMethod": "POST",
+	//   "id": "bigquerydatatransfer.projects.locations.unenrollDataSources",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the project resource in the form: `projects/{project_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:unenrollDataSources",
+	//   "request": {
+	//     "$ref": "UnenrollDataSourcesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds":

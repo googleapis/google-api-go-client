@@ -1835,6 +1835,9 @@ type SchedulingConfig struct {
 	// Reserved: Whether the node is created under a reservation.
 	Reserved bool `json:"reserved,omitempty"`
 
+	// Spot: Optional. Defines whether the node is Spot VM.
+	Spot bool `json:"spot,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Preemptible") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

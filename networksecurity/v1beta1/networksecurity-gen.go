@@ -1377,7 +1377,11 @@ type GoogleIamV1Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1707,6 +1711,10 @@ type ListAddressGroupReferencesResponseAddressGroupReference struct {
 	// RulePriority: Rule priority of the FirewallPolicy that is using the
 	// Address Group.
 	RulePriority int64 `json:"rulePriority,omitempty"`
+
+	// SecurityPolicy: Cloud Armor SecurityPolicy that is using the Address
+	// Group.
+	SecurityPolicy string `json:"securityPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FirewallPolicy") to
 	// unconditionally include in API requests. By default, fields with

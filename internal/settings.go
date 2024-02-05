@@ -196,24 +196,44 @@ func (ds *DialSettings) IsUniverseDomainGDU() bool {
 func GetUniverseDomain(creds *google.Credentials) (string, error) {
 	timer := time.NewTimer(time.Second)
 	defer timer.Stop()
-	var credsUniverseDomain string
-	var err error
+	errors := make(chan error)
+	results := make(chan string)
+
 	go func() {
-		credsUniverseDomain, err = creds.GetUniverseDomain()
+		result, err := creds.GetUniverseDomain()
+		if err != nil {
+			errors <- err
+			return
+		}
+		results <- result
 	}()
-	<-timer.C
-	if err != nil {
-		// An error returned in less than 1s is legitimate.
-		return "", err
-	} else if credsUniverseDomain == "" {
-		// If credsUniverseDomain is empty, it means that creds.GetUniverseDomain()
-		// did not complete in 1s. Assume that MDS is likely never responding to
-		// the endpoint and will timeout. This is the source of issues such as
-		// https://github.com/googleapis/google-cloud-go/issues/9350.
-		// Temporarily (2024-02-02) return the GDU domain. Restore the original
-		// calls to creds.GetUniverseDomain() in grpc/dial.go and http/dial.go
-		// and remove this method to close [TODO(chrisdsmith): issue link here].
-		return universeDomainDefault, nil
+
+loop:
+	for {
+		select {
+		case <-timer.C: // Timer is expired.
+			break loop
+		default: // Timer is not expired, so continue.
+		}
+
+		select {
+		case err := <-errors:
+			// An error returned before the timer expires is legitimate.
+			return "", err
+		case res := <-results:
+			return res, nil
+		case <-time.After(time.Millisecond * 100): // Poll channels every 100ms.
+		}
+
 	}
-	return credsUniverseDomain, nil
+
+	// If result or err was never returned, it means that creds.GetUniverseDomain()
+	// did not complete in 1s. Assume that MDS is likely never responding to
+	// the endpoint and will timeout. This is the source of issues such as
+	// https://github.com/googleapis/google-cloud-go/issues/9350.
+	// Temporarily (2024-02-02) return the GDU domain. Restore the original
+	// calls to creds.GetUniverseDomain() in grpc/dial.go and http/dial.go
+	// and remove this method to close
+	// https://github.com/googleapis/google-api-go-client/issues/2399.
+	return universeDomainDefault, nil
 }

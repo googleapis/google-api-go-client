@@ -552,7 +552,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1069,6 +1073,9 @@ type DropInfo struct {
 	//   "PSC_NEG_PRODUCER_ENDPOINT_NO_GLOBAL_ACCESS" - The packet is sent
 	// to the Private Service Connect backend (network endpoint group), but
 	// the producer PSC forwarding rule does not have global access enabled.
+	//   "PSC_NEG_PRODUCER_FORWARDING_RULE_MULTIPLE_PORTS" - The packet is
+	// sent to the Private Service Connect backend (network endpoint group),
+	// but the producer PSC forwarding rule has multiple ports specified.
 	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run
 	// revision that is not ready.
 	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside
@@ -1986,6 +1993,10 @@ func (s *LoadBalancerBackend) MarshalJSON() ([]byte, error) {
 // LoadBalancerBackendInfo: For display only. Metadata associated with
 // the load balancer backend.
 type LoadBalancerBackendInfo struct {
+	// BackendBucketUri: URI of the backend bucket this backend targets (if
+	// applicable).
+	BackendBucketUri string `json:"backendBucketUri,omitempty"`
+
 	// BackendServiceUri: URI of the backend service this backend belongs to
 	// (if applicable).
 	BackendServiceUri string `json:"backendServiceUri,omitempty"`
@@ -2039,15 +2050,23 @@ type LoadBalancerBackendInfo struct {
 	// backend belongs to (if applicable).
 	NetworkEndpointGroupUri string `json:"networkEndpointGroupUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BackendServiceUri")
-	// to unconditionally include in API requests. By default, fields with
+	// PscGoogleApiTarget: PSC Google API target this PSC NEG backend
+	// targets (if applicable).
+	PscGoogleApiTarget string `json:"pscGoogleApiTarget,omitempty"`
+
+	// PscServiceAttachmentUri: URI of the PSC service attachment this PSC
+	// NEG backend targets (if applicable).
+	PscServiceAttachmentUri string `json:"pscServiceAttachmentUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackendBucketUri") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BackendServiceUri") to
+	// NullFields is a list of field names (e.g. "BackendBucketUri") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2977,7 +2996,9 @@ type Step struct {
 	// Instance: Display information of a Compute Engine instance.
 	Instance *InstanceInfo `json:"instance,omitempty"`
 
-	// LoadBalancer: Display information of the load balancers.
+	// LoadBalancer: Display information of the load balancers. Deprecated
+	// in favor of the `load_balancer_backend_info` field, not used in new
+	// tests.
 	LoadBalancer *LoadBalancerInfo `json:"loadBalancer,omitempty"`
 
 	// LoadBalancerBackendInfo: Display information of a specific load
@@ -3050,9 +3071,11 @@ type Step struct {
 	//   "ARRIVE_AT_INSTANCE" - Forwarding state: arriving at a Compute
 	// Engine instance.
 	//   "ARRIVE_AT_INTERNAL_LOAD_BALANCER" - Forwarding state: arriving at
-	// a Compute Engine internal load balancer.
+	// a Compute Engine internal load balancer. Deprecated in favor of the
+	// `ANALYZE_LOAD_BALANCER_BACKEND` state, not used in new tests.
 	//   "ARRIVE_AT_EXTERNAL_LOAD_BALANCER" - Forwarding state: arriving at
-	// a Compute Engine external load balancer.
+	// a Compute Engine external load balancer. Deprecated in favor of the
+	// `ANALYZE_LOAD_BALANCER_BACKEND` state, not used in new tests.
 	//   "ARRIVE_AT_VPN_GATEWAY" - Forwarding state: arriving at a Cloud VPN
 	// gateway.
 	//   "ARRIVE_AT_VPN_TUNNEL" - Forwarding state: arriving at a Cloud VPN

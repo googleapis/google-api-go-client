@@ -1163,6 +1163,9 @@ type H264CodecSettings struct {
 	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
+	// Hlg: Optional. HLG color format setting for H264.
+	Hlg *H264ColorFormatHLG `json:"hlg,omitempty"`
+
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
 	// pixel formats: - `yuv420p` pixel format - `yuv422p` pixel format -
 	// `yuv444p` pixel format - `yuv420p10` 10-bit HDR pixel format -
@@ -1190,6 +1193,9 @@ type H264CodecSettings struct {
 	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
 	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
+
+	// Sdr: Optional. SDR color format setting for H264.
+	Sdr *H264ColorFormatSDR `json:"sdr,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
 	// FFmpeg-compatible (https://trac.ffmpeg.org/wiki/Encode/H.264#Tune).
@@ -1256,6 +1262,16 @@ func (s *H264CodecSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// H264ColorFormatHLG: Convert the input video to a Hybrid Log Gamma
+// (HLG) video.
+type H264ColorFormatHLG struct {
+}
+
+// H264ColorFormatSDR: Convert the input video to a Standard Dynamic
+// Range (SDR) video.
+type H264ColorFormatSDR struct {
+}
+
 // H265CodecSettings: H265 codec settings.
 type H265CodecSettings struct {
 	// AllowOpenGop: Specifies whether an open Group of Pictures (GOP)
@@ -1310,6 +1326,9 @@ type H265CodecSettings struct {
 	// count. Must be greater than zero.
 	GopFrameCount int64 `json:"gopFrameCount,omitempty"`
 
+	// Hdr10: Optional. HDR10 color format setting for H265.
+	Hdr10 *H265ColorFormatHDR10 `json:"hdr10,omitempty"`
+
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
@@ -1319,6 +1338,9 @@ type H265CodecSettings struct {
 	// The API detects any rotation metadata and swaps the requested height
 	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
+
+	// Hlg: Optional. HLG color format setting for H265.
+	Hlg *H265ColorFormatHLG `json:"hlg,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
 	// pixel formats: - `yuv420p` pixel format - `yuv422p` pixel format -
@@ -1351,6 +1373,9 @@ type H265CodecSettings struct {
 	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
 	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
+
+	// Sdr: Optional. SDR color format setting for H265.
+	Sdr *H265ColorFormatSDR `json:"sdr,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
 	// FFmpeg-compatible (https://trac.ffmpeg.org/wiki/Encode/H.265). Note
@@ -1415,6 +1440,21 @@ func (s *H265CodecSettings) UnmarshalJSON(data []byte) error {
 	s.AqStrength = float64(s1.AqStrength)
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
+}
+
+// H265ColorFormatHDR10: Convert the input video to a High Dynamic Range
+// 10 (HDR10) video.
+type H265ColorFormatHDR10 struct {
+}
+
+// H265ColorFormatHLG: Convert the input video to a Hybrid Log Gamma
+// (HLG) video.
+type H265ColorFormatHLG struct {
+}
+
+// H265ColorFormatSDR: Convert the input video to a Standard Dynamic
+// Range (SDR) video.
+type H265ColorFormatSDR struct {
 }
 
 // Image: Overlaid image.
@@ -2548,6 +2588,9 @@ type Vp9CodecSettings struct {
 	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
+	// Hlg: Optional. HLG color format setting for VP9.
+	Hlg *Vp9ColorFormatHLG `json:"hlg,omitempty"`
+
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
 	// pixel formats: - `yuv420p` pixel format - `yuv422p` pixel format -
 	// `yuv444p` pixel format - `yuv420p10` 10-bit HDR pixel format -
@@ -2567,6 +2610,9 @@ type Vp9CodecSettings struct {
 	// RateControlMode: Specify the mode. The default is `vbr`. Supported
 	// rate control modes: - `vbr` - variable bitrate
 	RateControlMode string `json:"rateControlMode,omitempty"`
+
+	// Sdr: Optional. SDR color format setting for VP9.
+	Sdr *Vp9ColorFormatSDR `json:"sdr,omitempty"`
 
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
@@ -2613,6 +2659,16 @@ func (s *Vp9CodecSettings) UnmarshalJSON(data []byte) error {
 	}
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
+}
+
+// Vp9ColorFormatHLG: Convert the input video to a Hybrid Log Gamma
+// (HLG) video.
+type Vp9ColorFormatHLG struct {
+}
+
+// Vp9ColorFormatSDR: Convert the input video to a Standard Dynamic
+// Range (SDR) video.
+type Vp9ColorFormatSDR struct {
 }
 
 // Widevine: Widevine configuration.

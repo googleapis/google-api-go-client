@@ -448,7 +448,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1906,6 +1910,9 @@ type PipelineRun struct {
 	// being executed. +optional
 	FinallyStartTime string `json:"finallyStartTime,omitempty"`
 
+	// GcbParams: Output only. GCB default params.
+	GcbParams map[string]string `json:"gcbParams,omitempty"`
+
 	// Name: Output only. The `PipelineRun` name with format
 	// `projects/{project}/locations/{location}/pipelineRuns/{pipeline_run}`
 	Name string `json:"name,omitempty"`
@@ -1928,9 +1935,15 @@ type PipelineRun struct {
 	// PipelineSpec: PipelineSpec defines the desired state of Pipeline.
 	PipelineSpec *PipelineSpec `json:"pipelineSpec,omitempty"`
 
+	// Provenance: Optional. Provenance configuration.
+	Provenance *Provenance `json:"provenance,omitempty"`
+
 	// ResolvedPipelineSpec: Output only. The exact PipelineSpec used to
 	// instantiate the run.
 	ResolvedPipelineSpec *PipelineSpec `json:"resolvedPipelineSpec,omitempty"`
+
+	// Security: Optional. Security configuration.
+	Security *Security `json:"security,omitempty"`
 
 	// ServiceAccount: Service account used in the Pipeline.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -1953,6 +1966,9 @@ type PipelineRun struct {
 	// UpdateTime: Output only. Time at which the request to update the
 	// `PipelineRun` was received.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Worker: Optional. Worker configuration.
+	Worker *Worker `json:"worker,omitempty"`
 
 	// WorkerPool: Output only. The WorkerPool used to run this PipelineRun.
 	WorkerPool string `json:"workerPool,omitempty"`
@@ -2306,6 +2322,62 @@ func (s *PropertySpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Provenance: Provenance configuration.
+type Provenance struct {
+	// Enabled: Optional. Provenance push mode.
+	//
+	// Possible values:
+	//   "ENABLED_UNSPECIFIED" - Default to disabled (before AA
+	// regionalization), optimistic after
+	//   "REQUIRED" - Provenance failures would fail the run
+	//   "OPTIMISTIC" - GCB will attempt to push to artifact analaysis and
+	// build state would not be impacted by the push failures.
+	//   "DISABLED" - Disable the provenance push entirely.
+	Enabled string `json:"enabled,omitempty"`
+
+	// Region: Optional. Provenance region.
+	//
+	// Possible values:
+	//   "REGION_UNSPECIFIED" - The PipelineRun/TaskRun/Workflow will be
+	// rejected. Update this comment to push to the same region as the run
+	// in Artifact Analysis when it's regionalized.
+	//   "GLOBAL" - Push provenance to Artifact Analysis in global region.
+	Region string `json:"region,omitempty"`
+
+	// Storage: Optional. Where provenance is stored.
+	//
+	// Possible values:
+	//   "STORAGE_UNSPECIFIED" - Default PREFER_ARTIFACT_PROJECT.
+	//   "PREFER_ARTIFACT_PROJECT" - GCB will attempt to push provenance to
+	// the artifact project. If it is not available, fallback to build
+	// project.
+	//   "ARTIFACT_PROJECT_ONLY" - Only push to artifact project.
+	//   "BUILD_PROJECT_ONLY" - Only push to build project.
+	Storage string `json:"storage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Provenance) MarshalJSON() ([]byte, error) {
+	type NoMethod Provenance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Repository: A repository associated to a parent connection.
 type Repository struct {
 	// Annotations: Allows clients to store small amounts of arbitrary data.
@@ -2442,6 +2514,43 @@ type SecretVolumeSource struct {
 
 func (s *SecretVolumeSource) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretVolumeSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Security: Security configuration.
+type Security struct {
+	// PrivilegeMode: Optional. Privilege mode.
+	//
+	// Possible values:
+	//   "PRIVILEGE_MODE_UNSPECIFIED" - Default to PRIVILEGED.
+	//   "PRIVILEGED" - Privileged mode.
+	//   "UNPRIVILEGED" - Unprivileged mode.
+	PrivilegeMode string `json:"privilegeMode,omitempty"`
+
+	// ServiceAccount: IAM service account whose credentials will be used at
+	// runtime.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrivilegeMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrivilegeMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Security) MarshalJSON() ([]byte, error) {
+	type NoMethod Security
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3230,6 +3339,35 @@ type WhenExpression struct {
 
 func (s *WhenExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod WhenExpression
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Worker: Configuration for the worker.
+type Worker struct {
+	// MachineType: Optional. Machine type of a worker, default is
+	// "e2-standard-2".
+	MachineType string `json:"machineType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MachineType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Worker) MarshalJSON() ([]byte, error) {
+	type NoMethod Worker
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

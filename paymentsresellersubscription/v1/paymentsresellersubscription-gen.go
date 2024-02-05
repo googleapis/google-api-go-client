@@ -1215,8 +1215,17 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A Subscription
-// resource managed by 3P Partners.
+// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A subscription
+// serves as a central billing entity between an external partner and
+// Google. The underlying Google services rely on the subscription state
+// to grant or revoke the user's service entitlement. It's important to
+// note that the subscription state may not always perfectly align with
+// the user's service entitlement. For example, some Google services may
+// continue providing access to the user until the current billing cycle
+// ends, even if the subscription has been immediately canceled.
+// However, other services may not do the same. To fully understand the
+// specific details, please consult the relevant contract or product
+// policy.
 type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// CancellationDetails: Output only. Describes the details of a
 	// cancelled subscription. Only applicable to subscription of state

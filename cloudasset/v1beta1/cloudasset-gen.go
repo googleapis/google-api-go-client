@@ -1682,8 +1682,8 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 // succeed.
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// [EgressPolicy]. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// [EgressPolicy], in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -1891,8 +1891,8 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, er
 // in order to match.
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// ingress policy. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// ingress policy, in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed

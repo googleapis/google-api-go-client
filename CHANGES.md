@@ -1,5 +1,22 @@
 # Changes
 
+## [0.162.0](https://github.com/googleapis/google-api-go-client/compare/v0.161.0...v0.162.0) (2024-02-05)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2388](https://github.com/googleapis/google-api-go-client/issues/2388)) ([f2f2d22](https://github.com/googleapis/google-api-go-client/commit/f2f2d22cf7dc6904306ca941ef8c6994a573a383))
+* **all:** Auto-regenerate discovery clients ([#2391](https://github.com/googleapis/google-api-go-client/issues/2391)) ([c8e77f6](https://github.com/googleapis/google-api-go-client/commit/c8e77f698e25db69b2f41997eaddc2ffe1c67d03))
+* **all:** Auto-regenerate discovery clients ([#2392](https://github.com/googleapis/google-api-go-client/issues/2392)) ([e5a7a15](https://github.com/googleapis/google-api-go-client/commit/e5a7a1541d287038778a37a22478ac4830cefc17))
+* **all:** Auto-regenerate discovery clients ([#2394](https://github.com/googleapis/google-api-go-client/issues/2394)) ([140fb54](https://github.com/googleapis/google-api-go-client/commit/140fb54417a8198f9cc75a25e743836dcf75e171))
+* **all:** Auto-regenerate discovery clients ([#2395](https://github.com/googleapis/google-api-go-client/issues/2395)) ([169ead6](https://github.com/googleapis/google-api-go-client/commit/169ead6b4f2336c2b0805a1d60aa8f3aca4d6315))
+* **all:** Auto-regenerate discovery clients ([#2398](https://github.com/googleapis/google-api-go-client/issues/2398)) ([eddfeb9](https://github.com/googleapis/google-api-go-client/commit/eddfeb9353a18fd2c8d69fe224bb556f7f17253b))
+
+
+### Bug Fixes
+
+* **transport:** Enforce 1s timeout on requests to MDS universe_domain ([#2393](https://github.com/googleapis/google-api-go-client/issues/2393)) ([6862015](https://github.com/googleapis/google-api-go-client/commit/6862015b9f6c07ddb74cd2e9fb8d94703b0d42b3))
+
 ## [0.161.0](https://github.com/googleapis/google-api-go-client/compare/v0.160.0...v0.161.0) (2024-01-30)
 
 

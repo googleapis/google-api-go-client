@@ -1902,6 +1902,14 @@ func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset) 
 // icy: The IAM policies governed by the organization policies of the
 // AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
 type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy struct {
+	// AssetType: The asset type of the
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedIamPolicy.attached_reso
+	// urce. Example: `cloudresourcemanager.googleapis.com/Project` See
+	// Cloud Asset Inventory Supported Asset Types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for all supported asset types.
+	AssetType string `json:"assetType,omitempty"`
+
 	// AttachedResource: The full resource name of the resource on which
 	// this IAM policy is set. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
@@ -1929,7 +1937,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy s
 	// policy belongs to a project.
 	Project string `json:"project,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AttachedResource") to
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1937,13 +1945,12 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy s
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AttachedResource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AssetType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1957,6 +1964,17 @@ func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPoli
 // ce: The Google Cloud resources governed by the organization policies
 // of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
 type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource struct {
+	// AssetType: The asset type of the
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedResource.full_resource_
+	// name Example: `cloudresourcemanager.googleapis.com/Project` See Cloud
+	// Asset Inventory Supported Asset Types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for all supported asset types.
+	AssetType string `json:"assetType,omitempty"`
+
+	// EffectiveTags: The effective tags on this resource.
+	EffectiveTags []*EffectiveTagDetails `json:"effectiveTags,omitempty"`
+
 	// Folders: The folder(s) that this resource belongs to, in the format
 	// of folders/{FOLDER_NUMBER}. This field is available when the resource
 	// belongs (directly or cascadingly) to one or more folders.
@@ -1985,7 +2003,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource st
 	// belongs to a project.
 	Project string `json:"project,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1993,7 +2011,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource st
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Folders") to include in
+	// NullFields is a list of field names (e.g. "AssetType") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2287,10 +2305,24 @@ type GoogleCloudAssetV1GovernedContainer struct {
 	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
 	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
 
+	// EffectiveTags: The effective tags on this resource.
+	EffectiveTags []*EffectiveTagDetails `json:"effectiveTags,omitempty"`
+
+	// Folders: The folder(s) that this resource belongs to, in the format
+	// of folders/{FOLDER_NUMBER}. This field is available when the resource
+	// belongs (directly or cascadingly) to one or more folders.
+	Folders []string `json:"folders,omitempty"`
+
 	// FullResourceName: The [full resource name]
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	// of an organization/folder/project resource.
 	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Organization: The organization that this resource belongs to, in the
+	// format of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the resource belongs (directly or cascadingly) to an
+	// organization.
+	Organization string `json:"organization,omitempty"`
 
 	// Parent: The [full resource name]
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
@@ -2304,6 +2336,11 @@ type GoogleCloudAssetV1GovernedContainer struct {
 	// d_resource. to the scope specified in the request. If the constraint
 	// is defined with default policy, it will also appear in the list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// Project: The project that this resource belongs to, in the format of
+	// projects/{PROJECT_NUMBER}. This field is available when the resource
+	// belongs to a project.
+	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
 	// to unconditionally include in API requests. By default, fields with
@@ -2533,6 +2570,14 @@ type GoogleCloudAssetV1Rule struct {
 
 	// Condition: The evaluating condition for this rule.
 	Condition *Expr `json:"condition,omitempty"`
+
+	// ConditionEvaluation: The condition evaluation result for this rule.
+	// Only populated if it meets all the following criteria: * there is a
+	// condition defined for this rule * this rule is within a
+	// consolidated_policy * the consolidated_policy is within
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer or
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedResource
+	ConditionEvaluation *ConditionEvaluation `json:"conditionEvaluation,omitempty"`
 
 	// DenyAll: Setting this to true means that all values are denied. This
 	// field can be set only in Policies for list constraints.
@@ -3555,8 +3600,8 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 // succeed.
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// [EgressPolicy]. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// [EgressPolicy], in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -3764,8 +3809,8 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, er
 // in order to match.
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// ingress policy. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// ingress policy, in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -5203,11 +5248,28 @@ type OrgPolicyResult struct {
 	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
 	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
 
+	// Folders: The folder(s) that this consolidated policy belongs to, in
+	// the format of folders/{FOLDER_NUMBER}. This field is available when
+	// the consolidated policy belongs (directly or cascadingly) to one or
+	// more folders.
+	Folders []string `json:"folders,omitempty"`
+
+	// Organization: The organization that this consolidated policy belongs
+	// to, in the format of organizations/{ORGANIZATION_NUMBER}. This field
+	// is available when the consolidated policy belongs (directly or
+	// cascadingly) to an organization.
+	Organization string `json:"organization,omitempty"`
+
 	// PolicyBundle: The ordered list of all organization policies from the
 	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
 	// d_resource. to the scope specified in the request. If the constraint
 	// is defined with default policy, it will also appear in the list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// Project: The project that this consolidated policy belongs to, in the
+	// format of projects/{PROJECT_NUMBER}. This field is available when the
+	// consolidated policy belongs to a project.
+	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
 	// to unconditionally include in API requests. By default, fields with
@@ -10350,14 +10412,49 @@ type V1AnalyzeOrgPolicyGovernedAssetsCall struct {
 
 // AnalyzeOrgPolicyGovernedAssets: Analyzes organization policies
 // governed assets (Google Cloud resources or policies) under a scope.
-// This RPC supports custom constraints and the following 10 canned
-// constraints: * storage.uniformBucketLevelAccess *
-// iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains
-// * compute.vmExternalIpAccess *
-// appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations *
-// compute.trustedImageProjects * compute.skipDefaultNetworkCreation *
-// compute.requireOsLogin * compute.disableNestedVirtualization This RPC
-// only returns either resources of types supported by search APIs
+// This RPC supports custom constraints and the following canned
+// constraints: * constraints/ainotebooks.accessMode *
+// constraints/ainotebooks.disableFileDownloads *
+// constraints/ainotebooks.disableRootAccess *
+// constraints/ainotebooks.disableTerminal *
+// constraints/ainotebooks.environmentOptions *
+// constraints/ainotebooks.requireAutoUpgradeSchedule *
+// constraints/ainotebooks.restrictVpcNetworks *
+// constraints/compute.disableGuestAttributesAccess *
+// constraints/compute.disableInstanceDataAccessApis *
+// constraints/compute.disableNestedVirtualization *
+// constraints/compute.disableSerialPortAccess *
+// constraints/compute.disableSerialPortLogging *
+// constraints/compute.disableVpcExternalIpv6 *
+// constraints/compute.requireOsLogin *
+// constraints/compute.requireShieldedVm *
+// constraints/compute.restrictLoadBalancerCreationForTypes *
+// constraints/compute.restrictProtocolForwardingCreationForTypes *
+// constraints/compute.restrictXpnProjectLienRemoval *
+// constraints/compute.setNewProjectDefaultToZonalDNSOnly *
+// constraints/compute.skipDefaultNetworkCreation *
+// constraints/compute.trustedImageProjects *
+// constraints/compute.vmCanIpForward *
+// constraints/compute.vmExternalIpAccess *
+// constraints/gcp.detailedAuditLoggingMode *
+// constraints/gcp.resourceLocations *
+// constraints/iam.allowedPolicyMemberDomains *
+// constraints/iam.automaticIamGrantsForDefaultServiceAccounts *
+// constraints/iam.disableServiceAccountCreation *
+// constraints/iam.disableServiceAccountKeyCreation *
+// constraints/iam.disableServiceAccountKeyUpload *
+// constraints/iam.restrictCrossProjectServiceAccountLienRemoval *
+// constraints/iam.serviceAccountKeyExpiryHours *
+// constraints/resourcemanager.accessBoundaries *
+// constraints/resourcemanager.allowedExportDestinations *
+// constraints/sql.restrictAuthorizedNetworks *
+// constraints/sql.restrictNoncompliantDiagnosticDataAccess *
+// constraints/sql.restrictNoncompliantResourceCreation *
+// constraints/sql.restrictPublicIp *
+// constraints/storage.publicAccessPrevention *
+// constraints/storage.restrictAuthTypes *
+// constraints/storage.uniformBucketLevelAccess This RPC only returns
+// either resources of types supported by search APIs
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // or IAM policies.
 //
@@ -10523,7 +10620,7 @@ func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either resources of types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types) or IAM policies.",
+	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following canned constraints: * constraints/ainotebooks.accessMode * constraints/ainotebooks.disableFileDownloads * constraints/ainotebooks.disableRootAccess * constraints/ainotebooks.disableTerminal * constraints/ainotebooks.environmentOptions * constraints/ainotebooks.requireAutoUpgradeSchedule * constraints/ainotebooks.restrictVpcNetworks * constraints/compute.disableGuestAttributesAccess * constraints/compute.disableInstanceDataAccessApis * constraints/compute.disableNestedVirtualization * constraints/compute.disableSerialPortAccess * constraints/compute.disableSerialPortLogging * constraints/compute.disableVpcExternalIpv6 * constraints/compute.requireOsLogin * constraints/compute.requireShieldedVm * constraints/compute.restrictLoadBalancerCreationForTypes * constraints/compute.restrictProtocolForwardingCreationForTypes * constraints/compute.restrictXpnProjectLienRemoval * constraints/compute.setNewProjectDefaultToZonalDNSOnly * constraints/compute.skipDefaultNetworkCreation * constraints/compute.trustedImageProjects * constraints/compute.vmCanIpForward * constraints/compute.vmExternalIpAccess * constraints/gcp.detailedAuditLoggingMode * constraints/gcp.resourceLocations * constraints/iam.allowedPolicyMemberDomains * constraints/iam.automaticIamGrantsForDefaultServiceAccounts * constraints/iam.disableServiceAccountCreation * constraints/iam.disableServiceAccountKeyCreation * constraints/iam.disableServiceAccountKeyUpload * constraints/iam.restrictCrossProjectServiceAccountLienRemoval * constraints/iam.serviceAccountKeyExpiryHours * constraints/resourcemanager.accessBoundaries * constraints/resourcemanager.allowedExportDestinations * constraints/sql.restrictAuthorizedNetworks * constraints/sql.restrictNoncompliantDiagnosticDataAccess * constraints/sql.restrictNoncompliantResourceCreation * constraints/sql.restrictPublicIp * constraints/storage.publicAccessPrevention * constraints/storage.restrictAuthTypes * constraints/storage.uniformBucketLevelAccess This RPC only returns either resources of types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types) or IAM policies.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedAssets",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.analyzeOrgPolicyGovernedAssets",

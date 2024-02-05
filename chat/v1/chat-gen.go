@@ -139,8 +139,8 @@ const (
 	// View messages and reactions in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 
-	// Create conversations and spaces and view or update metadata
-	// (including history settings) in Google Chat
+	// Create conversations and spaces and see or edit metadata (including
+	// history settings and access settings) in Google Chat
 	ChatSpacesScope = "https://www.googleapis.com/auth/chat.spaces"
 
 	// Create new conversations in Google Chat

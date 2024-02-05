@@ -553,6 +553,166 @@ func (s *BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BrowserAttributes: Contains information about browser profiles
+// reported by the Endpoint Verification extension.
+type BrowserAttributes struct {
+	// ChromeBrowserInfo: Represents the current state of the Chrome browser
+	// attributes
+	// (https://cloud.google.com/access-context-manager/docs/browser-attributes)
+	// sent by the Endpoint Verification extension.
+	ChromeBrowserInfo *BrowserInfo `json:"chromeBrowserInfo,omitempty"`
+
+	// ChromeProfileId: Chrome profile ID that is exposed by the Chrome API.
+	// It is unique for each device.
+	ChromeProfileId string `json:"chromeProfileId,omitempty"`
+
+	// LastProfileSyncTime: Timestamp in milliseconds since Epoch when the
+	// profile/gcm id was last synced.
+	LastProfileSyncTime string `json:"lastProfileSyncTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChromeBrowserInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChromeBrowserInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BrowserAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod BrowserAttributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BrowserInfo: Browser-specific fields reported by the Endpoint
+// Verification extension. See go/additionalattributesdesign and
+// go/caa-webprotect-attributes-extension LINT.IfChange
+type BrowserInfo struct {
+	// BrowserManagementState: Output only. Browser's management state.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Management state is not specified.
+	//   "UNMANAGED" - Browser/Profile is not managed by any customer.
+	//   "MANAGED_BY_OTHER_DOMAIN" - Browser/Profile is managed, but by some
+	// other customer.
+	//   "PROFILE_MANAGED" - Profile is managed by customer.
+	//   "BROWSER_MANAGED" - Browser is managed by customer.
+	BrowserManagementState string `json:"browserManagementState,omitempty"`
+
+	// BrowserVersion: Version of the request initiating browser.
+	BrowserVersion string `json:"browserVersion,omitempty"`
+
+	// IsBuiltInDnsClientEnabled: Current state of built-in DNS client
+	// (https://chromeenterprise.google/policies/#BuiltInDnsClientEnabled).
+	IsBuiltInDnsClientEnabled bool `json:"isBuiltInDnsClientEnabled,omitempty"`
+
+	// IsBulkDataEntryAnalysisEnabled: Current state of bulk data analysis
+	// (https://chromeenterprise.google/policies/#OnBulkDataEntryEnterpriseConnector).
+	// Set to true if provider list from Chrome is non-empty.
+	IsBulkDataEntryAnalysisEnabled bool `json:"isBulkDataEntryAnalysisEnabled,omitempty"`
+
+	// IsChromeCleanupEnabled: Current state of Chrome Cleanup
+	// (https://chromeenterprise.google/policies/#ChromeCleanupEnabled).
+	IsChromeCleanupEnabled bool `json:"isChromeCleanupEnabled,omitempty"`
+
+	// IsChromeRemoteDesktopAppBlocked: Current state of Chrome Remote
+	// Desktop app (https://chromeenterprise.google/policies/#URLBlocklist).
+	IsChromeRemoteDesktopAppBlocked bool `json:"isChromeRemoteDesktopAppBlocked,omitempty"`
+
+	// IsFileDownloadAnalysisEnabled: Current state of file download
+	// analysis
+	// (https://chromeenterprise.google/policies/#OnFileDownloadedEnterpriseConnector).
+	// Set to true if provider list from Chrome is non-empty.
+	IsFileDownloadAnalysisEnabled bool `json:"isFileDownloadAnalysisEnabled,omitempty"`
+
+	// IsFileUploadAnalysisEnabled: Current state of file upload analysis
+	// (https://chromeenterprise.google/policies/#OnFileAttachedEnterpriseConnector).
+	// Set to true if provider list from Chrome is non-empty.
+	IsFileUploadAnalysisEnabled bool `json:"isFileUploadAnalysisEnabled,omitempty"`
+
+	// IsRealtimeUrlCheckEnabled: Current state of real-time URL check
+	// (https://chromeenterprise.google/policies/#EnterpriseRealTimeUrlCheckMode).
+	// Set to true if provider list from Chrome is non-empty.
+	IsRealtimeUrlCheckEnabled bool `json:"isRealtimeUrlCheckEnabled,omitempty"`
+
+	// IsSecurityEventAnalysisEnabled: Current state of security event
+	// analysis
+	// (https://chromeenterprise.google/policies/#OnSecurityEventEnterpriseConnector).
+	// Set to true if provider list from Chrome is non-empty.
+	IsSecurityEventAnalysisEnabled bool `json:"isSecurityEventAnalysisEnabled,omitempty"`
+
+	// IsSiteIsolationEnabled: Current state of site isolation
+	// (https://chromeenterprise.google/policies/?policy=IsolateOrigins).
+	IsSiteIsolationEnabled bool `json:"isSiteIsolationEnabled,omitempty"`
+
+	// IsThirdPartyBlockingEnabled: Current state of third-party blocking
+	// (https://chromeenterprise.google/policies/#ThirdPartyBlockingEnabled).
+	IsThirdPartyBlockingEnabled bool `json:"isThirdPartyBlockingEnabled,omitempty"`
+
+	// PasswordProtectionWarningTrigger: Current state of password
+	// protection trigger
+	// (https://chromeenterprise.google/policies/#PasswordProtectionWarningTrigger).
+	//
+	// Possible values:
+	//   "PASSWORD_PROTECTION_TRIGGER_UNSPECIFIED" - Password protection is
+	// not specified.
+	//   "PROTECTION_OFF" - Password reuse is never detected.
+	//   "PASSWORD_REUSE" - Warning is shown when the user reuses their
+	// protected password on a non-allowed site.
+	//   "PHISHING_REUSE" - Warning is shown when the user reuses their
+	// protected password on a phishing site.
+	PasswordProtectionWarningTrigger string `json:"passwordProtectionWarningTrigger,omitempty"`
+
+	// SafeBrowsingProtectionLevel: Current state of Safe Browsing
+	// protection level
+	// (https://chromeenterprise.google/policies/#SafeBrowsingProtectionLevel).
+	//
+	// Possible values:
+	//   "SAFE_BROWSING_LEVEL_UNSPECIFIED" - Browser protection level is not
+	// specified.
+	//   "DISABLED" - No protection against dangerous websites, downloads,
+	// and extensions.
+	//   "STANDARD" - Standard protection against websites, downloads, and
+	// extensions that are known to be dangerous.
+	//   "ENHANCED" - Faster, proactive protection against dangerous
+	// websites, downloads, and extensions.
+	SafeBrowsingProtectionLevel string `json:"safeBrowsingProtectionLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BrowserManagementState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BrowserManagementState")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BrowserInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BrowserInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelUserInvitationRequest: Request to cancel sent invitation for
 // target email in UserInvitation.
 type CancelUserInvitationRequest struct {
@@ -1124,7 +1284,9 @@ type Device struct {
 	EncryptionState string `json:"encryptionState,omitempty"`
 
 	// EndpointVerificationSpecificAttributes: Output only. Attributes
-	// specific to Endpoint Verification devices.
+	// specific to Endpoint Verification
+	// (https://cloud.google.com/endpoint-verification/docs/overview)
+	// devices.
 	EndpointVerificationSpecificAttributes *EndpointVerificationSpecificAttributes `json:"endpointVerificationSpecificAttributes,omitempty"`
 
 	// Hostname: Host name of the device.
@@ -1479,22 +1641,34 @@ func (s *DynamicGroupStatus) MarshalJSON() ([]byte, error) {
 }
 
 // EndpointVerificationSpecificAttributes: Resource representing the
-// Endpoint Verification-specific attributes of a Device.
-// https://cloud.google.com/endpoint-verification/docs/overview
+// Endpoint Verification-specific attributes
+// (https://cloud.google.com/endpoint-verification/docs/device-information)
+// of a device.
 type EndpointVerificationSpecificAttributes struct {
+	// AdditionalSignals: Additional signals reported by Endpoint
+	// Verification. It includes the following attributes: 1.
+	// Non-configurable attributes: hotfixes, av_installed, av_enabled,
+	// windows_domain_name, is_os_native_firewall_enabled, and
+	// is_secure_boot_enabled. 2. Configurable attributes: file_config,
+	// registry_config, and plist_config.
+	AdditionalSignals googleapi.RawMessage `json:"additionalSignals,omitempty"`
+
+	// BrowserAttributes: Details of browser profiles reported by Endpoint
+	// Verification.
+	BrowserAttributes []*BrowserAttributes `json:"browserAttributes,omitempty"`
+
 	// CertificateAttributes: Details of certificates.
 	CertificateAttributes []*CertificateAttributes `json:"certificateAttributes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CertificateAttributes") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalSignals")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CertificateAttributes") to
+	// NullFields is a list of field names (e.g. "AdditionalSignals") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

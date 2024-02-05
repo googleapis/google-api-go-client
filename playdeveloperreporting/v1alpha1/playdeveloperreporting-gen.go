@@ -939,7 +939,7 @@ type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
 	Location string `json:"location,omitempty"`
 
 	// Name: Identifier. The resource name of the issue. Format:
-	// apps/{app}/errorIssues/{issue}
+	// apps/{app}/{issue}
 	Name string `json:"name,omitempty"`
 
 	// Type: Type of the errors grouped in this issue.
@@ -1003,8 +1003,7 @@ type GooglePlayDeveloperReportingV1alpha1ErrorReport struct {
 	// reports being assigned to a different issue.
 	Issue string `json:"issue,omitempty"`
 
-	// Name: The resource name of the report. Format:
-	// apps/{app}/errorReports/{report}
+	// Name: The resource name of the report. Format: apps/{app}/{report}
 	Name string `json:"name,omitempty"`
 
 	// OsVersion: The OS version on which an event in this error report

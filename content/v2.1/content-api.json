@@ -6186,7 +6186,7 @@
       }
     }
   },
-  "revision": "20240130",
+  "revision": "20240131",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -8060,12 +8060,14 @@
           "enum": [
             "CHECKOUT_ON_MERCHANT_ENROLLMENT_STATE_UNSPECIFIED",
             "INACTIVE",
-            "ENROLLED"
+            "ENROLLED",
+            "OPT_OUT"
           ],
           "enumDescriptions": [
             "Default enrollment state when enrollment state is not specified.",
             "Merchant has not enrolled into the feature.",
-            "Merchant has enrolled into the feature by providing either an account level URL or checkout URLs as part of their feed."
+            "Merchant has enrolled into the feature by providing either an account level URL or checkout URLs as part of their feed.",
+            "Merchant has previously enrolled but opted out of the feature."
           ],
           "readOnly": true,
           "type": "string"
@@ -8096,12 +8098,14 @@
           "enum": [
             "CHECKOUT_ON_MERCHANT_ENROLLMENT_STATE_UNSPECIFIED",
             "INACTIVE",
-            "ENROLLED"
+            "ENROLLED",
+            "OPT_OUT"
           ],
           "enumDescriptions": [
             "Default enrollment state when enrollment state is not specified.",
             "Merchant has not enrolled into the feature.",
-            "Merchant has enrolled into the feature by providing either an account level URL or checkout URLs as part of their feed."
+            "Merchant has enrolled into the feature by providing either an account level URL or checkout URLs as part of their feed.",
+            "Merchant has previously enrolled but opted out of the feature."
           ],
           "readOnly": true,
           "type": "string"

@@ -319,9 +319,8 @@ func (s *AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
 type AdbShellInteractiveEvent struct {
 }
 
-// AdvancedSecurityOverrides: Security policies set to secure values by
-// default. To maintain the security posture of a device, we don't
-// recommend overriding any of the default values.
+// AdvancedSecurityOverrides: Advanced security settings. In most cases,
+// setting these is not needed.
 type AdvancedSecurityOverrides struct {
 	// CommonCriteriaMode: Controls Common Criteria Mode—security
 	// standards defined in the Common Criteria for Information Technology
@@ -937,7 +936,24 @@ type ApplicationPolicy struct {
 	// policy is specified for a permission at any level, then the PROMPT
 	// behavior is used by default.
 	//   "PROMPT" - Prompt the user to grant a permission.
-	//   "GRANT" - Automatically grant a permission.
+	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
+	// Manifest.permission.READ_SMS
+	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
+	// and following sensor-related permissions can only be granted on fully
+	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
+	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
+	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
+	// Manifest.permission.CAMERA
+	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
+	// Manifest.permission.RECORD_AUDIO
+	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
+	// Manifest.permission.ACTIVITY_RECOGNITION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
+	// Manifest.permission.BODY_SENSORS
+	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
@@ -1003,6 +1019,19 @@ type ApplicationPolicy struct {
 	// app, with the capability of interacting with Android Device Policy
 	// offline.This field can be set for at most one app.
 	ExtensionConfig *ExtensionConfig `json:"extensionConfig,omitempty"`
+
+	// InstallConstraint: Optional. The constraints for installing the app.
+	// You can specify a maximum of one InstallConstraint. Multiple
+	// constraints are rejected.
+	InstallConstraint []*InstallConstraint `json:"installConstraint,omitempty"`
+
+	// InstallPriority: Optional. Amongst apps with installTypeset
+	// to:FORCE_INSTALLEDPREINSTALLED this controls the relative priority of
+	// installation. A value of 0 (default) means this app has no priority
+	// over other apps. For values between 1 and 10,000, a lower value means
+	// a higher priority. Values outside of the range 0 to 10,000 inclusive
+	// are rejected.
+	InstallPriority int64 `json:"installPriority,omitempty"`
 
 	// InstallType: The type of installation to perform.
 	//
@@ -2220,7 +2249,8 @@ type Device struct {
 
 	// MemoryEvents: Events related to memory and storage measurements in
 	// chronological order. This information is only available if
-	// memoryInfoEnabled is true in the device's policy.
+	// memoryInfoEnabled is true in the device's policy.Events are retained
+	// for a certain period of time and old events are deleted.
 	MemoryEvents []*MemoryEvent `json:"memoryEvents,omitempty"`
 
 	// MemoryInfo: Memory information: contains information about device
@@ -3407,6 +3437,66 @@ func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// InstallConstraint: Amongst apps with InstallTypeset
+// to:FORCE_INSTALLEDPREINSTALLED this defines a set of restrictions for
+// the app installation. At least one of the fields must be set. When
+// multiple fields are set, then all the constraints need to be
+// satisfied for the app to be installed.
+type InstallConstraint struct {
+	// ChargingConstraint: Optional. Charging constraint.
+	//
+	// Possible values:
+	//   "CHARGING_CONSTRAINT_UNSPECIFIED" - Unspecified. Default to
+	// CHARGING_NOT_REQUIRED.
+	//   "CHARGING_NOT_REQUIRED" - Device doesn't have to be charging.
+	//   "INSTALL_ONLY_WHEN_CHARGING" - Device has to be charging.
+	ChargingConstraint string `json:"chargingConstraint,omitempty"`
+
+	// DeviceIdleConstraint: Optional. Device idle constraint.
+	//
+	// Possible values:
+	//   "DEVICE_IDLE_CONSTRAINT_UNSPECIFIED" - Unspecified. Default to
+	// DEVICE_IDLE_NOT_REQUIRED.
+	//   "DEVICE_IDLE_NOT_REQUIRED" - Device doesn't have to be idle, app
+	// can be installed while the user is interacting with the device.
+	//   "INSTALL_ONLY_WHEN_DEVICE_IDLE" - Device has to be idle.
+	DeviceIdleConstraint string `json:"deviceIdleConstraint,omitempty"`
+
+	// NetworkTypeConstraint: Optional. Network type constraint.
+	//
+	// Possible values:
+	//   "NETWORK_TYPE_CONSTRAINT_UNSPECIFIED" - Unspecified. Default to
+	// INSTALL_ON_ANY_NETWORK.
+	//   "INSTALL_ON_ANY_NETWORK" - Any active networks (Wi-Fi, cellular,
+	// etc.).
+	//   "INSTALL_ONLY_ON_UNMETERED_NETWORK" - Any unmetered network (e.g.
+	// Wi-FI).
+	NetworkTypeConstraint string `json:"networkTypeConstraint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChargingConstraint")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChargingConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstallConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod InstallConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IssueCommandResponse: Response on issuing a command. This is
 // currently empty as a placeholder.
 type IssueCommandResponse struct {
@@ -4351,7 +4441,9 @@ func (s *MediaUnmountEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MemoryEvent: An event related to memory and storage measurements.
+// MemoryEvent: An event related to memory and storage measurements.To
+// distinguish between new and old events, we recommend using the
+// createTime field.
 type MemoryEvent struct {
 	// ByteCount: The number of free bytes in the medium, or for
 	// EXTERNAL_STORAGE_DETECTED, the total capacity in bytes of the storage
@@ -5285,7 +5377,24 @@ type PermissionGrant struct {
 	// policy is specified for a permission at any level, then the PROMPT
 	// behavior is used by default.
 	//   "PROMPT" - Prompt the user to grant a permission.
-	//   "GRANT" - Automatically grant a permission.
+	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
+	// Manifest.permission.READ_SMS
+	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
+	// and following sensor-related permissions can only be granted on fully
+	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
+	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
+	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
+	// Manifest.permission.CAMERA
+	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
+	// Manifest.permission.RECORD_AUDIO
+	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
+	// Manifest.permission.ACTIVITY_RECOGNITION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
+	// Manifest.permission.BODY_SENSORS
+	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	Policy string `json:"policy,omitempty"`
 
@@ -5482,19 +5591,16 @@ type Policy struct {
 	// disabled. Also mutes the device.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 
-	// AdvancedSecurityOverrides: Security policies set to secure values by
-	// default. To maintain the security posture of a device, we don't
-	// recommend overriding any of the default values.
+	// AdvancedSecurityOverrides: Advanced security settings. In most cases,
+	// setting these is not needed.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
 	// Use with vpn_config_disabled to prevent modification of this setting.
 	AlwaysOnVpnPackage *AlwaysOnVpnPackage `json:"alwaysOnVpnPackage,omitempty"`
 
-	// AndroidDevicePolicyTracks: The app tracks for Android Device Policy
-	// the device can access. The device receives the latest version among
-	// all accessible tracks. If no tracks are specified, then the device
-	// only uses the production track.
+	// AndroidDevicePolicyTracks: This setting is not supported. Any value
+	// is ignored.
 	//
 	// Possible values:
 	//   "APP_TRACK_UNSPECIFIED" - This value is ignored.
@@ -5638,7 +5744,24 @@ type Policy struct {
 	// policy is specified for a permission at any level, then the PROMPT
 	// behavior is used by default.
 	//   "PROMPT" - Prompt the user to grant a permission.
-	//   "GRANT" - Automatically grant a permission.
+	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
+	// Manifest.permission.READ_SMS
+	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
+	// and following sensor-related permissions can only be granted on fully
+	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
+	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
+	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
+	// Manifest.permission.CAMERA
+	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
+	// Manifest.permission.RECORD_AUDIO
+	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
+	// Manifest.permission.ACTIVITY_RECOGNITION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
+	// Manifest.permission.BODY_SENSORS
+	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
@@ -9685,141 +9808,6 @@ func (c *EnterprisesDevicesOperationsCancelCall) Do(opts ...googleapi.CallOption
 	//     }
 	//   },
 	//   "path": "v1/{+name}:cancel",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/androidmanagement"
-	//   ]
-	// }
-
-}
-
-// method id "androidmanagement.enterprises.devices.operations.delete":
-
-type EnterprisesDevicesOperationsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns google.rpc.Code.UNIMPLEMENTED.
-//
-// - name: The name of the operation resource to be deleted.
-func (r *EnterprisesDevicesOperationsService) Delete(name string) *EnterprisesDevicesOperationsDeleteCall {
-	c := &EnterprisesDevicesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *EnterprisesDevicesOperationsDeleteCall) Fields(s ...googleapi.Field) *EnterprisesDevicesOperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *EnterprisesDevicesOperationsDeleteCall) Context(ctx context.Context) *EnterprisesDevicesOperationsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidmanagement.enterprises.devices.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *EnterprisesDevicesOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED.",
-	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "androidmanagement.enterprises.devices.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^enterprises/[^/]+/devices/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
 	//   },

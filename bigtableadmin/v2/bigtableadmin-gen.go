@@ -597,7 +597,7 @@ type Backup struct {
 	// SourceBackup: Output only. Name of the backup from which this backup
 	// was copied. If a backup is not created by copying a backup, this
 	// field will be empty. Values are of the form:
-	// projects//instances//backups/.
+	// projects//instances//clusters//backups/
 	SourceBackup string `json:"sourceBackup,omitempty"`
 
 	// SourceTable: Required. Immutable. Name of the table from which this
@@ -661,7 +661,7 @@ type BackupInfo struct {
 	// SourceBackup: Output only. Name of the backup from which this backup
 	// was copied. If a backup is not created by copying a backup, this
 	// field will be empty. Values are of the form:
-	// projects//instances//backups/.
+	// projects//instances//clusters//backups/
 	SourceBackup string `json:"sourceBackup,omitempty"`
 
 	// SourceTable: Output only. Name of the table the backup was created
@@ -775,7 +775,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to

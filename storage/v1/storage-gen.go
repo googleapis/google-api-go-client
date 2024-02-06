@@ -1860,9 +1860,6 @@ type Folder struct {
 	// storage#folder.
 	Kind string `json:"kind,omitempty"`
 
-	// Metadata: User-provided metadata, in key/value pairs.
-	Metadata map[string]string `json:"metadata,omitempty"`
-
 	// Metageneration: The version of the metadata for this folder. Used for
 	// preconditions and for detecting changes in metadata.
 	Metageneration int64 `json:"metageneration,omitempty,string"`

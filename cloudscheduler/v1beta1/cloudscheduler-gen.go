@@ -841,11 +841,11 @@ type PubsubMessage struct {
 	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: Optional. ID of this message, assigned by the server when
-	// the message is published. Guaranteed to be unique within the topic.
-	// This value may be read by a subscriber that receives a
-	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
-	// populated by the publisher in a `Publish` call.
+	// MessageId: ID of this message, assigned by the server when the
+	// message is published. Guaranteed to be unique within the topic. This
+	// value may be read by a subscriber that receives a `PubsubMessage` via
+	// a `Pull` call or a push delivery. It must not be populated by the
+	// publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
 	// OrderingKey: Optional. If non-empty, identifies related messages for
@@ -858,9 +858,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: Optional. The time at which the message was published,
-	// populated by the server when it receives the `Publish` call. It must
-	// not be populated by the publisher in a `Publish` call.
+	// PublishTime: The time at which the message was published, populated
+	// by the server when it receives the `Publish` call. It must not be
+	// populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to

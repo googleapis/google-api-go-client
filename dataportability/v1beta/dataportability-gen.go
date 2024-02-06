@@ -105,6 +105,30 @@ const (
 	// conversations with.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
 
+	// Move a copy of your pinned trips on Maps.
+	DataportabilityMapsCommuteRoutesScope = "https://www.googleapis.com/auth/dataportability.maps.commute_routes"
+
+	// Move a copy of your commute settings on Maps.
+	DataportabilityMapsCommuteSettingsScope = "https://www.googleapis.com/auth/dataportability.maps.commute_settings"
+
+	// Move a copy of your electric vehicle profile on Maps.
+	DataportabilityMapsEvProfileScope = "https://www.googleapis.com/auth/dataportability.maps.ev_profile"
+
+	// Move a copy of your updates to places on Maps.
+	DataportabilityMapsOfferingContributionsScope = "https://www.googleapis.com/auth/dataportability.maps.offering_contributions"
+
+	// Move a copy of the photos and videos you posted on Maps.
+	DataportabilityMapsPhotosVideosScope = "https://www.googleapis.com/auth/dataportability.maps.photos_videos"
+
+	// Move a copy of your reviews and posts on Maps.
+	DataportabilityMapsReviewsScope = "https://www.googleapis.com/auth/dataportability.maps.reviews"
+
+	// Move a copy of your Starred places list on Maps.
+	DataportabilityMapsStarredPlacesScope = "https://www.googleapis.com/auth/dataportability.maps.starred_places"
+
+	// Move a copy of your Maps activity.
+	DataportabilityMyactivityMapsScope = "https://www.googleapis.com/auth/dataportability.myactivity.maps"
+
 	// Move a copy of your search activity.
 	DataportabilityMyactivitySearchScope = "https://www.googleapis.com/auth/dataportability.myactivity.search"
 
@@ -120,41 +144,44 @@ const (
 	// Move a copy of reviews you wrote about products or online stores.
 	DataportabilityShoppingReviewsScope = "https://www.googleapis.com/auth/dataportability.shopping.reviews"
 
-	// Move a copy of information about your channel.
+	// Move a copy of information about your YouTube channel.
 	DataportabilityYoutubeChannelScope = "https://www.googleapis.com/auth/dataportability.youtube.channel"
 
-	// Move a copy of your comments.
+	// Move a copy of your YouTube comments.
 	DataportabilityYoutubeCommentsScope = "https://www.googleapis.com/auth/dataportability.youtube.comments"
 
-	// Move a copy of your messages in live chat.
+	// Move a copy of your YouTube messages in live chat.
 	DataportabilityYoutubeLiveChatScope = "https://www.googleapis.com/auth/dataportability.youtube.live_chat"
 
-	// Move a copy of your uploaded YouTube Music tracks and your YouTube
-	// Music library.
+	// Move a copy of your uploaded YouTube music tracks and your YouTube
+	// music library.
 	DataportabilityYoutubeMusicScope = "https://www.googleapis.com/auth/dataportability.youtube.music"
 
-	// Move a copy of your private playlists.
+	// Move a copy of your YouTube private playlists.
 	DataportabilityYoutubePrivatePlaylistsScope = "https://www.googleapis.com/auth/dataportability.youtube.private_playlists"
 
-	// Move a copy of your private videos and information about them.
+	// Move a copy of your private YouTube videos and information about
+	// them.
 	DataportabilityYoutubePrivateVideosScope = "https://www.googleapis.com/auth/dataportability.youtube.private_videos"
 
-	// Move a copy of your public playlists.
+	// Move a copy of your public YouTube playlists.
 	DataportabilityYoutubePublicPlaylistsScope = "https://www.googleapis.com/auth/dataportability.youtube.public_playlists"
 
-	// Move a copy of your public videos and information about them.
+	// Move a copy of your public YouTube videos and information about them.
 	DataportabilityYoutubePublicVideosScope = "https://www.googleapis.com/auth/dataportability.youtube.public_videos"
 
-	// Move a copy of YouTube Shopping Wishlists, and wishlist items.
+	// Move a copy of your YouTube shopping wishlists, and wishlist items.
 	DataportabilityYoutubeShoppingScope = "https://www.googleapis.com/auth/dataportability.youtube.shopping"
 
-	// Move a copy of your channel subscriptions, even if they're private.
+	// Move a copy of your YouTube channel subscriptions, even if they're
+	// private.
 	DataportabilityYoutubeSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.youtube.subscriptions"
 
-	// Move a copy of your unlisted playlists.
+	// Move a copy of your unlisted YouTube playlists.
 	DataportabilityYoutubeUnlistedPlaylistsScope = "https://www.googleapis.com/auth/dataportability.youtube.unlisted_playlists"
 
-	// Move a copy of your unlisted videos and information about them.
+	// Move a copy of your unlisted YouTube videos and information about
+	// them.
 	DataportabilityYoutubeUnlistedVideosScope = "https://www.googleapis.com/auth/dataportability.youtube.unlisted_videos"
 )
 
@@ -162,6 +189,14 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+		"https://www.googleapis.com/auth/dataportability.maps.commute_routes",
+		"https://www.googleapis.com/auth/dataportability.maps.commute_settings",
+		"https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+		"https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
+		"https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+		"https://www.googleapis.com/auth/dataportability.maps.reviews",
+		"https://www.googleapis.com/auth/dataportability.maps.starred_places",
+		"https://www.googleapis.com/auth/dataportability.myactivity.maps",
 		"https://www.googleapis.com/auth/dataportability.myactivity.search",
 		"https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 		"https://www.googleapis.com/auth/dataportability.myactivity.youtube",
@@ -575,6 +610,14 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
+	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
+	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
@@ -736,6 +779,14 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
+	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
+	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
@@ -883,6 +934,14 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
+	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
+	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
@@ -1027,6 +1086,14 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
+	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
+	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
+	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",

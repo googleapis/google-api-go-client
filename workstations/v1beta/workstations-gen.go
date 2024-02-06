@@ -433,7 +433,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -748,6 +752,9 @@ type GceInstance struct {
 	// `*.gcr.io` and `*.pkg.dev`. Defaults to false (VMs have public IP
 	// addresses).
 	DisablePublicIpAddresses bool `json:"disablePublicIpAddresses,omitempty"`
+
+	// DisableSsh: Optional. Whether to disable SSH access to the VM.
+	DisableSsh bool `json:"disableSsh,omitempty"`
 
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on Cloud Workstations VMs created under this

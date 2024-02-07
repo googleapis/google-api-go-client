@@ -712,6 +712,37 @@ type GoogleCloudRetailV2AddLocalInventoriesMetadata struct {
 type GoogleCloudRetailV2AddLocalInventoriesResponse struct {
 }
 
+// GoogleCloudRetailV2BigQueryOutputResult: A BigQuery output result.
+type GoogleCloudRetailV2BigQueryOutputResult struct {
+	// DatasetId: The ID of a BigQuery Dataset.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// TableId: The ID of a BigQuery Table.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2BigQueryOutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2BigQueryOutputResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2CreateModelMetadata: Metadata associated with a
 // create operation.
 type GoogleCloudRetailV2CreateModelMetadata struct {
@@ -740,6 +771,106 @@ type GoogleCloudRetailV2CreateModelMetadata struct {
 
 func (s *GoogleCloudRetailV2CreateModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CreateModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2ExportAnalyticsMetricsResponse: Response of the
+// ExportAnalyticsMetricsRequest. If the long running operation was
+// successful, then this message is returned by the
+// google.longrunning.Operations.response field if the operation was
+// successful.
+type GoogleCloudRetailV2ExportAnalyticsMetricsResponse struct {
+	// ErrorSamples: A sample of errors encountered while processing the
+	// request.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+
+	// ErrorsConfig: This field is never set.
+	ErrorsConfig *GoogleCloudRetailV2ExportErrorsConfig `json:"errorsConfig,omitempty"`
+
+	// OutputResult: Output result indicating where the data were exported
+	// to.
+	OutputResult *GoogleCloudRetailV2OutputResult `json:"outputResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2ExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ExportAnalyticsMetricsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2ExportErrorsConfig: Configuration of destination
+// for Export related errors.
+type GoogleCloudRetailV2ExportErrorsConfig struct {
+	// GcsPrefix: Google Cloud Storage path for import errors. This must be
+	// an empty, existing Cloud Storage bucket. Export errors will be
+	// written to a file in this bucket, one per line, as a JSON-encoded
+	// `google.rpc.Status` message.
+	GcsPrefix string `json:"gcsPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2ExportErrorsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ExportErrorsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2GcsOutputResult: A Gcs output result.
+type GoogleCloudRetailV2GcsOutputResult struct {
+	// OutputUri: The uri of Gcs output
+	OutputUri string `json:"outputUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2GcsOutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2GcsOutputResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1207,6 +1338,40 @@ type GoogleCloudRetailV2ModelServingConfigList struct {
 
 func (s *GoogleCloudRetailV2ModelServingConfigList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ModelServingConfigList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2OutputResult: Output result that stores the
+// information about where the exported data is stored.
+type GoogleCloudRetailV2OutputResult struct {
+	// BigqueryResult: The BigQuery location where the result is stored.
+	BigqueryResult []*GoogleCloudRetailV2BigQueryOutputResult `json:"bigqueryResult,omitempty"`
+
+	// GcsResult: The Google Cloud Storage location where the result is
+	// stored.
+	GcsResult []*GoogleCloudRetailV2GcsOutputResult `json:"gcsResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2OutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2OutputResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

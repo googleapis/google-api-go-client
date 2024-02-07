@@ -6475,9 +6475,10 @@ func (c *DevicesDeviceUsersLookupCall) PageToken(pageToken string) *DevicesDevic
 // Resource Id used by Google Endpoint Verification. If the user is
 // enrolled into Google Endpoint Verification, this id will be saved as
 // the 'device_resource_id' field in the following platform dependent
-// files. Mac: ~/.secureConnect/context_aware_config.json Windows:
-// C:\Users\%USERPROFILE%\.secureConnect\context_aware_config.json
-// Linux: ~/.secureConnect/context_aware_config.json
+// files. * macOS: ~/.secureConnect/context_aware_config.json * Windows:
+// %USERPROFILE%\AppData\Local\Google\Endpoint
+// Verification\accounts.json * Linux:
+// ~/.secureConnect/context_aware_config.json
 func (c *DevicesDeviceUsersLookupCall) RawResourceId(rawResourceId string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("rawResourceId", rawResourceId)
 	return c
@@ -6625,7 +6626,7 @@ func (c *DevicesDeviceUsersLookupCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "type": "string"
 	//     },
 	//     "rawResourceId": {
-	//       "description": "Raw Resource Id used by Google Endpoint Verification. If the user is enrolled into Google Endpoint Verification, this id will be saved as the 'device_resource_id' field in the following platform dependent files. Mac: ~/.secureConnect/context_aware_config.json Windows: C:\\Users\\%USERPROFILE%\\.secureConnect\\context_aware_config.json Linux: ~/.secureConnect/context_aware_config.json",
+	//       "description": "Raw Resource Id used by Google Endpoint Verification. If the user is enrolled into Google Endpoint Verification, this id will be saved as the 'device_resource_id' field in the following platform dependent files. * macOS: ~/.secureConnect/context_aware_config.json * Windows: %USERPROFILE%\\AppData\\Local\\Google\\Endpoint Verification\\accounts.json * Linux: ~/.secureConnect/context_aware_config.json",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

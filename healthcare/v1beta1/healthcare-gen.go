@@ -500,24 +500,24 @@ type AccessDeterminationLogConfig struct {
 	// unused.
 	//   "DISABLED" - No additional consent-related logging is added to
 	// audit logs.
-	//   "MINIMUM" - The following information is included: - One of the
+	//   "MINIMUM" - The following information is included: * One of the
 	// following
 	// [`consentMode`](https://cloud.google.com/healthcare-api/docs/fhir-cons
 	// ent#audit_logs) fields:
-	// (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). - The accessor's
-	// request headers - The `log_level` of the
-	// [AccessDeterminationLogConfig](google.cloud.healthcare.v1beta1.fhir.Fh
-	// irStore.ConsentConfig.AccessDeterminationLogConfig) - The final
-	// consent evaluation (`PERMIT`, `DENY`, or `NO_CONSENT`) - A
-	// human-readable summary of the evaluation
+	// (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). * The accessor's
+	// request headers * The `log_level` of the
+	// [AccessDeterminationLogConfig](https://cloud.google.com/healthcare-api
+	// /docs/reference/rest/v1beta1/projects.locations.datasets.fhirStores#Ac
+	// cessDeterminationLogConfig) * The final consent evaluation (`PERMIT`,
+	// `DENY`, or `NO_CONSENT`) * A human-readable summary of the evaluation
 	//   "VERBOSE" - Includes `MINIMUM` and, for each resource owner,
-	// returns: - The resource owner's name - Most specific part of the
-	// `X-Consent-Scope` resulting in consensual determination - Timestamp
-	// of the applied enforcement leading to the decision - Enforcement
-	// version at the time the applicable consents were applied - The
-	// Consent resource name - The timestamp of the Consent resource used
-	// for enforcement - Policy type (PATIENT or ADMIN) Note that this mode
-	// adds some overhead to CRUD operations.
+	// returns: * The resource owner's name * Most specific part of the
+	// `X-Consent-Scope` resulting in consensual determination * Timestamp
+	// of the applied enforcement leading to the decision * Enforcement
+	// version at the time the applicable consents were applied * The
+	// Consent resource name * The timestamp of the Consent resource used
+	// for enforcement * Policy type (`PATIENT` or `ADMIN`) Note that this
+	// mode adds some overhead to CRUD operations.
 	LogLevel string `json:"logLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogLevel") to
@@ -794,7 +794,7 @@ func (s *AnalyzeEntitiesResponse) MarshalJSON() ([]byte, error) {
 
 // Annotation: An annotation record.
 type Annotation struct {
-	// AnnotationSource: Details of the source.
+	// AnnotationSource: Required. Details of the source.
 	AnnotationSource *AnnotationSource `json:"annotationSource,omitempty"`
 
 	// CustomData: Additional information for this annotation record, such
@@ -805,7 +805,7 @@ type Annotation struct {
 	// polygons.
 	ImageAnnotation *ImageAnnotation `json:"imageAnnotation,omitempty"`
 
-	// Name: Resource name of the Annotation, of the form
+	// Name: Identifier. Resource name of the Annotation, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
 	// nnotationStores/{annotation_store_id}/annotations/{annotation_id}`.
 	Name string `json:"name,omitempty"`
@@ -931,7 +931,7 @@ type AnnotationStore struct {
 	// labels can be associated with a given store.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Resource name of the Annotation store, of the form
+	// Name: Identifier. Resource name of the Annotation store, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
 	// nnotationStores/{annotation_store_id}`.
 	Name string `json:"name,omitempty"`
@@ -1494,7 +1494,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1905,7 +1909,7 @@ type Consent struct {
 	// given consent.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// Name: Resource name of the Consent, of the form
+	// Name: Identifier. Resource name of the Consent, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
 	// changed after creation.
@@ -1973,6 +1977,47 @@ type Consent struct {
 
 func (s *Consent) MarshalJSON() ([]byte, error) {
 	type NoMethod Consent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsentAccessorScope: The accessor scope that describes who can
+// access, for what purpose, in which environment.
+type ConsentAccessorScope struct {
+	// Actor: An individual, group, or access role that identifies the
+	// accessor or a characteristic of the accessor. This can be a resource
+	// ID (such as `{resourceType}/{id}`) or an external URI. This value
+	// must be present.
+	Actor string `json:"actor,omitempty"`
+
+	// Environment: An abstract identifier that describes the environment or
+	// conditions under which the accessor is acting. Can be “*” if it
+	// applies to all environments.
+	Environment string `json:"environment,omitempty"`
+
+	// Purpose: The intent of data use. Can be “*” if it applies to all
+	// purposes.
+	Purpose string `json:"purpose,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actor") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsentAccessorScope) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsentAccessorScope
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2295,7 +2340,7 @@ type ContextualDeidConfig struct {
 
 // CreateMessageRequest: Creates a new message.
 type CreateMessageRequest struct {
-	// Message: HL7v2 message.
+	// Message: Required. HL7v2 message.
 	Message *Message `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -2370,7 +2415,7 @@ type CryptoHashField struct {
 // patients. This may include multiple modalities of healthcare data,
 // such as electronic medical records or medical imaging data.
 type Dataset struct {
-	// Name: Resource name of the dataset, of the form
+	// Name: Identifier. Resource name of the dataset, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.
 	Name string `json:"name,omitempty"`
 
@@ -3270,8 +3315,8 @@ type EvaluateAnnotationStoreRequest struct {
 	// infoType mapping for `golden_store`.
 	GoldenInfoTypeMapping map[string]string `json:"goldenInfoTypeMapping,omitempty"`
 
-	// GoldenStore: The Annotation store to use as ground truth, in the
-	// format of
+	// GoldenStore: Required. The Annotation store to use as ground truth,
+	// in the format of
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/a
 	// nnotationStores/{annotation_store_id}`.
 	GoldenStore string `json:"goldenStore,omitempty"`
@@ -3413,6 +3458,164 @@ type EvaluateUserConsentsResponse struct {
 
 func (s *EvaluateUserConsentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EvaluateUserConsentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainDataAccessConsentInfo: The enforcing consent's metadata.
+type ExplainDataAccessConsentInfo struct {
+	// CascadeOrigins: The compartment base resources that matched a
+	// cascading policy. Each resource has the following format:
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
+	// hirStores/{fhir_store_id}/fhir/{resource_type}/{resource_id}`
+	CascadeOrigins []string `json:"cascadeOrigins,omitempty"`
+
+	// ConsentResource: The resource name of this consent resource. Format:
+	// `projects/{projectId}/datasets/{datasetId}/fhirStores/{fhirStoreId}/fh
+	// ir/{resourceType}/{id}`.
+	ConsentResource string `json:"consentResource,omitempty"`
+
+	// EnforcementTime: Last enforcement timestamp of this consent resource.
+	EnforcementTime string `json:"enforcementTime,omitempty"`
+
+	// MatchingAccessorScopes: A list of all the matching accessor scopes of
+	// this consent policy that enforced
+	// ExplainDataAccessConsentScope.accessor_scope.
+	MatchingAccessorScopes []*ConsentAccessorScope `json:"matchingAccessorScopes,omitempty"`
+
+	// PatientConsentOwner: The patient owning the consent (only applicable
+	// for patient consents), in the format:
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
+	// hirStores/{fhir_store_id}/fhir/Patient/{patient_id}`
+	PatientConsentOwner string `json:"patientConsentOwner,omitempty"`
+
+	// Type: The policy type of consent resource (e.g. PATIENT, ADMIN).
+	//
+	// Possible values:
+	//   "CONSENT_POLICY_TYPE_UNSPECIFIED" - Unspecified policy type.
+	//   "CONSENT_POLICY_TYPE_PATIENT" - Consent represent a patient
+	// consent.
+	//   "CONSENT_POLICY_TYPE_ADMIN" - Consent represent an admin consent.
+	Type string `json:"type,omitempty"`
+
+	// Variants: The consent's variant combinations. A single consent may
+	// have multiple variants.
+	//
+	// Possible values:
+	//   "VARIANT_UNSPECIFIED" - Consent variant unspecified.
+	//   "VARIANT_STANDARD" - Consent is a standard patient or admin
+	// consent.
+	//   "VARIANT_CASCADE" - Consent is a cascading consent.
+	Variants []string `json:"variants,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CascadeOrigins") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CascadeOrigins") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainDataAccessConsentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainDataAccessConsentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainDataAccessConsentScope: A single consent scope that provides
+// info on who has access to the requested resource scope for a
+// particular purpose and environment, enforced by which consent.
+type ExplainDataAccessConsentScope struct {
+	// AccessorScope: The accessor scope that describes who can access, for
+	// what purpose, and in which environment.
+	AccessorScope *ConsentAccessorScope `json:"accessorScope,omitempty"`
+
+	// Decision: Whether the current consent scope is permitted or denied
+	// access on the requested resource.
+	//
+	// Possible values:
+	//   "CONSENT_DECISION_TYPE_UNSPECIFIED" - Unspecified consent decision
+	// type.
+	//   "CONSENT_DECISION_TYPE_PERMIT" - Consent permitted access.
+	//   "CONSENT_DECISION_TYPE_DENY" - Consent denied access.
+	Decision string `json:"decision,omitempty"`
+
+	// EnforcingConsents: Metadata of the consent resources that enforce the
+	// consent scope's access.
+	EnforcingConsents []*ExplainDataAccessConsentInfo `json:"enforcingConsents,omitempty"`
+
+	// Exceptions: Other consent scopes that created exceptions within this
+	// scope.
+	Exceptions []*ExplainDataAccessConsentScope `json:"exceptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessorScope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessorScope") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainDataAccessConsentScope) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainDataAccessConsentScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainDataAccessResponse: List of consent scopes that are applicable
+// to the explained access on a given resource.
+type ExplainDataAccessResponse struct {
+	// ConsentScopes: List of applicable consent scopes. Sorted in order of
+	// actor such that scopes belonging to the same actor will be adjacent
+	// to each other in the list.
+	ConsentScopes []*ExplainDataAccessConsentScope `json:"consentScopes,omitempty"`
+
+	// Warning: Warnings associated with this response. It inform user with
+	// exceeded scope limit errors.
+	Warning string `json:"warning,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentScopes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentScopes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainDataAccessResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainDataAccessResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4050,13 +4253,10 @@ type FhirStore struct {
 	// read the historical versions.
 	DisableResourceVersioning bool `json:"disableResourceVersioning,omitempty"`
 
-	// EnableHistoryModifications: Optional. Whether to allow the
-	// [ImportResourcesHistory] and [ExecuteBundle] APIs to accept history
-	// bundles, and directly insert and overwrite historical resource
-	// versions into the FHIR store. Importing resource histories creates
-	// resource interactions that have occurred in the past that clients
-	// might not allow. If set to false, using history bundles fail with an
-	// error.
+	// EnableHistoryModifications: Optional. Whether to allow ExecuteBundle
+	// to accept history bundles, and directly insert and overwrite
+	// historical resource versions into the FHIR store. If set to false,
+	// using history bundles fails with an error.
 	EnableHistoryModifications bool `json:"enableHistoryModifications,omitempty"`
 
 	// EnableUpdateCreate: Whether this FHIR store has the updateCreate
@@ -5397,7 +5597,7 @@ type Hl7V2Store struct {
 	// associated with a given store.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Resource name of the HL7v2 store, of the form
+	// Name: Identifier. Resource name of the HL7v2 store, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
 	// l7V2Stores/{hl7v2_store_id}`.
 	Name string `json:"name,omitempty"`
@@ -5993,7 +6193,7 @@ func (s *InfoTypeTransformation) MarshalJSON() ([]byte, error) {
 // IngestMessageRequest: Ingests a message into the specified HL7v2
 // store.
 type IngestMessageRequest struct {
-	// Message: HL7v2 message to ingest.
+	// Message: Required. HL7v2 message to ingest.
 	Message *Message `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -6765,7 +6965,7 @@ type Message struct {
 	// Set by the server.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Data: Raw message bytes.
+	// Data: Required. Raw message bytes.
 	Data string `json:"data,omitempty"`
 
 	// Labels: User-supplied key-value pairs used to organize HL7v2 stores.
@@ -6781,7 +6981,7 @@ type Message struct {
 	// MessageType: The message type for this message. MSH-9.1.
 	MessageType string `json:"messageType,omitempty"`
 
-	// Name: Resource name of the Message, of the form
+	// Name: Output only. Resource name of the Message, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/h
 	// l7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the
 	// server.
@@ -9556,9 +9756,9 @@ func (r *ProjectsLocationsDatasetsService) Create(parent string, dataset *Datase
 	return c
 }
 
-// DatasetId sets the optional parameter "datasetId": The ID of the
-// dataset that is being created. The string must match the following
-// regex: `[\p{L}\p{N}_\-\.]{1,256}`.
+// DatasetId sets the optional parameter "datasetId": Required. The ID
+// of the dataset that is being created. The string must match the
+// following regex: `[\p{L}\p{N}_\-\.]{1,256}`.
 func (c *ProjectsLocationsDatasetsCreateCall) DatasetId(datasetId string) *ProjectsLocationsDatasetsCreateCall {
 	c.urlParams_.Set("datasetId", datasetId)
 	return c
@@ -9664,12 +9864,12 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "The ID of the dataset that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+	//       "description": "Required. The ID of the dataset that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the project where the server creates the dataset. For example, `projects/{project_id}/locations/{location_id}`.",
+	//       "description": "Required. The name of the project where the server creates the dataset. For example, `projects/{project_id}/locations/{location_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -9963,7 +10163,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the dataset to delete. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+	//       "description": "Required. The name of the dataset to delete. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -10112,7 +10312,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the dataset to read. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+	//       "description": "Required. The name of the dataset to read. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -10462,7 +10662,7 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the project whose datasets should be listed. For example, `projects/{project_id}/locations/{location_id}`.",
+	//       "description": "Required. The name of the project whose datasets should be listed. For example, `projects/{project_id}/locations/{location_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10515,7 +10715,7 @@ type ProjectsLocationsDatasetsPatchCall struct {
 
 // Patch: Updates dataset metadata.
 //
-//   - name: Resource name of the dataset, of the form
+//   - name: Identifier. Resource name of the dataset, of the form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     `.
 func (r *ProjectsLocationsDatasetsService) Patch(name string, dataset *Dataset) *ProjectsLocationsDatasetsPatchCall {
@@ -10525,8 +10725,9 @@ func (r *ProjectsLocationsDatasetsService) Patch(name string, dataset *Dataset) 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask applies to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -10633,14 +10834,14 @@ func (c *ProjectsLocationsDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+	//       "description": "Identifier. Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10982,8 +11183,8 @@ func (r *ProjectsLocationsDatasetsAnnotationStoresService) Create(parent string,
 }
 
 // AnnotationStoreId sets the optional parameter "annotationStoreId":
-// The ID of the Annotation store that is being created. The string must
-// match the following regex: `[\p{L}\p{N}_\-\.]{1,256}`.
+// Required. The ID of the Annotation store that is being created. The
+// string must match the following regex: `[\p{L}\p{N}_\-\.]{1,256}`.
 func (c *ProjectsLocationsDatasetsAnnotationStoresCreateCall) AnnotationStoreId(annotationStoreId string) *ProjectsLocationsDatasetsAnnotationStoresCreateCall {
 	c.urlParams_.Set("annotationStoreId", annotationStoreId)
 	return c
@@ -11089,12 +11290,12 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresCreateCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "annotationStoreId": {
-	//       "description": "The ID of the Annotation store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+	//       "description": "Required. The ID of the Annotation store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the dataset this Annotation store belongs to.",
+	//       "description": "Required. The name of the dataset this Annotation store belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -11231,7 +11432,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresDeleteCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Annotation store to delete.",
+	//       "description": "Required. The resource name of the Annotation store to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -11380,7 +11581,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresEvaluateCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The Annotation store to compare against `golden_store`, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+	//       "description": "Required. The Annotation store to compare against `golden_store`, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -11531,7 +11732,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the Annotation store to export annotations to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+	//       "description": "Required. The name of the Annotation store to export annotations to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -11682,7 +11883,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Annotation store to get.",
+	//       "description": "Required. The resource name of the Annotation store to get.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -12007,7 +12208,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresImportCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the Annotation store to which the server imports annotations, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+	//       "description": "Required. The name of the Annotation store to which the server imports annotations, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -12221,7 +12422,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the dataset.",
+	//       "description": "Required. Name of the dataset.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -12274,7 +12475,8 @@ type ProjectsLocationsDatasetsAnnotationStoresPatchCall struct {
 
 // Patch: Updates the specified Annotation store.
 //
-//   - name: Resource name of the Annotation store, of the form
+//   - name: Identifier. Resource name of the Annotation store, of the
+//     form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /annotationStores/{annotation_store_id}`.
 func (r *ProjectsLocationsDatasetsAnnotationStoresService) Patch(name string, annotationstore *AnnotationStore) *ProjectsLocationsDatasetsAnnotationStoresPatchCall {
@@ -12284,8 +12486,9 @@ func (r *ProjectsLocationsDatasetsAnnotationStoresService) Patch(name string, an
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask applies to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsAnnotationStoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsAnnotationStoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -12392,14 +12595,14 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresPatchCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Annotation store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+	//       "description": "Identifier. Resource name of the Annotation store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -12845,7 +13048,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the Annotation store this annotation belongs to. For example, `projects/my-project/locations/us-central1/datasets/mydataset/annotationStores/myannotationstore`.",
+	//       "description": "Required. The name of the Annotation store this annotation belongs to. For example, `projects/my-project/locations/us-central1/datasets/mydataset/annotationStores/myannotationstore`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -12982,7 +13185,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsDeleteCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Annotation to delete.",
+	//       "description": "Required. The resource name of the Annotation to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+/annotations/[^/]+$",
 	//       "required": true,
@@ -13129,7 +13332,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsGetCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Annotation to retrieve.",
+	//       "description": "Required. The resource name of the Annotation to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+/annotations/[^/]+$",
 	//       "required": true,
@@ -13340,7 +13543,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsListCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the Annotation store to retrieve Annotations from.",
+	//       "description": "Required. Name of the Annotation store to retrieve Annotations from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
 	//       "required": true,
@@ -13408,7 +13611,7 @@ type ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall struct {
 
 // Patch: Updates the Annotation.
 //
-//   - name: Resource name of the Annotation, of the form
+//   - name: Identifier. Resource name of the Annotation, of the form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /annotationStores/{annotation_store_id}/annotations/{annotation_id}`
 //     .
@@ -13419,8 +13622,9 @@ func (r *ProjectsLocationsDatasetsAnnotationStoresAnnotationsService) Patch(name
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask applies to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -13527,14 +13731,14 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Annotation, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}/annotations/{annotation_id}`.",
+	//       "description": "Identifier. Resource name of the Annotation, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}/annotations/{annotation_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+/annotations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -18072,7 +18276,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentsPatchCall struct {
 // error occurs if the latest revision of the specified Consent is in
 // the `REJECTED` or `REVOKED` state.
 //
-//   - name: Resource name of the Consent, of the form
+//   - name: Identifier. Resource name of the Consent, of the form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
 //     changed after creation.
@@ -18194,7 +18398,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
+	//       "description": "Identifier. Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -26020,6 +26224,168 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "healthcare.projects.locations.datasets.fhirStores.explainDataAccess":
+
+type ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExplainDataAccess: Explains all the permitted/denied actor, purpose
+// and environment for a given resource.
+//
+//   - name: The name of the FHIR store to enforce, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) ExplainDataAccess(name string) *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall {
+	c := &ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ResourceId sets the optional parameter "resourceId": Required. The ID
+// (`{resourceType}/{id}`) of the resource to explain data access on.
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) ResourceId(resourceId string) *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall {
+	c.urlParams_.Set("resourceId", resourceId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:explainDataAccess")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.explainDataAccess" call.
+// Exactly one of *ExplainDataAccessResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExplainDataAccessResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresExplainDataAccessCall) Do(opts ...googleapi.CallOption) (*ExplainDataAccessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExplainDataAccessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Explains all the permitted/denied actor, purpose and environment for a given resource.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:explainDataAccess",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.fhirStores.explainDataAccess",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceId": {
+	//       "description": "Required. The ID (`{resourceType}/{id}`) of the resource to explain data access on.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:explainDataAccess",
+	//   "response": {
+	//     "$ref": "ExplainDataAccessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-healthcare",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "healthcare.projects.locations.datasets.fhirStores.export":
 
 type ProjectsLocationsDatasetsFhirStoresExportCall struct {
@@ -31318,9 +31684,9 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) Create(parent string, hl7v
 	return c
 }
 
-// Hl7V2StoreId sets the optional parameter "hl7V2StoreId": The ID of
-// the HL7v2 store that is being created. The string must match the
-// following regex: `[\p{L}\p{N}_\-\.]{1,256}`.
+// Hl7V2StoreId sets the optional parameter "hl7V2StoreId": Required.
+// The ID of the HL7v2 store that is being created. The string must
+// match the following regex: `[\p{L}\p{N}_\-\.]{1,256}`.
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Hl7V2StoreId(hl7V2StoreId string) *ProjectsLocationsDatasetsHl7V2StoresCreateCall {
 	c.urlParams_.Set("hl7V2StoreId", hl7V2StoreId)
 	return c
@@ -31426,12 +31792,12 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "hl7V2StoreId": {
-	//       "description": "The ID of the HL7v2 store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+	//       "description": "Required. The ID of the HL7v2 store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The name of the dataset this HL7v2 store belongs to.",
+	//       "description": "Required. The name of the dataset this HL7v2 store belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -31568,7 +31934,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the HL7v2 store to delete.",
+	//       "description": "Required. The resource name of the HL7v2 store to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -31717,7 +32083,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the source HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
+	//       "description": "Required. The name of the source HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -31867,7 +32233,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the HL7v2 store to get.",
+	//       "description": "Required. The resource name of the HL7v2 store to get.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -32017,7 +32383,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetHL7v2StoreMetricsCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the HL7v2 store to get metrics for, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+	//       "description": "Required. The resource name of the HL7v2 store to get metrics for, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -32361,7 +32727,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the target HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
+	//       "description": "Required. The name of the target HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -32574,7 +32940,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the dataset.",
+	//       "description": "Required. Name of the dataset.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -32627,7 +32993,7 @@ type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
 
 // Patch: Updates the HL7v2 store.
 //
-//   - name: Resource name of the HL7v2 store, of the form
+//   - name: Identifier. Resource name of the HL7v2 store, of the form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /hl7V2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
@@ -32637,8 +33003,9 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2st
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask applies to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -32745,14 +33112,14 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+	//       "description": "Identifier. Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -33248,7 +33615,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the HL7v2 store to retrieve messages from, in the format: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`.",
+	//       "description": "Required. Name of the HL7v2 store to retrieve messages from, in the format: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -33414,7 +33781,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the HL7v2 store this message belongs to.",
+	//       "description": "Required. The name of the HL7v2 store this message belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -33550,7 +33917,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the HL7v2 message to delete.",
+	//       "description": "Required. The resource name of the HL7v2 message to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -33726,7 +34093,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the HL7v2 message to retrieve.",
+	//       "description": "Required. The resource name of the HL7v2 message to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -33896,7 +34263,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The name of the HL7v2 store this message belongs to.",
+	//       "description": "Required. The name of the HL7v2 store this message belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -34174,7 +34541,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Name of the HL7v2 store to retrieve messages from.",
+	//       "description": "Required. Name of the HL7v2 store to retrieve messages from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
@@ -34253,7 +34620,7 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall struct {
 // the existing set of labels. Existing labels with the same keys are
 // updated.
 //
-//   - name: Resource name of the Message, of the form
+//   - name: Output only. Resource name of the Message, of the form
 //     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 //     /hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by
 //     the server.
@@ -34264,8 +34631,9 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string,
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask applies to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -34372,14 +34740,14 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
+	//       "description": "Output only. Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

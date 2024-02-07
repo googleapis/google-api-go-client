@@ -644,6 +644,7 @@ func (s *AppLinkDataAppLinkInfo) MarshalJSON() ([]byte, error) {
 }
 
 type AppLinkDataAppLinkInfoAppTarget struct {
+	// TargetUri: URI for AppTarget. The description on the URI must be set.
 	TargetUri *Uri `json:"targetUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetUri") to

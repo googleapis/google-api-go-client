@@ -808,6 +808,10 @@ type GoogleCloudRecaptchaenterpriseV1FirewallAction struct {
 	// get an HTTP error code.
 	Block *GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction `json:"block,omitempty"`
 
+	// IncludeRecaptchaScript: This action will inject reCAPTCHA JavaScript
+	// code into the HTML page returned by the site backend.
+	IncludeRecaptchaScript *GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAction `json:"includeRecaptchaScript,omitempty"`
+
 	// Redirect: This action will redirect the request to a ReCaptcha
 	// interstitial to attach a token.
 	Redirect *GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction `json:"redirect,omitempty"`
@@ -852,6 +856,15 @@ type GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction struct {
 // action serves an HTTP error code a prevents the request from hitting
 // the backend.
 type GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAc
+// tion: An include reCAPTCHA script action involves injecting reCAPTCHA
+// JavaScript code into the HTML returned by the site backend. This
+// reCAPTCHA script is tasked with collecting user signals on the
+// requested web page, issuing tokens as a cookie within the site
+// domain, and enabling their utilization in subsequent page requests.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAction struct {
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction: A

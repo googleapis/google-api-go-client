@@ -1443,6 +1443,12 @@ func (s *AssetSliceSet) MarshalJSON() ([]byte, error) {
 // AutoRenewingBasePlanType: Represents a base plan that automatically
 // renews at the end of its subscription period.
 type AutoRenewingBasePlanType struct {
+	// AccountHoldDuration: Optional. Account hold period of the
+	// subscription, specified in ISO 8601 format. Acceptable values must be
+	// in DAYS and in the range P0D (zero days) to P30D (30 days). If not
+	// specified, the default value is P30D (30 days).
+	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
+
 	// BillingPeriodDuration: Required. Subscription period, specified in
 	// ISO 8601 format. For a list of acceptable billing periods, refer to
 	// the help center.
@@ -1495,16 +1501,15 @@ type AutoRenewingBasePlanType struct {
 	//   "RESUBSCRIBE_STATE_INACTIVE" - Resubscribe is inactive.
 	ResubscribeState string `json:"resubscribeState,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingPeriodDuration") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AccountHoldDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BillingPeriodDuration") to
+	// NullFields is a list of field names (e.g. "AccountHoldDuration") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

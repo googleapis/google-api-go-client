@@ -1292,11 +1292,11 @@ type DatabaseInstance struct {
 	// of PSC instance.
 	PscServiceAttachmentLink string `json:"pscServiceAttachmentLink,omitempty"`
 
-	// Region: The geographical region. Can be: * `us-central` (`FIRST_GEN`
-	// instances only) * `us-central1` (`SECOND_GEN` instances only) *
-	// `asia-east1` or `europe-west1`. Defaults to `us-central` or
-	// `us-central1` depending on the instance type. The region cannot be
-	// changed after instance creation.
+	// Region: The geographical region of the Cloud SQL instance. It can be
+	// one of the regions
+	// (https://cloud.google.com/sql/docs/mysql/locations#location-r) where
+	// Cloud SQL operates: For example, `asia-east1`, `europe-west1`, and
+	// `us-central1`. The default value is `us-central1`.
 	Region string `json:"region,omitempty"`
 
 	// ReplicaConfiguration: Configuration specific to failover replicas and
@@ -3055,7 +3055,13 @@ type IpConfiguration struct {
 	//   "TRUSTED_CLIENT_CERTIFICATE_REQUIRED" - Only allow connections
 	// encrypted with SSL/TLS and with valid client certificates. When this
 	// value is used, the legacy `require_ssl` flag must be true or cleared
-	// to avoid the conflict between values of two flags.
+	// to avoid the conflict between values of two flags. PostgreSQL clients
+	// or users that connect using IAM database authentication must use
+	// either the [Cloud SQL Auth
+	// Proxy](https://cloud.google.com/sql/docs/postgres/connect-auth-proxy)
+	// or [Cloud SQL
+	// Connectors](https://cloud.google.com/sql/docs/postgres/connect-connect
+	// ors) to enforce client identity verification.
 	SslMode string `json:"sslMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
@@ -3750,8 +3756,8 @@ type PasswordValidationPolicy struct {
 	// numeric, and non-alphanumeric characters.
 	Complexity string `json:"complexity,omitempty"`
 
-	// DisallowCompromisedCredentials: Disallow credentials that have been
-	// previously compromised by a public data breach.
+	// DisallowCompromisedCredentials: This field is deprecated and will be
+	// removed in a future version of the API.
 	DisallowCompromisedCredentials bool `json:"disallowCompromisedCredentials,omitempty"`
 
 	// DisallowUsernameSubstring: Disallow username as a part of the
@@ -4375,6 +4381,10 @@ type SqlExternalSyncSettingError struct {
 	//   "SUBSCRIPTION_CALCULATION_STATUS" - If a time out occurs while the
 	// subscription counts are calculated, then this value is set to 1.
 	// Otherwise, this value is set to 2.
+	//   "PG_SUBSCRIPTION_COUNT" - Count of subscriptions needed to sync
+	// source data for PostgreSQL database.
+	//   "PG_SYNC_PARALLEL_LEVEL" - Final parallel level that is used to do
+	// migration.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to

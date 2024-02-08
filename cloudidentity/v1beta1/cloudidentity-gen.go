@@ -595,8 +595,7 @@ func (s *BrowserAttributes) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserInfo: Browser-specific fields reported by the Endpoint
-// Verification extension. See go/additionalattributesdesign and
-// go/caa-webprotect-attributes-extension LINT.IfChange
+// Verification extension. LINT.IfChange
 type BrowserInfo struct {
 	// BrowserManagementState: Output only. Browser's management state.
 	//

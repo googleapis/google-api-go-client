@@ -5722,6 +5722,101 @@ func (s *GoogleCloudDataplexV1ListZonesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1MetadataJobEvent: These messages contain
+// information about the execution of a metadata job. The monitored
+// resource is 'MetadataJob'.
+type GoogleCloudDataplexV1MetadataJobEvent struct {
+	// ImportResult: Import job results. Should only be populated on
+	// terminal states.
+	ImportResult *GoogleCloudDataplexV1MetadataJobEventImportResult `json:"importResult,omitempty"`
+
+	// Message: Message describing failure or success event.
+	Message string `json:"message,omitempty"`
+
+	// Resource: The resource name associated with the event. Supported
+	// resources included, but not limited to EntryGroup, MetadataJob, and
+	// Entry.
+	Resource string `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImportResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImportResult") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1MetadataJobEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataJobEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1MetadataJobEventImportResult: Import job result
+// for metadata job.
+type GoogleCloudDataplexV1MetadataJobEventImportResult struct {
+	// CreatedEntries: Total number of entries created.
+	CreatedEntries int64 `json:"createdEntries,omitempty,string"`
+
+	// DeletedEntries: Total number of entries deleted.
+	DeletedEntries int64 `json:"deletedEntries,omitempty,string"`
+
+	// MutatedEntryGroups: The number of entry groups modified/specified by
+	// the import job.
+	MutatedEntryGroups int64 `json:"mutatedEntryGroups,omitempty,string"`
+
+	// RecreatedEntries: Total number of entries recreated.
+	RecreatedEntries int64 `json:"recreatedEntries,omitempty,string"`
+
+	// State: Output only. Terminal state of the import job.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State Unspecified.
+	//   "SUCCEEDED" - Import Job was successful.
+	//   "FAILED" - Import Job was failed.
+	//   "CANCELLED" - Import job was cancelled.
+	//   "RUNNING" - Import Job is running.
+	State string `json:"state,omitempty"`
+
+	// UnchangedEntries: Total number of entries left unchanged.
+	UnchangedEntries int64 `json:"unchangedEntries,omitempty,string"`
+
+	// UpdatedEntries: Total number of entries updated.
+	UpdatedEntries int64 `json:"updatedEntries,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CreatedEntries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedEntries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1MetadataJobEventImportResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1MetadataJobEventImportResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1OperationMetadata: Represents the metadata of a
 // long-running operation.
 type GoogleCloudDataplexV1OperationMetadata struct {

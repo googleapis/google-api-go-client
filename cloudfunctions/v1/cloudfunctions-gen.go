@@ -505,6 +505,10 @@ type CloudFunction struct {
 	// deployment. `projects//locations//builds/`.
 	BuildName string `json:"buildName,omitempty"`
 
+	// BuildServiceAccount: Optional. A service account the user provides
+	// for use with Cloud Build.
+	BuildServiceAccount string `json:"buildServiceAccount,omitempty"`
+
 	// BuildWorkerPool: Name of the Cloud Build Custom Worker Pool that
 	// should be used to build the function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}`
@@ -521,10 +525,9 @@ type CloudFunction struct {
 	Description string `json:"description,omitempty"`
 
 	// DockerRegistry: Docker Registry to use for this deployment. If
-	// `docker_repository` field is specified, this field will be
-	// automatically set as `ARTIFACT_REGISTRY`. If unspecified, it
-	// currently defaults to `CONTAINER_REGISTRY`. This field may be
-	// overridden by the backend for eligible deployments.
+	// unspecified, it defaults to `ARTIFACT_REGISTRY`. If
+	// `docker_repository` field is specified, this field should either be
+	// left unspecified or set to `ARTIFACT_REGISTRY`.
 	//
 	// Possible values:
 	//   "DOCKER_REGISTRY_UNSPECIFIED" - Unspecified.

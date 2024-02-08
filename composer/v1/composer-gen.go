@@ -187,6 +187,8 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsEnvironmentsService(s *Service) *ProjectsLocationsEnvironmentsService {
 	rs := &ProjectsLocationsEnvironmentsService{s: s}
+	rs.UserWorkloadsConfigMaps = NewProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService(s)
+	rs.UserWorkloadsSecrets = NewProjectsLocationsEnvironmentsUserWorkloadsSecretsService(s)
 	rs.Workloads = NewProjectsLocationsEnvironmentsWorkloadsService(s)
 	return rs
 }
@@ -194,7 +196,29 @@ func NewProjectsLocationsEnvironmentsService(s *Service) *ProjectsLocationsEnvir
 type ProjectsLocationsEnvironmentsService struct {
 	s *Service
 
+	UserWorkloadsConfigMaps *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService
+
+	UserWorkloadsSecrets *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService
+
 	Workloads *ProjectsLocationsEnvironmentsWorkloadsService
+}
+
+func NewProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService(s *Service) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService {
+	rs := &ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsEnvironmentsUserWorkloadsSecretsService(s *Service) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService {
+	rs := &ProjectsLocationsEnvironmentsUserWorkloadsSecretsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsEnvironmentsUserWorkloadsSecretsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsEnvironmentsWorkloadsService(s *Service) *ProjectsLocationsEnvironmentsWorkloadsService {
@@ -1337,6 +1361,82 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListUserWorkloadsConfigMapsResponse: The user workloads ConfigMaps
+// for a given environment.
+type ListUserWorkloadsConfigMapsResponse struct {
+	// NextPageToken: The page token used to query for the next page if one
+	// exists.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// UserWorkloadsConfigMaps: The list of ConfigMaps returned by a
+	// ListUserWorkloadsConfigMapsRequest.
+	UserWorkloadsConfigMaps []*UserWorkloadsConfigMap `json:"userWorkloadsConfigMaps,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListUserWorkloadsConfigMapsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserWorkloadsConfigMapsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListUserWorkloadsSecretsResponse: The user workloads Secrets for a
+// given environment.
+type ListUserWorkloadsSecretsResponse struct {
+	// NextPageToken: The page token used to query for the next page if one
+	// exists.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// UserWorkloadsSecrets: The list of Secrets returned by a
+	// ListUserWorkloadsSecretsRequest.
+	UserWorkloadsSecrets []*UserWorkloadsSecret `json:"userWorkloadsSecrets,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListUserWorkloadsSecretsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUserWorkloadsSecretsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2587,6 +2687,88 @@ func (s *TriggererResource) UnmarshalJSON(data []byte) error {
 	s.Cpu = float64(s1.Cpu)
 	s.MemoryGb = float64(s1.MemoryGb)
 	return nil
+}
+
+// UserWorkloadsConfigMap: User workloads ConfigMap used by Airflow
+// tasks that run with Kubernetes executor or KubernetesPodOperator.
+type UserWorkloadsConfigMap struct {
+	// Data: Optional. The "data" field of Kubernetes ConfigMap, organized
+	// in key-value pairs. For details see:
+	// https://kubernetes.io/docs/concepts/configuration/configmap/
+	Data map[string]string `json:"data,omitempty"`
+
+	// Name: Identifier. The resource name of the ConfigMap, in the form:
+	// "projects/{projectId}/locations/{locationId}/environments/{environment
+	// Id}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserWorkloadsConfigMap) MarshalJSON() ([]byte, error) {
+	type NoMethod UserWorkloadsConfigMap
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserWorkloadsSecret: User workloads Secret used by Airflow tasks that
+// run with Kubernetes executor or KubernetesPodOperator.
+type UserWorkloadsSecret struct {
+	// Data: Optional. The "data" field of Kubernetes Secret, organized in
+	// key-value pairs, which can contain sensitive values such as a
+	// password, a token, or a key. The values for all keys have to be
+	// base64-encoded strings. For details see:
+	// https://kubernetes.io/docs/concepts/configuration/secret/
+	Data map[string]string `json:"data,omitempty"`
+
+	// Name: Identifier. The resource name of the Secret, in the form:
+	// "projects/{projectId}/locations/{locationId}/environments/{environment
+	// Id}/userWorkloadsSecrets/{userWorkloadsSecretId}"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserWorkloadsSecret) MarshalJSON() ([]byte, error) {
+	type NoMethod UserWorkloadsSecret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // WebServerConfig: The configuration settings for the Airflow web
@@ -4684,6 +4866,1557 @@ func (c *ProjectsLocationsEnvironmentsStopAirflowCommandCall) Do(opts ...googlea
 	//   },
 	//   "response": {
 	//     "$ref": "StopAirflowCommandResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsConfigMaps.create":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall struct {
+	s                      *Service
+	parent                 string
+	userworkloadsconfigmap *UserWorkloadsConfigMap
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates a user workloads ConfigMap. This method is supported
+// for Cloud Composer environments in versions
+// composer-3.*.*-airflow-*.*.* and newer.
+//
+//   - parent: The environment name to create a ConfigMap for, in the
+//     form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService) Create(parent string, userworkloadsconfigmap *UserWorkloadsConfigMap) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.userworkloadsconfigmap = userworkloadsconfigmap
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userworkloadsconfigmap)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userWorkloadsConfigMaps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.create" call.
+// Exactly one of *UserWorkloadsConfigMap or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UserWorkloadsConfigMap.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall) Do(opts ...googleapi.CallOption) (*UserWorkloadsConfigMap, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserWorkloadsConfigMap{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a user workloads ConfigMap. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsConfigMaps",
+	//   "httpMethod": "POST",
+	//   "id": "composer.projects.locations.environments.userWorkloadsConfigMaps.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The environment name to create a ConfigMap for, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/userWorkloadsConfigMaps",
+	//   "request": {
+	//     "$ref": "UserWorkloadsConfigMap"
+	//   },
+	//   "response": {
+	//     "$ref": "UserWorkloadsConfigMap"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsConfigMaps.delete":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a user workloads ConfigMap. This method is supported
+// for Cloud Composer environments in versions
+// composer-3.*.*-airflow-*.*.* and newer.
+//
+//   - name: The ConfigMap to delete, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService) Delete(name string) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a user workloads ConfigMap. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "composer.projects.locations.environments.userWorkloadsConfigMaps.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The ConfigMap to delete, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+/userWorkloadsConfigMaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsConfigMaps.get":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an existing user workloads ConfigMap. This method is
+// supported for Cloud Composer environments in versions
+// composer-3.*.*-airflow-*.*.* and newer.
+//
+//   - name: The resource name of the ConfigMap to get, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService) Get(name string) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.get" call.
+// Exactly one of *UserWorkloadsConfigMap or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UserWorkloadsConfigMap.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) Do(opts ...googleapi.CallOption) (*UserWorkloadsConfigMap, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserWorkloadsConfigMap{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an existing user workloads ConfigMap. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapsId}",
+	//   "httpMethod": "GET",
+	//   "id": "composer.projects.locations.environments.userWorkloadsConfigMaps.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the ConfigMap to get, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+/userWorkloadsConfigMaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "UserWorkloadsConfigMap"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsConfigMaps.list":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists user workloads ConfigMaps. This method is supported for
+// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.*
+// and newer.
+//
+//   - parent: List ConfigMaps in the given environment, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService) List(parent string) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of ConfigMaps to return.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) PageSize(pageSize int64) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous List request, if any.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) PageToken(pageToken string) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userWorkloadsConfigMaps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.list" call.
+// Exactly one of *ListUserWorkloadsConfigMapsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListUserWorkloadsConfigMapsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) Do(opts ...googleapi.CallOption) (*ListUserWorkloadsConfigMapsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUserWorkloadsConfigMapsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists user workloads ConfigMaps. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsConfigMaps",
+	//   "httpMethod": "GET",
+	//   "id": "composer.projects.locations.environments.userWorkloadsConfigMaps.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of ConfigMaps to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. List ConfigMaps in the given environment, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/userWorkloadsConfigMaps",
+	//   "response": {
+	//     "$ref": "ListUserWorkloadsConfigMapsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) Pages(ctx context.Context, f func(*ListUserWorkloadsConfigMapsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsConfigMaps.update":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall struct {
+	s                      *Service
+	name                   string
+	userworkloadsconfigmap *UserWorkloadsConfigMap
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Update: Updates a user workloads ConfigMap. This method is supported
+// for Cloud Composer environments in versions
+// composer-3.*.*-airflow-*.*.* and newer.
+//
+//   - name: Identifier. The resource name of the ConfigMap, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsService) Update(name string, userworkloadsconfigmap *UserWorkloadsConfigMap) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.userworkloadsconfigmap = userworkloadsconfigmap
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userworkloadsconfigmap)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.update" call.
+// Exactly one of *UserWorkloadsConfigMap or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UserWorkloadsConfigMap.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall) Do(opts ...googleapi.CallOption) (*UserWorkloadsConfigMap, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserWorkloadsConfigMap{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a user workloads ConfigMap. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "composer.projects.locations.environments.userWorkloadsConfigMaps.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Identifier. The resource name of the ConfigMap, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+/userWorkloadsConfigMaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "UserWorkloadsConfigMap"
+	//   },
+	//   "response": {
+	//     "$ref": "UserWorkloadsConfigMap"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsSecrets.create":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall struct {
+	s                   *Service
+	parent              string
+	userworkloadssecret *UserWorkloadsSecret
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Creates a user workloads Secret. This method is supported for
+// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.*
+// and newer.
+//
+//   - parent: The environment name to create a Secret for, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService) Create(parent string, userworkloadssecret *UserWorkloadsSecret) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.userworkloadssecret = userworkloadssecret
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userworkloadssecret)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userWorkloadsSecrets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.create" call.
+// Exactly one of *UserWorkloadsSecret or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UserWorkloadsSecret.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall) Do(opts ...googleapi.CallOption) (*UserWorkloadsSecret, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserWorkloadsSecret{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a user workloads Secret. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsSecrets",
+	//   "httpMethod": "POST",
+	//   "id": "composer.projects.locations.environments.userWorkloadsSecrets.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The environment name to create a Secret for, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/userWorkloadsSecrets",
+	//   "request": {
+	//     "$ref": "UserWorkloadsSecret"
+	//   },
+	//   "response": {
+	//     "$ref": "UserWorkloadsSecret"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsSecrets.delete":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a user workloads Secret. This method is supported for
+// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.*
+// and newer.
+//
+//   - name: The Secret to delete, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}/userWorkloadsSecrets/{userWorkloadsSecretId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService) Delete(name string) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a user workloads Secret. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsSecrets/{userWorkloadsSecretsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "composer.projects.locations.environments.userWorkloadsSecrets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Secret to delete, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+/userWorkloadsSecrets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsSecrets.get":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an existing user workloads Secret. Values of the "data"
+// field in the response are cleared. This method is supported for Cloud
+// Composer environments in versions composer-3.*.*-airflow-*.*.* and
+// newer.
+//
+//   - name: The resource name of the Secret to get, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}/userWorkloadsSecrets/{userWorkloadsSecretId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService) Get(name string) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.get" call.
+// Exactly one of *UserWorkloadsSecret or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UserWorkloadsSecret.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) Do(opts ...googleapi.CallOption) (*UserWorkloadsSecret, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserWorkloadsSecret{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an existing user workloads Secret. Values of the \"data\" field in the response are cleared. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsSecrets/{userWorkloadsSecretsId}",
+	//   "httpMethod": "GET",
+	//   "id": "composer.projects.locations.environments.userWorkloadsSecrets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Secret to get, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+/userWorkloadsSecrets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "UserWorkloadsSecret"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsSecrets.list":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists user workloads Secrets. This method is supported for
+// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.*
+// and newer.
+//
+//   - parent: List Secrets in the given environment, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService) List(parent string) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Secrets to return.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) PageSize(pageSize int64) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous List request, if any.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) PageToken(pageToken string) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userWorkloadsSecrets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.list" call.
+// Exactly one of *ListUserWorkloadsSecretsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListUserWorkloadsSecretsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) Do(opts ...googleapi.CallOption) (*ListUserWorkloadsSecretsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListUserWorkloadsSecretsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists user workloads Secrets. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsSecrets",
+	//   "httpMethod": "GET",
+	//   "id": "composer.projects.locations.environments.userWorkloadsSecrets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of Secrets to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous List request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. List Secrets in the given environment, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/userWorkloadsSecrets",
+	//   "response": {
+	//     "$ref": "ListUserWorkloadsSecretsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) Pages(ctx context.Context, f func(*ListUserWorkloadsSecretsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "composer.projects.locations.environments.userWorkloadsSecrets.update":
+
+type ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall struct {
+	s                   *Service
+	name                string
+	userworkloadssecret *UserWorkloadsSecret
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Update: Updates a user workloads Secret. This method is supported for
+// Cloud Composer environments in versions composer-3.*.*-airflow-*.*.*
+// and newer.
+//
+//   - name: Identifier. The resource name of the Secret, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}/userWorkloadsSecrets/{userWorkloadsSecretId}".
+func (r *ProjectsLocationsEnvironmentsUserWorkloadsSecretsService) Update(name string, userworkloadssecret *UserWorkloadsSecret) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall {
+	c := &ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.userworkloadssecret = userworkloadssecret
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.userworkloadssecret)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.update" call.
+// Exactly one of *UserWorkloadsSecret or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *UserWorkloadsSecret.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall) Do(opts ...googleapi.CallOption) (*UserWorkloadsSecret, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserWorkloadsSecret{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a user workloads Secret. This method is supported for Cloud Composer environments in versions composer-3.*.*-airflow-*.*.* and newer.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}/userWorkloadsSecrets/{userWorkloadsSecretsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "composer.projects.locations.environments.userWorkloadsSecrets.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Identifier. The resource name of the Secret, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+/userWorkloadsSecrets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "UserWorkloadsSecret"
+	//   },
+	//   "response": {
+	//     "$ref": "UserWorkloadsSecret"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

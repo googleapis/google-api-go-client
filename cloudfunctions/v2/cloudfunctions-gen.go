@@ -212,6 +212,11 @@ type ProjectsLocationsRuntimesService struct {
 	s *Service
 }
 
+// AbortFunctionUpgradeRequest: Request for the `AbortFunctionUpgrade`
+// method.
+type AbortFunctionUpgradeRequest struct {
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -540,6 +545,11 @@ func (s *BuildConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CommitFunctionUpgradeRequest: Request for the `CommitFunctionUpgrade`
+// method.
+type CommitFunctionUpgradeRequest struct {
+}
+
 // Date: Represents a whole or partial calendar date, such as a
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
@@ -779,6 +789,10 @@ type Function struct {
 	// container from the given source.
 	BuildConfig *BuildConfig `json:"buildConfig,omitempty"`
 
+	// CreateTime: Output only. The create timestamp of a Cloud Function.
+	// This is only applicable to 2nd Gen functions.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Description: User-provided description of a function.
 	Description string `json:"description,omitempty"`
 
@@ -836,6 +850,9 @@ type Function struct {
 	// UpdateTime: Output only. The last update timestamp of a Cloud
 	// Function.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// UpgradeInfo: Output only. UpgradeInfo for this Cloud Function
+	UpgradeInfo *UpgradeInfo `json:"upgradeInfo,omitempty"`
 
 	// Url: Output only. The deployed url for the function.
 	Url string `json:"url,omitempty"`
@@ -2086,6 +2103,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RedirectFunctionUpgradeTrafficRequest: Request for the
+// `RedirectFunctionUpgradeTraffic` method.
+type RedirectFunctionUpgradeTrafficRequest struct {
+}
+
 // RepoSource: Location of the source in a Google Cloud Source
 // Repository.
 type RepoSource struct {
@@ -2136,6 +2158,11 @@ func (s *RepoSource) MarshalJSON() ([]byte, error) {
 	type NoMethod RepoSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackFunctionUpgradeTrafficRequest: Request for the
+// `RollbackFunctionUpgradeTraffic` method.
+type RollbackFunctionUpgradeTrafficRequest struct {
 }
 
 // Runtime: Describes a runtime and any special information (e.g.,
@@ -2520,6 +2547,11 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SetupFunctionUpgradeConfigRequest: Request for the
+// `SetupFunctionUpgradeConfig` method.
+type SetupFunctionUpgradeConfigRequest struct {
+}
+
 // Source: The location of the function source code.
 type Source struct {
 	// GitUri: If provided, get the source from GitHub repository. This
@@ -2746,6 +2778,72 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpgradeInfo: Information related to: * A function's eligibility for
+// 1st Gen to 2nd Gen migration * Current state of migration for
+// function undergoing migration.
+type UpgradeInfo struct {
+	// BuildConfig: Describes the Build step of the function that builds a
+	// container to prepare for 2nd gen upgrade.
+	BuildConfig *BuildConfig `json:"buildConfig,omitempty"`
+
+	// EventTrigger: Describes the Event trigger which has been setup to
+	// prepare for 2nd gen upgrade.
+	EventTrigger *EventTrigger `json:"eventTrigger,omitempty"`
+
+	// ServiceConfig: Describes the Cloud Run service which has been setup
+	// to prepare for 2nd gen upgrade.
+	ServiceConfig *ServiceConfig `json:"serviceConfig,omitempty"`
+
+	// UpgradeState: UpgradeState of the function
+	//
+	// Possible values:
+	//   "UPGRADE_STATE_UNSPECIFIED" - Unspecified state. Most functions are
+	// in this upgrade state.
+	//   "ELIGIBLE_FOR_2ND_GEN_UPGRADE" - Functions in this state are
+	// eligible for 1st Gen -> 2nd Gen upgrade.
+	//   "UPGRADE_OPERATION_IN_PROGRESS" - An upgrade related operation is
+	// in progress.
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG_SUCCESSFUL" -
+	// SetupFunctionUpgradeConfig API was successful and a 2nd Gen function
+	// has been created based on 1st Gen function instance.
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG_ERROR" - SetupFunctionUpgradeConfig
+	// API was un-successful.
+	//   "ABORT_FUNCTION_UPGRADE_ERROR" - AbortFunctionUpgrade API was
+	// un-successful.
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC_SUCCESSFUL" -
+	// RedirectFunctionUpgradeTraffic API was successful and traffic is
+	// served by 2nd Gen function stack.
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC_ERROR" -
+	// RedirectFunctionUpgradeTraffic API was un-successful.
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC_ERROR" -
+	// RollbackFunctionUpgradeTraffic API was un-successful.
+	//   "COMMIT_FUNCTION_UPGRADE_ERROR" - CommitFunctionUpgrade API was
+	// un-successful.
+	UpgradeState string `json:"upgradeState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "cloudfunctions.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -2953,6 +3051,297 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudfunctions.projects.locations.functions.abortFunctionUpgrade":
+
+type ProjectsLocationsFunctionsAbortFunctionUpgradeCall struct {
+	s                           *Service
+	name                        string
+	abortfunctionupgraderequest *AbortFunctionUpgradeRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// AbortFunctionUpgrade: Aborts generation upgrade process for a
+// function with the given name from the specified project. Deletes all
+// 2nd Gen copy related configuration and resources which were created
+// during the upgrade process.
+//
+// - name: The name of the function for which upgrade should be aborted.
+func (r *ProjectsLocationsFunctionsService) AbortFunctionUpgrade(name string, abortfunctionupgraderequest *AbortFunctionUpgradeRequest) *ProjectsLocationsFunctionsAbortFunctionUpgradeCall {
+	c := &ProjectsLocationsFunctionsAbortFunctionUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.abortfunctionupgraderequest = abortfunctionupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsAbortFunctionUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Context(ctx context.Context) *ProjectsLocationsFunctionsAbortFunctionUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.abortfunctionupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:abortFunctionUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.abortFunctionUpgrade" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Aborts generation upgrade process for a function with the given name from the specified project. Deletes all 2nd Gen copy related configuration and resources which were created during the upgrade process.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:abortFunctionUpgrade",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.abortFunctionUpgrade",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which upgrade should be aborted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:abortFunctionUpgrade",
+	//   "request": {
+	//     "$ref": "AbortFunctionUpgradeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudfunctions.projects.locations.functions.commitFunctionUpgrade":
+
+type ProjectsLocationsFunctionsCommitFunctionUpgradeCall struct {
+	s                            *Service
+	name                         string
+	commitfunctionupgraderequest *CommitFunctionUpgradeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// CommitFunctionUpgrade: Finalizes the upgrade after which function
+// upgrade can not be rolled back. This is the last step of the multi
+// step process to upgrade 1st Gen functions to 2nd Gen. Deletes all
+// original 1st Gen related configuration and resources.
+//
+//   - name: The name of the function for which upgrade should be
+//     finalized.
+func (r *ProjectsLocationsFunctionsService) CommitFunctionUpgrade(name string, commitfunctionupgraderequest *CommitFunctionUpgradeRequest) *ProjectsLocationsFunctionsCommitFunctionUpgradeCall {
+	c := &ProjectsLocationsFunctionsCommitFunctionUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.commitfunctionupgraderequest = commitfunctionupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsCommitFunctionUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Context(ctx context.Context) *ProjectsLocationsFunctionsCommitFunctionUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitfunctionupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:commitFunctionUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.commitFunctionUpgrade" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finalizes the upgrade after which function upgrade can not be rolled back. This is the last step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Deletes all original 1st Gen related configuration and resources.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:commitFunctionUpgrade",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.commitFunctionUpgrade",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which upgrade should be finalized.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:commitFunctionUpgrade",
+	//   "request": {
+	//     "$ref": "CommitFunctionUpgradeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudfunctions.projects.locations.functions.create":
@@ -4263,6 +4652,298 @@ func (c *ProjectsLocationsFunctionsPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic":
+
+type ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall struct {
+	s                                     *Service
+	name                                  string
+	redirectfunctionupgradetrafficrequest *RedirectFunctionUpgradeTrafficRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// RedirectFunctionUpgradeTraffic: Changes the traffic target of a
+// function from the original 1st Gen function to the 2nd Gen copy. This
+// is the second step of the multi step process to upgrade 1st Gen
+// functions to 2nd Gen. After this operation, all new traffic will be
+// served by 2nd Gen copy.
+//
+//   - name: The name of the function for which traffic target should be
+//     changed to 2nd Gen from 1st Gen.
+func (r *ProjectsLocationsFunctionsService) RedirectFunctionUpgradeTraffic(name string, redirectfunctionupgradetrafficrequest *RedirectFunctionUpgradeTrafficRequest) *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall {
+	c := &ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.redirectfunctionupgradetrafficrequest = redirectfunctionupgradetrafficrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Context(ctx context.Context) *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.redirectfunctionupgradetrafficrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:redirectFunctionUpgradeTraffic")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the traffic target of a function from the original 1st Gen function to the 2nd Gen copy. This is the second step of the multi step process to upgrade 1st Gen functions to 2nd Gen. After this operation, all new traffic will be served by 2nd Gen copy.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:redirectFunctionUpgradeTraffic",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which traffic target should be changed to 2nd Gen from 1st Gen.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:redirectFunctionUpgradeTraffic",
+	//   "request": {
+	//     "$ref": "RedirectFunctionUpgradeTrafficRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic":
+
+type ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall struct {
+	s                                     *Service
+	name                                  string
+	rollbackfunctionupgradetrafficrequest *RollbackFunctionUpgradeTrafficRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// RollbackFunctionUpgradeTraffic: Reverts the traffic target of a
+// function from the 2nd Gen copy to the original 1st Gen function.
+// After this operation, all new traffic would be served by the 1st Gen.
+//
+//   - name: The name of the function for which traffic target should be
+//     changed back to 1st Gen from 2nd Gen.
+func (r *ProjectsLocationsFunctionsService) RollbackFunctionUpgradeTraffic(name string, rollbackfunctionupgradetrafficrequest *RollbackFunctionUpgradeTrafficRequest) *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall {
+	c := &ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rollbackfunctionupgradetrafficrequest = rollbackfunctionupgradetrafficrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Context(ctx context.Context) *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackfunctionupgradetrafficrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:rollbackFunctionUpgradeTraffic")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reverts the traffic target of a function from the 2nd Gen copy to the original 1st Gen function. After this operation, all new traffic would be served by the 1st Gen.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:rollbackFunctionUpgradeTraffic",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which traffic target should be changed back to 1st Gen from 2nd Gen.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:rollbackFunctionUpgradeTraffic",
+	//   "request": {
+	//     "$ref": "RollbackFunctionUpgradeTrafficRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "cloudfunctions.projects.locations.functions.setIamPolicy":
 
 type ProjectsLocationsFunctionsSetIamPolicyCall struct {
@@ -4402,6 +5083,153 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig":
+
+type ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall struct {
+	s                                 *Service
+	name                              string
+	setupfunctionupgradeconfigrequest *SetupFunctionUpgradeConfigRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// SetupFunctionUpgradeConfig: Creates a 2nd Gen copy of the function
+// configuration based on the 1st Gen function with the given name. This
+// is the first step of the multi step process to upgrade 1st Gen
+// functions to 2nd Gen. Only 2nd Gen configuration is setup as part of
+// this request and traffic continues to be served by 1st Gen.
+//
+//   - name: The name of the function which should have configuration
+//     copied for upgrade.
+func (r *ProjectsLocationsFunctionsService) SetupFunctionUpgradeConfig(name string, setupfunctionupgradeconfigrequest *SetupFunctionUpgradeConfigRequest) *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall {
+	c := &ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.setupfunctionupgradeconfigrequest = setupfunctionupgradeconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Context(ctx context.Context) *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setupfunctionupgradeconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:setupFunctionUpgradeConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a 2nd Gen copy of the function configuration based on the 1st Gen function with the given name. This is the first step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Only 2nd Gen configuration is setup as part of this request and traffic continues to be served by 1st Gen.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:setupFunctionUpgradeConfig",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function which should have configuration copied for upgrade.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:setupFunctionUpgradeConfig",
+	//   "request": {
+	//     "$ref": "SetupFunctionUpgradeConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

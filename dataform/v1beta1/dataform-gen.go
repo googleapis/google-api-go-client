@@ -2732,6 +2732,10 @@ func (s *RemoveFileRequest) MarshalJSON() ([]byte, error) {
 
 // Repository: Represents a Dataform Git repository.
 type Repository struct {
+	// CreateTime: Output only. The timestamp of when the repository was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DisplayName: Optional. The repository's user-friendly name.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -2774,7 +2778,7 @@ type Repository struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2782,10 +2786,10 @@ type Repository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

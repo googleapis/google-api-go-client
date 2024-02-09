@@ -2402,6 +2402,109 @@ func (s *GoogleCloudContactcenterinsightsV1ExportInsightsDataRequestBigQueryDest
 type GoogleCloudContactcenterinsightsV1ExportInsightsDataResponse struct {
 }
 
+// GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata: Metadata
+// used for export issue model.
+type GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata struct {
+	// CreateTime: The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Request: The original export request.
+	Request *GoogleCloudContactcenterinsightsV1ExportIssueModelRequest `json:"request,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ExportIssueModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ExportIssueModelRequest: Request to
+// export an issue model.
+type GoogleCloudContactcenterinsightsV1ExportIssueModelRequest struct {
+	// GcsDestination: Google Cloud Storage URI to export the Issue Model
+	// to.
+	GcsDestination *GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination `json:"gcsDestination,omitempty"`
+
+	// Name: Required. The issue model to export
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ExportIssueModelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestinatio
+// n: Google Cloud Storage Object URI to save the issue model to.
+type GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination struct {
+	// ObjectUri: Required. Format: `gs:///`
+	ObjectUri string `json:"objectUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ExportIssueModelRequestGcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ExportIssueModelResponse: Response
+// from export issue model
+type GoogleCloudContactcenterinsightsV1ExportIssueModelResponse struct {
+}
+
 // GoogleCloudContactcenterinsightsV1FaqAnswerData: Agent Assist
 // frequently-asked-question answer data.
 type GoogleCloudContactcenterinsightsV1FaqAnswerData struct {
@@ -2504,6 +2607,114 @@ func (s *GoogleCloudContactcenterinsightsV1GcsSource) MarshalJSON() ([]byte, err
 // GoogleCloudContactcenterinsightsV1HoldData: The data for a hold
 // annotation.
 type GoogleCloudContactcenterinsightsV1HoldData struct {
+}
+
+// GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata: Metadata
+// used for import issue model.
+type GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata struct {
+	// CreateTime: The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Request: The original import request.
+	Request *GoogleCloudContactcenterinsightsV1ImportIssueModelRequest `json:"request,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ImportIssueModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ImportIssueModelRequest: Request to
+// import an issue model.
+type GoogleCloudContactcenterinsightsV1ImportIssueModelRequest struct {
+	// CreateNewModel: Optional. If set to true, will create a new issue
+	// model from the imported file with randomly generated IDs for the
+	// issue model and corresponding issues. Otherwise, replaces an existing
+	// model with the same ID as the file.
+	CreateNewModel bool `json:"createNewModel,omitempty"`
+
+	// GcsSource: Google Cloud Storage source message.
+	GcsSource *GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource `json:"gcsSource,omitempty"`
+
+	// Parent: Required. The parent resource of the issue model.
+	Parent string `json:"parent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateNewModel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateNewModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ImportIssueModelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource:
+// Google Cloud Storage Object URI to get the issue model file from.
+type GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource struct {
+	// ObjectUri: Required. Format: `gs:///`
+	ObjectUri string `json:"objectUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ImportIssueModelRequestGcsSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ImportIssueModelResponse: Response
+// from import issue model
+type GoogleCloudContactcenterinsightsV1ImportIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1IngestConversationsMetadata: The
@@ -2702,6 +2913,19 @@ type GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource struc
 	// BucketUri: Required. The Cloud Storage bucket containing source
 	// objects.
 	BucketUri string `json:"bucketUri,omitempty"`
+
+	// CustomMetadataKeys: Optional. Custom keys to extract as conversation
+	// labels from metadata files in `metadata_bucket_uri`. Keys not
+	// included in this field will be ignored. Note that there is a limit of
+	// 20 labels per conversation.
+	CustomMetadataKeys []string `json:"customMetadataKeys,omitempty"`
+
+	// MetadataBucketUri: Optional. The Cloud Storage path to the source
+	// object metadata. Note that: [1] metadata files are expected to be in
+	// JSON format [2] metadata and source objects must be in separate
+	// buckets [3] a source object's metadata object must share the same
+	// name to be properly ingested
+	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketObjectType") to
 	// unconditionally include in API requests. By default, fields with
@@ -6224,6 +6448,109 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequestBigQue
 type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataResponse struct {
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata:
+// Metadata used for export issue model.
+type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata struct {
+	// CreateTime: The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Request: The original export request.
+	Request *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest `json:"request,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest:
+// Request to export an issue model.
+type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest struct {
+	// GcsDestination: Google Cloud Storage URI to export the Issue Model
+	// to.
+	GcsDestination *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination `json:"gcsDestination,omitempty"`
+
+	// Name: Required. The issue model to export
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDest
+// ination: Google Cloud Storage Object URI to save the issue model to.
+type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination struct {
+	// ObjectUri: Required. Format: `gs:///`
+	ObjectUri string `json:"objectUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelRequestGcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse:
+// Response from export issue model
+type GoogleCloudContactcenterinsightsV1alpha1ExportIssueModelResponse struct {
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData: Agent Assist
 // frequently-asked-question answer data.
 type GoogleCloudContactcenterinsightsV1alpha1FaqAnswerData struct {
@@ -6326,6 +6653,114 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1GcsSource) MarshalJSON() ([]byt
 // GoogleCloudContactcenterinsightsV1alpha1HoldData: The data for a hold
 // annotation.
 type GoogleCloudContactcenterinsightsV1alpha1HoldData struct {
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata:
+// Metadata used for import issue model.
+type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata struct {
+	// CreateTime: The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Request: The original import request.
+	Request *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest `json:"request,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest:
+// Request to import an issue model.
+type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest struct {
+	// CreateNewModel: Optional. If set to true, will create a new issue
+	// model from the imported file with randomly generated IDs for the
+	// issue model and corresponding issues. Otherwise, replaces an existing
+	// model with the same ID as the file.
+	CreateNewModel bool `json:"createNewModel,omitempty"`
+
+	// GcsSource: Google Cloud Storage source message.
+	GcsSource *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource `json:"gcsSource,omitempty"`
+
+	// Parent: Required. The parent resource of the issue model.
+	Parent string `json:"parent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateNewModel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateNewModel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSour
+// ce: Google Cloud Storage Object URI to get the issue model file from.
+type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource struct {
+	// ObjectUri: Required. Format: `gs:///`
+	ObjectUri string `json:"objectUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelRequestGcsSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse:
+// Response from import issue model
+type GoogleCloudContactcenterinsightsV1alpha1ImportIssueModelResponse struct {
 }
 
 // GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata:
@@ -6523,6 +6958,19 @@ type GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
 	// BucketUri: Required. The Cloud Storage bucket containing source
 	// objects.
 	BucketUri string `json:"bucketUri,omitempty"`
+
+	// CustomMetadataKeys: Optional. Custom keys to extract as conversation
+	// labels from metadata files in `metadata_bucket_uri`. Keys not
+	// included in this field will be ignored. Note that there is a limit of
+	// 20 labels per conversation.
+	CustomMetadataKeys []string `json:"customMetadataKeys,omitempty"`
+
+	// MetadataBucketUri: Optional. The Cloud Storage path to the source
+	// object metadata. Note that: [1] metadata files are expected to be in
+	// JSON format [2] metadata and source objects must be in separate
+	// buckets [3] a source object's metadata object must share the same
+	// name to be properly ingested
+	MetadataBucketUri string `json:"metadataBucketUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketObjectType") to
 	// unconditionally include in API requests. By default, fields with
@@ -9037,6 +9485,18 @@ func (c *ProjectsLocationsConversationsListCall) Filter(filter string) *Projects
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The attribute by which
+// to order conversations in the response. If empty, conversations will
+// be ordered by descending creation time. Supported values are one of
+// the following: * create_time * duration * turn_count *
+// latest_analysis The default sort order is ascending. To specify
+// order, append `asc` or `desc`, i.e. `create_time desc`. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsConversationsListCall) OrderBy(orderBy string) *ProjectsLocationsConversationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of conversations to return in the response. A valid page size ranges
 // from 0 to 1,000 inclusive. If the page size is zero or unspecified, a
@@ -9187,6 +9647,11 @@ func (c *ProjectsLocationsConversationsListCall) Do(opts ...googleapi.CallOption
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "A filter to reduce results to a specific subset. Useful for querying conversations with specific properties.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The attribute by which to order conversations in the response. If empty, conversations will be ordered by descending creation time. Supported values are one of the following: * create_time * duration * turn_count * latest_analysis The default sort order is ascending. To specify order, append `asc` or `desc`, i.e. `create_time desc`. See https://google.aip.dev/132#ordering for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10904,6 +11369,148 @@ func (c *ProjectsLocationsIssueModelsDeployCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "contactcenterinsights.projects.locations.issueModels.export":
+
+type ProjectsLocationsIssueModelsExportCall struct {
+	s                                                         *Service
+	name                                                      string
+	googlecloudcontactcenterinsightsv1exportissuemodelrequest *GoogleCloudContactcenterinsightsV1ExportIssueModelRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// Export: Exports an issue model to the provided destination.
+//
+// - name: The issue model to export.
+func (r *ProjectsLocationsIssueModelsService) Export(name string, googlecloudcontactcenterinsightsv1exportissuemodelrequest *GoogleCloudContactcenterinsightsV1ExportIssueModelRequest) *ProjectsLocationsIssueModelsExportCall {
+	c := &ProjectsLocationsIssueModelsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1exportissuemodelrequest = googlecloudcontactcenterinsightsv1exportissuemodelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIssueModelsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsIssueModelsExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIssueModelsExportCall) Context(ctx context.Context) *ProjectsLocationsIssueModelsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIssueModelsExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIssueModelsExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontactcenterinsightsv1exportissuemodelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.issueModels.export" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIssueModelsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exports an issue model to the provided destination.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/issueModels/{issueModelsId}:export",
+	//   "httpMethod": "POST",
+	//   "id": "contactcenterinsights.projects.locations.issueModels.export",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The issue model to export",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/issueModels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:export",
+	//   "request": {
+	//     "$ref": "GoogleCloudContactcenterinsightsV1ExportIssueModelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "contactcenterinsights.projects.locations.issueModels.get":
 
 type ProjectsLocationsIssueModelsGetCall struct {
@@ -11044,6 +11651,148 @@ func (c *ProjectsLocationsIssueModelsGetCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudContactcenterinsightsV1IssueModel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "contactcenterinsights.projects.locations.issueModels.import":
+
+type ProjectsLocationsIssueModelsImportCall struct {
+	s                                                         *Service
+	parent                                                    string
+	googlecloudcontactcenterinsightsv1importissuemodelrequest *GoogleCloudContactcenterinsightsV1ImportIssueModelRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// Import: Imports an issue model from a Cloud Storage bucket.
+//
+// - parent: The parent resource of the issue model.
+func (r *ProjectsLocationsIssueModelsService) Import(parent string, googlecloudcontactcenterinsightsv1importissuemodelrequest *GoogleCloudContactcenterinsightsV1ImportIssueModelRequest) *ProjectsLocationsIssueModelsImportCall {
+	c := &ProjectsLocationsIssueModelsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1importissuemodelrequest = googlecloudcontactcenterinsightsv1importissuemodelrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIssueModelsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsIssueModelsImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIssueModelsImportCall) Context(ctx context.Context) *ProjectsLocationsIssueModelsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIssueModelsImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIssueModelsImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudcontactcenterinsightsv1importissuemodelrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/issueModels:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.issueModels.import" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIssueModelsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports an issue model from a Cloud Storage bucket.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/issueModels:import",
+	//   "httpMethod": "POST",
+	//   "id": "contactcenterinsights.projects.locations.issueModels.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource of the issue model.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/issueModels:import",
+	//   "request": {
+	//     "$ref": "GoogleCloudContactcenterinsightsV1ImportIssueModelRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

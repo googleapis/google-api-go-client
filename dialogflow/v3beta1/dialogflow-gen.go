@@ -1471,6 +1471,48 @@ func (s *GoogleCloudDialogflowCxV3ExportAgentResponse) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ExportEntityTypesMetadata: Metadata returned
+// for the EntityTypes.ExportEntityTypes long running operation.
+type GoogleCloudDialogflowCxV3ExportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ExportEntityTypesResponse: The response
+// message for EntityTypes.ExportEntityTypes.
+type GoogleCloudDialogflowCxV3ExportEntityTypesResponse struct {
+	// EntityTypesContent: Uncompressed byte content for entity types. This
+	// field is populated only if `entity_types_content_inline` is set to
+	// true in ExportEntityTypesRequest.
+	EntityTypesContent *GoogleCloudDialogflowCxV3InlineDestination `json:"entityTypesContent,omitempty"`
+
+	// EntityTypesUri: The URI to a file containing the exported entity
+	// types. This field is populated only if `entity_types_uri` is
+	// specified in ExportEntityTypesRequest.
+	EntityTypesUri string `json:"entityTypesUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityTypesContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityTypesContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ExportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ExportFlowResponse: The response message for
 // Flows.ExportFlow.
 type GoogleCloudDialogflowCxV3ExportFlowResponse struct {
@@ -2076,6 +2118,82 @@ type GoogleCloudDialogflowCxV3ImportDocumentsResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ImportDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ImportEntityTypesMetadata: Metadata returned
+// for the EntityTypes.ImportEntityTypes long running operation.
+type GoogleCloudDialogflowCxV3ImportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ImportEntityTypesResponse: The response
+// message for EntityTypes.ImportEntityTypes.
+type GoogleCloudDialogflowCxV3ImportEntityTypesResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportEntityTypesRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// EntityTypes: The unique identifier of the imported entity types.
+	// Format: `projects//locations//agents//entity_types/`.
+	EntityTypes []string `json:"entityTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources
+// : Conflicting resources detected during the import process. Only
+// filled when REPORT_CONFLICT is set in the request and there are
+// conflicts in the display names.
+type GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// EntityTypeDisplayNames: Display names of conflicting entity types.
+	EntityTypeDisplayNames []string `json:"entityTypeDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7166,6 +7284,113 @@ func (s *GoogleCloudDialogflowCxV3beta1ExportAgentResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata: Metadata
+// returned for the EntityTypes.ExportEntityTypes long running
+// operation.
+type GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest: The request
+// message for EntityTypes.ExportEntityTypes.
+type GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest struct {
+	// DataFormat: Optional. The data format of the exported entity types.
+	// If not specified, `BLOB` is assumed.
+	//
+	// Possible values:
+	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format. Treated as `BLOB`.
+	//   "BLOB" - EntityTypes will be exported as raw bytes.
+	//   "JSON_PACKAGE" - EntityTypes will be exported in JSON Package
+	// format.
+	DataFormat string `json:"dataFormat,omitempty"`
+
+	// EntityTypes: Required. The name of the entity types to export.
+	// Format: `projects//locations//agents//entityTypes/`.
+	EntityTypes []string `json:"entityTypes,omitempty"`
+
+	// EntityTypesContentInline: Optional. The option to return the
+	// serialized entity types inline.
+	EntityTypesContentInline bool `json:"entityTypesContentInline,omitempty"`
+
+	// EntityTypesUri: Optional. The Google Cloud Storage
+	// (https://cloud.google.com/storage/docs/) URI to export the entity
+	// types to. The format of this URI must be `gs:///`. Dialogflow
+	// performs a write operation for the Cloud Storage object on the
+	// caller's behalf, so your request authentication must have write
+	// permissions for the object. For more information, see Dialogflow
+	// access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
+	EntityTypesUri string `json:"entityTypesUri,omitempty"`
+
+	// LanguageCode: Optional. The language to retrieve the entity type for.
+	// The following fields are language dependent: *
+	// `EntityType.entities.value` * `EntityType.entities.synonyms` *
+	// `EntityType.excluded_phrases.value` If not specified, all language
+	// dependent fields will be retrieved. Many languages
+	// (https://cloud.google.com/dialogflow/docs/reference/language) are
+	// supported. Note: languages must be enabled in the agent before they
+	// can be used.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataFormat") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse: The response
+// message for EntityTypes.ExportEntityTypes.
+type GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse struct {
+	// EntityTypesContent: Uncompressed byte content for entity types. This
+	// field is populated only if `entity_types_content_inline` is set to
+	// true in ExportEntityTypesRequest.
+	EntityTypesContent *GoogleCloudDialogflowCxV3beta1InlineDestination `json:"entityTypesContent,omitempty"`
+
+	// EntityTypesUri: The URI to a file containing the exported entity
+	// types. This field is populated only if `entity_types_uri` is
+	// specified in ExportEntityTypesRequest.
+	EntityTypesUri string `json:"entityTypesUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityTypesContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityTypesContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ExportFlowRequest: The request message
 // for Flows.ExportFlow.
 type GoogleCloudDialogflowCxV3beta1ExportFlowRequest struct {
@@ -8493,6 +8718,147 @@ type GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata: Metadata
+// returned for the EntityTypes.ImportEntityTypes long running
+// operation.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest: The request
+// message for EntityTypes.ImportEntityTypes.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest struct {
+	// EntityTypesContent: Uncompressed byte content of entity types.
+	EntityTypesContent *GoogleCloudDialogflowCxV3beta1InlineSource `json:"entityTypesContent,omitempty"`
+
+	// EntityTypesUri: The Google Cloud Storage
+	// (https://cloud.google.com/storage/docs/) URI to import entity types
+	// from. The format of this URI must be `gs:///`. Dialogflow performs a
+	// read operation for the Cloud Storage object on the caller's behalf,
+	// so your request authentication must have read permissions for the
+	// object. For more information, see Dialogflow access control
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).
+	EntityTypesUri string `json:"entityTypesUri,omitempty"`
+
+	// MergeOption: Required. Merge option for importing entity types.
+	//
+	// Possible values:
+	//   "MERGE_OPTION_UNSPECIFIED" - Unspecified. If used, system uses
+	// REPORT_CONFLICT as default.
+	//   "REPLACE" - Replace the original entity type in the agent with the
+	// new entity type when display name conflicts exist.
+	//   "MERGE" - Merge the original entity type with the new entity type
+	// when display name conflicts exist.
+	//   "RENAME" - Create new entity types with new display names to
+	// differentiate them from the existing entity types when display name
+	// conflicts exist.
+	//   "REPORT_CONFLICT" - Report conflict information if display names
+	// conflict is detected. Otherwise, import entity types.
+	//   "KEEP" - Keep the original entity type and discard the conflicting
+	// new entity type when display name conflicts exist.
+	MergeOption string `json:"mergeOption,omitempty"`
+
+	// TargetEntityType: Optional. The target entity type to import into.
+	// Format: `projects//locations//agents//entity_types/`. If set, there
+	// should be only one entity type included in entity_types, of which the
+	// type should match the type of the target entity type. All entities in
+	// the imported entity type will be added to the target entity type.
+	TargetEntityType string `json:"targetEntityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityTypesContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityTypesContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse: The response
+// message for EntityTypes.ImportEntityTypes.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportEntityTypesRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// EntityTypes: The unique identifier of the imported entity types.
+	// Format: `projects//locations//agents//entity_types/`.
+	EntityTypes []string `json:"entityTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingReso
+// urces: Conflicting resources detected during the import process. Only
+// filled when REPORT_CONFLICT is set in the request and there are
+// conflicts in the display names.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// EntityTypeDisplayNames: Display names of conflicting entity types.
+	EntityTypeDisplayNames []string `json:"entityTypeDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -25052,6 +25418,150 @@ func (c *ProjectsLocationsAgentsEntityTypesDeleteCall) Do(opts ...googleapi.Call
 
 }
 
+// method id "dialogflow.projects.locations.agents.entityTypes.export":
+
+type ProjectsLocationsAgentsEntityTypesExportCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googleclouddialogflowcxv3beta1exportentitytypesrequest *GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Export: Exports the selected entity types.
+//
+//   - parent: The name of the parent agent to export entity types.
+//     Format: `projects//locations//agents/`.
+func (r *ProjectsLocationsAgentsEntityTypesService) Export(parent string, googleclouddialogflowcxv3beta1exportentitytypesrequest *GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest) *ProjectsLocationsAgentsEntityTypesExportCall {
+	c := &ProjectsLocationsAgentsEntityTypesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3beta1exportentitytypesrequest = googleclouddialogflowcxv3beta1exportentitytypesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsEntityTypesExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEntityTypesExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsEntityTypesExportCall) Context(ctx context.Context) *ProjectsLocationsAgentsEntityTypesExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsEntityTypesExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsEntityTypesExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1exportentitytypesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/entityTypes:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.entityTypes.export" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsEntityTypesExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exports the selected entity types.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes:export",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.entityTypes.export",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the parent agent to export entity types. Format: `projects//locations//agents/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}/entityTypes:export",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1ExportEntityTypesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.locations.agents.entityTypes.get":
 
 type ProjectsLocationsAgentsEntityTypesGetCall struct {
@@ -25212,6 +25722,150 @@ func (c *ProjectsLocationsAgentsEntityTypesGetCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v3beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowCxV3beta1EntityType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.agents.entityTypes.import":
+
+type ProjectsLocationsAgentsEntityTypesImportCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googleclouddialogflowcxv3beta1importentitytypesrequest *GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Import: Imports the specified entitytypes into the agent.
+//
+//   - parent: The agent to import the entity types into. Format:
+//     `projects//locations//agents/`.
+func (r *ProjectsLocationsAgentsEntityTypesService) Import(parent string, googleclouddialogflowcxv3beta1importentitytypesrequest *GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest) *ProjectsLocationsAgentsEntityTypesImportCall {
+	c := &ProjectsLocationsAgentsEntityTypesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3beta1importentitytypesrequest = googleclouddialogflowcxv3beta1importentitytypesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentsEntityTypesImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEntityTypesImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentsEntityTypesImportCall) Context(ctx context.Context) *ProjectsLocationsAgentsEntityTypesImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentsEntityTypesImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsEntityTypesImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1importentitytypesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/entityTypes:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agents.entityTypes.import" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsEntityTypesImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports the specified entitytypes into the agent.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes:import",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.agents.entityTypes.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The agent to import the entity types into. Format: `projects//locations//agents/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}/entityTypes:import",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1ImportEntityTypesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

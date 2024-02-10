@@ -920,7 +920,7 @@ type ScheduleOptions struct {
 
 	// EndTime: Defines time to stop scheduling transfer runs. A transfer
 	// run cannot be scheduled at or after the end time. The end time can be
-	// changed at any moment. The time when a data transfer can be trigerred
+	// changed at any moment. The time when a data transfer can be triggered
 	// manually is not limited by this option.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -928,7 +928,7 @@ type ScheduleOptions struct {
 	// first run will be scheduled at or after the start time according to a
 	// recurrence pattern defined in the schedule string. The start time can
 	// be changed at any moment. The time when a data transfer can be
-	// trigerred manually is not limited by this option.
+	// triggered manually is not limited by this option.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1206,8 +1206,8 @@ type TransferConfig struct {
 	// DestinationDatasetId: The BigQuery target dataset id.
 	DestinationDatasetId string `json:"destinationDatasetId,omitempty"`
 
-	// Disabled: Is this config disabled. When set to true, no runs are
-	// scheduled for a given transfer.
+	// Disabled: Is this config disabled. When set to true, no runs will be
+	// scheduled for this transfer config.
 	Disabled bool `json:"disabled,omitempty"`
 
 	// DisplayName: User specified display name for the data transfer.
@@ -1240,7 +1240,7 @@ type TransferConfig struct {
 	// NotificationPubsubTopic: Pub/Sub topic where notifications will be
 	// sent after transfer runs associated with this transfer config finish.
 	// The format for specifying a pubsub topic is:
-	// `projects/{project}/topics/{topic}`
+	// `projects/{project_id}/topics/{topic_id}`
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// OwnerInfo: Output only. Information about the user whose credentials
@@ -1389,7 +1389,7 @@ type TransferRun struct {
 	// NotificationPubsubTopic: Output only. Pub/Sub topic where a
 	// notification will be sent after this transfer run finishes. The
 	// format for specifying a pubsub topic is:
-	// `projects/{project}/topics/{topic}`
+	// `projects/{project_id}/topics/{topic_id}`
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// Params: Output only. Parameters specific to each data source. For
@@ -2698,7 +2698,8 @@ type ProjectsLocationsUnenrollDataSourcesCall struct {
 // allows users to remove transfer configurations for these data
 // sources. They will no longer appear in the ListDataSources RPC and
 // will also no longer appear in the BigQuery UI
-// (https://console.cloud.google.com/bigquery).
+// (https://console.cloud.google.com/bigquery). Data transfers
+// configurations of unenrolled data sources will not be scheduled.
 //
 //   - name: The name of the project resource in the form:
 //     `projects/{project_id}`.
@@ -2800,7 +2801,7 @@ func (c *ProjectsLocationsUnenrollDataSourcesCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Unenroll data sources in a user project. This allows users to remove transfer configurations for these data sources. They will no longer appear in the ListDataSources RPC and will also no longer appear in the [BigQuery UI](https://console.cloud.google.com/bigquery).",
+	//   "description": "Unenroll data sources in a user project. This allows users to remove transfer configurations for these data sources. They will no longer appear in the ListDataSources RPC and will also no longer appear in the [BigQuery UI](https://console.cloud.google.com/bigquery). Data transfers configurations of unenrolled data sources will not be scheduled.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:unenrollDataSources",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.unenrollDataSources",

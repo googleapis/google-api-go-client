@@ -1451,9 +1451,9 @@ type CreateDatabaseRequest struct {
 	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
 	// To generate it, install (https://grpc.io/docs/protoc-installation/)
 	// and run `protoc` with --include_imports and --descriptor_set_out. For
-	// example, to generate for moon/shot/app.proto, run """ $protoc
+	// example, to generate for moon/shot/app.proto, run ``` $protoc
 	// --proto_path=/app_path --proto_path=/lib_path \ --include_imports \
-	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto """ For
+	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For
 	// more details, see protobuffer self description
 	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
 	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
@@ -1573,6 +1573,17 @@ type CreateInstanceMetadata struct {
 	// EndTime: The time at which this operation failed or was completed
 	// successfully.
 	EndTime string `json:"endTime,omitempty"`
+
+	// ExpectedFulfillmentPeriod: The expected fulfillment period of this
+	// create operation.
+	//
+	// Possible values:
+	//   "FULFILLMENT_PERIOD_UNSPECIFIED" - Not specified.
+	//   "FULFILLMENT_PERIOD_NORMAL" - Normal fulfillment period. The
+	// operation is expected to complete within minutes.
+	//   "FULFILLMENT_PERIOD_EXTENDED" - Extended fulfillment period. It can
+	// take up to an hour for the operation to complete.
+	ExpectedFulfillmentPeriod string `json:"expectedFulfillmentPeriod,omitempty"`
 
 	// Instance: The instance being created.
 	Instance *Instance `json:"instance,omitempty"`
@@ -1979,9 +1990,9 @@ func (s *DiagnosticMessage) MarshalJSON() ([]byte, error) {
 // transaction, otherwise the API will return an `INVALID_ARGUMENT`
 // error.
 type DirectedReadOptions struct {
-	// ExcludeReplicas: Exclude_replicas indicates that should be excluded
-	// from serving requests. Spanner will not route requests to the
-	// replicas in this list.
+	// ExcludeReplicas: Exclude_replicas indicates that specified replicas
+	// should be excluded from serving requests. Spanner will not route
+	// requests to the replicas in this list.
 	ExcludeReplicas *ExcludeReplicas `json:"excludeReplicas,omitempty"`
 
 	// IncludeReplicas: Include_replicas indicates the order of replicas (as
@@ -5086,7 +5097,7 @@ func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
 // the replica. Some examples of using replica_selectors are: *
 // `location:us-east1` --> The "us-east1" replica(s) of any available
 // type will be used to process the request. * `type:READ_ONLY` --> The
-// "READ_ONLY" type replica(s) in nearest . available location will be
+// "READ_ONLY" type replica(s) in nearest available location will be
 // used to process the request. * `location:us-east1 type:READ_ONLY` -->
 // The "READ_ONLY" type replica(s) in location "us-east1" will be used
 // to process the request.
@@ -6474,9 +6485,9 @@ type UpdateDatabaseDdlRequest struct {
 	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
 	// To generate it, install (https://grpc.io/docs/protoc-installation/)
 	// and run `protoc` with --include_imports and --descriptor_set_out. For
-	// example, to generate for moon/shot/app.proto, run """ $protoc
+	// example, to generate for moon/shot/app.proto, run ``` $protoc
 	// --proto_path=/app_path --proto_path=/lib_path \ --include_imports \
-	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto """ For
+	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For
 	// more details, see protobuffer self description
 	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
 	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
@@ -6667,6 +6678,17 @@ type UpdateInstanceMetadata struct {
 	// EndTime: The time at which this operation failed or was completed
 	// successfully.
 	EndTime string `json:"endTime,omitempty"`
+
+	// ExpectedFulfillmentPeriod: The expected fulfillment period of this
+	// update operation.
+	//
+	// Possible values:
+	//   "FULFILLMENT_PERIOD_UNSPECIFIED" - Not specified.
+	//   "FULFILLMENT_PERIOD_NORMAL" - Normal fulfillment period. The
+	// operation is expected to complete within minutes.
+	//   "FULFILLMENT_PERIOD_EXTENDED" - Extended fulfillment period. It can
+	// take up to an hour for the operation to complete.
+	ExpectedFulfillmentPeriod string `json:"expectedFulfillmentPeriod,omitempty"`
 
 	// Instance: The desired end state of the update.
 	Instance *Instance `json:"instance,omitempty"`

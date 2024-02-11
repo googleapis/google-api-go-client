@@ -2692,7 +2692,10 @@ type ReachabilityDetails struct {
 	//   "AMBIGUOUS" - The source and destination endpoints do not uniquely
 	// identify the test location in the network, and the reachability
 	// result contains multiple traces. For some traces, a packet could be
-	// delivered, and for others, it would not be.
+	// delivered, and for others, it would not be. This result is also
+	// assigned to configuration analysis of return path if on its own it
+	// should be REACHABLE, but configuration analysis of forward path is
+	// AMBIGUOUS.
 	//   "UNDETERMINED" - The configuration analysis did not complete.
 	// Possible reasons are: * A permissions error occurred--for example,
 	// the user might not have read permission for all of the resources
@@ -3239,6 +3242,12 @@ type Trace struct {
 	// model. If there are multiple traces starting from different source
 	// locations, then the endpoint_info may be different between traces.
 	EndpointInfo *EndpointInfo `json:"endpointInfo,omitempty"`
+
+	// ForwardTraceId: ID of trace. For forward traces, this ID is unique
+	// for each trace. For return traces, it matches ID of associated
+	// forward trace. A single forward trace can be associated with none,
+	// one or more than one return trace.
+	ForwardTraceId int64 `json:"forwardTraceId,omitempty"`
 
 	// Steps: A trace of a test contains multiple steps from the initial
 	// state to the final state (delivered, dropped, forwarded, or aborted).

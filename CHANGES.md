@@ -1,5 +1,20 @@
 # Changes
 
+## [0.164.0](https://github.com/googleapis/google-api-go-client/compare/v0.163.0...v0.164.0) (2024-02-12)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2406](https://github.com/googleapis/google-api-go-client/issues/2406)) ([1bd8304](https://github.com/googleapis/google-api-go-client/commit/1bd8304e017d5aaced1a535580738249da71bcb9))
+* **all:** Auto-regenerate discovery clients ([#2408](https://github.com/googleapis/google-api-go-client/issues/2408)) ([f1b37df](https://github.com/googleapis/google-api-go-client/commit/f1b37df9d4f6d3dc1e0dec4ff03427424b6a7cc9))
+* **all:** Auto-regenerate discovery clients ([#2409](https://github.com/googleapis/google-api-go-client/issues/2409)) ([246b19f](https://github.com/googleapis/google-api-go-client/commit/246b19f13b64b614d8ca8c049ee88b4d534a57c3))
+* **all:** Auto-regenerate discovery clients ([#2412](https://github.com/googleapis/google-api-go-client/issues/2412)) ([51d5068](https://github.com/googleapis/google-api-go-client/commit/51d5068358085484a187cd8a8881d1741139e8fb))
+
+
+### Bug Fixes
+
+* **transport:** Disable universe domain check if token source ([#2413](https://github.com/googleapis/google-api-go-client/issues/2413)) ([edbe996](https://github.com/googleapis/google-api-go-client/commit/edbe996fdb838db06a84e532b756b3a8342c352a))
+
 ## [0.163.0](https://github.com/googleapis/google-api-go-client/compare/v0.162.0...v0.163.0) (2024-02-08)
 
 

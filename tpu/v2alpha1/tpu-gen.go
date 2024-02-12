@@ -1670,7 +1670,8 @@ type QueuedResourceState struct {
 	State string `json:"state,omitempty"`
 
 	// StateInitiator: Output only. The initiator of the QueuedResources's
-	// current state.
+	// current state. Used to indicate whether the SUSPENDING/SUSPENDED
+	// state was initiated by the user or the service.
 	//
 	// Possible values:
 	//   "STATE_INITIATOR_UNSPECIFIED" - The state initiator is unspecified.

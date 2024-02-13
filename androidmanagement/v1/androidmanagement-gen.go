@@ -926,6 +926,16 @@ type ApplicationPolicy struct {
 	// communicate across profiles after receiving user consent.
 	ConnectedWorkAndPersonalApp string `json:"connectedWorkAndPersonalApp,omitempty"`
 
+	// CredentialProviderPolicy: Optional. Whether the app is allowed to act
+	// as a credential provider on Android 14 and above.
+	//
+	// Possible values:
+	//   "CREDENTIAL_PROVIDER_POLICY_UNSPECIFIED" - Unspecified. The
+	// behaviour is governed by credentialProviderPolicyDefault.
+	//   "CREDENTIAL_PROVIDER_ALLOWED" - App is allowed to act as a
+	// credential provider.
+	CredentialProviderPolicy string `json:"credentialProviderPolicy,omitempty"`
+
 	// DefaultPermissionPolicy: The default policy for all permissions
 	// requested by the app. If specified, this overrides the policy-level
 	// default_permission_policy which applies to all apps. It does not
@@ -1025,8 +1035,8 @@ type ApplicationPolicy struct {
 	// constraints are rejected.
 	InstallConstraint []*InstallConstraint `json:"installConstraint,omitempty"`
 
-	// InstallPriority: Optional. Amongst apps with installTypeset
-	// to:FORCE_INSTALLEDPREINSTALLED this controls the relative priority of
+	// InstallPriority: Optional. Amongst apps with installType set to:
+	// FORCE_INSTALLED PREINSTALLEDthis controls the relative priority of
 	// installation. A value of 0 (default) means this app has no priority
 	// over other apps. For values between 1 and 10,000, a lower value means
 	// a higher priority. Values outside of the range 0 to 10,000 inclusive
@@ -3437,8 +3447,8 @@ func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// InstallConstraint: Amongst apps with InstallTypeset
-// to:FORCE_INSTALLEDPREINSTALLED this defines a set of restrictions for
+// InstallConstraint: Amongst apps with InstallType set to:
+// FORCE_INSTALLED PREINSTALLEDthis defines a set of restrictions for
 // the app installation. At least one of the fields must be set. When
 // multiple fields are set, then all the constraints need to be
 // satisfied for the app to be installed.
@@ -5722,6 +5732,26 @@ type Policy struct {
 	// is disabled.
 	CreateWindowsDisabled bool `json:"createWindowsDisabled,omitempty"`
 
+	// CredentialProviderPolicyDefault: Controls which apps are allowed to
+	// act as credential providers on Android 14 and above. These apps store
+	// credentials, see this
+	// (https://developer.android.com/training/sign-in/passkeys) and this
+	// (https://developer.android.com/reference/androidx/credentials/CredentialManager)
+	// for details. See also credentialProviderPolicy.
+	//
+	// Possible values:
+	//   "CREDENTIAL_PROVIDER_POLICY_DEFAULT_UNSPECIFIED" - Unspecified.
+	// Defaults to CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED" - Apps with
+	// credentialProviderPolicy unspecified are not allowed to act as a
+	// credential provider.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM" - Apps with
+	// credentialProviderPolicy unspecified are not allowed to act as a
+	// credential provider except for the OEM default credential providers.
+	// OEM default credential providers are always allowed to act as
+	// credential providers.
+	CredentialProviderPolicyDefault string `json:"credentialProviderPolicyDefault,omitempty"`
+
 	// CredentialsConfigDisabled: Whether configuring user credentials is
 	// disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
@@ -6035,6 +6065,18 @@ type Policy struct {
 	//   "PREFERENTIAL_NETWORK_SERVICE_ENABLED" - Preferential network
 	// service is enabled on the work profile.
 	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
+
+	// PrintingPolicy: Optional. Controls whether printing is allowed. This
+	// is supported on devices running Android 9 and above. .
+	//
+	// Possible values:
+	//   "PRINTING_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// PRINTING_ALLOWED.
+	//   "PRINTING_DISALLOWED" - Printing is disallowed. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 9.
+	//   "PRINTING_ALLOWED" - Printing is allowed.
+	PrintingPolicy string `json:"printingPolicy,omitempty"`
 
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in

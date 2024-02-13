@@ -632,7 +632,7 @@
       }
     }
   },
-  "revision": "20240126",
+  "revision": "20240209",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AgentPool": {
@@ -957,6 +957,17 @@
         },
         "subjectId": {
           "description": "Unique identifier for the service account.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "HdfsData": {
+      "description": "An HdfsData resource specifies a path within an HDFS entity (e.g. a cluster). All cluster-specific settings, such as namenodes and ports, are configured on the transfer agents servicing requests, so HdfsData only contains the root path to the data in our transfer.",
+      "id": "HdfsData",
+      "properties": {
+        "path": {
+          "description": "Root path to transfer files.",
           "type": "string"
         }
       },
@@ -1856,6 +1867,10 @@
         "gcsIntermediateDataLocation": {
           "$ref": "GcsData",
           "description": "For transfers between file systems, specifies a Cloud Storage bucket to be used as an intermediate location through which to transfer data. See [Transfer data between file systems](https://cloud.google.com/storage-transfer/docs/file-to-file) for more information."
+        },
+        "hdfsDataSource": {
+          "$ref": "HdfsData",
+          "description": "An HDFS cluster data source."
         },
         "httpDataSource": {
           "$ref": "HttpData",

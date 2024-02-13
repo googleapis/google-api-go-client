@@ -1215,8 +1215,45 @@ type Cve struct {
 	// https://www.first.org/cvss/v3.1/specification-document
 	Cvssv3 *Cvssv3 `json:"cvssv3,omitempty"`
 
+	// ExploitationActivity: The exploitation activity of the vulnerability
+	// in the wild.
+	//
+	// Possible values:
+	//   "EXPLOITATION_ACTIVITY_UNSPECIFIED" - Invalid or empty value.
+	//   "WIDE" - Exploitation has been reported or confirmed to widely
+	// occur.
+	//   "CONFIRMED" - Limited reported or confirmed exploitation
+	// activities.
+	//   "AVAILABLE" - Exploit is publicly available.
+	//   "ANTICIPATED" - No known exploitation activity, but has a high
+	// potential for exploitation.
+	//   "NO_KNOWN" - No known exploitation activity.
+	ExploitationActivity string `json:"exploitationActivity,omitempty"`
+
 	// Id: The unique identifier for the vulnerability. e.g. CVE-2021-34527
 	Id string `json:"id,omitempty"`
+
+	// Impact: The potential impact of the vulnerability if it was to be
+	// exploited.
+	//
+	// Possible values:
+	//   "RISK_RATING_UNSPECIFIED" - Invalid or empty value.
+	//   "LOW" - Exploitation would have little to no security impact.
+	//   "MEDIUM" - Exploitation would enable attackers to perform
+	// activities, or could allow attackers to have a direct impact, but
+	// would require additional steps.
+	//   "HIGH" - Exploitation would enable attackers to have a notable
+	// direct impact without needing to overcome any major mitigating
+	// factors.
+	//   "CRITICAL" - Exploitation would fundamentally undermine the
+	// security of affected systems, enable actors to perform significant
+	// attacks with minimal effort, with little to no mitigating factors to
+	// overcome.
+	Impact string `json:"impact,omitempty"`
+
+	// ObservedInTheWild: Whether or not the vulnerability has been observed
+	// in the wild.
+	ObservedInTheWild bool `json:"observedInTheWild,omitempty"`
 
 	// References: Additional information about the CVE. e.g.
 	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
@@ -1224,6 +1261,10 @@ type Cve struct {
 
 	// UpstreamFixAvailable: Whether upstream fix is available for the CVE.
 	UpstreamFixAvailable bool `json:"upstreamFixAvailable,omitempty"`
+
+	// ZeroDay: Whether or not the vulnerability was zero day when the
+	// finding was published.
+	ZeroDay bool `json:"zeroDay,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cvssv3") to
 	// unconditionally include in API requests. By default, fields with
@@ -3802,42 +3843,64 @@ type MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
-	//   "ACTIVE_SCANNING" - T1595
-	//   "SCANNING_IP_BLOCKS" - T1595.001
-	//   "INGRESS_TOOL_TRANSFER" - T1105
-	//   "NATIVE_API" - T1106
-	//   "SHARED_MODULES" - T1129
+	//   "MASQUERADING" - T1036
+	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
+	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
+	//   "STARTUP_ITEMS" - T1037.005
+	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
-	//   "RESOURCE_HIJACKING" - T1496
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "APPLICATION_LAYER_PROTOCOL" - T1071
+	//   "DNS" - T1071.004
+	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
+	//   "VALID_ACCOUNTS" - T1078
+	//   "DEFAULT_ACCOUNTS" - T1078.001
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
 	//   "PROXY" - T1090
 	//   "EXTERNAL_PROXY" - T1090.002
 	//   "MULTI_HOP_PROXY" - T1090.003
-	//   "DYNAMIC_RESOLUTION" - T1568
-	//   "UNSECURED_CREDENTIALS" - T1552
-	//   "VALID_ACCOUNTS" - T1078
-	//   "LOCAL_ACCOUNTS" - T1078.003
-	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "ADDITIONAL_CLOUD_CREDENTIALS" - T1098.001
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "BRUTE_FORCE" - T1110
+	//   "SHARED_MODULES" - T1129
+	//   "ACCESS_TOKEN_MANIPULATION" - T1134
+	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "DATA_DESTRUCTION" - T1485
+	//   "SERVICE_STOP" - T1489
+	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "RESOURCE_HIJACKING" - T1496
 	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
-	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
-	//   "CLOUD_GROUPS" - T1069.003
+	//   "CLOUD_SERVICE_DISCOVERY" - T1526
+	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
+	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "IMPAIR_DEFENSES" - T1562
+	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
 	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
-	//   "ACCOUNT_MANIPULATION" - T1098
-	//   "SSH_AUTHORIZED_KEYS" - T1098.004
-	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
-	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "LATERAL_TOOL_TRANSFER" - T1570
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
-	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
-	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
-	//   "DATA_DESTRUCTION" - T1485
-	//   "DOMAIN_POLICY_MODIFICATION" - T1484
-	//   "IMPAIR_DEFENSES" - T1562
-	//   "NETWORK_SERVICE_DISCOVERY" - T1046
-	//   "ACCESS_TOKEN_MANIPULATION" - T1134
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
-	//   "DEFAULT_ACCOUNTS" - T1078.001
-	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "CREATE_SNAPSHOT" - T1578.001
+	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
+	//   "OBTAIN_CAPABILITIES" - T1588
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -3871,42 +3934,64 @@ type MitreAttack struct {
 	//
 	// Possible values:
 	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
-	//   "ACTIVE_SCANNING" - T1595
-	//   "SCANNING_IP_BLOCKS" - T1595.001
-	//   "INGRESS_TOOL_TRANSFER" - T1105
-	//   "NATIVE_API" - T1106
-	//   "SHARED_MODULES" - T1129
+	//   "MASQUERADING" - T1036
+	//   "MATCH_LEGITIMATE_NAME_OR_LOCATION" - T1036.005
+	//   "BOOT_OR_LOGON_INITIALIZATION_SCRIPTS" - T1037
+	//   "STARTUP_ITEMS" - T1037.005
+	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "PROCESS_DISCOVERY" - T1057
 	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
 	//   "UNIX_SHELL" - T1059.004
-	//   "RESOURCE_HIJACKING" - T1496
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "APPLICATION_LAYER_PROTOCOL" - T1071
+	//   "DNS" - T1071.004
+	//   "SOFTWARE_DEPLOYMENT_TOOLS" - T1072
+	//   "VALID_ACCOUNTS" - T1078
+	//   "DEFAULT_ACCOUNTS" - T1078.001
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
 	//   "PROXY" - T1090
 	//   "EXTERNAL_PROXY" - T1090.002
 	//   "MULTI_HOP_PROXY" - T1090.003
-	//   "DYNAMIC_RESOLUTION" - T1568
-	//   "UNSECURED_CREDENTIALS" - T1552
-	//   "VALID_ACCOUNTS" - T1078
-	//   "LOCAL_ACCOUNTS" - T1078.003
-	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "ADDITIONAL_CLOUD_CREDENTIALS" - T1098.001
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "ADDITIONAL_CONTAINER_CLUSTER_ROLES" - T1098.006
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "BRUTE_FORCE" - T1110
+	//   "SHARED_MODULES" - T1129
+	//   "ACCESS_TOKEN_MANIPULATION" - T1134
+	//   "TOKEN_IMPERSONATION_OR_THEFT" - T1134.001
+	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
+	//   "DOMAIN_POLICY_MODIFICATION" - T1484
+	//   "DATA_DESTRUCTION" - T1485
+	//   "SERVICE_STOP" - T1489
+	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "RESOURCE_HIJACKING" - T1496
 	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
-	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
-	//   "CLOUD_GROUPS" - T1069.003
+	//   "CLOUD_SERVICE_DISCOVERY" - T1526
+	//   "STEAL_APPLICATION_ACCESS_TOKEN" - T1528
+	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
+	//   "IMPAIR_DEFENSES" - T1562
+	//   "DISABLE_OR_MODIFY_TOOLS" - T1562.001
 	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
 	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
-	//   "ACCOUNT_MANIPULATION" - T1098
-	//   "SSH_AUTHORIZED_KEYS" - T1098.004
-	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
-	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "LATERAL_TOOL_TRANSFER" - T1570
 	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
-	//   "EXPLOIT_PUBLIC_FACING_APPLICATION" - T1190
-	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
-	//   "DATA_DESTRUCTION" - T1485
-	//   "DOMAIN_POLICY_MODIFICATION" - T1484
-	//   "IMPAIR_DEFENSES" - T1562
-	//   "NETWORK_SERVICE_DISCOVERY" - T1046
-	//   "ACCESS_TOKEN_MANIPULATION" - T1134
-	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
-	//   "DEFAULT_ACCOUNTS" - T1078.001
-	//   "INHIBIT_SYSTEM_RECOVERY" - T1490
+	//   "CREATE_SNAPSHOT" - T1578.001
+	//   "CLOUD_INFRASTRUCTURE_DISCOVERY" - T1580
+	//   "OBTAIN_CAPABILITIES" - T1588
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.

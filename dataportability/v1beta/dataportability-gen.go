@@ -102,7 +102,7 @@ const defaultUniverseDomain = "googleapis.com"
 // OAuth2 scopes used by this API.
 const (
 	// Move a copy of messages between you and the businesses you have
-	// conversations with.
+	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
 
 	// Move a copy of your pinned trips on Maps.
@@ -129,7 +129,7 @@ const (
 	// Move a copy of your Maps activity.
 	DataportabilityMyactivityMapsScope = "https://www.googleapis.com/auth/dataportability.myactivity.maps"
 
-	// Move a copy of your search activity.
+	// Move a copy of your Google Search activity.
 	DataportabilityMyactivitySearchScope = "https://www.googleapis.com/auth/dataportability.myactivity.search"
 
 	// Move a copy of your Shopping activity.
@@ -138,10 +138,11 @@ const (
 	// Move a copy of your YouTube activity.
 	DataportabilityMyactivityYoutubeScope = "https://www.googleapis.com/auth/dataportability.myactivity.youtube"
 
-	// Move a copy of your shipping information.
+	// Move a copy of your shipping information on Shopping.
 	DataportabilityShoppingAddressesScope = "https://www.googleapis.com/auth/dataportability.shopping.addresses"
 
-	// Move a copy of reviews you wrote about products or online stores.
+	// Move a copy of reviews you wrote about products or online stores on
+	// Google Search.
 	DataportabilityShoppingReviewsScope = "https://www.googleapis.com/auth/dataportability.shopping.reviews"
 
 	// Move a copy of information about your YouTube channel.

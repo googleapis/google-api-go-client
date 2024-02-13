@@ -893,6 +893,37 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HdfsData: An HdfsData resource specifies a path within an HDFS entity
+// (e.g. a cluster). All cluster-specific settings, such as namenodes
+// and ports, are configured on the transfer agents servicing requests,
+// so HdfsData only contains the root path to the data in our transfer.
+type HdfsData struct {
+	// Path: Root path to transfer files.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HdfsData) MarshalJSON() ([]byte, error) {
+	type NoMethod HdfsData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HttpData: An HttpData resource specifies a list of objects on the web
 // to be transferred over HTTP. The information of the objects to be
 // transferred is contained in a file referenced by a URL. The first
@@ -2221,6 +2252,9 @@ type TransferSpec struct {
 	// (https://cloud.google.com/storage-transfer/docs/file-to-file) for
 	// more information.
 	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
+
+	// HdfsDataSource: An HDFS cluster data source.
+	HdfsDataSource *HdfsData `json:"hdfsDataSource,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.
 	HttpDataSource *HttpData `json:"httpDataSource,omitempty"`

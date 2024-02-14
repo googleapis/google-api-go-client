@@ -2791,6 +2791,7 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	//   "WAF_SERVICE_UNSPECIFIED" - Undefined WAF
 	//   "CA" - Cloud Armor
 	//   "FASTLY" - Fastly
+	//   "CLOUDFLARE" - Cloudflare
 	WafService string `json:"wafService,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "WafFeature") to

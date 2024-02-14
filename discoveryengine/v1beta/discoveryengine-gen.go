@@ -2382,6 +2382,8 @@ func (s *GoogleCloudDiscoveryengineV1TargetSiteFailureReason) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1TargetSiteFailureReasonQuotaFailure:
+// Failed due to insufficient quota.
 type GoogleCloudDiscoveryengineV1TargetSiteFailureReasonQuotaFailure struct {
 	// TotalRequiredQuota: This number is an estimation on how much total
 	// quota this project needs to successfully complete indexing.
@@ -4747,6 +4749,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReason) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure:
+// Failed due to insufficient quota.
 type GoogleCloudDiscoveryengineV1alphaTargetSiteFailureReasonQuotaFailure struct {
 	// TotalRequiredQuota: This number is an estimation on how much total
 	// quota this project needs to successfully complete indexing.
@@ -8791,11 +8795,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpecMo
 	// Version: The model version used to generate the summary. Supported
 	// values are: * `stable`: string. Default value when no value is
 	// specified. Uses a generally available, fine-tuned version of the
-	// text-bison@001 model. LINT.IfChange * `preview`: string. (Public
-	// preview) Uses a fine-tuned version of the text-bison@002 model. This
-	// model works only for summaries in English.
-	// LINT.ThenChange(//depot/google3/cloud/console/web/ai/unified_cloud_sea
-	// rch/pages/configurations/widget_tab.ts)
+	// text-bison@001 model. * `preview`: string. (Public preview) Uses a
+	// fine-tuned version of the text-bison@002 model. This model works only
+	// for summaries in English.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Version") to
@@ -9525,6 +9527,7 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSummary struct {
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
 
+	// SummaryWithMetadata: Summary with metadata information.
 	SummaryWithMetadata *GoogleCloudDiscoveryengineV1betaSearchResponseSummarySummaryWithMetadata `json:"summaryWithMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SafetyAttributes") to
@@ -9854,6 +9857,23 @@ type GoogleCloudDiscoveryengineV1betaServingConfig struct {
 	// SOLUTION_TYPE_SEARCH.
 	OnewaySynonymsControlIds []string `json:"onewaySynonymsControlIds,omitempty"`
 
+	// RankingExpression: The ranking expression controls the customized
+	// ranking on retrieval documents. To leverage this, document embedding
+	// is required. The ranking expression setting in ServingConfig applies
+	// to all search requests served by the serving config. However, if
+	// SearchRequest.ranking_expression is specified, it overrides the
+	// ServingConfig ranking expression. The ranking expression is a single
+	// function or multiple functions that are joined by "+". *
+	// ranking_expression = function, { " + ", function }; Supported
+	// functions: * double * relevance_score * double *
+	// dotProduct(embedding_field_path) Function variables: relevance_score:
+	// pre-defined keywords, used for measure relevance between query and
+	// document. embedding_field_path: the document embedding field used
+	// with query embedding vector. dotProduct: embedding function between
+	// embedding_field_path and query embedding vector. Example ranking
+	// expression: If document has an embedding field doc_embedding, the
+	// ranking expression could be 0.5 * relevance_score + 0.3 *
+	// dotProduct(doc_embedding).
 	RankingExpression string `json:"rankingExpression,omitempty"`
 
 	// RedirectControlIds: IDs of the redirect controls. Only the first
@@ -10268,6 +10288,8 @@ func (s *GoogleCloudDiscoveryengineV1betaTargetSiteFailureReason) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaTargetSiteFailureReasonQuotaFailure:
+// Failed due to insufficient quota.
 type GoogleCloudDiscoveryengineV1betaTargetSiteFailureReasonQuotaFailure struct {
 	// TotalRequiredQuota: This number is an estimation on how much total
 	// quota this project needs to successfully complete indexing.

@@ -939,6 +939,12 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	// OrdinalPosition: Optional. Ordinal position
 	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
 
+	// RangeElementType: Optional. The subtype of the RANGE, if the type of
+	// this field is RANGE. If the type is RANGE, this field is required.
+	// Possible values for the field element type of a RANGE include: * DATE
+	// * DATETIME * TIMESTAMP
+	RangeElementType *GoogleCloudDatacatalogV1ColumnSchemaFieldElementType `json:"rangeElementType,omitempty"`
+
 	// Subcolumns: Optional. Schema of sub-columns. A column can have zero
 	// or more sub-columns.
 	Subcolumns []*GoogleCloudDatacatalogV1ColumnSchema `json:"subcolumns,omitempty"`
@@ -966,6 +972,35 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 
 func (s *GoogleCloudDatacatalogV1ColumnSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ColumnSchemaFieldElementType: Represents the
+// type of a field element.
+type GoogleCloudDatacatalogV1ColumnSchemaFieldElementType struct {
+	// Type: Required. The type of a field element. See ColumnSchema.type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ColumnSchemaFieldElementType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ColumnSchemaFieldElementType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -159,6 +159,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Notes = NewProjectsNotesService(s)
 	rs.Occurrences = NewProjectsOccurrencesService(s)
+	rs.Resources = NewProjectsResourcesService(s)
 	return rs
 }
 
@@ -168,6 +169,8 @@ type ProjectsService struct {
 	Notes *ProjectsNotesService
 
 	Occurrences *ProjectsOccurrencesService
+
+	Resources *ProjectsResourcesService
 }
 
 func NewProjectsNotesService(s *Service) *ProjectsNotesService {
@@ -197,6 +200,15 @@ func NewProjectsOccurrencesService(s *Service) *ProjectsOccurrencesService {
 }
 
 type ProjectsOccurrencesService struct {
+	s *Service
+}
+
+func NewProjectsResourcesService(s *Service) *ProjectsResourcesService {
+	rs := &ProjectsResourcesService{s: s}
+	return rs
+}
+
+type ProjectsResourcesService struct {
 	s *Service
 }
 
@@ -673,7 +685,11 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1433,6 +1449,11 @@ func (s *CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudRepoSourceContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudStorageLocation: Empty placeholder to denote that this is a
+// Google Cloud Storage export request.
+type CloudStorageLocation struct {
 }
 
 // Command: Command describes a step performed as part of the build
@@ -3991,6 +4012,73 @@ type EnvelopeSignature struct {
 
 func (s *EnvelopeSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvelopeSignature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExportSBOMRequest: The request to generate and export SBOM. Target
+// must be specified for the request.
+type ExportSBOMRequest struct {
+	// CloudStorageLocation: Empty placeholder to denote that this is a
+	// Google Cloud Storage export request.
+	CloudStorageLocation *CloudStorageLocation `json:"cloudStorageLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudStorageLocation") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudStorageLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportSBOMRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportSBOMRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExportSBOMResponse: The response from a call to ExportSBOM.
+type ExportSBOMResponse struct {
+	// DiscoveryOccurrence: The name of the discovery occurrence in the form
+	// "projects/{project_id}/occurrences/{OCCURRENCE_ID} It can be used to
+	// track the progress of the SBOM export.
+	DiscoveryOccurrence string `json:"discoveryOccurrence,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DiscoveryOccurrence")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiscoveryOccurrence") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportSBOMResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportSBOMResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11031,6 +11119,149 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "containeranalysis.projects.resources.exportSBOM":
+
+type ProjectsResourcesExportSBOMCall struct {
+	s                 *Service
+	name              string
+	exportsbomrequest *ExportSBOMRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ExportSBOM: Generates an SBOM for the given resource.
+//
+//   - name: The name of the resource in the form of
+//     `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.
+func (r *ProjectsResourcesService) ExportSBOM(name string, exportsbomrequest *ExportSBOMRequest) *ProjectsResourcesExportSBOMCall {
+	c := &ProjectsResourcesExportSBOMCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exportsbomrequest = exportsbomrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsResourcesExportSBOMCall) Fields(s ...googleapi.Field) *ProjectsResourcesExportSBOMCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsResourcesExportSBOMCall) Context(ctx context.Context) *ProjectsResourcesExportSBOMCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsResourcesExportSBOMCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsResourcesExportSBOMCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportsbomrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:exportSBOM")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "containeranalysis.projects.resources.exportSBOM" call.
+// Exactly one of *ExportSBOMResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExportSBOMResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsResourcesExportSBOMCall) Do(opts ...googleapi.CallOption) (*ExportSBOMResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExportSBOMResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates an SBOM for the given resource.",
+	//   "flatPath": "v1/projects/{projectsId}/resources/{resourcesId}:exportSBOM",
+	//   "httpMethod": "POST",
+	//   "id": "containeranalysis.projects.resources.exportSBOM",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource in the form of `projects/[PROJECT_ID]/resources/[RESOURCE_URL]`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/resources/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:exportSBOM",
+	//   "request": {
+	//     "$ref": "ExportSBOMRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ExportSBOMResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -154,7 +154,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Smarttap = NewSmarttapService(s)
 	s.Transitclass = NewTransitclassService(s)
 	s.Transitobject = NewTransitobjectService(s)
-	s.Walletobjects = NewWalletobjectsService(s)
 	return s, nil
 }
 
@@ -200,8 +199,6 @@ type Service struct {
 	Transitclass *TransitclassService
 
 	Transitobject *TransitobjectService
-
-	Walletobjects *WalletobjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -379,39 +376,6 @@ func NewTransitobjectService(s *Service) *TransitobjectService {
 }
 
 type TransitobjectService struct {
-	s *Service
-}
-
-func NewWalletobjectsService(s *Service) *WalletobjectsService {
-	rs := &WalletobjectsService{s: s}
-	rs.V1 = NewWalletobjectsV1Service(s)
-	return rs
-}
-
-type WalletobjectsService struct {
-	s *Service
-
-	V1 *WalletobjectsV1Service
-}
-
-func NewWalletobjectsV1Service(s *Service) *WalletobjectsV1Service {
-	rs := &WalletobjectsV1Service{s: s}
-	rs.PrivateContent = NewWalletobjectsV1PrivateContentService(s)
-	return rs
-}
-
-type WalletobjectsV1Service struct {
-	s *Service
-
-	PrivateContent *WalletobjectsV1PrivateContentService
-}
-
-func NewWalletobjectsV1PrivateContentService(s *Service) *WalletobjectsV1PrivateContentService {
-	rs := &WalletobjectsV1PrivateContentService{s: s}
-	return rs
-}
-
-type WalletobjectsV1PrivateContentService struct {
 	s *Service
 }
 
@@ -3819,6 +3783,11 @@ type GenericClass struct {
 	// defined on the object, both will be displayed. The maximum number of
 	// these fields displayed is 10 from class and 10 from object.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
+
+	// Messages: An array of messages displayed in the app. All users of
+	// this object will receive its associated messages. The maximum number
+	// of these fields is 10.
+	Messages []*Message `json:"messages,omitempty"`
 
 	// MultipleDevicesAndHoldersAllowedStatus: Identifies whether multiple
 	// users and devices will save the same object referencing this class.
@@ -7239,75 +7208,6 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PrivateText: Private data for TextModule. This data will be rendered
-// as a TextModule for a pass.
-type PrivateText struct {
-	// Body: Translated strings for the body.
-	Body *LocalizedString `json:"body,omitempty"`
-
-	// Header: Translated strings for the header.
-	Header *LocalizedString `json:"header,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateText) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateText
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PrivateUri: Private data for LinkModule. This data will be rendered
-// as the LinkModule for a pass.
-type PrivateUri struct {
-	// Description: The URI's title appearing in the app as text and its
-	// translated strings. Recommended maximum is 20 characters to ensure
-	// the full string is displayed on smaller screens.
-	Description *LocalizedString `json:"description,omitempty"`
-
-	// Uri: The location of a web page, image, or other resource. URIs in
-	// the `LinksModuleData` can have different prefixes indicating the type
-	// of URI (a link to a web page, a link to a map, a telephone number, or
-	// an email address).
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateUri) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateUri
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type PurchaseDetails struct {
 	// AccountId: ID of the account used to purchase the ticket.
 	AccountId string `json:"accountId,omitempty"`
@@ -9055,138 +8955,6 @@ type UpcomingNotification struct {
 
 func (s *UpcomingNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod UpcomingNotification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateDataRequest: Request for sending user private Text or
-// URI by the Issuer.
-type UploadPrivateDataRequest struct {
-	// IssuerId: The ID of the issuer sending the data.
-	IssuerId int64 `json:"issuerId,omitempty,string"`
-
-	// Text: Private text data of the user.
-	Text *PrivateText `json:"text,omitempty"`
-
-	// Uri: Private URIs of the user.
-	Uri *PrivateUri `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IssuerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IssuerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateDataRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateDataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateDataResponse: Response for uploading user private data
-// (text or URIs)
-type UploadPrivateDataResponse struct {
-	// PrivateContentId: A 64-bit content id for the private data that was
-	// uploaded by the Issuer.
-	PrivateContentId int64 `json:"privateContentId,omitempty,string"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "PrivateContentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrivateContentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateDataResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateDataResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateImageRequest: Request to upload user's private images by
-// Issuers to be used in passes.
-type UploadPrivateImageRequest struct {
-	// Blob: A reference to the image payload that was uploaded by Scotty.
-	Blob *Media `json:"blob,omitempty"`
-
-	// MediaRequestInfo: Extra information about the uploaded media.
-	MediaRequestInfo *MediaRequestInfo `json:"mediaRequestInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Blob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Blob") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateImageRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateImageRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateImageResponse: Response for uploading the private image
-type UploadPrivateImageResponse struct {
-	// PrivateContentId: A 64-bit content id for the image that was uploaded
-	// by the Issuer.
-	PrivateContentId int64 `json:"privateContentId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "PrivateContentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrivateContentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateImageResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateImageResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -23234,132 +23002,6 @@ func (c *TransitobjectUpdateCall) Do(opts ...googleapi.CallOption) (*TransitObje
 	//   },
 	//   "response": {
 	//     "$ref": "TransitObject"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/wallet_object.issuer"
-	//   ]
-	// }
-
-}
-
-// method id "walletobjects.walletobjects.v1.privateContent.uploadPrivateData":
-
-type WalletobjectsV1PrivateContentUploadPrivateDataCall struct {
-	s                        *Service
-	uploadprivatedatarequest *UploadPrivateDataRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// UploadPrivateData: Upload private data (text or URI) and returns an
-// Id to be used in its place.
-func (r *WalletobjectsV1PrivateContentService) UploadPrivateData(uploadprivatedatarequest *UploadPrivateDataRequest) *WalletobjectsV1PrivateContentUploadPrivateDataCall {
-	c := &WalletobjectsV1PrivateContentUploadPrivateDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.uploadprivatedatarequest = uploadprivatedatarequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Fields(s ...googleapi.Field) *WalletobjectsV1PrivateContentUploadPrivateDataCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Context(ctx context.Context) *WalletobjectsV1PrivateContentUploadPrivateDataCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadprivatedatarequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/privateContent/uploadPrivateData")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "walletobjects.walletobjects.v1.privateContent.uploadPrivateData" call.
-// Exactly one of *UploadPrivateDataResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *UploadPrivateDataResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Do(opts ...googleapi.CallOption) (*UploadPrivateDataResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &UploadPrivateDataResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Upload private data (text or URI) and returns an Id to be used in its place.",
-	//   "flatPath": "walletobjects/v1/privateContent/uploadPrivateData",
-	//   "httpMethod": "POST",
-	//   "id": "walletobjects.walletobjects.v1.privateContent.uploadPrivateData",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "walletobjects/v1/privateContent/uploadPrivateData",
-	//   "request": {
-	//     "$ref": "UploadPrivateDataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UploadPrivateDataResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/wallet_object.issuer"

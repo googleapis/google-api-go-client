@@ -2126,6 +2126,10 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
 
+	// HealthCheckDisabled: Optional. Disables health checking containers
+	// during deployment.
+	HealthCheckDisabled bool `json:"healthCheckDisabled,omitempty"`
+
 	// Labels: Unstructured key value map that can be used to organize and
 	// categorize objects. User-provided labels are shared with Google's
 	// billing system, so they can be used to filter, or break down billing
@@ -2158,7 +2162,7 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// default service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// SessionAffinity: Enable session affinity.
+	// SessionAffinity: Optional. Enable session affinity.
 	SessionAffinity bool `json:"sessionAffinity,omitempty"`
 
 	// Timeout: Max allowed time for an instance to respond to a request.

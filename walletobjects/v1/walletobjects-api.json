@@ -2625,39 +2625,9 @@
           ]
         }
       }
-    },
-    "walletobjects": {
-      "resources": {
-        "v1": {
-          "resources": {
-            "privateContent": {
-              "methods": {
-                "uploadPrivateData": {
-                  "description": "Upload private data (text or URI) and returns an Id to be used in its place.",
-                  "flatPath": "walletobjects/v1/privateContent/uploadPrivateData",
-                  "httpMethod": "POST",
-                  "id": "walletobjects.walletobjects.v1.privateContent.uploadPrivateData",
-                  "parameterOrder": [],
-                  "parameters": {},
-                  "path": "walletobjects/v1/privateContent/uploadPrivateData",
-                  "request": {
-                    "$ref": "UploadPrivateDataRequest"
-                  },
-                  "response": {
-                    "$ref": "UploadPrivateDataResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/wallet_object.issuer"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
-  "revision": "20240206",
+  "revision": "20240214",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -5086,6 +5056,13 @@
         "linksModuleData": {
           "$ref": "LinksModuleData",
           "description": "Links module data. If `linksModuleData` is also defined on the object, both will be displayed. The maximum number of these fields displayed is 10 from class and 10 from object."
+        },
+        "messages": {
+          "description": "An array of messages displayed in the app. All users of this object will receive its associated messages. The maximum number of these fields is 10.",
+          "items": {
+            "$ref": "Message"
+          },
+          "type": "array"
         },
         "multipleDevicesAndHoldersAllowedStatus": {
           "description": "Identifies whether multiple users and devices will save the same object referencing this class.",
@@ -7680,36 +7657,6 @@
       },
       "type": "object"
     },
-    "PrivateText": {
-      "description": "Private data for TextModule. This data will be rendered as a TextModule for a pass.",
-      "id": "PrivateText",
-      "properties": {
-        "body": {
-          "$ref": "LocalizedString",
-          "description": "Translated strings for the body."
-        },
-        "header": {
-          "$ref": "LocalizedString",
-          "description": "Translated strings for the header."
-        }
-      },
-      "type": "object"
-    },
-    "PrivateUri": {
-      "description": "Private data for LinkModule. This data will be rendered as the LinkModule for a pass.",
-      "id": "PrivateUri",
-      "properties": {
-        "description": {
-          "$ref": "LocalizedString",
-          "description": "The URI's title appearing in the app as text and its translated strings. Recommended maximum is 20 characters to ensure the full string is displayed on smaller screens."
-        },
-        "uri": {
-          "description": "The location of a web page, image, or other resource. URIs in the `LinksModuleData` can have different prefixes indicating the type of URI (a link to a web page, a link to a map, a telephone number, or an email address).",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "PurchaseDetails": {
       "id": "PurchaseDetails",
       "properties": {
@@ -9120,65 +9067,6 @@
         "enableNotification": {
           "description": "Indicates if the object needs to have upcoming notification enabled.",
           "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "UploadPrivateDataRequest": {
-      "description": "Request for sending user private Text or URI by the Issuer.",
-      "id": "UploadPrivateDataRequest",
-      "properties": {
-        "issuerId": {
-          "description": "The ID of the issuer sending the data.",
-          "format": "int64",
-          "type": "string"
-        },
-        "text": {
-          "$ref": "PrivateText",
-          "description": "Private text data of the user."
-        },
-        "uri": {
-          "$ref": "PrivateUri",
-          "description": "Private URIs of the user."
-        }
-      },
-      "type": "object"
-    },
-    "UploadPrivateDataResponse": {
-      "description": "Response for uploading user private data (text or URIs)",
-      "id": "UploadPrivateDataResponse",
-      "properties": {
-        "privateContentId": {
-          "description": "A 64-bit content id for the private data that was uploaded by the Issuer.",
-          "format": "int64",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "UploadPrivateImageRequest": {
-      "description": "Request to upload user's private images by Issuers to be used in passes.",
-      "id": "UploadPrivateImageRequest",
-      "properties": {
-        "blob": {
-          "$ref": "Media",
-          "description": "A reference to the image payload that was uploaded by Scotty."
-        },
-        "mediaRequestInfo": {
-          "$ref": "MediaRequestInfo",
-          "description": "Extra information about the uploaded media."
-        }
-      },
-      "type": "object"
-    },
-    "UploadPrivateImageResponse": {
-      "description": "Response for uploading the private image",
-      "id": "UploadPrivateImageResponse",
-      "properties": {
-        "privateContentId": {
-          "description": "A 64-bit content id for the image that was uploaded by the Issuer.",
-          "format": "int64",
-          "type": "string"
         }
       },
       "type": "object"

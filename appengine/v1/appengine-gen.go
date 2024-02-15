@@ -3432,6 +3432,10 @@ type Runtime struct {
 	//   "END_OF_SUPPORT" - The runtime is end of support.
 	Stage string `json:"stage,omitempty"`
 
+	// SupportedOperatingSystems: Supported operating systems for the
+	// runtime, e.g., 'ubuntu22', etc.
+	SupportedOperatingSystems []string `json:"supportedOperatingSystems,omitempty"`
+
 	// Warnings: Warning messages, e.g., a deprecation warning.
 	Warnings []string `json:"warnings,omitempty"`
 

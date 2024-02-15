@@ -1301,6 +1301,38 @@ func (s *ExistenceFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExplainOptions: Explain options for the query.
+type ExplainOptions struct {
+	// Analyze: Optional. Whether to execute this query. When false (the
+	// default), the query will be planned, returning only metrics from the
+	// planning stages. When true, the query will be planned and executed,
+	// returning the full query results along with both planning and
+	// execution stage metrics.
+	Analyze bool `json:"analyze,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Analyze") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Analyze") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FieldFilter: A filter on a specific field.
 type FieldFilter struct {
 	// Field: The field to filter by.
@@ -1658,6 +1690,53 @@ func (s *GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1CmekConfig: The CMEK (Customer Managed
+// Encryption Key) configuration for a Firestore database. If not
+// present, the database is secured by the default Google encryption
+// key.
+type GoogleFirestoreAdminV1CmekConfig struct {
+	// ActiveKeyVersion: Output only. Currently in-use KMS key versions
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions).
+	// During key rotation (https://cloud.google.com/kms/docs/key-rotation),
+	// there can be multiple in-use key versions. The expected format is
+	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cr
+	// yptoKeys/{crypto_key}/cryptoKeyVersions/{key_version}`.
+	ActiveKeyVersion []string `json:"activeKeyVersion,omitempty"`
+
+	// KmsKeyName: Required. Only keys in the same location as this database
+	// are allowed to be used for encryption. For Firestore's nam5
+	// multi-region, this corresponds to Cloud KMS multi-region us. For
+	// Firestore's eur3 multi-region, this corresponds to Cloud KMS
+	// multi-region europe. See https://cloud.google.com/kms/docs/locations.
+	// The expected format is
+	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cr
+	// yptoKeys/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveKeyVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveKeyVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1CmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1CmekConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the
 // create database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
@@ -1683,6 +1762,10 @@ type GoogleFirestoreAdminV1Database struct {
 	// database to serve requests. This is the default setting for databases
 	// created with the Firestore API.
 	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
+
+	// CmekConfig: Optional. Presence indicates CMEK is enabled for this
+	// database.
+	CmekConfig *GoogleFirestoreAdminV1CmekConfig `json:"cmekConfig,omitempty"`
 
 	// ConcurrencyMode: The concurrency control mode to use for this
 	// database.
@@ -3909,6 +3992,11 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 // RunAggregationQueryRequest: The request for
 // Firestore.RunAggregationQuery.
 type RunAggregationQueryRequest struct {
+	// ExplainOptions: Optional. Explain options for the query. If set,
+	// additional query statistics will be returned. If not, only query
+	// results will be returned.
+	ExplainOptions *ExplainOptions `json:"explainOptions,omitempty"`
+
 	// NewTransaction: Starts a new transaction as part of the query,
 	// defaulting to read-only. The new transaction ID will be returned as
 	// the first response in the stream.
@@ -3928,7 +4016,7 @@ type RunAggregationQueryRequest struct {
 	// the query in.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "ExplainOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3936,7 +4024,7 @@ type RunAggregationQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewTransaction") to
+	// NullFields is a list of field names (e.g. "ExplainOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -4001,6 +4089,11 @@ func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
 
 // RunQueryRequest: The request for Firestore.RunQuery.
 type RunQueryRequest struct {
+	// ExplainOptions: Optional. Explain options for the query. If set,
+	// additional query statistics will be returned. If not, only query
+	// results will be returned.
+	ExplainOptions *ExplainOptions `json:"explainOptions,omitempty"`
+
 	// NewTransaction: Starts a new transaction and reads the documents.
 	// Defaults to a read-only transaction. The new transaction ID will be
 	// returned as the first response in the stream.
@@ -4019,7 +4112,7 @@ type RunQueryRequest struct {
 	// value here is the opaque transaction ID to execute the query in.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "ExplainOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4027,7 +4120,7 @@ type RunQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewTransaction") to
+	// NullFields is a list of field names (e.g. "ExplainOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

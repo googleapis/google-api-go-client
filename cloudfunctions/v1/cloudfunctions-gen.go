@@ -485,8 +485,6 @@ func (s *CallFunctionResponse) MarshalJSON() ([]byte, error) {
 // computation executed in response to an event. It encapsulate function
 // and triggers configurations.
 type CloudFunction struct {
-	// AutomaticUpdatePolicy: See the comment next to this message for more
-	// details.
 	AutomaticUpdatePolicy *AutomaticUpdatePolicy `json:"automaticUpdatePolicy,omitempty"`
 
 	// AvailableMemoryMb: The amount of memory in MB available for a
@@ -632,8 +630,6 @@ type CloudFunction struct {
 	// Network: Deprecated: use vpc_connector
 	Network string `json:"network,omitempty"`
 
-	// OnDeployUpdatePolicy: See the comment next to this message for more
-	// details.
 	OnDeployUpdatePolicy *OnDeployUpdatePolicy `json:"onDeployUpdatePolicy,omitempty"`
 
 	// Runtime: The runtime in which to run the function. Required when
@@ -2643,35 +2639,29 @@ func (r *OperationsService) List() *OperationsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Required. A filter for
-// matching the requested operations. The supported formats of *filter*
-// are: To query for a specific function:
-// project:*,location:*,function:* To query for all of the latest
-// operations for a project: project:*,latest:true
+// Filter sets the optional parameter "filter": The standard list
+// filter.
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// Name sets the optional parameter "name": Must not be set.
+// Name sets the optional parameter "name": The name of the operation's
+// parent resource.
 func (c *OperationsListCall) Name(name string) *OperationsListCall {
 	c.urlParams_.Set("name", name)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of records that should be returned. Requested page size cannot exceed
-// 100. If not set, the default page size is 100. Pagination is only
-// supported when querying for a specific function.
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
 func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token identifying
-// which result to start with, which is returned by a previous list
-// call. Pagination is only supported when querying for a specific
-// function.
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2780,23 +2770,23 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A filter for matching the requested operations. The supported formats of *filter* are: To query for a specific function: project:*,location:*,function:* To query for all of the latest operations for a project: project:*,latest:true",
+	//       "description": "The standard list filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Must not be set.",
+	//       "description": "The name of the operation's parent resource.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of records that should be returned. Requested page size cannot exceed 100. If not set, the default page size is 100. Pagination is only supported when querying for a specific function.",
+	//       "description": "The standard list page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token identifying which result to start with, which is returned by a previous list call. Pagination is only supported when querying for a specific function.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

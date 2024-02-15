@@ -2606,6 +2606,9 @@ func (s *ChannelStatus) MarshalJSON() ([]byte, error) {
 // ChannelToStoreLinkDetails: Information specific to a store on a
 // merchandising platform linked to a YouTube channel.
 type ChannelToStoreLinkDetails struct {
+	// BillingDetails: Information specific to billing (read-only).
+	BillingDetails *ChannelToStoreLinkDetailsBillingDetails `json:"billingDetails,omitempty"`
+
 	// MerchantId: Google Merchant Center id of the store.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
@@ -2615,7 +2618,7 @@ type ChannelToStoreLinkDetails struct {
 	// StoreUrl: Landing page of the store.
 	StoreUrl string `json:"storeUrl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MerchantId") to
+	// ForceSendFields is a list of field names (e.g. "BillingDetails") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2623,17 +2626,53 @@ type ChannelToStoreLinkDetails struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MerchantId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillingDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *ChannelToStoreLinkDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelToStoreLinkDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChannelToStoreLinkDetailsBillingDetails: Information specific to
+// billing.
+type ChannelToStoreLinkDetailsBillingDetails struct {
+	// BillingStatus: The current billing profile status.
+	//
+	// Possible values:
+	//   "billingStatusUnspecified"
+	//   "billingStatusPending"
+	//   "billingStatusActive"
+	//   "billingStatusInactive"
+	BillingStatus string `json:"billingStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingStatus") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelToStoreLinkDetailsBillingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelToStoreLinkDetailsBillingDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5846,7 +5885,7 @@ func (s *LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LiveChatMessageSnippet: Next ID: 33
+// LiveChatMessageSnippet: Next ID: 34
 type LiveChatMessageSnippet struct {
 	// AuthorChannelId: The ID of the user that authored this message, this
 	// field is not always filled. textMessageEvent - the user that wrote
@@ -5859,7 +5898,7 @@ type LiveChatMessageSnippet struct {
 	// messageRetractedEvent - the author that retracted their message
 	// userBannedEvent - the moderator that took the action superChatEvent -
 	// the user that made the purchase superStickerEvent - the user that
-	// made the purchase
+	// made the purchase pollEvent - the user that created the poll
 	AuthorChannelId string `json:"authorChannelId,omitempty"`
 
 	// DisplayMessage: Contains a string that can be displayed to the user.
@@ -5899,6 +5938,10 @@ type LiveChatMessageSnippet struct {
 	// "member" is the new term for "sponsor".
 	NewSponsorDetails *LiveChatNewSponsorDetails `json:"newSponsorDetails,omitempty"`
 
+	// PollDetails: Details about the poll event, this is only set if the
+	// type is 'pollEvent'.
+	PollDetails *LiveChatPollDetails `json:"pollDetails,omitempty"`
+
 	// PublishedAt: The date and time when the message was orignally
 	// published.
 	PublishedAt string `json:"publishedAt,omitempty"`
@@ -5935,6 +5978,7 @@ type LiveChatMessageSnippet struct {
 	//   "userBannedEvent"
 	//   "superChatEvent"
 	//   "superStickerEvent"
+	//   "pollEvent"
 	Type string `json:"type,omitempty"`
 
 	UserBannedDetails *LiveChatUserBannedMessageDetails `json:"userBannedDetails,omitempty"`
@@ -6126,6 +6170,96 @@ type LiveChatNewSponsorDetails struct {
 
 func (s *LiveChatNewSponsorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatNewSponsorDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LiveChatPollDetails struct {
+	Metadata *LiveChatPollDetailsPollMetadata `json:"metadata,omitempty"`
+
+	// Possible values:
+	//   "unknown"
+	//   "active"
+	//   "closed"
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatPollDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatPollDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LiveChatPollDetailsPollMetadata struct {
+	// Options: The options will be returned in the order that is displayed
+	// in 1P
+	Options []*LiveChatPollDetailsPollMetadataPollOption `json:"options,omitempty"`
+
+	QuestionText string `json:"questionText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Options") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Options") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatPollDetailsPollMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatPollDetailsPollMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LiveChatPollDetailsPollMetadataPollOption struct {
+	OptionText string `json:"optionText,omitempty"`
+
+	Tally int64 `json:"tally,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "OptionText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OptionText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatPollDetailsPollMetadataPollOption) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatPollDetailsPollMetadataPollOption
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

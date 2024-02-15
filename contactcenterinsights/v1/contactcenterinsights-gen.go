@@ -9488,10 +9488,11 @@ func (c *ProjectsLocationsConversationsListCall) Filter(filter string) *Projects
 // OrderBy sets the optional parameter "orderBy": The attribute by which
 // to order conversations in the response. If empty, conversations will
 // be ordered by descending creation time. Supported values are one of
-// the following: * create_time * duration * turn_count *
-// latest_analysis The default sort order is ascending. To specify
-// order, append `asc` or `desc`, i.e. `create_time desc`. See
-// https://google.aip.dev/132#ordering for more details.
+// the following: * create_time * customer_satisfaction_rating *
+// duration * latest_analysis * start_time * turn_count The default sort
+// order is ascending. To specify order, append `asc` or `desc`, i.e.
+// `create_time desc`. See https://google.aip.dev/132#ordering for more
+// details.
 func (c *ProjectsLocationsConversationsListCall) OrderBy(orderBy string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -9651,7 +9652,7 @@ func (c *ProjectsLocationsConversationsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The attribute by which to order conversations in the response. If empty, conversations will be ordered by descending creation time. Supported values are one of the following: * create_time * duration * turn_count * latest_analysis The default sort order is ascending. To specify order, append `asc` or `desc`, i.e. `create_time desc`. See https://google.aip.dev/132#ordering for more details.",
+	//       "description": "Optional. The attribute by which to order conversations in the response. If empty, conversations will be ordered by descending creation time. Supported values are one of the following: * create_time * customer_satisfaction_rating * duration * latest_analysis * start_time * turn_count The default sort order is ascending. To specify order, append `asc` or `desc`, i.e. `create_time desc`. See https://google.aip.dev/132#ordering for more details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

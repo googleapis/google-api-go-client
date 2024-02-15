@@ -346,7 +346,7 @@ type AwsKinesis struct {
 	// Pub/Sub SA is not granted the `iam.serviceAccounts.getOpenIdToken`
 	// permission on `gcp_service_account`.
 	//   "PUBLISH_PERMISSION_DENIED" - Permission denied encountered while
-	// publishing to the topic. This can happen due to Pub/Sub SA has not
+	// publishing to the topic. This can happen if the Pub/Sub SA has not
 	// been granted the [appropriate publish
 	// permissions](https://cloud.google.com/pubsub/docs/access-control#pubsu
 	// b.publisher)
@@ -389,6 +389,15 @@ type BigQueryConfig struct {
 	// extra fields are not written and remain in the subscription's
 	// backlog.
 	DropUnknownFields bool `json:"dropUnknownFields,omitempty"`
+
+	// ServiceAccountEmail: Optional. The service account to use to write to
+	// BigQuery. The subscription creator or updater that specifies this
+	// field must have `iam.serviceAccounts.actAs` permission on the service
+	// account. If not specified, the Pub/Sub service agent
+	// (https://cloud.google.com/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is
+	// used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// State: Output only. An output-only field that indicates whether or
 	// not the subscription can receive messages.
@@ -603,6 +612,15 @@ type CloudStorageConfig struct {
 	// default 5 minutes. May not exceed the subscription's acknowledgement
 	// deadline.
 	MaxDuration string `json:"maxDuration,omitempty"`
+
+	// ServiceAccountEmail: Optional. The service account to use to write to
+	// Cloud Storage. The subscription creator or updater that specifies
+	// this field must have `iam.serviceAccounts.actAs` permission on the
+	// service account. If not specified, the Pub/Sub service agent
+	// (https://cloud.google.com/iam/docs/service-agents),
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is
+	// used.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// State: Output only. An output-only field that indicates whether or
 	// not the subscription can receive messages.

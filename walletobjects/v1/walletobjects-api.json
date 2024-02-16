@@ -772,6 +772,33 @@
     },
     "genericclass": {
       "methods": {
+        "addmessage": {
+          "description": "Adds a message to the generic class referenced by the given class ID.",
+          "flatPath": "walletobjects/v1/genericClass/{resourceId}/addMessage",
+          "httpMethod": "POST",
+          "id": "walletobjects.genericclass.addmessage",
+          "parameterOrder": [
+            "resourceId"
+          ],
+          "parameters": {
+            "resourceId": {
+              "description": "The unique identifier for a class. This ID must be unique across all classes from an issuer. This value should follow the format issuer ID. identifier where the former is issued by Google and latter is chosen by you. Your unique identifier should only include alphanumeric characters, '.', '_', or '-'.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "walletobjects/v1/genericClass/{resourceId}/addMessage",
+          "request": {
+            "$ref": "AddMessageRequest"
+          },
+          "response": {
+            "$ref": "GenericClassAddMessageResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/wallet_object.issuer"
+          ]
+        },
         "get": {
           "description": "Returns the generic class with the given class ID.",
           "flatPath": "walletobjects/v1/genericClass/{resourceId}",
@@ -2627,7 +2654,7 @@
       }
     }
   },
-  "revision": "20240214",
+  "revision": "20240215",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -2756,9 +2783,13 @@
     "AppLinkDataAppLinkInfoAppTarget": {
       "id": "AppLinkDataAppLinkInfoAppTarget",
       "properties": {
+        "packageName": {
+          "description": "Package name for AppTarget. For example: com.google.android.gm",
+          "type": "string"
+        },
         "targetUri": {
           "$ref": "Uri",
-          "description": "URI for AppTarget. The description on the URI must be set."
+          "description": "URI for AppTarget. The description on the URI must be set. Prefer setting package field instead, if this target is defined for your application."
         }
       },
       "type": "object"
@@ -5127,6 +5158,17 @@
             "Requires the user to unlock their device each time the pass is viewed. If the user removes their device lock after saving the pass, then they will be prompted to create a device lock before the pass can be viewed."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GenericClassAddMessageResponse": {
+      "description": "Response to adding a new issuer message to the class. This contains the entire updated GenericClass.",
+      "id": "GenericClassAddMessageResponse",
+      "properties": {
+        "resource": {
+          "$ref": "GenericClass",
+          "description": "The updated EventTicketClass resource."
         }
       },
       "type": "object"

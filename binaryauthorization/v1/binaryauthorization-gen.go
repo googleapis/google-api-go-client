@@ -422,9 +422,9 @@ func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 // AttestationSource: Specifies the locations for fetching the
 // provenance attestations.
 type AttestationSource struct {
-	// ContainerAnalysisAttestationProjects: The IDs of the GCP projects
-	// storing the SLSA attestations as Container Analysis Occurrences, in
-	// the format `projects/[PROJECT_ID]`. Maximum number of
+	// ContainerAnalysisAttestationProjects: The IDs of the Google Cloud
+	// projects that store the SLSA attestations as Container Analysis
+	// Occurrences, in the format `projects/[PROJECT_ID]`. Maximum number of
 	// `container_analysis_attestation_projects` allowed in each
 	// `AttestationSource` is 10.
 	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
@@ -693,6 +693,11 @@ type Check struct {
 	// a configured expiration time. Image age is determined by its upload
 	// time.
 	ImageFreshnessCheck *ImageFreshnessCheck `json:"imageFreshnessCheck,omitempty"`
+
+	// SigstoreSignatureCheck: Optional. Require that an image was signed by
+	// Cosign with a trusted key. This check requires that both the image
+	// and signature are stored in Artifact Registry.
+	SigstoreSignatureCheck *SigstoreSignatureCheck `json:"sigstoreSignatureCheck,omitempty"`
 
 	// SimpleSigningAttestationCheck: Optional. Require a SimpleSigning-type
 	// attestation for every image in the deployment.
@@ -1579,6 +1584,135 @@ type Signature struct {
 
 func (s *Signature) MarshalJSON() ([]byte, error) {
 	type NoMethod Signature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstoreAuthority: A Sigstore authority, used to verify signatures
+// that are created by Sigstore. An authority is analogous to an
+// attestation authenticator, verifying that a signature is valid or
+// invalid.
+type SigstoreAuthority struct {
+	// DisplayName: Optional. A user-provided name for this
+	// `SigstoreAuthority`. This field has no effect on the policy
+	// evaluation behavior except to improve readability of messages in
+	// evaluation results.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// PublicKeySet: Required. A simple set of public keys. A signature is
+	// considered valid if any keys in the set validate the signature.
+	PublicKeySet *SigstorePublicKeySet `json:"publicKeySet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstoreAuthority) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstoreAuthority
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstorePublicKey: A Sigstore public key. `SigstorePublicKey` is the
+// public key material used to authenticate Sigstore signatures.
+type SigstorePublicKey struct {
+	// PublicKeyPem: The public key material in PEM format.
+	PublicKeyPem string `json:"publicKeyPem,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeyPem") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstorePublicKey) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstorePublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstorePublicKeySet: A bundle of Sigstore public keys, used to
+// verify Sigstore signatures. A signature is authenticated by a
+// `SigstorePublicKeySet` if any of the keys verify it.
+type SigstorePublicKeySet struct {
+	// PublicKeys: Required. `public_keys` must have at least one entry.
+	PublicKeys []*SigstorePublicKey `json:"publicKeys,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeys") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeys") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstorePublicKeySet) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstorePublicKeySet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstoreSignatureCheck: A Sigstore signature check, which verifies
+// the Sigstore signature associated with an image.
+type SigstoreSignatureCheck struct {
+	// SigstoreAuthorities: Required. The authorities required by this check
+	// to verify the signature. A signature only needs to be verified by one
+	// authority to pass the check.
+	SigstoreAuthorities []*SigstoreAuthority `json:"sigstoreAuthorities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SigstoreAuthorities")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SigstoreAuthorities") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstoreSignatureCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstoreSignatureCheck
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

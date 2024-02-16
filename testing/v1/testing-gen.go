@@ -2516,6 +2516,11 @@ type PerAndroidVersionInfo struct {
 	// for DirectAccess for this Android version.
 	DirectAccessVersionInfo *DirectAccessVersionInfo `json:"directAccessVersionInfo,omitempty"`
 
+	// InteractiveDeviceAvailabilityEstimate: Output only. The estimated
+	// wait time for a single interactive device session using Direct
+	// Access.
+	InteractiveDeviceAvailabilityEstimate string `json:"interactiveDeviceAvailabilityEstimate,omitempty"`
+
 	// VersionId: An Android version.
 	VersionId string `json:"versionId,omitempty"`
 

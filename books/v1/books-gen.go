@@ -9413,6 +9413,13 @@ func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string
 	return c
 }
 
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsSummaryCall) Source(source string) *MylibraryAnnotationsSummaryCall {
+	c.urlParams_.Set("source", source)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9510,6 +9517,11 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 	//       "location": "query",
 	//       "repeated": true,
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "Optional. String to identify the originator of this request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "volumeId": {

@@ -1135,13 +1135,26 @@ type H264CodecSettings struct {
 	EntropyCoder string `json:"entropyCoder,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
-	// (FPS). Must be less than or equal to 120. Will default to the input
-	// frame rate if larger than the input frame rate. The API will generate
-	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. See Calculating frame rate
-	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
-	// more information.
+	// (FPS). Must be less than or equal to 120.
 	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// FrameRateConversionStrategy: Optional. Frame rate conversion strategy
+	// for desired frame rate. The default is `DOWNSAMPLE`.
+	//
+	// Possible values:
+	//   "FRAME_RATE_CONVERSION_STRATEGY_UNSPECIFIED" - Unspecified frame
+	// rate conversion strategy.
+	//   "DOWNSAMPLE" - Selectively retain frames to reduce the output frame
+	// rate. Every _n_ th frame is kept, where `n = ceil(input frame rate /
+	// target frame rate)`. When _n_ = 1 (that is, the target frame rate is
+	// greater than the input frame rate), the output frame rate matches the
+	// input frame rate. When _n_ > 1, frames are dropped and the output
+	// frame rate is equal to `(input frame rate / n)`. For more
+	// information, see [Calculate frame
+	// rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate).
+	//   "DROP_DUPLICATE" - Drop or duplicate frames to match the specified
+	// frame rate.
+	FrameRateConversionStrategy string `json:"frameRateConversionStrategy,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
 	// default is `3s`. Note that `gopDuration` must be less than or equal
@@ -1308,13 +1321,26 @@ type H265CodecSettings struct {
 	EnableTwoPass bool `json:"enableTwoPass,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
-	// (FPS). Must be less than or equal to 120. Will default to the input
-	// frame rate if larger than the input frame rate. The API will generate
-	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. See Calculating frame rate
-	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
-	// more information.
+	// (FPS). Must be less than or equal to 120.
 	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// FrameRateConversionStrategy: Optional. Frame rate conversion strategy
+	// for desired frame rate. The default is `DOWNSAMPLE`.
+	//
+	// Possible values:
+	//   "FRAME_RATE_CONVERSION_STRATEGY_UNSPECIFIED" - Unspecified frame
+	// rate conversion strategy.
+	//   "DOWNSAMPLE" - Selectively retain frames to reduce the output frame
+	// rate. Every _n_ th frame is kept, where `n = ceil(input frame rate /
+	// target frame rate)`. When _n_ = 1 (that is, the target frame rate is
+	// greater than the input frame rate), the output frame rate matches the
+	// input frame rate. When _n_ > 1, frames are dropped and the output
+	// frame rate is equal to `(input frame rate / n)`. For more
+	// information, see [Calculate frame
+	// rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate).
+	//   "DROP_DUPLICATE" - Drop or duplicate frames to match the specified
+	// frame rate.
+	FrameRateConversionStrategy string `json:"frameRateConversionStrategy,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
 	// default is `3s`. Note that `gopDuration` must be less than or equal
@@ -2560,13 +2586,26 @@ type Vp9CodecSettings struct {
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
-	// (FPS). Must be less than or equal to 120. Will default to the input
-	// frame rate if larger than the input frame rate. The API will generate
-	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. See Calculating frame rate
-	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
-	// more information.
+	// (FPS). Must be less than or equal to 120.
 	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// FrameRateConversionStrategy: Optional. Frame rate conversion strategy
+	// for desired frame rate. The default is `DOWNSAMPLE`.
+	//
+	// Possible values:
+	//   "FRAME_RATE_CONVERSION_STRATEGY_UNSPECIFIED" - Unspecified frame
+	// rate conversion strategy.
+	//   "DOWNSAMPLE" - Selectively retain frames to reduce the output frame
+	// rate. Every _n_ th frame is kept, where `n = ceil(input frame rate /
+	// target frame rate)`. When _n_ = 1 (that is, the target frame rate is
+	// greater than the input frame rate), the output frame rate matches the
+	// input frame rate. When _n_ > 1, frames are dropped and the output
+	// frame rate is equal to `(input frame rate / n)`. For more
+	// information, see [Calculate frame
+	// rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate).
+	//   "DROP_DUPLICATE" - Drop or duplicate frames to match the specified
+	// frame rate.
+	FrameRateConversionStrategy string `json:"frameRateConversionStrategy,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
 	// default is `3s`. Note that `gopDuration` must be less than or equal

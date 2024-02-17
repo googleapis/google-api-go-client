@@ -1073,6 +1073,12 @@ type DropInfo struct {
 	//   "PSC_NEG_PRODUCER_FORWARDING_RULE_MULTIPLE_PORTS" - The packet is
 	// sent to the Private Service Connect backend (network endpoint group),
 	// but the producer PSC forwarding rule has multiple ports specified.
+	//   "HYBRID_NEG_NON_DYNAMIC_ROUTE_MATCHED" - The packet sent from the
+	// hybrid NEG proxy matches a non-dynamic route, but such a
+	// configuration is not supported.
+	//   "HYBRID_NEG_NON_LOCAL_DYNAMIC_ROUTE_MATCHED" - The packet sent from
+	// the hybrid NEG proxy matches a dynamic route with a next hop in a
+	// different region, but such a configuration is not supported.
 	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run
 	// revision that is not ready.
 	//   "DROPPED_INSIDE_PSC_SERVICE_PRODUCER" - Packet was dropped inside

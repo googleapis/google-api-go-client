@@ -704,6 +704,19 @@ type DnsAuthorization struct {
 	// `projects/*/locations/*/dnsAuthorizations/*`.
 	Name string `json:"name,omitempty"`
 
+	// Type: Immutable. Type of DnsAuthorization. If unset during resource
+	// creation the following default will be used: - in location global:
+	// FIXED_RECORD.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "FIXED_RECORD" - FIXED_RECORD DNS authorization uses DNS-01
+	// validation method.
+	//   "PER_PROJECT_RECORD" - PER_PROJECT_RECORD DNS authorization allows
+	// for independent management of Google-managed certificates with DNS
+	// authorization across multiple projects.
+	Type string `json:"type,omitempty"`
+
 	// UpdateTime: Output only. The last update timestamp of a
 	// DnsAuthorization.
 	UpdateTime string `json:"updateTime,omitempty"`

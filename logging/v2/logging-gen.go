@@ -4418,6 +4418,22 @@ func (s *SavedQuery) MarshalJSON() ([]byte, error) {
 // Settings: Describes the settings associated with a project, folder,
 // organization, or billing account.
 type Settings struct {
+	// AnalyticsMode: Optional. The default analytics mode of an org or
+	// folder which is inherited by all newly created child project buckets.
+	//
+	// Possible values:
+	//   "ANALYTICS_MODE_UNSPECIFIED" - No default analytics mode defined at
+	// this resource level, it will inherit from the closest ancester which
+	// has a defined analytics mode. If there is no specified analytics mode
+	// across the resource hierarchy, analytics will be disabled by default.
+	//   "ANALYTICS_ENABLED" - By default, analytics will be enabled for all
+	// new project-level buckets unless explicitly specified otherwise at
+	// bucket creation time.
+	//   "ANALYTICS_DISABLED" - By default, analytics will be disabled for
+	// new project-level buckets unless explicitly specified otherwise at
+	// bucket creation time.
+	AnalyticsMode string `json:"analyticsMode,omitempty"`
+
 	// DefaultSinkConfig: Optional. Overrides the built-in configuration for
 	// _Default sink.
 	DefaultSinkConfig *DefaultSinkConfig `json:"defaultSinkConfig,omitempty"`
@@ -4477,21 +4493,20 @@ type Settings struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DefaultSinkConfig")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AnalyticsMode") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DefaultSinkConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnalyticsMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

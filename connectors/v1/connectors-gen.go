@@ -1585,6 +1585,14 @@ type CustomConnectorVersion struct {
 	// SpecLocation: Optional. Location of the custom connector spec.
 	SpecLocation string `json:"specLocation,omitempty"`
 
+	// State: Output only. State of the custom connector version.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State Unspecified.
+	//   "ACTIVE" - Active state. By default we set the state to Active.
+	//   "DEPRECATED" - Deprecated state.
+	State string `json:"state,omitempty"`
+
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1951,9 +1959,9 @@ type EncryptionConfig struct {
 	// EncryptionType: Optional. Encryption type for the region.
 	//
 	// Possible values:
-	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Egress mode unspecified.
-	//   "GMEK" - Network egress through auto assigned IPs.
-	//   "CMEK" - Network egress through static IPs.
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Encryption type unspecified.
+	//   "GMEK" - Google managed encryption keys
+	//   "CMEK" - Customer managed encryption keys.
 	EncryptionType string `json:"encryptionType,omitempty"`
 
 	// KmsKeyName: Optional. KMS crypto key. This field accepts identifiers

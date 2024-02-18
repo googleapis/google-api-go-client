@@ -839,7 +839,7 @@ type FirewallEndpoint struct {
 	// this list after traffic routing is fully configured.
 	Associations []*FirewallEndpointAssociationReference `json:"associations,omitempty"`
 
-	// BillingProjectId: Optional. Project to bill on endpoint uptime usage.
+	// BillingProjectId: Required. Project to bill on endpoint uptime usage.
 	BillingProjectId string `json:"billingProjectId,omitempty"`
 
 	// CreateTime: Output only. Create time stamp

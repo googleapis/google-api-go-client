@@ -4389,6 +4389,11 @@ type SqlExternalSyncSettingError struct {
 	// source data for PostgreSQL database.
 	//   "PG_SYNC_PARALLEL_LEVEL" - Final parallel level that is used to do
 	// migration.
+	//   "INSUFFICIENT_DISK_SIZE" - The disk size of the replica instance is
+	// smaller than the data size of the source instance.
+	//   "INSUFFICIENT_MACHINE_TIER" - The data size of the source instance
+	// is greater than 1 TB, the number of cores of the replica instance is
+	// less than 8, and the memory of the replica is less than 32 GB.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to

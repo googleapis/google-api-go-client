@@ -1839,6 +1839,18 @@ type ConfigManagementConfigSyncState struct {
 	//   "INSTALLING" - CRD is installing
 	RootsyncCrd string `json:"rootsyncCrd,omitempty"`
 
+	// State: The state of CS This field summarizes the other fields in this
+	// message.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - CS's state cannot be determined.
+	//   "CONFIG_SYNC_NOT_INSTALLED" - CS is not installed.
+	//   "CONFIG_SYNC_INSTALLED" - The expected CS version is installed
+	// successfully.
+	//   "CONFIG_SYNC_ERROR" - CS encounters errors.
+	//   "CONFIG_SYNC_PENDING" - CS is installing or terminating.
+	State string `json:"state,omitempty"`
+
 	// SyncState: The state of ConfigSync's process to sync configs to a
 	// cluster
 	SyncState *ConfigManagementSyncState `json:"syncState,omitempty"`
@@ -2318,6 +2330,16 @@ type ConfigManagementMembershipSpec struct {
 	// HierarchyController: Hierarchy Controller configuration for the
 	// cluster.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
+
+	// Management: Enables automatic Feature management.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "MANAGEMENT_AUTOMATIC" - Google will manage the Feature for the
+	// cluster.
+	//   "MANAGEMENT_MANUAL" - User will manually manage the Feature for the
+	// cluster.
+	Management string `json:"management,omitempty"`
 
 	// PolicyController: Policy Controller configuration for the cluster.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
@@ -4462,6 +4484,43 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPermittedScopesResponse: List of permitted Scopes.
+type ListPermittedScopesResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListPermittedScopes` method. The value of an empty string means that
+	// there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Scopes: The list of permitted Scopes
+	Scopes []*Scope `json:"scopes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPermittedScopesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPermittedScopesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15352,6 +15411,201 @@ func (c *ProjectsLocationsScopesListCall) Do(opts ...googleapi.CallOption) (*Lis
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsScopesListCall) Pages(ctx context.Context, f func(*ListScopesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gkehub.projects.locations.scopes.listPermitted":
+
+type ProjectsLocationsScopesListPermittedCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListPermitted: Lists permitted Scopes.
+//
+//   - parent: The parent (project and location) where the Scope will be
+//     listed. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsScopesService) ListPermitted(parent string) *ProjectsLocationsScopesListPermittedCall {
+	c := &ProjectsLocationsScopesListPermittedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsScopesListPermittedCall) PageSize(pageSize int64) *ProjectsLocationsScopesListPermittedCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListPermittedScopes` which specifies the position
+// in the list from where to continue listing the resources.
+func (c *ProjectsLocationsScopesListPermittedCall) PageToken(pageToken string) *ProjectsLocationsScopesListPermittedCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsScopesListPermittedCall) Fields(s ...googleapi.Field) *ProjectsLocationsScopesListPermittedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsScopesListPermittedCall) IfNoneMatch(entityTag string) *ProjectsLocationsScopesListPermittedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsScopesListPermittedCall) Context(ctx context.Context) *ProjectsLocationsScopesListPermittedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsScopesListPermittedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsScopesListPermittedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/scopes:listPermitted")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.scopes.listPermitted" call.
+// Exactly one of *ListPermittedScopesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPermittedScopesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsScopesListPermittedCall) Do(opts ...googleapi.CallOption) (*ListPermittedScopesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPermittedScopesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists permitted Scopes.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/scopes:listPermitted",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.scopes.listPermitted",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListPermittedScopes` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Scope will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/scopes:listPermitted",
+	//   "response": {
+	//     "$ref": "ListPermittedScopesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsScopesListPermittedCall) Pages(ctx context.Context, f func(*ListPermittedScopesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

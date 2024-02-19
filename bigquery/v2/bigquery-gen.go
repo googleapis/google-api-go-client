@@ -2418,9 +2418,9 @@ type Dataset struct {
 	// Etag: Output only. A hash of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// ExternalDatasetReference: Optional. Information about the external
-	// metadata storage where the dataset is defined. Filled out when the
-	// dataset type is EXTERNAL.
+	// ExternalDatasetReference: Optional. Reference to a read-only external
+	// dataset defined in data catalogs outside of BigQuery. Filled out when
+	// the dataset type is EXTERNAL.
 	ExternalDatasetReference *ExternalDatasetReference `json:"externalDatasetReference,omitempty"`
 
 	// FriendlyName: Optional. A descriptive name for the dataset.

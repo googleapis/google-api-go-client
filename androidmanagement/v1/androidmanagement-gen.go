@@ -366,6 +366,33 @@ type AdvancedSecurityOverrides struct {
 	// enable app verification.
 	GooglePlayProtectVerifyApps string `json:"googlePlayProtectVerifyApps,omitempty"`
 
+	// MtePolicy: Optional. Controls Memory Tagging Extension (MTE)
+	// (https://source.android.com/docs/security/test/memory-safety/arm-mte)
+	// on the device. The device needs to be rebooted to apply changes to
+	// the MTE policy.
+	//
+	// Possible values:
+	//   "MTE_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// MTE_USER_CHOICE.
+	//   "MTE_USER_CHOICE" - The user can choose to enable or disable MTE on
+	// the device if the device supports this.
+	//   "MTE_ENFORCED" - MTE is enabled on the device and the user is not
+	// allowed to change this setting. This can be set on fully managed
+	// devices and work profiles on company-owned devices. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A nonComplianceDetail with DEVICE_INCOMPATIBLE is
+	// reported if the device does not support MTE.Supported on Android 14
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 14.
+	//   "MTE_DISABLED" - MTE is disabled on the device and the user is not
+	// allowed to change this setting. This applies only on fully managed
+	// devices. In other cases, a nonComplianceDetail with MANAGEMENT_MODE
+	// is reported. A nonComplianceDetail with DEVICE_INCOMPATIBLE is
+	// reported if the device does not support MTE.Supported on Android 14
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 14.
+	MtePolicy string `json:"mtePolicy,omitempty"`
+
 	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read
 	// work profile notifications using a NotificationListenerService
 	// (https://developer.android.com/reference/android/service/notification/NotificationListenerService).
@@ -4808,6 +4835,12 @@ type NonComplianceDetail struct {
 	// configured Wi-Fi network manually. This is applicable only on work
 	// profiles on personally-owned devices. nonComplianceReason is set to
 	// USER_ACTION.
+	//   "ONC_WIFI_KEY_PAIR_ALIAS_NOT_CORRESPONDING_TO_EXISTING_KEY" - Key
+	// pair alias specified via ClientCertKeyPairAlias
+	// (https://chromium.googlesource.com/chromium/src/+/main/components/onc/docs/onc_spec.md#eap-type)
+	// field in openNetworkConfiguration does not correspond to an existing
+	// key installed on the device. nonComplianceReason is set to
+	// INVALID_VALUE.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to

@@ -1380,6 +1380,9 @@ type GoogleCloudDialogflowCxV3Changelog struct {
 	// DisplayName: The affected resource display name of the change.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// LanguageCode: The affected language code of the change.
+	LanguageCode string `json:"languageCode,omitempty"`
+
 	// Name: The unique identifier of the changelog. Format:
 	// `projects//locations//agents//changelogs/`.
 	Name string `json:"name,omitempty"`

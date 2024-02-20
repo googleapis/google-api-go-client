@@ -13141,6 +13141,9 @@ type GoogleCloudDialogflowV2beta1AnalyzeContentRequest struct {
 	// EventInput: An input event to send to Dialogflow.
 	EventInput *GoogleCloudDialogflowV2beta1EventInput `json:"eventInput,omitempty"`
 
+	// IntentInput: The intent to be triggered on V3 agent.
+	IntentInput *GoogleCloudDialogflowV2beta1IntentInput `json:"intentInput,omitempty"`
+
 	// MessageSendTime: Optional. The send time of the message from end user
 	// or human agent's perspective. It is used for identifying the same
 	// message under one participant. Given two messages under the same

@@ -401,13 +401,17 @@ type GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport struct {
 	// Geo: Location of the associated account's home city.
 	Geo string `json:"geo,omitempty"`
 
+	// GoogleAdsLeadId: Unique identifier of a Detailed Lead Report.
+	GoogleAdsLeadId int64 `json:"googleAdsLeadId,omitempty,string"`
+
 	// LeadCategory: Lead category (e.g. hvac, plumber)
 	LeadCategory string `json:"leadCategory,omitempty"`
 
 	// LeadCreationTimestamp: Timestamp of when the lead was created.
 	LeadCreationTimestamp string `json:"leadCreationTimestamp,omitempty"`
 
-	// LeadId: Unique identifier of a Detailed Lead Report.
+	// LeadId: Deprecated in favor of google_ads_lead_id. Unique identifier
+	// of a Detailed Lead Report.
 	LeadId int64 `json:"leadId,omitempty,string"`
 
 	// LeadPrice: Price of the lead (available only after it has been

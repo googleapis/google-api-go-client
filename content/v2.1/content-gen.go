@@ -3195,8 +3195,7 @@ func (s *Amount) MarshalJSON() ([]byte, error) {
 // sources receiving pre-attribution data.
 type AttributionSettings struct {
 	// AttributionLookbackWindowInDays: Required. Lookback windows (in days)
-	// used for attribution in this source. Supported values are 7, 30, 60,
-	// 90.
+	// used for attribution in this source. Supported values are 7, 30, 40.
 	AttributionLookbackWindowInDays int64 `json:"attributionLookbackWindowInDays,omitempty"`
 
 	// AttributionModel: Required. Attribution model.

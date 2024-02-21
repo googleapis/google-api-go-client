@@ -272,9 +272,11 @@ type Application struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. User-defined description of an Application.
+	// Can have a maximum length of 2048 characters.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Optional. User-defined name for the Application.
+	// DisplayName: Optional. User-defined name for the Application. Can
+	// have a maximum length of 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Identifier. The resource name of an Application. Format:
@@ -621,7 +623,8 @@ type ContactInfo struct {
 	// Channel: Optional. Communication channel of the contacts.
 	Channel *Channel `json:"channel,omitempty"`
 
-	// DisplayName: Optional. Contact's name.
+	// DisplayName: Optional. Contact's name. Can have a maximum length of
+	// 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: Required. Email address of the contacts.
@@ -652,12 +655,25 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 
 // Criticality: Criticality of the Application, Service, or Workload
 type Criticality struct {
-	// Level: Required. Criticality level.
+	// Level: Optional. Criticality level. Can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. Can have a
+	// maximum length of 63 characters.
 	Level string `json:"level,omitempty"`
 
-	// MissionCritical: Required. Indicates mission-critical Application,
+	// MissionCritical: Optional. Indicates mission-critical Application,
 	// Service, or Workload.
 	MissionCritical bool `json:"missionCritical,omitempty"`
+
+	// Type: Required. Criticality Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "MISSION_CRITICAL" - Mission critical service, application or
+	// workload.
+	//   "HIGH" - High impact.
+	//   "MEDIUM" - Medium impact.
+	//   "LOW" - Low impact.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Level") to
 	// unconditionally include in API requests. By default, fields with
@@ -799,8 +815,20 @@ type Empty struct {
 
 // Environment: Environment of the Application, Service, or Workload
 type Environment struct {
-	// Environment: Required. Environment name.
+	// Environment: Optional. Environment name. Can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. Can have a
+	// maximum length of 63 characters.
 	Environment string `json:"environment,omitempty"`
+
+	// Type: Required. Environment Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "PRODUCTION" - Production environment.
+	//   "STAGING" - Staging environment.
+	//   "TEST" - Test environment.
+	//   "DEVELOPMENT" - Development environment.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
@@ -1631,14 +1659,16 @@ type Service struct {
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Optional. User-defined description of a Service.
+	// Description: Optional. User-defined description of a Service. Can
+	// have a maximum length of 2048 characters.
 	Description string `json:"description,omitempty"`
 
 	// DiscoveredService: Required. Immutable. The resource name of the
 	// original discovered service.
 	DiscoveredService string `json:"discoveredService,omitempty"`
 
-	// DisplayName: Optional. User-defined name for the Service.
+	// DisplayName: Optional. User-defined name for the Service. Can have a
+	// maximum length of 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Identifier. The resource name of a Service. Format:
@@ -1993,14 +2023,16 @@ type Workload struct {
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Optional. User-defined description of a Workload.
+	// Description: Optional. User-defined description of a Workload. Can
+	// have a maximum length of 2048 characters.
 	Description string `json:"description,omitempty"`
 
 	// DiscoveredWorkload: Required. Immutable. The resource name of the
 	// original discovered workload.
 	DiscoveredWorkload string `json:"discoveredWorkload,omitempty"`
 
-	// DisplayName: Optional. User-defined name for the Workload.
+	// DisplayName: Optional. User-defined name for the Workload. Can have a
+	// maximum length of 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Identifier. The resource name of the Workload. Format:
@@ -2798,7 +2830,9 @@ func (r *ProjectsLocationsApplicationsService) Create(parent string, application
 }
 
 // ApplicationId sets the optional parameter "applicationId": Required.
-// The Application identifier.
+// The Application identifier. Must contain only lowercase letters,
+// numbers or hyphens, with the first character a letter, the last a
+// letter or a number, and a 63 character maximum.
 func (c *ProjectsLocationsApplicationsCreateCall) ApplicationId(applicationId string) *ProjectsLocationsApplicationsCreateCall {
 	c.urlParams_.Set("applicationId", applicationId)
 	return c
@@ -2922,7 +2956,7 @@ func (c *ProjectsLocationsApplicationsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "applicationId": {
-	//       "description": "Required. The Application identifier.",
+	//       "description": "Required. The Application identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4169,7 +4203,9 @@ func (c *ProjectsLocationsApplicationsServicesCreateCall) RequestId(requestId st
 }
 
 // ServiceId sets the optional parameter "serviceId": Required. The
-// Service identifier.
+// Service identifier. Must contain only lowercase letters, numbers or
+// hyphens, with the first character a letter, the last a letter or a
+// number, and a 63 character maximum.
 func (c *ProjectsLocationsApplicationsServicesCreateCall) ServiceId(serviceId string) *ProjectsLocationsApplicationsServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
@@ -4287,7 +4323,7 @@ func (c *ProjectsLocationsApplicationsServicesCreateCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "serviceId": {
-	//       "description": "Required. The Service identifier.",
+	//       "description": "Required. The Service identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5050,7 +5086,9 @@ func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) RequestId(requestId s
 }
 
 // WorkloadId sets the optional parameter "workloadId": Required. The
-// Workload identifier.
+// Workload identifier. Must contain only lowercase letters, numbers or
+// hyphens, with the first character a letter, the last a letter or a
+// number, and a 63 character maximum.
 func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) WorkloadId(workloadId string) *ProjectsLocationsApplicationsWorkloadsCreateCall {
 	c.urlParams_.Set("workloadId", workloadId)
 	return c
@@ -5168,7 +5206,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "workloadId": {
-	//       "description": "Required. The Workload identifier.",
+	//       "description": "Required. The Workload identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6265,7 +6303,8 @@ type ProjectsLocationsDiscoveredServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists discovered services in a host project and location.
+// List: Lists discovered services that can be added to an application
+// in a host project and location.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsDiscoveredServicesService) List(parent string) *ProjectsLocationsDiscoveredServicesListCall {
@@ -6401,7 +6440,7 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists discovered services in a host project and location.",
+	//   "description": "Lists discovered services that can be added to an application in a host project and location.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredServices",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredServices.list",
@@ -6845,7 +6884,8 @@ type ProjectsLocationsDiscoveredWorkloadsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists discovered workloads in a host project and location.
+// List: Lists discovered workloads that can be added to an application
+// in a host project and location.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsDiscoveredWorkloadsService) List(parent string) *ProjectsLocationsDiscoveredWorkloadsListCall {
@@ -6981,7 +7021,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists discovered workloads in a host project and location.",
+	//   "description": "Lists discovered workloads that can be added to an application in a host project and location.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredWorkloads.list",

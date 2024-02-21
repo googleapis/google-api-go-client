@@ -544,6 +544,38 @@ func (s *BandwidthLimit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type BatchTaskSpec struct {
+	DeleteObjectTaskSpec *DeleteObjectTaskSpec `json:"deleteObjectTaskSpec,omitempty"`
+
+	ListTaskSpec *ListTaskSpec `json:"listTaskSpec,omitempty"`
+
+	MetadataTaskSpec *MetadataTaskSpec `json:"metadataTaskSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DeleteObjectTaskSpec") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeleteObjectTaskSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchTaskSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchTaskSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -592,6 +624,38 @@ type Date struct {
 
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DeleteObjectTaskSpec struct {
+	Generation int64 `json:"generation,omitempty,string"`
+
+	HardDeleteVersionedObject bool `json:"hardDeleteVersionedObject,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Size int64 `json:"size,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Generation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Generation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteObjectTaskSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteObjectTaskSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1050,6 +1114,34 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListTaskSpec struct {
+	Manifest *Manifest `json:"manifest,omitempty"`
+
+	ObjectPrefixes *ObjectPrefixes `json:"objectPrefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Manifest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Manifest") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListTaskSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTaskSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListTransferJobsResponse: Response from ListTransferJobs.
 type ListTransferJobsResponse struct {
 	// NextPageToken: The list next page token.
@@ -1147,6 +1239,35 @@ type LoggingConfig struct {
 
 func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type Manifest struct {
+	ManifestLocation string `json:"manifestLocation,omitempty"`
+
+	Root string `json:"root,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ManifestLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ManifestLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Manifest) MarshalJSON() ([]byte, error) {
+	type NoMethod Manifest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1251,17 +1372,18 @@ type MetadataOptions struct {
 	TemporaryHold string `json:"temporaryHold,omitempty"`
 
 	// TimeCreated: Specifies how each object's `timeCreated` metadata is
-	// preserved for transfers between Google Cloud Storage buckets. If
-	// unspecified, the default behavior is the same as TIME_CREATED_SKIP.
+	// preserved for transfers. If unspecified, the default behavior is the
+	// same as TIME_CREATED_SKIP.
 	//
 	// Possible values:
 	//   "TIME_CREATED_UNSPECIFIED" - TimeCreated behavior is unspecified.
 	//   "TIME_CREATED_SKIP" - Do not preserve the `timeCreated` metadata
 	// from the source object.
 	//   "TIME_CREATED_PRESERVE_AS_CUSTOM_TIME" - Preserves the source
-	// object's `timeCreated` metadata in the `customTime` field in the
-	// destination object. Note that any value stored in the source object's
-	// `customTime` field will not be propagated to the destination object.
+	// object's `timeCreated` or `lastModified` metadata in the `customTime`
+	// field in the destination object. Note that any value stored in the
+	// source object's `customTime` field will not be propagated to the
+	// destination object.
 	TimeCreated string `json:"timeCreated,omitempty"`
 
 	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
@@ -1294,6 +1416,38 @@ type MetadataOptions struct {
 
 func (s *MetadataOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type MetadataTaskSpec struct {
+	BucketName string `json:"bucketName,omitempty"`
+
+	Generation int64 `json:"generation,omitempty,string"`
+
+	Key string `json:"key,omitempty"`
+
+	Size int64 `json:"size,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BucketName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetadataTaskSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod MetadataTaskSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1472,6 +1626,61 @@ type ObjectConditions struct {
 
 func (s *ObjectConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectConditions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ObjectPrefix struct {
+	BucketName string `json:"bucketName,omitempty"`
+
+	ObjectPrefix string `json:"objectPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BucketName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ObjectPrefix) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectPrefix
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ObjectPrefixes struct {
+	ObjectPrefixes []*ObjectPrefix `json:"objectPrefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectPrefixes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectPrefixes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ObjectPrefixes) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectPrefixes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

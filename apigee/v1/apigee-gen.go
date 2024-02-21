@@ -10938,11 +10938,23 @@ type GoogleCloudApigeeV1SecurityActionAllow struct {
 // list of conditions. A valid SecurityAction must contain at least one
 // condition. Within a condition, each element is ORed. Across
 // conditions elements are ANDed. For example if a SecurityAction has
-// the following: api_keys: ["key1", "key2"] and developers: ["dev1",
-// "dev2"] then this is interpreted as: enforce the action if the
-// incoming request has ((api_key = "key1" OR api_key="key") AND
-// (developer="dev1" OR developer="dev2")).
+// the following: ip_address_ranges: ["ip1", "ip2"] and bot_reasons:
+// ["Flooder", "Robot Abuser"] then this is interpreted as: enforce the
+// action if the incoming request has ((ip_address_ranges = "ip1" OR
+// ip_address_ranges = "ip2") AND (bot_reasons="Flooder" OR
+// bot_reasons="Robot Abuser")). Conditions other than ip_address_ranges
+// and bot_reasons cannot be ANDed.
 type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
+	// AccessTokens: Optional. A list of access_tokens. Limit 1000 per
+	// action.
+	AccessTokens []string `json:"accessTokens,omitempty"`
+
+	// ApiKeys: Optional. A list of API keys. Limit 1000 per action.
+	ApiKeys []string `json:"apiKeys,omitempty"`
+
+	// ApiProducts: Optional. A list of API Products. Limit 1000 per action.
+	ApiProducts []string `json:"apiProducts,omitempty"`
+
 	// BotReasons: Optional. A list of Bot Reasons. Current options:
 	// Flooder, Brute Guessor, Static Content Scraper, OAuth Abuser, Robot
 	// Abuser, TorListRule, Advanced Anomaly Detection, Advanced API
@@ -10950,11 +10962,22 @@ type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
 	// Public Cloud Azure, and Public Cloud Google.
 	BotReasons []string `json:"botReasons,omitempty"`
 
+	// DeveloperApps: Optional. A list of developer apps. Limit 1000 per
+	// action.
+	DeveloperApps []string `json:"developerApps,omitempty"`
+
+	// Developers: Optional. A list of developers. Limit 1000 per action.
+	Developers []string `json:"developers,omitempty"`
+
 	// IpAddressRanges: Optional. A list of IP addresses. This could be
 	// either IPv4 or IPv6. Limited to 100 per action.
 	IpAddressRanges []string `json:"ipAddressRanges,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BotReasons") to
+	// UserAgents: Optional. A list of user agents to deny. We look for
+	// exact matches. Limit 50 per action.
+	UserAgents []string `json:"userAgents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessTokens") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -10962,10 +10985,10 @@ type GoogleCloudApigeeV1SecurityActionConditionConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BotReasons") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AccessTokens") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

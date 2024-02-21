@@ -446,7 +446,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/preview). A subscription to
 // receive events about a Google Workspace resource. To learn more about
 // subscriptions, see the Google Workspace Events API overview
-// (https://developers.google.com/workspace/events/guides).
+// (https://developers.google.com/workspace/events).
 type Subscription struct {
 	// Authority: Output only. The user who authorized the creation of the
 	// subscription. Format: `users/{user}` For Google Workspace users, the
@@ -466,11 +466,10 @@ type Subscription struct {
 	// EventTypes: Required. Immutable. Unordered list. Input for creating a
 	// subscription. Otherwise, output only. One or more types of events to
 	// receive about the target resource. Formatted according to the
-	// CloudEvents specification. For a list of supported event types, see
-	// the following documentation: * Google Chat events
-	// (https://developers.google.com/workspace/events/guides/events-chat) *
-	// Google Meet events
-	// (https://developers.google.com/workspace/events/guides/events-meet)
+	// CloudEvents specification. The supported event types depend on the
+	// target resource of your subscription. For details, see Supported
+	// Google Workspace events
+	// (https://developers.google.com/workspace/events/guides#supported-events).
 	// By default, you also receive events about the lifecycle of your
 	// subscription
 	// (https://developers.google.com/workspace/events/guides/events-lifecycle).
@@ -544,9 +543,10 @@ type Subscription struct {
 	// TargetResource: Required. Immutable. The Google Workspace resource
 	// that's monitored for events, formatted as the full resource name
 	// (https://google.aip.dev/122#full-resource-names). To learn about
-	// target resources, see Supported Google Workspace resources
-	// (https://developers.google.com/workspace/events/guides#supported-resources).
-	// A user can only authorize your app to create one subscription for a
+	// target resources and the events that they support, see Supported
+	// Google Workspace events
+	// (https://developers.google.com/workspace/events#supported-events). A
+	// user can only authorize your app to create one subscription for a
 	// given target resource. If your app tries to create another
 	// subscription with the same user credentials, the request returns an
 	// `ALREADY_EXISTS` error.

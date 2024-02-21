@@ -5204,10 +5204,7 @@ type NodeConfig struct {
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
 
-	// EnableConfidentialStorage: Optional. Enable confidential storage on
-	// Hyperdisk. boot_disk_kms_key is required when
-	// enable_confidential_storage is true. This is only available for
-	// private preview.
+	// EnableConfidentialStorage: Optional. Reserved for future use.
 	EnableConfidentialStorage bool `json:"enableConfidentialStorage,omitempty"`
 
 	// EphemeralStorageConfig: Parameters for the ephemeral storage
@@ -8785,6 +8782,10 @@ type UpdateNodePoolRequest struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// QueuedProvisioning: Specifies the configuration of queued
+	// provisioning.
+	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
 
 	// ResourceLabels: The resource labels for the node pool to use to
 	// annotate any related Google Compute Engine resources.

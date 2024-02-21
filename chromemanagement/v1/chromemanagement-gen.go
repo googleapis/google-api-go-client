@@ -666,11 +666,12 @@ type GoogleChromeManagementV1BatteryStatusReport struct {
 	//
 	// Possible values:
 	//   "BATTERY_HEALTH_UNSPECIFIED" - Health unknown.
-	//   "BATTERY_HEALTH_NORMAL" - Battery is healthy.
+	//   "BATTERY_HEALTH_NORMAL" - Battery is healthy, full charge capacity
+	// / design capacity > 80%
 	//   "BATTERY_REPLACE_SOON" - Battery is moderately unhealthy and should
-	// be replaced soon.
+	// be replaced soon, full charge capacity / design capacity 75% - 80%
 	//   "BATTERY_REPLACE_NOW" - Battery is unhealthy and should be
-	// replaced.
+	// replaced, full charge capacity / design capacity < 75%
 	BatteryHealth string `json:"batteryHealth,omitempty"`
 
 	// CycleCount: Output only. Cycle count.

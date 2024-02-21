@@ -6355,8 +6355,7 @@ type Message struct {
 	// LocalizedHeader: Translated strings for the message header.
 	LocalizedHeader *LocalizedString `json:"localizedHeader,omitempty"`
 
-	// MessageType: The type of the message. Currently, this can only be set
-	// for offers.
+	// MessageType: The message type.
 	//
 	// Possible values:
 	//   "MESSAGE_TYPE_UNSPECIFIED"

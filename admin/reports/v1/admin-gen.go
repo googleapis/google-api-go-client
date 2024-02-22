@@ -1515,7 +1515,8 @@ func (c *ActivitiesWatchCall) MaxResults(maxResults int64) *ActivitiesWatchCall 
 	return c
 }
 
-// OrgUnitID sets the optional parameter "orgUnitID": ID of the
+// OrgUnitID sets the optional parameter "orgUnitID": `Deprecated`. This
+// field is deprecated and is no longer supported. ID of the
 // organizational unit to report on. Activity records will be shown only
 // for users who belong to the specified organizational unit. Data
 // before Dec 17, 2018 doesn't appear in the filtered results.
@@ -1744,7 +1745,8 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//     },
 	//     "orgUnitID": {
 	//       "default": "",
-	//       "description": "ID of the organizational unit to report on. Activity records will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
+	//       "deprecated": true,
+	//       "description": "`Deprecated`. This field is deprecated and is no longer supported. ID of the organizational unit to report on. Activity records will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+)",
 	//       "type": "string"

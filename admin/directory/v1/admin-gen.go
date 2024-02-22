@@ -2939,7 +2939,10 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// JSON object in the form: { "ackedUserPresence": true }.
 	// `ackedUserPresence` is a boolean. By default, `ackedUserPresence` is
 	// set to `false`. To start a Chrome Remote Desktop session for an
-	// active device, set `ackedUserPresence` to `true`.
+	// active device, set `ackedUserPresence` to `true`. * `REBOOT`: Payload
+	// is a stringified JSON object in the form: {
+	// "user_session_delay_seconds": 300 }. The delay has to be in the range
+	// [0, 300].
 	Payload string `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommandType") to

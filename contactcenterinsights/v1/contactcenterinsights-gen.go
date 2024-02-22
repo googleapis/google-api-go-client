@@ -4066,9 +4066,10 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// time an analysis is created. * "create-conversation": Notify each
 	// time a conversation is created. * "export-insights-data": Notify each
 	// time an export is complete. * "update-conversation": Notify each time
-	// a conversation is updated via UpdateConversation. Values are Pub/Sub
-	// topics. The format of each Pub/Sub topic is:
-	// projects/{project}/topics/{topic}
+	// a conversation is updated via UpdateConversation. *
+	// "upload-conversation": Notify when an UploadConversation LRO
+	// completes. Values are Pub/Sub topics. The format of each Pub/Sub
+	// topic is: projects/{project}/topics/{topic}
 	PubsubNotificationSettings map[string]string `json:"pubsubNotificationSettings,omitempty"`
 
 	// RedactionConfig: Default DLP redaction resources to be applied while

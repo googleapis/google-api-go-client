@@ -177,9 +177,9 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			if err != nil {
 				return nil, err
 			}
-			if o.TokenSource == nil {
-				// We only validate non-tokensource creds, as TokenSource-based credentials
-				// don't propagate universe.
+			// DialSettings.TokenSource credentials are lazily verified in
+			// grpcTokenSource.GetRequestMetadata.
+			if o.TokenSource == nil && !creds.HasUniverseAwareTokenSource() {
 				credsUniverseDomain, err := internal.GetUniverseDomain(creds)
 				if err != nil {
 					return nil, err
@@ -266,6 +266,8 @@ type grpcTokenSource struct {
 	// Additional metadata attached as headers.
 	quotaProject  string
 	requestReason string
+	// settingsUniverseDomain is the universe domain from client configuration.
+	settingsUniverseDomain string
 }
 
 // GetRequestMetadata gets the request metadata as a map from a grpcTokenSource.
@@ -274,6 +276,18 @@ func (ts grpcTokenSource) GetRequestMetadata(ctx context.Context, uri ...string)
 	metadata, err := ts.TokenSource.GetRequestMetadata(ctx, uri...)
 	if err != nil {
 		return nil, err
+	}
+	// TODO(chrisdsmith): Avoid this second call to Token if possible by instead using the token fetched by GetRequestMetadata above.
+	tok, err := ts.Token()
+	if err != nil {
+		return nil, err
+	}
+	credsUniverseDomain := tok.Extra("oauth2.google.universeDomain").(string)
+	// If the token is returned with a universe domain, compare with the
+	// user-configured universe domain. This is only for compute credentials and
+	// user-configured TokenSource.
+	if credsUniverseDomain != "" && credsUniverseDomain != ts.settingsUniverseDomain {
+		return nil, internal.ErrUniverseNotMatch(ts.settingsUniverseDomain, credsUniverseDomain)
 	}
 
 	// Attach system parameter

@@ -88,9 +88,9 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 		if err != nil {
 			return nil, err
 		}
-		if settings.TokenSource == nil {
-			// We only validate non-tokensource creds, as TokenSource-based credentials
-			// don't propagate universe.
+		// DialSettings.TokenSource credentials are lazily verified in
+		// universeAwareTokenSource.Token.
+		if settings.TokenSource == nil && !creds.HasUniverseAwareTokenSource() {
 			credsUniverseDomain, err := internal.GetUniverseDomain(creds)
 			if err != nil {
 				return nil, err
@@ -105,11 +105,35 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 			ts = settings.TokenSource
 		}
 		trans = &oauth2.Transport{
-			Base:   trans,
-			Source: ts,
+			Base: trans,
+			Source: &universeAwareTokenSource{
+				settingsUniverseDomain: settings.UniverseDomain,
+				ts:                     ts,
+			},
 		}
 	}
 	return trans, nil
+}
+
+type universeAwareTokenSource struct {
+	// settingsUniverseDomain is the universe domain from client configuration.
+	settingsUniverseDomain string
+	ts                     oauth2.TokenSource
+}
+
+func (uats *universeAwareTokenSource) Token() (*oauth2.Token, error) {
+	tok, err := uats.ts.Token()
+	if err != nil {
+		return nil, err
+	}
+	credsUniverseDomain := tok.Extra("oauth2.google.universeDomain").(string)
+	// If the token is returned with a universe domain, compare with the
+	// user-configured universe domain. This is only for compute credentials and
+	// user-configured TokenSource.
+	if credsUniverseDomain != "" && credsUniverseDomain != uats.settingsUniverseDomain {
+		return nil, internal.ErrUniverseNotMatch(uats.settingsUniverseDomain, credsUniverseDomain)
+	}
+	return tok, nil
 }
 
 func newSettings(opts []option.ClientOption) (*internal.DialSettings, error) {

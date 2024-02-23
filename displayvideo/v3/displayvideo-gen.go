@@ -1888,12 +1888,12 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 
 	// Int64Value: Integer value.
@@ -8821,6 +8821,14 @@ type EditCustomerMatchMembersRequest struct {
 	// Customer Match FirstAndThirdPartyAudience.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
+	// RemovedContactInfoList: Input only. A list of contact information to
+	// define the members to be removed.
+	RemovedContactInfoList *ContactInfoList `json:"removedContactInfoList,omitempty"`
+
+	// RemovedMobileDeviceIdList: Input only. A list of mobile device IDs to
+	// define the members to be removed.
+	RemovedMobileDeviceIdList *MobileDeviceIdList `json:"removedMobileDeviceIdList,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AddedContactInfoList") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -9228,12 +9236,12 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -9372,12 +9380,12 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -9498,12 +9506,12 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -9623,12 +9631,12 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -10868,12 +10876,12 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -11809,12 +11817,12 @@ type InventorySource struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
-	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin using the gBid SDK.
-	//   "EXCHANGE_FYBER_GBID" - Fyber using the gBid SDK.
-	//   "EXCHANGE_UNITY_GBID" - Unity using the gBid SDK.
-	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost using the gBid SDK.
-	//   "EXCHANGE_ADMOST_GBID" - Admost using the gBid SDK.
-	//   "EXCHANGE_TOPON_GBID" - Topon using the gBid SDK.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that

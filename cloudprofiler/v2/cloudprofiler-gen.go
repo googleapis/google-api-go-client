@@ -390,6 +390,10 @@ type Profile struct {
 	// pressure to see if those can be optimized.
 	ProfileType string `json:"profileType,omitempty"`
 
+	// StartTime: Output only. Start time for the profile. This output is
+	// only present in response from the ListProfiles method.
+	StartTime string `json:"startTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

@@ -450,10 +450,7 @@ type ContainerState struct {
 	// CCFE-triggered event used for reconciliation then the current reasons
 	// will be set to their *_CONTROL_PLANE_SYNC state. The previous reasons
 	// will contain the last known set of non-unknown non-control_plane_sync
-	// reasons for the state.Reasons fields are deprecated. New tenants
-	// should only use the state field. If you must know the reason(s)
-	// behind a specific state, please consult with CCFE team first
-	// (cloud-ccfe-discuss@google.com).
+	// reasons for the state.
 	PreviousReasons *Reasons `json:"previousReasons,omitempty"`
 
 	// State: The current state of the container. This state is the

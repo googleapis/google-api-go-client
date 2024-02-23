@@ -187,6 +187,7 @@ type ProjectsAttestorsService struct {
 
 func NewProjectsPlatformsService(s *Service) *ProjectsPlatformsService {
 	rs := &ProjectsPlatformsService{s: s}
+	rs.Gke = NewProjectsPlatformsGkeService(s)
 	rs.Policies = NewProjectsPlatformsPoliciesService(s)
 	return rs
 }
@@ -194,7 +195,30 @@ func NewProjectsPlatformsService(s *Service) *ProjectsPlatformsService {
 type ProjectsPlatformsService struct {
 	s *Service
 
+	Gke *ProjectsPlatformsGkeService
+
 	Policies *ProjectsPlatformsPoliciesService
+}
+
+func NewProjectsPlatformsGkeService(s *Service) *ProjectsPlatformsGkeService {
+	rs := &ProjectsPlatformsGkeService{s: s}
+	rs.Policies = NewProjectsPlatformsGkePoliciesService(s)
+	return rs
+}
+
+type ProjectsPlatformsGkeService struct {
+	s *Service
+
+	Policies *ProjectsPlatformsGkePoliciesService
+}
+
+func NewProjectsPlatformsGkePoliciesService(s *Service) *ProjectsPlatformsGkePoliciesService {
+	rs := &ProjectsPlatformsGkePoliciesService{s: s}
+	return rs
+}
+
+type ProjectsPlatformsGkePoliciesService struct {
+	s *Service
 }
 
 func NewProjectsPlatformsPoliciesService(s *Service) *ProjectsPlatformsPoliciesService {
@@ -317,6 +341,35 @@ type AdmissionWhitelistPattern struct {
 
 func (s *AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
 	type NoMethod AdmissionWhitelistPattern
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AllowlistResult: Result of evaluating an image name allowlist.
+type AllowlistResult struct {
+	// MatchedPattern: The allowlist pattern that the image matched.
+	MatchedPattern string `json:"matchedPattern,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MatchedPattern") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MatchedPattern") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllowlistResult) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowlistResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -741,6 +794,80 @@ func (s *Check) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CheckResult: Result of evaluating one check.
+type CheckResult struct {
+	// AllowlistResult: If the image was exempted by an allow_pattern in the
+	// check, contains the pattern that the image name matched.
+	AllowlistResult *AllowlistResult `json:"allowlistResult,omitempty"`
+
+	// DisplayName: The name of the check.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EvaluationResult: If a check was evaluated, contains the result of
+	// the check.
+	EvaluationResult *EvaluationResult `json:"evaluationResult,omitempty"`
+
+	// Explanation: Explanation of this check result.
+	Explanation string `json:"explanation,omitempty"`
+
+	// Index: The index of the check.
+	Index int64 `json:"index,omitempty,string"`
+
+	// Type: The type of the check.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckResults: Result of evaluating one or more checks.
+type CheckResults struct {
+	// Results: Per-check details.
+	Results []*CheckResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckResults) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckResults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CheckSet: A conjunction of policy checks, scoped to a particular
 // namespace or Kubernetes service account. In order for evaluation of a
 // `CheckSet` to return "allowed" for a given image in a given Pod, one
@@ -793,6 +920,53 @@ func (s *CheckSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CheckSetResult: Result of evaluating one check set.
+type CheckSetResult struct {
+	// AllowlistResult: If the image was exempted by an allow_pattern in the
+	// check set, contains the pattern that the image name matched.
+	AllowlistResult *AllowlistResult `json:"allowlistResult,omitempty"`
+
+	// CheckResults: If checks were evaluated, contains the results of
+	// evaluating each check.
+	CheckResults *CheckResults `json:"checkResults,omitempty"`
+
+	// DisplayName: The name of the check set.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Explanation: Explanation of this check set result. Only populated if
+	// no checks were evaluated.
+	Explanation string `json:"explanation,omitempty"`
+
+	// Index: The index of the check set.
+	Index int64 `json:"index,omitempty,string"`
+
+	// Scope: The scope of the check set.
+	Scope *Scope `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckSetResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckSetResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -802,6 +976,117 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EvaluateGkePolicyRequest: Request message for
+// PlatformPolicyEvaluationService.EvaluateGkePolicy.
+type EvaluateGkePolicyRequest struct {
+	// Resource: Required. JSON or YAML blob representing a Kubernetes
+	// resource.
+	Resource googleapi.RawMessage `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Resource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluateGkePolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluateGkePolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EvaluateGkePolicyResponse: Response message for
+// PlatformPolicyEvaluationService.EvaluateGkePolicy.
+type EvaluateGkePolicyResponse struct {
+	// Results: Evaluation result for each Pod contained in the request.
+	Results []*PodResult `json:"results,omitempty"`
+
+	// Verdict: The result of evaluating all Pods in the request.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Not specified. This should never be used.
+	//   "CONFORMANT" - All Pods in the request conform to the policy.
+	//   "NON_CONFORMANT" - At least one Pod does not conform to the policy.
+	//   "ERROR" - Encountered at least one error evaluating a Pod and all
+	// other Pods conform to the policy. Non-conformance has precedence over
+	// errors.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluateGkePolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluateGkePolicyResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationResult: Result of evaluating one check.
+type EvaluationResult struct {
+	// Verdict: The result of evaluating this check.
+	//
+	// Possible values:
+	//   "CHECK_VERDICT_UNSPECIFIED" - Not specified. This should never be
+	// used.
+	//   "CONFORMANT" - The check was successfully evaluated and the image
+	// satisfied the check.
+	//   "NON_CONFORMANT" - The check was successfully evaluated and the
+	// image did not satisfy the check.
+	//   "ERROR" - The check was not successfully evaluated.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Verdict") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Verdict") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -1084,6 +1369,59 @@ func (s *ImageFreshnessCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImageResult: Result of evaluating one image.
+type ImageResult struct {
+	// AllowlistResult: If the image was exempted by a top-level
+	// allow_pattern, contains the allowlist pattern that the image name
+	// matched.
+	AllowlistResult *AllowlistResult `json:"allowlistResult,omitempty"`
+
+	// CheckSetResult: If a check set was evaluated, contains the result of
+	// the check set. Empty if there were no check sets.
+	CheckSetResult *CheckSetResult `json:"checkSetResult,omitempty"`
+
+	// Explanation: Explanation of this image result. Only populated if no
+	// check sets were evaluated.
+	Explanation string `json:"explanation,omitempty"`
+
+	// ImageUri: Image URI from the request.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// Verdict: The result of evaluating this image.
+	//
+	// Possible values:
+	//   "IMAGE_VERDICT_UNSPECIFIED" - Not specified. This should never be
+	// used.
+	//   "CONFORMANT" - Image conforms to the policy.
+	//   "NON_CONFORMANT" - Image does not conform to the policy.
+	//   "ERROR" - Error evaluating the image. Non-conformance has
+	// precedence over errors.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Jwt struct {
 	// CompactJwt: The compact encoding of a JWS, which is always three
 	// base64 encoded strings joined by periods. For details, see:
@@ -1355,6 +1693,56 @@ type PlatformPolicy struct {
 
 func (s *PlatformPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PlatformPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PodResult: Result of evaluating the whole GKE policy for one Pod.
+type PodResult struct {
+	// ImageResults: Per-image details.
+	ImageResults []*ImageResult `json:"imageResults,omitempty"`
+
+	// KubernetesNamespace: The Kubernetes namespace of the Pod.
+	KubernetesNamespace string `json:"kubernetesNamespace,omitempty"`
+
+	// KubernetesServiceAccount: The Kubernetes service account of the Pod.
+	KubernetesServiceAccount string `json:"kubernetesServiceAccount,omitempty"`
+
+	// PodName: The name of the Pod.
+	PodName string `json:"podName,omitempty"`
+
+	// Verdict: The result of evaluating this Pod.
+	//
+	// Possible values:
+	//   "POD_VERDICT_UNSPECIFIED" - Not specified. This should never be
+	// used.
+	//   "CONFORMANT" - All images conform to the policy.
+	//   "NON_CONFORMANT" - At least one image does not conform to the
+	// policy.
+	//   "ERROR" - Encountered at least one error evaluating an image and
+	// all other images with non-error verdicts conform to the policy.
+	// Non-conformance has precedence over errors.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageResults") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PodResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PodResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3904,6 +4292,152 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "ValidateAttestationOccurrenceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "binaryauthorization.projects.platforms.gke.policies.evaluate":
+
+type ProjectsPlatformsGkePoliciesEvaluateCall struct {
+	s                        *Service
+	name                     string
+	evaluategkepolicyrequest *EvaluateGkePolicyRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Evaluate: Evaluates a Kubernetes object versus a GKE platform policy.
+// Returns `NOT_FOUND` if the policy doesn't exist, `INVALID_ARGUMENT`
+// if the policy or request is malformed and `PERMISSION_DENIED` if the
+// client does not have sufficient permissions.
+//
+//   - name: The name of the platform policy to evaluate in the format
+//     `projects/*/platforms/*/policies/*`.
+func (r *ProjectsPlatformsGkePoliciesService) Evaluate(name string, evaluategkepolicyrequest *EvaluateGkePolicyRequest) *ProjectsPlatformsGkePoliciesEvaluateCall {
+	c := &ProjectsPlatformsGkePoliciesEvaluateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.evaluategkepolicyrequest = evaluategkepolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Fields(s ...googleapi.Field) *ProjectsPlatformsGkePoliciesEvaluateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Context(ctx context.Context) *ProjectsPlatformsGkePoliciesEvaluateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.evaluategkepolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:evaluate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.gke.policies.evaluate" call.
+// Exactly one of *EvaluateGkePolicyResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *EvaluateGkePolicyResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Do(opts ...googleapi.CallOption) (*EvaluateGkePolicyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EvaluateGkePolicyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Evaluates a Kubernetes object versus a GKE platform policy. Returns `NOT_FOUND` if the policy doesn't exist, `INVALID_ARGUMENT` if the policy or request is malformed and `PERMISSION_DENIED` if the client does not have sufficient permissions.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/gke/policies/{policiesId}:evaluate",
+	//   "httpMethod": "POST",
+	//   "id": "binaryauthorization.projects.platforms.gke.policies.evaluate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the platform policy to evaluate in the format `projects/*/platforms/*/policies/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/gke/policies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:evaluate",
+	//   "request": {
+	//     "$ref": "EvaluateGkePolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "EvaluateGkePolicyResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

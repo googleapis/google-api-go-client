@@ -1267,6 +1267,10 @@ type AppRecoveryAction struct {
 	// The action cannot be resumed.
 	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
 	// and has not yet been deployed to users.
+	//   "RECOVERY_STATUS_GENERATION_IN_PROGRESS" - The recovery action is
+	// generating recovery apks.
+	//   "RECOVERY_STATUS_GENERATION_FAILED" - The app recovery action
+	// generation has failed.
 	Status string `json:"status,omitempty"`
 
 	// Targeting: Specifies targeting criteria for the recovery action such
@@ -1300,8 +1304,7 @@ func (s *AppRecoveryAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppVersionList: Data format for a list of app versions. Only one app
-// version is supported for now.
+// AppVersionList: Data format for a list of app versions.
 type AppVersionList struct {
 	// VersionCodes: List of app version codes.
 	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
@@ -3678,6 +3681,10 @@ type GeneratedRecoveryApk struct {
 	// The action cannot be resumed.
 	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
 	// and has not yet been deployed to users.
+	//   "RECOVERY_STATUS_GENERATION_IN_PROGRESS" - The recovery action is
+	// generating recovery apks.
+	//   "RECOVERY_STATUS_GENERATION_FAILED" - The app recovery action
+	// generation has failed.
 	RecoveryStatus string `json:"recoveryStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DownloadId") to

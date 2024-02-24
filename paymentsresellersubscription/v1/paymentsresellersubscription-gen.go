@@ -880,7 +880,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	// charged indefinitely.
 	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
 
-	// Name: Output only. Response only. Resource name of the product. It
+	// Name: Identifier. Response only. Resource name of the product. It
 	// will have the format of "partners/{partner_id}/products/{product_id}"
 	Name string `json:"name,omitempty"`
 
@@ -1054,7 +1054,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// PROMOTION_TYPE_INTRODUCTORY_PRICING.
 	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
 
-	// Name: Output only. Response only. Resource name of the subscription
+	// Name: Identifier. Response only. Resource name of the subscription
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
 	Name string `json:"name,omitempty"`
@@ -1108,7 +1108,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]by
 // GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
 // etails: The details of a introductory pricing promotion.
 type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails struct {
-	// IntroductoryPricingSpecs: Specifies the introductory pricing periods.
+	// IntroductoryPricingSpecs: Output only. Specifies the introductory
+	// pricing periods.
 	IntroductoryPricingSpecs []*GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1253,7 +1254,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// LineItems: Required. The line items of the subscription.
 	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
 
-	// Name: Optional. Resource name of the subscription. It will have the
+	// Name: Identifier. Resource name of the subscription. It will have the
 	// format of "partners/{partner_id}/subscriptions/{subscription_id}".
 	// This is available for authorizeAddon, but otherwise is response only.
 	Name string `json:"name,omitempty"`
@@ -1376,7 +1377,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetai
 // ls: Describes the details of a cancelled or cancelling subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails struct {
-	// Reason: The reason of the cancellation.
+	// Reason: Output only. The reason of the cancellation.
 	//
 	// Possible values:
 	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified.
@@ -1569,7 +1570,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDeta
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRe
 // currenceDetails: Details for a ONE_TIME recurrence line item.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails struct {
-	// ServicePeriod: The service period of the ONE_TIME line item.
+	// ServicePeriod: Output only. The service period of the ONE_TIME line
+	// item.
 	ServicePeriod *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod `json:"servicePeriod,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ServicePeriod") to
@@ -1857,8 +1859,8 @@ func (s *ProductBundleDetails) MarshalJSON() ([]byte, error) {
 // SubscriptionLineItemBundleDetails: The bundle details for a line item
 // corresponding to a hard bundle.
 type SubscriptionLineItemBundleDetails struct {
-	// BundleElementDetails: The details for each element in the hard
-	// bundle.
+	// BundleElementDetails: Output only. The details for each element in
+	// the hard bundle.
 	BundleElementDetails []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails `json:"bundleElementDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

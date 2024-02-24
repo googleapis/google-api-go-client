@@ -1073,15 +1073,11 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 // cards, like data entered in dialogs
 // (https://developers.google.com/chat/how-tos/dialogs).
 type CommonEventObject struct {
-	// FormInputs: A map containing the current values of the widgets in a
-	// card. The map keys are the string IDs assigned to each widget, and
-	// the values represent inputs to the widget. Depending on the input
-	// data type, a different object represents each input: For single-value
-	// widgets, `StringInput`. For multi-value widgets, an array of
-	// `StringInput` objects. For a date-time picker, a `DateTimeInput`. For
-	// a date-only picker, a `DateInput`. For a time-only picker, a
-	// `TimeInput`. Corresponds with the data entered by a user on a card in
-	// a dialog (https://developers.google.com/chat/how-tos/dialogs).
+	// FormInputs: A map containing the values that a user inputs in a
+	// widget from a card or dialog. The map keys are the string IDs
+	// assigned to each widget, and the values represent inputs to the
+	// widget. For details, see Process information inputted by users
+	// (https://developers.google.com/chat/ui/read-form-data).
 	FormInputs map[string]Inputs `json:"formInputs,omitempty"`
 
 	// HostApp: The hostApp enum which indicates the app the add-on is
@@ -3776,23 +3772,34 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Inputs: Types of data that users can enter on cards or dialogs. To
-// learn how to process information from users, see Read form data input
-// by users on cards
-// (https://developers.google.com/chat/ui/read-form-data).
+// Inputs: Types of data that users can input on cards or dialogs
+// (https://developers.google.com/chat/ui/read-form-data). The input
+// type depends on the type of values that the widget accepts.
 type Inputs struct {
-	// DateInput: Date input values.
+	// DateInput: Date input values from a `DateTimePicker`
+	// (https://developers.google.com/chat/api/reference/rest/v1/cards#DateTimePicker)
+	// widget that only accepts date values.
 	DateInput *DateInput `json:"dateInput,omitempty"`
 
-	// DateTimeInput: Date and time input values.
+	// DateTimeInput: Date and time input values from a `DateTimePicker`
+	// (https://developers.google.com/chat/api/reference/rest/v1/cards#DateTimePicker)
+	// widget that accepts both a date and time.
 	DateTimeInput *DateTimeInput `json:"dateTimeInput,omitempty"`
 
-	// StringInputs: Input parameter for regular widgets. For single-valued
-	// widgets, it is a single value list. For multi-valued widgets, such as
-	// checkbox, all the values are presented.
+	// StringInputs: A list of strings that represent the values that the
+	// user inputs in a widget. If the widget only accepts one value, such
+	// as a `TextInput`
+	// (https://developers.google.com/chat/api/reference/rest/v1/cards#TextInput)
+	// widget, the list contains one string object. If the widget accepts
+	// multiple values, such as a `SelectionInput`
+	// (https://developers.google.com/chat/api/reference/rest/v1/cards#selectioninput)
+	// widget of checkboxes, the list contains a string object for each
+	// value that the user inputs or selects.
 	StringInputs *StringInputs `json:"stringInputs,omitempty"`
 
-	// TimeInput: Time input values.
+	// TimeInput: Time input values from a `DateTimePicker`
+	// (https://developers.google.com/chat/api/reference/rest/v1/cards#DateTimePicker)
+	// widget that only accepts time values.
 	TimeInput *TimeInput `json:"timeInput,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateInput") to
@@ -5005,7 +5012,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // widgets, it is a single value list. For multi-valued widgets, such as
 // checkbox, all the values are presented.
 type StringInputs struct {
-	// Value: An array of strings entered by the user.
+	// Value: An list of strings entered by the user.
 	Value []string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Value") to

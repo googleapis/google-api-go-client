@@ -321,7 +321,8 @@ type Cluster struct {
 	// ShardCount: Required. Number of shards for the Redis cluster.
 	ShardCount int64 `json:"shardCount,omitempty"`
 
-	// SizeGb: Output only. Redis memory size in GB for the entire cluster.
+	// SizeGb: Output only. Redis memory size in GB for the entire cluster
+	// rounded up to the next integer.
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
 	// State: Output only. The current state of this cluster. Can be

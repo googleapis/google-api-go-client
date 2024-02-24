@@ -435,7 +435,7 @@
       }
     }
   },
-  "revision": "20240201",
+  "revision": "20240222",
   "rootUrl": "https://paymentsresellersubscription.googleapis.com/",
   "schemas": {
     "GoogleCloudPaymentsResellerSubscriptionV1Amount": {
@@ -793,8 +793,7 @@
           "description": "Optional. Details for a subscription line item with finite billing cycles. If unset, the line item will be charged indefinitely."
         },
         "name": {
-          "description": "Output only. Response only. Resource name of the product. It will have the format of \"partners/{partner_id}/products/{product_id}\"",
-          "readOnly": true,
+          "description": "Identifier. Response only. Resource name of the product. It will have the format of \"partners/{partner_id}/products/{product_id}\"",
           "type": "string"
         },
         "priceConfigs": {
@@ -914,8 +913,7 @@
           "description": "Optional. Specifies the introductory pricing details when the promotion_type is PROMOTION_TYPE_INTRODUCTORY_PRICING."
         },
         "name": {
-          "description": "Output only. Response only. Resource name of the subscription promotion. It will have the format of \"partners/{partner_id}/promotion/{promotion_id}\"",
-          "readOnly": true,
+          "description": "Identifier. Response only. Resource name of the subscription promotion. It will have the format of \"partners/{partner_id}/promotion/{promotion_id}\"",
           "type": "string"
         },
         "promotionType": {
@@ -962,10 +960,11 @@
       "id": "GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails",
       "properties": {
         "introductoryPricingSpecs": {
-          "description": "Specifies the introductory pricing periods.",
+          "description": "Output only. Specifies the introductory pricing periods.",
           "items": {
             "$ref": "GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec"
           },
+          "readOnly": true,
           "type": "array"
         }
       },
@@ -1057,7 +1056,7 @@
           "type": "array"
         },
         "name": {
-          "description": "Optional. Resource name of the subscription. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\". This is available for authorizeAddon, but otherwise is response only.",
+          "description": "Identifier. Resource name of the subscription. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\". This is available for authorizeAddon, but otherwise is response only.",
           "type": "string"
         },
         "partnerUserToken": {
@@ -1156,7 +1155,7 @@
       "id": "GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails",
       "properties": {
         "reason": {
-          "description": "The reason of the cancellation.",
+          "description": "Output only. The reason of the cancellation.",
           "enum": [
             "CANCELLATION_REASON_UNSPECIFIED",
             "CANCELLATION_REASON_FRAUD",
@@ -1183,6 +1182,7 @@
             "Used for notification only, do not use in Cancel API. The subscription is cancelled by Google automatically since it is no longer valid.",
             "Other reason."
           ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -1310,7 +1310,8 @@
       "properties": {
         "servicePeriod": {
           "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod",
-          "description": "The service period of the ONE_TIME line item."
+          "description": "Output only. The service period of the ONE_TIME line item.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -1477,10 +1478,11 @@
       "id": "SubscriptionLineItemBundleDetails",
       "properties": {
         "bundleElementDetails": {
-          "description": "The details for each element in the hard bundle.",
+          "description": "Output only. The details for each element in the hard bundle.",
           "items": {
             "$ref": "GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails"
           },
+          "readOnly": true,
           "type": "array"
         }
       },

@@ -807,6 +807,10 @@ type ConnectionInfo struct {
 	// issuer-to-root order according to RFC 5246.
 	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
 
+	// PscDnsName: Output only. The DNS name to use with PSC for the
+	// Instance.
+	PscDnsName string `json:"pscDnsName,omitempty"`
+
 	// PublicIpAddress: Output only. The public IP addresses for the
 	// Instance. This is available ONLY when enable_public_ip is set. This
 	// is the connection endpoint for an end-user application.
@@ -1489,6 +1493,10 @@ type Instance struct {
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
+
+	// PscInstanceConfig: Optional. The configuration for Private Service
+	// Connect (PSC) for the instance.
+	PscInstanceConfig *PscInstanceConfig `json:"pscInstanceConfig,omitempty"`
 
 	// PublicIpAddress: Output only. The public IP addresses for the
 	// Instance. This is available ONLY when enable_public_ip is set. This
@@ -2227,6 +2235,110 @@ func (s *PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PscInstanceConfig: PscInstanceConfig contains PSC related
+// configuration at an instance level.
+type PscInstanceConfig struct {
+	// AllowedConsumerNetworks: Optional. List of consumer networks that are
+	// allowed to create PSC endpoints to service-attachments to this
+	// instance.
+	AllowedConsumerNetworks []string `json:"allowedConsumerNetworks,omitempty"`
+
+	// AllowedConsumerProjects: Optional. List of consumer projects that are
+	// allowed to create PSC endpoints to service-attachments to this
+	// instance.
+	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+
+	// OutgoingServiceAttachmentLinks: Optional. List of service attachments
+	// that this instance has created endpoints to connect with. Currently,
+	// only a single outgoing service attachment is supported per instance.
+	OutgoingServiceAttachmentLinks []string `json:"outgoingServiceAttachmentLinks,omitempty"`
+
+	// PscEnabled: Optional. Whether PSC connectivity is enabled for this
+	// instance. This is populated by referencing the value from the parent
+	// cluster.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
+
+	// PscInterfaceConfigs: Optional. Configurations for setting up PSC
+	// interfaces attached to the instance which are used for outbound
+	// connectivity. Only primary instances can have PSC interface attached.
+	// All the VMs created for the primary instance will share the same
+	// configurations. Currently we only support 0 or 1 PSC interface.
+	PscInterfaceConfigs []*PscInterfaceConfig `json:"pscInterfaceConfigs,omitempty"`
+
+	// ServiceAttachmentLink: Output only. The service attachment created
+	// when Private Service Connect (PSC) is enabled for the instance. The
+	// name of the resource will be in the format of
+	// projects//regions//serviceAttachments/
+	ServiceAttachmentLink string `json:"serviceAttachmentLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedConsumerNetworks") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedConsumerNetworks")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInstanceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PscInterfaceConfig: Configuration for setting up a PSC interface.
+// This information needs to be provided by the customer. PSC interfaces
+// will be created and added to VMs via SLM (adding a network interface
+// will require recreating the VM). For HA instances this will be done
+// via LDTM.
+type PscInterfaceConfig struct {
+	// ConsumerEndpointIps: A list of endpoints in the consumer VPC the
+	// interface might initiate outbound connections to. This list has to be
+	// provided when the PSC interface is created.
+	ConsumerEndpointIps []string `json:"consumerEndpointIps,omitempty"`
+
+	// NetworkAttachment: The NetworkAttachment resource created in the
+	// consumer VPC to which the PSC interface will be linked, in the form
+	// of:
+	// "projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${N
+	// ETWORK_ATTACHMENT_NAME}". NetworkAttachment has to be provided when
+	// the PSC interface is created.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerEndpointIps")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumerEndpointIps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInterfaceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QuantityBasedExpiry: A backup's position in a quantity-based
 // retention queue, of backups with the same source cluster and type,
 // with length, retention, specified by the backup's retention policy.
@@ -2857,10 +2969,14 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "OBSERVABILITY_DATA" - Database resource monitoring data
 	//   "SECURITY_FINDING_DATA" - Database resource security health signal
 	// data
+	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation
+	// signal data
 	FeedType string `json:"feedType,omitempty"`
 
-	// ResourceHealthSignalData: More feed data would be added in subsequent
+	// RecommendationSignalData: More feed data would be added in subsequent
 	// CLs
+	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
+
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
 
 	// ResourceId: Primary key associated with the Resource. resource_id is
@@ -3106,6 +3222,27 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// instance is not set to on.
 	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
 	// enabled.
+	//   "SIGNAL_TYPE_IDLE" - Represents Idle instance helps to reduce
+	// costs.
+	//   "SIGNAL_TYPE_OVERPROVISIONED" - Represents instances that are
+	// unnecessarily large for given workload.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_OPEN_TABLES" - Represents high number
+	// of concurrently opened tables.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES" - Represents high table count
+	// close to SLA limit.
+	//   "SIGNAL_TYPE_HIGH_TRANSACTION_ID_UTILIZATION" - Represents high
+	// number of unvacuumed transactions
+	//   "SIGNAL_TYPE_UNDERPROVISIONED" - Represents need for more CPU
+	// and/or memory
+	//   "SIGNAL_TYPE_OUT_OF_DISK" - Represents out of disk.
+	//   "SIGNAL_TYPE_SERVER_CERTIFICATE_NEAR_EXPIRY" - Represents server
+	// certificate is near expiry.
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database
+	// auditing is disabled.
+	//   "SIGNAL_TYPE_RESTRICT_AUTHORIZED_NETWORKS" - Represents not
+	// restricted to authorized networks.
+	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
+	// violate org policy restrict public ip.
 	SignalType string `json:"signalType,omitempty"`
 
 	// Possible values:
@@ -3168,7 +3305,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	ProviderDescription string `json:"providerDescription,omitempty"`
 
 	// ResourceType: Required. The type of resource this ID is identifying.
-	// Ex alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
+	// Ex redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
+	// alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
 	// spanner.googleapis.com/Instance REQUIRED Please refer
 	// go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
@@ -3231,6 +3369,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
+
+	// Entitlements: Entitlements associated with the resource
+	Entitlements []*StorageDatabasecenterPartnerapiV1mainEntitlement `json:"entitlements,omitempty"`
 
 	// ExpectedState: The state that the instance is expected to be in. For
 	// example, an instance state can transition to UNHEALTHY due to wrong
@@ -3321,6 +3462,291 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 
 func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSig
+// nalData: Common model for database resource recommendation signal
+// data.
+type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData struct {
+	// AdditionalMetadata: Required. Any other additional metadata specific
+	// to recommendation
+	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
+
+	// LastRefreshTime: Required. last time recommendationw as refreshed
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+
+	// RecommendationState: Required. Recommendation state
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "ACTIVE" - Recommendation is active and can be applied. ACTIVE
+	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
+	//   "CLAIMED" - Recommendation is in claimed state. Recommendations
+	// content is immutable and cannot be updated by Google. CLAIMED
+	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
+	//   "SUCCEEDED" - Recommendation is in succeeded state. Recommendations
+	// content is immutable and cannot be updated by Google. SUCCEEDED
+	// recommendations can be marked as SUCCEEDED, or FAILED.
+	//   "FAILED" - Recommendation is in failed state. Recommendations
+	// content is immutable and cannot be updated by Google. FAILED
+	// recommendations can be marked as SUCCEEDED, or FAILED.
+	//   "DISMISSED" - Recommendation is in dismissed state. Recommendation
+	// content can be updated by Google. DISMISSED recommendations can be
+	// marked as ACTIVE.
+	RecommendationState string `json:"recommendationState,omitempty"`
+
+	// Recommender: Required. Name of recommendation. Examples:
+	// organizations/1234/locations/us-central1/recommenders/google.cloudsql.
+	// instance.PerformanceRecommender/recommendations/9876
+	Recommender string `json:"recommender,omitempty"`
+
+	// RecommenderId: Required. ID of recommender. Examples:
+	// "google.cloudsql.instance.PerformanceRecommender"
+	RecommenderId string `json:"recommenderId,omitempty"`
+
+	// RecommenderSubtype: Required. Contains an identifier for a subtype of
+	// recommendations produced for the same recommender. Subtype is a
+	// function of content and impact, meaning a new subtype might be added
+	// when significant changes to `content` or `primary_impact.category`
+	// are introduced. See the Recommenders section to see a list of
+	// subtypes for a given Recommender. Examples: For recommender =
+	// "google.cloudsql.instance.PerformanceRecommender",
+	// recommender_subtype can be
+	// "MYSQL_HIGH_NUMBER_OF_OPEN_TABLES_BEST_PRACTICE"/"POSTGRES_HIGH_TRANSA
+	// CTION_ID_UTILIZATION_BEST_PRACTICE"
+	RecommenderSubtype string `json:"recommenderSubtype,omitempty"`
+
+	// ResourceName: Required. Database resource name associated with the
+	// signal. Resource name to follow CAIS resource_name format as noted
+	// here go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// SignalType: Required. Type of signal, for example,
+	// `SIGNAL_TYPE_IDLE`, `SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES`, etc.
+	//
+	// Possible values:
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is protected by automatic failover. Checks for resources
+	// that are configured to have redundancy within a region that enables
+	// automatic failover.
+	//   "SIGNAL_TYPE_GROUP_NOT_REPLICATING_ACROSS_REGIONS" - Represents if
+	// a group is replicating across regions. Checks for resources that are
+	// configured to have redundancy, and ongoing replication, across
+	// regions.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_ZONES" - Represents if the
+	// resource is available in multiple zones or not.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_REGIONS" - Represents if a
+	// resource is available in multiple regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Represents if a resource has
+	// a promotable replica.
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource
+	// has an automated backup policy.
+	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources
+	// has a short backup retention period.
+	//   "SIGNAL_TYPE_LAST_BACKUP_FAILED" - Represents if the last backup of
+	// a resource failed.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than some threshold value.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_2_0" - Represents if a
+	// resource violates CIS GCP Foundation 2.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_3" - Represents if a
+	// resource violates CIS GCP Foundation 1.3.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_2" - Represents if a
+	// resource violates CIS GCP Foundation 1.2.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_1" - Represents if a
+	// resource violates CIS GCP Foundation 1.1.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a
+	// resource violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource
+	// violates NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource
+	// violates ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource
+	// violates PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents
+	// if log_checkpoints database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_QUERY_DURATIONS_NOT_LOGGED" - Represents if the
+	// log_duration database flag for a Cloud SQL for PostgreSQL instance is
+	// not set to on.
+	//   "SIGNAL_TYPE_VERBOSE_ERROR_LOGGING" - Represents if the
+	// log_error_verbosity database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to default or stricter (default or terse).
+	//   "SIGNAL_TYPE_QUERY_LOCK_WAITS_NOT_LOGGED" - Represents if the
+	// log_lock_waits database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_MOST_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance is not set appropriately.
+	//   "SIGNAL_TYPE_LOGGING_ONLY_CRITICAL_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance does not have an appropriate severity level.
+	//   "SIGNAL_TYPE_MINIMAL_ERROR_LOGGING" - Represents if the
+	// log_min_messages database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to warning or another recommended value.
+	//   "SIGNAL_TYPE_QUERY_STATISTICS_LOGGED" - Represents if the
+	// databaseFlags property of instance metadata for the
+	// log_executor_status field is set to on.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_CLIENT_HOSTNAME" - Represents if
+	// the log_hostname database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PARSER_STATISTICS" - Represents
+	// if the log_parser_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PLANNER_STATISTICS" - Represents
+	// if the log_planner_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_ONLY_DDL_STATEMENTS" - Represents if the
+	// log_statement database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to DDL (all data definition statements).
+	//   "SIGNAL_TYPE_LOGGING_QUERY_STATISTICS" - Represents if the
+	// log_statement_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_TEMPORARY_FILES" - Represents if the
+	// log_temp_files database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to "0". (NOTE: 0 = ON)
+	//   "SIGNAL_TYPE_CONNECTION_MAX_NOT_CONFIGURED" - Represents if the
+	// user connections database flag for a Cloud SQL for SQL Server
+	// instance is configured.
+	//   "SIGNAL_TYPE_USER_OPTIONS_CONFIGURED" - Represents if the user
+	// options database flag for Cloud SQL SQL Server instance is configured
+	// or not.
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource
+	// is exposed to public access.
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources
+	// requires all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a Cloud SQL database
+	// has a password configured for the root account or not.
+	//   "SIGNAL_TYPE_WEAK_ROOT_PASSWORD" - Represents if a Cloud SQL
+	// database has a weak password configured for the root account.
+	//   "SIGNAL_TYPE_ENCRYPTION_KEY_NOT_CUSTOMER_MANAGED" - Represents if a
+	// SQL database instance is not encrypted with customer-managed
+	// encryption keys (CMEK).
+	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if
+	// The contained database authentication database flag for a Cloud SQL
+	// for SQL Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Represents if the
+	// cross_db_ownership_chaining database flag for a Cloud SQL for SQL
+	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he
+	// external scripts enabled database flag for a Cloud SQL for SQL Server
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_LOCAL_DATA_LOADS" - Represents if the
+	// local_infile database flag for a Cloud SQL for MySQL instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_CONNECTION_ATTEMPTS_NOT_LOGGED" - Represents if the
+	// log_connections database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_DISCONNECTIONS_NOT_LOGGED" - Represents if the
+	// log_disconnections database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_EXCESSIVE_STATEMENT_INFO" - Represents if the
+	// log_min_duration_statement database flag for a Cloud SQL for
+	// PostgreSQL instance is not set to -1.
+	//   "SIGNAL_TYPE_EXPOSED_TO_REMOTE_ACCESS" - Represents if the remote
+	// access database flag for a Cloud SQL for SQL Server instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_DATABASE_NAMES_EXPOSED" - Represents if the
+	// skip_show_database database flag for a Cloud SQL for MySQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_SENSITIVE_TRACE_INFO_NOT_MASKED" - Represents if the
+	// 3625 (trace flag) database flag for a Cloud SQL for SQL Server
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
+	// enabled.
+	//   "SIGNAL_TYPE_IDLE" - Represents Idle instance helps to reduce
+	// costs.
+	//   "SIGNAL_TYPE_OVERPROVISIONED" - Represents instances that are
+	// unnecessarily large for given workload.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_OPEN_TABLES" - Represents high number
+	// of concurrently opened tables.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES" - Represents high table count
+	// close to SLA limit.
+	//   "SIGNAL_TYPE_HIGH_TRANSACTION_ID_UTILIZATION" - Represents high
+	// number of unvacuumed transactions
+	//   "SIGNAL_TYPE_UNDERPROVISIONED" - Represents need for more CPU
+	// and/or memory
+	//   "SIGNAL_TYPE_OUT_OF_DISK" - Represents out of disk.
+	//   "SIGNAL_TYPE_SERVER_CERTIFICATE_NEAR_EXPIRY" - Represents server
+	// certificate is near expiry.
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database
+	// auditing is disabled.
+	//   "SIGNAL_TYPE_RESTRICT_AUTHORIZED_NETWORKS" - Represents not
+	// restricted to authorized networks.
+	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
+	// violate org policy restrict public ip.
+	SignalType string `json:"signalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainEntitlement: Proto representing
+// the access that a user has to a specific feature/service. NextId: 3.
+type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
+	// EntitlementState: The current state of user's accessibility to a
+	// feature/benefit.
+	//
+	// Possible values:
+	//   "ENTITLEMENT_STATE_UNSPECIFIED"
+	//   "ENTITLED" - User is entitled to a feature/benefit, but whether it
+	// has been successfully provisioned is decided by provisioning state.
+	//   "REVOKED" - User is entitled to a feature/benefit, but it was
+	// requested to be revoked. Whether the revoke has been successful is
+	// decided by provisioning state.
+	EntitlementState string `json:"entitlementState,omitempty"`
+
+	// Type: An enum that represents the type of this entitlement.
+	//
+	// Possible values:
+	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
+	//   "DUET_AI" - The root entitlement representing Duet AI package
+	// ownership.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntitlementState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntitlementState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainEntitlement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3425,6 +3851,9 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// PostgreSQL dialect.
 	//   "ENGINE_CLOUD_SPANNER_WITH_GOOGLESQL_DIALECT" - Cloud Spanner with
 	// Google SQL dialect.
+	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
+	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis
+	// cluster dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine.
 	// This is to be when engine is known, but it is not present in this
 	// enum.
@@ -3443,6 +3872,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in GCP
 	//   "PRODUCT_TYPE_ON_PREM" - On premises database product.
 	//   "ON_PREM" - On premises database product.
+	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type.
 	// This is to be when product type is known, but it is not present in
 	// this enum.

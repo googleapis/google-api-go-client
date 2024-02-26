@@ -1482,6 +1482,9 @@ func (s *ConnectorsLogConfig) MarshalJSON() ([]byte, error) {
 // CustomConnector: CustomConnector represents the custom connector
 // defined by the customer as part of byoc.
 type CustomConnector struct {
+	// ActiveConnectorVersions: Optional. Active connector versions.
+	ActiveConnectorVersions []string `json:"activeConnectorVersions,omitempty"`
+
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1519,20 +1522,22 @@ type CustomConnector struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ActiveConnectorVersions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActiveConnectorVersions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1582,7 +1587,10 @@ type CustomConnectorVersion struct {
 	// access auth config secrets.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// SpecLocation: Optional. Location of the custom connector spec.
+	// SpecLocation: Optional. Location of the custom connector spec. The
+	// location can be either a public url like
+	// `https://public-url.com/spec` Or a Google Cloud Storage location like
+	// `gs:///`
 	SpecLocation string `json:"specLocation,omitempty"`
 
 	// State: Output only. State of the custom connector version.
@@ -2391,6 +2399,10 @@ type EventingConfig struct {
 	// registration.
 	RegistrationDestinationConfig *DestinationConfig `json:"registrationDestinationConfig,omitempty"`
 
+	// TriggerConfigVariables: Optional. Additional eventing related field
+	// values
+	TriggerConfigVariables []*ConfigVariable `json:"triggerConfigVariables,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2461,6 +2473,10 @@ type EventingConfigTemplate struct {
 	// RegistrationDestinationConfig: Registration host destination config
 	// template.
 	RegistrationDestinationConfig *DestinationConfigTemplate `json:"registrationDestinationConfig,omitempty"`
+
+	// TriggerConfigVariables: Trigger Config fields that needs to be
+	// rendered
+	TriggerConfigVariables []*ConfigVariableTemplate `json:"triggerConfigVariables,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
 	// to unconditionally include in API requests. By default, fields with

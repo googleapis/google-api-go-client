@@ -93,42 +93,42 @@
 // Operation.Done field indicates it is finished. To do this, use the service's
 // Operation client, and a loop, like so:
 //
-//   import (
-//		gax "github.com/googleapis/gax-go/v2"
-//   )
+//	  import (
+//			gax "github.com/googleapis/gax-go/v2"
+//	  )
 //
-//   // existing application code...
+//	  // existing application code...
 //
-//   // API call that returns an Operation.
-//	 op, err := myApiClient.CalculateFoo().Do()
-//	 if err != nil {
-//		// handle err
-//	 }
+//	  // API call that returns an Operation.
+//		 op, err := myApiClient.CalculateFoo().Do()
+//		 if err != nil {
+//			// handle err
+//		 }
 //
-//	 operationsService = myapi.NewOperationsService(myApiClient)
-//   pollingBackoff := gax.Backoff{
-// 	    Initial:    time.Second,
-// 	    Max:        time.Minute, // Max time between polling attempts.
-// 	    Multiplier: 2,
-//   }
-//	 for {
-//		if op.Done {
-//			break
-//		}
-//		// not done, sleep with backoff, then poll again
-//		if err := gax.Sleep(ctx, pollingBackoff.Pause()); err != nil {
-//			// handle error
-//		}
-//		op, err := operationsService.Get(op.Name).Do()
-//		if err != nil {
-//			// handle error
-//		}
-//	 }
+//		 operationsService = myapi.NewOperationsService(myApiClient)
+//	  pollingBackoff := gax.Backoff{
+//		    Initial:    time.Second,
+//		    Max:        time.Minute, // Max time between polling attempts.
+//		    Multiplier: 2,
+//	  }
+//		 for {
+//			if op.Done {
+//				break
+//			}
+//			// not done, sleep with backoff, then poll again
+//			if err := gax.Sleep(ctx, pollingBackoff.Pause()); err != nil {
+//				// handle error
+//			}
+//			op, err := operationsService.Get(op.Name).Do()
+//			if err != nil {
+//				// handle error
+//			}
+//		 }
 //
-//	 if op.Error != nil {
-//		// handle operation err
-//	 }
+//		 if op.Error != nil {
+//			// handle operation err
+//		 }
 //
-//	 // Do something with the response
-//	 fmt.Println(op.Response)
+//		 // Do something with the response
+//		 fmt.Println(op.Response)
 package api

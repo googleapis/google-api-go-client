@@ -7,7 +7,7 @@
 # Fail on error, and display commands being run.
 set -ex
 
-if [[ $(go version) != *"go1.22"* ]]; then
+if [[ $KOKORO_JOB_NAME != *"latest-version"* ]]; then
   exit 0
 fi
 

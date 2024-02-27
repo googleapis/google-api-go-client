@@ -715,6 +715,10 @@ type ConsumerPscConnection struct {
 	// connected to the service attachments in this service connection map.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
 
+	// SelectedSubnetwork: Output only. The URI of the selected subnetwork
+	// selected to allocate IP address for this connection.
+	SelectedSubnetwork string `json:"selectedSubnetwork,omitempty"`
+
 	// ServiceAttachmentUri: The URI of a service attachment which is the
 	// target of the PSC connection.
 	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
@@ -2589,6 +2593,10 @@ type PscConnection struct {
 
 	// PscConnectionId: The PSC connection id of the PSC forwarding rule.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
+
+	// SelectedSubnetwork: Output only. The URI of the subnetwork selected
+	// to allocate IP address for this connection.
+	SelectedSubnetwork string `json:"selectedSubnetwork,omitempty"`
 
 	// State: State of the PSC Connection
 	//

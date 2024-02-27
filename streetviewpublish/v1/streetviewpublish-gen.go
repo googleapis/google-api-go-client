@@ -1159,6 +1159,7 @@ type PhotoSequence struct {
 	//   "INSUFFICIENT_VIDEO_FRAMES" - Not enough video frames.
 	//   "INSUFFICIENT_MOVEMENT" - Not enough moving data.
 	//   "MAST_DOWN" - Mast is down.
+	//   "CAMERA_COVERED" - Camera is covered.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// Filename: Output only. The filename of the upload. Does not include

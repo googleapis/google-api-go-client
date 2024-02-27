@@ -234,6 +234,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest:
+// Request to cancel a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the
 	// subscription immediately, and may or may not (based on the contract)
@@ -290,6 +292,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse:
+// Response that contains the cancelled subscription resource.
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse struct {
 	// Subscription: The cancelled subscription resource.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
@@ -430,6 +434,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLine
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse:
+// Response that contains the entitled subscription resource.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct {
 	// Subscription: The subscription that has user linked to it.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
@@ -501,6 +507,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse:
+// Response that contains the timestamps after the extension.
 type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct {
 	// CycleEndTime: The time at which the subscription is expected to be
 	// extended, in ISO 8061 format. UTC timezone. Example,
@@ -551,8 +559,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse) Ma
 // GoogleCloudPaymentsResellerSubscriptionV1Extension: Describes the
 // details of an extension request.
 type GoogleCloudPaymentsResellerSubscriptionV1Extension struct {
-	// Duration: Specifies the period of access the subscription should
-	// grant.
+	// Duration: Required. Specifies the period of access the subscription
+	// should grant.
 	Duration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"duration,omitempty"`
 
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
@@ -582,15 +590,17 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+// : Request to find eligible promotions for the current user.
 type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
 	// Filter: Optional. Specifies the filters for the promotion results.
 	// The syntax is defined in https://google.aip.dev/160 with the
-	// following caveats: - Only the following features are supported: -
+	// following caveats: 1. Only the following features are supported: -
 	// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
-	// Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only
+	// Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only
 	// the following fields are supported: - `applicableProducts` -
 	// `regionCodes` - `youtubePayload.partnerEligibilityId` -
-	// `youtubePayload.postalCode` - Unless explicitly mentioned above,
+	// `youtubePayload.postalCode` 3. Unless explicitly mentioned above,
 	// other features are not supported. Example:
 	// `applicableProducts:partners/partner1/products/product1 AND
 	// regionCodes:US AND youtubePayload.postalCode=94043 AND
@@ -765,6 +775,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse:
+// Response that contains the products.
 type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -800,6 +812,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse:
+// Response that contains the promotions.
 type GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -1912,12 +1926,12 @@ func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall 
 
 // Filter sets the optional parameter "filter": Specifies the filters
 // for the product results. The syntax is defined in
-// https://google.aip.dev/160 with the following caveats: - Only the
+// https://google.aip.dev/160 with the following caveats: 1. Only the
 // following features are supported: - Logical operator `AND` -
 // Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
-// Has operator `:` (no wildcards `*`) - Only the following fields are
+// Has operator `:` (no wildcards `*`) 2. Only the following fields are
 // supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` -
-// `youtubePayload.postalCode` - Unless explicitly mentioned above,
+// `youtubePayload.postalCode` 3. Unless explicitly mentioned above,
 // other features are not supported. Example: `regionCodes:US AND
 // youtubePayload.postalCode=94043 AND
 // youtubePayload.partnerEligibilityId=eligibility-id`
@@ -2056,7 +2070,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` - Unless explicitly mentioned above, other features are not supported. Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
+	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2307,14 +2321,15 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 
 // Filter sets the optional parameter "filter": Specifies the filters
 // for the promotion results. The syntax is defined in
-// https://google.aip.dev/160 with the following caveats: - Only the
+// https://google.aip.dev/160 with the following caveats: 1. Only the
 // following features are supported: - Logical operator `AND` -
 // Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
-// Has operator `:` (no wildcards `*`) - Only the following fields are
+// Has operator `:` (no wildcards `*`) 2. Only the following fields are
 // supported: - `applicableProducts` - `regionCodes` -
-// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` -
-// Unless explicitly mentioned above, other features are not supported.
-// Example: `applicableProducts:partners/partner1/products/product1 AND
+// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode`
+// 3. Unless explicitly mentioned above, other features are not
+// supported. Example:
+// `applicableProducts:partners/partner1/products/product1 AND
 // regionCodes:US AND youtubePayload.postalCode=94043 AND
 // youtubePayload.partnerEligibilityId=eligibility-id`
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
@@ -2452,7 +2467,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` - Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
+	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

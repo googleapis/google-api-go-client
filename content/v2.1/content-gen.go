@@ -18522,7 +18522,7 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 // SearchRequest: Request message for the ReportService.Search method.
 type SearchRequest struct {
 	// PageSize: Number of ReportRows to retrieve in a single page. Defaults
-	// to the maximum of 1000. Values above 1000 are coerced to 1000.
+	// to 1000. Values above 5000 are coerced to 5000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: Token of the page to retrieve. If not specified, the first

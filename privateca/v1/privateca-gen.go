@@ -967,6 +967,12 @@ type CertificateConfig struct {
 	// certificate that are related to the subject.
 	SubjectConfig *SubjectConfig `json:"subjectConfig,omitempty"`
 
+	// SubjectKeyId: Optional. When specified this provides a custom SKI to
+	// be used in the certificate. This should only be used to maintain a
+	// SKI of an existing CA originally created outside CAS, which was not
+	// generated using method (1) described in RFC 5280 section 4.2.1.2.
+	SubjectKeyId *CertificateConfigKeyId `json:"subjectKeyId,omitempty"`
+
 	// X509Config: Required. Describes how some of the technical X.509
 	// fields in a certificate should be populated.
 	X509Config *X509Parameters `json:"x509Config,omitempty"`
@@ -990,6 +996,37 @@ type CertificateConfig struct {
 
 func (s *CertificateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertificateConfigKeyId: A KeyId identifies a specific public key,
+// usually by hashing the public key.
+type CertificateConfigKeyId struct {
+	// KeyId: Optional. The value of this KeyId encoded in lowercase
+	// hexadecimal. This is most likely the 160 bit SHA-1 hash of the public
+	// key.
+	KeyId string `json:"keyId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertificateConfigKeyId) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateConfigKeyId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

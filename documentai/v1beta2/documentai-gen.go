@@ -3091,7 +3091,8 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
@@ -5426,7 +5427,8 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if

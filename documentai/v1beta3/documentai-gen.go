@@ -3127,7 +3127,8 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
@@ -5398,7 +5399,8 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
@@ -8652,7 +8654,8 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta3BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
@@ -9933,6 +9936,9 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues) Marshal
 // GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty: Defines
 // properties that can be part of the entity type.
 type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
+	// DisplayName: User defined name for the property.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// Name: The name of the property. Follows the same guidelines as the
 	// EntityType name.
 	Name string `json:"name,omitempty"`
@@ -9960,7 +9966,7 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
 	// is subject to the same conventions as the `Entity.base_types` field.
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -9968,10 +9974,10 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

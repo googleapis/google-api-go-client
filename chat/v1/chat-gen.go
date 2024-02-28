@@ -2249,9 +2249,9 @@ func (s *GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Columns: The `Columns` widget displays up to 2
-// columns in a card message or dialog. You can add widgets to each
-// column; the widgets appear in the order that they are specified. For
-// an example in Google Chat apps, see Columns
+// columns in a card or dialog. You can add widgets to each column; the
+// widgets appear in the order that they are specified. For an example
+// in Google Chat apps, see Columns
 // (https://developers.google.com/chat/ui/widgets/columns). The height
 // of each column is determined by the taller column. For example, if
 // the first column is taller than the second column, both columns have
@@ -2265,8 +2265,11 @@ func (s *GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 // the second column wraps if the screen width is less than or equal to
 // 300 pt. * On Android devices, the second column wraps if the screen
 // width is less than or equal to 320 dp. To include more than 2
-// columns, or to use rows, use the `Grid` widget. Google Chat apps
-// (https://developers.google.com/chat):
+// columns, or to use rows, use the `Grid` widget. Google Workspace
+// Add-ons and Chat apps
+// (https://developers.google.com/workspace/extend): Columns for Google
+// Workspace Add-ons are in Developer Preview
+// (https://developers.google.com/workspace/preview).
 type GoogleAppsCardV1Columns struct {
 	// ColumnItems: An array of columns. You can include up to 2 columns in
 	// a card or dialog.
@@ -3055,8 +3058,10 @@ type GoogleAppsCardV1SelectionInput struct {
 	// outside of Google Workspace. For examples of how to implement
 	// multiselect menus, see the [`SelectionInput` widget
 	// page](https://developers.google.com/chat/ui/widgets/selection-input#mu
-	// ltiselect-menu). [Google Chat
-	// apps](https://developers.google.com/chat):
+	// ltiselect-menu). [Google Workspace Add-ons and Chat
+	// apps](https://developers.google.com/workspace/extend): multiselect
+	// for Google Workspace Add-ons are in [Developer
+	// Preview](https://developers.google.com/workspace/preview).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExternalDataSource")

@@ -1181,6 +1181,7 @@ type OrganizationsSharedflowsRevisionsDeploymentsService struct {
 func NewOrganizationsSitesService(s *Service) *OrganizationsSitesService {
 	rs := &OrganizationsSitesService{s: s}
 	rs.Apicategories = NewOrganizationsSitesApicategoriesService(s)
+	rs.Apidocs = NewOrganizationsSitesApidocsService(s)
 	return rs
 }
 
@@ -1188,6 +1189,8 @@ type OrganizationsSitesService struct {
 	s *Service
 
 	Apicategories *OrganizationsSitesApicategoriesService
+
+	Apidocs *OrganizationsSitesApidocsService
 }
 
 func NewOrganizationsSitesApicategoriesService(s *Service) *OrganizationsSitesApicategoriesService {
@@ -1196,6 +1199,15 @@ func NewOrganizationsSitesApicategoriesService(s *Service) *OrganizationsSitesAp
 }
 
 type OrganizationsSitesApicategoriesService struct {
+	s *Service
+}
+
+func NewOrganizationsSitesApidocsService(s *Service) *OrganizationsSitesApidocsService {
+	rs := &OrganizationsSitesApidocsService{s: s}
+	return rs
+}
+
+type OrganizationsSitesApidocsService struct {
 	s *Service
 }
 
@@ -1818,6 +1830,244 @@ type GoogleCloudApigeeV1ApiCategoryResponse struct {
 
 func (s *GoogleCloudApigeeV1ApiCategoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ApiCategoryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApiDoc: `ApiDoc` represents an API catalog item.
+// Catalog items are used in two ways in a portal: - Users can browse
+// and interact with a visual representation of the API documentation -
+// The `api_product_name` field provides a link to a backing API
+// product. Through this link, portal users can create and manage
+// developer apps linked to one or more API products.
+type GoogleCloudApigeeV1ApiDoc struct {
+	// AnonAllowed: Optional. Boolean flag that manages user access to the
+	// catalog item. When true, the catalog item can be viewed anonymously;
+	// otherwise, only registered users may view it. Note: when the parent
+	// portal is enrolled in the audience management feature
+	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-audience#enrolling_in_the_beta_release_of_the_audience_management_feature),
+	// this flag is ignored; instead visibility must be further managed in
+	// the management UI (see Manage the visibility of an API in your portal
+	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/publish-apis#visibility)).
+	AnonAllowed bool `json:"anonAllowed,omitempty"`
+
+	// ApiProductName: Required. Immutable. The `name` field of the
+	// associated API product
+	// (/apigee/docs/reference/apis/apigee/rest/v1/organizations.apiproducts)
+	// . A portal may have only one catalog item associated with a given API
+	// product.
+	ApiProductName string `json:"apiProductName,omitempty"`
+
+	// CategoryIds: Optional. The IDs of the API categories to which this
+	// catalog item belongs.
+	CategoryIds []string `json:"categoryIds,omitempty"`
+
+	// Description: Optional. Description of the catalog item. Max length is
+	// 10,000 characters.
+	Description string `json:"description,omitempty"`
+
+	// EdgeAPIProductName: Optional. Immutable. DEPRECATED: use the
+	// `apiProductName` field instead
+	EdgeAPIProductName string `json:"edgeAPIProductName,omitempty"`
+
+	// GraphqlEndpointUrl: Optional. DEPRECATED: manage documentation
+	// through the `getDocumentation` and `updateDocumentation` methods
+	GraphqlEndpointUrl string `json:"graphqlEndpointUrl,omitempty"`
+
+	// GraphqlSchema: Optional. DEPRECATED: manage documentation through the
+	// `getDocumentation` and `updateDocumentation` methods
+	GraphqlSchema string `json:"graphqlSchema,omitempty"`
+
+	// GraphqlSchemaDisplayName: Optional. DEPRECATED: manage documentation
+	// through the `getDocumentation` and `updateDocumentation` methods
+	GraphqlSchemaDisplayName string `json:"graphqlSchemaDisplayName,omitempty"`
+
+	// Id: Output only. The ID of the catalog item.
+	Id int64 `json:"id,omitempty,string"`
+
+	// ImageUrl: Optional. Location of the image used for the catalog item
+	// in the catalog. For portal files, this can have the format
+	// `/files/{filename}`. Max length is 2,083 characters.
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	// Modified: Output only. Time the catalog item was last modified in
+	// milliseconds since epoch.
+	Modified int64 `json:"modified,omitempty,string"`
+
+	// Published: Optional. Denotes whether the catalog item is published to
+	// the portal or is in a draft state. When the parent portal is enrolled
+	// in the audience management feature
+	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-audience#enrolling_in_the_beta_release_of_the_audience_management_feature),
+	// the visibility must be further managed in the management UI (see
+	// Manage the visibility of an API in your portal
+	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/publish-apis#visibility))
+	// before it can be visible to any users. If not enrolled in the
+	// audience management feature, the visibility is further managed by the
+	// `anonAllowed` flag.
+	Published bool `json:"published,omitempty"`
+
+	// RequireCallbackUrl: Optional. Whether a callback URL is required when
+	// this catalog item's API product is enabled in a developer app. When
+	// true, a portal user will be required to input a URL when managing the
+	// app (this is typically used for the app's OAuth flow).
+	RequireCallbackUrl bool `json:"requireCallbackUrl,omitempty"`
+
+	// SiteId: Output only. The ID of the parent portal.
+	SiteId string `json:"siteId,omitempty"`
+
+	// SpecId: Optional. DEPRECATED: DO NOT USE
+	SpecId string `json:"specId,omitempty"`
+
+	// Title: Required. The user-facing name of the catalog item. `title`
+	// must be a non-empty string with a max length of 255 characters.
+	Title string `json:"title,omitempty"`
+
+	// Visibility: Optional. DEPRECATED: use the `published` field instead
+	Visibility bool `json:"visibility,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnonAllowed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnonAllowed") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiDoc) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiDoc
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApiDocDocumentation: The documentation for a
+// catalog item.
+type GoogleCloudApigeeV1ApiDocDocumentation struct {
+	// GraphqlDocumentation: Optional. GraphQL documentation.
+	GraphqlDocumentation *GoogleCloudApigeeV1GraphqlDocumentation `json:"graphqlDocumentation,omitempty"`
+
+	// OasDocumentation: Optional. OpenAPI Specification documentation.
+	OasDocumentation *GoogleCloudApigeeV1OASDocumentation `json:"oasDocumentation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "GraphqlDocumentation") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GraphqlDocumentation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiDocDocumentation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiDocDocumentation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApiDocDocumentationResponse: The catalog item
+// documentation wrapped with response status, error_code, etc.
+type GoogleCloudApigeeV1ApiDocDocumentationResponse struct {
+	// Data: Output only. The documentation resource.
+	Data *GoogleCloudApigeeV1ApiDocDocumentation `json:"data,omitempty"`
+
+	// ErrorCode: Output only. Unique error code for the request, if any.
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// Message: Output only. Description of the operation.
+	Message string `json:"message,omitempty"`
+
+	// RequestId: Output only. Unique ID of the request.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Status: Output only. Status of the operation.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiDocDocumentationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiDocDocumentationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ApiDocResponse: The catalog item resource wrapped
+// with response status, error_code, etc.
+type GoogleCloudApigeeV1ApiDocResponse struct {
+	// Data: The catalog item resource.
+	Data *GoogleCloudApigeeV1ApiDoc `json:"data,omitempty"`
+
+	// ErrorCode: Unique error code for the request, if any.
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// Message: Description of the operation.
+	Message string `json:"message,omitempty"`
+
+	// RequestId: Unique ID of the request.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Status: Status of the operation.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ApiDocResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ApiDocResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4901,6 +5151,39 @@ func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 type GoogleCloudApigeeV1DisableSecurityActionRequest struct {
 }
 
+// GoogleCloudApigeeV1DocumentationFile: Documentation file contents for
+// a catalog item.
+type GoogleCloudApigeeV1DocumentationFile struct {
+	// Contents: Required. The file contents. The max size is 4 MB.
+	Contents string `json:"contents,omitempty"`
+
+	// DisplayName: Required. A display name for the file, shown in the
+	// management UI. Max length is 255 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1DocumentationFile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DocumentationFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1EnableSecurityActionRequest: Message to enable a
 // disabled SecurityAction.
 type GoogleCloudApigeeV1EnableSecurityActionRequest struct {
@@ -5975,6 +6258,40 @@ func (s *GoogleCloudApigeeV1GraphQLOperationGroup) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1GraphqlDocumentation: GraphQL documentation for a
+// catalog item.
+type GoogleCloudApigeeV1GraphqlDocumentation struct {
+	// EndpointUri: Required. The GraphQL endpoint URI to be queried by API
+	// consumers. Max length is 2,083 characters.
+	EndpointUri string `json:"endpointUri,omitempty"`
+
+	// Schema: Required. The documentation file contents for the GraphQL
+	// schema.
+	Schema *GoogleCloudApigeeV1DocumentationFile `json:"schema,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1GraphqlDocumentation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1GraphqlDocumentation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1GrpcOperationConfig: Binds the resources in a
 // proxy or remote service with the gRPC operation and its associated
 // quota enforcement.
@@ -6627,6 +6944,54 @@ type GoogleCloudApigeeV1ListApiCategoriesResponse struct {
 
 func (s *GoogleCloudApigeeV1ListApiCategoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ListApiCategoriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudApigeeV1ListApiDocsResponse struct {
+	// Data: The catalog item resources.
+	Data []*GoogleCloudApigeeV1ApiDoc `json:"data,omitempty"`
+
+	// ErrorCode: Unique error code for the request, if any.
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// Message: Description of the operation.
+	Message string `json:"message,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RequestId: Unique ID of the request.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Status: Status of the operation.
+	Status string `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Data") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1ListApiDocsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListApiDocsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8103,6 +8468,45 @@ type GoogleCloudApigeeV1NodeConfig struct {
 
 func (s *GoogleCloudApigeeV1NodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1NodeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1OASDocumentation: OpenAPI Specification
+// documentation for a catalog item.
+type GoogleCloudApigeeV1OASDocumentation struct {
+	// Format: Output only. The format of the input specification file
+	// contents.
+	//
+	// Possible values:
+	//   "FORMAT_UNSPECIFIED" - The format is not available.
+	//   "YAML" - YAML format.
+	//   "JSON" - JSON format.
+	Format string `json:"format,omitempty"`
+
+	// Spec: Required. The documentation file contents for the OpenAPI
+	// Specification. JSON and YAML file formats are supported.
+	Spec *GoogleCloudApigeeV1DocumentationFile `json:"spec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1OASDocumentation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1OASDocumentation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -62414,6 +62818,1072 @@ func (c *OrganizationsSitesApicategoriesPatchCall) Do(opts ...googleapi.CallOpti
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1ApiCategoryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.sites.apidocs.create":
+
+type OrganizationsSitesApidocsCreateCall struct {
+	s                         *Service
+	parent                    string
+	googlecloudapigeev1apidoc *GoogleCloudApigeeV1ApiDoc
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Create: Creates a new catalog item.
+//
+//   - parent: Name of the portal. Use the following structure in your
+//     request: `organizations/{org}/sites/{site}`.
+func (r *OrganizationsSitesApidocsService) Create(parent string, googlecloudapigeev1apidoc *GoogleCloudApigeeV1ApiDoc) *OrganizationsSitesApidocsCreateCall {
+	c := &OrganizationsSitesApidocsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1apidoc = googlecloudapigeev1apidoc
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsCreateCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsCreateCall) Context(ctx context.Context) *OrganizationsSitesApidocsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apidoc)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apidocs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.create" call.
+// Exactly one of *GoogleCloudApigeeV1ApiDocResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1ApiDocResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApidocsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiDocResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiDocResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new catalog item.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.sites.apidocs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the portal. Use the following structure in your request: `organizations/{org}/sites/{site}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apidocs",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDoc"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDocResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.sites.apidocs.delete":
+
+type OrganizationsSitesApidocsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a catalog item.
+//
+//   - name: Name of the catalog item. Use the following structure in your
+//     request: `organizations/{org}/sites/{site}/apidocs/{apidoc}`.
+func (r *OrganizationsSitesApidocsService) Delete(name string) *OrganizationsSitesApidocsDeleteCall {
+	c := &OrganizationsSitesApidocsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsDeleteCall) Context(ctx context.Context) *OrganizationsSitesApidocsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.delete" call.
+// Exactly one of *GoogleCloudApigeeV1DeleteResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1DeleteResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApidocsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1DeleteResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1DeleteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a catalog item.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs/{apidocsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "apigee.organizations.sites.apidocs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the catalog item. Use the following structure in your request: `organizations/{org}/sites/{site}/apidocs/{apidoc}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+/apidocs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1DeleteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.sites.apidocs.get":
+
+type OrganizationsSitesApidocsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a catalog item.
+//
+//   - name: Name of the catalog item. Use the following structure in your
+//     request: `organizations/{org}/sites/{site}/apidocs/{apidoc}`.
+func (r *OrganizationsSitesApidocsService) Get(name string) *OrganizationsSitesApidocsGetCall {
+	c := &OrganizationsSitesApidocsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsGetCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSitesApidocsGetCall) IfNoneMatch(entityTag string) *OrganizationsSitesApidocsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsGetCall) Context(ctx context.Context) *OrganizationsSitesApidocsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.get" call.
+// Exactly one of *GoogleCloudApigeeV1ApiDocResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1ApiDocResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApidocsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiDocResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiDocResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a catalog item.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs/{apidocsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.sites.apidocs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the catalog item. Use the following structure in your request: `organizations/{org}/sites/{site}/apidocs/{apidoc}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+/apidocs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDocResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.sites.apidocs.getDocumentation":
+
+type OrganizationsSitesApidocsGetDocumentationCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDocumentation: Gets the documentation for the specified catalog
+// item.
+//
+//   - name: Resource name of the catalog item documentation. Use the
+//     following structure in your request:
+//     `organizations/{org}/sites/{site}/apidocs/{apidoc}/documentation`.
+func (r *OrganizationsSitesApidocsService) GetDocumentation(name string) *OrganizationsSitesApidocsGetDocumentationCall {
+	c := &OrganizationsSitesApidocsGetDocumentationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsGetDocumentationCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsGetDocumentationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSitesApidocsGetDocumentationCall) IfNoneMatch(entityTag string) *OrganizationsSitesApidocsGetDocumentationCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsGetDocumentationCall) Context(ctx context.Context) *OrganizationsSitesApidocsGetDocumentationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsGetDocumentationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsGetDocumentationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.getDocumentation" call.
+// Exactly one of *GoogleCloudApigeeV1ApiDocDocumentationResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ApiDocDocumentationResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApidocsGetDocumentationCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiDocDocumentationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiDocDocumentationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the documentation for the specified catalog item.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs/{apidocsId}/documentation",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.sites.apidocs.getDocumentation",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the catalog item documentation. Use the following structure in your request: `organizations/{org}/sites/{site}/apidocs/{apidoc}/documentation`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+/apidocs/[^/]+/documentation$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDocDocumentationResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.sites.apidocs.list":
+
+type OrganizationsSitesApidocsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the catalog items associated with a portal.
+//
+//   - parent: Name of the portal. Use the following structure in your
+//     request: `organizations/{org}/sites/{site}`.
+func (r *OrganizationsSitesApidocsService) List(parent string) *OrganizationsSitesApidocsListCall {
+	c := &OrganizationsSitesApidocsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return. The service may return fewer than this value. If
+// unspecified, at most 25 books will be returned. The maximum value is
+// 100; values above 100 will be coerced to 100.
+func (c *OrganizationsSitesApidocsListCall) PageSize(pageSize int64) *OrganizationsSitesApidocsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListApiDocs` call. Provide this to retrieve
+// the subsequent page.
+func (c *OrganizationsSitesApidocsListCall) PageToken(pageToken string) *OrganizationsSitesApidocsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsListCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsSitesApidocsListCall) IfNoneMatch(entityTag string) *OrganizationsSitesApidocsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsListCall) Context(ctx context.Context) *OrganizationsSitesApidocsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apidocs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.list" call.
+// Exactly one of *GoogleCloudApigeeV1ListApiDocsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudApigeeV1ListApiDocsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsSitesApidocsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListApiDocsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListApiDocsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the catalog items associated with a portal.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.sites.apidocs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return. The service may return fewer than this value. If unspecified, at most 25 books will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListApiDocs` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the portal. Use the following structure in your request: `organizations/{org}/sites/{site}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apidocs",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ListApiDocsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSitesApidocsListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListApiDocsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.sites.apidocs.update":
+
+type OrganizationsSitesApidocsUpdateCall struct {
+	s                         *Service
+	name                      string
+	googlecloudapigeev1apidoc *GoogleCloudApigeeV1ApiDoc
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Update: Updates a catalog item.
+//
+//   - name: Name of the catalog item. Use the following structure in your
+//     request: `organizations/{org}/sites/{site}/apidocs/{apidoc}`.
+func (r *OrganizationsSitesApidocsService) Update(name string, googlecloudapigeev1apidoc *GoogleCloudApigeeV1ApiDoc) *OrganizationsSitesApidocsUpdateCall {
+	c := &OrganizationsSitesApidocsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1apidoc = googlecloudapigeev1apidoc
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsUpdateCall) Context(ctx context.Context) *OrganizationsSitesApidocsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apidoc)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.update" call.
+// Exactly one of *GoogleCloudApigeeV1ApiDocResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1ApiDocResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApidocsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiDocResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiDocResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a catalog item.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs/{apidocsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "apigee.organizations.sites.apidocs.update",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the catalog item. Use the following structure in your request: `organizations/{org}/sites/{site}/apidocs/{apidoc}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+/apidocs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDoc"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDocResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.sites.apidocs.updateDocumentation":
+
+type OrganizationsSitesApidocsUpdateDocumentationCall struct {
+	s                                      *Service
+	name                                   string
+	googlecloudapigeev1apidocdocumentation *GoogleCloudApigeeV1ApiDocDocumentation
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// UpdateDocumentation: Updates the documentation for the specified
+// catalog item. Note that the documentation file contents will not be
+// populated in the return message.
+//
+//   - name: Resource name of the catalog item documentation. Use the
+//     following structure in your request:
+//     `organizations/{org}/sites/{site}/apidocs/{apidoc}/documentation`.
+func (r *OrganizationsSitesApidocsService) UpdateDocumentation(name string, googlecloudapigeev1apidocdocumentation *GoogleCloudApigeeV1ApiDocDocumentation) *OrganizationsSitesApidocsUpdateDocumentationCall {
+	c := &OrganizationsSitesApidocsUpdateDocumentationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1apidocdocumentation = googlecloudapigeev1apidocdocumentation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSitesApidocsUpdateDocumentationCall) Fields(s ...googleapi.Field) *OrganizationsSitesApidocsUpdateDocumentationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSitesApidocsUpdateDocumentationCall) Context(ctx context.Context) *OrganizationsSitesApidocsUpdateDocumentationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSitesApidocsUpdateDocumentationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSitesApidocsUpdateDocumentationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1apidocdocumentation)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.sites.apidocs.updateDocumentation" call.
+// Exactly one of *GoogleCloudApigeeV1ApiDocDocumentationResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1ApiDocDocumentationResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSitesApidocsUpdateDocumentationCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ApiDocDocumentationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ApiDocDocumentationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the documentation for the specified catalog item. Note that the documentation file contents will not be populated in the return message.",
+	//   "flatPath": "v1/organizations/{organizationsId}/sites/{sitesId}/apidocs/{apidocsId}/documentation",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.sites.apidocs.updateDocumentation",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the catalog item documentation. Use the following structure in your request: `organizations/{org}/sites/{site}/apidocs/{apidoc}/documentation`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/sites/[^/]+/apidocs/[^/]+/documentation$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDocDocumentation"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1ApiDocDocumentationResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

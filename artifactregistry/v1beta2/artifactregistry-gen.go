@@ -1407,6 +1407,8 @@ type ProjectSettings struct {
 	//   "REDIRECTION_FROM_GCR_IO_ENABLED" - Redirection is enabled.
 	//   "REDIRECTION_FROM_GCR_IO_FINALIZED" - Redirection is enabled, and
 	// has been finalized so cannot be reverted.
+	//   "REDIRECTION_FROM_GCR_IO_ENABLED_AND_COPYING" - Redirection is
+	// enabled and missing images are copied from GCR
 	LegacyRedirectionState string `json:"legacyRedirectionState,omitempty"`
 
 	// Name: The name of the project's settings. Always of the form:

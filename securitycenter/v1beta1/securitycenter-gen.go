@@ -359,13 +359,12 @@ func (s *AccessReview) MarshalJSON() ([]byte, error) {
 // Application: Represents an application associated with a finding.
 type Application struct {
 	// BaseUri: The base URI that identifies the network location of the
-	// application in which the vulnerability was detected. Examples:
-	// http://11.22.33.44, http://foo.com, http://11.22.33.44:8080
+	// application in which the vulnerability was detected. For example,
+	// `http://example.com`.
 	BaseUri string `json:"baseUri,omitempty"`
 
 	// FullUri: The full URI with payload that can be used to reproduce the
-	// vulnerability. Example:
-	// http://11.22.33.44/reflected/parameter/attribute/singlequoted/js?p=aMmYgI6H
+	// vulnerability. For example, `http://example.com?p=aMmYgI6H`.
 	FullUri string `json:"fullUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUri") to
@@ -669,13 +668,13 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 type BackupDisasterRecovery struct {
 	// Appliance: The name of the Backup and DR appliance that captures,
 	// moves, and manages the lifecycle of backup data. For example,
-	// “backup-server-57137”.
+	// `backup-server-57137`.
 	Appliance string `json:"appliance,omitempty"`
 
 	// Applications: The names of Backup and DR applications. An application
 	// is a VM, database, or file system on a managed host monitored by a
-	// backup and recovery appliance. For example, “centos7-01-vol00”,
-	// “centos7-01-vol01”, “centos7-01-vol02”.
+	// backup and recovery appliance. For example, `centos7-01-vol00`,
+	// `centos7-01-vol01`, `centos7-01-vol02`.
 	Applications []string `json:"applications,omitempty"`
 
 	// BackupCreateTime: The timestamp at which the Backup and DR backup was
@@ -685,11 +684,11 @@ type BackupDisasterRecovery struct {
 	// BackupTemplate: The name of a Backup and DR template which comprises
 	// one or more backup policies. See the Backup and DR documentation
 	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#temp)
-	// for more information. For example, “snap-ov”.
+	// for more information. For example, `snap-ov`.
 	BackupTemplate string `json:"backupTemplate,omitempty"`
 
 	// BackupType: The backup type of the Backup and DR image. For example,
-	// “Snapshot”, “Remote Snapshot”, “OnVault”.
+	// `Snapshot`, `Remote Snapshot`, `OnVault`.
 	BackupType string `json:"backupType,omitempty"`
 
 	// Host: The name of a Backup and DR host, which is managed by the
@@ -698,27 +697,27 @@ type BackupDisasterRecovery struct {
 	// Server, Oracle DB, SMB file system, etc.), vCenter, or an ESX server.
 	// See the Backup and DR documentation on hosts
 	// (https://cloud.google.com/backup-disaster-recovery/docs/configuration/manage-hosts-and-their-applications)
-	// for more information. For example, “centos7-01”.
+	// for more information. For example, `centos7-01`.
 	Host string `json:"host,omitempty"`
 
 	// Policies: The names of Backup and DR policies that are associated
 	// with a template and that define when to run a backup, how frequently
 	// to run a backup, and how long to retain the backup image. For
-	// example, “onvaults”.
+	// example, `onvaults`.
 	Policies []string `json:"policies,omitempty"`
 
 	// PolicyOptions: The names of Backup and DR advanced policy options of
 	// a policy applying to an application. See the Backup and DR
 	// documentation on policy options
 	// (https://cloud.google.com/backup-disaster-recovery/docs/create-plan/policy-settings).
-	// For example, “skipofflineappsincongrp, nounmap”.
+	// For example, `skipofflineappsincongrp, nounmap`.
 	PolicyOptions []string `json:"policyOptions,omitempty"`
 
 	// Profile: The name of the Backup and DR resource profile that
 	// specifies the storage media for backups of application and VM data.
 	// See the Backup and DR documentation on profiles
 	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#profile).
-	// For example, “GCP”.
+	// For example, `GCP`.
 	Profile string `json:"profile,omitempty"`
 
 	// StoragePool: The name of the Backup and DR storage pool that the
@@ -726,7 +725,7 @@ type BackupDisasterRecovery struct {
 	// could be of type Cloud, Primary, Snapshot, or OnVault. See the Backup
 	// and DR documentation on storage pools
 	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/storage-pools).
-	// For example, “DiskPoolOne”.
+	// For example, `DiskPoolOne`.
 	StoragePool string `json:"storagePool,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Appliance") to
@@ -2578,6 +2577,14 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// system.
 	Assignees []string `json:"assignees,omitempty"`
 
+	// CaseCloseTime: The time when the case was closed, as reported by the
+	// external system.
+	CaseCloseTime string `json:"caseCloseTime,omitempty"`
+
+	// CaseCreateTime: The time when the case was created, as reported by
+	// the external system.
+	CaseCreateTime string `json:"caseCreateTime,omitempty"`
+
 	// CasePriority: The priority of the finding's corresponding case in the
 	// external system.
 	CasePriority string `json:"casePriority,omitempty"`
@@ -3790,13 +3797,12 @@ func (s *GoogleCloudSecuritycenterV2AccessReview) MarshalJSON() ([]byte, error) 
 // associated with a finding.
 type GoogleCloudSecuritycenterV2Application struct {
 	// BaseUri: The base URI that identifies the network location of the
-	// application in which the vulnerability was detected. Examples:
-	// http://11.22.33.44, http://foo.com, http://11.22.33.44:8080
+	// application in which the vulnerability was detected. For example,
+	// `http://example.com`.
 	BaseUri string `json:"baseUri,omitempty"`
 
 	// FullUri: The full URI with payload that could be used to reproduce
-	// the vulnerability. Example:
-	// http://11.22.33.44/reflected/parameter/attribute/singlequoted/js?p=aMmYgI6H
+	// the vulnerability. For example, `http://example.com?p=aMmYgI6H`.
 	FullUri string `json:"fullUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUri") to
@@ -3906,13 +3912,13 @@ func (s *GoogleCloudSecuritycenterV2AttackExposure) UnmarshalJSON(data []byte) e
 type GoogleCloudSecuritycenterV2BackupDisasterRecovery struct {
 	// Appliance: The name of the Backup and DR appliance that captures,
 	// moves, and manages the lifecycle of backup data. For example,
-	// “backup-server-57137”.
+	// `backup-server-57137`.
 	Appliance string `json:"appliance,omitempty"`
 
 	// Applications: The names of Backup and DR applications. An application
 	// is a VM, database, or file system on a managed host monitored by a
-	// backup and recovery appliance. For example, “centos7-01-vol00”,
-	// “centos7-01-vol01”, “centos7-01-vol02”.
+	// backup and recovery appliance. For example, `centos7-01-vol00`,
+	// `centos7-01-vol01`, `centos7-01-vol02`.
 	Applications []string `json:"applications,omitempty"`
 
 	// BackupCreateTime: The timestamp at which the Backup and DR backup was
@@ -3922,11 +3928,11 @@ type GoogleCloudSecuritycenterV2BackupDisasterRecovery struct {
 	// BackupTemplate: The name of a Backup and DR template which comprises
 	// one or more backup policies. See the Backup and DR documentation
 	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#temp)
-	// for more information. For example, “snap-ov”.
+	// for more information. For example, `snap-ov`.
 	BackupTemplate string `json:"backupTemplate,omitempty"`
 
 	// BackupType: The backup type of the Backup and DR image. For example,
-	// “Snapshot”, “Remote Snapshot”, “OnVault”.
+	// `Snapshot`, `Remote Snapshot`, `OnVault`.
 	BackupType string `json:"backupType,omitempty"`
 
 	// Host: The name of a Backup and DR host, which is managed by the
@@ -3935,27 +3941,27 @@ type GoogleCloudSecuritycenterV2BackupDisasterRecovery struct {
 	// Server, Oracle DB, SMB file system, etc.), vCenter, or an ESX server.
 	// See the Backup and DR documentation on hosts
 	// (https://cloud.google.com/backup-disaster-recovery/docs/configuration/manage-hosts-and-their-applications)
-	// for more information. For example, “centos7-01”.
+	// for more information. For example, `centos7-01`.
 	Host string `json:"host,omitempty"`
 
 	// Policies: The names of Backup and DR policies that are associated
 	// with a template and that define when to run a backup, how frequently
 	// to run a backup, and how long to retain the backup image. For
-	// example, “onvaults”.
+	// example, `onvaults`.
 	Policies []string `json:"policies,omitempty"`
 
 	// PolicyOptions: The names of Backup and DR advanced policy options of
 	// a policy applying to an application. See the Backup and DR
 	// documentation on policy options
 	// (https://cloud.google.com/backup-disaster-recovery/docs/create-plan/policy-settings).
-	// For example, “skipofflineappsincongrp, nounmap”.
+	// For example, `skipofflineappsincongrp, nounmap`.
 	PolicyOptions []string `json:"policyOptions,omitempty"`
 
 	// Profile: The name of the Backup and DR resource profile that
 	// specifies the storage media for backups of application and VM data.
 	// See the Backup and DR documentation on profiles
 	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-plan#profile).
-	// For example, “GCP”.
+	// For example, `GCP`.
 	Profile string `json:"profile,omitempty"`
 
 	// StoragePool: The name of the Backup and DR storage pool that the
@@ -3963,7 +3969,7 @@ type GoogleCloudSecuritycenterV2BackupDisasterRecovery struct {
 	// could be of type Cloud, Primary, Snapshot, or OnVault. See the Backup
 	// and DR documentation on storage pools
 	// (https://cloud.google.com/backup-disaster-recovery/docs/concepts/storage-pools).
-	// For example, “DiskPoolOne”.
+	// For example, `DiskPoolOne`.
 	StoragePool string `json:"storagePool,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Appliance") to
@@ -4934,6 +4940,14 @@ type GoogleCloudSecuritycenterV2ExternalSystem struct {
 	// Assignees: References primary/secondary etc assignees in the external
 	// system.
 	Assignees []string `json:"assignees,omitempty"`
+
+	// CaseCloseTime: The time when the case was closed, as reported by the
+	// external system.
+	CaseCloseTime string `json:"caseCloseTime,omitempty"`
+
+	// CaseCreateTime: The time when the case was created, as reported by
+	// the external system.
+	CaseCreateTime string `json:"caseCreateTime,omitempty"`
 
 	// CasePriority: The priority of the finding's corresponding case in the
 	// external system.
@@ -6289,12 +6303,12 @@ func (s *GoogleCloudSecuritycenterV2Pod) MarshalJSON() ([]byte, error) {
 // violates the deployed posture and its expected and detected values.
 type GoogleCloudSecuritycenterV2PolicyDriftDetails struct {
 	// DetectedValue: The detected value that violates the deployed posture,
-	// for example, `false` or `allowed_values={"projects/22831892”}`.
+	// for example, `false` or `allowed_values={"projects/22831892"}`.
 	DetectedValue string `json:"detectedValue,omitempty"`
 
 	// ExpectedValue: The value of this field that was configured in a
 	// posture, for example, `true` or
-	// `allowed_values={"projects/29831892”}`.
+	// `allowed_values={"projects/29831892"}`.
 	ExpectedValue string `json:"expectedValue,omitempty"`
 
 	// Field: The name of the updated field, for example
@@ -8466,15 +8480,15 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 // PolicyDriftDetails: The policy field that violates the deployed
-// posture and its expected and and detected values.
+// posture and its expected and detected values.
 type PolicyDriftDetails struct {
 	// DetectedValue: The detected value that violates the deployed posture,
-	// for example, `false` or `allowed_values={"projects/22831892”}`.
+	// for example, `false` or `allowed_values={"projects/22831892"}`.
 	DetectedValue string `json:"detectedValue,omitempty"`
 
 	// ExpectedValue: The value of this field that was configured in a
 	// posture, for example, `true` or
-	// `allowed_values={"projects/29831892”}`.
+	// `allowed_values={"projects/29831892"}`.
 	ExpectedValue string `json:"expectedValue,omitempty"`
 
 	// Field: The name of the updated field, for example

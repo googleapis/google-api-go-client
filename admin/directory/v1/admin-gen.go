@@ -2817,6 +2817,13 @@ type DirectoryChromeosdevicesCommand struct {
 	// `deviceFiles` field of
 	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/re
 	// ference/rest/v1/chromeosdevices)
+	//   "FETCH_SUPPORT_PACKET" - Fetch support packet from a device
+	// remotely. Support packet is a zip archive that contains various
+	// system logs and debug data from a ChromeOS device. The support packet
+	// can be downloaded from the downloadURL link present in the
+	// `deviceFiles` field of
+	// [`chromeosdevices`](https://developers.google.com/admin-sdk/directory/
+	// reference/rest/v1/chromeosdevices)
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2929,6 +2936,13 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// `deviceFiles` field of
 	// [chromeosdevices](https://developers.google.com/admin-sdk/directory/re
 	// ference/rest/v1/chromeosdevices)
+	//   "FETCH_SUPPORT_PACKET" - Fetch support packet from a device
+	// remotely. Support packet is a zip archive that contains various
+	// system logs and debug data from a ChromeOS device. The support packet
+	// can be downloaded from the downloadURL link present in the
+	// `deviceFiles` field of
+	// [`chromeosdevices`](https://developers.google.com/admin-sdk/directory/
+	// reference/rest/v1/chromeosdevices)
 	CommandType string `json:"commandType,omitempty"`
 
 	// Payload: The payload for the command, provide it only if command
@@ -2942,7 +2956,22 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// active device, set `ackedUserPresence` to `true`. * `REBOOT`: Payload
 	// is a stringified JSON object in the form: {
 	// "user_session_delay_seconds": 300 }. The delay has to be in the range
-	// [0, 300].
+	// [0, 300]. * `FETCH_SUPPORT_PACKET`: Payload is optionally a
+	// stringified JSON object in the form: {"supportPacketDetails":{
+	// "issueCaseId": optional_support_case_id_string, "issueDescription":
+	// optional_issue_description_string, "requestedDataCollectors": []}}
+	// The list of available `data_collector_enums` are as following: Chrome
+	// System Information (1), Crash IDs (2), Memory Details (3), UI
+	// Hierarchy (4), Additional ChromeOS Platform Logs (5), Device Event
+	// (6), Intel WiFi NICs Debug Dump (7), Touch Events (8), Lacros (9),
+	// Lacros System Information (10), ChromeOS Flex Logs (11), DBus Details
+	// (12), ChromeOS Network Routes (13), ChromeOS Shill (Connection
+	// Manager) Logs (14), Policies (15), ChromeOS System State and Logs
+	// (16), ChromeOS System Logs (17), ChromeOS Chrome User Logs (18),
+	// ChromeOS Bluetooth (19), ChromeOS Connected Input Devices (20),
+	// ChromeOS Traffic Counters (21), ChromeOS Virtual Keyboard (22),
+	// ChromeOS Network Health (23). See more details in help article
+	// (https://support.google.com/chrome/a?p=remote-log).
 	Payload string `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommandType") to

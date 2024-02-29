@@ -2369,8 +2369,8 @@ type TextConfig struct {
 
 // Topic: A topic resource.
 type Topic struct {
-	// IngestionDataSourceSettings: Optional. Settings for managed ingestion
-	// from a data source into this topic.
+	// IngestionDataSourceSettings: Optional. Settings for ingestion from a
+	// data source into this topic.
 	IngestionDataSourceSettings *IngestionDataSourceSettings `json:"ingestionDataSourceSettings,omitempty"`
 
 	// KmsKeyName: Optional. The resource name of the Cloud KMS CryptoKey to

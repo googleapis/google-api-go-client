@@ -3094,6 +3094,56 @@ func (s *GoogleChromeManagementV1PrinterReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1RuntimeCountersReport: Runtime counters
+// retrieved from CPU. Currently the runtime counters telemetry is only
+// supported by Intel vPro PSR on Gen 14+.
+type GoogleChromeManagementV1RuntimeCountersReport struct {
+	// EnterHibernationCount: Number of times that the device has entered
+	// into the hibernation state. Currently obtained via the PSR, count
+	// from S0->S4.
+	EnterHibernationCount int64 `json:"enterHibernationCount,omitempty,string"`
+
+	// EnterPoweroffCount: Number of times that the device has entered into
+	// the power-off state. Currently obtained via the PSR, count from
+	// S0->S5.
+	EnterPoweroffCount int64 `json:"enterPoweroffCount,omitempty,string"`
+
+	// EnterSleepCount: Number of times that the device has entered into the
+	// sleep state. Currently obtained via the PSR, count from S0->S3.
+	EnterSleepCount int64 `json:"enterSleepCount,omitempty,string"`
+
+	// ReportTime: Timestamp when the report was collected.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// UptimeRuntimeDuration: Total lifetime runtime. Currently always S0
+	// runtime from Intel vPro PSR.
+	UptimeRuntimeDuration string `json:"uptimeRuntimeDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnterHibernationCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnterHibernationCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1RuntimeCountersReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1RuntimeCountersReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1StorageInfo: Status data for storage. * This
 // field is telemetry information and this will change over time as the
 // device is utilized. * Data for this field is controlled via policy:
@@ -3313,6 +3363,12 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// PeripheralsReport: Output only. Peripherals reports collected
 	// periodically sorted in a decreasing order of report_time.
 	PeripheralsReport []*GoogleChromeManagementV1PeripheralsReport `json:"peripheralsReport,omitempty"`
+
+	// RuntimeCountersReport: Output only. Runtime counters reports
+	// collected device lifetime runtime, as well as the counts of S0->S3,
+	// S0->S4, and S0->S5 transitions, meaning entering into sleep,
+	// hibernation, and power-off states
+	RuntimeCountersReport []*GoogleChromeManagementV1RuntimeCountersReport `json:"runtimeCountersReport,omitempty"`
 
 	// SerialNumber: Output only. Device serial number. This value is the
 	// same as the Admin Console's Serial Number in the ChromeOS Devices

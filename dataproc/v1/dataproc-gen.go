@@ -9219,9 +9219,11 @@ func (r *ProjectsLocationsBatchesService) List(parent string) *ProjectsLocations
 // constraining the values of various fields in each batch resource.
 // Filters are case sensitive, and may contain multiple clauses combined
 // with logical operators (AND/OR). Supported fields are batch_id,
-// batch_uuid, state, and create_time.e.g. state = RUNNING and
+// batch_uuid, state, create_time, and labels.e.g. state = RUNNING and
 // create_time < "2023-01-01T00:00:00Z" filters for batches in state
-// RUNNING that were created before 2023-01-01See
+// RUNNING that were created before 2023-01-01. state = RUNNING and
+// labels.environment=production filters for batches in state in a
+// RUNNING state that have a production environment label.See
 // https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
 // description of the filter syntax and a list of supported comparisons.
 func (c *ProjectsLocationsBatchesListCall) Filter(filter string) *ProjectsLocationsBatchesListCall {
@@ -9364,7 +9366,7 @@ func (c *ProjectsLocationsBatchesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter for the batches to return in the response.A filter is a logical expression constraining the values of various fields in each batch resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND/OR). Supported fields are batch_id, batch_uuid, state, and create_time.e.g. state = RUNNING and create_time \u003c \"2023-01-01T00:00:00Z\" filters for batches in state RUNNING that were created before 2023-01-01See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparisons.",
+	//       "description": "Optional. A filter for the batches to return in the response.A filter is a logical expression constraining the values of various fields in each batch resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND/OR). Supported fields are batch_id, batch_uuid, state, create_time, and labels.e.g. state = RUNNING and create_time \u003c \"2023-01-01T00:00:00Z\" filters for batches in state RUNNING that were created before 2023-01-01. state = RUNNING and labels.environment=production filters for batches in state in a RUNNING state that have a production environment label.See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparisons.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11325,9 +11327,11 @@ func (r *ProjectsLocationsSessionsService) List(parent string) *ProjectsLocation
 // constraining the values of various fields in each session resource.
 // Filters are case sensitive, and may contain multiple clauses combined
 // with logical operators (AND, OR). Supported fields are session_id,
-// session_uuid, state, and create_time.Example: state = ACTIVE and
-// create_time < "2023-01-01T00:00:00Z" is a filter for sessions in an
-// ACTIVE state that were created before 2023-01-01.See
+// session_uuid, state, create_time, and labels.Example: state = ACTIVE
+// and create_time < "2023-01-01T00:00:00Z" is a filter for sessions in
+// an ACTIVE state that were created before 2023-01-01. state = ACTIVE
+// and labels.environment=production is a filter for sessions in an
+// ACTIVE state that have a production environment label.See
 // https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed
 // description of the filter syntax and a list of supported comparators.
 func (c *ProjectsLocationsSessionsListCall) Filter(filter string) *ProjectsLocationsSessionsListCall {
@@ -11459,7 +11463,7 @@ func (c *ProjectsLocationsSessionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter for the sessions to return in the response.A filter is a logical expression constraining the values of various fields in each session resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND, OR). Supported fields are session_id, session_uuid, state, and create_time.Example: state = ACTIVE and create_time \u003c \"2023-01-01T00:00:00Z\" is a filter for sessions in an ACTIVE state that were created before 2023-01-01.See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparators.",
+	//       "description": "Optional. A filter for the sessions to return in the response.A filter is a logical expression constraining the values of various fields in each session resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND, OR). Supported fields are session_id, session_uuid, state, create_time, and labels.Example: state = ACTIVE and create_time \u003c \"2023-01-01T00:00:00Z\" is a filter for sessions in an ACTIVE state that were created before 2023-01-01. state = ACTIVE and labels.environment=production is a filter for sessions in an ACTIVE state that have a production environment label.See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparators.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

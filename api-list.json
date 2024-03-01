@@ -3938,6 +3938,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "marketingplatformadmin:v1alpha",
+      "name": "marketingplatformadmin",
+      "version": "v1alpha",
+      "title": "Google Marketing Platform Admin API",
+      "description": "marketingplatformadmin.googleapis.com API.",
+      "discoveryRestUrl": "https://marketingplatformadmin.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/analytics/devguides/config/gmp/v1",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "memcache:v1beta2",
       "name": "memcache",
       "version": "v1beta2",

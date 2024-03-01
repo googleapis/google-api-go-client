@@ -1253,6 +1253,9 @@ type MigrationJobVerificationError struct {
 	// or user defined entities (for example databases, tables, or
 	// functions). You can only migrate to empty instances. Clear your
 	// destination instance and retry the migration job.
+	//   "SOURCE_MAX_SUBSCRIPTIONS" - The migration job is configured to use
+	// max number of subscriptions to migrate data from the source to the
+	// destination.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,

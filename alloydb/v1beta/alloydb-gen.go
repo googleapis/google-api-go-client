@@ -698,7 +698,7 @@ type Cluster struct {
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
-	// "projects/{project}/global/networks/{network_id}". This is required
+	// `projects/{project}/global/networks/{network_id}`. This is required
 	// to create a cluster. Deprecated, use network_config.network instead.
 	Network string `json:"network,omitempty"`
 
@@ -707,6 +707,10 @@ type Cluster struct {
 	// PrimaryConfig: Output only. Cross Region replication config specific
 	// to PRIMARY cluster.
 	PrimaryConfig *PrimaryConfig `json:"primaryConfig,omitempty"`
+
+	// PscConfig: Optional. The configuration for Private Service Connect
+	// (PSC) for the cluster.
+	PscConfig *PscConfig `json:"pscConfig,omitempty"`
 
 	// Reconciling: Output only. Reconciling
 	// (https://google.aip.dev/128#reconciliation). Set to true if the
@@ -1969,7 +1973,7 @@ type NetworkConfig struct {
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
-	// "projects/{project_number}/global/networks/{network_id}". This is
+	// `projects/{project_number}/global/networks/{network_id}`. This is
 	// required to create a cluster.
 	Network string `json:"network,omitempty"`
 
@@ -2235,6 +2239,36 @@ func (s *PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PscConfig: PscConfig contains PSC related configuration at a cluster
+// level.
+type PscConfig struct {
+	// PscEnabled: Optional. Create an instance that allows connections from
+	// Private Service Connect endpoints to the instance.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PscEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PscEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PscInstanceConfig: PscInstanceConfig contains PSC related
 // configuration at an instance level.
 type PscInstanceConfig struct {
@@ -2268,7 +2302,7 @@ type PscInstanceConfig struct {
 	// ServiceAttachmentLink: Output only. The service attachment created
 	// when Private Service Connect (PSC) is enabled for the instance. The
 	// name of the resource will be in the format of
-	// projects//regions//serviceAttachments/
+	// `projects//regions//serviceAttachments/`
 	ServiceAttachmentLink string `json:"serviceAttachmentLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2310,8 +2344,8 @@ type PscInterfaceConfig struct {
 	// NetworkAttachment: The NetworkAttachment resource created in the
 	// consumer VPC to which the PSC interface will be linked, in the form
 	// of:
-	// "projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${N
-	// ETWORK_ATTACHMENT_NAME}". NetworkAttachment has to be provided when
+	// `projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${N
+	// ETWORK_ATTACHMENT_NAME}`. NetworkAttachment has to be provided when
 	// the PSC interface is created.
 	NetworkAttachment string `json:"networkAttachment,omitempty"`
 
@@ -3470,7 +3504,7 @@ func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJ
 // nalData: Common model for database resource recommendation signal
 // data.
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData struct {
-	// AdditionalMetadata: Required. Any other additional metadata specific
+	// AdditionalMetadata: Optional. Any other additional metadata specific
 	// to recommendation
 	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
 
@@ -3756,6 +3790,19 @@ func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte
 type StorageDatabasecenterPartnerapiV1mainOperationError struct {
 	// Code: Identifies the specific error that occurred. REQUIRED
 	Code string `json:"code,omitempty"`
+
+	// Possible values:
+	//   "OPERATION_ERROR_TYPE_UNSPECIFIED" - UNSPECIFIED means product type
+	// is not known or available.
+	//   "KMS_KEY_ERROR" - key destroyed, expired, not found, unreachable or
+	// permission denied.
+	//   "DATABASE_ERROR" - Database is not accessible
+	//   "STOCKOUT_ERROR" - The zone or region does not have sufficient
+	// resources to handle the request at the moment
+	//   "CANCELLATION_ERROR" - User initiated cancellation
+	//   "SQLSERVER_ERROR" - SQL server specific error
+	//   "INTERNAL_ERROR" - Any other internal error.
+	ErrorType string `json:"errorType,omitempty"`
 
 	// Message: Additional information about the error encountered. REQUIRED
 	Message string `json:"message,omitempty"`

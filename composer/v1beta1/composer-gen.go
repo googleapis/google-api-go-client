@@ -248,6 +248,44 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AirflowMetadataRetentionPolicyConfig: The policy for airflow metadata
+// database retention.
+type AirflowMetadataRetentionPolicyConfig struct {
+	// RetentionDays: Optional. How many days data should be retained for.
+	RetentionDays int64 `json:"retentionDays,omitempty"`
+
+	// RetentionMode: Optional. Retention can be either enabled or disabled.
+	//
+	// Possible values:
+	//   "RETENTION_MODE_UNSPECIFIED" - Default mode doesn't change
+	// environment parameters.
+	//   "RETENTION_MODE_ENABLED" - Retention policy is enabled.
+	//   "RETENTION_MODE_DISABLED" - Retention policy is disabled.
+	RetentionMode string `json:"retentionMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RetentionDays") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RetentionDays") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AirflowMetadataRetentionPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AirflowMetadataRetentionPolicyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AllowedIpRange: Allowed IP range with user-provided description.
 type AllowedIpRange struct {
 	// Description: Optional. User-provided description. It must contain at
@@ -605,12 +643,22 @@ func (s *DagProcessorResource) UnmarshalJSON(data []byte) error {
 // DataRetentionConfig: The configuration setting for Airflow database
 // data retention mechanism.
 type DataRetentionConfig struct {
+	// AirflowDatabaseRetentionDays: Optional. The number of days describing
+	// for how long to store event-based records in airflow database. If the
+	// retention mechanism is enabled this value must be a positive integer
+	// otherwise, value should be set to 0.
+	AirflowDatabaseRetentionDays int64 `json:"airflowDatabaseRetentionDays,omitempty"`
+
+	// AirflowMetadataRetentionConfig: Optional. The retention policy for
+	// airflow metadata database.
+	AirflowMetadataRetentionConfig *AirflowMetadataRetentionPolicyConfig `json:"airflowMetadataRetentionConfig,omitempty"`
+
 	// TaskLogsRetentionConfig: Optional. The configuration settings for
 	// task logs retention
 	TaskLogsRetentionConfig *TaskLogsRetentionConfig `json:"taskLogsRetentionConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "TaskLogsRetentionConfig") to unconditionally include in API
+	// "AirflowDatabaseRetentionDays") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -618,13 +666,13 @@ type DataRetentionConfig struct {
 	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TaskLogsRetentionConfig")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AirflowDatabaseRetentionDays") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

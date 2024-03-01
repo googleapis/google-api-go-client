@@ -214,6 +214,133 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AvailabilityConfiguration: Configuration for availability of database
+// instance
+type AvailabilityConfiguration struct {
+	// AvailabilityType: Availability type. Potential values: * `ZONAL`: The
+	// instance serves data from only one zone. Outages in that zone affect
+	// data accessibility. * `REGIONAL`: The instance can serve data from
+	// more than one zone in a region (it is highly available).
+	//
+	// Possible values:
+	//   "AVAILABILITY_TYPE_UNSPECIFIED"
+	//   "ZONAL" - Zonal available instance.
+	//   "REGIONAL" - Regional available instance.
+	//   "MULTI_REGIONAL" - Multi regional instance
+	//   "AVAILABILITY_TYPE_OTHER" - For rest of the other category
+	AvailabilityType string `json:"availabilityType,omitempty"`
+
+	ExternalReplicaConfigured bool `json:"externalReplicaConfigured,omitempty"`
+
+	PromotableReplicaConfigured bool `json:"promotableReplicaConfigured,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailabilityType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailabilityType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvailabilityConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailabilityConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackupConfiguration: Configuration for automatic backups
+type BackupConfiguration struct {
+	// AutomatedBackupEnabled: Whether customer visible automated backups
+	// are enabled on the instance.
+	AutomatedBackupEnabled bool `json:"automatedBackupEnabled,omitempty"`
+
+	// BackupRetentionSettings: Backup retention settings.
+	BackupRetentionSettings *RetentionSettings `json:"backupRetentionSettings,omitempty"`
+
+	// PointInTimeRecoveryEnabled: Whether point-in-time recovery is
+	// enabled. This is optional field, if the database service does not
+	// have this feature or metadata is not available in control plane, this
+	// can be omitted.
+	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomatedBackupEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutomatedBackupEnabled")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackupConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackupRun: A backup run.
+type BackupRun struct {
+	// EndTime: The time the backup operation completed. REQUIRED
+	EndTime string `json:"endTime,omitempty"`
+
+	// Error: Information about why the backup operation failed. This is
+	// only present if the run has the FAILED status. OPTIONAL
+	Error *OperationError `json:"error,omitempty"`
+
+	// StartTime: The time the backup operation started. REQUIRED
+	StartTime string `json:"startTime,omitempty"`
+
+	// Status: The status of this run. REQUIRED
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED"
+	//   "SUCCESSFUL" - The backup was successful.
+	//   "FAILED" - The backup was unsuccessful.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackupRun) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupRun
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type CertChain struct {
 	// Certificates: The certificates that form the CA chain, from leaf to
 	// root order.
@@ -384,6 +511,861 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Compliance: Contains compliance information about a security standard
+// indicating unmet recommendations.
+type Compliance struct {
+	// Standard: Industry-wide compliance standards or benchmarks, such as
+	// CIS, PCI, and OWASP.
+	Standard string `json:"standard,omitempty"`
+
+	// Version: Version of the standard or benchmark, for example, 1.1
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Standard") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Compliance) MarshalJSON() ([]byte, error) {
+	type NoMethod Compliance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomMetadataData: Any custom metadata associated with the resource.
+// i.e. A spanner instance can have multiple databases with its own
+// unique metadata. Information for these individual databases can be
+// captured in custom metadata data
+type CustomMetadataData struct {
+	DatabaseMetadata []*DatabaseMetadata `json:"databaseMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomMetadataData) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomMetadataData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseMetadata: Metadata for individual databases created in an
+// instance. i.e. spanner instance can have multiple databases with
+// unique configuration settings.
+type DatabaseMetadata struct {
+	// BackupConfiguration: Backup configuration for this database
+	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
+
+	// BackupRun: Information about the last backup attempt for this
+	// database
+	BackupRun *BackupRun `json:"backupRun,omitempty"`
+
+	Product *Product `json:"product,omitempty"`
+
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+
+	// ResourceName: Required. Database name. Resource name to follow CAIS
+	// resource_name format as noted here go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseResourceFeed: DatabaseResourceFeed is the top level proto to
+// be used to ingest different database resource level events into
+// Condor platform.
+type DatabaseResourceFeed struct {
+	// FeedTimestamp: Required. Timestamp when feed is generated.
+	FeedTimestamp string `json:"feedTimestamp,omitempty"`
+
+	// FeedType: Required. Type feed to be ingested into condor
+	//
+	// Possible values:
+	//   "FEEDTYPE_UNSPECIFIED"
+	//   "RESOURCE_METADATA" - Database resource metadata feed from control
+	// plane
+	//   "OBSERVABILITY_DATA" - Database resource monitoring data
+	//   "SECURITY_FINDING_DATA" - Database resource security health signal
+	// data
+	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation
+	// signal data
+	FeedType string `json:"feedType,omitempty"`
+
+	// RecommendationSignalData: More feed data would be added in subsequent
+	// CLs
+	RecommendationSignalData *DatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
+
+	ResourceHealthSignalData *DatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
+
+	// ResourceId: Primary key associated with the Resource. resource_id is
+	// available in individual feed level as well.
+	ResourceId *DatabaseResourceId `json:"resourceId,omitempty"`
+
+	ResourceMetadata *DatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FeedTimestamp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FeedTimestamp") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseResourceFeed) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseResourceFeed
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseResourceHealthSignalData: Common model for database resource
+// health signal data.
+type DatabaseResourceHealthSignalData struct {
+	// AdditionalMetadata: Any other additional metadata
+	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
+
+	// Compliance: Industry standards associated with this signal; if this
+	// signal is an issue, that could be a violation of the associated
+	// industry standard(s). For example, AUTO_BACKUP_DISABLED signal is
+	// associated with CIS GCP 1.1, CIS GCP 1.2, CIS GCP 1.3, NIST 800-53
+	// and ISO-27001 compliance standards. If a database resource does not
+	// have automated backup enable, it will violate these following
+	// industry standards.
+	Compliance []*Compliance `json:"compliance,omitempty"`
+
+	// Description: Description associated with signal
+	Description string `json:"description,omitempty"`
+
+	// EventTime: Required. The last time at which the event described by
+	// this signal took place
+	EventTime string `json:"eventTime,omitempty"`
+
+	// ExternalUri: The external-uri of the signal, using which more
+	// information about this signal can be obtained. In GCP, this will take
+	// user to SCC page to get more details about signals.
+	ExternalUri string `json:"externalUri,omitempty"`
+
+	// Name: Required. The name of the signal, ex: PUBLIC_SQL_INSTANCE,
+	// SQL_LOG_ERROR_VERBOSITY etc.
+	Name string `json:"name,omitempty"`
+
+	// Provider: Cloud provider name. Ex: GCP/AWS/Azure/OnPrem/SelfManaged
+	//
+	// Possible values:
+	//   "PROVIDER_UNSPECIFIED"
+	//   "GCP" - Google cloud platform provider
+	//   "AWS" - Amazon web service
+	//   "AZURE" - Azure web service
+	//   "ONPREM" - On-prem database resources.
+	//   "SELFMANAGED" - Self-managed database provider. These are resources
+	// on a cloud platform, e.g., database resource installed in a GCE VM,
+	// but not a managed database service.
+	//   "PROVIDER_OTHER" - For the rest of the other categories. Other
+	// refers to the rest of other database service providers, this could be
+	// smaller cloud provider. This needs to be provided when the provider
+	// is known, but it is not present in the existing set of enum values.
+	Provider string `json:"provider,omitempty"`
+
+	// ResourceContainer: Closest parent container of this resource. In GCP,
+	// 'container' refers to a Cloud Resource Manager project. It must be
+	// resource name of a Cloud Resource Manager project with the format of
+	// "provider//", such as "projects/123". For GCP provided resources,
+	// number should be project number.
+	ResourceContainer string `json:"resourceContainer,omitempty"`
+
+	// ResourceName: Required. Database resource name associated with the
+	// signal. Resource name to follow CAIS resource_name format as noted
+	// here go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// SignalClass: Required. The class of the signal, such as if it's a
+	// THREAT or VULNERABILITY.
+	//
+	// Possible values:
+	//   "CLASS_UNSPECIFIED" - Unspecified signal class.
+	//   "THREAT" - Describes unwanted or malicious activity.
+	//   "VULNERABILITY" - Describes a potential weakness in software that
+	// increases risk to Confidentiality & Integrity & Availability.
+	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
+	// resource/asset configuration that increases risk.
+	//   "OBSERVATION" - Describes a security observation that is for
+	// informational purposes.
+	//   "ERROR" - Describes an error that prevents some SCC functionality.
+	SignalClass string `json:"signalClass,omitempty"`
+
+	// SignalId: Required. Unique identifier for the signal. This is an
+	// unique id which would be mainatined by partner to identify a signal.
+	SignalId string `json:"signalId,omitempty"`
+
+	// SignalType: Required. Type of signal, for example,
+	// `AVAILABLE_IN_MULTIPLE_ZONES`, `LOGGING_MOST_ERRORS`, etc.
+	//
+	// Possible values:
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is protected by automatic failover. Checks for resources
+	// that are configured to have redundancy within a region that enables
+	// automatic failover.
+	//   "SIGNAL_TYPE_GROUP_NOT_REPLICATING_ACROSS_REGIONS" - Represents if
+	// a group is replicating across regions. Checks for resources that are
+	// configured to have redundancy, and ongoing replication, across
+	// regions.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_ZONES" - Represents if the
+	// resource is available in multiple zones or not.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_REGIONS" - Represents if a
+	// resource is available in multiple regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Represents if a resource has
+	// a promotable replica.
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource
+	// has an automated backup policy.
+	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources
+	// has a short backup retention period.
+	//   "SIGNAL_TYPE_LAST_BACKUP_FAILED" - Represents if the last backup of
+	// a resource failed.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than some threshold value.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_2_0" - Represents if a
+	// resource violates CIS GCP Foundation 2.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_3" - Represents if a
+	// resource violates CIS GCP Foundation 1.3.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_2" - Represents if a
+	// resource violates CIS GCP Foundation 1.2.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_1" - Represents if a
+	// resource violates CIS GCP Foundation 1.1.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a
+	// resource violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource
+	// violates NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource
+	// violates ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource
+	// violates PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents
+	// if log_checkpoints database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_QUERY_DURATIONS_NOT_LOGGED" - Represents if the
+	// log_duration database flag for a Cloud SQL for PostgreSQL instance is
+	// not set to on.
+	//   "SIGNAL_TYPE_VERBOSE_ERROR_LOGGING" - Represents if the
+	// log_error_verbosity database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to default or stricter (default or terse).
+	//   "SIGNAL_TYPE_QUERY_LOCK_WAITS_NOT_LOGGED" - Represents if the
+	// log_lock_waits database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_MOST_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance is not set appropriately.
+	//   "SIGNAL_TYPE_LOGGING_ONLY_CRITICAL_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance does not have an appropriate severity level.
+	//   "SIGNAL_TYPE_MINIMAL_ERROR_LOGGING" - Represents if the
+	// log_min_messages database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to warning or another recommended value.
+	//   "SIGNAL_TYPE_QUERY_STATISTICS_LOGGED" - Represents if the
+	// databaseFlags property of instance metadata for the
+	// log_executor_status field is set to on.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_CLIENT_HOSTNAME" - Represents if
+	// the log_hostname database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PARSER_STATISTICS" - Represents
+	// if the log_parser_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PLANNER_STATISTICS" - Represents
+	// if the log_planner_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_ONLY_DDL_STATEMENTS" - Represents if the
+	// log_statement database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to DDL (all data definition statements).
+	//   "SIGNAL_TYPE_LOGGING_QUERY_STATISTICS" - Represents if the
+	// log_statement_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_TEMPORARY_FILES" - Represents if the
+	// log_temp_files database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to "0". (NOTE: 0 = ON)
+	//   "SIGNAL_TYPE_CONNECTION_MAX_NOT_CONFIGURED" - Represents if the
+	// user connections database flag for a Cloud SQL for SQL Server
+	// instance is configured.
+	//   "SIGNAL_TYPE_USER_OPTIONS_CONFIGURED" - Represents if the user
+	// options database flag for Cloud SQL SQL Server instance is configured
+	// or not.
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource
+	// is exposed to public access.
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources
+	// requires all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a Cloud SQL database
+	// has a password configured for the root account or not.
+	//   "SIGNAL_TYPE_WEAK_ROOT_PASSWORD" - Represents if a Cloud SQL
+	// database has a weak password configured for the root account.
+	//   "SIGNAL_TYPE_ENCRYPTION_KEY_NOT_CUSTOMER_MANAGED" - Represents if a
+	// SQL database instance is not encrypted with customer-managed
+	// encryption keys (CMEK).
+	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if
+	// The contained database authentication database flag for a Cloud SQL
+	// for SQL Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Represents if the
+	// cross_db_ownership_chaining database flag for a Cloud SQL for SQL
+	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he
+	// external scripts enabled database flag for a Cloud SQL for SQL Server
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_LOCAL_DATA_LOADS" - Represents if the
+	// local_infile database flag for a Cloud SQL for MySQL instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_CONNECTION_ATTEMPTS_NOT_LOGGED" - Represents if the
+	// log_connections database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_DISCONNECTIONS_NOT_LOGGED" - Represents if the
+	// log_disconnections database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_EXCESSIVE_STATEMENT_INFO" - Represents if the
+	// log_min_duration_statement database flag for a Cloud SQL for
+	// PostgreSQL instance is not set to -1.
+	//   "SIGNAL_TYPE_EXPOSED_TO_REMOTE_ACCESS" - Represents if the remote
+	// access database flag for a Cloud SQL for SQL Server instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_DATABASE_NAMES_EXPOSED" - Represents if the
+	// skip_show_database database flag for a Cloud SQL for MySQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_SENSITIVE_TRACE_INFO_NOT_MASKED" - Represents if the
+	// 3625 (trace flag) database flag for a Cloud SQL for SQL Server
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
+	// enabled.
+	//   "SIGNAL_TYPE_IDLE" - Represents Idle instance helps to reduce
+	// costs.
+	//   "SIGNAL_TYPE_OVERPROVISIONED" - Represents instances that are
+	// unnecessarily large for given workload.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_OPEN_TABLES" - Represents high number
+	// of concurrently opened tables.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES" - Represents high table count
+	// close to SLA limit.
+	//   "SIGNAL_TYPE_HIGH_TRANSACTION_ID_UTILIZATION" - Represents high
+	// number of unvacuumed transactions
+	//   "SIGNAL_TYPE_UNDERPROVISIONED" - Represents need for more CPU
+	// and/or memory
+	//   "SIGNAL_TYPE_OUT_OF_DISK" - Represents out of disk.
+	//   "SIGNAL_TYPE_SERVER_CERTIFICATE_NEAR_EXPIRY" - Represents server
+	// certificate is near expiry.
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database
+	// auditing is disabled.
+	//   "SIGNAL_TYPE_RESTRICT_AUTHORIZED_NETWORKS" - Represents not
+	// restricted to authorized networks.
+	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
+	// violate org policy restrict public ip.
+	SignalType string `json:"signalType,omitempty"`
+
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "ACTIVE" - The signal requires attention and has not been addressed
+	// yet.
+	//   "RESOLVED" - The signal has been fixed, triaged as a non-issue or
+	// otherwise addressed and is no longer active.
+	//   "MUTED" - The signal has been muted.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseResourceHealthSignalData) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseResourceHealthSignalData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseResourceId: DatabaseResourceId will serve as primary key for
+// any resource ingestion event.
+type DatabaseResourceId struct {
+	// Provider: Required. Cloud provider name. Ex:
+	// GCP/AWS/Azure/OnPrem/SelfManaged
+	//
+	// Possible values:
+	//   "PROVIDER_UNSPECIFIED"
+	//   "GCP" - Google cloud platform provider
+	//   "AWS" - Amazon web service
+	//   "AZURE" - Azure web service
+	//   "ONPREM" - On-prem database resources.
+	//   "SELFMANAGED" - Self-managed database provider. These are resources
+	// on a cloud platform, e.g., database resource installed in a GCE VM,
+	// but not a managed database service.
+	//   "PROVIDER_OTHER" - For the rest of the other categories. Other
+	// refers to the rest of other database service providers, this could be
+	// smaller cloud provider. This needs to be provided when the provider
+	// is known, but it is not present in the existing set of enum values.
+	Provider string `json:"provider,omitempty"`
+
+	// ProviderDescription: Optional. Needs to be used only when the
+	// provider is PROVIDER_OTHER.
+	ProviderDescription string `json:"providerDescription,omitempty"`
+
+	// ResourceType: Required. The type of resource this ID is identifying.
+	// Ex redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
+	// alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
+	// spanner.googleapis.com/Instance REQUIRED Please refer
+	// go/condor-common-datamodel
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// UniqueId: Required. A service-local token that distinguishes this
+	// resource from other resources within the same service.
+	UniqueId string `json:"uniqueId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Provider") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Provider") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseResourceId) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseResourceId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseResourceMetadata: Common model for database resource instance
+// metadata.
+type DatabaseResourceMetadata struct {
+	// AvailabilityConfiguration: Availability configuration for this
+	// instance
+	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
+
+	// BackupConfiguration: Backup configuration for this instance
+	BackupConfiguration *BackupConfiguration `json:"backupConfiguration,omitempty"`
+
+	// BackupRun: Latest backup run information for this instance
+	BackupRun *BackupRun `json:"backupRun,omitempty"`
+
+	// CreationTime: The creation time of the resource, i.e. the time when
+	// resource is created and recorded in partner service.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// CurrentState: Current state of the instance.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED"
+	//   "HEALTHY" - The instance is running.
+	//   "UNHEALTHY" - Instance being created, updated, deleted or under
+	// maintenance
+	//   "SUSPENDED" - When instance is suspended
+	//   "DELETED" - Instance is deleted.
+	//   "STATE_OTHER" - For rest of the other category
+	CurrentState string `json:"currentState,omitempty"`
+
+	// CustomMetadata: Any custom metadata associated with the resource
+	CustomMetadata *CustomMetadataData `json:"customMetadata,omitempty"`
+
+	// Entitlements: Entitlements associated with the resource
+	Entitlements []*Entitlement `json:"entitlements,omitempty"`
+
+	// ExpectedState: The state that the instance is expected to be in. For
+	// example, an instance state can transition to UNHEALTHY due to wrong
+	// patch update, while the expected state will remain at the HEALTHY.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED"
+	//   "HEALTHY" - The instance is running.
+	//   "UNHEALTHY" - Instance being created, updated, deleted or under
+	// maintenance
+	//   "SUSPENDED" - When instance is suspended
+	//   "DELETED" - Instance is deleted.
+	//   "STATE_OTHER" - For rest of the other category
+	ExpectedState string `json:"expectedState,omitempty"`
+
+	// Id: Required. Unique identifier for a Database resource
+	Id *DatabaseResourceId `json:"id,omitempty"`
+
+	// InstanceType: The type of the instance. Specified at creation time.
+	//
+	// Possible values:
+	//   "INSTANCE_TYPE_UNSPECIFIED"
+	//   "SUB_RESOURCE_TYPE_UNSPECIFIED" - For rest of the other categories.
+	//   "PRIMARY" - A regular primary database instance.
+	//   "SECONDARY" - A cluster or an instance acting as a secondary.
+	//   "READ_REPLICA" - An instance acting as a read-replica.
+	//   "OTHER" - For rest of the other categories.
+	//   "SUB_RESOURCE_TYPE_PRIMARY" - A regular primary database instance.
+	//   "SUB_RESOURCE_TYPE_SECONDARY" - A cluster or an instance acting as
+	// a secondary.
+	//   "SUB_RESOURCE_TYPE_READ_REPLICA" - An instance acting as a
+	// read-replica.
+	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
+	InstanceType string `json:"instanceType,omitempty"`
+
+	// Location: The resource location. REQUIRED
+	Location string `json:"location,omitempty"`
+
+	// PrimaryResourceId: Identifier for this resource's immediate
+	// parent/primary resource if the current resource is a replica or
+	// derived form of another Database resource. Else it would be NULL.
+	// REQUIRED if the immediate parent exists when first time resource is
+	// getting ingested
+	PrimaryResourceId *DatabaseResourceId `json:"primaryResourceId,omitempty"`
+
+	// Product: The product this resource represents.
+	Product *Product `json:"product,omitempty"`
+
+	// ResourceContainer: Closest parent Cloud Resource Manager container of
+	// this resource. It must be resource name of a Cloud Resource Manager
+	// project with the format of "/", such as "projects/123". For GCP
+	// provided resources, number should be project number.
+	ResourceContainer string `json:"resourceContainer,omitempty"`
+
+	// ResourceName: Required. Different from DatabaseResourceId.unique_id,
+	// a resource name can be reused over time. That is, after a resource
+	// named "ABC" is deleted, the name "ABC" can be used to to create a new
+	// resource within the same source. Resource name to follow CAIS
+	// resource_name format as noted here go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// UpdationTime: The time at which the resource was updated and recorded
+	// at partner service.
+	UpdationTime string `json:"updationTime,omitempty"`
+
+	// UserLabels: User-provided labels, represented as a dictionary where
+	// each label is a single key value pair.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvailabilityConfiguration") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AvailabilityConfiguration") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseResourceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseResourceRecommendationSignalData: Common model for database
+// resource recommendation signal data.
+type DatabaseResourceRecommendationSignalData struct {
+	// AdditionalMetadata: Optional. Any other additional metadata specific
+	// to recommendation
+	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
+
+	// LastRefreshTime: Required. last time recommendationw as refreshed
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+
+	// RecommendationState: Required. Recommendation state
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "ACTIVE" - Recommendation is active and can be applied. ACTIVE
+	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
+	//   "CLAIMED" - Recommendation is in claimed state. Recommendations
+	// content is immutable and cannot be updated by Google. CLAIMED
+	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
+	//   "SUCCEEDED" - Recommendation is in succeeded state. Recommendations
+	// content is immutable and cannot be updated by Google. SUCCEEDED
+	// recommendations can be marked as SUCCEEDED, or FAILED.
+	//   "FAILED" - Recommendation is in failed state. Recommendations
+	// content is immutable and cannot be updated by Google. FAILED
+	// recommendations can be marked as SUCCEEDED, or FAILED.
+	//   "DISMISSED" - Recommendation is in dismissed state. Recommendation
+	// content can be updated by Google. DISMISSED recommendations can be
+	// marked as ACTIVE.
+	RecommendationState string `json:"recommendationState,omitempty"`
+
+	// Recommender: Required. Name of recommendation. Examples:
+	// organizations/1234/locations/us-central1/recommenders/google.cloudsql.
+	// instance.PerformanceRecommender/recommendations/9876
+	Recommender string `json:"recommender,omitempty"`
+
+	// RecommenderId: Required. ID of recommender. Examples:
+	// "google.cloudsql.instance.PerformanceRecommender"
+	RecommenderId string `json:"recommenderId,omitempty"`
+
+	// RecommenderSubtype: Required. Contains an identifier for a subtype of
+	// recommendations produced for the same recommender. Subtype is a
+	// function of content and impact, meaning a new subtype might be added
+	// when significant changes to `content` or `primary_impact.category`
+	// are introduced. See the Recommenders section to see a list of
+	// subtypes for a given Recommender. Examples: For recommender =
+	// "google.cloudsql.instance.PerformanceRecommender",
+	// recommender_subtype can be
+	// "MYSQL_HIGH_NUMBER_OF_OPEN_TABLES_BEST_PRACTICE"/"POSTGRES_HIGH_TRANSA
+	// CTION_ID_UTILIZATION_BEST_PRACTICE"
+	RecommenderSubtype string `json:"recommenderSubtype,omitempty"`
+
+	// ResourceName: Required. Database resource name associated with the
+	// signal. Resource name to follow CAIS resource_name format as noted
+	// here go/condor-common-datamodel
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// SignalType: Required. Type of signal, for example,
+	// `SIGNAL_TYPE_IDLE`, `SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES`, etc.
+	//
+	// Possible values:
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
+	// resource is protected by automatic failover. Checks for resources
+	// that are configured to have redundancy within a region that enables
+	// automatic failover.
+	//   "SIGNAL_TYPE_GROUP_NOT_REPLICATING_ACROSS_REGIONS" - Represents if
+	// a group is replicating across regions. Checks for resources that are
+	// configured to have redundancy, and ongoing replication, across
+	// regions.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_ZONES" - Represents if the
+	// resource is available in multiple zones or not.
+	//   "SIGNAL_TYPE_NOT_AVAILABLE_IN_MULTIPLE_REGIONS" - Represents if a
+	// resource is available in multiple regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Represents if a resource has
+	// a promotable replica.
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource
+	// has an automated backup policy.
+	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources
+	// has a short backup retention period.
+	//   "SIGNAL_TYPE_LAST_BACKUP_FAILED" - Represents if the last backup of
+	// a resource failed.
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
+	// resource is older than some threshold value.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_2_0" - Represents if a
+	// resource violates CIS GCP Foundation 2.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_3" - Represents if a
+	// resource violates CIS GCP Foundation 1.3.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_2" - Represents if a
+	// resource violates CIS GCP Foundation 1.2.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_1" - Represents if a
+	// resource violates CIS GCP Foundation 1.1.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a
+	// resource violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource
+	// violates NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource
+	// violates ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource
+	// violates PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents
+	// if log_checkpoints database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_QUERY_DURATIONS_NOT_LOGGED" - Represents if the
+	// log_duration database flag for a Cloud SQL for PostgreSQL instance is
+	// not set to on.
+	//   "SIGNAL_TYPE_VERBOSE_ERROR_LOGGING" - Represents if the
+	// log_error_verbosity database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to default or stricter (default or terse).
+	//   "SIGNAL_TYPE_QUERY_LOCK_WAITS_NOT_LOGGED" - Represents if the
+	// log_lock_waits database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_MOST_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance is not set appropriately.
+	//   "SIGNAL_TYPE_LOGGING_ONLY_CRITICAL_ERRORS" - Represents if the
+	// log_min_error_statement database flag for a Cloud SQL for PostgreSQL
+	// instance does not have an appropriate severity level.
+	//   "SIGNAL_TYPE_MINIMAL_ERROR_LOGGING" - Represents if the
+	// log_min_messages database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to warning or another recommended value.
+	//   "SIGNAL_TYPE_QUERY_STATISTICS_LOGGED" - Represents if the
+	// databaseFlags property of instance metadata for the
+	// log_executor_status field is set to on.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_CLIENT_HOSTNAME" - Represents if
+	// the log_hostname database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PARSER_STATISTICS" - Represents
+	// if the log_parser_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXCESSIVE_LOGGING_OF_PLANNER_STATISTICS" - Represents
+	// if the log_planner_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_ONLY_DDL_STATEMENTS" - Represents if the
+	// log_statement database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to DDL (all data definition statements).
+	//   "SIGNAL_TYPE_LOGGING_QUERY_STATISTICS" - Represents if the
+	// log_statement_stats database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_NOT_LOGGING_TEMPORARY_FILES" - Represents if the
+	// log_temp_files database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to "0". (NOTE: 0 = ON)
+	//   "SIGNAL_TYPE_CONNECTION_MAX_NOT_CONFIGURED" - Represents if the
+	// user connections database flag for a Cloud SQL for SQL Server
+	// instance is configured.
+	//   "SIGNAL_TYPE_USER_OPTIONS_CONFIGURED" - Represents if the user
+	// options database flag for Cloud SQL SQL Server instance is configured
+	// or not.
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource
+	// is exposed to public access.
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources
+	// requires all incoming connections to use SSL or not.
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a Cloud SQL database
+	// has a password configured for the root account or not.
+	//   "SIGNAL_TYPE_WEAK_ROOT_PASSWORD" - Represents if a Cloud SQL
+	// database has a weak password configured for the root account.
+	//   "SIGNAL_TYPE_ENCRYPTION_KEY_NOT_CUSTOMER_MANAGED" - Represents if a
+	// SQL database instance is not encrypted with customer-managed
+	// encryption keys (CMEK).
+	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if
+	// The contained database authentication database flag for a Cloud SQL
+	// for SQL Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Represents if the
+	// cross_db_ownership_chaining database flag for a Cloud SQL for SQL
+	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he
+	// external scripts enabled database flag for a Cloud SQL for SQL Server
+	// instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_TO_LOCAL_DATA_LOADS" - Represents if the
+	// local_infile database flag for a Cloud SQL for MySQL instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_CONNECTION_ATTEMPTS_NOT_LOGGED" - Represents if the
+	// log_connections database flag for a Cloud SQL for PostgreSQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_DISCONNECTIONS_NOT_LOGGED" - Represents if the
+	// log_disconnections database flag for a Cloud SQL for PostgreSQL
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_LOGGING_EXCESSIVE_STATEMENT_INFO" - Represents if the
+	// log_min_duration_statement database flag for a Cloud SQL for
+	// PostgreSQL instance is not set to -1.
+	//   "SIGNAL_TYPE_EXPOSED_TO_REMOTE_ACCESS" - Represents if the remote
+	// access database flag for a Cloud SQL for SQL Server instance is not
+	// set to off.
+	//   "SIGNAL_TYPE_DATABASE_NAMES_EXPOSED" - Represents if the
+	// skip_show_database database flag for a Cloud SQL for MySQL instance
+	// is not set to on.
+	//   "SIGNAL_TYPE_SENSITIVE_TRACE_INFO_NOT_MASKED" - Represents if the
+	// 3625 (trace flag) database flag for a Cloud SQL for SQL Server
+	// instance is not set to on.
+	//   "SIGNAL_TYPE_PUBLIC_IP_ENABLED" - Represents if public IP is
+	// enabled.
+	//   "SIGNAL_TYPE_IDLE" - Represents Idle instance helps to reduce
+	// costs.
+	//   "SIGNAL_TYPE_OVERPROVISIONED" - Represents instances that are
+	// unnecessarily large for given workload.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_OPEN_TABLES" - Represents high number
+	// of concurrently opened tables.
+	//   "SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES" - Represents high table count
+	// close to SLA limit.
+	//   "SIGNAL_TYPE_HIGH_TRANSACTION_ID_UTILIZATION" - Represents high
+	// number of unvacuumed transactions
+	//   "SIGNAL_TYPE_UNDERPROVISIONED" - Represents need for more CPU
+	// and/or memory
+	//   "SIGNAL_TYPE_OUT_OF_DISK" - Represents out of disk.
+	//   "SIGNAL_TYPE_SERVER_CERTIFICATE_NEAR_EXPIRY" - Represents server
+	// certificate is near expiry.
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database
+	// auditing is disabled.
+	//   "SIGNAL_TYPE_RESTRICT_AUTHORIZED_NETWORKS" - Represents not
+	// restricted to authorized networks.
+	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
+	// violate org policy restrict public ip.
+	SignalType string `json:"signalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseResourceRecommendationSignalData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DiscoveryEndpoint: Endpoints on each network, for Redis clients to
 // connect to the cluster.
 type DiscoveryEndpoint struct {
@@ -431,6 +1413,53 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Entitlement: Proto representing the access that a user has to a
+// specific feature/service. NextId: 3.
+type Entitlement struct {
+	// EntitlementState: The current state of user's accessibility to a
+	// feature/benefit.
+	//
+	// Possible values:
+	//   "ENTITLEMENT_STATE_UNSPECIFIED"
+	//   "ENTITLED" - User is entitled to a feature/benefit, but whether it
+	// has been successfully provisioned is decided by provisioning state.
+	//   "REVOKED" - User is entitled to a feature/benefit, but it was
+	// requested to be revoked. Whether the revoke has been successful is
+	// decided by provisioning state.
+	EntitlementState string `json:"entitlementState,omitempty"`
+
+	// Type: An enum that represents the type of this entitlement.
+	//
+	// Possible values:
+	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
+	//   "DUET_AI" - The root entitlement representing Duet AI package
+	// ownership.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntitlementState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntitlementState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Entitlement) MarshalJSON() ([]byte, error) {
+	type NoMethod Entitlement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ExportInstanceRequest: Request for Export.
@@ -1432,6 +2461,51 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationError: An error that occurred during a backup creation
+// operation.
+type OperationError struct {
+	// Code: Identifies the specific error that occurred. REQUIRED
+	Code string `json:"code,omitempty"`
+
+	// Possible values:
+	//   "OPERATION_ERROR_TYPE_UNSPECIFIED" - UNSPECIFIED means product type
+	// is not known or available.
+	//   "KMS_KEY_ERROR" - key destroyed, expired, not found, unreachable or
+	// permission denied.
+	//   "DATABASE_ERROR" - Database is not accessible
+	//   "STOCKOUT_ERROR" - The zone or region does not have sufficient
+	// resources to handle the request at the moment
+	//   "CANCELLATION_ERROR" - User initiated cancellation
+	//   "SQLSERVER_ERROR" - SQL server specific error
+	//   "INTERNAL_ERROR" - Any other internal error.
+	ErrorType string `json:"errorType,omitempty"`
+
+	// Message: Additional information about the error encountered. REQUIRED
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationError) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadata: Pre-defined metadata fields.
 type OperationMetadata struct {
 	// ApiVersion: Output only. API version used to start the operation.
@@ -1569,6 +2643,86 @@ type PersistenceConfig struct {
 
 func (s *PersistenceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistenceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Product: Product specification for Condor resources.
+type Product struct {
+	// Engine: The specific engine that the underlying database is running.
+	//
+	// Possible values:
+	//   "ENGINE_UNSPECIFIED" - UNSPECIFIED means engine type is not known
+	// or available.
+	//   "ENGINE_MYSQL" - MySQL binary running as an engine in the database
+	// instance.
+	//   "MYSQL" - MySQL binary running as engine in database instance.
+	//   "ENGINE_POSTGRES" - Postgres binary running as engine in database
+	// instance.
+	//   "POSTGRES" - Postgres binary running as engine in database
+	// instance.
+	//   "ENGINE_SQL_SERVER" - SQLServer binary running as engine in
+	// database instance.
+	//   "SQL_SERVER" - SQLServer binary running as engine in database
+	// instance.
+	//   "ENGINE_NATIVE" - Native database binary running as engine in
+	// instance.
+	//   "NATIVE" - Native database binary running as engine in instance.
+	//   "ENGINE_CLOUD_SPANNER_WITH_POSTGRES_DIALECT" - Cloud Spanner with
+	// PostgreSQL dialect.
+	//   "ENGINE_CLOUD_SPANNER_WITH_GOOGLESQL_DIALECT" - Cloud Spanner with
+	// Google SQL dialect.
+	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
+	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis
+	// cluster dialect.
+	//   "ENGINE_OTHER" - Other refers to rest of other database engine.
+	// This is to be when engine is known, but it is not present in this
+	// enum.
+	Engine string `json:"engine,omitempty"`
+
+	// Type: Type of specific database product. It could be CloudSQL,
+	// AlloyDB etc..
+	//
+	// Possible values:
+	//   "PRODUCT_TYPE_UNSPECIFIED" - UNSPECIFIED means product type is not
+	// known or available.
+	//   "PRODUCT_TYPE_CLOUD_SQL" - Cloud SQL product area in GCP
+	//   "CLOUD_SQL" - Cloud SQL product area in GCP
+	//   "PRODUCT_TYPE_ALLOYDB" - AlloyDB product area in GCP
+	//   "ALLOYDB" - AlloyDB product area in GCP
+	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in GCP
+	//   "PRODUCT_TYPE_ON_PREM" - On premises database product.
+	//   "ON_PREM" - On premises database product.
+	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in GCP
+	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type.
+	// This is to be when product type is known, but it is not present in
+	// this enum.
+	Type string `json:"type,omitempty"`
+
+	// Version: Version of the underlying database engine. Example values:
+	// For MySQL, it could be "8.0", "5.7" etc.. For Postgres, it could be
+	// "14", "15" etc..
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Engine") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Engine") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Product) MarshalJSON() ([]byte, error) {
+	type NoMethod Product
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1732,6 +2886,48 @@ type RescheduleMaintenanceRequest struct {
 
 func (s *RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RescheduleMaintenanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RetentionSettings struct {
+	QuantityBasedRetention int64 `json:"quantityBasedRetention,omitempty"`
+
+	// RetentionUnit: The unit that 'retained_backups' represents.
+	//
+	// Possible values:
+	//   "RETENTION_UNIT_UNSPECIFIED" - Backup retention unit is
+	// unspecified, will be treated as COUNT.
+	//   "COUNT" - Retention will be by count, eg. "retain the most recent 7
+	// backups".
+	//   "TIME" - Retention will be by Time, eg. "retain the last 7 days
+	// backups".
+	//   "RETENTION_UNIT_OTHER" - For rest of the other category
+	RetentionUnit string `json:"retentionUnit,omitempty"`
+
+	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "QuantityBasedRetention") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QuantityBasedRetention")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetentionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod RetentionSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

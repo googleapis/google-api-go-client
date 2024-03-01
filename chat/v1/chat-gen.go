@@ -917,7 +917,7 @@ func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
 // multiselect menu, a data source from Google Chat. The data source
 // populates selection items for the multiselect menu. For example, a
 // user can select Google Chat spaces that they're a member of. Google
-// Chat apps (https://developers.google.com/chat):
+// Chat apps (https://developers.google.com/workspace/chat):
 type ChatClientDataSourceMarkup struct {
 	// SpaceDataSource: Google Chat spaces that the user is a member of.
 	SpaceDataSource *SpaceDataSource `json:"spaceDataSource,omitempty"`
@@ -1672,7 +1672,7 @@ type GoogleAppsCardV1Action struct {
 	// (https://developers.google.com/chat/how-tos/dialogs). When specified,
 	// a loading indicator isn't shown. If specified for an add-on, the
 	// entire card is stripped and nothing is shown in the client. Google
-	// Chat apps (https://developers.google.com/chat):
+	// Chat apps (https://developers.google.com/workspace/chat):
 	//
 	// Possible values:
 	//   "INTERACTION_UNSPECIFIED" - Default value. The `action` executes as
@@ -1683,7 +1683,7 @@ type GoogleAppsCardV1Action struct {
 	// users. Only supported by Chat apps in response to button-clicks on
 	// card messages. If specified for an add-on, the entire card is
 	// stripped and nothing is shown in the client. [Google Chat
-	// apps](https://developers.google.com/chat):
+	// apps](https://developers.google.com/workspace/chat):
 	Interaction string `json:"interaction,omitempty"`
 
 	// LoadIndicator: Specifies the loading indicator that the action
@@ -2180,8 +2180,9 @@ func (s *GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Column: A column. Google Chat apps
-// (https://developers.google.com/chat):
+// GoogleAppsCardV1Column: A column. Google Workspace Add-ons and Chat
+// apps (https://developers.google.com/workspace/extend): Columns for
+// Google Workspace Add-ons are in Developer Preview.
 type GoogleAppsCardV1Column struct {
 	// HorizontalAlignment: Specifies whether widgets align to the left,
 	// right, or center of a column.
@@ -2198,7 +2199,7 @@ type GoogleAppsCardV1Column struct {
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 
 	// HorizontalSizeStyle: Specifies how a column fills the width of the
-	// card. Google Chat apps (https://developers.google.com/chat):
+	// card.
 	//
 	// Possible values:
 	//   "HORIZONTAL_SIZE_STYLE_UNSPECIFIED" - Don't use. Unspecified.
@@ -2210,8 +2211,7 @@ type GoogleAppsCardV1Column struct {
 	HorizontalSizeStyle string `json:"horizontalSizeStyle,omitempty"`
 
 	// VerticalAlignment: Specifies whether widgets align to the top,
-	// bottom, or center of a column. Google Chat apps
-	// (https://developers.google.com/chat):
+	// bottom, or center of a column.
 	//
 	// Possible values:
 	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Don't use. Unspecified.
@@ -2268,8 +2268,7 @@ func (s *GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 // columns, or to use rows, use the `Grid` widget. Google Workspace
 // Add-ons and Chat apps
 // (https://developers.google.com/workspace/extend): Columns for Google
-// Workspace Add-ons are in Developer Preview
-// (https://developers.google.com/workspace/preview).
+// Workspace Add-ons are in Developer Preview.
 type GoogleAppsCardV1Columns struct {
 	// ColumnItems: An array of columns. You can include up to 2 columns in
 	// a card or dialog.
@@ -2881,7 +2880,7 @@ func (s *GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1PlatformDataSource: For a `SelectionInput` widget
 // that uses a multiselect menu, a data source from Google Workspace.
 // Used to populate items in a multiselect menu. Google Chat apps
-// (https://developers.google.com/chat):
+// (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1PlatformDataSource struct {
 	// CommonDataSource: A data source shared by all Google Workspace
 	// applications, such as users in a Google Workspace organization.
@@ -3059,9 +3058,8 @@ type GoogleAppsCardV1SelectionInput struct {
 	// multiselect menus, see the [`SelectionInput` widget
 	// page](https://developers.google.com/chat/ui/widgets/selection-input#mu
 	// ltiselect-menu). [Google Workspace Add-ons and Chat
-	// apps](https://developers.google.com/workspace/extend): multiselect
-	// for Google Workspace Add-ons are in [Developer
-	// Preview](https://developers.google.com/workspace/preview).
+	// apps](https://developers.google.com/workspace/extend): Multiselect
+	// for Google Workspace Add-ons are in Developer Preview.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExternalDataSource")
@@ -3330,7 +3328,7 @@ type GoogleAppsCardV1TextInput struct {
 	// PlaceholderText: Text that appears in the text input field when the
 	// field is empty. Use this text to prompt users to enter a value. For
 	// example, `Enter a number from 0 to 100`. Google Chat apps
-	// (https://developers.google.com/chat):
+	// (https://developers.google.com/workspace/chat):
 	PlaceholderText string `json:"placeholderText,omitempty"`
 
 	// Type: How a text input field appears in the user interface. For
@@ -3545,7 +3543,9 @@ func (s *GoogleAppsCardV1Widget) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1Widgets: The supported widgets that you can include
-// in a column. Google Chat apps (https://developers.google.com/chat):
+// in a column. Google Workspace Add-ons and Chat apps
+// (https://developers.google.com/workspace/extend): Columns for Google
+// Workspace Add-ons are in Developer Preview.
 type GoogleAppsCardV1Widgets struct {
 	// ButtonList: ButtonList widget.
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
@@ -3624,7 +3624,7 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 // HostAppDataSourceMarkup: For a `SelectionInput` widget that uses a
 // multiselect menu, a data source from a Google Workspace application.
 // The data source populates selection items for the multiselect menu.
-// Google Chat apps (https://developers.google.com/chat):
+// Google Chat apps (https://developers.google.com/workspace/chat):
 type HostAppDataSourceMarkup struct {
 	// ChatDataSource: A data source from Google Chat.
 	ChatDataSource *ChatClientDataSourceMarkup `json:"chatDataSource,omitempty"`
@@ -4903,7 +4903,7 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 // SpaceDataSource: A data source that populates Google Chat spaces as
 // selection items for a multiselect menu. Only populates spaces that
 // the user is a member of. Google Chat apps
-// (https://developers.google.com/chat):
+// (https://developers.google.com/workspace/chat):
 type SpaceDataSource struct {
 	// DefaultToCurrentSpace: If set to `true`, the multiselect menu selects
 	// the current Google Chat space as an item by default.

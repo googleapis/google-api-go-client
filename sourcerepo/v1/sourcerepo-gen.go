@@ -1849,9 +1849,8 @@ type ProjectsReposGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the IAM policy policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
 //   - resource: REQUIRED: The resource for which the policy is being
 //     requested. See Resource names
@@ -1980,7 +1979,7 @@ func (c *ProjectsReposGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "description": "Gets the IAM policy policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/repos/{reposId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "sourcerepo.projects.repos.getIamPolicy",
@@ -2371,8 +2370,8 @@ type ProjectsReposSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.
+// SetIamPolicy: Sets the IAM policy on the specified resource. Replaces
+// any existing policy.
 //
 //   - resource: REQUIRED: The resource for which the policy is being
 //     specified. See Resource names
@@ -2476,7 +2475,7 @@ func (c *ProjectsReposSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "description": "Sets the IAM policy on the specified resource. Replaces any existing policy.",
 	//   "flatPath": "v1/projects/{projectsId}/repos/{reposId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "sourcerepo.projects.repos.setIamPolicy",

@@ -3315,34 +3315,6 @@ func (s *UserCredential) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeClaim: VolumeClaim is a user's request for a volume.
-type VolumeClaim struct {
-	// Storage: Volume size, e.g. 1gb.
-	Storage string `json:"storage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Storage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Storage") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VolumeClaim) MarshalJSON() ([]byte, error) {
-	type NoMethod VolumeClaim
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // VolumeMount: Pod volumes to mount into the container's filesystem.
 type VolumeMount struct {
 	// MountPath: Path within the container at which the volume should be
@@ -3509,9 +3481,6 @@ type WorkspaceBinding struct {
 	// which should be used for this binding (i.e. the volume will be
 	// mounted at this sub directory). +optional
 	SubPath string `json:"subPath,omitempty"`
-
-	// VolumeClaim: Volume claim that will be created in the same namespace.
-	VolumeClaim *VolumeClaim `json:"volumeClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with

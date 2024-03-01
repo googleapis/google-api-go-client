@@ -88,7 +88,7 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 		if err != nil {
 			return nil, err
 		}
-		if settings.TokenSource == nil {
+		if creds.TokenSource == nil {
 			// We only validate non-tokensource creds, as TokenSource-based credentials
 			// don't propagate universe.
 			credsUniverseDomain, err := internal.GetUniverseDomain(creds)

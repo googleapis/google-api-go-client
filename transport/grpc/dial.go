@@ -177,7 +177,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			if err != nil {
 				return nil, err
 			}
-			if o.TokenSource == nil {
+			if creds.TokenSource == nil {
 				// We only validate non-tokensource creds, as TokenSource-based credentials
 				// don't propagate universe.
 				credsUniverseDomain, err := internal.GetUniverseDomain(creds)

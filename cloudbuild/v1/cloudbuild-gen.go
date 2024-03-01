@@ -2223,6 +2223,49 @@ func (s *CreateWorkerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DefaultServiceAccount: The default service account used for `Builds`.
+type DefaultServiceAccount struct {
+	// Name: Identifier. Format:
+	// `projects/{project}/locations/{location}/defaultServiceAccount
+	Name string `json:"name,omitempty"`
+
+	// ServiceAccountEmail: Output only. The email address of the service
+	// account identity that will be used for a build by default. This is
+	// returned in the format
+	// `projects/{project}/serviceAccounts/{service_account}` where
+	// `{service_account}` could be the legacy Cloud Build SA, in the format
+	// [PROJECT_NUMBER]@cloudbuild.gserviceaccount.com or the Compute SA, in
+	// the format [PROJECT_NUMBER]-compute@developer.gserviceaccount.com. If
+	// no service account will be used by default, this will be empty.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DefaultServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultServiceAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeleteBitbucketServerConfigOperationMetadata: Metadata for
 // `DeleteBitbucketServerConfig` operation.
 type DeleteBitbucketServerConfigOperationMetadata struct {
@@ -3846,6 +3889,10 @@ type PrivatePoolV1Config struct {
 	// NetworkConfig: Network configuration for the pool.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
 
+	// PrivateServiceConnect: Immutable. Private Service Connect(PSC)
+	// Network configuration for the pool.
+	PrivateServiceConnect *PrivateServiceConnect `json:"privateServiceConnect,omitempty"`
+
 	// WorkerConfig: Machine configuration for the workers in the pool.
 	WorkerConfig *WorkerConfig `json:"workerConfig,omitempty"`
 
@@ -3868,6 +3915,59 @@ type PrivatePoolV1Config struct {
 
 func (s *PrivatePoolV1Config) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivatePoolV1Config
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateServiceConnect: Defines the Private Service Connect network
+// configuration for the pool.
+type PrivateServiceConnect struct {
+	// NetworkAttachment: Required. Immutable. The network attachment that
+	// the worker network interface is peered to. Must be in the format
+	// `projects/{project}/regions/{region}/networkAttachments/{networkAttach
+	// ment}`. The region of network attachment must be the same as the
+	// worker pool. See Network Attachments
+	// (https://cloud.google.com/vpc/docs/about-network-attachments)
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+
+	// PublicIpAddressDisabled: Required. Immutable. Disable public IP on
+	// the primary network interface. If true, workers are created without
+	// any public address, which prevents network egress to public IPs
+	// unless a network proxy is configured. If false, workers are created
+	// with a public address which allows for public internet egress. The
+	// public address only applies to traffic through the primary network
+	// interface. If `route_all_traffic` is set to true, all traffic will go
+	// through the non-primary network interface, this boolean has no
+	// effect.
+	PublicIpAddressDisabled bool `json:"publicIpAddressDisabled,omitempty"`
+
+	// RouteAllTraffic: Immutable. Route all traffic through PSC interface.
+	// Enable this if you want full control of traffic in the private pool.
+	// Configure Cloud NAT for the subnet of network attachment if you need
+	// to access public Internet. If false, Only route private IPs, e.g.
+	// 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 through PSC interface.
+	RouteAllTraffic bool `json:"routeAllTraffic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachment")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkAttachment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateServiceConnect) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateServiceConnect
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7751,6 +7851,154 @@ func (c *ProjectsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi.CallOpti
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudbuild.projects.locations.getDefaultServiceAccount":
+
+type ProjectsLocationsGetDefaultServiceAccountCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDefaultServiceAccount: Returns the `DefaultServiceAccount` used by
+// the project.
+//
+//   - name: The name of the `DefaultServiceAccount` to retrieve. Format:
+//     `projects/{project}/locations/{location}/defaultServiceAccount`.
+func (r *ProjectsLocationsService) GetDefaultServiceAccount(name string) *ProjectsLocationsGetDefaultServiceAccountCall {
+	c := &ProjectsLocationsGetDefaultServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetDefaultServiceAccountCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetDefaultServiceAccountCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetDefaultServiceAccountCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetDefaultServiceAccountCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetDefaultServiceAccountCall) Context(ctx context.Context) *ProjectsLocationsGetDefaultServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetDefaultServiceAccountCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetDefaultServiceAccountCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbuild.projects.locations.getDefaultServiceAccount" call.
+// Exactly one of *DefaultServiceAccount or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DefaultServiceAccount.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetDefaultServiceAccountCall) Do(opts ...googleapi.CallOption) (*DefaultServiceAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DefaultServiceAccount{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the `DefaultServiceAccount` used by the project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/defaultServiceAccount",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbuild.projects.locations.getDefaultServiceAccount",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the `DefaultServiceAccount` to retrieve. Format: `projects/{project}/locations/{location}/defaultServiceAccount`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/defaultServiceAccount$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "DefaultServiceAccount"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

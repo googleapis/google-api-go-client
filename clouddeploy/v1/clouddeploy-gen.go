@@ -746,6 +746,7 @@ type AutomationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -809,6 +810,10 @@ type AutomationRolloutMetadata struct {
 	// AdvanceAutomationRuns: Output only. The IDs of the AutomationRuns
 	// initiated by an advance rollout rule.
 	AdvanceAutomationRuns []string `json:"advanceAutomationRuns,omitempty"`
+
+	// CurrentRepairAutomationRun: Output only. The current AutomationRun
+	// repairing the rollout.
+	CurrentRepairAutomationRun string `json:"currentRepairAutomationRun,omitempty"`
 
 	// PromoteAutomationRun: Output only. The ID of the AutomationRun
 	// initiated by a promote release rule.
@@ -973,6 +978,7 @@ type AutomationRun struct {
 	//   "FAILED" - The `AutomationRun` has failed.
 	//   "IN_PROGRESS" - The `AutomationRun` is in progress.
 	//   "PENDING" - The `AutomationRun` is pending.
+	//   "ABORTED" - The `AutomationRun` was aborted.
 	State string `json:"state,omitempty"`
 
 	// StateDescription: Output only. Explains the current state of the
@@ -1057,6 +1063,7 @@ type AutomationRunEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -2037,6 +2044,7 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -2752,6 +2760,7 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4336,6 +4345,7 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4434,6 +4444,7 @@ type ReleaseRenderEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4723,6 +4734,7 @@ type RetryAttempt struct {
 	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
 	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
 	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
+	//   "REPAIR_STATE_ABORTED" - The `repair` action was aborted.
 	State string `json:"state,omitempty"`
 
 	// StateDesc: Output only. Description of the state of the Retry.
@@ -4892,6 +4904,7 @@ type RollbackAttempt struct {
 	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
 	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
 	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
+	//   "REPAIR_STATE_ABORTED" - The `repair` action was aborted.
 	State string `json:"state,omitempty"`
 
 	// StateDesc: Output only. Description of the state of the Rollback.
@@ -5240,6 +5253,7 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -5322,6 +5336,7 @@ type RolloutUpdateEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -6049,6 +6064,7 @@ type TargetNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`

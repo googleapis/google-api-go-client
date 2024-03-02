@@ -674,7 +674,7 @@ type Cluster struct {
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
-	// "projects/{project}/global/networks/{network_id}". This is required
+	// `projects/{project}/global/networks/{network_id}`. This is required
 	// to create a cluster. Deprecated, use network_config.network instead.
 	Network string `json:"network,omitempty"`
 
@@ -1870,7 +1870,7 @@ type NetworkConfig struct {
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
-	// "projects/{project_number}/global/networks/{network_id}". This is
+	// `projects/{project_number}/global/networks/{network_id}`. This is
 	// required to create a cluster.
 	Network string `json:"network,omitempty"`
 
@@ -3267,7 +3267,7 @@ func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJ
 // nalData: Common model for database resource recommendation signal
 // data.
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData struct {
-	// AdditionalMetadata: Required. Any other additional metadata specific
+	// AdditionalMetadata: Optional. Any other additional metadata specific
 	// to recommendation
 	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
 
@@ -3553,6 +3553,19 @@ func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte
 type StorageDatabasecenterPartnerapiV1mainOperationError struct {
 	// Code: Identifies the specific error that occurred. REQUIRED
 	Code string `json:"code,omitempty"`
+
+	// Possible values:
+	//   "OPERATION_ERROR_TYPE_UNSPECIFIED" - UNSPECIFIED means product type
+	// is not known or available.
+	//   "KMS_KEY_ERROR" - key destroyed, expired, not found, unreachable or
+	// permission denied.
+	//   "DATABASE_ERROR" - Database is not accessible
+	//   "STOCKOUT_ERROR" - The zone or region does not have sufficient
+	// resources to handle the request at the moment
+	//   "CANCELLATION_ERROR" - User initiated cancellation
+	//   "SQLSERVER_ERROR" - SQL server specific error
+	//   "INTERNAL_ERROR" - Any other internal error.
+	ErrorType string `json:"errorType,omitempty"`
 
 	// Message: Additional information about the error encountered. REQUIRED
 	Message string `json:"message,omitempty"`

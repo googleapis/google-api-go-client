@@ -706,7 +706,7 @@ type Cluster struct {
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
-	// "projects/{project}/global/networks/{network_id}". This is required
+	// `projects/{project}/global/networks/{network_id}`. This is required
 	// to create a cluster. Deprecated, use network_config.network instead.
 	Network string `json:"network,omitempty"`
 
@@ -1987,7 +1987,7 @@ type NetworkConfig struct {
 	// cluster resources are created and from which they are accessible via
 	// Private IP. The network must belong to the same project as the
 	// cluster. It is specified in the form:
-	// "projects/{project_number}/global/networks/{network_id}". This is
+	// `projects/{project_number}/global/networks/{network_id}`. This is
 	// required to create a cluster.
 	Network string `json:"network,omitempty"`
 
@@ -2316,7 +2316,7 @@ type PscInstanceConfig struct {
 	// ServiceAttachmentLink: Output only. The service attachment created
 	// when Private Service Connect (PSC) is enabled for the instance. The
 	// name of the resource will be in the format of
-	// projects//regions//serviceAttachments/
+	// `projects//regions//serviceAttachments/`
 	ServiceAttachmentLink string `json:"serviceAttachmentLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2358,8 +2358,8 @@ type PscInterfaceConfig struct {
 	// NetworkAttachment: The NetworkAttachment resource created in the
 	// consumer VPC to which the PSC interface will be linked, in the form
 	// of:
-	// "projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${N
-	// ETWORK_ATTACHMENT_NAME}". NetworkAttachment has to be provided when
+	// `projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${N
+	// ETWORK_ATTACHMENT_NAME}`. NetworkAttachment has to be provided when
 	// the PSC interface is created.
 	NetworkAttachment string `json:"networkAttachment,omitempty"`
 
@@ -3518,7 +3518,7 @@ func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJ
 // nalData: Common model for database resource recommendation signal
 // data.
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData struct {
-	// AdditionalMetadata: Required. Any other additional metadata specific
+	// AdditionalMetadata: Optional. Any other additional metadata specific
 	// to recommendation
 	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
 
@@ -3804,6 +3804,19 @@ func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte
 type StorageDatabasecenterPartnerapiV1mainOperationError struct {
 	// Code: Identifies the specific error that occurred. REQUIRED
 	Code string `json:"code,omitempty"`
+
+	// Possible values:
+	//   "OPERATION_ERROR_TYPE_UNSPECIFIED" - UNSPECIFIED means product type
+	// is not known or available.
+	//   "KMS_KEY_ERROR" - key destroyed, expired, not found, unreachable or
+	// permission denied.
+	//   "DATABASE_ERROR" - Database is not accessible
+	//   "STOCKOUT_ERROR" - The zone or region does not have sufficient
+	// resources to handle the request at the moment
+	//   "CANCELLATION_ERROR" - User initiated cancellation
+	//   "SQLSERVER_ERROR" - SQL server specific error
+	//   "INTERNAL_ERROR" - Any other internal error.
+	ErrorType string `json:"errorType,omitempty"`
 
 	// Message: Additional information about the error encountered. REQUIRED
 	Message string `json:"message,omitempty"`

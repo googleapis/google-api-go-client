@@ -738,42 +738,27 @@ func (s *BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
 
 // BatchWriteRequest: The request for BatchWrite.
 type BatchWriteRequest struct {
-	// ExcludeTxnFromChangeStreams: Optional. When
-	// `exclude_txn_from_change_streams` is set to `true`: * Mutations from
-	// all transactions in this batch write operation will not be recorded
-	// in change streams with DDL option `allow_txn_exclusion=true` that are
-	// tracking columns modified by these transactions. * Mutations from all
-	// transactions in this batch write operation will be recorded in change
-	// streams with DDL option `allow_txn_exclusion=false or not set` that
-	// are tracking columns modified by these transactions. When
-	// `exclude_txn_from_change_streams` is set to `false` or not set,
-	// mutations from all transactions in this batch write operation will be
-	// recorded in all change streams that are tracking columns modified by
-	// these transactions.
-	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
-
 	// MutationGroups: Required. The groups of mutations to be applied.
 	MutationGroups []*MutationGroup `json:"mutationGroups,omitempty"`
 
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ExcludeTxnFromChangeStreams") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MutationGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ExcludeTxnFromChangeStreams") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MutationGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5677,14 +5662,6 @@ type Session struct {
 	// more information on and examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Multiplexed: Optional. If true, specifies a multiplexed session. A
-	// multiplexed session may be used for multiple, concurrent read-only
-	// operations but can not be used for read-write transactions,
-	// partitioned reads, or partitioned queries. Multiplexed sessions can
-	// be created via CreateSession but not via BatchCreateSessions.
-	// Multiplexed sessions may not be deleted nor listed.
-	Multiplexed bool `json:"multiplexed,omitempty"`
-
 	// Name: Output only. The name of the session. This is always
 	// system-assigned.
 	Name string `json:"name,omitempty"`
@@ -6232,21 +6209,6 @@ func (s *Transaction) MarshalJSON() ([]byte, error) {
 // operations that are idempotent, such as deleting old rows from a very
 // large table.
 type TransactionOptions struct {
-	// ExcludeTxnFromChangeStreams: When `exclude_txn_from_change_streams`
-	// is set to `true`: * Mutations from this transaction will not be
-	// recorded in change streams with DDL option `allow_txn_exclusion=true`
-	// that are tracking columns modified by these transactions. * Mutations
-	// from this transaction will be recorded in change streams with DDL
-	// option `allow_txn_exclusion=false or not set` that are tracking
-	// columns modified by these transactions. When
-	// `exclude_txn_from_change_streams` is set to `false` or not set,
-	// mutations from this transaction will be recorded in all change
-	// streams that are tracking columns modified by these transactions.
-	// `exclude_txn_from_change_streams` may only be specified for
-	// read-write or partitioned-dml transactions, otherwise the API will
-	// return an `INVALID_ARGUMENT` error.
-	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
-
 	// PartitionedDml: Partitioned DML transaction. Authorization to begin a
 	// Partitioned DML transaction requires
 	// `spanner.databases.beginPartitionedDmlTransaction` permission on the
@@ -6265,22 +6227,21 @@ type TransactionOptions struct {
 	// the `session` resource.
 	ReadWrite *ReadWrite `json:"readWrite,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ExcludeTxnFromChangeStreams") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PartitionedDml") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ExcludeTxnFromChangeStreams") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PartitionedDml") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
